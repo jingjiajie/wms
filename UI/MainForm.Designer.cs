@@ -1,4 +1,4 @@
-﻿namespace UI
+﻿namespace WMS.UI
 {
     partial class MainForm
     {
