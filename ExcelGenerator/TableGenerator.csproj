@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{337050E4-D570-4BC6-82A4-AC9FBDD33BAD}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ExcelGenerator</RootNamespace>
-    <AssemblyName>ExcelGenerator</AssemblyName>
+    <RootNamespace>WMS.TableGenerator</RootNamespace>
+    <AssemblyName>TableGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PortableFCSLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PortableFCSLib.1.0.0\lib\PortableFCSLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,12 +45,16 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Table.cs" />
+    <Compile Include="TableGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DataAccess.csproj">
       <Project>{fa53d354-54b7-474c-86ce-04fc4fe99b29}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
