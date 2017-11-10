@@ -5,7 +5,7 @@ using FCSlib;
 
 namespace WMS.TableGenerator
 {
-    class TableGenerator
+    public class TableGenerator
     {
         class TablePosition
         {
@@ -241,23 +241,23 @@ namespace WMS.TableGenerator
         {
             //Console.WriteLine("ResultAddDataByColumn({0},{1})", column, data);
             this.lengthColumnResult[column]++;
-            this.ResultTable.Cells[this.lengthColumnResult[column] - 1, column] = data;
+            this.ResultTable.Cells[this.lengthColumnResult[column] - 1, column].Data = data;
         }
 
         private void ResultAddDataByLine(int line, string data)
         {
             this.lengthLineResult[line]++;
-            this.ResultTable.Cells[this.lengthLineResult[line] - 1, line] = data;
+            this.ResultTable.Cells[this.lengthLineResult[line] - 1, line].Data = data;
         }
 
         private string PatternGetData(int line,int column)
         {
-            return this.PatternTable.Cells[line, column];
+            return this.PatternTable.Cells[line, column].Data;
         }
 
         private void PatternSetData(int line,int column,string value)
         {
-            this.PatternTable.Cells[line, column] = value;
+            this.PatternTable.Cells[line, column].Data = value;
         }
 
         private CellState PatternGetState(int line,int column)

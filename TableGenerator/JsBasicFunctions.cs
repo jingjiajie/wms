@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WMS.TableGenerator
 {
-    class JsBasicFunctions
+    internal class JsBasicFunctions
     {
         public string GetAllJsFuncStr()
         {

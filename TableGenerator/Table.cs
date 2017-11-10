@@ -7,13 +7,31 @@ namespace WMS.TableGenerator
 {
     public class Table
     {
-        private string[,] cells;
+        private Cell[,] cells;
 
-        public string[,] Cells { get => cells; set => cells = value; }
+        public Cell[,] Cells { get => cells; private set => cells = value; }
+
+        public Cell this[int line, int column]
+        {
+            get{
+                return this.Cells[line, column];
+            }
+            set
+            {
+                this.Cells[line, column] = value;
+            }
+        }
 
         public Table(int countOfLine, int countOfColumn)
         {
-            this.Cells = new string[countOfLine, countOfColumn];
+            this.Cells = new Cell[countOfLine, countOfColumn];
+            for(int i = 0; i < this.Cells.GetLength(0); i++)
+            {
+                for(int j = 0; j < this.Cells.GetLength(1); j++)
+                {
+                    this.Cells[i, j] = new Cell();
+                }
+            }
         }
 
         public override string ToString()

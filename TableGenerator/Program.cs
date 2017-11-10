@@ -34,15 +34,14 @@ namespace WMS.TableGenerator
             table.Rows.Add("1", "小明");
             table.Rows.Add("2", "小红");
             table.Rows.Add("3", "小华");
-            Table t = new Table(0, 0);
-            t.Cells = new string[,]
-            {
-                {"REPEAT AREA 1 2 VAR i IN range(table1.ID.length)","" },
-                {"WRITE table1.ID[i]","WRITE table1.Name[i]"},
-            };
-
+            Table t = new Table(2, 2);
+            t[0, 0].Data = "REPEAT AREA 1 2 VAR i IN range(table1.ID.length)";
+            t[1, 0].Data = "WRITE table1.ID[i]";
+            t[1, 1].Data = "WRITE table1.Name[i]";
+            
             var tg = new TableGenerator(t, ds);
             var result = tg.GenerateTable(10, 2);
+            
             Console.WriteLine(result.ToString());
             Console.ReadLine();
         }
