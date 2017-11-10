@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using FCSlib;
 
-namespace WMS.TableGenerator
+namespace WMS.TableGenerate
 {
     public class TableGenerator
     {
@@ -28,13 +28,7 @@ namespace WMS.TableGenerator
             Unhandled = 0,NormalHandled,RepeatHandled
         }
 
-        class LogicError : Exception
-        {
-            public LogicError(int line, int column, string message)
-                : base(String.Format("Error at ({0},{1}): {2}", line, column, message)){}
-        }
-
-        private Jint.Engine jsEngine;
+        private Jint.Engine jsEngine; //JavaScript引擎
 
         private DataSet dataSource = null; //数据源
 
@@ -49,21 +43,38 @@ namespace WMS.TableGenerator
         public DataSet DataSource { get => dataSource; set => this.UpdateDataSource(value); }
         public Table ResultTable { get => resultTable; set => resultTable = value; }
 
-        private TableGenerator()
+        public TableGenerator()
         {
             this.jsEngine = new Jint.Engine();
             var basicFunctions = new JsBasicFunctions();
             jsEngine.Execute(basicFunctions.GetAllJsFuncStr());
         }
 
-        public TableGenerator(Table patternTable, DataSet dataSource):this()
+        public TableGenerator(Table patternTable, DataSet dataSource = null):this()
         {
             this.PatternTable = patternTable;
             if(dataSource != null) this.DataSource = dataSource;
         }
 
-        public Table GenerateTable(int countOfLine,int countOfColumn)
+        public string TryGenerateTable(out Table resultTable,int countOfLine = 200,int countOfColumn = 200)
         {
+            try
+            {
+                resultTable = this.GenerateTable(countOfLine, countOfColumn);
+                return null;
+            }catch(Exception e)
+            {
+                resultTable = null;
+                return e.Message;
+            }
+        }
+
+        public Table GenerateTable(int countOfLine = 200, int countOfColumn = 200)
+        {
+            if(this.PatternTable == null)
+            {
+                throw new GenerateError("Pattern table not setted");
+            }
             int patternLines = this.patternTable.Cells.GetLength(0); //获取模式表行数
             int patternColumns = this.patternTable.Cells.GetLength(1); //获取模式表列数
 
@@ -108,28 +119,32 @@ namespace WMS.TableGenerator
             {
                 return;
             }
-            string curData = this.PatternGetData(line,column);
-            if(curData == null || curData.Length == 0) //单元格为空则直接向目标表加入单元格内容
+            Cell curCell = this.PatternGetCell(line,column);
+            if(curCell == null) //单元格不能为null
+            {
+                throw new LogicError(line,column,"Cell can not be null in pattern table");
+            }
+            if(curCell.Data.Length == 0) //单元格为空则直接向目标表加入单元格内容
             {
                 if (this.PatternGetState(line, column) == CellState.Unhandled)
                 {
                     if (!attribute.InRepeat)
                     {
-                        this.ResultAddDataByColumn(column, curData);
+                        this.ResultAddCellByColumn(column, curCell);
                         this.PatternSetState(line, column, CellState.NormalHandled);
                     }
                     else
                     {
-                        this.ResultAddDataByColumn(column, curData);
+                        this.ResultAddCellByColumn(column, curCell);
                     }
                 }
                 else if (this.PatternGetState(line, column) == CellState.RepeatHandled)
                 {
-                    this.ResultAddDataByColumn(column, curData);
+                    this.ResultAddCellByColumn(column, curCell);
                 }
                 return;
             }
-            string[] cmdList = curData.Split(' ');
+            string[] cmdList = curCell.Data.Split(' ');
             switch (cmdList[0]) //分析单元格内容，如果为指令则运行，否则直接向目标表写入
             {
                 case "WRITE":
@@ -138,31 +153,33 @@ namespace WMS.TableGenerator
                         {
                             throw new LogicError(line,column,"Expected WRITE <Expression> statement");
                         }
-                        string expr = cmdList[1];
-                        string result;
+                        string expr = cmdList[1]; //取WRITE后面的表达式
+                        string exprResult; //表达式计算结果
                         try
                         {
-                            result = jsEngine.Execute(expr).GetCompletionValue().ToString();
+                            exprResult = jsEngine.Execute(expr).GetCompletionValue().ToString();
                         }catch(Exception e)
                         {
                             throw new LogicError(line, column,e.Message);
                         }
+                        Cell newCell = curCell.Clone(); //从模式表当前单元格克隆出一个新的单元格
+                        newCell.Data = exprResult; //新单元格的数据等于WRITE表达式计算结果
 
                         if (this.PatternGetState(line, column) == CellState.Unhandled)
                         {
                             if (!attribute.InRepeat)
                             {
-                                this.ResultAddDataByColumn(column, result);
+                                this.ResultAddCellByColumn(column, newCell);
                                 this.PatternSetState(line, column, CellState.NormalHandled);
                             }
                             else
                             {
-                                this.ResultAddDataByColumn(column, result);
+                                this.ResultAddCellByColumn(column, newCell);
                             }
                         }
                         else if (this.PatternGetState(line, column) == CellState.RepeatHandled)
                         {
-                            this.ResultAddDataByColumn(column, result);
+                            this.ResultAddCellByColumn(column, newCell);
                         }
                         break;
                     }
@@ -179,7 +196,7 @@ namespace WMS.TableGenerator
                         object[] range; //循环范围
                         try
                         {
-                            range = (object[])jsEngine.Execute(curData.Substring(posJsExpr)).GetCompletionValue().ToObject();
+                            range = (object[])jsEngine.Execute(curCell.Data.Substring(posJsExpr)).GetCompletionValue().ToObject();
                         }catch
                         {
                             throw new LogicError(line,column,"Repeat range must be iterable");
@@ -219,17 +236,17 @@ namespace WMS.TableGenerator
                         {
                             if (!attribute.InRepeat)
                             {
-                                this.ResultAddDataByColumn(column, curData);
+                                this.ResultAddCellByColumn(column, curCell);
                                 this.PatternSetState(line, column, CellState.NormalHandled);
                             }
                             else
                             {
-                                this.ResultAddDataByColumn(column, curData);
+                                this.ResultAddCellByColumn(column, curCell);
                             }
                         }
                         else if (this.PatternGetState(line, column) == CellState.RepeatHandled)
                         {
-                            this.ResultAddDataByColumn(column, curData);
+                            this.ResultAddCellByColumn(column, curCell);
                         }
                         break;
                     }
@@ -237,27 +254,32 @@ namespace WMS.TableGenerator
             }
         }
 
-        private void ResultAddDataByColumn(int column,string data)
+        private void ResultAddCellByColumn(int column,Cell cell)
         {
             //Console.WriteLine("ResultAddDataByColumn({0},{1})", column, data);
             this.lengthColumnResult[column]++;
-            this.ResultTable.Cells[this.lengthColumnResult[column] - 1, column].Data = data;
+            if (resultTable.LineCount < this.lengthColumnResult[column])
+            {
+                resultTable.ExpandLine(resultTable.LineCount);
+            }
+            this.ResultTable.Cells[this.lengthColumnResult[column] - 1, column] = cell;
         }
 
+        /*
         private void ResultAddDataByLine(int line, string data)
         {
             this.lengthLineResult[line]++;
             this.ResultTable.Cells[this.lengthLineResult[line] - 1, line].Data = data;
+        }*/
+
+        private Cell PatternGetCell(int line,int column)
+        {
+            return this.PatternTable.Cells[line, column];
         }
 
-        private string PatternGetData(int line,int column)
+        private void PatternSetCell(int line,int column,Cell value)
         {
-            return this.PatternTable.Cells[line, column].Data;
-        }
-
-        private void PatternSetData(int line,int column,string value)
-        {
-            this.PatternTable.Cells[line, column].Data = value;
+            this.PatternTable.Cells[line, column] = value;
         }
 
         private CellState PatternGetState(int line,int column)

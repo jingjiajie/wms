@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
-namespace WMS.TableGenerator
+namespace WMS.TableGenerate
 {
     public class Cell
     {
@@ -25,6 +25,15 @@ namespace WMS.TableGenerator
         {
             this.Data = data;
             this.Color = color;
+        }
+
+        public Cell Clone()
+        {
+            return new Cell
+            {
+                Data = this.Data,
+                Color = this.Color
+            };
         }
 
         public override string ToString()
