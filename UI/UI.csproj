@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{fa53d354-54b7-474c-86ce-04fc4fe99b29}</Project>
+      <Project>{3bd69308-acc7-43a0-ac20-f95673d02f89}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\TableGenerator\TableGenerator.csproj">
