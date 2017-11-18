@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3E282656-7645-442D-94B1-FCE2214E2C08}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>WMS.TableGenerate</RootNamespace>
-    <AssemblyName>TableGenerate</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectGuid>{DC602B46-DC15-42B2-9136-19ED6876AB1F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>EGCMD</RootNamespace>
+    <AssemblyName>EGCMD</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,48 +32,28 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FCSlib, Version=1.0.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FCSlib.1.0.8.0\lib\net40\FCSlib.dll</HintPath>
+    <Reference Include="Antlr4.Runtime.Standard">
+      <HintPath>..\Antlr4.Runtime.Standard.dll</HintPath>
     </Reference>
-    <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Jint.2.11.23\lib\net40\Jint.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions.cs" />
-    <Compile Include="JsBasicFunctions.cs" />
+    <Compile Include="EGCMDBaseListener.cs" />
+    <Compile Include="EGCMDCommand.cs" />
+    <Compile Include="EGCMDLexer.cs" />
+    <Compile Include="EGCMDListener.cs" />
+    <Compile Include="EGCMDParser.cs" />
+    <Compile Include="EGCMDTranslateListener.cs" />
+    <Compile Include="EGCMDTranslator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TableGenerator.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
-      <Project>{fa53d354-54b7-474c-86ce-04fc4fe99b29}</Project>
-      <Name>DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EGCMDTranslator\EGCMD.csproj">
-      <Project>{dc602b46-dc15-42b2-9136-19ed6876ab1f}</Project>
-      <Name>EGCMD</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

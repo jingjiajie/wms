@@ -1,7 +1,12 @@
 ﻿using System.Data;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using FCSlib;
+using EGCMD;
+using System.Linq;
+using unvell.ReoGrid;
+
 
 namespace WMS.TableGenerate
 {
@@ -25,42 +30,42 @@ namespace WMS.TableGenerate
 
         enum CellState
         {
-            Unhandled = 0,NormalHandled,RepeatHandled
+            Unhandled = 0,NormalHandled
         }
 
-        private Jint.Engine jsEngine; //JavaScript引擎
+        private Jint.Engine jsEngine = new Jint.Engine(); //JavaScript引擎
+        private EGCMDTranslator egcmdTranslator = new EGCMDTranslator(); //EGCMD翻译器
 
         private DataSet dataSource = null; //数据源
 
-        private Table patternTable = null; //模式表
+        private Worksheet patternTable = null; //模式表
         private CellState[,] stateMatrix = null; //状态矩阵
 
-        private Table resultTable = null; //目标表
-        private int[] lengthLineResult; //目标表各行已有元素的数量
-        private int[] lengthColumnResult; //目标表各列已有元素的数量
+        private Worksheet resultTable = null; //目标表
+        private Dictionary<int,int> lengthLineResult = new Dictionary<int, int>(); //目标表各行已有元素的数量
+        private Dictionary<int,int> lengthColumnResult = new Dictionary<int, int>(); //目标表各列已有元素的数量
 
-        public Table PatternTable { get => patternTable; set => patternTable = value; }
+        public Worksheet PatternTable { get => patternTable; set => patternTable = value; }
         public DataSet DataSource { get => dataSource; set => this.UpdateDataSource(value); }
-        public Table ResultTable { get => resultTable; set => resultTable = value; }
+        public Worksheet ResultTable { get => resultTable; set => resultTable = value; }
 
         public TableGenerator()
         {
-            this.jsEngine = new Jint.Engine();
             var basicFunctions = new JsBasicFunctions();
-            jsEngine.Execute(basicFunctions.GetAllJsFuncStr());
+            basicFunctions.Bind(this.jsEngine);
         }
 
-        public TableGenerator(Table patternTable, DataSet dataSource = null):this()
+        public TableGenerator(Worksheet patternTable, DataSet dataSource = null):this()
         {
             this.PatternTable = patternTable;
             if(dataSource != null) this.DataSource = dataSource;
         }
 
-        public string TryGenerateTable(out Table resultTable,int countOfLine = 200,int countOfColumn = 200)
+        public string TryGenerateTable(out Worksheet resultTable)
         {
             try
             {
-                resultTable = this.GenerateTable(countOfLine, countOfColumn);
+                resultTable = this.GenerateTable();
                 return null;
             }catch(Exception e)
             {
@@ -69,19 +74,23 @@ namespace WMS.TableGenerate
             }
         }
 
-        public Table GenerateTable(int countOfLine = 200, int countOfColumn = 200)
+        public Worksheet GenerateTable()
         {
             if(this.PatternTable == null)
             {
                 throw new GenerateError("Pattern table not setted");
             }
-            int patternLines = this.patternTable.Cells.GetLength(0); //获取模式表行数
-            int patternColumns = this.patternTable.Cells.GetLength(1); //获取模式表列数
-
+            int patternLines = this.patternTable.RowCount;  //获取模式表行数
+            int patternColumns = this.patternTable.ColumnCount; //获取模式表列数
             this.stateMatrix = new CellState[patternLines, patternColumns]; //初始化状态矩阵
-            this.ResultTable = new Table(countOfLine, countOfColumn); //初始化目标表
-            this.lengthColumnResult = new int[countOfColumn]; //目标表各行长度
-            this.lengthLineResult = new int[countOfLine]; //目标表各列长度
+
+            var workbook = new ReoGridControl();
+            this.ResultTable = workbook.Worksheets[0]; //初始化目标表
+            this.ResultTable.ColumnCount = this.PatternTable.ColumnCount;
+            this.ResultTable.RowCount = this.PatternTable.RowCount;
+            workbook.Worksheets.Remove(this.ResultTable);
+            this.lengthColumnResult.Clear(); //目标表各行长度
+            this.lengthLineResult.Clear(); //目标表各列长度
             for(int i = 0; i < patternLines; i++) //顺序解析模式表单元格
             {
                 for(int j = 0; j < patternColumns; j++)
@@ -109,177 +118,210 @@ namespace WMS.TableGenerate
 
         private void ParseCell(int line,int column,ParseAttribute attribute)
         {
-            //Console.WriteLine("处理位置：{0},{1} InRepeat:{2}",line,column,attribute.InRepeat);
-            //PrintStateMatrix();
-            //Console.WriteLine();
+            bool gotNextCell = false;
+            Func<Cell> GetOperationResultCell = () =>
+            {
+                if (gotNextCell)
+                {
+                    return ResultGetCurCellByColumn(column);
+                }
+                else
+                {
+                    gotNextCell = true;
+                    ResultMoveToNextCellByColumn(column);
+                    var resultCell = this.PatternTable.Cells[line, column].Clone();
+                    resultCell.Data = null;
+                    ResultSetCurCellByColumn(column, resultCell);
+                    if (resultCell.IsMergedCell)
+                    {
+                        for (int col = resultCell.Column; col <= resultCell.Column + resultCell.GetColspan(); col++)
+                        {
+                            this.ResultMoveToNextCellByColumn(col, resultCell.GetRowspan() - 1);
+                        }
+                    }
+                    return ResultGetCurCellByColumn(column);
+                }
+            };
+
+            //单元格的状态为已经处理过，则跳过
             if (this.PatternGetState(line,column) == CellState.NormalHandled)
             {
                 return;
-            }else if(attribute.InRepeat == false && this.PatternGetState(line,column) == CellState.RepeatHandled)
-            {
-                return;
             }
-            Cell curCell = this.PatternGetCell(line,column);
-            if(curCell == null) //单元格不能为null
-            {
-                throw new LogicError(line,column,"Cell can not be null in pattern table");
-            }
-            if(curCell.Data.Length == 0) //单元格为空则直接向目标表加入单元格内容
-            {
-                if (this.PatternGetState(line, column) == CellState.Unhandled)
-                {
-                    if (!attribute.InRepeat)
-                    {
-                        this.ResultAddCellByColumn(column, curCell);
-                        this.PatternSetState(line, column, CellState.NormalHandled);
-                    }
-                    else
-                    {
-                        this.ResultAddCellByColumn(column, curCell);
-                    }
-                }
-                else if (this.PatternGetState(line, column) == CellState.RepeatHandled)
-                {
-                    this.ResultAddCellByColumn(column, curCell);
-                }
-                return;
-            }
-            string[] cmdList = curCell.Data.Split(' ');
-            switch (cmdList[0]) //分析单元格内容，如果为指令则运行，否则直接向目标表写入
-            {
-                case "WRITE":
-                    {
-                        if (cmdList.Length < 2)
-                        {
-                            throw new LogicError(line,column,"Expected WRITE <Expression> statement");
-                        }
-                        string expr = cmdList[1]; //取WRITE后面的表达式
-                        string exprResult; //表达式计算结果
-                        try
-                        {
-                            exprResult = jsEngine.Execute(expr).GetCompletionValue().ToString();
-                        }catch(Exception e)
-                        {
-                            throw new LogicError(line, column,e.Message);
-                        }
-                        Cell newCell = curCell.Clone(); //从模式表当前单元格克隆出一个新的单元格
-                        newCell.Data = exprResult; //新单元格的数据等于WRITE表达式计算结果
 
-                        if (this.PatternGetState(line, column) == CellState.Unhandled)
-                        {
-                            if (!attribute.InRepeat)
-                            {
-                                this.ResultAddCellByColumn(column, newCell);
-                                this.PatternSetState(line, column, CellState.NormalHandled);
-                            }
-                            else
-                            {
-                                this.ResultAddCellByColumn(column, newCell);
-                            }
-                        }
-                        else if (this.PatternGetState(line, column) == CellState.RepeatHandled)
-                        {
-                            this.ResultAddCellByColumn(column, newCell);
-                        }
-                        break;
-                    }
-                case "REPEAT":
+            //否则开始处理单元格数据
+            Cell curPatternCell = this.PatternGetCell(line,column);
+
+            //模式表单元格为null，则目标表单元格也为null
+            if (curPatternCell == null)
+            {
+                this.ResultMoveToNextCellByColumn(column);
+                this.UpdateToNextState(line, column, attribute);
+                return;
+            }
+
+            //无效单元格，则直接跳过
+            if(curPatternCell.IsValidCell == false)
+            {
+                this.UpdateToNextState(line, column, attribute);
+                return;
+            }
+
+            //单元格为空则直接向目标表加入单元格内容
+            if (curPatternCell.Data.ToString().Length == 0)
+            {
+                Cell curResultCell = GetOperationResultCell();
+                this.UpdateToNextState(line, column, attribute);
+                return;
+            }
+
+            List<EGCMDCommand> commandList = egcmdTranslator.Translate(curPatternCell.Data.ToString());
+            foreach (EGCMDCommand command in commandList)
+            {
+                if (command is EGCMDCommand.WRITE)
+                {
+                    EGCMDCommand.WRITE writeCommand = command as EGCMDCommand.WRITE;
+                    string exprResult; //表达式计算结果
+                    try
                     {
-                        if (cmdList.Length <= 7 || cmdList[1] != "AREA" || cmdList[4] != "VAR" || cmdList[6] != "IN")
+                        exprResult = jsEngine.Execute(writeCommand.JsExpr).GetCompletionValue().ToString();
+                    }
+                    catch (Exception e)
+                    {
+                        throw new LogicError(line, column, e.Message);
+                    }
+                    Cell curResultCell = GetOperationResultCell();
+                    curResultCell.Data += exprResult;
+                    this.UpdateToNextState(line, column, attribute);
+                }
+                if (command is EGCMDCommand.REPEAT)
+                {
+                    var repeatCommand = command as EGCMDCommand.REPEAT;
+                    int countLines = repeatCommand.Rows;
+                    int countColumns = repeatCommand.Columns;
+                    string varName = repeatCommand.VarName;
+                    object[] range; //循环范围
+                    try
+                    {
+                        range = (object[])jsEngine.Execute(repeatCommand.Range).GetCompletionValue().ToObject();
+                    }
+                    catch
+                    {
+                        throw new LogicError(line, column, "Repeat range must be iterable");
+                    }
+                    //Console.Write("循环开始位置：{0},{1}", line, column);
+                    //Console.WriteLine("循环次数：{0}", range.Length);
+                    for (int i = column + 1; i < column + countColumns; i++) //将REPEAT单元格同一行右面的REPEAT范围内的单元格状态设为NormalHandled
+                    {
+                        this.PatternSetState(line, i, CellState.NormalHandled);
+                    }
+                    for (int i = 0; i < countLines; i++) //将Repeat块部分设置成UnHandled
+                    {
+                        for (int j = 0; j < countColumns; j++)
                         {
-                            throw new LogicError(line,column,"Expected REPEAT AREA <lines,columns> VAR <variable> IN <Expression> statement");
+                            this.PatternSetState(line + 1 + i, column + j, CellState.Unhandled);
                         }
-                        int posJsExpr = Functional.FoldL((int len, string cur) => len + cur.Length + 1, 0, Functional.Take(7, cmdList));
-                        int countLines = Convert.ToInt32(cmdList[2]);
-                        int countColumns = Convert.ToInt32(cmdList[3]);
-                        string varName = cmdList[5];
-                        object[] range; //循环范围
-                        try
-                        {
-                            range = (object[])jsEngine.Execute(curCell.Data.Substring(posJsExpr)).GetCompletionValue().ToObject();
-                        }catch
-                        {
-                            throw new LogicError(line,column,"Repeat range must be iterable");
-                        }
-                        //Console.Write("循环开始位置：{0},{1}", line, column);
-                        //Console.WriteLine("循环次数：{0}", range.Length);
-                        for (int i = column + 1; i < column + countColumns; i++) //将REPEAT单元格同一行右面的REPEAT范围内的单元格状态设为NormalHandled
-                        {
-                            this.PatternSetState(line, i, CellState.NormalHandled);
-                        }
-                        foreach (object time in range)
-                        {
-                            jsEngine.SetValue(varName, time);
-                            for (int i = 0; i < countLines; i++)
-                            {
-                                for (int j = 0; j < countColumns; j++)
-                                {
-                                    this.ParseCell(line + 1 + i, column + j, new ParseAttribute() { InRepeat = true });
-                                }
-                            }
-                        }
-                        for (int i = 0; i < countLines + 1; i++) //将Repeat块的所有未处理状态的单元格的状态设置成RepeatHandled
+                    }
+                    foreach (object time in range) //开始循环
+                    {
+                        jsEngine.SetValue(varName, time);
+                        for (int i = 0; i < countLines; i++)
                         {
                             for (int j = 0; j < countColumns; j++)
                             {
-                                if (this.PatternGetState(line + i, column + j) == CellState.Unhandled)
-                                {
-                                    this.PatternSetState(line + i, column + j, CellState.RepeatHandled);
-                                }
+                                this.ParseCell(line + 1 + i, column + j, new ParseAttribute() { InRepeat = true });
                             }
                         }
-                        break;
-                    };
-                default:
-                    {
-                        if (this.PatternGetState(line, column) == CellState.Unhandled)
-                        {
-                            if (!attribute.InRepeat)
-                            {
-                                this.ResultAddCellByColumn(column, curCell);
-                                this.PatternSetState(line, column, CellState.NormalHandled);
-                            }
-                            else
-                            {
-                                this.ResultAddCellByColumn(column, curCell);
-                            }
-                        }
-                        else if (this.PatternGetState(line, column) == CellState.RepeatHandled)
-                        {
-                            this.ResultAddCellByColumn(column, curCell);
-                        }
-                        break;
                     }
-
+                    if (!attribute.InRepeat) //如果已经是最外层循环，则循环完毕后将自身设为NormalHandled
+                    {
+                        this.PatternSetState(line, column, CellState.NormalHandled);
+                    }
+                    for (int i = 0; i < countLines; i++) //将Repeat块的所有单元格的状态设置成NormalHandled
+                    {
+                        for (int j = 0; j < countColumns; j++)
+                        {
+                            this.PatternSetState(line + 1 + i, column + j, CellState.NormalHandled);
+                        }
+                    }
+                }
+                if(command is EGCMDCommand.TEXT)
+                {
+                    var textCommand = command as EGCMDCommand.TEXT;
+                    Cell curResultCell = GetOperationResultCell();
+                    curResultCell.Data += textCommand.Text;
+                }
+                if (command is EGCMDCommand.SET_COLOR)
+                {
+                    /*var setColorCommand = command as EGCMDCommand.SET_COLOR;
+                    Cell curResultCell = GetOperationResultCell();
+                    curResultCell.Style.BackColor = 
+                    this.ResultSetCurCellByColumn(column, curResultCell);*/
+                }
             }
         }
 
-        private void ResultAddCellByColumn(int column,Cell cell)
+        private void UpdateToNextState(int line,int column,ParseAttribute attribute)
         {
-            //Console.WriteLine("ResultAddDataByColumn({0},{1})", column, data);
-            this.lengthColumnResult[column]++;
-            if (resultTable.LineCount < this.lengthColumnResult[column])
+            if (attribute.InRepeat) //循环中不改变单元格状态
             {
-                resultTable.ExpandLine(resultTable.LineCount);
+                return;
             }
-            this.ResultTable.Cells[this.lengthColumnResult[column] - 1, column] = cell;
+            if (this.PatternGetState(line, column) == CellState.Unhandled)
+            {
+                this.PatternSetState(line, column, CellState.NormalHandled);
+            }
         }
 
-        /*
-        private void ResultAddDataByLine(int line, string data)
+        private void ResultMoveToNextCellByColumn(int column,int step = 1)
         {
-            this.lengthLineResult[line]++;
-            this.ResultTable.Cells[this.lengthLineResult[line] - 1, line].Data = data;
-        }*/
+            if(this.lengthColumnResult.ContainsKey(column) == false)
+            {
+                this.lengthColumnResult.Add(column, 0);
+            }
+            this.lengthColumnResult[column] += step;
+            if(ResultTable.RowCount < this.lengthColumnResult[column])
+            {
+                resultTable.RowCount *= 2;
+            }
+        }
+
+        private Cell ResultGetCurCellByColumn(int column)
+        {
+            return this.ResultTable.Cells[this.lengthColumnResult[column] - 1, column];
+        }
+
+        private void ResultSetCurCellByColumn(int column,Cell cell)
+        {
+            var resultCurCell = this.ResultGetCurCellByColumn(column);
+            resultCurCell.Body = cell.Body;
+            resultCurCell.Data = cell.Data;
+            resultCurCell.DataFormat = cell.DataFormat;
+            resultCurCell.DataFormatArgs = cell.DataFormatArgs;
+            resultCurCell.Formula = cell.Formula;
+            resultCurCell.IsReadOnly = cell.IsReadOnly;
+            resultCurCell.Style = cell.Style;
+            resultCurCell.Tag = cell.Tag;
+            resultCurCell.TraceFormulaDependents = cell.TraceFormulaDependents;
+            resultCurCell.TraceFormulaPrecedents = cell.TraceFormulaPrecedents;
+            if (cell.IsMergedCell)
+            {
+                this.ResultTable.MergeRange(resultCurCell.Row, resultCurCell.Column, cell.GetRowspan(), cell.GetColspan());
+            }
+        }
 
         private Cell PatternGetCell(int line,int column)
         {
-            return this.PatternTable.Cells[line, column];
-        }
-
-        private void PatternSetCell(int line,int column,Cell value)
-        {
-            this.PatternTable.Cells[line, column] = value;
+            var cell = this.PatternTable.GetCell(line, column);
+            if (cell == null)
+            {
+                return null;
+            }
+            if (cell.Data == null)
+            {
+                cell.Data = "";
+            }
+            return cell;
         }
 
         private CellState PatternGetState(int line,int column)

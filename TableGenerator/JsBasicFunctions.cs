@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Jint;
 
 namespace WMS.TableGenerate
 {
     internal class JsBasicFunctions
     {
-        public string GetAllJsFuncStr()
+        public void Bind(Jint.Engine engine)
         {
             StringBuilder sb = new StringBuilder();
             foreach(string strFunc in listFunc)
             {
                 sb.Append(strFunc);
             }
-            return sb.ToString();
+            engine.Execute(sb.ToString());
         }
 
         private List<string> listFunc = new List<string>()
@@ -35,5 +36,6 @@ namespace WMS.TableGenerate
                             return result;
             }",
         };
+
     }
 }
