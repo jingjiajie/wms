@@ -33,7 +33,7 @@ namespace WMS.TableGenerate
             Unhandled = 0,NormalHandled
         }
 
-        private Jint.Engine jsEngine = new Jint.Engine(); //JavaScript引擎
+        private Jint.Engine jsEngine = EGCMDJsEngine.GetJsEngine(); //JavaScript引擎
         private EGCMDTranslator egcmdTranslator = new EGCMDTranslator(); //EGCMD翻译器
 
         private DataSet dataSource = null; //数据源
@@ -51,8 +51,6 @@ namespace WMS.TableGenerate
 
         public TableGenerator()
         {
-            var basicFunctions = new JsBasicFunctions();
-            basicFunctions.Bind(this.jsEngine);
         }
 
         public TableGenerator(Worksheet patternTable, DataSet dataSource = null):this()
@@ -129,9 +127,9 @@ namespace WMS.TableGenerate
                 {
                     gotNextCell = true;
                     ResultMoveToNextCellByColumn(column);
-                    var resultCell = this.PatternTable.Cells[line, column].Clone();
-                    resultCell.Data = null;
-                    ResultSetCurCellByColumn(column, resultCell);
+                    ResultSetCurCellByColumn(column, PatternTable.Cells[line, column]);
+                    var resultCell = ResultGetCurCellByColumn(column);
+                    resultCell.Data = "";
                     if (resultCell.IsMergedCell)
                     {
                         for (int col = resultCell.Column; col <= resultCell.Column + resultCell.GetColspan(); col++)
@@ -139,7 +137,7 @@ namespace WMS.TableGenerate
                             this.ResultMoveToNextCellByColumn(col, resultCell.GetRowspan() - 1);
                         }
                     }
-                    return ResultGetCurCellByColumn(column);
+                    return resultCell;
                 }
             };
 
@@ -253,10 +251,18 @@ namespace WMS.TableGenerate
                 }
                 if (command is EGCMDCommand.SET_COLOR)
                 {
-                    /*var setColorCommand = command as EGCMDCommand.SET_COLOR;
+                    var setColorCommand = command as EGCMDCommand.SET_COLOR;
                     Cell curResultCell = GetOperationResultCell();
-                    curResultCell.Style.BackColor = 
-                    this.ResultSetCurCellByColumn(column, curResultCell);*/
+                    try
+                    {
+                        Color color = (Color)this.jsEngine.Execute(setColorCommand.JsExpr).GetCompletionValue().ToObject();
+                        curResultCell.Style.BackColor = color;
+                    }
+                    catch
+                    {
+                        curResultCell.Data += "#UNKNOWN COLOR";
+                        throw;
+                    }
                 }
             }
         }
