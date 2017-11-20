@@ -20,7 +20,6 @@ namespace WMS.TableGenerate
             {
                 engine = new Jint.Engine(cfg => cfg.AllowClr());
                 InitJsEngine(engine);
-                engine.Execute("color('blue');");
                 return engine;
             }
         }

@@ -132,9 +132,10 @@ namespace WMS.TableGenerate
                     resultCell.Data = "";
                     if (resultCell.IsMergedCell)
                     {
-                        for (int col = resultCell.Column; col <= resultCell.Column + resultCell.GetColspan(); col++)
+                        this.ResultMoveToNextCellByColumn(column, resultCell.GetRowspan() - 1);
+                        for (int col = resultCell.Column+1; col <= resultCell.Column + resultCell.GetColspan()-1; col++)
                         {
-                            this.ResultMoveToNextCellByColumn(col, resultCell.GetRowspan() - 1);
+                            this.ResultMoveToNextCellByColumn(col, resultCell.GetRowspan());
                         }
                     }
                     return resultCell;
@@ -159,7 +160,7 @@ namespace WMS.TableGenerate
             }
 
             //无效单元格，则直接跳过
-            if(curPatternCell.IsValidCell == false)
+            if (curPatternCell.IsValidCell == false)
             {
                 this.UpdateToNextState(line, column, attribute);
                 return;
