@@ -13,10 +13,10 @@ namespace WMS.DataAccess
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class wmsEntities : DbContext
+    public partial class WMSEntities : DbContext
     {
-        public wmsEntities()
-            : base("name=wmsEntities")
+        public WMSEntities()
+            : base("name=WMSEntities")
         {
         }
     
@@ -25,5 +25,6 @@ namespace WMS.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<User> User { get; set; }
     }
 }
