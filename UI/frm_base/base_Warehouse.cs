@@ -9,19 +9,14 @@ using System.Windows.Forms;
 
 namespace WMS.UI.frm_base
 {
-    public partial class base_useralter : Form
+    public partial class base_Warehouse : Form
     {
-        public base_useralter()
+        public base_Warehouse()
         {
             InitializeComponent();
         }
 
-        private void base_useralter_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void buttonEnter_Click(object sender, EventArgs e)
+        private void base_Warehouse_Load(object sender, EventArgs e)
         {
 
         }

@@ -31,8 +31,14 @@ namespace WMS.UI
             }
             if (treeView1.SelectedNode.Text == "供应商")
             {
-                
-                //panel1.Visible = false;
+
+                panel1.Visible = true;
+                BSM.BMS4100M b41 = new BSM.BMS4100M();//实例化子窗口
+                b41.TopLevel = false;
+                b41.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                b41.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panel1.Controls.Add(b41);
+                b41.Show();
             }
             if (treeView1.SelectedNode.Text == "零件")
             {

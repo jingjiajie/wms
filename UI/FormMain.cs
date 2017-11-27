@@ -73,25 +73,43 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "用户管理")
             {
                 panelRight.Visible = true;
-                BSM.BMS4000M b40 = new BSM.BMS4000M();//实例化子窗口
-                b40.TopLevel = false;
-                b40.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-                b40.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                this.panelRight.Controls.Add(b40);
-                b40.Show();
+                frm_base.base_user l = new frm_base.base_user();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
             }
             if (treeViewLeft.SelectedNode.Text == "供应商")
             {
-
-                //panelRight.Visible = false;
+               
+                panelRight.Visible = true;
+                frm_base.base_supplier l = new frm_base.base_supplier();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
             }
             if (treeViewLeft.SelectedNode.Text == "零件")
             {
-                panelRight.Visible = false;
+                panelRight.Visible = true;
+                frm_base.base_component l = new frm_base.base_component();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
             }
             if (treeViewLeft.SelectedNode.Text == "仓库面积")
             {
-                panelRight.Visible = false;
+                panelRight.Visible = true;
+                frm_base.base_Warehouse l = new frm_base.base_Warehouse();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
             }
         }
     }

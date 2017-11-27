@@ -33,10 +33,10 @@ namespace WMS.UI.frm_base
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
             showreoGridControl();//显示所有数据
-            //if (toolStripComboBoxSelect.Text == "用户名" && toolStripTextBoxSelect.Text != string.Empty)
-            //{
-            //    searchreoGridControl();
-            //}
+            if (toolStripComboBoxSelect.Text == "用户名" && toolStripTextBoxSelect.Text != string.Empty)
+            {
+                searchreoGridControl();
+            }
         }
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)

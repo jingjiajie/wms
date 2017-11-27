@@ -95,6 +95,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frm_base\base_component.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_base\base_component.Designer.cs">
+      <DependentUpon>base_component.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_base\base_supplier.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,12 @@
     </Compile>
     <Compile Include="frm_base\base_useralter.Designer.cs">
       <DependentUpon>base_useralter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_base\base_Warehouse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_base\base_Warehouse.Designer.cs">
+      <DependentUpon>base_Warehouse.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -162,6 +174,9 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frm_base\base_component.resx">
+      <DependentUpon>base_component.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_base\base_supplier.resx">
       <DependentUpon>base_supplier.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_base\base_useralter.resx">
       <DependentUpon>base_useralter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_base\base_Warehouse.resx">
+      <DependentUpon>base_Warehouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
