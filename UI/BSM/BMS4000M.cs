@@ -56,7 +56,32 @@ namespace WMS.UI.BSM
                 User user = allUsers[i];
                 worksheet1[i, 0] = user.UserName;
                 worksheet1[i, 1] = user.PassWord;
-                worksheet1[i, 2] = user.Authority;
+                if(user.Authority==0)
+                {
+                    worksheet1[i, 2] = "无";
+
+                }
+                if (user.Authority == 15)
+                {
+                    worksheet1[i, 2] = "管理员";
+
+                }
+                if (user.Authority == 2)
+                {
+                    worksheet1[i, 2] = "收货员";
+
+                }
+                if (user.Authority == 4)
+                {
+                    worksheet1[i, 2] = "发货员";
+
+                }
+                if (user.Authority == 8)
+                {
+                    worksheet1[i, 2] = "结算员";
+
+                }
+                //worksheet1[i, 2] = user.Authority;
             }
         }
 

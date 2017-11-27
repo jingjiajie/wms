@@ -15,7 +15,7 @@ namespace WMS.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new SMC2000M());
+            Application.Run(new FormMain());
             //DataAccess.User us = new DataAccess.User();
             
 

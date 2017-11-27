@@ -89,6 +89,24 @@
     <Compile Include="FormExcelGenerate.Designer.cs">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_base\base_supplier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_base\base_supplier.Designer.cs">
+      <DependentUpon>base_supplier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_base\base_user.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_base\base_user.Designer.cs">
+      <DependentUpon>base_user.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +146,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormExcelGenerate.resx">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_base\base_supplier.resx">
+      <DependentUpon>base_supplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_base\base_user.resx">
+      <DependentUpon>base_user.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
