@@ -32,7 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\Antlr3.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="FastColoredTextBox">
+      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,8 +51,38 @@
     <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
     </Reference>
+    <Reference Include="unvell.ReoScript">
+      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\unvell.ReoScript.dll</HintPath>
+    </Reference>
+    <Reference Include="unvell.ReoScript.EditorLib">
+      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\unvell.ReoScript.EditorLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSM\BMS4000M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSM\BMS4000M.Designer.cs">
+      <DependentUpon>BMS4000M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSM\BMS4100M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSM\BMS4100M.Designer.cs">
+      <DependentUpon>BMS4100M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSM\BMS4200M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BSM\BMS4200M.Designer.cs">
+      <DependentUpon>BMS4200M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormExcelGenerate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,11 +97,35 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SMC2000M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SMC2000M.Designer.cs">
+      <DependentUpon>SMC2000M.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SMC2100M.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SMC2100M.Designer.cs">
+      <DependentUpon>SMC2100M.cs</DependentUpon>
+    </Compile>
     <Compile Include="wmsDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>wmsDataSet.xsd</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BSM\BMS4000M.resx">
+      <DependentUpon>BMS4000M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSM\BMS4100M.resx">
+      <DependentUpon>BMS4100M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSM\BMS4200M.resx">
+      <DependentUpon>BMS4200M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormExcelGenerate.resx">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +142,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SMC2000M.resx">
+      <DependentUpon>SMC2000M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SMC2100M.resx">
+      <DependentUpon>SMC2100M.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -114,6 +180,9 @@
       <Project>{3e282656-7645-442d-94b1-fce2214e2c08}</Project>
       <Name>TableGenerator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="icon\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
