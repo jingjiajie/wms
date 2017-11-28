@@ -11,13 +11,9 @@ using WMS.DataAccess;
 
 namespace WMS.UI
 {
-    //public delegate void MyDelegate(string Item1, string Item2);//委托实质上是一个类
-
+  
     public partial class FromBaseUser : Form
     {
-
-        //public MyDelegate myDelegate;//声明一个委托的对象
-
         public FromBaseUser()
         {
             InitializeComponent();
@@ -35,7 +31,6 @@ namespace WMS.UI
         {
             FormBaseUserAdd ad = new FormBaseUserAdd();
             ad.ShowDialog();
-            //DialogResult r = ad.ShowDialog();
             fresh();
         }
 
@@ -63,7 +58,8 @@ namespace WMS.UI
 
             string str = worksheet1.SelectionRange.ToRelativeAddress();//返回选中地址串
             int start = 2, length = 1;
-            MessageBox.Show(str.Substring(start - 1, length));//返回行数
+            //MessageBox.Show(str.Substring(start - 1, length));//返回行数
+            //MessageBox.Show(a+"+"+b);
             int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
 
             string usrname = worksheet1[i - 1, 0].ToString();
@@ -71,18 +67,17 @@ namespace WMS.UI
 
             WMSEntities wms = new WMSEntities();
             User nameUsers = (from s in wms.User
-                             where s.UserName == usrname
+                             where s.Username == usrname
                              select s).First<User>();
 
-            string a= nameUsers.UserName;
-            string b= nameUsers.PassWord;
+            string a= nameUsers.Username;
+            string b= nameUsers.Password;
 
-            //myDelegate(a, b);
+            FormBaseUserAlter al = new FormBaseUserAlter(a,b);
+            al.ShowDialog();
+            fresh();
 
-            FormBaseUserAlter al = new FormBaseUserAlter();
-            al.Show();
 
-            //MessageBox.Show(a+"+"+b);
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)//删除
@@ -101,7 +96,7 @@ namespace WMS.UI
 
             WMSEntities wms = new WMSEntities();
             User nameUsers = (from s in wms.User
-                              where s.UserName == usrname
+                              where s.Username == usrname
                               select s).First<User>();
             wms.User.Remove(nameUsers);//删除
             wms.SaveChanges();
@@ -126,8 +121,8 @@ namespace WMS.UI
             for (int i = 0; i < allUsers.Count(); i++)
             {
                 User user = allUsers[i];
-                worksheet1[i, 0] = user.UserName;
-                worksheet1[i, 1] = user.PassWord;
+                worksheet1[i, 0] = user.Username;
+                worksheet1[i, 1] = user.Password;
                 if (user.Authority == 0)
                 {
                     worksheet1[i, 2] = "无";
@@ -162,8 +157,8 @@ namespace WMS.UI
             for (int i = 0; i < allUsers.Count(); i++)
             {
                 User user = allUsers[i];
-                worksheet1[i, 0] = user.UserName;
-                worksheet1[i, 1] = user.PassWord;
+                worksheet1[i, 0] = user.Username;
+                worksheet1[i, 1] = user.Password;
                 worksheet1[i, 2] = user.Authority;
             }
         }//没用函数
@@ -178,13 +173,13 @@ namespace WMS.UI
             WMSEntities wms = new WMSEntities();
 
                 var nameUsers = (from s in wms.User
-                                 where s.UserName == toolStripTextBoxSelect.Text
+                                 where s.Username == toolStripTextBoxSelect.Text
                                  select s).ToArray();
                 for (int i = 0; i < nameUsers.Count(); i++)
                 {
                     User userb = nameUsers[i];
-                    worksheet1[i, 0] = userb.UserName;
-                    worksheet1[i, 1] = userb.PassWord;
+                    worksheet1[i, 0] = userb.Username;
+                    worksheet1[i, 1] = userb.Password;
                     if (userb.Authority == 0)
                     {
                         worksheet1[i, 2] = "无";
@@ -253,8 +248,8 @@ namespace WMS.UI
             for (int i = 0; i < nameUsers.Count(); i++)
             {
                 User userb = nameUsers[i];
-                worksheet1[i, 0] = userb.UserName;
-                worksheet1[i, 1] = userb.PassWord;
+                worksheet1[i, 0] = userb.Username;
+                worksheet1[i, 1] = userb.Password;
                 if (userb.Authority == 0)
                 {
                     worksheet1[i, 2] = "无";
