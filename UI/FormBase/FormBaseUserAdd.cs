@@ -32,8 +32,8 @@ namespace WMS.UI
             //添加
             User objuser = new User();
             {
-                objuser.UserName = textBoxUsername.Text;
-                objuser.PassWord = textBoxUsername.Text;
+                objuser.Username = textBoxUsername.Text;
+                objuser.Password = textBoxUsername.Text;
                 if(radioButtonBase.Checked==true)
                 {
                     objuser.Authority = 15;

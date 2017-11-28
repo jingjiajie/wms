@@ -48,6 +48,10 @@ namespace WMS.UI
             {
                 panel1.Visible = false;
             }
+            if (treeView1.SelectedNode.Text == "到货管理")
+            {
+                panel1.Visible = true;
+            }
         }
 
 

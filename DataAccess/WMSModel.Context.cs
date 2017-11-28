@@ -25,6 +25,10 @@ namespace WMS.DataAccess
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Component> Component { get; set; }
+        public DbSet<Supplier> Supplier { get; set; }
+        public DbSet<SupplierAnnualInfo> SupplierAnnualInfo { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<Warehouse> Warehouse { get; set; }
     }
 }

@@ -39,6 +39,7 @@
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +62,7 @@
             this.reoGridControlUser.Size = new System.Drawing.Size(1200, 755);
             this.reoGridControlUser.TabIndex = 3;
             this.reoGridControlUser.Text = "reoGridControl1";
+            this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click);
             // 
             // toolStripTop
             // 
@@ -170,5 +172,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
+        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }

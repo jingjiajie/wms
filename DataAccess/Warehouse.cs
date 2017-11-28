@@ -12,11 +12,18 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Warehouse
     {
+        public Warehouse()
+        {
+            this.Component = new HashSet<Component>();
+            this.Supplier = new HashSet<Supplier>();
+        }
+    
         public int ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public int Authority { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<Component> Component { get; set; }
+        public virtual ICollection<Supplier> Supplier { get; set; }
     }
 }

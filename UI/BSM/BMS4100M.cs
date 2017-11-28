@@ -36,8 +36,8 @@ namespace WMS.UI.BSM
             User objuser = new User();
             {
 
-                objuser.UserName = textBox1.Text;
-                objuser.PassWord = textBox2.Text;
+                objuser.Username = textBox1.Text;
+                objuser.Password = textBox2.Text;
                 objuser.Authority = 0;
             }
             WMSEntities wms = new WMSEntities();
@@ -45,9 +45,9 @@ namespace WMS.UI.BSM
             wms.SaveChanges();
             //查找
             //User obuser = (from s in wms.User
-            //               where s.UserName == "WWW"
+            //               where s.Username == "WWW"
             //               select s).First<User>();
-            //MessageBox.Show(obuser.UserName + "+" + obuser.PassWord);
+            //MessageBox.Show(obuser.Username + "+" + obuser.Password);
             
 
         }
