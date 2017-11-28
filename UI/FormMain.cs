@@ -114,6 +114,17 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
+            if (treeViewLeft.SelectedNode.Text == "库存信息")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                var formBaseStock = new FormBaseStock();//实例化子窗口
+                formBaseStock.TopLevel = false;
+                formBaseStock.Dock = DockStyle.Fill;//窗口大小
+                formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(formBaseStock);
+                formBaseStock.Show();
+            }
         }
     }
 }

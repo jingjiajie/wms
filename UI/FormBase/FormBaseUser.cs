@@ -23,7 +23,6 @@ namespace WMS.UI
             showreoGridControl();//显示所有数据
             toolStripComboBoxSelect.Items.Add("用户名");
             toolStripComboBoxSelect.Items.Add("权限");
-
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
