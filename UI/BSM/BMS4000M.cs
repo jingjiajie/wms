@@ -106,7 +106,11 @@ namespace WMS.UI.BSM
 
             ReoGridControl grid = this.reoGridControlMain;
             var worksheet1 = grid.Worksheets[0];
-            //grid.Visible = false;
+
+            //worksheet1.ColumnHeaders.
+            worksheet1.RowHeaders[2].Text = "Header";
+
+            worksheet1.SelectionMode = WorksheetSelectionMode.Row;
 
             WMSEntities wms = new WMSEntities();
             var allUsers = (from s in wms.User select s).ToArray();

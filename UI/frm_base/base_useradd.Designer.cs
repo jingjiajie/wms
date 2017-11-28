@@ -35,6 +35,10 @@
             this.labelNotice = new System.Windows.Forms.Label();
             this.buttonEnter = new System.Windows.Forms.Button();
             this.buttonClosing = new System.Windows.Forms.Button();
+            this.radioButtonBase = new System.Windows.Forms.RadioButton();
+            this.radioButtonStork = new System.Windows.Forms.RadioButton();
+            this.radioButtonReceive = new System.Windows.Forms.RadioButton();
+            this.radioButtonDelivery = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // textBoxUsername
@@ -80,7 +84,7 @@
             // 
             // buttonEnter
             // 
-            this.buttonEnter.Location = new System.Drawing.Point(73, 255);
+            this.buttonEnter.Location = new System.Drawing.Point(73, 291);
             this.buttonEnter.Name = "buttonEnter";
             this.buttonEnter.Size = new System.Drawing.Size(75, 23);
             this.buttonEnter.TabIndex = 5;
@@ -90,18 +94,66 @@
             // 
             // buttonClosing
             // 
-            this.buttonClosing.Location = new System.Drawing.Point(232, 255);
+            this.buttonClosing.Location = new System.Drawing.Point(232, 291);
             this.buttonClosing.Name = "buttonClosing";
             this.buttonClosing.Size = new System.Drawing.Size(75, 23);
             this.buttonClosing.TabIndex = 6;
             this.buttonClosing.Text = "取消";
             this.buttonClosing.UseVisualStyleBackColor = true;
             // 
+            // radioButtonBase
+            // 
+            this.radioButtonBase.AutoSize = true;
+            this.radioButtonBase.Location = new System.Drawing.Point(75, 224);
+            this.radioButtonBase.Name = "radioButtonBase";
+            this.radioButtonBase.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonBase.TabIndex = 7;
+            this.radioButtonBase.TabStop = true;
+            this.radioButtonBase.Text = "管理员";
+            this.radioButtonBase.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonStork
+            // 
+            this.radioButtonStork.AutoSize = true;
+            this.radioButtonStork.Location = new System.Drawing.Point(232, 224);
+            this.radioButtonStork.Name = "radioButtonStork";
+            this.radioButtonStork.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonStork.TabIndex = 8;
+            this.radioButtonStork.TabStop = true;
+            this.radioButtonStork.Text = "结算员";
+            this.radioButtonStork.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonReceive
+            // 
+            this.radioButtonReceive.AutoSize = true;
+            this.radioButtonReceive.Location = new System.Drawing.Point(75, 250);
+            this.radioButtonReceive.Name = "radioButtonReceive";
+            this.radioButtonReceive.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonReceive.TabIndex = 9;
+            this.radioButtonReceive.TabStop = true;
+            this.radioButtonReceive.Text = "收货员";
+            this.radioButtonReceive.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonDelivery
+            // 
+            this.radioButtonDelivery.AutoSize = true;
+            this.radioButtonDelivery.Location = new System.Drawing.Point(232, 250);
+            this.radioButtonDelivery.Name = "radioButtonDelivery";
+            this.radioButtonDelivery.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonDelivery.TabIndex = 10;
+            this.radioButtonDelivery.TabStop = true;
+            this.radioButtonDelivery.Text = "发货员";
+            this.radioButtonDelivery.UseVisualStyleBackColor = true;
+            // 
             // base_useradd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(390, 326);
+            this.Controls.Add(this.radioButtonDelivery);
+            this.Controls.Add(this.radioButtonReceive);
+            this.Controls.Add(this.radioButtonStork);
+            this.Controls.Add(this.radioButtonBase);
             this.Controls.Add(this.buttonClosing);
             this.Controls.Add(this.buttonEnter);
             this.Controls.Add(this.labelNotice);
@@ -126,5 +178,9 @@
         private System.Windows.Forms.Label labelNotice;
         private System.Windows.Forms.Button buttonEnter;
         private System.Windows.Forms.Button buttonClosing;
+        private System.Windows.Forms.RadioButton radioButtonBase;
+        private System.Windows.Forms.RadioButton radioButtonStork;
+        private System.Windows.Forms.RadioButton radioButtonReceive;
+        private System.Windows.Forms.RadioButton radioButtonDelivery;
     }
 }

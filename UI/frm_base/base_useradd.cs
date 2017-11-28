@@ -34,13 +34,31 @@ namespace WMS.UI.frm_base
             {
                 objuser.UserName = textBoxUsername.Text;
                 objuser.PassWord = textBoxUsername.Text;
-                objuser.Authority = 0;
+                if(radioButtonBase.Checked==true)
+                {
+                    objuser.Authority = 15;
+                }
+                if (radioButtonDelivery.Checked == true)
+                {
+                    objuser.Authority = 4;
+                }
+                if (radioButtonReceive.Checked == true)
+                {
+                    objuser.Authority = 2;
+                }
+                if (radioButtonStork.Checked == true)
+                {
+                    objuser.Authority = 8;
+                }
             }
             WMSEntities wms = new WMSEntities();
             wms.User.Add(objuser);
-            wms.SaveChanges();
-            
-            
+            wms.SaveChanges();    
+        }
+
+        private void base_useradd_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

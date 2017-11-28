@@ -72,6 +72,7 @@ namespace WMS.UI
         {
             if (treeViewLeft.SelectedNode.Text == "用户管理")
             {
+                this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 frm_base.base_user l = new frm_base.base_user();//实例化子窗口
                 l.TopLevel = false;
@@ -82,7 +83,7 @@ namespace WMS.UI
             }
             if (treeViewLeft.SelectedNode.Text == "供应商")
             {
-               
+                this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 frm_base.base_supplier l = new frm_base.base_supplier();//实例化子窗口
                 l.TopLevel = false;
@@ -93,6 +94,7 @@ namespace WMS.UI
             }
             if (treeViewLeft.SelectedNode.Text == "零件")
             {
+                this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 frm_base.base_component l = new frm_base.base_component();//实例化子窗口
                 l.TopLevel = false;
@@ -103,6 +105,7 @@ namespace WMS.UI
             }
             if (treeViewLeft.SelectedNode.Text == "仓库面积")
             {
+                this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 frm_base.base_Warehouse l = new frm_base.base_Warehouse();//实例化子窗口
                 l.TopLevel = false;

@@ -131,6 +131,7 @@
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
             this.reoGridControlUser.Location = new System.Drawing.Point(0, 28);
             this.reoGridControlUser.Name = "reoGridControlUser";
+            this.reoGridControlUser.Readonly = true;
             this.reoGridControlUser.RowHeaderContextMenuStrip = null;
             this.reoGridControlUser.Script = null;
             this.reoGridControlUser.SheetTabContextMenuStrip = null;

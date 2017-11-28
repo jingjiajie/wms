@@ -22,6 +22,7 @@ namespace WMS.UI.frm_base
         {
             showreoGridControl();//显示所有数据
             toolStripComboBoxSelect.Items.Add("用户名");
+
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -41,7 +42,35 @@ namespace WMS.UI.frm_base
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
+            ReoGridControl grid = this.reoGridControlUser;
+            var worksheet1 = grid.Worksheets[0];
 
+            worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
+
+            //string a = worksheet1.FocusedRowHandle.ToString();
+            //worksheet1.SelectionChanged += (s, e) =>
+
+            //MessageBox.Show(worksheet1.SelectionRange.ToAddress());//返回地址串
+
+            //worksheet1.GetRowHeader.c();
+            //var s =worksheet1[worksheet1.RowCount, 1];
+            //string test = worksheet1.SelectionRange.ToRelativeAddress();
+            //int first = test[1];
+            //string b = test.SubString(0, 1);
+
+            //string st = worksheet1.SelectionRange.ToRelativeAddress();
+            //string[] sArray = st.Split('_');// 一定是单引 
+
+
+            string str = worksheet1.SelectionRange.ToRelativeAddress();
+            int start = 2, length = 1;
+            MessageBox.Show(str.Substring(start - 1, length));//返回行数
+            int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
+            
+
+
+            MessageBox.Show(worksheet1[i-1, 0].ToString());
+            ;
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -53,6 +82,12 @@ namespace WMS.UI.frm_base
         {
             ReoGridControl grid = this.reoGridControlUser;
             var worksheet1 = grid.Worksheets[0];
+
+            worksheet1.ColumnHeaders[0].Text = "用户名";
+            worksheet1.ColumnHeaders[1].Text = "密码";
+            worksheet1.ColumnHeaders[2].Text = "权限";
+
+            worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
 
             WMSEntities wms = new WMSEntities();
             var allUsers = (from s in wms.User select s).ToArray();
