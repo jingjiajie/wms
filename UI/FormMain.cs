@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WMS.UI.FormReceipt;
+using WMS.UI.FormDelivery;
 
 namespace WMS.UI
 {
@@ -108,6 +110,72 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 FormBaseWarehouse l = new FormBaseWarehouse();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "到货管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormBaseWarehouse l = new FormBaseWarehouse();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "到货管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormReceiptArrival l = new FormReceiptArrival();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "上架管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormReceiptShelves l = new FormReceiptShelves();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "发货单管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormDeliverySend l = new FormDeliverySend();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "作业单管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormDeliveryJob l = new FormDeliveryJob();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "出库单管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormDeliveryOutput l = new FormDeliveryOutput();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

@@ -83,6 +83,24 @@
     <Compile Include="FormBase\FormBaseStock.Designer.cs">
       <DependentUpon>FormBaseStock.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDelivery\FormDeliveryJob.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDelivery\FormDeliveryJob.Designer.cs">
+      <DependentUpon>FormDeliveryJob.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDelivery\FormDeliveryOutput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDelivery\FormDeliveryOutput.Designer.cs">
+      <DependentUpon>FormDeliveryOutput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormDelivery\FormDeliverySend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDelivery\FormDeliverySend.Designer.cs">
+      <DependentUpon>FormDeliverySend.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormExcelGenerate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +149,18 @@
     <Compile Include="FormBase\FormBaseWarehouse.Designer.cs">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormReceiptArrival .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptArrival .Designer.cs">
+      <DependentUpon>FormReceiptArrival .cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptShelves.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptShelves.Designer.cs">
+      <DependentUpon>FormReceiptShelves.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +204,15 @@
     <EmbeddedResource Include="FormBase\FormBaseStock.resx">
       <DependentUpon>FormBaseStock.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormDelivery\FormDeliveryJob.resx">
+      <DependentUpon>FormDeliveryJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDelivery\FormDeliveryOutput.resx">
+      <DependentUpon>FormDeliveryOutput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDelivery\FormDeliverySend.resx">
+      <DependentUpon>FormDeliverySend.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormExcelGenerate.resx">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
     </EmbeddedResource>
@@ -197,6 +236,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseWarehouse.resx">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormReceiptArrival .resx">
+      <DependentUpon>FormReceiptArrival .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormReceiptShelves.resx">
+      <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
