@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace WMS.UI.frm_base
 {
-    public partial class base_component : Form
+    public partial class FormBaseComponent : Form
     {
-        public base_component()
+        public FormBaseComponent()
         {
             InitializeComponent();
         }

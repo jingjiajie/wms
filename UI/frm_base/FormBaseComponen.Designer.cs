@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI.frm_base
 {
-    partial class base_component
+    partial class FormBaseComponent
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(base_component));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBaseComponent));
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();

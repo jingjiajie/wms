@@ -50,7 +50,7 @@
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(167, 182);
+            this.textBoxPassword.Location = new System.Drawing.Point(167, 159);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(193, 25);
             this.textBoxPassword.TabIndex = 1;
@@ -67,7 +67,7 @@
             // labelPsaaword
             // 
             this.labelPsaaword.AutoSize = true;
-            this.labelPsaaword.Location = new System.Drawing.Point(70, 185);
+            this.labelPsaaword.Location = new System.Drawing.Point(70, 162);
             this.labelPsaaword.Name = "labelPsaaword";
             this.labelPsaaword.Size = new System.Drawing.Size(52, 15);
             this.labelPsaaword.TabIndex = 3;
@@ -145,7 +145,7 @@
             this.radioButtonDelivery.Text = "发货员";
             this.radioButtonDelivery.UseVisualStyleBackColor = true;
             // 
-            // base_useradd
+            // FormBaseUserAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -161,7 +161,7 @@
             this.Controls.Add(this.labelusername);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxUsername);
-            this.Name = "base_useradd";
+            this.Name = "FormBaseUserAdd";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "base_useradd";
             this.ResumeLayout(false);

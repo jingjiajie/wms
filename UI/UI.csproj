@@ -95,11 +95,11 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\base_component.cs">
+    <Compile Include="frm_base\FormBaseComponen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\base_component.Designer.cs">
-      <DependentUpon>base_component.cs</DependentUpon>
+    <Compile Include="frm_base\FormBaseComponen.Designer.cs">
+      <DependentUpon>FormBaseComponen.cs</DependentUpon>
     </Compile>
     <Compile Include="frm_base\FormBaseSupplier.cs">
       <SubType>Form</SubType>
@@ -174,8 +174,8 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\base_component.resx">
-      <DependentUpon>base_component.cs</DependentUpon>
+    <EmbeddedResource Include="frm_base\FormBaseComponen.resx">
+      <DependentUpon>FormBaseComponen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frm_base\FormBaseSupplier.resx">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>

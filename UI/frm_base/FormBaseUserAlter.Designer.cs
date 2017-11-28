@@ -34,12 +34,16 @@
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonEnter = new System.Windows.Forms.Button();
             this.buttonClosing = new System.Windows.Forms.Button();
+            this.radioButtonDelivery = new System.Windows.Forms.RadioButton();
+            this.radioButtonReceive = new System.Windows.Forms.RadioButton();
+            this.radioButtonStork = new System.Windows.Forms.RadioButton();
+            this.radioButtonBase = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // labelUsername
             // 
             this.labelUsername.AutoSize = true;
-            this.labelUsername.Location = new System.Drawing.Point(116, 127);
+            this.labelUsername.Location = new System.Drawing.Point(76, 58);
             this.labelUsername.Name = "labelUsername";
             this.labelUsername.Size = new System.Drawing.Size(67, 15);
             this.labelUsername.TabIndex = 0;
@@ -48,7 +52,7 @@
             // labelPassword
             // 
             this.labelPassword.AutoSize = true;
-            this.labelPassword.Location = new System.Drawing.Point(119, 182);
+            this.labelPassword.Location = new System.Drawing.Point(91, 112);
             this.labelPassword.Name = "labelPassword";
             this.labelPassword.Size = new System.Drawing.Size(52, 15);
             this.labelPassword.TabIndex = 1;
@@ -56,21 +60,21 @@
             // 
             // textBoxUsername
             // 
-            this.textBoxUsername.Location = new System.Drawing.Point(219, 127);
+            this.textBoxUsername.Location = new System.Drawing.Point(179, 58);
             this.textBoxUsername.Name = "textBoxUsername";
             this.textBoxUsername.Size = new System.Drawing.Size(229, 25);
             this.textBoxUsername.TabIndex = 2;
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(219, 171);
+            this.textBoxPassword.Location = new System.Drawing.Point(179, 102);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.Size = new System.Drawing.Size(229, 25);
             this.textBoxPassword.TabIndex = 3;
             // 
             // buttonEnter
             // 
-            this.buttonEnter.Location = new System.Drawing.Point(163, 255);
+            this.buttonEnter.Location = new System.Drawing.Point(105, 244);
             this.buttonEnter.Name = "buttonEnter";
             this.buttonEnter.Size = new System.Drawing.Size(75, 23);
             this.buttonEnter.TabIndex = 4;
@@ -80,18 +84,66 @@
             // 
             // buttonClosing
             // 
-            this.buttonClosing.Location = new System.Drawing.Point(323, 255);
+            this.buttonClosing.Location = new System.Drawing.Point(276, 244);
             this.buttonClosing.Name = "buttonClosing";
             this.buttonClosing.Size = new System.Drawing.Size(75, 23);
             this.buttonClosing.TabIndex = 5;
             this.buttonClosing.Text = "取消";
             this.buttonClosing.UseVisualStyleBackColor = true;
             // 
+            // radioButtonDelivery
+            // 
+            this.radioButtonDelivery.AutoSize = true;
+            this.radioButtonDelivery.Location = new System.Drawing.Point(264, 185);
+            this.radioButtonDelivery.Name = "radioButtonDelivery";
+            this.radioButtonDelivery.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonDelivery.TabIndex = 14;
+            this.radioButtonDelivery.TabStop = true;
+            this.radioButtonDelivery.Text = "发货员";
+            this.radioButtonDelivery.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonReceive
+            // 
+            this.radioButtonReceive.AutoSize = true;
+            this.radioButtonReceive.Location = new System.Drawing.Point(107, 185);
+            this.radioButtonReceive.Name = "radioButtonReceive";
+            this.radioButtonReceive.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonReceive.TabIndex = 13;
+            this.radioButtonReceive.TabStop = true;
+            this.radioButtonReceive.Text = "收货员";
+            this.radioButtonReceive.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonStork
+            // 
+            this.radioButtonStork.AutoSize = true;
+            this.radioButtonStork.Location = new System.Drawing.Point(264, 159);
+            this.radioButtonStork.Name = "radioButtonStork";
+            this.radioButtonStork.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonStork.TabIndex = 12;
+            this.radioButtonStork.TabStop = true;
+            this.radioButtonStork.Text = "结算员";
+            this.radioButtonStork.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonBase
+            // 
+            this.radioButtonBase.AutoSize = true;
+            this.radioButtonBase.Location = new System.Drawing.Point(107, 159);
+            this.radioButtonBase.Name = "radioButtonBase";
+            this.radioButtonBase.Size = new System.Drawing.Size(73, 19);
+            this.radioButtonBase.TabIndex = 11;
+            this.radioButtonBase.TabStop = true;
+            this.radioButtonBase.Text = "管理员";
+            this.radioButtonBase.UseVisualStyleBackColor = true;
+            // 
             // FormBaseUserAlter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(537, 380);
+            this.ClientSize = new System.Drawing.Size(483, 319);
+            this.Controls.Add(this.radioButtonDelivery);
+            this.Controls.Add(this.radioButtonReceive);
+            this.Controls.Add(this.radioButtonStork);
+            this.Controls.Add(this.radioButtonBase);
             this.Controls.Add(this.buttonClosing);
             this.Controls.Add(this.buttonEnter);
             this.Controls.Add(this.textBoxPassword);
@@ -114,5 +166,9 @@
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Button buttonEnter;
         private System.Windows.Forms.Button buttonClosing;
+        private System.Windows.Forms.RadioButton radioButtonDelivery;
+        private System.Windows.Forms.RadioButton radioButtonReceive;
+        private System.Windows.Forms.RadioButton radioButtonStork;
+        private System.Windows.Forms.RadioButton radioButtonBase;
     }
 }
