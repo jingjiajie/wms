@@ -32,13 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime">
-      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-    <Reference Include="FastColoredTextBox">
-      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\FastColoredTextBox.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,12 +44,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="unvell.ReoScript">
-      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\unvell.ReoScript.dll</HintPath>
-    </Reference>
-    <Reference Include="unvell.ReoScript.EditorLib">
-      <HintPath>..\..\..\..\Desktop\ReoGrid-2.1.0.0-All-Packages\ReoGrid-2.1.0.0-Extension\unvell.ReoScript.EditorLib.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -95,40 +83,40 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\FormBaseComponen.cs">
+    <Compile Include="FormBase\FormBaseComponen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\FormBaseComponen.Designer.cs">
+    <Compile Include="FormBase\FormBaseComponen.Designer.cs">
       <DependentUpon>FormBaseComponen.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\FormBaseSupplier.cs">
+    <Compile Include="FormBase\FormBaseSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\FormBaseSupplier.Designer.cs">
+    <Compile Include="FormBase\FormBaseSupplier.Designer.cs">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\FormBaseUser.cs">
+    <Compile Include="FormBase\FormBaseUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\FormBaseUser.Designer.cs">
+    <Compile Include="FormBase\FormBaseUser.Designer.cs">
       <DependentUpon>FormBaseUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\FormBaseUserAdd.cs">
+    <Compile Include="FormBase\FormBaseUserAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\FormBaseUserAdd.Designer.cs">
+    <Compile Include="FormBase\FormBaseUserAdd.Designer.cs">
       <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\FormBaseUserAlter.cs">
+    <Compile Include="FormBase\FormBaseUserAlter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\FormBaseUserAlter.Designer.cs">
+    <Compile Include="FormBase\FormBaseUserAlter.Designer.cs">
       <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\FormBaseWarehouse.cs">
+    <Compile Include="FormBase\FormBaseWarehouse.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\FormBaseWarehouse.Designer.cs">
+    <Compile Include="FormBase\FormBaseWarehouse.Designer.cs">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
@@ -174,22 +162,22 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\FormBaseComponen.resx">
+    <EmbeddedResource Include="FormBase\FormBaseComponen.resx">
       <DependentUpon>FormBaseComponen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\FormBaseSupplier.resx">
+    <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\FormBaseUser.resx">
+    <EmbeddedResource Include="FormBase\FormBaseUser.resx">
       <DependentUpon>FormBaseUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\FormBaseUserAdd.resx">
+    <EmbeddedResource Include="FormBase\FormBaseUserAdd.resx">
       <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\FormBaseUserAlter.resx">
+    <EmbeddedResource Include="FormBase\FormBaseUserAlter.resx">
       <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\FormBaseWarehouse.resx">
+    <EmbeddedResource Include="FormBase\FormBaseWarehouse.resx">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

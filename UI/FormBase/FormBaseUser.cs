@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using unvell.ReoGrid;
 using WMS.DataAccess;
 
-namespace WMS.UI.frm_base
+namespace WMS.UI
 {
     public partial class FromBaseUser : Form
     {

@@ -1,6 +1,6 @@
-﻿namespace WMS.UI.frm_base
+﻿namespace WMS.UI
 {
-    partial class FromBaseUser
+    partial class FormBaseWarehouse
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FromBaseUser));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBaseWarehouse));
+            this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
@@ -38,9 +39,28 @@
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
-            this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // reoGridControlUser
+            // 
+            this.reoGridControlUser.BackColor = System.Drawing.Color.White;
+            this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Location = new System.Drawing.Point(0, 39);
+            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.reoGridControlUser.Name = "reoGridControlUser";
+            this.reoGridControlUser.RowHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Script = null;
+            this.reoGridControlUser.SheetTabContextMenuStrip = null;
+            this.reoGridControlUser.SheetTabNewButtonVisible = true;
+            this.reoGridControlUser.SheetTabVisible = true;
+            this.reoGridControlUser.SheetTabWidth = 90;
+            this.reoGridControlUser.ShowScrollEndSpacing = true;
+            this.reoGridControlUser.Size = new System.Drawing.Size(1186, 711);
+            this.reoGridControlUser.TabIndex = 5;
+            this.reoGridControlUser.Text = "reoGridControl1";
             // 
             // toolStripTop
             // 
@@ -56,26 +76,27 @@
             this.toolStripButtonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(769, 28);
-            this.toolStripTop.TabIndex = 0;
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(1186, 39);
+            this.toolStripTop.TabIndex = 4;
             this.toolStripTop.Text = "toolStrip1";
             // 
             // toolStripLabelSelect
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 36);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // toolStripComboBoxSelect
             // 
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(150, 28);
+            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(223, 39);
             // 
             // toolStripTextBoxSelect
             // 
             this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(200, 28);
+            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(298, 39);
             // 
             // toolStripButtonSelect
             // 
@@ -85,7 +106,6 @@
             this.toolStripButtonSelect.Name = "toolStripButtonSelect";
             this.toolStripButtonSelect.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonSelect.Text = "查询";
-            this.toolStripButtonSelect.Click += new System.EventHandler(this.toolStripButtonSelect_Click);
             // 
             // toolStripSeparator1
             // 
@@ -101,7 +121,6 @@
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonAdd.Text = "添加";
-            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonAlter
             // 
@@ -111,7 +130,6 @@
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
             this.toolStripButtonAlter.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonAlter.Text = "修改";
-            this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
             // toolStripButtonDelete
             // 
@@ -121,38 +139,18 @@
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonDelete.Text = "删除";
-            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
-            // reoGridControlUser
+            // FormBaseWarehouse
             // 
-            this.reoGridControlUser.BackColor = System.Drawing.Color.White;
-            this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlUser.Name = "reoGridControlUser";
-            this.reoGridControlUser.Readonly = true;
-            this.reoGridControlUser.RowHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Script = null;
-            this.reoGridControlUser.SheetTabContextMenuStrip = null;
-            this.reoGridControlUser.SheetTabNewButtonVisible = true;
-            this.reoGridControlUser.SheetTabVisible = true;
-            this.reoGridControlUser.SheetTabWidth = 60;
-            this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(769, 488);
-            this.reoGridControlUser.TabIndex = 1;
-            this.reoGridControlUser.Text = "reoGridControl1";
-            // 
-            // base_user
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(769, 516);
+            this.ClientSize = new System.Drawing.Size(1186, 750);
             this.Controls.Add(this.reoGridControlUser);
             this.Controls.Add(this.toolStripTop);
-            this.Name = "base_user";
-            this.Text = "base_user";
-            this.Load += new System.EventHandler(this.base_user_Load);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Name = "FormBaseWarehouse";
+            this.Text = "仓库信息";
+            this.Load += new System.EventHandler(this.base_Warehouse_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);
@@ -162,6 +160,7 @@
 
         #endregion
 
+        private unvell.ReoGrid.ReoGridControl reoGridControlUser;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSelect;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelect;
@@ -171,6 +170,5 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
-        private unvell.ReoGrid.ReoGridControl reoGridControlUser;
     }
 }

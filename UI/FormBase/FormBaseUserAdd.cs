@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 
-namespace WMS.UI.frm_base
+namespace WMS.UI
 {
     public partial class FormBaseUserAdd : Form
     {
@@ -57,6 +57,11 @@ namespace WMS.UI.frm_base
         }
 
         private void base_useradd_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormBaseUserAdd_Load(object sender, EventArgs e)
         {
 
         }

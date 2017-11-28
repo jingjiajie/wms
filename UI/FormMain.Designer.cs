@@ -58,8 +58,8 @@
             treeNode15});
             this.panelTop = new System.Windows.Forms.Panel();
             this.panelFill = new System.Windows.Forms.Panel();
-            this.panelLeft = new System.Windows.Forms.Panel();
             this.panelRight = new System.Windows.Forms.Panel();
+            this.panelLeft = new System.Windows.Forms.Panel();
             this.treeViewLeft = new System.Windows.Forms.TreeView();
             this.panelFill.SuspendLayout();
             this.panelLeft.SuspendLayout();
@@ -69,8 +69,9 @@
             // 
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
+            this.panelTop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(762, 100);
+            this.panelTop.Size = new System.Drawing.Size(1143, 160);
             this.panelTop.TabIndex = 0;
             // 
             // panelFill
@@ -78,32 +79,36 @@
             this.panelFill.Controls.Add(this.panelRight);
             this.panelFill.Controls.Add(this.panelLeft);
             this.panelFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFill.Location = new System.Drawing.Point(0, 100);
+            this.panelFill.Location = new System.Drawing.Point(0, 160);
+            this.panelFill.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelFill.Name = "panelFill";
-            this.panelFill.Size = new System.Drawing.Size(762, 439);
+            this.panelFill.Size = new System.Drawing.Size(1143, 702);
             this.panelFill.TabIndex = 1;
+            // 
+            // panelRight
+            // 
+            this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelRight.Location = new System.Drawing.Point(300, 0);
+            this.panelRight.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panelRight.Name = "panelRight";
+            this.panelRight.Size = new System.Drawing.Size(843, 702);
+            this.panelRight.TabIndex = 1;
             // 
             // panelLeft
             // 
             this.panelLeft.Controls.Add(this.treeViewLeft);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLeft.Location = new System.Drawing.Point(0, 0);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(200, 439);
+            this.panelLeft.Size = new System.Drawing.Size(300, 702);
             this.panelLeft.TabIndex = 0;
-            // 
-            // panelRight
-            // 
-            this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRight.Location = new System.Drawing.Point(200, 0);
-            this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(562, 439);
-            this.panelRight.TabIndex = 1;
             // 
             // treeViewLeft
             // 
             this.treeViewLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewLeft.Location = new System.Drawing.Point(0, 0);
+            this.treeViewLeft.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeViewLeft.Name = "treeViewLeft";
             treeNode1.Name = "节点11";
             treeNode1.Text = "用户管理";
@@ -142,19 +147,20 @@
             treeNode8,
             treeNode12,
             treeNode16});
-            this.treeViewLeft.Size = new System.Drawing.Size(200, 439);
+            this.treeViewLeft.Size = new System.Drawing.Size(300, 702);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(762, 539);
+            this.ClientSize = new System.Drawing.Size(1143, 862);
             this.Controls.Add(this.panelFill);
             this.Controls.Add(this.panelTop);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormMain";
-            this.Text = "FormMain";
+            this.Text = "主窗口";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.panelFill.ResumeLayout(false);
             this.panelLeft.ResumeLayout(false);

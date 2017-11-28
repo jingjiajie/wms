@@ -7,13 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WMS.UI.frm_base
+namespace WMS.UI
 {
-    public partial class FormBaseComponent : Form
+    public partial class FormBaseSupplier : Form
     {
-        public FormBaseComponent()
+        public FormBaseSupplier()
         {
             InitializeComponent();
+        }
+
+        private void FormBaseSupplier_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

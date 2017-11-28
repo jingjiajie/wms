@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WMS.UI.frm_base
+namespace WMS.UI
 {
     public partial class FormBaseWarehouse : Form
     {

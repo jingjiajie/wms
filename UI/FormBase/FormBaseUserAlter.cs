@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 
-namespace WMS.UI.frm_base
+namespace WMS.UI
 {
     public partial class FormBaseUserAlter : Form
     {
