@@ -16,16 +16,16 @@ namespace WMS.UI
         {
             InitializeComponent();
         }
+        public FormBaseUserAlter(string a,string b)//函数重载 传参
+        {
+            InitializeComponent();
+            textBoxUsername.Text = a;
+            textBoxPassword.Text = b;
+        }
 
         private void buttonEnter_Click(object sender, EventArgs e)
         {
-
-
-            if (textBoxUsername.Text == string.Empty)
-            {
-                MessageBox.Show("用户名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            
             if (textBoxPassword.Text == string.Empty)
             {
                 MessageBox.Show("密码不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -33,22 +33,41 @@ namespace WMS.UI
             }
             //修改
             WMSEntities wms = new WMSEntities();
-            //User nameUsers = (from s in wms.User
-            //                  where s.UserName == 
-            //                  select s).First<User>();
+            User objuser = (from s in wms.User
+                              where s.UserName ==textBoxUsername.Text
+                              select s).First<User>();
 
-            // nameUsers.UserName = textBoxUsername.Text;
-            //nameUsers.PassWord = textBoxPassword.Text;
-
+            objuser.UserName = textBoxUsername.Text;
+            objuser.PassWord = textBoxPassword.Text;
+            if (radioButtonBase.Checked == true)
+            {
+                objuser.Authority = 15;
+            }
+            if (radioButtonDelivery.Checked == true)
+            {
+                objuser.Authority = 4;
+            }
+            if (radioButtonReceive.Checked == true)
+            {
+                objuser.Authority = 2;
+            }
+            if (radioButtonStork.Checked == true)
+            {
+                objuser.Authority = 8;
+            }
             wms.SaveChanges();
+            MessageBox.Show("修改成功");
+            this.Close();
         }
 
         private void FormBaseUserAlter_Load(object sender, EventArgs e)
         {
-            
-            
-            //Form1 f1 = new Form1();
-            //f1.myDelegate += new MyDelegate(Add);
+            textBoxUsername.ReadOnly = true;//用户名只读
+        }
+
+        private void buttonClosing_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
