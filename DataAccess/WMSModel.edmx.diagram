@@ -4,8 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7c928c6099b047cca42de019b5ebf2ed" Name="Diagram1">
+      <Diagram DiagramId="78360df874c24be38b5a63c264cad1f8" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.Supplier" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfo" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WMSModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.Warehouse" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="WMSModel.FK__Component__Suppl__1B0907CE" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Component__Wareh__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Supplier__Wareho__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__SupplierA__Suppl__20C1E124" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

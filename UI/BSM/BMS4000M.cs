@@ -44,13 +44,13 @@ namespace WMS.UI.BSM
                 {
                     //查找
                     var nameUsers = (from s in wms.User
-                                     where s.UserName == toolStripTextBox1.Text
+                                     where s.Username == toolStripTextBox1.Text
                                      select s).ToArray();
                     for (int i = 0; i < nameUsers.Count(); i++)
                     {
                         User userb = nameUsers[i];
-                        worksheet1[i, 0] = userb.UserName;
-                        worksheet1[i, 1] = userb.PassWord;
+                        worksheet1[i, 0] = userb.Username;
+                        worksheet1[i, 1] = userb.Password;
                         if (userb.Authority == 0)
                         {
                             worksheet1[i, 2] = "无";
@@ -117,8 +117,8 @@ namespace WMS.UI.BSM
             for(int i = 0; i < allUsers.Count(); i++)
             {
                 User user = allUsers[i];
-                worksheet1[i, 0] = user.UserName;
-                worksheet1[i, 1] = user.PassWord;
+                worksheet1[i, 0] = user.Username;
+                worksheet1[i, 1] = user.Password;
                 if(user.Authority==0)
                 {
                     worksheet1[i, 2] = "无";

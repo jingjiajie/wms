@@ -31,14 +31,15 @@ namespace WMS.UI
                 MessageBox.Show("密码不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             //修改
             WMSEntities wms = new WMSEntities();
             //User nameUsers = (from s in wms.User
-            //                  where s.UserName == 
+            //                  where s.Username == 
             //                  select s).First<User>();
 
-            // nameUsers.UserName = textBoxUsername.Text;
-            //nameUsers.PassWord = textBoxPassword.Text;
+            // nameUsers.Username = textBoxUsername.Text;
+            //nameUsers.Password = textBoxPassword.Text;
 
             wms.SaveChanges();
         }

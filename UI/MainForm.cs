@@ -30,7 +30,7 @@ namespace WMS.UI
             var res = wmsEntities.User.Where((user) => true);
             foreach(User u in res)
             {
-                Console.WriteLine(u.UserName);
+                Console.WriteLine(u.Username);
             }
         }
     }

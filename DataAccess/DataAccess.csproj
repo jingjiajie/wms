@@ -47,8 +47,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Component.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Supplier.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierAnnualInfo.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WMSModel.Context.cs">

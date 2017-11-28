@@ -30,7 +30,7 @@
         {
             this.textBoxUsername = new System.Windows.Forms.TextBox();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
-            this.labelusername = new System.Windows.Forms.Label();
+            this.labelUsername = new System.Windows.Forms.Label();
             this.labelPsaaword = new System.Windows.Forms.Label();
             this.labelNotice = new System.Windows.Forms.Label();
             this.buttonEnter = new System.Windows.Forms.Button();
@@ -57,15 +57,15 @@
             this.textBoxPassword.Size = new System.Drawing.Size(288, 35);
             this.textBoxPassword.TabIndex = 1;
             // 
-            // labelusername
+            // labelUsername
             // 
-            this.labelusername.AutoSize = true;
-            this.labelusername.Location = new System.Drawing.Point(105, 181);
-            this.labelusername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelusername.Name = "labelusername";
-            this.labelusername.Size = new System.Drawing.Size(106, 24);
-            this.labelusername.TabIndex = 2;
-            this.labelusername.Text = "用户名：";
+            this.labelUsername.AutoSize = true;
+            this.labelUsername.Location = new System.Drawing.Point(105, 181);
+            this.labelUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelUsername.Name = "labelUsername";
+            this.labelUsername.Size = new System.Drawing.Size(106, 24);
+            this.labelUsername.TabIndex = 2;
+            this.labelUsername.Text = "用户名：";
             // 
             // labelPsaaword
             // 
@@ -169,7 +169,7 @@
             this.Controls.Add(this.buttonEnter);
             this.Controls.Add(this.labelNotice);
             this.Controls.Add(this.labelPsaaword);
-            this.Controls.Add(this.labelusername);
+            this.Controls.Add(this.labelUsername);
             this.Controls.Add(this.textBoxPassword);
             this.Controls.Add(this.textBoxUsername);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -186,7 +186,7 @@
 
         private System.Windows.Forms.TextBox textBoxUsername;
         private System.Windows.Forms.TextBox textBoxPassword;
-        private System.Windows.Forms.Label labelusername;
+        private System.Windows.Forms.Label labelUsername;
         private System.Windows.Forms.Label labelPsaaword;
         private System.Windows.Forms.Label labelNotice;
         private System.Windows.Forms.Button buttonEnter;

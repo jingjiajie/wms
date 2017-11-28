@@ -62,11 +62,11 @@ namespace WMS.UI
 
             WMSEntities wms = new WMSEntities();
             User nameUsers = (from s in wms.User
-                             where s.UserName == usrname
+                             where s.Username == usrname
                              select s).First<User>();
 
-            string a= nameUsers.UserName;
-            string b= nameUsers.PassWord;
+            string a= nameUsers.Username;
+            string b= nameUsers.Password;
         
             MessageBox.Show(a+"+"+b);
         }
@@ -92,8 +92,8 @@ namespace WMS.UI
             for (int i = 0; i < allUsers.Count(); i++)
             {
                 User user = allUsers[i];
-                worksheet1[i, 0] = user.UserName;
-                worksheet1[i, 1] = user.PassWord;
+                worksheet1[i, 0] = user.Username;
+                worksheet1[i, 1] = user.Password;
                 if (user.Authority == 0)
                 {
                     worksheet1[i, 2] = "无";
@@ -127,8 +127,8 @@ namespace WMS.UI
             for (int i = 0; i < allUsers.Count(); i++)
             {
                 User user = allUsers[i];
-                worksheet1[i, 0] = user.UserName;
-                worksheet1[i, 1] = user.PassWord;
+                worksheet1[i, 0] = user.Username;
+                worksheet1[i, 1] = user.Password;
                 worksheet1[i, 2] = user.Authority;
             }
         }
@@ -143,13 +143,13 @@ namespace WMS.UI
             WMSEntities wms = new WMSEntities();
 
                 var nameUsers = (from s in wms.User
-                                 where s.UserName == toolStripTextBoxSelect.Text
+                                 where s.Username == toolStripTextBoxSelect.Text
                                  select s).ToArray();
                 for (int i = 0; i < nameUsers.Count(); i++)
                 {
                     User userb = nameUsers[i];
-                    worksheet1[i, 0] = userb.UserName;
-                    worksheet1[i, 1] = userb.PassWord;
+                    worksheet1[i, 0] = userb.Username;
+                    worksheet1[i, 1] = userb.Password;
                     if (userb.Authority == 0)
                     {
                         worksheet1[i, 2] = "无";
@@ -219,8 +219,8 @@ namespace WMS.UI
             for (int i = 0; i < nameUsers.Count(); i++)
             {
                 User userb = nameUsers[i];
-                worksheet1[i, 0] = userb.UserName;
-                worksheet1[i, 1] = userb.PassWord;
+                worksheet1[i, 0] = userb.Username;
+                worksheet1[i, 1] = userb.Password;
                 if (userb.Authority == 0)
                 {
                     worksheet1[i, 2] = "无";
