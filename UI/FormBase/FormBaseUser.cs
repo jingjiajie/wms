@@ -249,5 +249,9 @@ namespace WMS.UI
             }
         }
 
+        private void reoGridControlUser_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

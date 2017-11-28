@@ -71,6 +71,12 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormBaseReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseReceipt.Designer.cs">
+      <DependentUpon>FormBaseReceipt.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormExcelGenerate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseReceipt.resx">
+      <DependentUpon>FormBaseReceipt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormExcelGenerate.resx">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
