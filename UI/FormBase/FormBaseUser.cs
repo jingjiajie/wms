@@ -11,8 +11,13 @@ using WMS.DataAccess;
 
 namespace WMS.UI
 {
+    //public delegate void MyDelegate(string Item1, string Item2);//委托实质上是一个类
+
     public partial class FromBaseUser : Form
     {
+
+        //public MyDelegate myDelegate;//声明一个委托的对象
+
         public FromBaseUser()
         {
             InitializeComponent();
@@ -26,13 +31,17 @@ namespace WMS.UI
 
         }
 
-        private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)//添加
         {
             FormBaseUserAdd ad = new FormBaseUserAdd();
-            ad.Show();
+            ad.ShowDialog();
+            //DialogResult r = ad.ShowDialog();
+            fresh();
         }
 
-        private void toolStripButtonSelect_Click(object sender, EventArgs e)
+
+
+        private void toolStripButtonSelect_Click(object sender, EventArgs e)//查询
         {
             showreoGridControl();//显示所有数据
             if (toolStripComboBoxSelect.Text == "用户名" && toolStripTextBoxSelect.Text != string.Empty)
@@ -45,7 +54,7 @@ namespace WMS.UI
             }
         }
 
-        private void toolStripButtonAlter_Click(object sender, EventArgs e)
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)//修改
         {
             ReoGridControl grid = this.reoGridControlUser;
             var worksheet1 = grid.Worksheets[0];
@@ -67,12 +76,37 @@ namespace WMS.UI
 
             string a= nameUsers.UserName;
             string b= nameUsers.PassWord;
-        
-            MessageBox.Show(a+"+"+b);
+
+            //myDelegate(a, b);
+
+            FormBaseUserAlter al = new FormBaseUserAlter();
+            al.Show();
+
+            //MessageBox.Show(a+"+"+b);
         }
 
-        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)//删除
         {
+            ReoGridControl grid = this.reoGridControlUser;
+            var worksheet1 = grid.Worksheets[0];
+
+            worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
+
+            string str = worksheet1.SelectionRange.ToRelativeAddress();//返回选中地址串
+            int start = 2, length = 1;
+            //MessageBox.Show(str.Substring(start - 1, length));//返回行数
+            int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
+
+            string usrname = worksheet1[i - 1, 0].ToString();
+
+            WMSEntities wms = new WMSEntities();
+            User nameUsers = (from s in wms.User
+                              where s.UserName == usrname
+                              select s).First<User>();
+            wms.User.Remove(nameUsers);//删除
+            wms.SaveChanges();
+            worksheet1.Reset();
+            showreoGridControl();//显示所有数据
 
         }
 
@@ -115,7 +149,8 @@ namespace WMS.UI
                     worksheet1[i, 2] = "结算员";
                 }
             }
-        }
+        }//表格显示
+
 
         private void clearreoGridControl()
         {
@@ -131,7 +166,7 @@ namespace WMS.UI
                 worksheet1[i, 1] = user.PassWord;
                 worksheet1[i, 2] = user.Authority;
             }
-        }
+        }//没用函数
 
         private void searchuserReoGridControl()
         {
@@ -175,11 +210,10 @@ namespace WMS.UI
                         worksheet1[i, 2] = "结算员";
 
                     }
-                //}
             }
 
 
-        }
+        }//查找用户名
 
         private void searchauthReoGridControl()
         {
@@ -247,6 +281,14 @@ namespace WMS.UI
 
                 }
             }
+        }//查找权限
+
+        private void fresh()//刷新表格
+        {
+            ReoGridControl grid = this.reoGridControlUser;
+            var worksheet1 = grid.Worksheets[0];
+            worksheet1.Reset();
+            showreoGridControl();//显示所有数据
         }
 
     }

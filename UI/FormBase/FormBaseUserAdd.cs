@@ -53,7 +53,10 @@ namespace WMS.UI
             }
             WMSEntities wms = new WMSEntities();
             wms.User.Add(objuser);
-            wms.SaveChanges();    
+            wms.SaveChanges();
+            MessageBox.Show("添加用户成功");
+            this.Close();
+
         }
 
         private void base_useradd_Load(object sender, EventArgs e)
@@ -64,6 +67,11 @@ namespace WMS.UI
         private void FormBaseUserAdd_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonClosing_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

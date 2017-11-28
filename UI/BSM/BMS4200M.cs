@@ -17,8 +17,16 @@ namespace WMS.UI.BSM
             InitializeComponent();
         }
 
+        BMS4000M b40 = new BMS4000M();
+        
+
         private void BMS4200M_Load(object sender, EventArgs e)
         {
+
+            BMS4000M b40 = new BMS4000M();
+            //b40.
+           
+            
 
             //reoGridControl1 grid = new reoGridControl1();
             //grid.SetCellData(new ReoGridPos(2, 1), "hello world");
@@ -28,6 +36,11 @@ namespace WMS.UI.BSM
             };
 
             this.Controls.Add(grid);  // add to form or panel
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

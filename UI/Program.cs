@@ -15,7 +15,8 @@ namespace WMS.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-           // Application.Run(new BSM.BMS4000M());
+            //Application.Run(new BSM.BMS4000M());
+            //Application.Run(new BSM.Form3());
             Application.Run(new FormMain());
             //DataAccess.User us = new DataAccess.User();
 

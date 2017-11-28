@@ -15,6 +15,13 @@ namespace WMS.UI.BSM
     {
         User userdb = new User();
 
+        //private setTextBox1ValueDel _setTextBox1ValueDel;
+
+        //        private void SetTextBox1Value(string str)
+        //24         {
+        //25             this.textBox1.Text = str;
+        //26         }
+
         public BMS4000M()
         {
             InitializeComponent();
@@ -90,8 +97,20 @@ namespace WMS.UI.BSM
 
         private void btnAlter_Click(object sender, EventArgs e)
         {
+            
+
+            BMS4200M b42 = new BMS4200M();
+            b42.Show();
+           // b42.MdiParent = this;
 
         }
+        private string  searcha()
+        {
+            string a = "2";
+            //string b = "4";
+            return a;
+        }
+
 
         private void btnDelete_Click(object sender, EventArgs e)
         {

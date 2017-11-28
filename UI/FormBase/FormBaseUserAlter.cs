@@ -45,8 +45,10 @@ namespace WMS.UI
 
         private void FormBaseUserAlter_Load(object sender, EventArgs e)
         {
-            //textBoxUsername.Text =
-            //textBoxPassword.Text =
+            
+            
+            //Form1 f1 = new Form1();
+            //f1.myDelegate += new MyDelegate(Add);
         }
     }
 }
