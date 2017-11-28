@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI.frm_base
 {
-    partial class base_useralter
+    partial class FormBaseUserAlter
     {
         /// <summary>
         /// Required designer variable.
@@ -87,7 +87,7 @@
             this.buttonClosing.Text = "取消";
             this.buttonClosing.UseVisualStyleBackColor = true;
             // 
-            // base_useralter
+            // FormBaseUserAlter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -98,9 +98,9 @@
             this.Controls.Add(this.textBoxUsername);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.labelUsername);
-            this.Name = "base_useralter";
+            this.Name = "FormBaseUserAlter";
             this.Text = "base_useralter";
-            this.Load += new System.EventHandler(this.base_useralter_Load);
+            this.Load += new System.EventHandler(this.FormBaseUserAlter_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

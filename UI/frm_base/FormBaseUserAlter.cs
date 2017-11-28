@@ -9,16 +9,21 @@ using System.Windows.Forms;
 
 namespace WMS.UI.frm_base
 {
-    public partial class base_Warehouse : Form
+    public partial class FormBaseUserAlter : Form
     {
-        public base_Warehouse()
+        public FormBaseUserAlter()
         {
             InitializeComponent();
         }
 
-        private void base_Warehouse_Load(object sender, EventArgs e)
+        private void buttonEnter_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void FormBaseUserAlter_Load(object sender, EventArgs e):
+        {
+            //textBoxUsername.Text=
         }
     }
 }

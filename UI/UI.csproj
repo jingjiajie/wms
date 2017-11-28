@@ -101,35 +101,35 @@
     <Compile Include="frm_base\base_component.Designer.cs">
       <DependentUpon>base_component.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\base_supplier.cs">
+    <Compile Include="frm_base\FormBaseSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\base_supplier.Designer.cs">
-      <DependentUpon>base_supplier.cs</DependentUpon>
+    <Compile Include="frm_base\FormBaseSupplier.Designer.cs">
+      <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\base_user.cs">
+    <Compile Include="frm_base\FormBaseUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\base_user.Designer.cs">
-      <DependentUpon>base_user.cs</DependentUpon>
+    <Compile Include="frm_base\FormBaseUser.Designer.cs">
+      <DependentUpon>FormBaseUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\base_useradd.cs">
+    <Compile Include="frm_base\FormBaseUserAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\base_useradd.Designer.cs">
-      <DependentUpon>base_useradd.cs</DependentUpon>
+    <Compile Include="frm_base\FormBaseUserAdd.Designer.cs">
+      <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\base_useralter.cs">
+    <Compile Include="frm_base\FormBaseUserAlter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\base_useralter.Designer.cs">
-      <DependentUpon>base_useralter.cs</DependentUpon>
+    <Compile Include="frm_base\FormBaseUserAlter.Designer.cs">
+      <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_base\base_Warehouse.cs">
+    <Compile Include="frm_base\FormBaseWarehouse.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frm_base\base_Warehouse.Designer.cs">
-      <DependentUpon>base_Warehouse.cs</DependentUpon>
+    <Compile Include="frm_base\FormBaseWarehouse.Designer.cs">
+      <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -177,20 +177,20 @@
     <EmbeddedResource Include="frm_base\base_component.resx">
       <DependentUpon>base_component.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\base_supplier.resx">
-      <DependentUpon>base_supplier.cs</DependentUpon>
+    <EmbeddedResource Include="frm_base\FormBaseSupplier.resx">
+      <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\base_user.resx">
-      <DependentUpon>base_user.cs</DependentUpon>
+    <EmbeddedResource Include="frm_base\FormBaseUser.resx">
+      <DependentUpon>FormBaseUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\base_useradd.resx">
-      <DependentUpon>base_useradd.cs</DependentUpon>
+    <EmbeddedResource Include="frm_base\FormBaseUserAdd.resx">
+      <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\base_useralter.resx">
-      <DependentUpon>base_useralter.cs</DependentUpon>
+    <EmbeddedResource Include="frm_base\FormBaseUserAlter.resx">
+      <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frm_base\base_Warehouse.resx">
-      <DependentUpon>base_Warehouse.cs</DependentUpon>
+    <EmbeddedResource Include="frm_base\FormBaseWarehouse.resx">
+      <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

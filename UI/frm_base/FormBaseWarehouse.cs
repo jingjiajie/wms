@@ -9,11 +9,16 @@ using System.Windows.Forms;
 
 namespace WMS.UI.frm_base
 {
-    public partial class base_supplier : Form
+    public partial class FormBaseWarehouse : Form
     {
-        public base_supplier()
+        public FormBaseWarehouse()
         {
             InitializeComponent();
+        }
+
+        private void base_Warehouse_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

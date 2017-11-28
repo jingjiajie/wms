@@ -10,9 +10,9 @@ using WMS.DataAccess;
 
 namespace WMS.UI.frm_base
 {
-    public partial class base_useradd : Form
+    public partial class FormBaseUserAdd : Form
     {
-        public base_useradd()
+        public FormBaseUserAdd()
         {
             InitializeComponent();
         }

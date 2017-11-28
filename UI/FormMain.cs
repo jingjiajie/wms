@@ -74,7 +74,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                frm_base.base_user l = new frm_base.base_user();//实例化子窗口
+                frm_base.FromBaseUser l = new frm_base.FromBaseUser();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -85,7 +85,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                frm_base.base_supplier l = new frm_base.base_supplier();//实例化子窗口
+                frm_base.FormBaseSupplier l = new frm_base.FormBaseSupplier();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -107,7 +107,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                frm_base.base_Warehouse l = new frm_base.base_Warehouse();//实例化子窗口
+                frm_base.FormBaseWarehouse l = new frm_base.FormBaseWarehouse();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

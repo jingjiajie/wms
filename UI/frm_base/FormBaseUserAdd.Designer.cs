@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI.frm_base
 {
-    partial class base_useradd
+    partial class FormBaseUserAdd
     {
         /// <summary>
         /// Required designer variable.

@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI.frm_base
 {
-    partial class base_supplier
+    partial class FromBaseUser
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(base_supplier));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FromBaseUser));
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
@@ -56,8 +56,8 @@
             this.toolStripButtonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(757, 28);
-            this.toolStripTop.TabIndex = 1;
+            this.toolStripTop.Size = new System.Drawing.Size(769, 28);
+            this.toolStripTop.TabIndex = 0;
             this.toolStripTop.Text = "toolStrip1";
             // 
             // toolStripLabelSelect
@@ -85,6 +85,7 @@
             this.toolStripButtonSelect.Name = "toolStripButtonSelect";
             this.toolStripButtonSelect.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonSelect.Text = "查询";
+            this.toolStripButtonSelect.Click += new System.EventHandler(this.toolStripButtonSelect_Click);
             // 
             // toolStripSeparator1
             // 
@@ -100,6 +101,7 @@
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonAdd.Text = "添加";
+            this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonAlter
             // 
@@ -109,6 +111,7 @@
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
             this.toolStripButtonAlter.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonAlter.Text = "修改";
+            this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
             // toolStripButtonDelete
             // 
@@ -118,6 +121,7 @@
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonDelete.Text = "删除";
+            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
             // reoGridControlUser
             // 
@@ -127,6 +131,7 @@
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
             this.reoGridControlUser.Location = new System.Drawing.Point(0, 28);
             this.reoGridControlUser.Name = "reoGridControlUser";
+            this.reoGridControlUser.Readonly = true;
             this.reoGridControlUser.RowHeaderContextMenuStrip = null;
             this.reoGridControlUser.Script = null;
             this.reoGridControlUser.SheetTabContextMenuStrip = null;
@@ -134,19 +139,20 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 60;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(757, 480);
-            this.reoGridControlUser.TabIndex = 2;
+            this.reoGridControlUser.Size = new System.Drawing.Size(769, 488);
+            this.reoGridControlUser.TabIndex = 1;
             this.reoGridControlUser.Text = "reoGridControl1";
             // 
-            // base_supplier
+            // base_user
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(757, 508);
+            this.ClientSize = new System.Drawing.Size(769, 516);
             this.Controls.Add(this.reoGridControlUser);
             this.Controls.Add(this.toolStripTop);
-            this.Name = "base_supplier";
-            this.Text = "base_supplier";
+            this.Name = "base_user";
+            this.Text = "base_user";
+            this.Load += new System.EventHandler(this.base_user_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);

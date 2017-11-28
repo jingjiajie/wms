@@ -11,9 +11,9 @@ using WMS.DataAccess;
 
 namespace WMS.UI.frm_base
 {
-    public partial class base_user : Form
+    public partial class FromBaseUser : Form
     {
-        public base_user()
+        public FromBaseUser()
         {
             InitializeComponent();
         }
@@ -27,7 +27,7 @@ namespace WMS.UI.frm_base
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            base_useradd ad = new base_useradd();
+            FormBaseUserAdd ad = new FormBaseUserAdd();
             ad.Show();
         }
 
@@ -47,30 +47,23 @@ namespace WMS.UI.frm_base
 
             worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
 
-            //string a = worksheet1.FocusedRowHandle.ToString();
-            //worksheet1.SelectionChanged += (s, e) =>
-
-            //MessageBox.Show(worksheet1.SelectionRange.ToAddress());//返回地址串
-
-            //worksheet1.GetRowHeader.c();
-            //var s =worksheet1[worksheet1.RowCount, 1];
-            //string test = worksheet1.SelectionRange.ToRelativeAddress();
-            //int first = test[1];
-            //string b = test.SubString(0, 1);
-
-            //string st = worksheet1.SelectionRange.ToRelativeAddress();
-            //string[] sArray = st.Split('_');// 一定是单引 
-
-
-            string str = worksheet1.SelectionRange.ToRelativeAddress();
+            string str = worksheet1.SelectionRange.ToRelativeAddress();//返回选中地址串
             int start = 2, length = 1;
             MessageBox.Show(str.Substring(start - 1, length));//返回行数
             int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
-            
+
+            string usrname = worksheet1[i - 1, 0].ToString();
 
 
-            MessageBox.Show(worksheet1[i-1, 0].ToString());
-            ;
+            WMSEntities wms = new WMSEntities();
+            User nameUsers = (from s in wms.User
+                             where s.UserName == usrname
+                             select s).First<User>();
+
+            string a= nameUsers.UserName;
+            string b= nameUsers.PassWord;
+        
+            MessageBox.Show(a+"+"+b);
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
