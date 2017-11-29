@@ -14,6 +14,20 @@ namespace WMS.DataAccess
     
     public partial class Component
     {
+        public Component()
+        {
+            this.ComponentShipmentInfo = new HashSet<ComponentShipmentInfo>();
+            this.ComponentStatistics = new HashSet<ComponentStatistics>();
+            this.ComponentOuterPackingSize = new HashSet<ComponentOuterPackingSize>();
+            this.ComponentSingleBoxTranPackingInfo = new HashSet<ComponentSingleBoxTranPackingInfo>();
+            this.JobTicketItem = new HashSet<JobTicketItem>();
+            this.PutawayTicketComponentInfo = new HashSet<PutawayTicketComponentInfo>();
+            this.PutInStorageTicketComponentInfo = new HashSet<PutInStorageTicketComponentInfo>();
+            this.ReceiptTicket = new HashSet<ReceiptTicket>();
+            this.StockInfo = new HashSet<StockInfo>();
+            this.SubmissionTicketItem = new HashSet<SubmissionTicketItem>();
+        }
+    
         public int ID { get; set; }
         public int WarehouseID { get; set; }
         public int SupplierID { get; set; }
@@ -35,7 +49,17 @@ namespace WMS.DataAccess
         public Nullable<decimal> InventoryRequirement5Day { get; set; }
         public Nullable<decimal> InventoryRequirement10Day { get; set; }
     
+        public virtual ICollection<ComponentShipmentInfo> ComponentShipmentInfo { get; set; }
+        public virtual ICollection<ComponentStatistics> ComponentStatistics { get; set; }
+        public virtual ICollection<ComponentOuterPackingSize> ComponentOuterPackingSize { get; set; }
+        public virtual ICollection<ComponentSingleBoxTranPackingInfo> ComponentSingleBoxTranPackingInfo { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual ICollection<JobTicketItem> JobTicketItem { get; set; }
+        public virtual ICollection<PutawayTicketComponentInfo> PutawayTicketComponentInfo { get; set; }
+        public virtual ICollection<PutInStorageTicketComponentInfo> PutInStorageTicketComponentInfo { get; set; }
+        public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
+        public virtual ICollection<StockInfo> StockInfo { get; set; }
+        public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }
     }
 }
