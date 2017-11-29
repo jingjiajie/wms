@@ -46,7 +46,11 @@
             this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
             this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripTop.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // reoGridControlUser
@@ -66,7 +70,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 90;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1622, 769);
+            this.reoGridControlUser.Size = new System.Drawing.Size(1360, 741);
             this.reoGridControlUser.TabIndex = 3;
             this.reoGridControlUser.Text = "reoGridControl1";
             this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click);
@@ -93,7 +97,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1622, 39);
+            this.toolStripTop.Size = new System.Drawing.Size(1360, 39);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
@@ -226,11 +230,36 @@
             this.toolStripButton1.Size = new System.Drawing.Size(24, 36);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.lableStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 744);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1360, 36);
+            this.statusStrip1.TabIndex = 4;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 33);
+            this.toolStripStatusLabel1.Text = "状态：";
+            // 
+            // lableStatus
+            // 
+            this.lableStatus.Name = "lableStatus";
+            this.lableStatus.Size = new System.Drawing.Size(110, 33);
+            this.lableStatus.Text = "到货管理";
+            // 
             // FormReceiptArrival
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1622, 808);
+            this.ClientSize = new System.Drawing.Size(1360, 780);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.reoGridControlUser);
             this.Controls.Add(this.toolStripTop);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -239,6 +268,8 @@
             this.Load += new System.EventHandler(this.FormReceiptArrival_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,5 +294,8 @@
         private System.Windows.Forms.ToolStripButton buttonReceipt;
         private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel lableStatus;
     }
 }
