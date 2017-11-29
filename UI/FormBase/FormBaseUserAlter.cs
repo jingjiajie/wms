@@ -16,7 +16,7 @@ namespace WMS.UI
         {
             InitializeComponent();
         }
-        public FormBaseUserAlter(string a,string b)
+        public FormBaseUserAlter(string a,string b)//定义重载 传参
         {
             InitializeComponent();
             textBoxUsername.Text = a;
@@ -62,7 +62,7 @@ namespace WMS.UI
 
         private void FormBaseUserAlter_Load(object sender, EventArgs e)
         {
-            textBoxUsername.ReadOnly = true;
+            textBoxUsername.ReadOnly = true;//定义 只读
         }
 
         private void buttonClosing_Click(object sender, EventArgs e)

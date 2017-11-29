@@ -59,12 +59,12 @@ namespace WMS.UI
 
         }
 
-        private void base_useradd_Load(object sender, EventArgs e)
+        private void base_useradd_Load(object sender, EventArgs e)//没用
         {
 
         }
 
-        private void FormBaseUserAdd_Load(object sender, EventArgs e)
+        private void FormBaseUserAdd_Load(object sender, EventArgs e)//没用
         {
 
         }

@@ -70,7 +70,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "仓库面积")
+            if (treeViewLeft.SelectedNode.Text == "仓库")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;

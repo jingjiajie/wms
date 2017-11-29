@@ -65,6 +65,30 @@
     <Compile Include="BSM\BMS4200M.Designer.cs">
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormBaseComponenAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseComponenAdd.Designer.cs">
+      <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseComponenAlter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseComponenAlter.Designer.cs">
+      <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseSupplierAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseSupplierAdd.Designer.cs">
+      <DependentUpon>FormBaseSupplierAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseSupplierAlter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
+      <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormAlterStock.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,6 +100,12 @@
     </Compile>
     <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseWarehouseAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseWarehouseAdd.Designer.cs">
+      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="FormDelivery\FormDeliveryJob.cs">
       <SubType>Form</SubType>
@@ -184,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseWarehouseAdd.resx">
+      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDelivery\FormDeliveryJob.resx">
       <DependentUpon>FormDeliveryJob.cs</DependentUpon>

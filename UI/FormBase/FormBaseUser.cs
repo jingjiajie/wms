@@ -21,37 +21,34 @@ namespace WMS.UI
 
         private void base_user_Load(object sender, EventArgs e)
         {
-            showreoGridControl();//显示所有数据
-            toolStripComboBoxSelect.Items.Add("用户名");
+            ShowReoGridControl();//显示所有数据
+            toolStripComboBoxSelect.Items.Add("用户名");//设置 combobox下拉控件 会显示的信息
             toolStripComboBoxSelect.Items.Add("权限");
-
         }
 
-        private void toolStripButtonAdd_Click(object sender, EventArgs e)//添加
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)//添加 //点击添加按钮 打开FormBaseUserAdd页面
         {
             FormBaseUserAdd ad = new FormBaseUserAdd();
-            ad.ShowDialog();
-            fresh();
+            ad.ShowDialog();//显示后继续进行操作
+            Fresh();//刷新
         }
 
-
-
-        private void toolStripButtonSelect_Click(object sender, EventArgs e)//查询
+        private void toolStripButtonSelect_Click(object sender, EventArgs e)//查询 //点击查询按钮
         {
-            showreoGridControl();//显示所有数据
-            if (toolStripComboBoxSelect.Text == "用户名" && toolStripTextBoxSelect.Text != string.Empty)
+            ShowReoGridControl();//显示所有数据
+            if (toolStripComboBoxSelect.Text == "用户名" && toolStripTextBoxSelect.Text != string.Empty)//如果combobox选择为-用户名，且 toolStripTextBoxSelect 中信息不为空
             {
-                searchuserReoGridControl();
+                SearchuUserReoGridControl();
             }
-            if (toolStripComboBoxSelect.Text == "权限" && toolStripTextBoxSelect.Text != string.Empty)
+            if (toolStripComboBoxSelect.Text == "权限" && toolStripTextBoxSelect.Text != string.Empty)//如果combobox选择为-权限，且 toolStripTextBoxSelect 中信息不为空
             {
-                searchauthReoGridControl();
+                SearchAuthReoGridControl();
             }
         }
 
-        private void toolStripButtonAlter_Click(object sender, EventArgs e)//修改
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)//修改 //点击修改按钮
         {
-            ReoGridControl grid = this.reoGridControlUser;
+            ReoGridControl grid = this.reoGridControlUser;//定义reoGridControl控件
             var worksheet1 = grid.Worksheets[0];
 
             worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
@@ -62,21 +59,20 @@ namespace WMS.UI
             //MessageBox.Show(a+"+"+b);
             int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
 
-            string usrname = worksheet1[i - 1, 0].ToString();
-
+            string usrname = worksheet1[i - 1, 0].ToString();//选中行的第一列的cell中信息，以string格式提取出来
 
             WMSEntities wms = new WMSEntities();
-            User nameUsers = (from s in wms.User
+            //定义数据库
+            User allUsers = (from s in wms.User
                              where s.Username == usrname
                              select s).First<User>();
 
-            string a= nameUsers.Username;
-            string b= nameUsers.Password;
+            string a= allUsers.Username;
+            string b= allUsers.Password;
 
-            FormBaseUserAlter al = new FormBaseUserAlter(a,b);
+            FormBaseUserAlter al = new FormBaseUserAlter(a,b);//打卡FormBaseUserAlter页面 传递两个参数
             al.ShowDialog();
-            fresh();
-
+            Fresh();
 
         }
 
@@ -95,21 +91,20 @@ namespace WMS.UI
             string usrname = worksheet1[i - 1, 0].ToString();
 
             WMSEntities wms = new WMSEntities();
-            User nameUsers = (from s in wms.User
+            User allUsers = (from s in wms.User
                               where s.Username == usrname
                               select s).First<User>();
-            wms.User.Remove(nameUsers);//删除
-            wms.SaveChanges();
-            worksheet1.Reset();
-            showreoGridControl();//显示所有数据
-
+            wms.User.Remove(allUsers);//删除
+            wms.SaveChanges();//保存
+            worksheet1.Reset();//清空表格
+            ShowReoGridControl();//显示所有数据
         }
 
-        private void showreoGridControl()
+        private void ShowReoGridControl()//表格显示
         {
             ReoGridControl grid = this.reoGridControlUser;
             var worksheet1 = grid.Worksheets[0];
-
+            //设定表头信息
             worksheet1.ColumnHeaders[0].Text = "用户名";
             worksheet1.ColumnHeaders[1].Text = "密码";
             worksheet1.ColumnHeaders[2].Text = "权限";
@@ -121,8 +116,8 @@ namespace WMS.UI
             for (int i = 0; i < allUsers.Count(); i++)
             {
                 User user = allUsers[i];
-                worksheet1[i, 0] = user.Username;
-                worksheet1[i, 1] = user.Password;
+                worksheet1[i, 0] = user.Username;//第一列显示
+                worksheet1[i, 1] = user.Password;//第一列显示
                 if (user.Authority == 0)
                 {
                     worksheet1[i, 2] = "无";
@@ -144,10 +139,9 @@ namespace WMS.UI
                     worksheet1[i, 2] = "结算员";
                 }
             }
-        }//表格显示
+        }
 
-
-        private void clearreoGridControl()
+        private void ClearReoGridControl()//没用函数
         {
             ReoGridControl grid = this.reoGridControlUser;
             var worksheet1 = grid.Worksheets[0];
@@ -161,65 +155,53 @@ namespace WMS.UI
                 worksheet1[i, 1] = user.Password;
                 worksheet1[i, 2] = user.Authority;
             }
-        }//没用函数
+        }
 
-        private void searchuserReoGridControl()
-        {
-            
+        private void SearchuUserReoGridControl()//查找用户名
+        {        
             ReoGridControl grid = this.reoGridControlUser;
             var worksheet1 = grid.Worksheets[0];
             worksheet1.Reset();
-
             WMSEntities wms = new WMSEntities();
-
-                var nameUsers = (from s in wms.User
+                var allUsers = (from s in wms.User
                                  where s.Username == toolStripTextBoxSelect.Text
                                  select s).ToArray();
-                for (int i = 0; i < nameUsers.Count(); i++)
+                for (int i = 0; i < allUsers.Count(); i++)
                 {
-                    User userb = nameUsers[i];
+                    User userb = allUsers[i];
                     worksheet1[i, 0] = userb.Username;
                     worksheet1[i, 1] = userb.Password;
                     if (userb.Authority == 0)
                     {
                         worksheet1[i, 2] = "无";
-
                     }
                     if (userb.Authority == 15)
                     {
                         worksheet1[i, 2] = "管理员";
-
                     }
                     if (userb.Authority == 2)
                     {
                         worksheet1[i, 2] = "收货员";
-
                     }
                     if (userb.Authority == 4)
                     {
                         worksheet1[i, 2] = "发货员";
-
                     }
                     if (userb.Authority == 8)
                     {
                         worksheet1[i, 2] = "结算员";
-
                     }
             }
-
-
         }//查找用户名
 
-        private void searchauthReoGridControl()
+        private void SearchAuthReoGridControl()
         {
             ReoGridControl grid = this.reoGridControlUser;
             var worksheet1 = grid.Worksheets[0];
             worksheet1.Reset();
-
             WMSEntities wms = new WMSEntities();
 
             int authority=0;
-
             if(toolStripTextBoxSelect.Text=="无")
             {
                 authority = 0;
@@ -240,50 +222,43 @@ namespace WMS.UI
             {
                 authority = 8;
             }
-
-            var nameUsers = (from s in wms.User
+            var allUsers = (from s in wms.User
                              where s.Authority == authority
                              select s).ToArray();
-
-            for (int i = 0; i < nameUsers.Count(); i++)
+            for (int i = 0; i < allUsers.Count(); i++)
             {
-                User userb = nameUsers[i];
+                User userb = allUsers[i];
                 worksheet1[i, 0] = userb.Username;
                 worksheet1[i, 1] = userb.Password;
                 if (userb.Authority == 0)
                 {
                     worksheet1[i, 2] = "无";
-
                 }
                 if (userb.Authority == 15)
                 {
                     worksheet1[i, 2] = "管理员";
-
                 }
                 if (userb.Authority == 2)
                 {
                     worksheet1[i, 2] = "收货员";
-
                 }
                 if (userb.Authority == 4)
                 {
                     worksheet1[i, 2] = "发货员";
-
                 }
                 if (userb.Authority == 8)
                 {
                     worksheet1[i, 2] = "结算员";
-
                 }
             }
         }//查找权限
 
-        private void fresh()//刷新表格
+        private void Fresh()//刷新表格
         {
             ReoGridControl grid = this.reoGridControlUser;
             var worksheet1 = grid.Worksheets[0];
             worksheet1.Reset();
-            showreoGridControl();//显示所有数据
+            ShowReoGridControl();//显示所有数据
         }
 
     }
