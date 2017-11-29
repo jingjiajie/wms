@@ -1,4 +1,4 @@
-﻿namespace WMS.UI.FormReceipt
+﻿namespace WMS.UI
 {
     partial class FormReceiptArrival
     {
@@ -32,19 +32,20 @@
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripTextBoxSelect = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButtonSelect = new System.Windows.Forms.ToolStripButton();
+            this.comboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
+            this.textBoxSelect = new System.Windows.Forms.ToolStripTextBox();
+            this.buttonSelect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
+            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
+            this.buttonAlter = new System.Windows.Forms.ToolStripButton();
+            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonCheck = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonCheckCancel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonPrint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonReceipt = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonReceiptCancel = new System.Windows.Forms.ToolStripButton();
+            this.buttonCheck = new System.Windows.Forms.ToolStripButton();
+            this.buttonCheckCancel = new System.Windows.Forms.ToolStripButton();
+            this.buttonPrint = new System.Windows.Forms.ToolStripButton();
+            this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
+            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +55,8 @@
             this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(0, 28);
+            this.reoGridControlUser.Location = new System.Drawing.Point(0, 39);
+            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.reoGridControlUser.Name = "reoGridControlUser";
             this.reoGridControlUser.Readonly = true;
             this.reoGridControlUser.RowHeaderContextMenuStrip = null;
@@ -62,61 +64,67 @@
             this.reoGridControlUser.SheetTabContextMenuStrip = null;
             this.reoGridControlUser.SheetTabNewButtonVisible = true;
             this.reoGridControlUser.SheetTabVisible = true;
-            this.reoGridControlUser.SheetTabWidth = 60;
+            this.reoGridControlUser.SheetTabWidth = 90;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1081, 477);
+            this.reoGridControlUser.Size = new System.Drawing.Size(1622, 769);
             this.reoGridControlUser.TabIndex = 3;
             this.reoGridControlUser.Text = "reoGridControl1";
+            this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click);
             // 
             // toolStripTop
             // 
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabelSelect,
-            this.toolStripComboBoxSelect,
-            this.toolStripTextBoxSelect,
-            this.toolStripButtonSelect,
+            this.comboBoxSelect,
+            this.textBoxSelect,
+            this.buttonSelect,
             this.toolStripSeparator1,
-            this.toolStripButtonAdd,
-            this.toolStripButtonAlter,
-            this.toolStripButtonDelete,
+            this.buttonAdd,
+            this.buttonAlter,
+            this.buttonDelete,
             this.toolStripSeparator2,
-            this.toolStripButtonCheck,
-            this.toolStripButtonCheckCancel,
-            this.toolStripButtonPrint,
-            this.toolStripButtonReceipt,
-            this.toolStripButtonReceiptCancel});
+            this.buttonCheck,
+            this.buttonCheckCancel,
+            this.buttonPrint,
+            this.buttonReceipt,
+            this.buttonReceiptCancel,
+            this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1081, 28);
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(1622, 39);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
+            this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
             // 
             // toolStripLabelSelect
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 36);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
-            // toolStripComboBoxSelect
+            // comboBoxSelect
             // 
-            this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(150, 28);
+            this.comboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelect.Name = "comboBoxSelect";
+            this.comboBoxSelect.Size = new System.Drawing.Size(223, 39);
             // 
-            // toolStripTextBoxSelect
+            // textBoxSelect
             // 
-            this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(200, 28);
+            this.textBoxSelect.Name = "textBoxSelect";
+            this.textBoxSelect.Size = new System.Drawing.Size(298, 39);
             // 
-            // toolStripButtonSelect
+            // buttonSelect
             // 
-            this.toolStripButtonSelect.AutoSize = false;
-            this.toolStripButtonSelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelect.Image")));
-            this.toolStripButtonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSelect.Name = "toolStripButtonSelect";
-            this.toolStripButtonSelect.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonSelect.Text = "查询";
+            this.buttonSelect.AutoSize = false;
+            this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
+            this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSelect.Name = "buttonSelect";
+            this.buttonSelect.Size = new System.Drawing.Size(60, 25);
+            this.buttonSelect.Text = "查询";
+            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
             // toolStripSeparator1
             // 
@@ -124,32 +132,32 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
-            // toolStripButtonAdd
+            // buttonAdd
             // 
-            this.toolStripButtonAdd.AutoSize = false;
-            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
-            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonAdd.Text = "添加";
+            this.buttonAdd.AutoSize = false;
+            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
+            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
+            this.buttonAdd.Text = "添加";
             // 
-            // toolStripButtonAlter
+            // buttonAlter
             // 
-            this.toolStripButtonAlter.AutoSize = false;
-            this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
-            this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonAlter.Text = "修改";
+            this.buttonAlter.AutoSize = false;
+            this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
+            this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAlter.Name = "buttonAlter";
+            this.buttonAlter.Size = new System.Drawing.Size(60, 25);
+            this.buttonAlter.Text = "修改";
             // 
-            // toolStripButtonDelete
+            // buttonDelete
             // 
-            this.toolStripButtonDelete.AutoSize = false;
-            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
-            this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonDelete.Text = "删除";
+            this.buttonDelete.AutoSize = false;
+            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
+            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(60, 25);
+            this.buttonDelete.Text = "删除";
             // 
             // toolStripSeparator2
             // 
@@ -157,67 +165,78 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
             // 
-            // toolStripButtonCheck
+            // buttonCheck
             // 
-            this.toolStripButtonCheck.AutoSize = false;
-            this.toolStripButtonCheck.BackColor = System.Drawing.SystemColors.Control;
-            this.toolStripButtonCheck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonCheck.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCheck.Image")));
-            this.toolStripButtonCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonCheck.Name = "toolStripButtonCheck";
-            this.toolStripButtonCheck.Size = new System.Drawing.Size(40, 25);
-            this.toolStripButtonCheck.Text = "送检";
-            this.toolStripButtonCheck.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.buttonCheck.AutoSize = false;
+            this.buttonCheck.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonCheck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonCheck.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheck.Image")));
+            this.buttonCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCheck.Name = "buttonCheck";
+            this.buttonCheck.Size = new System.Drawing.Size(40, 25);
+            this.buttonCheck.Text = "送检";
+            this.buttonCheck.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             // 
-            // toolStripButtonCheckCancel
+            // buttonCheckCancel
             // 
-            this.toolStripButtonCheckCancel.AutoSize = false;
-            this.toolStripButtonCheckCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonCheckCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCheckCancel.Image")));
-            this.toolStripButtonCheckCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonCheckCancel.Name = "toolStripButtonCheckCancel";
-            this.toolStripButtonCheckCancel.Size = new System.Drawing.Size(70, 25);
-            this.toolStripButtonCheckCancel.Text = "取消送检";
+            this.buttonCheckCancel.AutoSize = false;
+            this.buttonCheckCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonCheckCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheckCancel.Image")));
+            this.buttonCheckCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCheckCancel.Name = "buttonCheckCancel";
+            this.buttonCheckCancel.Size = new System.Drawing.Size(70, 25);
+            this.buttonCheckCancel.Text = "取消送检";
             // 
-            // toolStripButtonPrint
+            // buttonPrint
             // 
-            this.toolStripButtonPrint.AutoSize = false;
-            this.toolStripButtonPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonPrint.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonPrint.Image")));
-            this.toolStripButtonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonPrint.Name = "toolStripButtonPrint";
-            this.toolStripButtonPrint.Size = new System.Drawing.Size(80, 25);
-            this.toolStripButtonPrint.Text = "打印送检单";
+            this.buttonPrint.AutoSize = false;
+            this.buttonPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonPrint.Image = ((System.Drawing.Image)(resources.GetObject("buttonPrint.Image")));
+            this.buttonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPrint.Name = "buttonPrint";
+            this.buttonPrint.Size = new System.Drawing.Size(80, 25);
+            this.buttonPrint.Text = "打印送检单";
             // 
-            // toolStripButtonReceipt
+            // buttonReceipt
             // 
-            this.toolStripButtonReceipt.AutoSize = false;
-            this.toolStripButtonReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReceipt.Image")));
-            this.toolStripButtonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonReceipt.Name = "toolStripButtonReceipt";
-            this.toolStripButtonReceipt.Size = new System.Drawing.Size(40, 25);
-            this.toolStripButtonReceipt.Text = "收货";
+            this.buttonReceipt.AutoSize = false;
+            this.buttonReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceipt.Image")));
+            this.buttonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReceipt.Name = "buttonReceipt";
+            this.buttonReceipt.Size = new System.Drawing.Size(40, 25);
+            this.buttonReceipt.Text = "收货";
             // 
-            // toolStripButtonReceiptCancel
+            // buttonReceiptCancel
             // 
-            this.toolStripButtonReceiptCancel.AutoSize = false;
-            this.toolStripButtonReceiptCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonReceiptCancel.Image")));
-            this.toolStripButtonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonReceiptCancel.Name = "toolStripButtonReceiptCancel";
-            this.toolStripButtonReceiptCancel.Size = new System.Drawing.Size(70, 25);
-            this.toolStripButtonReceiptCancel.Text = "取消收货";
+            this.buttonReceiptCancel.AutoSize = false;
+            this.buttonReceiptCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
+            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
+            this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
+            this.buttonReceiptCancel.Text = "取消收货";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 36);
+            this.toolStripButton1.Text = "toolStripButton1";
             // 
             // FormReceiptArrival
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1081, 505);
+            this.ClientSize = new System.Drawing.Size(1622, 808);
             this.Controls.Add(this.reoGridControlUser);
             this.Controls.Add(this.toolStripTop);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormReceiptArrival";
             this.Text = "FormReceiptArrival";
+            this.Load += new System.EventHandler(this.FormReceiptArrival_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);
@@ -230,18 +249,19 @@
         private unvell.ReoGrid.ReoGridControl reoGridControlUser;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSelect;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelect;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSelect;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSelect;
+        private System.Windows.Forms.ToolStripComboBox comboBoxSelect;
+        private System.Windows.Forms.ToolStripTextBox textBoxSelect;
+        private System.Windows.Forms.ToolStripButton buttonSelect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
+        private System.Windows.Forms.ToolStripButton buttonAdd;
+        private System.Windows.Forms.ToolStripButton buttonAlter;
+        private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonCheck;
-        private System.Windows.Forms.ToolStripButton toolStripButtonCheckCancel;
-        private System.Windows.Forms.ToolStripButton toolStripButtonPrint;
-        private System.Windows.Forms.ToolStripButton toolStripButtonReceipt;
-        private System.Windows.Forms.ToolStripButton toolStripButtonReceiptCancel;
+        private System.Windows.Forms.ToolStripButton buttonCheck;
+        private System.Windows.Forms.ToolStripButton buttonCheckCancel;
+        private System.Windows.Forms.ToolStripButton buttonPrint;
+        private System.Windows.Forms.ToolStripButton buttonReceipt;
+        private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }
