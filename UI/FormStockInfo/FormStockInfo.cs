@@ -109,44 +109,49 @@ namespace WMS.UI
 
         private void Search(string key, string value)
         {
-            var wmsEntities = new WMSEntities();
+            this.labelStatus.Text = "正在搜索中...";
+            new Thread(new ThreadStart(() =>
+            {
+                var wmsEntities = new WMSEntities();
 
-            StockInfo[] stockInfos = null;
-            if (key==null || value == null) //查询条件为null则查询全部内容
-            {
-                stockInfos = wmsEntities.Database.SqlQuery<StockInfo>("SELECT * FROM StockInfo").ToArray();
-            }
-            else
-            {
-                double tmp;
-                if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                StockInfo[] stockInfos = null;
+                if (key == null || value == null) //查询条件为null则查询全部内容
                 {
-                    value = "'" + value + "'";
+                    stockInfos = wmsEntities.Database.SqlQuery<StockInfo>("SELECT * FROM StockInfo").ToArray();
                 }
-                try
+                else
                 {
-                    stockInfos = wmsEntities.Database.SqlQuery<StockInfo>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}", key, value)).ToArray();
-                }
-                catch
-                {
-                    MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-            this.reoGridControlMain.Invoke(new Action(()=>
-            {
-                var worksheet = this.reoGridControlMain.Worksheets[0];
-                worksheet.DeleteRangeData(RangePosition.EntireRange);
-                for (int i = 0; i < stockInfos.Length; i++)
-                {
-                    StockInfo curStockInfo = stockInfos[i];
-                    object[] columns = Utilities.GetValuesByPropertieNames(curStockInfo, (from kn in this.keyAndNames select kn.Key).ToArray());
-                    for (int j = 0; j < worksheet.Columns; j++)
+                    double tmp;
+                    if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
                     {
-                        worksheet[i, j] = columns[j];
+                        value = "'" + value + "'";
+                    }
+                    try
+                    {
+                        stockInfos = wmsEntities.Database.SqlQuery<StockInfo>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}", key, value)).ToArray();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
                 }
-            }));
+                this.reoGridControlMain.Invoke(new Action(() =>
+                {
+                    this.labelStatus.Text = "搜索完成";
+                    var worksheet = this.reoGridControlMain.Worksheets[0];
+                    worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    for (int i = 0; i < stockInfos.Length; i++)
+                    {
+                        StockInfo curStockInfo = stockInfos[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfo, (from kn in this.keyAndNames select kn.Key).ToArray());
+                        for (int j = 0; j < worksheet.Columns; j++)
+                        {
+                            worksheet[i, j] = columns[j];
+                        }
+                    }
+                }));
+            })).Start();
         }
     }
 }
