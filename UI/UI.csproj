@@ -83,6 +83,12 @@
     <Compile Include="FormBase\FormBaseStock.Designer.cs">
       <DependentUpon>FormBaseStock.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormBaseWarehouseAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseWarehouseAdd.Designer.cs">
+      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDelivery\FormDeliveryJob.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +209,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseStock.resx">
       <DependentUpon>FormBaseStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseWarehouseAdd.resx">
+      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDelivery\FormDeliveryJob.resx">
       <DependentUpon>FormDeliveryJob.cs</DependentUpon>
