@@ -94,13 +94,16 @@
             // 
             // comboBoxSearchCondition
             // 
+            this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(223, 39);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 39);
             // 
             // textBoxSearchValue
             // 
+            this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(298, 39);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
             // 
             // buttonSearch
             // 

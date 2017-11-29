@@ -8,19 +8,20 @@ using System.Text;
 using System.Windows.Forms;
 using unvell.ReoGrid;
 using WMS.DataAccess;
+using System.Threading;
 
 namespace WMS.UI
 {
-    struct KeyAndName
-    {
-        public string Key;
-        public string Name;
-    }
-
     public partial class FormStockInfo : Form
     {
+        struct KeyAndName
+        {
+            public string Key;
+            public string Name;
+        }
+
         private KeyAndName[] keyAndNames = {
-            new KeyAndName(){Key="ID",Name="ID"},
+            //new KeyAndName(){Key="ID",Name="ID"},
             new KeyAndName(){Key="ComponentID",Name="零件ID"},
             new KeyAndName(){Key="ReceiptTicketID",Name="收货单ID"},
             new KeyAndName(){Key="StockDate",Name="存货日期"},
@@ -60,6 +61,7 @@ namespace WMS.UI
         private void FormStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
+            this.Search(null, null);
         }
 
         private void InitComponents()
@@ -89,34 +91,62 @@ namespace WMS.UI
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            string key = (from kn in this.keyAndNames
-                          where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
-                          select kn.Key).First();
-            string value = this.textBoxSearchValue.Text;
-            this.Search(key,value);
+            if(this.comboBoxSearchCondition.SelectedIndex == 0)
+            {
+                this.Search(null,null);
+                return;
+            }
+            else
+            {
+                string key = (from kn in this.keyAndNames
+                              where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
+                              select kn.Key).First();
+                string value = this.textBoxSearchValue.Text;
+                this.Search(key, value);
+                return;
+            }
         }
 
-        private void Search(string key,string value)
+        private void Search(string key, string value)
         {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
             var wmsEntities = new WMSEntities();
-            double tmp;
-            if(Double.TryParse(value,out tmp) == false) //不是数字则加上单引号
-            {
-                value = "'" + value + "'";
-            }
-            var stockInfos = wmsEntities.Database.SqlQuery<StockInfo>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}",key,value)).ToArray();
 
-            worksheet.DeleteRangeData(RangePosition.EntireRange);
-            for (int i = 0; i < stockInfos.Length; i++)
+            StockInfo[] stockInfos = null;
+            if (key==null || value == null) //查询条件为null则查询全部内容
             {
-                StockInfo curStockInfo = stockInfos[i];
-                object[] columns = { curStockInfo.ID, curStockInfo.ComponentID, curStockInfo.ReceiptTicketID, curStockInfo.StockDate, curStockInfo.ManufatureDate, curStockInfo.ExpireDate, curStockInfo.WarehouseArea, curStockInfo.TargetStorageLocation, curStockInfo.PackagingUnit, curStockInfo.ReceivingSpaceArea, curStockInfo.OverflowArea, curStockInfo.ShipmentArea, curStockInfo.ReceivingSpaceAreaCount, curStockInfo.OverflowAreaCount, curStockInfo.ShipmentAreaCount, curStockInfo.PackagingToolCount, curStockInfo.RecycleBoxCount, curStockInfo.NonOrderAreaCount, curStockInfo.UnacceptedProductAreaCount, curStockInfo.PlannedBoardCount, curStockInfo.PlannedPackagingToolCount, curStockInfo.BoardNo, curStockInfo.Batch, curStockInfo.StorageState, curStockInfo.ManufactureNo, curStockInfo.ProjectInfo, curStockInfo.ProjectStageInfo, curStockInfo.RealRightProperty, curStockInfo.CarModel, curStockInfo.BoxNo };
-                for(int j = 0; j < worksheet.Columns; j++)
+                stockInfos = wmsEntities.Database.SqlQuery<StockInfo>("SELECT * FROM StockInfo").ToArray();
+            }
+            else
+            {
+                double tmp;
+                if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
                 {
-                    worksheet[i, j] = columns[j];
+                    value = "'" + value + "'";
+                }
+                try
+                {
+                    stockInfos = wmsEntities.Database.SqlQuery<StockInfo>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}", key, value)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
             }
+            this.reoGridControlMain.Invoke(new Action(()=>
+            {
+                var worksheet = this.reoGridControlMain.Worksheets[0];
+                worksheet.DeleteRangeData(RangePosition.EntireRange);
+                for (int i = 0; i < stockInfos.Length; i++)
+                {
+                    StockInfo curStockInfo = stockInfos[i];
+                    object[] columns = Utilities.GetValuesByPropertieNames(curStockInfo, (from kn in this.keyAndNames select kn.Key).ToArray());
+                    for (int j = 0; j < worksheet.Columns; j++)
+                    {
+                        worksheet[i, j] = columns[j];
+                    }
+                }
+            }));
         }
     }
 }
