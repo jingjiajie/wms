@@ -26,6 +26,21 @@ namespace WMS.DataAccess
         }
     
         public DbSet<Component> Component { get; set; }
+        public DbSet<ComponentOuterPackingSize> ComponentOuterPackingSize { get; set; }
+        public DbSet<ComponentShipmentInfo> ComponentShipmentInfo { get; set; }
+        public DbSet<ComponentSingleBoxTranPackingInfo> ComponentSingleBoxTranPackingInfo { get; set; }
+        public DbSet<ComponentStatistics> ComponentStatistics { get; set; }
+        public DbSet<JobTicket> JobTicket { get; set; }
+        public DbSet<JobTicketItem> JobTicketItem { get; set; }
+        public DbSet<PutawayTicket> PutawayTicket { get; set; }
+        public DbSet<PutawayTicketComponentInfo> PutawayTicketComponentInfo { get; set; }
+        public DbSet<PutInStorageTicketComponentInfo> PutInStorageTicketComponentInfo { get; set; }
+        public DbSet<PutOutStorageTicket> PutOutStorageTicket { get; set; }
+        public DbSet<ReceiptTicket> ReceiptTicket { get; set; }
+        public DbSet<ShipmentTicket> ShipmentTicket { get; set; }
+        public DbSet<StockInfo> StockInfo { get; set; }
+        public DbSet<SubmissionTicket> SubmissionTicket { get; set; }
+        public DbSet<SubmissionTicketItem> SubmissionTicketItem { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<SupplierAnnualInfo> SupplierAnnualInfo { get; set; }
         public DbSet<User> User { get; set; }

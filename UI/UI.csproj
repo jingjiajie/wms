@@ -77,11 +77,17 @@
     <Compile Include="FormBase\FormBaseReceipt.Designer.cs">
       <DependentUpon>FormBaseReceipt.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseStock.cs">
+    <Compile Include="FormStockInfo\FormAlterStock.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseStock.Designer.cs">
-      <DependentUpon>FormBaseStock.cs</DependentUpon>
+    <Compile Include="FormStockInfo\FormAlterStock.Designer.cs">
+      <DependentUpon>FormAlterStock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
+      <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="FormDelivery\FormDeliveryJob.cs">
       <SubType>Form</SubType>
@@ -201,8 +207,11 @@
     <EmbeddedResource Include="FormBase\FormBaseReceipt.resx">
       <DependentUpon>FormBaseReceipt.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseStock.resx">
-      <DependentUpon>FormBaseStock.cs</DependentUpon>
+    <EmbeddedResource Include="FormStockInfo\FormAlterStock.resx">
+      <DependentUpon>FormAlterStock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
+      <DependentUpon>FormStockInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDelivery\FormDeliveryJob.resx">
       <DependentUpon>FormDeliveryJob.cs</DependentUpon>

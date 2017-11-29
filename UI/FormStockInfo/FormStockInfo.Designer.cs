@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class FormBaseStock
+    partial class FormStockInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBaseStock));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockInfo));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
-            this.comboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
-            this.textBoxSelect = new System.Windows.Forms.ToolStripTextBox();
-            this.buttonSelect = new System.Windows.Forms.ToolStripButton();
+            this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
+            this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
+            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
@@ -70,9 +70,9 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelSelect,
-            this.comboBoxSelect,
-            this.textBoxSelect,
-            this.buttonSelect,
+            this.comboBoxSearchCondition,
+            this.textBoxSearchValue,
+            this.buttonSearch,
             this.toolStripSeparator1,
             this.buttonAdd,
             this.buttonAlter,
@@ -92,24 +92,25 @@
             this.labelSelect.Size = new System.Drawing.Size(134, 36);
             this.labelSelect.Text = "查询条件：";
             // 
-            // comboBoxSelect
+            // comboBoxSearchCondition
             // 
-            this.comboBoxSelect.Name = "comboBoxSelect";
-            this.comboBoxSelect.Size = new System.Drawing.Size(223, 39);
+            this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(223, 39);
             // 
-            // textBoxSelect
+            // textBoxSearchValue
             // 
-            this.textBoxSelect.Name = "textBoxSelect";
-            this.textBoxSelect.Size = new System.Drawing.Size(298, 39);
+            this.textBoxSearchValue.Name = "textBoxSearchValue";
+            this.textBoxSearchValue.Size = new System.Drawing.Size(298, 39);
             // 
-            // buttonSelect
+            // buttonSearch
             // 
-            this.buttonSelect.AutoSize = false;
-            this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
-            this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(60, 25);
-            this.buttonSelect.Text = "查询";
+            this.buttonSearch.AutoSize = false;
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(60, 25);
+            this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // toolStripSeparator1
             // 
@@ -153,16 +154,16 @@
             this.toolStripButton1.Size = new System.Drawing.Size(24, 36);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
-            // FormBaseStock
+            // FormStockInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1053, 704);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
-            this.Name = "FormBaseStock";
-            this.Text = "FormBaseStock";
-            this.Load += new System.EventHandler(this.FormBaseStock_Load);
+            this.Name = "FormStockInfo";
+            this.Text = "FormStock";
+            this.Load += new System.EventHandler(this.FormStockInfo_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);
@@ -175,9 +176,9 @@
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripLabel labelSelect;
-        private System.Windows.Forms.ToolStripComboBox comboBoxSelect;
-        private System.Windows.Forms.ToolStripTextBox textBoxSelect;
-        private System.Windows.Forms.ToolStripButton buttonSelect;
+        private System.Windows.Forms.ToolStripComboBox comboBoxSearchCondition;
+        private System.Windows.Forms.ToolStripTextBox textBoxSearchValue;
+        private System.Windows.Forms.ToolStripButton buttonSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonAdd;
         private System.Windows.Forms.ToolStripButton buttonAlter;
