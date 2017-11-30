@@ -95,12 +95,6 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormAlterStock.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormStockInfo\FormAlterStock.Designer.cs">
-      <DependentUpon>FormAlterStock.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormStockInfo\FormStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>

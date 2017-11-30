@@ -44,11 +44,6 @@ namespace WMS.UI.FormBase
         private void buttonEnter_Click(object sender, EventArgs e)
         {
             
-            if (WarehouseID.Text == string.Empty)
-            {
-                MessageBox.Show("仓库ID不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             if (SupplierID.Text == string.Empty)
             {
                 MessageBox.Show("供应商ID不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -91,6 +86,7 @@ namespace WMS.UI.FormBase
         private void FormBaseComponenAlter_Load(object sender, EventArgs e)
         {
             ID.ReadOnly = true;//定义 只读
+            WarehouseID.ReadOnly = true;//定义 只读
             Name1.ReadOnly = true;//定义 只读
         }
     }

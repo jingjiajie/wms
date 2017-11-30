@@ -21,8 +21,8 @@ namespace WMS.UI
         private void FormBaseComponent_Load(object sender, EventArgs e)
         {
             showreoGridControl();//显示所有数据
-            toolStripComboBoxSelect.Items.Add("零件ID");
-            toolStripComboBoxSelect.Items.Add("仓库ID");
+            //toolStripComboBoxSelect.Items.Add("零件ID");
+            //toolStripComboBoxSelect.Items.Add("仓库ID");
             toolStripComboBoxSelect.Items.Add("供货商ID");
             toolStripComboBoxSelect.Items.Add("容器号");
             toolStripComboBoxSelect.Items.Add("工厂");
@@ -48,29 +48,57 @@ namespace WMS.UI
             ReoGridControl grid = this.reoGridControlComponen;
             var worksheet1 = grid.Worksheets[0];
 
-            worksheet1.ColumnHeaders[0].Text = "零件ID";
-            worksheet1.ColumnHeaders[1].Text = "仓库ID";
-            worksheet1.ColumnHeaders[2].Text = "供货商ID";
-            worksheet1.ColumnHeaders[3].Text = "容器号";
-            worksheet1.ColumnHeaders[4].Text = "工厂";
-            worksheet1.ColumnHeaders[5].Text = "工位";
-            worksheet1.ColumnHeaders[6].Text = "零件代号";
-            worksheet1.ColumnHeaders[7].Text = "零件名称";
-            worksheet1.ColumnHeaders[8].Text = "A系列/B系列供应商";
-            worksheet1.ColumnHeaders[9].Text = "机型区分";
-            worksheet1.ColumnHeaders[10].Text = "尺寸（大件/小件）";
-            worksheet1.ColumnHeaders[11].Text = "分类";
-            worksheet1.ColumnHeaders[12].Text = "分组负责人";
-            worksheet1.ColumnHeaders[13].Text = "单台用量";
-            worksheet1.ColumnHeaders[14].Text = "物流服务费1-50000台套";
-            worksheet1.ColumnHeaders[15].Text = "物流服务费50000台套以上";
-            worksheet1.ColumnHeaders[16].Text = "1天库存要求";
-            worksheet1.ColumnHeaders[17].Text = "3天库存要求";
-            worksheet1.ColumnHeaders[18].Text = "5天库存要求";
-            worksheet1.ColumnHeaders[19].Text = "10天库存要求";
+
+            worksheet1.ColumnHeaders[0].Text = "供货商ID";
+            worksheet1.ColumnHeaders[1].Text = "容器号";
+            worksheet1.ColumnHeaders[2].Text = "工厂";
+            worksheet1.ColumnHeaders[3].Text = "工位";
+            worksheet1.ColumnHeaders[4].Text = "零件代号";
+            worksheet1.ColumnHeaders[5].Text = "零件名称";
+            worksheet1.ColumnHeaders[6].Text = "A系列/B系列供应商";
+            worksheet1.ColumnHeaders[7].Text = "机型区分";
+            worksheet1.ColumnHeaders[8].Text = "尺寸（大件/小件）";
+            worksheet1.ColumnHeaders[9].Text = "分类";
+            worksheet1.ColumnHeaders[10].Text = "分组负责人";
+            worksheet1.ColumnHeaders[11].Text = "单台用量";
+            worksheet1.ColumnHeaders[12].Text = "物流服务费1-50000台套";
+            worksheet1.ColumnHeaders[13].Text = "物流服务费50000台套以上";
+            worksheet1.ColumnHeaders[14].Text = "1天库存要求";
+            worksheet1.ColumnHeaders[15].Text = "3天库存要求";
+            worksheet1.ColumnHeaders[16].Text = "5天库存要求";
+            worksheet1.ColumnHeaders[17].Text = "10天库存要求";
+            worksheet1.ColumnHeaders[18].Text = "零件ID";
+            worksheet1.ColumnHeaders[19].Text = "仓库ID";
             //设定表头信息
+            worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
 
+            WMSEntities wms = new WMSEntities();
+            var allcomponen = (from s in wms.Component select s).ToArray();
+            for (int i = 0; i < allcomponen.Count(); i++)
+            {
+                DataAccess.Component component = allcomponen[i];
+                worksheet1[i, 0] = component.SupplierID;//第一列显示
+                worksheet1[i, 1] = component.ContainerNo;
+                worksheet1[i, 2] = component.Factroy;
+                worksheet1[i, 3] = component.WorkPosition;
+                worksheet1[i, 4] = component.No;
+                worksheet1[i, 5] = component.Name;
+                worksheet1[i, 6] = component.SupplierType;
+                worksheet1[i, 7] = component.Type;
+                worksheet1[i, 8] = component.Size;
+                worksheet1[i, 9] = component.Category;
+                worksheet1[i, 10] = component.GroupPrincipal;
+                worksheet1[i, 11] = component.SingleCarUsageAmount;
+                worksheet1[i, 12] = component.ChargeBelow50000;
+                worksheet1[i, 13] = component.ChargeAbove50000;
+                worksheet1[i, 14] = component.InventoryRequirement1Day;
+                worksheet1[i, 15] = component.InventoryRequirement3Day;
+                worksheet1[i, 16] = component.InventoryRequirement5Day;
+                worksheet1[i, 17] = component.InventoryRequirement10Day;
+                worksheet1[i, 18] = component.ID;
+                worksheet1[i, 19] = component.WarehouseID;
 
+            }
         }//表格显示
 
         private void fresh()//刷新表格
@@ -89,14 +117,14 @@ namespace WMS.UI
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
             showreoGridControl();//显示所有数据
-            if (toolStripComboBoxSelect.Text == "零件ID" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchIDReoGridControl();
-            }
-            if (toolStripComboBoxSelect.Text == "仓库ID" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchWarehouseIDReoGridControl();
-            }
+            //if (toolStripComboBoxSelect.Text == "零件ID" && toolStripTextBoxSelect.Text != string.Empty)
+            //{
+            //    searchIDReoGridControl();
+            //}
+            //if (toolStripComboBoxSelect.Text == "仓库ID" && toolStripTextBoxSelect.Text != string.Empty)
+            //{
+            //    searchWarehouseIDReoGridControl();
+            //}
             if (toolStripComboBoxSelect.Text == "供货商ID" && toolStripTextBoxSelect.Text != string.Empty)
             {
                 searchSupplierIDReoGridControl();
@@ -185,27 +213,27 @@ namespace WMS.UI
 
             for (int i = 0; i < nameComponent.Count(); i++)
             {
-                DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                DataAccess.Component Componentb = nameComponent[i];                
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
             }//查找零件ID
         }
         private void searchWarehouseIDReoGridControl()
@@ -223,26 +251,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }//查找仓库ID
@@ -261,26 +289,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -299,26 +327,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -337,26 +365,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -375,26 +403,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -413,26 +441,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -451,26 +479,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -489,26 +517,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -527,26 +555,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -565,26 +593,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -603,26 +631,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -641,26 +669,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -679,26 +707,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -717,26 +745,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -755,26 +783,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -793,26 +821,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -831,26 +859,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -869,26 +897,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -907,26 +935,26 @@ namespace WMS.UI
             for (int i = 0; i < nameComponent.Count(); i++)
             {
                 DataAccess.Component Componentb = nameComponent[i];
-                worksheet1[i, 0] = Componentb.ID;
-                worksheet1[i, 1] = Componentb.WarehouseID;
-                worksheet1[i, 2] = Componentb.SupplierID;
-                worksheet1[i, 3] = Componentb.ContainerNo;
-                worksheet1[i, 4] = Componentb.Factroy;
-                worksheet1[i, 5] = Componentb.WorkPosition;
-                worksheet1[i, 6] = Componentb.No;
-                worksheet1[i, 7] = Componentb.Name;
-                worksheet1[i, 8] = Componentb.SupplierType;
-                worksheet1[i, 9] = Componentb.Type;
-                worksheet1[i, 10] = Componentb.Size;
-                worksheet1[i, 11] = Componentb.Category;
-                worksheet1[i, 12] = Componentb.GroupPrincipal;
-                worksheet1[i, 13] = Componentb.SingleCarUsageAmount;
-                worksheet1[i, 14] = Componentb.ChargeBelow50000;
-                worksheet1[i, 15] = Componentb.ChargeAbove50000;
-                worksheet1[i, 16] = Componentb.InventoryRequirement1Day;
-                worksheet1[i, 17] = Componentb.InventoryRequirement3Day;
-                worksheet1[i, 18] = Componentb.InventoryRequirement5Day;
-                worksheet1[i, 19] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 0] = Componentb.SupplierID;
+                worksheet1[i, 1] = Componentb.ContainerNo;
+                worksheet1[i, 2] = Componentb.Factroy;
+                worksheet1[i, 3] = Componentb.WorkPosition;
+                worksheet1[i, 4] = Componentb.No;
+                worksheet1[i, 5] = Componentb.Name;
+                worksheet1[i, 6] = Componentb.SupplierType;
+                worksheet1[i, 7] = Componentb.Type;
+                worksheet1[i, 8] = Componentb.Size;
+                worksheet1[i, 9] = Componentb.Category;
+                worksheet1[i, 10] = Componentb.GroupPrincipal;
+                worksheet1[i, 11] = Componentb.SingleCarUsageAmount;
+                worksheet1[i, 12] = Componentb.ChargeBelow50000;
+                worksheet1[i, 13] = Componentb.ChargeAbove50000;
+                worksheet1[i, 14] = Componentb.InventoryRequirement1Day;
+                worksheet1[i, 15] = Componentb.InventoryRequirement3Day;
+                worksheet1[i, 16] = Componentb.InventoryRequirement5Day;
+                worksheet1[i, 17] = Componentb.InventoryRequirement10Day;
+                worksheet1[i, 18] = Componentb.ID;
+                worksheet1[i, 19] = Componentb.WarehouseID;
 
             }
         }
@@ -953,13 +981,14 @@ namespace WMS.UI
             //MessageBox.Show(str.Substring(start - 1, length));//返回行数
             int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
 
-            String id = worksheet1[i - 1, 0].ToString();
-            int ID1 = Convert.ToInt32(id);
+
+
+            String name = worksheet1[i - 1, 5].ToString();
 
             WMSEntities wms = new WMSEntities();
             DataAccess.Component allComponen = (from s in wms.Component
-                                              where s.ID == ID1
-                                              select s).First();
+                                                where s.Name == name
+                                                select s).First();
             int a = allComponen.ID;
             int b = allComponen.WarehouseID;
             int c = allComponen.SupplierID;
@@ -998,12 +1027,11 @@ namespace WMS.UI
             //MessageBox.Show(str.Substring(start - 1, length));//返回行数
             int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
 
-            String id = worksheet1[i - 1, 0].ToString();
-            int ID1 = Convert.ToInt32(id);
+            String name = worksheet1[i - 1, 5].ToString();
 
             WMSEntities wms = new WMSEntities();
             DataAccess.Component allComponen = (from s in wms.Component
-                                              where s.ID == ID1
+                                              where s.Name == name
                                               select s).First();
             wms.Component.Remove(allComponen);//删除
             wms.SaveChanges();

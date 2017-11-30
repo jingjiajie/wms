@@ -116,7 +116,6 @@ namespace WMS.UI
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
             //formReceiptArrival.InitComponents();
 
-<<<<<<< HEAD
             //下拉栏显示仓库
             WMSEntities wms = new WMSEntities();
             var allWare = (from s in wms.Warehouse select s).ToArray();
@@ -130,14 +129,13 @@ namespace WMS.UI
 
 
 
-=======
-            treeViewLeft.ExpandAll();//树形栏显示所有节点   
-            new Thread(new ThreadStart(() =>
-            {
-                var wmsEntities = new WMSEntities(); //初始化EF框架
-                wmsEntities.Database.Connection.Open(); //打开EF连接
-            })).Start();            
->>>>>>> 0f14e23100174f6a587e1a919f0080154e9a07f1
+
+//            treeViewLeft.ExpandAll();//树形栏显示所有节点   
+//            new Thread(new ThreadStart(() =>
+//            {
+//                var wmsEntities = new WMSEntities(); //初始化EF框架
+//                wmsEntities.Database.Connection.Open(); //打开EF连接
+//            })).Start();            
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
