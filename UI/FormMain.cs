@@ -15,7 +15,11 @@ using WMS.DataAccess;
 namespace WMS.UI
 {
     public partial class FormMain : Form
-    {
+    { 
+
+
+        //private FormReceiptArrival formReceiptArrival = new FormReceiptArrival();
+        
         public FormMain()
         {
             InitializeComponent();
@@ -32,6 +36,7 @@ namespace WMS.UI
             int DeskHeight = Screen.PrimaryScreen.WorkingArea.Height;
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
+            //formReceiptArrival.InitComponents();
 
             treeViewLeft.ExpandAll();//树形栏显示所有节点   
             new Thread(new ThreadStart(() =>
@@ -92,17 +97,6 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseWarehouse l = new FormBaseWarehouse();//实例化子窗口
-                l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                this.panelRight.Controls.Add(l);
-                l.Show();
-            }
-            if (treeViewLeft.SelectedNode.Text == "到货管理")
-            {
-                this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormReceiptArrival l = new FormReceiptArrival();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -110,6 +104,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
+          
             if (treeViewLeft.SelectedNode.Text == "上架管理")
             {
                 this.panelRight.Controls.Clear();//清空
