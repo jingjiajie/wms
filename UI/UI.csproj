@@ -209,6 +209,15 @@
     <EmbeddedResource Include="BSM\BMS4200M.resx">
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseComponenAdd.resx">
+      <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseComponenAlter.resx">
+      <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseSupplierAlter.resx">
+      <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormAlterStock.resx">
       <DependentUpon>FormAlterStock.cs</DependentUpon>
     </EmbeddedResource>
@@ -297,6 +306,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="icon\" />
+    <Folder Include="unvell\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

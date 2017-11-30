@@ -40,5 +40,10 @@ namespace WMS.UI.FormBase
         {
             this.Close();
         }
+
+        private void FormBaseWarehouseAdd_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
