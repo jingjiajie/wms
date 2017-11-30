@@ -5,9 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
+
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormDelivery;
+using WMS.DataAccess;
 
 namespace WMS.UI
 {
@@ -31,7 +34,11 @@ namespace WMS.UI
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
 
             treeViewLeft.ExpandAll();//树形栏显示所有节点   
-
+            new Thread(new ThreadStart(() =>
+            {
+                var wmsEntities = new WMSEntities(); //初始化EF框架
+                wmsEntities.Database.Connection.Open(); //打开EF连接
+            })).Start();            
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
