@@ -142,6 +142,7 @@
             this.buttonAlter.Name = "buttonAlter";
             this.buttonAlter.Size = new System.Drawing.Size(60, 25);
             this.buttonAlter.Text = "修改";
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
             // buttonDelete
             // 
@@ -167,22 +168,22 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 666);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 668);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1053, 38);
+            this.statusStrip1.Size = new System.Drawing.Size(1053, 36);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 33);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(110, 33);
+            this.labelStatus.Size = new System.Drawing.Size(110, 31);
             this.labelStatus.Text = "库存管理";
             // 
             // FormStockInfo

@@ -110,6 +110,8 @@ namespace WMS.UI
         private void Search(string key, string value)
         {
             this.labelStatus.Text = "正在搜索中...";
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
                 var wmsEntities = new WMSEntities();
@@ -121,8 +123,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    double tmp;
-                    if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                    if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
                     {
                         value = "'" + value + "'";
                     }
@@ -139,8 +140,11 @@ namespace WMS.UI
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
-                    var worksheet = this.reoGridControlMain.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    if(stockInfos.Length == 0)
+                    {
+                        worksheet[0, 0] = "没有查询到符合条件的记录";
+                    }
                     for (int i = 0; i < stockInfos.Length; i++)
                     {
                         StockInfo curStockInfo = stockInfos[i];
@@ -152,6 +156,11 @@ namespace WMS.UI
                     }
                 }));
             })).Start();
+        }
+
+        private void buttonAlter_Click(object sender, EventArgs e)
+        {
+            //new FormStockInfo().Show();
         }
     }
 }

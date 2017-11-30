@@ -165,7 +165,17 @@ namespace WMS.UI
 
         private void buttonSelect_Click(object sender, EventArgs e)
         {
-
+            
+            if (comboBoxSelect.SelectedIndex == 0)
+            {
+                Search(null, null);
+            }
+            else
+            {
+                string condition = this.comboBoxSelect.Text;
+                string value = this.textBoxSelect.Text;
+                Search(condition, value);
+            }
         }
     }
 }
