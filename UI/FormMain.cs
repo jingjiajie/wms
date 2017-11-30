@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormDelivery;
+using WMS.DataAccess;
 
 namespace WMS.UI
 {
@@ -17,6 +18,82 @@ namespace WMS.UI
         {
             InitializeComponent();
         }
+        public FormMain(string a, int b)
+        {
+            InitializeComponent();
+            labelUsername.Text = a;
+            string auth = "无";
+            if(b==2)
+            {
+                auth = "收货员";
+            }
+            if (b == 4)
+            {
+                auth = "发货员";
+            }
+            if (b == 8)
+            {
+                auth = "结算员";
+            }
+            if (b == 15)
+            {
+                auth = "管理员";
+            }
+            labelAuth.Text = auth;
+
+        }
+
+        private void HideBase()
+        {
+            treeViewLeft.Nodes[0].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[0].Nodes[0].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[0].Nodes[1].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[0].Nodes[2].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[0].Nodes[3].ForeColor = SystemColors.Control;
+        }
+        private void HideReceipt()
+        {
+            treeViewLeft.Nodes[1].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[1].Nodes[0].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[1].Nodes[1].ForeColor = SystemColors.Control;
+        }
+        private void HideDelivery()
+        {
+            treeViewLeft.Nodes[2].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[2].Nodes[0].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[2].Nodes[1].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[2].Nodes[2].ForeColor = SystemColors.Control;
+        }
+        private void HideStock()
+        {
+            treeViewLeft.Nodes[3].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[3].Nodes[0].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[3].Nodes[1].ForeColor = SystemColors.Control;
+            treeViewLeft.Nodes[3].Nodes[2].ForeColor = SystemColors.Control;
+        }
+
+        private void treeViewLeft_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (e.Node != null)
+            {
+                if (e.Node.ForeColor == SystemColors.Control)
+                {
+                    e.Cancel = true;  //不让选中禁用节点
+                }
+            }
+        }
+        private void treeViewLeft_BeforeCheck(object sender, TreeViewCancelEventArgs e)
+        {
+            if (e.Node != null)
+            {
+                if (e.Node.ForeColor == SystemColors.Control)
+                {
+                    e.Cancel = true; //不让选中禁用节点
+
+                }
+            }
+        }
+
         private void creatTreeList()
         {
             ////建立父节点
@@ -60,13 +137,26 @@ namespace WMS.UI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            panelLeft.Visible = false;
+            panelFill.Visible = false;
             //窗体大小根据显示屏改变
             int DeskWidth = Screen.PrimaryScreen.WorkingArea.Width;
             int DeskHeight = Screen.PrimaryScreen.WorkingArea.Height;
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
 
-            treeViewLeft.ExpandAll();//树形栏显示所有节点   
+            //下拉栏显示仓库
+            WMSEntities wms = new WMSEntities();
+            var allWare = (from s in wms.Warehouse select s).ToArray();
+            for (int i = 0; i < allWare.Count(); i++)
+            {
+                Warehouse ware = allWare[i];
+                comboBoxWarehouse.Items.Add(ware.Name);
+            }
+            
+            //MessageBox.Show("请选择仓库");
+
+
 
         }
 
@@ -193,6 +283,41 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formBaseStock);
                 formBaseStock.Show();
             }
+        }
+
+        private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            panelLeft.Visible = true;
+            panelFill.Visible = true;
+            treeViewLeft.ExpandAll();//树形栏显示所有节点   
+
+            //判断用户身份显示树节点
+            if (labelAuth.Text == "无")//游客
+                {
+                    HideBase();
+                    HideReceipt();
+                    HideDelivery();
+                    HideStock();
+                }
+            if (labelAuth.Text == "收货员")//收货员
+                {
+                    HideBase();
+                    HideDelivery();
+                    HideStock();
+                }
+            if (labelAuth.Text == "发货员")//发货员
+                {
+                    HideBase();
+                    HideReceipt();
+                    HideStock();
+                }
+            if (labelAuth.Text == "结算员")
+                {
+                    HideBase();
+                    HideReceipt();
+                    HideDelivery();
+                }
+
         }
     }
 }
