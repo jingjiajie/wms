@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
+
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormDelivery;
@@ -13,7 +15,11 @@ using WMS.DataAccess;
 namespace WMS.UI
 {
     public partial class FormMain : Form
-    {
+    { 
+
+
+        //private FormReceiptArrival formReceiptArrival = new FormReceiptArrival();
+        
         public FormMain()
         {
             InitializeComponent();
@@ -96,43 +102,7 @@ namespace WMS.UI
 
         private void creatTreeList()
         {
-            ////建立父节点
-            //TreeNode tn1 = treeViewLeft.Nodes.Add("基本信息");
-            //TreeNode tn2 = treeViewLeft.Nodes.Add("收货管理");
-            //TreeNode tn3 = treeViewLeft.Nodes.Add("发货管理");
-            //TreeNode tn4 = treeViewLeft.Nodes.Add("库存信息");
-            ////建立子节点-1
-            //TreeNode Jtn1 = treeViewLeft.Nodes.Add("用户管理");
-            //TreeNode Jtn2 = treeViewLeft.Nodes.Add("供应商");
-            //TreeNode Jtn3 = treeViewLeft.Nodes.Add("零件");
-            //TreeNode Jtn4 = treeViewLeft.Nodes.Add("仓库面积");
-            ////添加进父节点-1
-            //tn1.Nodes.Add(Jtn1);
-            //tn1.Nodes.Add(Jtn2);
-            //tn1.Nodes.Add(Jtn3);
-            //tn1.Nodes.Add(Jtn4);
-            ////建立子节点-2
-            //TreeNode Stn1 = treeViewLeft.Nodes.Add("到货管理");
-            //TreeNode Stn2 = treeViewLeft.Nodes.Add("上架管理");
-            ////添加进父节点-2
-            //tn2.Nodes.Add(Stn1);
-            //tn2.Nodes.Add(Stn2);
-            ////建立子节点-3
-            //TreeNode Ftn1 = treeViewLeft.Nodes.Add("发货单管理");
-            //TreeNode Ftn2 = treeViewLeft.Nodes.Add("作业单管理");
-            //TreeNode Ftn3 = treeViewLeft.Nodes.Add("出库单管理");
-            ////添加进父节点-3
-            //tn3.Nodes.Add(Ftn1);
-            //tn3.Nodes.Add(Ftn2);
-            //tn3.Nodes.Add(Ftn3);
-            ////建立子节点-4
-            //TreeNode Ktn1 = treeViewLeft.Nodes.Add("库存管理");
-            //TreeNode Ktn2 = treeViewLeft.Nodes.Add("库存日志");
-            //TreeNode Ktn3 = treeViewLeft.Nodes.Add("库存汇总");
-            ////添加进父节点-4
-            //tn4.Nodes.Add(Ktn1);
-            //tn4.Nodes.Add(Ktn2);
-            //tn4.Nodes.Add(Ktn3);
+ 
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -144,7 +114,9 @@ namespace WMS.UI
             int DeskHeight = Screen.PrimaryScreen.WorkingArea.Height;
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
+            //formReceiptArrival.InitComponents();
 
+<<<<<<< HEAD
             //下拉栏显示仓库
             WMSEntities wms = new WMSEntities();
             var allWare = (from s in wms.Warehouse select s).ToArray();
@@ -158,10 +130,19 @@ namespace WMS.UI
 
 
 
+=======
+            treeViewLeft.ExpandAll();//树形栏显示所有节点   
+            new Thread(new ThreadStart(() =>
+            {
+                var wmsEntities = new WMSEntities(); //初始化EF框架
+                wmsEntities.Database.Connection.Open(); //打开EF连接
+            })).Start();            
+>>>>>>> 0f14e23100174f6a587e1a919f0080154e9a07f1
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 0, IntPtr.Zero);
             if (treeViewLeft.SelectedNode.Text == "用户管理")
             {
                 this.panelRight.Controls.Clear();//清空
@@ -210,17 +191,6 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseWarehouse l = new FormBaseWarehouse();//实例化子窗口
-                l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                this.panelRight.Controls.Add(l);
-                l.Show();
-            }
-            if (treeViewLeft.SelectedNode.Text == "到货管理")
-            {
-                this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormReceiptArrival l = new FormReceiptArrival();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -228,6 +198,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
+          
             if (treeViewLeft.SelectedNode.Text == "上架管理")
             {
                 this.panelRight.Controls.Clear();//清空
@@ -283,6 +254,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formBaseStock);
                 formBaseStock.Show();
             }
+            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, IntPtr.Zero);
         }
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
