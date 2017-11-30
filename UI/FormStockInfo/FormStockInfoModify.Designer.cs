@@ -65,7 +65,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBoxReceiptStockDate = new System.Windows.Forms.TextBox();
+            this.textBoxStockDate = new System.Windows.Forms.TextBox();
             this.textBoxTargetStorageLocation = new System.Windows.Forms.TextBox();
             this.textBoxShipmentArea = new System.Windows.Forms.TextBox();
             this.textBoxPackagingToolCount = new System.Windows.Forms.TextBox();
@@ -89,9 +89,9 @@
             this.textBoxCarModel = new System.Windows.Forms.TextBox();
             this.textBoxBoxNo = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonModify = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -171,7 +171,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label9, 4, 2);
             this.tableLayoutPanel1.Controls.Add(this.label12, 4, 3);
             this.tableLayoutPanel1.Controls.Add(this.label15, 4, 4);
-            this.tableLayoutPanel1.Controls.Add(this.textBoxReceiptStockDate, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.textBoxStockDate, 5, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBoxTargetStorageLocation, 5, 1);
             this.tableLayoutPanel1.Controls.Add(this.textBoxShipmentArea, 5, 2);
             this.tableLayoutPanel1.Controls.Add(this.textBoxPackagingToolCount, 5, 3);
@@ -218,7 +218,7 @@
             this.textBoxProjectStageInfo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxProjectStageInfo.Name = "textBoxProjectStageInfo";
             this.textBoxProjectStageInfo.Size = new System.Drawing.Size(136, 38);
-            this.textBoxProjectStageInfo.TabIndex = 53;
+            this.textBoxProjectStageInfo.TabIndex = 26;
             // 
             // label20
             // 
@@ -260,7 +260,7 @@
             this.textBoxPlannedPackagingToolCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPlannedPackagingToolCount.Name = "textBoxPlannedPackagingToolCount";
             this.textBoxPlannedPackagingToolCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxPlannedPackagingToolCount.TabIndex = 31;
+            this.textBoxPlannedPackagingToolCount.TabIndex = 20;
             // 
             // textBoxRecycleBoxCount
             // 
@@ -269,7 +269,7 @@
             this.textBoxRecycleBoxCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxRecycleBoxCount.Name = "textBoxRecycleBoxCount";
             this.textBoxRecycleBoxCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxRecycleBoxCount.TabIndex = 31;
+            this.textBoxRecycleBoxCount.TabIndex = 16;
             // 
             // textBoxReceivingSpaceAreaCount
             // 
@@ -278,7 +278,7 @@
             this.textBoxReceivingSpaceAreaCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxReceivingSpaceAreaCount.Name = "textBoxReceivingSpaceAreaCount";
             this.textBoxReceivingSpaceAreaCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxReceivingSpaceAreaCount.TabIndex = 31;
+            this.textBoxReceivingSpaceAreaCount.TabIndex = 12;
             // 
             // textBoxPackagingUnit
             // 
@@ -287,7 +287,7 @@
             this.textBoxPackagingUnit.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPackagingUnit.Name = "textBoxPackagingUnit";
             this.textBoxPackagingUnit.Size = new System.Drawing.Size(136, 38);
-            this.textBoxPackagingUnit.TabIndex = 31;
+            this.textBoxPackagingUnit.TabIndex = 8;
             // 
             // textBoxManufatureDate
             // 
@@ -296,7 +296,7 @@
             this.textBoxManufatureDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxManufatureDate.Name = "textBoxManufatureDate";
             this.textBoxManufatureDate.Size = new System.Drawing.Size(136, 38);
-            this.textBoxManufatureDate.TabIndex = 31;
+            this.textBoxManufatureDate.TabIndex = 4;
             // 
             // label1
             // 
@@ -336,7 +336,7 @@
             this.textBoxUnacceptedProductAreaCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxUnacceptedProductAreaCount.Name = "textBoxUnacceptedProductAreaCount";
             this.textBoxUnacceptedProductAreaCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxUnacceptedProductAreaCount.TabIndex = 27;
+            this.textBoxUnacceptedProductAreaCount.TabIndex = 18;
             // 
             // textBoxReceiptTicketID
             // 
@@ -345,7 +345,7 @@
             this.textBoxReceiptTicketID.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxReceiptTicketID.Name = "textBoxReceiptTicketID";
             this.textBoxReceiptTicketID.Size = new System.Drawing.Size(136, 38);
-            this.textBoxReceiptTicketID.TabIndex = 3;
+            this.textBoxReceiptTicketID.TabIndex = 2;
             // 
             // label14
             // 
@@ -365,7 +365,7 @@
             this.textBoxNonOrderAreaCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxNonOrderAreaCount.Name = "textBoxNonOrderAreaCount";
             this.textBoxNonOrderAreaCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxNonOrderAreaCount.TabIndex = 25;
+            this.textBoxNonOrderAreaCount.TabIndex = 17;
             // 
             // label13
             // 
@@ -396,7 +396,7 @@
             this.textBoxExpireDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxExpireDate.Name = "textBoxExpireDate";
             this.textBoxExpireDate.Size = new System.Drawing.Size(136, 38);
-            this.textBoxExpireDate.TabIndex = 7;
+            this.textBoxExpireDate.TabIndex = 5;
             // 
             // label5
             // 
@@ -416,7 +416,7 @@
             this.textBoxShipmentAreaCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxShipmentAreaCount.Name = "textBoxShipmentAreaCount";
             this.textBoxShipmentAreaCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxShipmentAreaCount.TabIndex = 21;
+            this.textBoxShipmentAreaCount.TabIndex = 14;
             // 
             // textBoxWarehouseArea
             // 
@@ -425,7 +425,7 @@
             this.textBoxWarehouseArea.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxWarehouseArea.Name = "textBoxWarehouseArea";
             this.textBoxWarehouseArea.Size = new System.Drawing.Size(136, 38);
-            this.textBoxWarehouseArea.TabIndex = 9;
+            this.textBoxWarehouseArea.TabIndex = 6;
             // 
             // label11
             // 
@@ -445,7 +445,7 @@
             this.textBoxOverflowAreaCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxOverflowAreaCount.Name = "textBoxOverflowAreaCount";
             this.textBoxOverflowAreaCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxOverflowAreaCount.TabIndex = 19;
+            this.textBoxOverflowAreaCount.TabIndex = 12;
             // 
             // label7
             // 
@@ -476,7 +476,7 @@
             this.textBoxOverflowArea.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxOverflowArea.Name = "textBoxOverflowArea";
             this.textBoxOverflowArea.Size = new System.Drawing.Size(136, 38);
-            this.textBoxOverflowArea.TabIndex = 15;
+            this.textBoxOverflowArea.TabIndex = 10;
             // 
             // textBoxReceivingSpaceArea
             // 
@@ -485,7 +485,7 @@
             this.textBoxReceivingSpaceArea.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxReceivingSpaceArea.Name = "textBoxReceivingSpaceArea";
             this.textBoxReceivingSpaceArea.Size = new System.Drawing.Size(136, 38);
-            this.textBoxReceivingSpaceArea.TabIndex = 13;
+            this.textBoxReceivingSpaceArea.TabIndex = 9;
             // 
             // label10
             // 
@@ -508,7 +508,6 @@
             this.label3.Size = new System.Drawing.Size(88, 38);
             this.label3.TabIndex = 4;
             this.label3.Text = "存货日期";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label6
             // 
@@ -555,14 +554,14 @@
             this.label15.TabIndex = 28;
             this.label15.Text = "规划拖位";
             // 
-            // textBoxReceiptStockDate
+            // textBoxStockDate
             // 
-            this.textBoxReceiptStockDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxReceiptStockDate.Location = new System.Drawing.Point(580, 4);
-            this.textBoxReceiptStockDate.Margin = new System.Windows.Forms.Padding(4);
-            this.textBoxReceiptStockDate.Name = "textBoxReceiptStockDate";
-            this.textBoxReceiptStockDate.Size = new System.Drawing.Size(136, 38);
-            this.textBoxReceiptStockDate.TabIndex = 5;
+            this.textBoxStockDate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxStockDate.Location = new System.Drawing.Point(580, 4);
+            this.textBoxStockDate.Margin = new System.Windows.Forms.Padding(4);
+            this.textBoxStockDate.Name = "textBoxStockDate";
+            this.textBoxStockDate.Size = new System.Drawing.Size(136, 38);
+            this.textBoxStockDate.TabIndex = 3;
             // 
             // textBoxTargetStorageLocation
             // 
@@ -571,7 +570,7 @@
             this.textBoxTargetStorageLocation.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxTargetStorageLocation.Name = "textBoxTargetStorageLocation";
             this.textBoxTargetStorageLocation.Size = new System.Drawing.Size(136, 38);
-            this.textBoxTargetStorageLocation.TabIndex = 11;
+            this.textBoxTargetStorageLocation.TabIndex = 7;
             // 
             // textBoxShipmentArea
             // 
@@ -580,7 +579,7 @@
             this.textBoxShipmentArea.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxShipmentArea.Name = "textBoxShipmentArea";
             this.textBoxShipmentArea.Size = new System.Drawing.Size(136, 38);
-            this.textBoxShipmentArea.TabIndex = 17;
+            this.textBoxShipmentArea.TabIndex = 11;
             // 
             // textBoxPackagingToolCount
             // 
@@ -589,7 +588,7 @@
             this.textBoxPackagingToolCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPackagingToolCount.Name = "textBoxPackagingToolCount";
             this.textBoxPackagingToolCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxPackagingToolCount.TabIndex = 23;
+            this.textBoxPackagingToolCount.TabIndex = 15;
             // 
             // textBoxPlannedBoardCount
             // 
@@ -598,7 +597,7 @@
             this.textBoxPlannedBoardCount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxPlannedBoardCount.Name = "textBoxPlannedBoardCount";
             this.textBoxPlannedBoardCount.Size = new System.Drawing.Size(136, 38);
-            this.textBoxPlannedBoardCount.TabIndex = 29;
+            this.textBoxPlannedBoardCount.TabIndex = 19;
             // 
             // label16
             // 
@@ -648,7 +647,7 @@
             this.textBoxBoardNo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBoardNo.Name = "textBoxBoardNo";
             this.textBoxBoardNo.Size = new System.Drawing.Size(136, 38);
-            this.textBoxBoardNo.TabIndex = 51;
+            this.textBoxBoardNo.TabIndex = 21;
             // 
             // label23
             // 
@@ -686,7 +685,7 @@
             this.textBoxBatch.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBatch.Name = "textBoxBatch";
             this.textBoxBatch.Size = new System.Drawing.Size(136, 38);
-            this.textBoxBatch.TabIndex = 52;
+            this.textBoxBatch.TabIndex = 22;
             // 
             // textBoxStorageState
             // 
@@ -694,7 +693,7 @@
             this.textBoxStorageState.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxStorageState.Name = "textBoxStorageState";
             this.textBoxStorageState.Size = new System.Drawing.Size(136, 38);
-            this.textBoxStorageState.TabIndex = 54;
+            this.textBoxStorageState.TabIndex = 23;
             // 
             // textBoxManufactureNo
             // 
@@ -702,7 +701,7 @@
             this.textBoxManufactureNo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxManufactureNo.Name = "textBoxManufactureNo";
             this.textBoxManufactureNo.Size = new System.Drawing.Size(136, 38);
-            this.textBoxManufactureNo.TabIndex = 55;
+            this.textBoxManufactureNo.TabIndex = 24;
             // 
             // label26
             // 
@@ -740,7 +739,7 @@
             this.textBoxProjectInfo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxProjectInfo.Name = "textBoxProjectInfo";
             this.textBoxProjectInfo.Size = new System.Drawing.Size(136, 38);
-            this.textBoxProjectInfo.TabIndex = 56;
+            this.textBoxProjectInfo.TabIndex = 25;
             // 
             // textBoxRealRightProperty
             // 
@@ -748,7 +747,7 @@
             this.textBoxRealRightProperty.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxRealRightProperty.Name = "textBoxRealRightProperty";
             this.textBoxRealRightProperty.Size = new System.Drawing.Size(136, 38);
-            this.textBoxRealRightProperty.TabIndex = 57;
+            this.textBoxRealRightProperty.TabIndex = 27;
             // 
             // textBoxCarModel
             // 
@@ -756,7 +755,7 @@
             this.textBoxCarModel.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxCarModel.Name = "textBoxCarModel";
             this.textBoxCarModel.Size = new System.Drawing.Size(136, 38);
-            this.textBoxCarModel.TabIndex = 58;
+            this.textBoxCarModel.TabIndex = 28;
             // 
             // textBoxBoxNo
             // 
@@ -764,7 +763,7 @@
             this.textBoxBoxNo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBoxNo.Name = "textBoxBoxNo";
             this.textBoxBoxNo.Size = new System.Drawing.Size(136, 38);
-            this.textBoxBoxNo.TabIndex = 59;
+            this.textBoxBoxNo.TabIndex = 29;
             // 
             // label25
             // 
@@ -799,7 +798,7 @@
             this.buttonModify.Location = new System.Drawing.Point(383, 14);
             this.buttonModify.Name = "buttonModify";
             this.buttonModify.Size = new System.Drawing.Size(194, 44);
-            this.buttonModify.TabIndex = 1;
+            this.buttonModify.TabIndex = 30;
             this.buttonModify.Text = "修改库存信息";
             this.buttonModify.UseVisualStyleBackColor = true;
             this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
@@ -857,7 +856,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBoxExpireDate;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBoxReceiptStockDate;
+        private System.Windows.Forms.TextBox textBoxStockDate;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
