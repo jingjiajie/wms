@@ -69,5 +69,10 @@ namespace WMS.UI.FormBase
         {
             this.Close();
         }//关闭窗口
+
+        private void WarehouseID_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

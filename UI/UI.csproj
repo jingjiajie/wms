@@ -77,6 +77,12 @@
     <Compile Include="FormBase\FormBaseComponenAlter.Designer.cs">
       <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormBaseSupplier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseSupplier.designer.cs">
+      <DependentUpon>FormBaseSupplier.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\FormBaseSupplierAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,18 @@
     </Compile>
     <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierAdd.designer.cs">
+      <DependentUpon>FormSupplierAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierAlter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierAlter.designer.cs">
+      <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
@@ -142,12 +160,6 @@
     </Compile>
     <Compile Include="FormBase\FormBaseComponen.Designer.cs">
       <DependentUpon>FormBaseComponen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormBaseSupplier.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseSupplier.Designer.cs">
-      <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormBaseUser.cs">
       <SubType>Form</SubType>
@@ -221,6 +233,15 @@
     <EmbeddedResource Include="FormBase\FormBaseComponenAlter.resx">
       <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
+      <DependentUpon>FormBaseSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSupplierAdd.resx">
+      <DependentUpon>FormSupplierAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSupplierAlter.resx">
+      <DependentUpon>FormSupplierAlter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,9 +271,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseComponen.resx">
       <DependentUpon>FormBaseComponen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
-      <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseUser.resx">
       <DependentUpon>FormBaseUser.cs</DependentUpon>
