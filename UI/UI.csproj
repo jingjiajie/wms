@@ -89,6 +89,12 @@
     <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\FormAlterStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormAlterStock.Designer.cs">
+      <DependentUpon>FormAlterStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,19 +185,8 @@
     <Compile Include="FormReceipt\FormReceiptShelves.Designer.cs">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoModify.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
-      <DependentUpon>FormStockInfoModify.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
     <Compile Include="SMC2000M.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +208,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSM\BMS4200M.resx">
       <DependentUpon>BMS4200M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseComponenAdd.resx">
+      <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseComponenAlter.resx">
+      <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseSupplierAlter.resx">
+      <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormAlterStock.resx">
+      <DependentUpon>FormAlterStock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
@@ -259,9 +266,6 @@
     <EmbeddedResource Include="FormReceipt\FormReceiptShelves.resx">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoModify.resx">
-      <DependentUpon>FormStockInfoModify.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -272,10 +276,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="SMC2000M.resx">
       <DependentUpon>SMC2000M.cs</DependentUpon>
     </EmbeddedResource>
@@ -306,6 +306,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="icon\" />
+    <Folder Include="unvell\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
