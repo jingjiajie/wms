@@ -89,6 +89,18 @@
     <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockInfo\FormAlterStock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormAlterStock.Designer.cs">
+      <DependentUpon>FormAlterStock.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseComponenAlter.resx">
       <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseSupplierAlter.resx">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
