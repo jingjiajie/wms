@@ -27,9 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ID = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -74,35 +72,19 @@
             this.buttonClosing = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // ID
-            // 
-            this.ID.Location = new System.Drawing.Point(153, 60);
-            this.ID.Name = "ID";
-            this.ID.Size = new System.Drawing.Size(146, 21);
-            this.ID.TabIndex = 0;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 20);
+            this.label1.Location = new System.Drawing.Point(40, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 12);
             this.label1.TabIndex = 1;
             this.label1.Text = "请输入零件信息";
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 63);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "零件ID";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 92);
+            this.label3.Location = new System.Drawing.Point(40, 62);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 3;
@@ -111,7 +93,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 122);
+            this.label4.Location = new System.Drawing.Point(40, 92);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 4;
@@ -120,7 +102,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(40, 150);
+            this.label5.Location = new System.Drawing.Point(40, 120);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 12);
             this.label5.TabIndex = 5;
@@ -129,7 +111,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(40, 179);
+            this.label6.Location = new System.Drawing.Point(40, 149);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(29, 12);
             this.label6.TabIndex = 6;
@@ -138,7 +120,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(40, 207);
+            this.label7.Location = new System.Drawing.Point(40, 177);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(29, 12);
             this.label7.TabIndex = 7;
@@ -147,7 +129,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(40, 235);
+            this.label8.Location = new System.Drawing.Point(40, 205);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 12);
             this.label8.TabIndex = 8;
@@ -156,7 +138,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(40, 261);
+            this.label9.Location = new System.Drawing.Point(40, 231);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 12);
             this.label9.TabIndex = 9;
@@ -165,7 +147,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(40, 289);
+            this.label10.Location = new System.Drawing.Point(40, 259);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(107, 12);
             this.label10.TabIndex = 10;
@@ -174,7 +156,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(40, 314);
+            this.label11.Location = new System.Drawing.Point(40, 284);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 12);
             this.label11.TabIndex = 11;
@@ -272,63 +254,63 @@
             // 
             // WarehouseID
             // 
-            this.WarehouseID.Location = new System.Drawing.Point(153, 89);
+            this.WarehouseID.Location = new System.Drawing.Point(153, 59);
             this.WarehouseID.Name = "WarehouseID";
             this.WarehouseID.Size = new System.Drawing.Size(146, 21);
             this.WarehouseID.TabIndex = 22;
             // 
             // SupplierID
             // 
-            this.SupplierID.Location = new System.Drawing.Point(153, 120);
+            this.SupplierID.Location = new System.Drawing.Point(153, 90);
             this.SupplierID.Name = "SupplierID";
             this.SupplierID.Size = new System.Drawing.Size(146, 21);
             this.SupplierID.TabIndex = 23;
             // 
             // ContainerNo
             // 
-            this.ContainerNo.Location = new System.Drawing.Point(153, 147);
+            this.ContainerNo.Location = new System.Drawing.Point(153, 117);
             this.ContainerNo.Name = "ContainerNo";
             this.ContainerNo.Size = new System.Drawing.Size(146, 21);
             this.ContainerNo.TabIndex = 24;
             // 
             // Factroy
             // 
-            this.Factroy.Location = new System.Drawing.Point(153, 176);
+            this.Factroy.Location = new System.Drawing.Point(153, 146);
             this.Factroy.Name = "Factroy";
             this.Factroy.Size = new System.Drawing.Size(146, 21);
             this.Factroy.TabIndex = 25;
             // 
             // WorkPosition
             // 
-            this.WorkPosition.Location = new System.Drawing.Point(153, 204);
+            this.WorkPosition.Location = new System.Drawing.Point(153, 174);
             this.WorkPosition.Name = "WorkPosition";
             this.WorkPosition.Size = new System.Drawing.Size(146, 21);
             this.WorkPosition.TabIndex = 26;
             // 
             // No
             // 
-            this.No.Location = new System.Drawing.Point(153, 232);
+            this.No.Location = new System.Drawing.Point(153, 202);
             this.No.Name = "No";
             this.No.Size = new System.Drawing.Size(146, 21);
             this.No.TabIndex = 27;
             // 
             // Name1
             // 
-            this.Name1.Location = new System.Drawing.Point(153, 258);
+            this.Name1.Location = new System.Drawing.Point(153, 228);
             this.Name1.Name = "Name1";
             this.Name1.Size = new System.Drawing.Size(146, 21);
             this.Name1.TabIndex = 28;
             // 
             // SupplierType
             // 
-            this.SupplierType.Location = new System.Drawing.Point(153, 286);
+            this.SupplierType.Location = new System.Drawing.Point(153, 256);
             this.SupplierType.Name = "SupplierType";
             this.SupplierType.Size = new System.Drawing.Size(146, 21);
             this.SupplierType.TabIndex = 29;
             // 
             // Type
             // 
-            this.Type.Location = new System.Drawing.Point(153, 311);
+            this.Type.Location = new System.Drawing.Point(153, 281);
             this.Type.Name = "Type";
             this.Type.Size = new System.Drawing.Size(146, 21);
             this.Type.TabIndex = 30;
@@ -437,7 +419,7 @@
             this.buttonClosing.UseVisualStyleBackColor = true;
             this.buttonClosing.Click += new System.EventHandler(this.buttonClosing_Click);
             // 
-            // FormBaseComponentAdd
+            // FormBaseComponenAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -484,10 +466,8 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ID);
-            this.Name = "FormBaseComponentAdd";
+            this.Name = "FormBaseComponenAdd";
             this.Text = "零件添加";
             this.Load += new System.EventHandler(this.FormBaseComponenAdd_Load);
             this.ResumeLayout(false);
@@ -496,10 +476,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox ID;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

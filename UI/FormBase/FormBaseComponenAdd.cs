@@ -23,11 +23,6 @@ namespace WMS.UI.FormBase
         }
         private void buttonEnter_Click(object sender, EventArgs e)
         {
-            if (ID.Text == string.Empty)
-            {
-                MessageBox.Show("零件ID不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             if (WarehouseID.Text == string.Empty)
             {
                 MessageBox.Show("仓库ID不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -39,32 +34,31 @@ namespace WMS.UI.FormBase
                 return;
             }
             //添加
-            DataAccess.Component objuser = new DataAccess.Component();
-            {
-                objuser.ID = Convert.ToInt32(ID.Text);
-                objuser.WarehouseID = Convert.ToInt32(WarehouseID.Text);
-                objuser.SupplierID = Convert.ToInt32(SupplierID.Text);
-                objuser.ContainerNo = ContainerNo.Text;
-                objuser.Factroy = Factroy.Text;
-                objuser.WorkPosition = WorkPosition.Text;
-                objuser.No = No.Text;
-                objuser.Name = Name1.Text;
-                objuser.SupplierType = SupplierType.Text;
-                objuser.Type = Type.Text;
-                objuser.Size = Size.Text;
-                objuser.Category = Category.Text;
-                objuser.GroupPrincipal = GroupPrincipal.Text;
-                objuser.SingleCarUsageAmount = Convert.ToDecimal(SingleCarUsageAmount.Text);
-                objuser.ChargeBelow50000 = Convert.ToDecimal(ChargeBelow50000.Text);
-                objuser.ChargeAbove50000 = Convert.ToDecimal(ChargeAbove50000.Text);
-                objuser.InventoryRequirement1Day = Convert.ToDecimal(InventoryRequirement1Day.Text);
-                objuser.InventoryRequirement3Day = Convert.ToDecimal(InventoryRequirement3Day.Text);
-                objuser.InventoryRequirement5Day = Convert.ToDecimal(InventoryRequirement5Day.Text);
-                objuser.InventoryRequirement10Day = Convert.ToDecimal(InventoryRequirement10Day.Text);
+            DataAccess.Component objcomponen = new DataAccess.Component();
+            {                
+                objcomponen.WarehouseID = Convert.ToInt32(WarehouseID.Text);
+                objcomponen.SupplierID = Convert.ToInt32(SupplierID.Text);
+                objcomponen.ContainerNo = ContainerNo.Text;
+                objcomponen.Factroy = Factroy.Text;
+                objcomponen.WorkPosition = WorkPosition.Text;
+                objcomponen.No = No.Text;
+                objcomponen.Name = Name1.Text;
+                objcomponen.SupplierType = SupplierType.Text;
+                objcomponen.Type = Type.Text;
+                objcomponen.Size = Size.Text;
+                objcomponen.Category = Category.Text;
+                objcomponen.GroupPrincipal = GroupPrincipal.Text;
+                objcomponen.SingleCarUsageAmount = Convert.ToDecimal(SingleCarUsageAmount.Text);
+                objcomponen.ChargeBelow50000 = Convert.ToDecimal(ChargeBelow50000.Text);
+                objcomponen.ChargeAbove50000 = Convert.ToDecimal(ChargeAbove50000.Text);
+                objcomponen.InventoryRequirement1Day = Convert.ToDecimal(InventoryRequirement1Day.Text);
+                objcomponen.InventoryRequirement3Day = Convert.ToDecimal(InventoryRequirement3Day.Text);
+                objcomponen.InventoryRequirement5Day = Convert.ToDecimal(InventoryRequirement5Day.Text);
+                objcomponen.InventoryRequirement10Day = Convert.ToDecimal(InventoryRequirement10Day.Text);
 
             }
             WMSEntities wms = new WMSEntities();
-            wms.Component.Add(objuser);
+            wms.Component.Add(objcomponen);
             wms.SaveChanges();
             MessageBox.Show("添加零件成功");
             this.Close();

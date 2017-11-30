@@ -43,11 +43,7 @@ namespace WMS.UI.FormBase
 
         private void buttonEnter_Click(object sender, EventArgs e)
         {
-            if (ID.Text == string.Empty)
-            {
-                MessageBox.Show("零件ID不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            
             if (WarehouseID.Text == string.Empty)
             {
                 MessageBox.Show("仓库ID不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -61,16 +57,14 @@ namespace WMS.UI.FormBase
             //修改
             WMSEntities wms = new WMSEntities();
             DataAccess.Component objuser = (from s in wms.Component
-                            where s.ID == Convert.ToInt32(ID.Text)
+                            where s.Name == Name1.Text
                             select s).First();
-
-            objuser.WarehouseID = Convert.ToInt32(WarehouseID.Text);
+            
             objuser.SupplierID = Convert.ToInt32(SupplierID.Text);
             objuser.ContainerNo = ContainerNo.Text;
             objuser.Factroy = Factroy.Text;
             objuser.WorkPosition = WorkPosition.Text;
             objuser.No = No.Text;
-            objuser.Name = Name1.Text;
             objuser.SupplierType = SupplierType.Text;
             objuser.Type = Type.Text;
             objuser.Size = Size.Text;
@@ -85,7 +79,7 @@ namespace WMS.UI.FormBase
             objuser.InventoryRequirement10Day = Convert.ToDecimal(InventoryRequirement10Day.Text);
            
             wms.SaveChanges();
-            MessageBox.Show("添加零件成功");
+            MessageBox.Show("修改零件成功");
             this.Close();
         }
 
@@ -97,6 +91,7 @@ namespace WMS.UI.FormBase
         private void FormBaseComponenAlter_Load(object sender, EventArgs e)
         {
             ID.ReadOnly = true;//定义 只读
+            Name1.ReadOnly = true;//定义 只读
         }
     }
 }
