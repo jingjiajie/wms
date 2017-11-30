@@ -160,7 +160,8 @@ namespace WMS.UI
 
         private void buttonAlter_Click(object sender, EventArgs e)
         {
-            //new FormStockInfo().Show();
+            var wmsEntities = new WMSEntities();
+            new FormStockInfoModify((from s in wmsEntities.StockInfo select s).FirstOrDefault()).Show();
         }
     }
 }
