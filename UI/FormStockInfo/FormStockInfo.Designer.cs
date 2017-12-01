@@ -54,7 +54,7 @@
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
             this.reoGridControlMain.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -62,9 +62,9 @@
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 60;
+            this.reoGridControlMain.SheetTabWidth = 80;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(526, 324);
+            this.reoGridControlMain.Size = new System.Drawing.Size(701, 412);
             this.reoGridControlMain.TabIndex = 3;
             this.reoGridControlMain.Text = "reoGridControl1";
             this.reoGridControlMain.Click += new System.EventHandler(this.reoGridControlMain_Click);
@@ -84,7 +84,7 @@
             this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(526, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(701, 28);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -92,7 +92,7 @@
             // 
             this.labelSelect.Name = "labelSelect";
             this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(68, 25);
+            this.labelSelect.Size = new System.Drawing.Size(84, 25);
             this.labelSelect.Text = "查询条件：";
             // 
             // comboBoxSearchCondition
@@ -100,13 +100,14 @@
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(97, 28);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(128, 28);
+            this.comboBoxSearchCondition.Click += new System.EventHandler(this.comboBoxSearchCondition_Click);
             // 
             // textBoxSearchValue
             // 
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(146, 28);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(194, 28);
             // 
             // buttonSearch
             // 
@@ -158,7 +159,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
             // statusStrip1
@@ -167,34 +168,34 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 330);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 415);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 7, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(526, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 9, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(701, 25);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 17);
+            this.labelStatus.Size = new System.Drawing.Size(69, 20);
             this.labelStatus.Text = "库存管理";
             // 
             // FormStockInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 352);
+            this.ClientSize = new System.Drawing.Size(701, 440);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormStockInfo";
             this.Text = "FormStock";
             this.Load += new System.EventHandler(this.FormStockInfo_Load);

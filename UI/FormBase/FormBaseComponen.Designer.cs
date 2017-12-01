@@ -61,7 +61,7 @@
             this.toolStripButtonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(652, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(891, 28);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -69,7 +69,7 @@
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(68, 25);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // toolStripComboBoxSelect
@@ -77,12 +77,12 @@
             this.toolStripComboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(114, 28);
+            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(151, 28);
             // 
             // toolStripTextBoxSelect
             // 
             this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(151, 28);
+            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(200, 28);
             // 
             // toolStripButtonSelect
             // 
@@ -137,16 +137,16 @@
             this.reoGridControlComponen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlComponen.LeadHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2);
+            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reoGridControlComponen.Name = "reoGridControlComponen";
             this.reoGridControlComponen.RowHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Script = null;
             this.reoGridControlComponen.SheetTabContextMenuStrip = null;
             this.reoGridControlComponen.SheetTabNewButtonVisible = true;
             this.reoGridControlComponen.SheetTabVisible = true;
-            this.reoGridControlComponen.SheetTabWidth = 60;
+            this.reoGridControlComponen.SheetTabWidth = 80;
             this.reoGridControlComponen.ShowScrollEndSpacing = true;
-            this.reoGridControlComponen.Size = new System.Drawing.Size(652, 395);
+            this.reoGridControlComponen.Size = new System.Drawing.Size(891, 355);
             this.reoGridControlComponen.TabIndex = 3;
             this.reoGridControlComponen.Text = "reoGridControl1";
             this.reoGridControlComponen.Click += new System.EventHandler(this.reoGridControlUser_Click);
@@ -154,36 +154,37 @@
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 398);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 358);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(652, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(891, 25);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(43, 22);
             this.toolStripStatusLabel1.Text = "状态:";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 22);
+            this.labelStatus.Size = new System.Drawing.Size(69, 22);
             this.labelStatus.Text = "零件信息";
             // 
             // FormBaseComponent
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(652, 423);
+            this.ClientSize = new System.Drawing.Size(891, 383);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.reoGridControlComponen);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormBaseComponent";
             this.Text = "零件信息";
             this.Load += new System.EventHandler(this.FormBaseComponent_Load);

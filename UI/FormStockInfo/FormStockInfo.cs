@@ -174,5 +174,10 @@ namespace WMS.UI
             int stockInfoID = Convert.ToInt32(worksheet[worksheet.SelectionRange.Row, 0]);
             new FormStockInfoModify(stockInfoID).Show();
         }
+
+        private void comboBoxSearchCondition_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
