@@ -35,7 +35,7 @@ namespace WMS.UI.FormBase
             }
             //添加
             DataAccess.Component objcomponen = new DataAccess.Component();
-            {                
+            {
                 objcomponen.WarehouseID = Convert.ToInt32(WarehouseID.Text);
                 objcomponen.SupplierID = Convert.ToInt32(SupplierID.Text);
                 objcomponen.ContainerNo = ContainerNo.Text;
