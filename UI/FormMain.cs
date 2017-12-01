@@ -48,6 +48,31 @@ namespace WMS.UI
             labelAuth.Text = auth;
 
         }
+        private void ShowAllSubNodes(TreeNode node)
+        {
+            foreach (TreeNode curSubNode in node.Nodes)
+            {
+                curSubNode.ForeColor = Color.Black;
+                this.ShowAllSubNodes(curSubNode);
+            }
+        }
+
+        private void ShowAll()
+        {
+            foreach (TreeNode curNode in this.treeViewLeft.Nodes)
+            {
+                curNode.ForeColor = Color.Black;
+                this.ShowAllSubNodes(curNode);
+            }
+        }
+
+        private void HideAll()
+        {
+            this.HideBase();
+            this.HideDelivery();
+            this.HideReceipt();
+            this.HideStock();
+        }
 
         private void HideBase()
         {
@@ -107,8 +132,11 @@ namespace WMS.UI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            panelLeft.Visible = false;
-            panelFill.Visible = false;
+            //panelLeft.Visible = false;
+            //panelFill.Visible = false;
+
+            this.HideAll();
+
             //窗体大小根据显示屏改变
             int DeskWidth = Screen.PrimaryScreen.WorkingArea.Width;
             int DeskHeight = Screen.PrimaryScreen.WorkingArea.Height;
@@ -257,11 +285,12 @@ namespace WMS.UI
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            panelLeft.Visible = true;
-            panelFill.Visible = true;
+            //panelLeft.Visible = true;
+            //panelFill.Visible = true;
             treeViewLeft.ExpandAll();//树形栏显示所有节点   
 
             //判断用户身份显示树节点
+            this.ShowAll();
             if (labelAuth.Text == "无")//游客
                 {
                     HideBase();

@@ -22,7 +22,7 @@ namespace WMS.UI
         private void FormStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.Search(null, null);
+            this.Search();
         }
 
         private void InitComponents()
@@ -55,24 +55,22 @@ namespace WMS.UI
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            if(this.comboBoxSearchCondition.SelectedIndex == 0)
-            {
-                this.Search(null,null);
-                return;
-            }
-            else
-            {
-                string key = (from kn in StockInfoMetaData.KeyNames
-                              where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
-                              select kn.Key).First();
-                string value = this.textBoxSearchValue.Text;
-                this.Search(key, value);
-                return;
-            }
+            this.Search();
         }
 
-        private void Search(string key, string value)
+        private void Search()
         {
+            string key = null;
+            string value = null;
+
+            if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            {
+                key = (from kn in StockInfoMetaData.KeyNames
+                              where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
+                              select kn.Key).First();
+                value = this.textBoxSearchValue.Text;
+            }
+
             this.labelStatus.Text = "正在搜索中...";
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet[0, 0] = "加载中...";
@@ -132,7 +130,12 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int stockInfoID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                new FormStockInfoModify(stockInfoID).Show();
+                var formStockInfoModify = new FormStockInfoModify(stockInfoID);
+                formStockInfoModify.SetModifyFinishedCallback(()=>
+                {
+                    this.Search();
+                });
+                formStockInfoModify.Show();
             }
             catch
             {

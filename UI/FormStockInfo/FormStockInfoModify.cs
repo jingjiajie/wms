@@ -15,6 +15,7 @@ namespace WMS.UI
     {
         private int stockInfoID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
+        private Action modifyFinishedCallback = null;
 
         public FormStockInfoModify(int stockInfoID)
         {
@@ -51,8 +52,17 @@ namespace WMS.UI
 
             //更新数据库
             wmsEntities.SaveChanges();
+            if(this.modifyFinishedCallback != null)
+            {
+                this.modifyFinishedCallback(); //调用修改完成的回调函数
+            }
             MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
+        }
+
+        public void SetModifyFinishedCallback(Action callback)
+        {
+            this.modifyFinishedCallback = callback;
         }
     }
 }

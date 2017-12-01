@@ -60,5 +60,29 @@ namespace WMS.UI
         {
             this.Close();
         }
+
+        private void textBoxUsername_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxUsername_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13) 
+            {
+                this.textBoxPassword.Focus();
+                this.textBoxPassword.SelectAll();
+                return;
+            }
+        }
+
+        private void textBoxPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                this.buttonEnter.PerformClick();
+                return;
+            }
+        }
     }
 }

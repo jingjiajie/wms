@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReceiptShelves));
-            //this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
+            this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
