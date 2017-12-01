@@ -45,8 +45,7 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].Text = StockInfoMetaData.KeyNames[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = StockInfoMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoMetaData.KeyNames.Length;
-            Console.WriteLine("表格行数："+StockInfoMetaData.KeyNames.Length);
+            worksheet.Columns = StockInfoMetaData.KeyNames.Length; //限制表的长度
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)
