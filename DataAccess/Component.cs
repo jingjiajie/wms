@@ -14,6 +14,8 @@ namespace WMS.DataAccess
     
     public partial class Component
     {
+        public string key;
+
         public Component()
         {
             this.ComponentShipmentInfo = new HashSet<ComponentShipmentInfo>();
