@@ -143,5 +143,10 @@ namespace WMS.UI
                 return;
             }
         }
+
+        private void comboBoxSearchCondition_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -8,605 +8,169 @@ using System.Text;
 using System.Windows.Forms;
 using unvell.ReoGrid;
 using WMS.DataAccess;
+using System.Threading;
 
 namespace WMS.UI
 {
     public partial class FormBaseSupplier : Form
     {
+        class KeyName
+        {
+            public string Key;
+            public string Name;
+            public bool Visible = true;
+        }
+
+        private KeyName[] keyNames = {
+            new KeyName(){Key="ID",Name="ID",Visible=false},
+            new KeyName(){Key="Name",Name="供货商名称"},
+            new KeyName(){Key="WarehouseID",Name="仓库ID"},
+            new KeyName(){Key="ContractNo",Name="合同编码"},
+            new KeyName(){Key="StartDate",Name="起始有效日期"},
+            new KeyName(){Key="EndDate",Name="结束有效日期"},
+            new KeyName(){Key="InvoiceDate",Name="开票日期"},
+            new KeyName(){Key="BalanceDate",Name="结算日期"},
+            new KeyName(){Key="FullName",Name="供货商全称"},
+            new KeyName(){Key="TaxpayerNumber",Name="纳税人识别号"},
+            new KeyName(){Key="Address",Name="地址"},
+            new KeyName(){Key="Tel",Name="电话"},
+            new KeyName(){Key="BankName",Name="开户行"},
+            new KeyName(){Key="BankAccount",Name="帐号"},
+            new KeyName(){Key="BankNo",Name="开户行行号"},
+            new KeyName(){Key="ZipCode",Name="邮编"},
+            new KeyName(){Key="RecipientName",Name="收件人"},
+
+         };
+
+
+        private void InitSupplier ()
+        {
+            string[] visibleColumnNames = (from kn in this.keyNames
+                                           where kn.Visible == true
+                                           select kn.Name).ToArray();
+
+            //初始化
+            this.toolStripComboBoxSelect.Items.Add("无");
+            this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
+            this.toolStripComboBoxSelect.SelectedIndex = 0;
+
+
+            //初始化表格
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            for (int i = 0; i < this.keyNames.Length; i++)
+            {
+                worksheet.ColumnHeaders[i].Text = this.keyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = this.keyNames[i].Visible;
+            }
+            worksheet.Columns = this.keyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + this.keyNames.Length);
+        }
+
+
+
+
         public FormBaseSupplier()
         {
             InitializeComponent();
+            
         }
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
-            showreoGridControl();//显示所有数据
-           
-            toolStripComboBoxSelect.Items.Add("供应商名称");
-            toolStripComboBoxSelect.Items.Add("合同编码");
-            toolStripComboBoxSelect.Items.Add("起始有效日期");
-            toolStripComboBoxSelect.Items.Add("结束有效日期");
-            toolStripComboBoxSelect.Items.Add("开票日期");
-            toolStripComboBoxSelect.Items.Add("结算日期");
-            toolStripComboBoxSelect.Items.Add("供货商全称");
-            toolStripComboBoxSelect.Items.Add("纳税人识别号");
-            toolStripComboBoxSelect.Items.Add("地址");
-            toolStripComboBoxSelect.Items.Add("电话");
-            toolStripComboBoxSelect.Items.Add("开户行");
-            toolStripComboBoxSelect.Items.Add("账号");
-            toolStripComboBoxSelect.Items.Add("开户行行号");
-            toolStripComboBoxSelect.Items.Add("邮编");
-            toolStripComboBoxSelect.Items.Add("收件人");
-
+            InitSupplier();
+            this.Search(null, null);
+         
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             FormSupplier.FormSupplierAdd  ad = new FormSupplier.FormSupplierAdd(); ;
             ad.ShowDialog();
-            fresh();
+            this.Search(null, null);
         }
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
-           
-            if (toolStripComboBoxSelect.Text == "供应商名称" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchnameReoGridControl();
-            }
-            
-            if (toolStripComboBoxSelect.Text == "合同编码" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchcontractidReoGridControl();
-            }
-            if (toolStripComboBoxSelect.Text == "起始有效日期" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchstartdateReoGridControl();
-            }
-            if (toolStripComboBoxSelect.Text == "结束有效日期" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchenddateReoGridControl();
-            }
-            if (toolStripComboBoxSelect.Text == "开票日期" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchinvoicedateReoGridControl();
-            }
-            if (toolStripComboBoxSelect.Text == "结算日期" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchbalancedateReoGridControl();
 
-            }
-            if (toolStripComboBoxSelect.Text == "供货商全称" && toolStripTextBoxSelect.Text != string.Empty)
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
             {
-                searchfullnameReoGridControl();
-
+                this.Search(null, null);
+                return;
             }
-            if (toolStripComboBoxSelect.Text == "纳税人识别号" && toolStripTextBoxSelect.Text != string.Empty)
+            else
             {
-                searchtaxnumReoGridControl();
+                string key = (from kn in this.keyNames
+                              where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+                              select kn.Key).First();
+                string value = this.toolStripTextBoxSelect.Text;
+                this.Search(key, value);
+                return;
+            }
 
 
-            }
-            if (toolStripComboBoxSelect.Text == "地址" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchadrressReoGridControl();
-
-            }
-            if (toolStripComboBoxSelect.Text == "电话" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchtelReoGridControl();
-
-            }
-            if (toolStripComboBoxSelect.Text == "开户行" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchbanknameReoGridControl();
-
-            }
-            if (toolStripComboBoxSelect.Text == "账号" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchbankaccReoGridControl();
-
-            }
-            if (toolStripComboBoxSelect.Text == "开户行行号" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchbanknoReoGridControl();
-
-            }
-            if (toolStripComboBoxSelect.Text == "邮编" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchzipcodeReoGridControl();
-
-            }
-            if (toolStripComboBoxSelect.Text == "收件人" && toolStripTextBoxSelect.Text != string.Empty)
-            {
-                searchrecnameReoGridControl();
-
-            }
         }
-       
 
+        private void Search(string key, string value)
 
-        private void searchnameReoGridControl()
         {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var name = (from s in wms.Supplier
-                      where s.Name == toolStripTextBoxSelect.Text
-                      select s).ToArray();
-
-            for (int i = 0; i < name.Count(); i++)
+            this.labelStatus.Text = "正在搜索中...";
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            worksheet[0, 0] = "加载中...";
+            new Thread(new ThreadStart(() =>
             {
-                Supplier supplierb = new Supplier();
-               
-                worksheet1[i, 0] = supplierb.Name;              
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
+                var wmsEntities = new WMSEntities();
 
+                DataAccess.Supplier[] Supplier = null;
+                if (key == null || value == null) //查询条件为null则查询全部内容
+                {
+                    Supplier = wmsEntities.Database.SqlQuery<DataAccess.Supplier>("SELECT * FROM Supplier").ToArray();
+                }
+                else
+                {
+                    if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
+                    {
+                        value = "'" + value + "'";
+                    }
+                    try
+                    {
+                        Supplier = wmsEntities.Database.SqlQuery<DataAccess.Supplier>(String.Format("SELECT * FROM Supplier WHERE {0} = {1}", key, value)).ToArray();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
 
-        private void searchcontractidReoGridControl()
-        {
-
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var wid = (from s in wms.Supplier
-                       where s.WarehouseID == Convert.ToInt32(toolStripTextBoxSelect.Text)
-                       select s).ToArray();
-
-            for (int i = 0; i < wid.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-
-
+                this.reoGridControlUser.Invoke(new Action(() =>
+                {
+                    this.labelStatus.Text = "搜索完成";
+                    worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    if (Supplier.Length == 0)
+                    {
+                        worksheet[1, 1] = "没有查询到符合条件的记录";
+                    }
+                    for (int i = 0; i < Supplier.Length; i++)
+                    {
+                        DataAccess.Supplier curComponent = Supplier[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in this.keyNames select kn.Key).ToArray());
+                        for (int j = 0; j < keyNames.Length; j++)
+                        {
+                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                        }
+                    }
+                }));
+            })).Start();
         }
 
 
 
-        private void searchstartdateReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var sd = (from s in wms.Supplier
-                        where s.StartDate == Convert.ToDateTime(toolStripTextBoxSelect.Text)
-                        select s).ToArray();
-
-            for (int i = 0; i < sd.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-
-        private void searchenddateReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var ed = (from s in wms.Supplier
-                      where s.EndDate == Convert.ToDateTime(toolStripTextBoxSelect.Text)
-                      select s).ToArray();
-
-            for (int i = 0; i < ed.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-
-        private void searchinvoicedateReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var ind = (from s in wms.Supplier
-                       where s.InvoiceDate == Convert.ToDateTime(toolStripTextBoxSelect.Text)
-                       select s).ToArray();
-
-            for (int i = 0; i < ind.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        private void searchbalancedateReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var bad = (from s in wms.Supplier
-                       where s.BalanceDate == Convert.ToDateTime(toolStripTextBoxSelect.Text)
-                       select s).ToArray();
-
-            for (int i = 0; i < bad.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        private void searchfullnameReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var fname = (from s in wms.Supplier
-                        where s.FullName  == toolStripTextBoxSelect.Text
-                        select s).ToArray();
-
-            for (int i = 0; i < fname.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        private void searchtaxnumReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                         where s.TaxpayerNumber == toolStripTextBoxSelect.Text
-                         select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        private void searchadrressReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                          where s.Address == toolStripTextBoxSelect.Text
-                          select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        private void searchtelReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                          where s.Tel  == toolStripTextBoxSelect.Text
-                          select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        private void searchbanknameReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                          where s.BankName == toolStripTextBoxSelect.Text
-                          select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-        private void searchbankaccReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                          where s.BankAccount == toolStripTextBoxSelect.Text
-                          select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-        private void searchbanknoReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                          where s.BankNo == toolStripTextBoxSelect.Text
-                          select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        private void searchzipcodeReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                          where s.ZipCode == toolStripTextBoxSelect.Text
-                          select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-        private void searchrecnameReoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            WMSEntities wms = new WMSEntities();
-
-            var taxnum = (from s in wms.Supplier
-                          where s.RecipientName == toolStripTextBoxSelect.Text
-                          select s).ToArray();
-
-            for (int i = 0; i < taxnum.Count(); i++)
-            {
-                Supplier supplierb = new Supplier();
-                worksheet1[i, 0] = supplierb.Name;
-                worksheet1[i, 1] = supplierb.ContractNo;
-                worksheet1[i, 2] = supplierb.StartDate;
-                worksheet1[i, 3] = supplierb.EndDate;
-                worksheet1[i, 4] = supplierb.InvoiceDate;
-                worksheet1[i, 5] = supplierb.BalanceDate;
-                worksheet1[i, 6] = supplierb.FullName;
-                worksheet1[i, 7] = supplierb.TaxpayerNumber;
-                worksheet1[i, 8] = supplierb.Address;
-                worksheet1[i, 9] = supplierb.Tel;
-                worksheet1[i, 10] = supplierb.BankName;
-                worksheet1[i, 11] = supplierb.BankAccount;
-                worksheet1[i, 12] = supplierb.BankNo;
-                worksheet1[i, 13] = supplierb.ZipCode;
-                worksheet1[i, 14] = supplierb.RecipientName;
-            }
-        }
-
-        
 
 
 
 
-
-        
+         
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
@@ -649,66 +213,11 @@ namespace WMS.UI
             FormSupplier.FormSupplierAlter  Al=new FormSupplier.FormSupplierAlter (a2, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17);
             
             Al.ShowDialog();
-            fresh();
+            this.Search(null, null);
         }
 
-        private void showreoGridControl()
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-
-            worksheet1.ColumnHeaders[0].Text = "供货商名称";
-            worksheet1.ColumnHeaders[1].Text = "合同编码";
-            worksheet1.ColumnHeaders[2].Text = "起始有效日期";
-            worksheet1.ColumnHeaders[3].Text = "结束有效日期";
-            worksheet1.ColumnHeaders[4].Text = "开票日期";
-            worksheet1.ColumnHeaders[5].Text = "结算日期";
-            worksheet1.ColumnHeaders[6].Text = "供货商全称";
-            worksheet1.ColumnHeaders[7].Text = "纳税人识别号";
-            worksheet1.ColumnHeaders[8].Text = "地址";
-            worksheet1.ColumnHeaders[9].Text = "电话";
-            worksheet1.ColumnHeaders[10].Text = "开户行";
-            worksheet1.ColumnHeaders[11].Text = "帐号";
-            worksheet1.ColumnHeaders[12].Text = "开户行行号";
-            worksheet1.ColumnHeaders[13].Text = "邮编";
-            worksheet1.ColumnHeaders[14].Text = "收件人";
-            
-
-            WMSEntities wms = new WMSEntities();
-            var allSupplier = (from s in wms.Supplier select s).ToArray();
-            for (int i = 0; i < allSupplier.Count(); i++)
-            {
-                Supplier supplier = allSupplier[i];
-
-                worksheet1[i, 0] =supplier.Name  ;
-                worksheet1[i, 1] = supplier.ContractNo ;
-                worksheet1[i, 2] = supplier.StartDate;
-                worksheet1[i, 3] = supplier.EndDate;
-                worksheet1[i, 4] = supplier.InvoiceDate;
-                worksheet1[i, 5] = supplier.BalanceDate;
-                worksheet1[i, 6] = supplier.FullName;
-                worksheet1[i, 7] = supplier.TaxpayerNumber;
-                worksheet1[i, 8] = supplier.Address;
-                worksheet1[i, 9] = supplier.Tel;
-                worksheet1[i, 10] = supplier.BankName;
-                worksheet1[i, 11] =supplier.BankAccount;
-                worksheet1[i, 12] = supplier.BankNo;
-                worksheet1[i, 13] = supplier.ZipCode;
-                worksheet1[i, 14] = supplier.RecipientName;
-                worksheet1[i, 15] = supplier.ID;
-
-
-
-            }
-        }//显示
-
-        private void fresh()//刷新表格
-        {
-            ReoGridControl grid = this.reoGridControlUser;
-            var worksheet1 = grid.Worksheets[0];
-            worksheet1.Reset();
-            showreoGridControl();//显示所有数据
-        }
+     
+     
 
 
 
@@ -734,7 +243,13 @@ namespace WMS.UI
 
             wms.SaveChanges();
             worksheet1.Reset();
-            showreoGridControl();//显示所有数据
+            //showreoGridControl();//显示所有数据
+            this.Search(null, null);//显示所有数据
+        }
+
+        private void reoGridControlUser_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
