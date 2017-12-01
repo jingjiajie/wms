@@ -203,6 +203,7 @@
     <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\StockInfoMetaData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMC2000M.cs">
