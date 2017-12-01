@@ -14,46 +14,6 @@ namespace WMS.UI
 {
     public partial class FormStockInfo : Form
     {
-        class KeyName
-        {
-            public string Key;
-            public string Name;
-            public bool Visible = true;
-        }
-
-        private KeyName[] keyNames = {
-            new KeyName(){Key="ID",Name="ID",Visible=false},
-            new KeyName(){Key="ComponentID",Name="零件ID"},
-            new KeyName(){Key="ReceiptTicketID",Name="收货单ID"},
-            new KeyName(){Key="StockDate",Name="存货日期"},
-            new KeyName(){Key="ManufatureDate",Name="生产日期"},
-            new KeyName(){Key="ExpireDate",Name="失效日期"},
-            new KeyName(){Key="WarehouseArea",Name="库区"},
-            new KeyName(){Key="TargetStorageLocation",Name="目标库位"},
-            new KeyName(){Key="PackagingUnit",Name="包装单位"},
-            new KeyName(){Key="ReceivingSpaceArea",Name="收货区 库位"},
-            new KeyName(){Key="OverflowArea",Name="溢库区 库位"},
-            new KeyName(){Key="ShipmentArea",Name="出库区 库位"},
-            new KeyName(){Key="ReceivingSpaceAreaCount",Name="收货区数量"},
-            new KeyName(){Key="OverflowAreaCount",Name="溢库区数量"},
-            new KeyName(){Key="ShipmentAreaCount",Name="出货区数量"},
-            new KeyName(){Key="PackagingToolCount",Name="翻包器具数量"},
-            new KeyName(){Key="RecycleBoxCount",Name="回收箱体"},
-            new KeyName(){Key="NonOrderAreaCount",Name="无订单区"},
-            new KeyName(){Key="UnacceptedProductAreaCount",Name="不合格品区"},
-            new KeyName(){Key="PlannedBoardCount",Name="规划拖位"},
-            new KeyName(){Key="PlannedPackagingToolCount",Name="规划翻包器具数量"},
-            new KeyName(){Key="BoardNo",Name="托盘号"},
-            new KeyName(){Key="Batch",Name="批次"},
-            new KeyName(){Key="StorageState",Name="库存状态"},
-            new KeyName(){Key="ManufactureNo",Name="厂商批号"},
-            new KeyName(){Key="ProjectInfo",Name="项目信息"},
-            new KeyName(){Key="ProjectStageInfo",Name="项目阶段信息"},
-            new KeyName(){Key="RealRightProperty",Name="物权属性"},
-            new KeyName(){Key="CarModel",Name="车型"},
-            new KeyName(){Key="BoxNo",Name="箱号"},
-        };
-
         public FormStockInfo()
         {
             InitializeComponent();
@@ -67,7 +27,7 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in this.keyNames
+            string[] visibleColumnNames = (from kn in StockInfoMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -80,13 +40,12 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < this.keyNames.Length; i++)
+            for (int i = 0; i < StockInfoMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = this.keyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = this.keyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = this.keyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数："+this.keyNames.Length);
+            worksheet.Columns = StockInfoMetaData.KeyNames.Length; //限制表的长度
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)
@@ -103,7 +62,7 @@ namespace WMS.UI
             }
             else
             {
-                string key = (from kn in this.keyNames
+                string key = (from kn in StockInfoMetaData.KeyNames
                               where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
                               select kn.Key).First();
                 string value = this.textBoxSearchValue.Text;
@@ -153,7 +112,7 @@ namespace WMS.UI
                     for (int i = 0; i < stockInfos.Length; i++)
                     {
                         StockInfo curStockInfo = stockInfos[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfo, (from kn in this.keyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfo, (from kn in StockInfoMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
@@ -166,13 +125,20 @@ namespace WMS.UI
         private void buttonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            if(worksheet.SelectionRange.Rows != 1)
+            try
             {
-                MessageBox.Show("请选择一项进行修改","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int stockInfoID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                new FormStockInfoModify(stockInfoID).Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            int stockInfoID = Convert.ToInt32(worksheet[worksheet.SelectionRange.Row, 0]);
-            new FormStockInfoModify(stockInfoID).Show();
         }
 
         private void comboBoxSearchCondition_Click(object sender, EventArgs e)
