@@ -48,6 +48,9 @@
             this.labelPsaaword.Size = new System.Drawing.Size(96, 36);
             this.labelPsaaword.TabIndex = 7;
             this.labelPsaaword.Text = "密码：";
+            this.labelPsaaword.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
+            this.labelPsaaword.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
+            this.labelPsaaword.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
             // 
             // labelusername
             // 
@@ -60,6 +63,9 @@
             this.labelusername.Size = new System.Drawing.Size(123, 36);
             this.labelusername.TabIndex = 6;
             this.labelusername.Text = "用户名：";
+            this.labelusername.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
+            this.labelusername.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
+            this.labelusername.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
             // 
             // textBoxPassword
             // 
@@ -118,6 +124,9 @@
             this.label1.Size = new System.Drawing.Size(716, 72);
             this.label1.TabIndex = 10;
             this.label1.Text = "安途丰达WMS物流管理系统";
+            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
+            this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
+            this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
             // 
             // FormLogin
             // 
@@ -137,6 +146,9 @@
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormLogin";
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
             this.ResumeLayout(false);
             this.PerformLayout();
 
