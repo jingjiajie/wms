@@ -148,5 +148,15 @@ namespace WMS.UI
         {
 
         }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

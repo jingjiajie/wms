@@ -95,6 +95,12 @@
     <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormSupplierModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierModify.Designer.cs">
+      <DependentUpon>FormSupplierModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\FormSupplierAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,7 @@
     <Compile Include="FormBase\FormSupplierAlter.designer.cs">
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\SupplierMetaData.cs" />
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
+      <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSupplierAdd.resx">
       <DependentUpon>FormSupplierAdd.cs</DependentUpon>
