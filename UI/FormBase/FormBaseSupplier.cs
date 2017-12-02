@@ -9,11 +9,13 @@ using System.Windows.Forms;
 using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
     public partial class FormBaseSupplier : Form
     {
+        private WMSEntities wmsEntities = new WMSEntities();
         public FormBaseSupplier()
         {
             InitializeComponent();
@@ -59,9 +61,14 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            FormSupplier.FormSupplierAdd  ad = new FormSupplier.FormSupplierAdd(); ;
-            ad.ShowDialog();
-            this.Search();
+            var a1  = new FormSupplierModify();
+            a1.SetMode(FormMode.ADD);
+
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.Search();
+            });
+            a1.Show();  
         }
 
 
@@ -70,10 +77,6 @@ namespace WMS.UI
         {
 
             this.Search();
-
-
-
-
         }
 
         private void Search()
@@ -85,26 +88,27 @@ namespace WMS.UI
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                key = (from kn in StockInfoMetaData.KeyNames
-                       where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.toolStripComboBoxSelect.Text;
+                key = (from kn in SupplierInfoMetaData.KeyNames
+                               where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+                               select kn.Key).First();
+                value = this.toolStripTextBoxSelect.Text;
             }
             this.labelStatus.Text = "正在搜索中...";
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                var wmsEntities = new WMSEntities();
+                
 
                 DataAccess.Supplier[] Supplier = null;
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
                     Supplier = wmsEntities.Database.SqlQuery<DataAccess.Supplier>("SELECT * FROM Supplier").ToArray();
+                    
                 }
                 else
                 {
-                    if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
+                    if (decimal.TryParse(value, out decimal result) == false)
                     {
                         value = "'" + value + "'";
                     }
@@ -131,7 +135,7 @@ namespace WMS.UI
                     {
                         DataAccess.Supplier curComponent = Supplier[i];
                         object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierInfoMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < SupplierInfoMetaData.KeyNames.Length; j++)
+                        for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
@@ -173,36 +177,50 @@ namespace WMS.UI
 
         }
 
-     
-     
+
+
 
 
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-           // ReoGridControl grid = this.reoGridControlUser;
-           // var worksheet1 = grid.Worksheets[0];
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
+            new Thread(new ThreadStart(() =>
+            {
+                foreach (int id in deleteIDs)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @stockInfoID", new SqlParameter("stockInfoID", id));
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+            })).Start();
 
-           // worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
 
-           // string str = worksheet1.SelectionRange.ToRelativeAddress();//返回选中地址串
-           // int start = 2, length = 1;
-           // //MessageBox.Show(str.Substring(start - 1, length));//返回行数
-           // int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
-
-           // string usrname = worksheet1[i - 1, 0].ToString();
-
-           // WMSEntities wms = new WMSEntities();
-           //Supplier supplier = (from s in wms.Supplier
-           //                   where s.Name== usrname
-           //                   select s).First<Supplier>();
-           // wms.Supplier.Remove(supplier);//删除
-
-           // wms.SaveChanges();
-           // worksheet1.Reset();
-           // //showreoGridControl();//显示所有数据
-           // this.Search();//显示所有数据
         }
+        
 
         private void reoGridControlUser_Click(object sender, EventArgs e)
         {

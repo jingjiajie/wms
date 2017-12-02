@@ -21,6 +21,7 @@ namespace WMS.UI
             InitializeComponent();
         }
 
+
         private void FormStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
@@ -188,6 +189,8 @@ namespace WMS.UI
                 return;
             }
             this.labelStatus.Text = "正在删除...";
+
+
             new Thread(new ThreadStart(()=>
             {
                 foreach(int id in deleteIDs)
