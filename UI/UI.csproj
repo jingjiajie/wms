@@ -65,6 +65,7 @@
     <Compile Include="BSM\BMS4200M.Designer.cs">
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
+    <Compile Include="CommonDataStructures.cs" />
     <Compile Include="FormBase\FormBaseComponenAdd.cs">
       <SubType>Form</SubType>
     </Compile>

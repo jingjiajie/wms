@@ -8,13 +8,6 @@ using System.Windows.Forms;
 
 namespace WMS.UI
 {
-    class KeyName
-    {
-        public string Key;
-        public string Name;
-        public bool Visible = true;
-    }
-
     class Utilities
     {
         public const int WM_SETREDRAW = 0xB;
@@ -73,12 +66,11 @@ namespace WMS.UI
                 //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
                 if (curTextBox.Text.Length == 0 && originType != typeof(string))
                 {
-                    try
-                    {
+                    if(IsNullableType(originType)){
                         p.SetValue(targetObject, null, null);
                         continue;
                     }
-                    catch
+                    else
                     {
                         errorMessage = chineseName + " 不允许为空！";
                         return false;
@@ -117,7 +109,13 @@ namespace WMS.UI
                 {
                     try
                     {
-                        p.SetValue(targetObject, DateTime.Parse(curTextBox.Text), null);
+                        DateTime dt = DateTime.Parse(curTextBox.Text);
+                        if(dt < new DateTime(1753,1,1) || dt > new DateTime(9999, 12, 31, 23, 59, 59))
+                        {
+                            errorMessage = chineseName + " 请填写合适的日期";
+                            return false;
+                        }
+                        p.SetValue(targetObject, dt, null);
                     }
                     catch
                     {
@@ -133,6 +131,13 @@ namespace WMS.UI
             }
             errorMessage = null;
             return true;
+        }
+
+        private static bool IsNullableType(Type type)
+        {
+            if (!type.IsValueType) return true; // ref-type
+            if (Nullable.GetUnderlyingType(type) != null) return true; // Nullable<T>
+            return false; // value-type
         }
     }
 }

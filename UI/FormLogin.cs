@@ -83,6 +83,7 @@ namespace WMS.UI
         {
             if (e.KeyChar == 13)
             {
+                this.buttonEnter.Focus();
                 this.buttonEnter.PerformClick();
                 return;
             }

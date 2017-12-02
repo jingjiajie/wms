@@ -9,11 +9,13 @@ using System.Windows.Forms;
 using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
     public partial class FormStockInfo : Form
     {
+        private WMSEntities wmsEntities = new WMSEntities();
         public FormStockInfo()
         {
             InitializeComponent();
@@ -27,6 +29,8 @@ namespace WMS.UI
 
         private void InitComponents()
         {
+            this.wmsEntities.Database.Connection.Open();
+
             string[] visibleColumnNames = (from kn in StockInfoMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
@@ -76,8 +80,6 @@ namespace WMS.UI
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                var wmsEntities = new WMSEntities();
-
                 StockInfo[] stockInfos = null;
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
@@ -85,13 +87,13 @@ namespace WMS.UI
                 }
                 else
                 {
-                    if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
+                    if(decimal.TryParse(value,out decimal result) == false)
                     {
                         value = "'" + value + "'";
                     }
                     try
                     {
-                        stockInfos = wmsEntities.Database.SqlQuery<StockInfo>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}", key, value)).ToArray();
+                        stockInfos = wmsEntities.Database.SqlQuery<StockInfo>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}",key,value)).ToArray();
                     }
                     catch
                     {
@@ -105,7 +107,7 @@ namespace WMS.UI
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
                     if(stockInfos.Length == 0)
                     {
-                        worksheet[0, 0] = "没有查询到符合条件的记录";
+                        worksheet[0, 1] = "没有查询到符合条件的记录";
                     }
                     for (int i = 0; i < stockInfos.Length; i++)
                     {
@@ -151,12 +153,50 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-
+            var form = new FormStockInfoModify();
+            form.SetMode(FormMode.ADD);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.Search();
+            });
+            form.Show();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if(deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
+            new Thread(new ThreadStart(()=>
+            {
+                foreach(int id in deleteIDs)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @stockInfoID", new SqlParameter("stockInfoID", id));
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+            })).Start();
         }
     }
 }
