@@ -133,6 +133,7 @@
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(60, 25);
             this.buttonAdd.Text = "添加";
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonAlter
             // 
@@ -152,6 +153,7 @@
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(60, 25);
             this.buttonDelete.Text = "删除";
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // toolStripButton1
             // 
