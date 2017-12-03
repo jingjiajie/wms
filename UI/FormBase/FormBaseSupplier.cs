@@ -212,7 +212,7 @@ namespace WMS.UI
             {
                 foreach (int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @stockInfoID", new SqlParameter("stockInfoID", id));
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
                 }
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
