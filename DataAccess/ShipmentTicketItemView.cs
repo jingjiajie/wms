@@ -183,5 +183,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
+        public string LastUpdateUserName { get; set; }
     }
 }

@@ -91,8 +91,6 @@ namespace WMS.DataAccess
         public Nullable<int> ShipmentTicketEmergency { get; set; }
         public string ShipmentTicketShipmentPlaceNo { get; set; }
         public Nullable<int> ShipmentTicketBoardPrintedTimes { get; set; }
-        public Nullable<int> ProjectID { get; set; }
-        public Nullable<int> WarehouseID { get; set; }
         public Nullable<int> StockInfoPutawayTicketItemID { get; set; }
         public Nullable<int> PutawayTicketItemPutawayTicketID { get; set; }
         public Nullable<int> PutawayTicketItemReceiptTicketItemID { get; set; }
@@ -205,5 +203,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
+        public string Name { get; set; }
+        public string Expr1 { get; set; }
     }
 }

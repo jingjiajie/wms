@@ -23,11 +23,11 @@ namespace WMS.DataAccess
         public Nullable<decimal> DistrabuteCount { get; set; }
         public Nullable<decimal> MoveCount { get; set; }
         public string State { get; set; }
-        public int ReceiptTicketItemID { get; set; }
         public string OperatePerson { get; set; }
         public string OperateTime { get; set; }
+        public int ReceiptTicketItemID { get; set; }
     
         public virtual PutawayTicket PutawayTicket { get; set; }
-        public virtual ReceiptTicket ReceiptTicket { get; set; }
+        public virtual ReceiptTicketItem ReceiptTicketItem { get; set; }
     }
 }

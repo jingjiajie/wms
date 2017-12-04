@@ -14,7 +14,6 @@ namespace WMS.DataAccess
     
     public partial class ReceiptTicketView
     {
-        public int ReceiptTicketID { get; set; }
         public Nullable<System.DateTime> ReceiptTicketVoucherYear { get; set; }
         public string ReceiptTicketReletedVoucherNo { get; set; }
         public string ReceiptTicketReletedVoucherLineNo { get; set; }
@@ -54,5 +53,12 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
+        public int Warehouse { get; set; }
+        public string VoucherNo { get; set; }
+        public string VoucherSource { get; set; }
+        public string DeliverTicketNoSRM { get; set; }
+        public string Type { get; set; }
+        public string VoucherLineNo { get; set; }
+        public int ID { get; set; }
     }
 }

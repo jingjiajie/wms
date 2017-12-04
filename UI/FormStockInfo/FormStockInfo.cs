@@ -85,6 +85,7 @@ namespace WMS.UI
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
                     stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>("SELECT * FROM StockInfoView").ToArray();
+                    Console.WriteLine(stockInfoViews.Length);
                 }
                 else
                 {
@@ -94,7 +95,7 @@ namespace WMS.UI
                     }
                     try
                     {
-                        stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}",key,value)).ToArray();
+                        stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(String.Format("SELECT * FROM StockInfoView WHERE {0} = {1}",key,value)).ToArray();
                     }
                     catch
                     {

@@ -16,7 +16,6 @@ namespace WMS.DataAccess
     {
         public ReceiptTicket()
         {
-            this.PutawayTicketItem = new HashSet<PutawayTicketItem>();
             this.ReceiptTicketItem = new HashSet<ReceiptTicketItem>();
             this.SubmissionTicket = new HashSet<SubmissionTicket>();
         }
@@ -61,7 +60,6 @@ namespace WMS.DataAccess
         public Nullable<int> CreateUserID { get; set; }
     
         public virtual Project Project { get; set; }
-        public virtual ICollection<PutawayTicketItem> PutawayTicketItem { get; set; }
         public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }

@@ -14,6 +14,17 @@ namespace WMS.DataAccess
     
     public partial class StockInfoView
     {
+        public Nullable<int> PutawayTicketItemPutawayTicketID { get; set; }
+        public Nullable<int> PutawayTicketItemReceiptTicketItemID { get; set; }
+        public string PutawayTicketItemDisplacementPositionNo { get; set; }
+        public string PutawayTicketItemTargetStorageLocation { get; set; }
+        public string PutawayTicketItemBoardNo { get; set; }
+        public string PutawayTicketItemState { get; set; }
+        public Nullable<decimal> PutawayTicketItemScheduledMoveCount { get; set; }
+        public Nullable<decimal> PutawayTicketItemDistrabuteCount { get; set; }
+        public Nullable<decimal> PutawayTicketItemMoveCount { get; set; }
+        public string PutawayTicketItemOperatePerson { get; set; }
+        public string PutawayTicketItemOperateTime { get; set; }
         public int ID { get; set; }
         public Nullable<int> PutawayTicketItemID { get; set; }
         public string PutawayTicketNo { get; set; }

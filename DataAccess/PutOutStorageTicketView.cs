@@ -97,5 +97,6 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
+        public string Name { get; set; }
     }
 }

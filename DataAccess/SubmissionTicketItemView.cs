@@ -110,5 +110,15 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
+        public Nullable<int> Warehouse { get; set; }
+        public string Type { get; set; }
+        public string DeliverTicketNoSRM { get; set; }
+        public string VoucherSource { get; set; }
+        public string VoucherNo { get; set; }
+        public string VoucherLineNo { get; set; }
+        public string No { get; set; }
+        public Nullable<int> SupplierID { get; set; }
+        public string State { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     }
 }

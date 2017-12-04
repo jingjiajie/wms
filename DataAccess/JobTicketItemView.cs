@@ -183,5 +183,28 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
+        public Nullable<int> Expr1 { get; set; }
+        public string Expr2 { get; set; }
+        public string Expr3 { get; set; }
+        public Nullable<int> ID { get; set; }
+        public Nullable<int> PutawayTicketID { get; set; }
+        public string DisplacementPositionNo { get; set; }
+        public string TargetStorageLocation { get; set; }
+        public string BoardNo { get; set; }
+        public Nullable<decimal> ScheduledMoveCount { get; set; }
+        public Nullable<decimal> DistrabuteCount { get; set; }
+        public Nullable<decimal> MoveCount { get; set; }
+        public string State { get; set; }
+        public Nullable<int> ReceiptTicketItemID { get; set; }
+        public string OperatePerson { get; set; }
+        public string OperateTime { get; set; }
+        public string Expr4 { get; set; }
+        public Nullable<decimal> Expr5 { get; set; }
+        public Nullable<decimal> Expr6 { get; set; }
+        public Nullable<decimal> Expr7 { get; set; }
+        public string Expr8 { get; set; }
+        public Nullable<int> Expr9 { get; set; }
+        public string Expr10 { get; set; }
+        public string Expr11 { get; set; }
     }
 }

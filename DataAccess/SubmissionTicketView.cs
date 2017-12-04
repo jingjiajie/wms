@@ -54,5 +54,42 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
+        public Nullable<int> Warehouse { get; set; }
+        public string Type { get; set; }
+        public string DeliverTicketNoSRM { get; set; }
+        public string VoucherSource { get; set; }
+        public string VoucherNo { get; set; }
+        public string VoucherLineNo { get; set; }
+        public Nullable<System.DateTime> VoucherYear { get; set; }
+        public string ReletedVoucherNo { get; set; }
+        public string ReletedVoucherLineNo { get; set; }
+        public Nullable<System.DateTime> ReletedVoucherYear { get; set; }
+        public string HeadingText { get; set; }
+        public Nullable<System.DateTime> PostCountDate { get; set; }
+        public string InwardDeliverTicketNo { get; set; }
+        public string InwardDeliverLineNo { get; set; }
+        public string OutwardDeliverTicketNo { get; set; }
+        public string OutwardDeliverLineNo { get; set; }
+        public string PurchaseTicketNo { get; set; }
+        public string PurchaseTicketLineNo { get; set; }
+        public Nullable<System.DateTime> OrderDate { get; set; }
+        public string ReceiptStorageLocation { get; set; }
+        public string BoardNo { get; set; }
+        public string ReceiptPackage { get; set; }
+        public Nullable<decimal> ExpectedAmount { get; set; }
+        public Nullable<decimal> ReceiptCount { get; set; }
+        public string State { get; set; }
+        public string No { get; set; }
+        public Nullable<int> SupplierID { get; set; }
+        public string AssignmentPerson { get; set; }
+        public Nullable<int> PostedCount { get; set; }
+        public string BoxNo { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<System.DateTime> LastUpdateTime { get; set; }
+        public string MoveType { get; set; }
+        public string Source { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
     }
 }
