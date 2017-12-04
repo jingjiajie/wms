@@ -17,11 +17,15 @@ namespace WMS.DataAccess
         public StockInfo()
         {
             this.JobTicketItem = new HashSet<JobTicketItem>();
+            this.PutOutStorageTicketItem = new HashSet<PutOutStorageTicketItem>();
+            this.ShipmentTicketItem = new HashSet<ShipmentTicketItem>();
         }
     
         public int ID { get; set; }
         public Nullable<int> PutawayTicketItemID { get; set; }
     
         public virtual ICollection<JobTicketItem> JobTicketItem { get; set; }
+        public virtual ICollection<PutOutStorageTicketItem> PutOutStorageTicketItem { get; set; }
+        public virtual ICollection<ShipmentTicketItem> ShipmentTicketItem { get; set; }
     }
 }

@@ -77,6 +77,12 @@
     <Compile Include="JobTicketItem.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="JobTicketItemView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobTicketView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Project.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
@@ -93,13 +99,34 @@
     <Compile Include="PutOutStorageTicket.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PutOutStorageTicketItem.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PutOutStorageTicketItemView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PutOutStorageTicketView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ReceiptTicket.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ReceiptTicketItem.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReceiptTicketItemView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShipmentTicket.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentTicketItem.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentTicketItemView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShipmentTicketView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StockInfo.cs">
@@ -112,6 +139,12 @@
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SubmissionTicketItem.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubmissionTicketItemView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubmissionTicketView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Supplier.cs">

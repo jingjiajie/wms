@@ -81,10 +81,10 @@ namespace WMS.UI
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                StockInfo[] stockInfos = null;
+                StockInfoView[] stockInfoViews = null;
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
-                    stockInfos = wmsEntities.Database.SqlQuery<StockInfo>("SELECT * FROM StockInfo").ToArray();
+                    stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>("SELECT * FROM StockInfoView").ToArray();
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace WMS.UI
                     }
                     try
                     {
-                        stockInfos = wmsEntities.Database.SqlQuery<StockInfo>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}",key,value)).ToArray();
+                        stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(String.Format("SELECT * FROM StockInfo WHERE {0} = {1}",key,value)).ToArray();
                     }
                     catch
                     {
@@ -106,14 +106,14 @@ namespace WMS.UI
                 {
                     this.labelStatus.Text = "搜索完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if(stockInfos.Length == 0)
+                    if(stockInfoViews.Length == 0)
                     {
                         worksheet[0, 1] = "没有查询到符合条件的记录";
                     }
-                    for (int i = 0; i < stockInfos.Length; i++)
+                    for (int i = 0; i < stockInfoViews.Length; i++)
                     {
-                        StockInfo curStockInfo = stockInfos[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfo, (from kn in StockInfoMetaData.KeyNames select kn.Key).ToArray());
+                        StockInfoView curStockInfoView = stockInfoViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
