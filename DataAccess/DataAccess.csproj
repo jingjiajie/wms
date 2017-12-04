@@ -117,6 +117,9 @@
     <Compile Include="ReceiptTicketItemView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReceiptTicketView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShipmentTicket.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>

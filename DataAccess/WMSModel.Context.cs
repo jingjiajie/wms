@@ -57,6 +57,7 @@ namespace WMS.DataAccess
         public DbSet<PutOutStorageTicketItemView> PutOutStorageTicketItemView { get; set; }
         public DbSet<PutOutStorageTicketView> PutOutStorageTicketView { get; set; }
         public DbSet<ReceiptTicketItemView> ReceiptTicketItemView { get; set; }
+        public DbSet<ReceiptTicketView> ReceiptTicketView { get; set; }
         public DbSet<ShipmentTicketItemView> ShipmentTicketItemView { get; set; }
         public DbSet<ShipmentTicketView> ShipmentTicketView { get; set; }
         public DbSet<StockInfoView> StockInfoView { get; set; }

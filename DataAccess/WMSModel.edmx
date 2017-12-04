@@ -1321,8 +1321,12 @@
           <Property Name="LastUpdateUserSupplierID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
-警告 6013: 表/视图“wms.dbo.ReceiptTicketView”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="ReceiptTicketView">
+          <Key>
+            <PropertyRef Name="ReceiptTicketID" />
+          </Key>
+          <Property Name="ReceiptTicketID" Type="int" Nullable="false" />
           <Property Name="ReceiptTicketVoucherYear" Type="datetime" />
           <Property Name="ReceiptTicketReletedVoucherNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketReletedVoucherLineNo" Type="nvarchar" MaxLength="64" />
@@ -1362,7 +1366,7 @@
           <Property Name="LastUpdateUserAuthority" Type="int" />
           <Property Name="LastUpdateUserAuthorityName" Type="nvarchar" MaxLength="64" />
           <Property Name="LastUpdateUserSupplierID" Type="int" />
-        </EntityType>-->
+        </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="ShipmentTicketItemView">
@@ -3322,6 +3326,50 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[ReceiptTicketView].[ReceiptTicketID] AS [ReceiptTicketID], 
+[ReceiptTicketView].[ReceiptTicketVoucherYear] AS [ReceiptTicketVoucherYear], 
+[ReceiptTicketView].[ReceiptTicketReletedVoucherNo] AS [ReceiptTicketReletedVoucherNo], 
+[ReceiptTicketView].[ReceiptTicketReletedVoucherLineNo] AS [ReceiptTicketReletedVoucherLineNo], 
+[ReceiptTicketView].[ReceiptTicketReletedVoucherYear] AS [ReceiptTicketReletedVoucherYear], 
+[ReceiptTicketView].[ReceiptTicketHeadingText] AS [ReceiptTicketHeadingText], 
+[ReceiptTicketView].[ReceiptTicketPostCountDate] AS [ReceiptTicketPostCountDate], 
+[ReceiptTicketView].[ReceiptTicketInwardDeliverTicketNo] AS [ReceiptTicketInwardDeliverTicketNo], 
+[ReceiptTicketView].[ReceiptTicketInwardDeliverLineNo] AS [ReceiptTicketInwardDeliverLineNo], 
+[ReceiptTicketView].[ReceiptTicketOutwardDeliverTicketNo] AS [ReceiptTicketOutwardDeliverTicketNo], 
+[ReceiptTicketView].[ReceiptTicketOutwardDeliverLineNo] AS [ReceiptTicketOutwardDeliverLineNo], 
+[ReceiptTicketView].[ReceiptTicketPurchaseTicketNo] AS [ReceiptTicketPurchaseTicketNo], 
+[ReceiptTicketView].[ReceiptTicketPurchaseTicketLineNo] AS [ReceiptTicketPurchaseTicketLineNo], 
+[ReceiptTicketView].[ReceiptTicketOrderDate] AS [ReceiptTicketOrderDate], 
+[ReceiptTicketView].[ReceiptTicketReceiptStorageLocation] AS [ReceiptTicketReceiptStorageLocation], 
+[ReceiptTicketView].[ReceiptTicketBoardNo] AS [ReceiptTicketBoardNo], 
+[ReceiptTicketView].[ReceiptTicketReceiptPackage] AS [ReceiptTicketReceiptPackage], 
+[ReceiptTicketView].[ReceiptTicketExpectedAmount] AS [ReceiptTicketExpectedAmount], 
+[ReceiptTicketView].[ReceiptTicketReceiptCount] AS [ReceiptTicketReceiptCount], 
+[ReceiptTicketView].[ReceiptTicketMoveType] AS [ReceiptTicketMoveType], 
+[ReceiptTicketView].[ReceiptTicketSource] AS [ReceiptTicketSource], 
+[ReceiptTicketView].[ReceiptTicketAssignmentPerson] AS [ReceiptTicketAssignmentPerson], 
+[ReceiptTicketView].[ReceiptTicketPostedCount] AS [ReceiptTicketPostedCount], 
+[ReceiptTicketView].[ReceiptTicketBoxNo] AS [ReceiptTicketBoxNo], 
+[ReceiptTicketView].[ReceiptTicketCreateUserID] AS [ReceiptTicketCreateUserID], 
+[ReceiptTicketView].[ReceiptTicketCreateTime] AS [ReceiptTicketCreateTime], 
+[ReceiptTicketView].[ReceiptTicketLastUpdateUserID] AS [ReceiptTicketLastUpdateUserID], 
+[ReceiptTicketView].[ReceiptTicketLastUpdateTime] AS [ReceiptTicketLastUpdateTime], 
+[ReceiptTicketView].[ProjectName] AS [ProjectName], 
+[ReceiptTicketView].[WarehouseName] AS [WarehouseName], 
+[ReceiptTicketView].[CreateUserUsername] AS [CreateUserUsername], 
+[ReceiptTicketView].[CreateUserPassword] AS [CreateUserPassword], 
+[ReceiptTicketView].[CreateUserAuthority] AS [CreateUserAuthority], 
+[ReceiptTicketView].[CreateUserAuthorityName] AS [CreateUserAuthorityName], 
+[ReceiptTicketView].[CreateUserSupplierID] AS [CreateUserSupplierID], 
+[ReceiptTicketView].[LastUpdateUserUsername] AS [LastUpdateUserUsername], 
+[ReceiptTicketView].[LastUpdateUserPassword] AS [LastUpdateUserPassword], 
+[ReceiptTicketView].[LastUpdateUserAuthority] AS [LastUpdateUserAuthority], 
+[ReceiptTicketView].[LastUpdateUserAuthorityName] AS [LastUpdateUserAuthorityName], 
+[ReceiptTicketView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID]
+FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="ShipmentTicketItemView" EntityType="Self.ShipmentTicketItemView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [ShipmentTicketItemView].[ID] AS [ID], 
@@ -4123,6 +4171,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySet Name="PutOutStorageTicketItemView" EntityType="WMSModel.PutOutStorageTicketItemView" />
           <EntitySet Name="PutOutStorageTicketView" EntityType="WMSModel.PutOutStorageTicketView" />
           <EntitySet Name="ReceiptTicketItemView" EntityType="WMSModel.ReceiptTicketItemView" />
+          <EntitySet Name="ReceiptTicketView" EntityType="WMSModel.ReceiptTicketView" />
           <EntitySet Name="ShipmentTicketItemView" EntityType="WMSModel.ShipmentTicketItemView" />
           <EntitySet Name="ShipmentTicketView" EntityType="WMSModel.ShipmentTicketView" />
           <EntitySet Name="StockInfoView" EntityType="WMSModel.StockInfoView" />
@@ -5628,6 +5677,51 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ComponentInventoryRequirement3Day" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ComponentInventoryRequirement5Day" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ComponentInventoryRequirement10Day" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ReceiptTicketVoucherYear" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptTicketReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketReletedVoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketReletedVoucherYear" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptTicketHeadingText" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketPostCountDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptTicketInwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketInwardDeliverLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketOutwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketOutwardDeliverLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketPurchaseTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketPurchaseTicketLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketOrderDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptTicketReceiptStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketBoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketReceiptPackage" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketExpectedAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ReceiptTicketReceiptCount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ReceiptTicketMoveType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketAssignmentPerson" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketPostedCount" Type="Int32" />
+          <Property Name="ReceiptTicketBoxNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketCreateUserID" Type="Int32" />
+          <Property Name="ReceiptTicketCreateTime" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptTicketLastUpdateUserID" Type="Int32" />
+          <Property Name="ReceiptTicketLastUpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUserPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUserAuthority" Type="Int32" />
+          <Property Name="CreateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUserSupplierID" Type="Int32" />
+          <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateUserPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateUserAuthority" Type="Int32" />
+          <Property Name="LastUpdateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateUserSupplierID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ReceiptTicketView">
+          <Key>
+            <PropertyRef Name="ReceiptTicketID" />
+          </Key>
+          <Property Name="ReceiptTicketID" Type="Int32" Nullable="false" />
           <Property Name="ReceiptTicketVoucherYear" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketReletedVoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -8090,6 +8184,52 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemPackageName" ColumnName="ReceiptTicketItemPackageName" />
                 <ScalarProperty Name="ReceiptTicketItemComponentID" ColumnName="ReceiptTicketItemComponentID" />
                 <ScalarProperty Name="ReceiptTicketItemReceiptTicketID" ColumnName="ReceiptTicketItemReceiptTicketID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReceiptTicketView">
+            <EntityTypeMapping TypeName="WMSModel.ReceiptTicketView">
+              <MappingFragment StoreEntitySet="ReceiptTicketView">
+                <ScalarProperty Name="LastUpdateUserSupplierID" ColumnName="LastUpdateUserSupplierID" />
+                <ScalarProperty Name="LastUpdateUserAuthorityName" ColumnName="LastUpdateUserAuthorityName" />
+                <ScalarProperty Name="LastUpdateUserAuthority" ColumnName="LastUpdateUserAuthority" />
+                <ScalarProperty Name="LastUpdateUserPassword" ColumnName="LastUpdateUserPassword" />
+                <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
+                <ScalarProperty Name="CreateUserSupplierID" ColumnName="CreateUserSupplierID" />
+                <ScalarProperty Name="CreateUserAuthorityName" ColumnName="CreateUserAuthorityName" />
+                <ScalarProperty Name="CreateUserAuthority" ColumnName="CreateUserAuthority" />
+                <ScalarProperty Name="CreateUserPassword" ColumnName="CreateUserPassword" />
+                <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ReceiptTicketLastUpdateTime" ColumnName="ReceiptTicketLastUpdateTime" />
+                <ScalarProperty Name="ReceiptTicketLastUpdateUserID" ColumnName="ReceiptTicketLastUpdateUserID" />
+                <ScalarProperty Name="ReceiptTicketCreateTime" ColumnName="ReceiptTicketCreateTime" />
+                <ScalarProperty Name="ReceiptTicketCreateUserID" ColumnName="ReceiptTicketCreateUserID" />
+                <ScalarProperty Name="ReceiptTicketBoxNo" ColumnName="ReceiptTicketBoxNo" />
+                <ScalarProperty Name="ReceiptTicketPostedCount" ColumnName="ReceiptTicketPostedCount" />
+                <ScalarProperty Name="ReceiptTicketAssignmentPerson" ColumnName="ReceiptTicketAssignmentPerson" />
+                <ScalarProperty Name="ReceiptTicketSource" ColumnName="ReceiptTicketSource" />
+                <ScalarProperty Name="ReceiptTicketMoveType" ColumnName="ReceiptTicketMoveType" />
+                <ScalarProperty Name="ReceiptTicketReceiptCount" ColumnName="ReceiptTicketReceiptCount" />
+                <ScalarProperty Name="ReceiptTicketExpectedAmount" ColumnName="ReceiptTicketExpectedAmount" />
+                <ScalarProperty Name="ReceiptTicketReceiptPackage" ColumnName="ReceiptTicketReceiptPackage" />
+                <ScalarProperty Name="ReceiptTicketBoardNo" ColumnName="ReceiptTicketBoardNo" />
+                <ScalarProperty Name="ReceiptTicketReceiptStorageLocation" ColumnName="ReceiptTicketReceiptStorageLocation" />
+                <ScalarProperty Name="ReceiptTicketOrderDate" ColumnName="ReceiptTicketOrderDate" />
+                <ScalarProperty Name="ReceiptTicketPurchaseTicketLineNo" ColumnName="ReceiptTicketPurchaseTicketLineNo" />
+                <ScalarProperty Name="ReceiptTicketPurchaseTicketNo" ColumnName="ReceiptTicketPurchaseTicketNo" />
+                <ScalarProperty Name="ReceiptTicketOutwardDeliverLineNo" ColumnName="ReceiptTicketOutwardDeliverLineNo" />
+                <ScalarProperty Name="ReceiptTicketOutwardDeliverTicketNo" ColumnName="ReceiptTicketOutwardDeliverTicketNo" />
+                <ScalarProperty Name="ReceiptTicketInwardDeliverLineNo" ColumnName="ReceiptTicketInwardDeliverLineNo" />
+                <ScalarProperty Name="ReceiptTicketInwardDeliverTicketNo" ColumnName="ReceiptTicketInwardDeliverTicketNo" />
+                <ScalarProperty Name="ReceiptTicketPostCountDate" ColumnName="ReceiptTicketPostCountDate" />
+                <ScalarProperty Name="ReceiptTicketHeadingText" ColumnName="ReceiptTicketHeadingText" />
+                <ScalarProperty Name="ReceiptTicketReletedVoucherYear" ColumnName="ReceiptTicketReletedVoucherYear" />
+                <ScalarProperty Name="ReceiptTicketReletedVoucherLineNo" ColumnName="ReceiptTicketReletedVoucherLineNo" />
+                <ScalarProperty Name="ReceiptTicketReletedVoucherNo" ColumnName="ReceiptTicketReletedVoucherNo" />
+                <ScalarProperty Name="ReceiptTicketVoucherYear" ColumnName="ReceiptTicketVoucherYear" />
+                <ScalarProperty Name="ReceiptTicketID" ColumnName="ReceiptTicketID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

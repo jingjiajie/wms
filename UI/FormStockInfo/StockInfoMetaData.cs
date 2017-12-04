@@ -13,7 +13,7 @@ namespace WMS.UI
             new KeyName(){Key="ReceiptTicketNo",Name="收货单号"},
             new KeyName(){Key="ReceiptTicketItemInventoryDate",Name="存货日期"},
             new KeyName(){Key="ReceiptTicketItemManufactureDate",Name="生产日期"},
-            new KeyName(){Key="ReceiptTicketItemExpireDate",Name="失效日期"},
+            new KeyName(){Key="ReceiptTicketItemExpiryDate",Name="失效日期"},
             new KeyName(){Key="PutawayTicketItemTargetStorageLocation",Name="目标库位"},
             new KeyName(){Key="ReceiptTicketItemPackageName",Name="包装"},
             //new KeyName(){Key="ReceivingSpaceArea",Name="收货区 库位"},
