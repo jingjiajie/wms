@@ -36,8 +36,8 @@ namespace WMS.UI
             new KeyName(){Key="Category",Name="分类"},
             new KeyName(){Key="GroupPrincipal",Name="分组负责人"},
             new KeyName(){Key="SingleCarUsageAmount",Name="单台用量"},
-            new KeyName(){Key="ChargeBelow50000",Name="物流服务费1-50000台套"},
-            new KeyName(){Key="ChargeAbove50000",Name="物流服务费50000台套以上"},
+            new KeyName(){Key="Charge1",Name="物流服务费1-50000台套"},
+            new KeyName(){Key="Charge2",Name="物流服务费50000台套以上"},
             new KeyName(){Key="InventoryRequirement1Day",Name="1天库存要求"},
             new KeyName(){Key="InventoryRequirement3Day",Name="3天库存要求"},
             new KeyName(){Key="InventoryRequirement5Day",Name="5天库存要求"},
@@ -218,8 +218,8 @@ namespace WMS.UI
             string l = allComponen.Category;
             string m = allComponen.GroupPrincipal;
             var n = Convert.ToString(allComponen.SingleCarUsageAmount);
-            var o = Convert.ToString(allComponen.ChargeBelow50000);
-            var p = Convert.ToString(allComponen.ChargeAbove50000);
+            var o = Convert.ToString(allComponen.Charge1);
+            var p = Convert.ToString(allComponen.Charge2);
             var q = Convert.ToString(allComponen.InventoryRequirement1Day);
             var r = Convert.ToString(allComponen.InventoryRequirement3Day);
             var s1 = Convert.ToString(allComponen.InventoryRequirement5Day);

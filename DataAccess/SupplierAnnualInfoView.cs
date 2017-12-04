@@ -12,7 +12,7 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class SupplierAnnualInfo
+    public partial class SupplierAnnualInfoView
     {
         public int ID { get; set; }
         public int SupplierID { get; set; }
@@ -67,7 +67,20 @@ namespace WMS.DataAccess
         public Nullable<decimal> OctStorageFee { get; set; }
         public Nullable<decimal> NovStorageFee { get; set; }
         public Nullable<decimal> DecStorageFee { get; set; }
-    
-        public virtual Supplier Supplier { get; set; }
+        public string SupplierName { get; set; }
+        public string SupplierContractNo { get; set; }
+        public Nullable<System.DateTime> SupplierStartDate { get; set; }
+        public Nullable<System.DateTime> SupplierEndDate { get; set; }
+        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
+        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
+        public string SupplierFullName { get; set; }
+        public string SupplierTaxpayerNumber { get; set; }
+        public string SupplierAddress { get; set; }
+        public string SupplierTel { get; set; }
+        public string SupplierBankName { get; set; }
+        public string SupplierBankAccount { get; set; }
+        public string SupplierBankNo { get; set; }
+        public string SupplierZipCode { get; set; }
+        public string SupplierRecipientName { get; set; }
     }
 }

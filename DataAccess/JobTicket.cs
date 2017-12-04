@@ -14,23 +14,32 @@ namespace WMS.DataAccess
     
     public partial class JobTicket
     {
+        public JobTicket()
+        {
+            this.JobTicketItem = new HashSet<JobTicketItem>();
+            this.PutOutStorageTicket = new HashSet<PutOutStorageTicket>();
+        }
+    
         public int ID { get; set; }
-        public int WarehouseID { get; set; }
         public string JobTicketNo { get; set; }
         public string JobType { get; set; }
         public string JobGroupName { get; set; }
         public Nullable<decimal> ScheduledAmount { get; set; }
         public Nullable<decimal> RealAmount { get; set; }
-        public string RelatedTicketNo { get; set; }
-        public string OriginalShipmentTicket { get; set; }
         public string State { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> PrintedTimes { get; set; }
         public string AssignmentArea { get; set; }
         public string PersonInCharge { get; set; }
-        public string LastUpdatePerson { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
+        public int ShipmentTicketID { get; set; }
+        public int CreateUserID { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
     
-        public virtual Warehouse Warehouse { get; set; }
+        public virtual User User { get; set; }
+        public virtual ICollection<JobTicketItem> JobTicketItem { get; set; }
+        public virtual User User1 { get; set; }
+        public virtual ShipmentTicket ShipmentTicket { get; set; }
+        public virtual ICollection<PutOutStorageTicket> PutOutStorageTicket { get; set; }
     }
 }

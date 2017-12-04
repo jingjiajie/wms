@@ -53,13 +53,22 @@
     <Compile Include="ComponentOuterPackingSize.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ComponentOuterPackingSizeView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ComponentShipmentInfo.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentShipmentInfoView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ComponentSingleBoxTranPackingInfo.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ComponentStatistics.cs">
+    <Compile Include="ComponentSingleBoxTranPackingInfoView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="JobTicket.cs">
@@ -68,14 +77,17 @@
     <Compile Include="JobTicketItem.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Project.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PutawayTicket.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="PutawayTicketComponentInfo.cs">
-      <DependentUpon>WMSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PutInStorageTicketComponentInfo.cs">
+    <Compile Include="PutawayTicketItem.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PutOutStorageTicket.cs">
@@ -84,10 +96,16 @@
     <Compile Include="ReceiptTicket.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ReceiptTicketItem.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ShipmentTicket.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="StockInfo.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInfoView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SubmissionTicket.cs">
@@ -102,10 +120,22 @@
     <Compile Include="SupplierAnnualInfo.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SupplierAnnualInfoView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Warehouse.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WMSModel.Context.cs">

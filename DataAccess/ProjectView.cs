@@ -12,20 +12,9 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Warehouse
+    public partial class ProjectView
     {
-        public Warehouse()
-        {
-            this.Component = new HashSet<Component>();
-            this.ReceiptTicket = new HashSet<ReceiptTicket>();
-            this.ShipmentTicket = new HashSet<ShipmentTicket>();
-        }
-    
         public int ID { get; set; }
         public string Name { get; set; }
-    
-        public virtual ICollection<Component> Component { get; set; }
-        public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
-        public virtual ICollection<ShipmentTicket> ShipmentTicket { get; set; }
     }
 }

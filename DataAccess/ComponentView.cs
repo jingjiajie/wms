@@ -12,18 +12,10 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Component
+    public partial class ComponentView
     {
-        public Component()
-        {
-            this.ComponentShipmentInfo = new HashSet<ComponentShipmentInfo>();
-            this.ComponentOuterPackingSize = new HashSet<ComponentOuterPackingSize>();
-            this.ComponentSingleBoxTranPackingInfo = new HashSet<ComponentSingleBoxTranPackingInfo>();
-            this.ReceiptTicketItem = new HashSet<ReceiptTicketItem>();
-            this.SubmissionTicketItem = new HashSet<SubmissionTicketItem>();
-        }
-    
         public int ID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
         public int WarehouseID { get; set; }
         public int SupplierID { get; set; }
         public string ContainerNo { get; set; }
@@ -43,15 +35,22 @@ namespace WMS.DataAccess
         public Nullable<decimal> InventoryRequirement3Day { get; set; }
         public Nullable<decimal> InventoryRequirement5Day { get; set; }
         public Nullable<decimal> InventoryRequirement10Day { get; set; }
-        public Nullable<int> ProjectID { get; set; }
-    
-        public virtual ICollection<ComponentShipmentInfo> ComponentShipmentInfo { get; set; }
-        public virtual ICollection<ComponentOuterPackingSize> ComponentOuterPackingSize { get; set; }
-        public virtual ICollection<ComponentSingleBoxTranPackingInfo> ComponentSingleBoxTranPackingInfo { get; set; }
-        public virtual Project Project { get; set; }
-        public virtual Supplier Supplier { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
-        public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }
-        public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }
+        public string ProjectName { get; set; }
+        public string WarehouseName { get; set; }
+        public string SupplierName { get; set; }
+        public string SupplierContractNo { get; set; }
+        public Nullable<System.DateTime> SupplierStartDate { get; set; }
+        public Nullable<System.DateTime> SupplierEndDate { get; set; }
+        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
+        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
+        public string SupplierFullName { get; set; }
+        public string SupplierTaxpayerNumber { get; set; }
+        public string SupplierAddress { get; set; }
+        public string SupplierTel { get; set; }
+        public string SupplierBankName { get; set; }
+        public string SupplierBankAccount { get; set; }
+        public string SupplierBankNo { get; set; }
+        public string SupplierZipCode { get; set; }
+        public string SupplierRecipientName { get; set; }
     }
 }

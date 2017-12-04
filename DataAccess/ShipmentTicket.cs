@@ -14,6 +14,11 @@ namespace WMS.DataAccess
     
     public partial class ShipmentTicket
     {
+        public ShipmentTicket()
+        {
+            this.JobTicket = new HashSet<JobTicket>();
+        }
+    
         public int ID { get; set; }
         public int WarehouseID { get; set; }
         public string No { get; set; }
@@ -26,31 +31,21 @@ namespace WMS.DataAccess
         public Nullable<int> TicketNum { get; set; }
         public Nullable<System.DateTime> RequireArriveDate { get; set; }
         public string State { get; set; }
-        public string AllocationState { get; set; }
-        public string CreateJobTicketState { get; set; }
-        public string PickingState { get; set; }
-        public string ShipmentState { get; set; }
         public Nullable<decimal> ScheduledAmount { get; set; }
         public Nullable<decimal> AllocatedAmount { get; set; }
         public Nullable<decimal> PickingAmount { get; set; }
         public Nullable<decimal> ShipmentAmount { get; set; }
         public Nullable<decimal> ExceedStorageAmount { get; set; }
         public string Station { get; set; }
-        public string JobTicketNo { get; set; }
         public string ReverseTicketNo { get; set; }
         public string SortType { get; set; }
-        public string ProjectNo { get; set; }
-        public string ProjectName { get; set; }
-        public string ProjectStage { get; set; }
         public string ProductionLine { get; set; }
         public string ReceivingPersonName { get; set; }
         public string ContactAddress { get; set; }
         public string DeliveryPath { get; set; }
         public string Description { get; set; }
         public string CloseReason { get; set; }
-        public string CreatePerson { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string LastUpdatePerson { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public Nullable<int> PrintTimes { get; set; }
         public Nullable<int> WaitingToBeDone { get; set; }
@@ -59,9 +54,15 @@ namespace WMS.DataAccess
         public string DeliveryPoint { get; set; }
         public Nullable<int> Emergency { get; set; }
         public string ShipmentPlaceNo { get; set; }
-        public string UUID { get; set; }
         public Nullable<int> BoardPrintedTimes { get; set; }
+        public int ProjectID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
     
+        public virtual ICollection<JobTicket> JobTicket { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
     }
 }

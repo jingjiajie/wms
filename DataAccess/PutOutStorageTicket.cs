@@ -15,12 +15,10 @@ namespace WMS.DataAccess
     public partial class PutOutStorageTicket
     {
         public int ID { get; set; }
-        public int WarehouseID { get; set; }
         public string No { get; set; }
         public string TruckLoadingTicketNo { get; set; }
         public string Sourse { get; set; }
         public string WorkFlow { get; set; }
-        public string ShipmentTicketNo { get; set; }
         public string State { get; set; }
         public string CarNum { get; set; }
         public string Driver { get; set; }
@@ -32,12 +30,14 @@ namespace WMS.DataAccess
         public string SortTypeNo { get; set; }
         public Nullable<System.DateTime> TruckLoadingTime { get; set; }
         public Nullable<System.DateTime> DeliverTime { get; set; }
-        public string CreatePerson { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public string LastUpdatePerson { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
-        public string UUID { get; set; }
+        public int CreateUserID { get; set; }
+        public int JobTicketID { get; set; }
+        public int LastUpdateUserID { get; set; }
     
-        public virtual Warehouse Warehouse { get; set; }
+        public virtual JobTicket JobTicket { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

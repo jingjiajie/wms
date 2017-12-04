@@ -14,38 +14,14 @@ namespace WMS.DataAccess
     
     public partial class StockInfo
     {
-        public int ID { get; set; }
-        public int ComponentID { get; set; }
-        public int ReceiptTicketID { get; set; }
-        public Nullable<System.DateTime> StockDate { get; set; }
-        public Nullable<System.DateTime> ManufatureDate { get; set; }
-        public Nullable<System.DateTime> ExpireDate { get; set; }
-        public string WarehouseArea { get; set; }
-        public string TargetStorageLocation { get; set; }
-        public string ReceivingSpaceArea { get; set; }
-        public string OverflowArea { get; set; }
-        public string ShipmentArea { get; set; }
-        public Nullable<decimal> ReceivingSpaceAreaCount { get; set; }
-        public Nullable<decimal> OverflowAreaCount { get; set; }
-        public Nullable<decimal> ShipmentAreaCount { get; set; }
-        public Nullable<decimal> PackagingToolCount { get; set; }
-        public Nullable<decimal> RecycleBoxCount { get; set; }
-        public Nullable<decimal> NonOrderAreaCount { get; set; }
-        public Nullable<decimal> UnacceptedProductAreaCount { get; set; }
-        public Nullable<decimal> PlannedBoardCount { get; set; }
-        public Nullable<decimal> PlannedPackagingToolCount { get; set; }
-        public string BoardNo { get; set; }
-        public string Batch { get; set; }
-        public string StorageState { get; set; }
-        public string PackagingUnit { get; set; }
-        public string ManufactureNo { get; set; }
-        public string ProjectInfo { get; set; }
-        public string ProjectStageInfo { get; set; }
-        public string RealRightProperty { get; set; }
-        public string CarModel { get; set; }
-        public string BoxNo { get; set; }
+        public StockInfo()
+        {
+            this.JobTicketItem = new HashSet<JobTicketItem>();
+        }
     
-        public virtual Component Component { get; set; }
-        public virtual ReceiptTicket ReceiptTicket { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> PutawayTicketItemID { get; set; }
+    
+        public virtual ICollection<JobTicketItem> JobTicketItem { get; set; }
     }
 }

@@ -21,22 +21,21 @@ namespace WMS.DataAccess
     
         public int ID { get; set; }
         public int ReceiptTicketID { get; set; }
-        public string InwardDeliverTicketNo { get; set; }
-        public string CreateDate { get; set; }
+        public string CreateTime { get; set; }
         public string No { get; set; }
-        public string SAPNo { get; set; }
-        public string ManufatureName { get; set; }
-        public string SupplierName { get; set; }
-        public Nullable<int> SupplierID { get; set; }
         public Nullable<int> HasSelfInspectionReport { get; set; }
-        public string CreatePerson { get; set; }
         public string DeliverSubmissionPerson { get; set; }
         public string ReceivePerson { get; set; }
         public string SubmissionPerson { get; set; }
         public string Result { get; set; }
+        public string State { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> LastUpdateTime { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
     
         public virtual ReceiptTicket ReceiptTicket { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }
-        public virtual Supplier Supplier { get; set; }
     }
 }

@@ -15,36 +15,21 @@ namespace WMS.DataAccess
     public partial class JobTicketItem
     {
         public int ID { get; set; }
-        public int WarehouseID { get; set; }
         public string No { get; set; }
         public string Type { get; set; }
         public string MoveOutStorageLocation { get; set; }
         public string SourceBoardNo { get; set; }
         public string MoveInStorageLocation { get; set; }
-        public int ComponentID { get; set; }
-        public string ComponentNo { get; set; }
-        public string ComponentName { get; set; }
-        public string PackagingUnit { get; set; }
         public Nullable<decimal> ScheduledMoveCount { get; set; }
         public Nullable<decimal> MoveCount { get; set; }
         public Nullable<decimal> HaveBackedCount { get; set; }
-        public string StockState { get; set; }
-        public string ExecuteState { get; set; }
-        public Nullable<System.DateTime> InventoryDate { get; set; }
-        public string ReceiptNo { get; set; }
-        public string ManufactureNo { get; set; }
-        public Nullable<System.DateTime> ManufactureDate { get; set; }
-        public Nullable<System.DateTime> NearEffectDate { get; set; }
-        public Nullable<System.DateTime> ExpiryDate { get; set; }
-        public string ProjectInfo { get; set; }
-        public string ProjectPhaseInfo { get; set; }
-        public string RealRightProperty { get; set; }
-        public Nullable<int> SupplierID { get; set; }
-        public string Supplier { get; set; }
         public string ActualJobPerson { get; set; }
         public Nullable<System.DateTime> HappenTime { get; set; }
+        public int JobTicketID { get; set; }
+        public string State { get; set; }
+        public int StockInfoID { get; set; }
     
-        public virtual Component Component { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
+        public virtual JobTicket JobTicket { get; set; }
+        public virtual StockInfo StockInfo { get; set; }
     }
 }

@@ -16,14 +16,13 @@ namespace WMS.DataAccess
     {
         public PutawayTicket()
         {
-            this.PutawayTicketComponentInfo = new HashSet<PutawayTicketComponentInfo>();
+            this.PutawayTicketItem = new HashSet<PutawayTicketItem>();
         }
     
         public int ID { get; set; }
         public string No { get; set; }
-        public string TicketType { get; set; }
-        public Nullable<System.DateTime> TicketCreateTime { get; set; }
-        public string ReceiptTicketNo { get; set; }
+        public string Type { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
         public int ReceiptTicketID { get; set; }
         public string State { get; set; }
         public Nullable<decimal> ScheduledDisplacementAmount { get; set; }
@@ -32,8 +31,12 @@ namespace WMS.DataAccess
         public Nullable<decimal> PrintTimes { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public string JobGroupName { get; set; }
-        public string LastOperatorName { get; set; }
+        public string LastUpdateUserName { get; set; }
+        public int CreateUserID { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
     
-        public virtual ICollection<PutawayTicketComponentInfo> PutawayTicketComponentInfo { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
+        public virtual ICollection<PutawayTicketItem> PutawayTicketItem { get; set; }
     }
 }
