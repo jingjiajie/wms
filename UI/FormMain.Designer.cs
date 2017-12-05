@@ -73,6 +73,7 @@
             this.panelLeft = new System.Windows.Forms.Panel();
             this.treeViewLeft = new System.Windows.Forms.TreeView();
             this.panelRight = new System.Windows.Forms.Panel();
+            this.comboBoxProject = new System.Windows.Forms.ComboBox();
             this.panelTop.SuspendLayout();
             this.tableLayoutBanner.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -186,7 +187,8 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel2.Controls.Add(this.comboBoxProject, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -303,6 +305,17 @@
             this.panelRight.Size = new System.Drawing.Size(735, 692);
             this.panelRight.TabIndex = 1;
             // 
+            // comboBoxProject
+            // 
+            this.comboBoxProject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxProject.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.comboBoxProject.FormattingEnabled = true;
+            this.comboBoxProject.Location = new System.Drawing.Point(3, 3);
+            this.comboBoxProject.Name = "comboBoxProject";
+            this.comboBoxProject.Size = new System.Drawing.Size(171, 31);
+            this.comboBoxProject.TabIndex = 1;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -347,5 +360,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelLeft;
+        private System.Windows.Forms.ComboBox comboBoxProject;
     }
 }

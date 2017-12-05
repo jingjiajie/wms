@@ -142,11 +142,24 @@ namespace WMS.UI
             return true;
         }
 
-        private static bool IsNullableType(Type type)
+        public static bool IsNullableType(Type type)
         {
             if (!type.IsValueType) return true; // ref-type
             if (Nullable.GetUnderlyingType(type) != null) return true; // Nullable<T>
             return false; // value-type
+        }
+
+        public static bool IsQuotateType(Type type)
+        {
+            Type[] quotateTypes = new Type[] //所有需要加引号的数据类型
+            {
+                typeof(string),typeof(string),typeof(DateTime),typeof(DateTime?)
+            };
+            foreach(Type t in quotateTypes)
+            {
+                if (type == t) return true;
+            }
+            return false;
         }
     }
 }

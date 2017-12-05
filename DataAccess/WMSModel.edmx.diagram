@@ -4,91 +4,91 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="78360df874c24be38b5a63c264cad1f8" Name="Diagram1" ZoomLevel="37">
-        <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="6" PointY="35.125" />
-        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="8.25" PointY="36.75" />
-        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfo" Width="1.5" PointX="8.25" PointY="50.5" />
-        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfo" Width="1.5" PointX="8.25" PointY="45.875" />
-        <EntityTypeShape EntityType="WMSModel.JobTicket" Width="1.5" PointX="5.25" PointY="63.625" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketItem" Width="1.5" PointX="13.5" PointY="64" />
-        <EntityTypeShape EntityType="WMSModel.Project" Width="1.5" PointX="3.75" PointY="44.75" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicket" Width="1.5" PointX="5.25" PointY="79.25" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicketItem" Width="1.5" PointX="16.5" PointY="61.875" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicket" Width="1.5" PointX="10.5" PointY="63.125" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItem" Width="1.5" PointX="15.75" PointY="66.75" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicket" Width="1.5" PointX="5.25" PointY="47.375" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItem" Width="1.5" PointX="11.25" PointY="43.75" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicket" Width="1.5" PointX="8.25" PointY="61.25" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItem" Width="1.5" PointX="13.5" PointY="58.75" />
-        <EntityTypeShape EntityType="WMSModel.StockInfo" Width="1.5" PointX="11.25" PointY="60" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicket" Width="1.5" PointX="7.5" PointY="55.75" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItem" Width="1.5" PointX="11.25" PointY="36.75" />
-        <EntityTypeShape EntityType="WMSModel.Supplier" Width="1.5" PointX="0.75" PointY="36" />
-        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfo" Width="1.5" PointX="3" PointY="30.25" />
-        <EntityTypeShape EntityType="WMSModel.User" Width="1.5" PointX="3" PointY="63.75" />
-        <EntityTypeShape EntityType="WMSModel.Warehouse" Width="1.5" PointX="3.75" PointY="42" />
-        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSizeView" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfoView" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfoView" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ComponentView" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketItemView" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketView" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ProjectView" Width="1.5" PointX="0.75" PointY="11.75" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicketItemView" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicketView" Width="1.5" PointX="2.75" PointY="12.75" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItemView" Width="1.5" PointX="14.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketView" Width="1.5" PointX="4.75" PointY="12.75" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItemView" Width="1.5" PointX="16.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketView" Width="1.5" PointX="18.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItemView" Width="1.5" PointX="18.75" PointY="11.75" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketView" Width="1.5" PointX="20.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.StockInfoView" Width="1.5" PointX="20.75" PointY="12.75" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItemView" Width="1.5" PointX="22.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicketView" Width="1.5" PointX="22.75" PointY="22.75" />
-        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfoView" Width="1.5" PointX="24.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.SupplierView" Width="1.5" PointX="10.75" PointY="23.75" />
-        <EntityTypeShape EntityType="WMSModel.UserView" Width="1.5" PointX="24.75" PointY="15.75" />
-        <EntityTypeShape EntityType="WMSModel.WarehouseView" Width="1.5" PointX="24.75" PointY="21.75" />
-        <AssociationConnector Association="WMSModel.FK__Component__Compo__239E4DCF" />
-        <AssociationConnector Association="WMSModel.FK__Component__Compo__29572725" />
-        <AssociationConnector Association="WMSModel.FK__Component__Compo__2C3393D0" />
-        <AssociationConnector Association="WMSModel.FK__Component__Proje__6B24EA82" />
-        <AssociationConnector Association="WMSModel.FK__Component__Suppl__1B0907CE" />
-        <AssociationConnector Association="WMSModel.FK__Component__Wareh__1A14E395" />
-        <AssociationConnector Association="WMSModel.FK__PutInStor__Compo__412EB0B6" />
-        <AssociationConnector Association="WMSModel.FK__Submissio__Compo__4E88ABD4" />
-        <AssociationConnector Association="WMSModel.FK__JobTicket__Creat__70DDC3D8" />
-        <AssociationConnector Association="WMSModel.FK__JobTicket__JobTi__72C60C4A" />
-        <AssociationConnector Association="WMSModel.FK__JobTicket__LastU__71D1E811" />
-        <AssociationConnector Association="WMSModel.FK__JobTicket__Shipm__6FE99F9F" />
-        <AssociationConnector Association="WMSModel.FK__PutOutSto__JobTi__75A278F5" />
-        <AssociationConnector Association="WMSModel.FK__JobTicket__Stock__73BA3083" />
-        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Proje__778AC167" />
-        <AssociationConnector Association="WMSModel.FK__ShipmentT__Proje__6C190EBB" />
-        <AssociationConnector Association="WMSModel.FK__PutawayTi__Creat__7C4F7684" />
-        <AssociationConnector Association="WMSModel.FK__PutawayTi__LastU__0E6E26BF" />
-        <AssociationConnector Association="WMSModel.FK__PutawayTi__Putaw__534D60F1" />
-        <AssociationConnector Association="WMSModel.FK__PutawayTi__Recei__2DE6D218" />
-        <AssociationConnector Association="WMSModel.FK__PutOutSto__Creat__74AE54BC" />
-        <AssociationConnector Association="WMSModel.FK__PutOutSto__LastU__76969D2E" />
-        <AssociationConnector Association="WMSModel.FK__PutOutSto__PutOu__18EBB532" />
-        <AssociationConnector Association="WMSModel.FK__PutOutSto__Stock__17F790F9" />
-        <AssociationConnector Association="WMSModel.FK__PutInStor__Recei__4222D4EF" />
-        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Creat__797309D9" />
-        <AssociationConnector Association="WMSModel.FK__ReceiptTi__LastU__787EE5A0" />
-        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Suppl__3A81B327" />
-        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Wareh__38996AB5" />
-        <AssociationConnector Association="WMSModel.FK__Submissio__Recei__49C3F6B7" />
-        <AssociationConnector Association="WMSModel.FK__ShipmentT__Creat__6E01572D" />
-        <AssociationConnector Association="WMSModel.FK__ShipmentT__LastU__6EF57B66" />
-        <AssociationConnector Association="WMSModel.FK__ShipmentT__Shipm__14270015" />
-        <AssociationConnector Association="WMSModel.FK__ShipmentT__Wareh__2F10007B" />
-        <AssociationConnector Association="WMSModel.FK__ShipmentT__Stock__151B244E" />
-        <AssociationConnector Association="WMSModel.FK__Submissio__Creat__7B5B524B" />
-        <AssociationConnector Association="WMSModel.FK__Submissio__LastU__7A672E12" />
-        <AssociationConnector Association="WMSModel.FK__Submissio__Submi__4D94879B" />
-        <AssociationConnector Association="WMSModel.FK__SupplierA__Suppl__02084FDA" />
-        <AssociationConnector Association="WMSModel.FK__User__SupplierID__6A30C649" />
+      <Diagram DiagramId="0298289884b349a6836a9fc7868152a1" Name="Diagram1" ZoomLevel="54">
+        <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="3" PointY="35.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="5.25" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfo" Width="1.5" PointX="5.25" PointY="36.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfo" Width="1.5" PointX="5.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.JobTicket" Width="1.5" PointX="5.25" PointY="51.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketItem" Width="1.5" PointX="10.5" PointY="53.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.Project" Width="1.5" PointX="0.75" PointY="33" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicket" Width="1.5" PointX="5.25" PointY="57.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicketItem" Width="1.5" PointX="12.75" PointY="46.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicket" Width="1.5" PointX="13.5" PointY="51.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItem" Width="1.5" PointX="15.75" PointY="53.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicket" Width="1.5" PointX="5.25" PointY="41.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItem" Width="1.5" PointX="7.5" PointY="40.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicket" Width="1.5" PointX="8.25" PointY="49.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItem" Width="1.5" PointX="10.5" PointY="58" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.StockInfo" Width="1.5" PointX="13.5" PointY="58.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicket" Width="1.5" PointX="10.5" PointY="48" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItem" Width="1.5" PointX="8.25" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.Supplier" Width="1.5" PointX="0.75" PointY="36" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfo" Width="1.5" PointX="3" PointY="57.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.User" Width="1.5" PointX="3" PointY="52" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.Warehouse" Width="1.5" PointX="0.75" PointY="41.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSizeView" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfoView" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfoView" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ComponentView" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketItemView" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketView" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ProjectView" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicketItemView" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicketView" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItemView" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketView" Width="1.5" PointX="0.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItemView" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketView" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItemView" Width="1.5" PointX="18.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketView" Width="1.5" PointX="4.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.StockInfoView" Width="1.5" PointX="20.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItemView" Width="1.5" PointX="22.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicketView" Width="1.5" PointX="22.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfoView" Width="1.5" PointX="10.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.SupplierView" Width="1.5" PointX="12.75" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.UserView" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WMSModel.WarehouseView" Width="1.5" PointX="4.75" PointY="24.75" IsExpanded="true" />
+        <AssociationConnector Association="WMSModel.FK__Component__Compo__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Component__Compo__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Component__Compo__2C3393D0" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Component__Proje__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Component__Suppl__1B0907CE" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Component__Wareh__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutInStor__Compo__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Submissio__Compo__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__JobTicket__Creat__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__JobTicket__JobTi__72C60C4A" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__JobTicket__LastU__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__JobTicket__Shipm__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutOutSto__JobTi__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__JobTicket__Stock__73BA3083" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Proje__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ShipmentT__Proje__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutawayTi__Creat__7C4F7684" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutawayTi__LastU__0E6E26BF" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutawayTi__Putaw__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutawayTi__Recei__2DE6D218" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutOutSto__Creat__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutOutSto__LastU__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutOutSto__PutOu__18EBB532" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutOutSto__Stock__17F790F9" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__PutInStor__Recei__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Creat__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ReceiptTi__LastU__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Suppl__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ReceiptTi__Wareh__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Submissio__Recei__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ShipmentT__Creat__6E01572D" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ShipmentT__LastU__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ShipmentT__Shipm__14270015" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ShipmentT__Wareh__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__ShipmentT__Stock__151B244E" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Submissio__Creat__7B5B524B" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Submissio__LastU__7A672E12" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__Submissio__Submi__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__SupplierA__Suppl__02084FDA" ManuallyRouted="false" />
+        <AssociationConnector Association="WMSModel.FK__User__SupplierID__6A30C649" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

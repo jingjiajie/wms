@@ -58,7 +58,7 @@ namespace WMS.UI.FormBase
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                key = (from kn in StockInfoMetaData.KeyNames
+                key = (from kn in StockInfoViewMetaData.KeyNames
                        where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.toolStripTextBoxSelect.Text;
