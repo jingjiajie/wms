@@ -203,7 +203,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
-        public string Name { get; set; }
-        public string Expr1 { get; set; }
+        public string ProjectName { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

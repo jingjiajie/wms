@@ -374,6 +374,7 @@
             this.Name = "FormSupplierAlter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "修改供应商";
+            this.Load += new System.EventHandler(this.FormSupplierAlter_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

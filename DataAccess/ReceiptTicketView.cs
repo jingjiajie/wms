@@ -14,33 +14,33 @@ namespace WMS.DataAccess
     
     public partial class ReceiptTicketView
     {
-        public Nullable<System.DateTime> ReceiptTicketVoucherYear { get; set; }
-        public string ReceiptTicketReletedVoucherNo { get; set; }
-        public string ReceiptTicketReletedVoucherLineNo { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketReletedVoucherYear { get; set; }
-        public string ReceiptTicketHeadingText { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketPostCountDate { get; set; }
-        public string ReceiptTicketInwardDeliverTicketNo { get; set; }
-        public string ReceiptTicketInwardDeliverLineNo { get; set; }
-        public string ReceiptTicketOutwardDeliverTicketNo { get; set; }
-        public string ReceiptTicketOutwardDeliverLineNo { get; set; }
-        public string ReceiptTicketPurchaseTicketNo { get; set; }
-        public string ReceiptTicketPurchaseTicketLineNo { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketOrderDate { get; set; }
-        public string ReceiptTicketReceiptStorageLocation { get; set; }
-        public string ReceiptTicketBoardNo { get; set; }
-        public string ReceiptTicketReceiptPackage { get; set; }
-        public Nullable<decimal> ReceiptTicketExpectedAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketReceiptCount { get; set; }
-        public string ReceiptTicketMoveType { get; set; }
-        public string ReceiptTicketSource { get; set; }
-        public string ReceiptTicketAssignmentPerson { get; set; }
-        public Nullable<int> ReceiptTicketPostedCount { get; set; }
-        public string ReceiptTicketBoxNo { get; set; }
-        public Nullable<int> ReceiptTicketCreateUserID { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketCreateTime { get; set; }
-        public Nullable<int> ReceiptTicketLastUpdateUserID { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketLastUpdateTime { get; set; }
+        public Nullable<System.DateTime> VoucherYear { get; set; }
+        public string ReletedVoucherNo { get; set; }
+        public string ReletedVoucherLineNo { get; set; }
+        public Nullable<System.DateTime> ReletedVoucherYear { get; set; }
+        public string HeadingText { get; set; }
+        public Nullable<System.DateTime> PostCountDate { get; set; }
+        public string InwardDeliverTicketNo { get; set; }
+        public string InwardDeliverLineNo { get; set; }
+        public string OutwardDeliverTicketNo { get; set; }
+        public string OutwardDeliverLineNo { get; set; }
+        public string PurchaseTicketNo { get; set; }
+        public string PurchaseTicketLineNo { get; set; }
+        public Nullable<System.DateTime> OrderDate { get; set; }
+        public string ReceiptStorageLocation { get; set; }
+        public string BoardNo { get; set; }
+        public string ReceiptPackage { get; set; }
+        public Nullable<decimal> ExpectedAmount { get; set; }
+        public Nullable<decimal> ReceiptCount { get; set; }
+        public string MoveType { get; set; }
+        public string Source { get; set; }
+        public string AssignmentPerson { get; set; }
+        public Nullable<int> PostedCount { get; set; }
+        public string BoxNo { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public string CreateUserUsername { get; set; }
@@ -53,12 +53,12 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
-        public int Warehouse { get; set; }
-        public string VoucherNo { get; set; }
-        public string VoucherSource { get; set; }
-        public string DeliverTicketNoSRM { get; set; }
-        public string Type { get; set; }
-        public string VoucherLineNo { get; set; }
-        public int ID { get; set; }
+        public int ReceiptTicketWarehouse { get; set; }
+        public string ReceiptTicketVoucherNo { get; set; }
+        public string ReceiptTicketVoucherSource { get; set; }
+        public string ReceiptTicketDeliverTicketNoSRM { get; set; }
+        public string ReceiptTicketType { get; set; }
+        public string ReceiptTicketVoucherLineNo { get; set; }
+        public int ReceiptTicketID { get; set; }
     }
 }

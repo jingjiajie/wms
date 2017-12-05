@@ -14,16 +14,16 @@ namespace WMS.DataAccess
     
     public partial class SubmissionTicketItemView
     {
-        public int SubmissionItemID { get; set; }
-        public Nullable<int> SubmissionItemSubmissionTicketID { get; set; }
-        public string SubmissionItemLineItem { get; set; }
-        public Nullable<int> SubmissionItemComponentID { get; set; }
-        public string SubmissionItemState { get; set; }
-        public string SubmissionItemArriveAmount { get; set; }
-        public string SubmissionItemUnit { get; set; }
-        public Nullable<decimal> SubmissionItemSubmissionAmount { get; set; }
-        public Nullable<decimal> SubmissionItemReturnAmount { get; set; }
-        public string SubmissionItemComment { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> SubmissionTicketID { get; set; }
+        public string LineItem { get; set; }
+        public Nullable<int> ComponentID { get; set; }
+        public string State { get; set; }
+        public string ArriveAmount { get; set; }
+        public string Unit { get; set; }
+        public Nullable<decimal> SubmissionAmount { get; set; }
+        public Nullable<decimal> ReturnAmount { get; set; }
+        public string Comment { get; set; }
         public Nullable<int> SubmissionReceiptTicketID { get; set; }
         public string SubmissionNo { get; set; }
         public string SubmissionState { get; set; }
@@ -110,15 +110,15 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
-        public Nullable<int> Warehouse { get; set; }
-        public string Type { get; set; }
-        public string DeliverTicketNoSRM { get; set; }
-        public string VoucherSource { get; set; }
-        public string VoucherNo { get; set; }
-        public string VoucherLineNo { get; set; }
-        public string No { get; set; }
-        public Nullable<int> SupplierID { get; set; }
-        public string State { get; set; }
-        public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> ReceiptTicketWarehouse { get; set; }
+        public string ReceiptTicketType { get; set; }
+        public string ReceiptTicketDeliverTicketNoSRM { get; set; }
+        public string ReceiptTicketVoucherSource { get; set; }
+        public string ReceiptTicketVoucherNo { get; set; }
+        public string ReceiptTicketVoucherLineNo { get; set; }
+        public string ReceiptTicketNo { get; set; }
+        public Nullable<int> ReceiptTicketSupplierID { get; set; }
+        public string ReceiptTicketState { get; set; }
+        public Nullable<int> ReceiptTicketProjectID { get; set; }
     }
 }
