@@ -38,22 +38,21 @@ namespace WMS.UI
                              select s).FirstOrDefault<User>();
             if (allUsers == null)
             {
-                MessageBox.Show("查无此人");
+                MessageBox.Show("用户名错误，请重新输入");
             }
             else
             {
                 if (allUsers.Password == textBoxPassword.Text)
                 {
                     string a = allUsers.Username;
-                    int b=allUsers.Authority;
-                    //MessageBox.Show(allUsers.Username + "+" + allUsers.Password);
+                    int b = allUsers.Authority;
                     FormMain fm = new FormMain(a,b);
                     fm.ShowDialog();
-                    this.Close();  
+                    this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("密码错误");
+                    MessageBox.Show("密码错误，请重新输入");
                 }
             }
             

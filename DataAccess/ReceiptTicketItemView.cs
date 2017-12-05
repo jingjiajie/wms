@@ -14,21 +14,21 @@ namespace WMS.DataAccess
     
     public partial class ReceiptTicketItemView
     {
-        public int ReceiptTicketItemReceiptTicketID { get; set; }
-        public int ReceiptTicketItemComponentID { get; set; }
-        public string ReceiptTicketItemPackageName { get; set; }
-        public Nullable<decimal> ReceiptTicketItemExpectedPackageAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemExpectedAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemReceiviptAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemWrongComponentAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemShortageAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemDisqualifiedAmount { get; set; }
-        public string ReceiptTicketItemManufactureNo { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemInventoryDate { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemManufactureDate { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemExpiryDate { get; set; }
-        public string ReceiptTicketItemRealRightProperty { get; set; }
-        public string ReceiptTicketItemBoxNo { get; set; }
+        public int ReceiptTicketID { get; set; }
+        public int ComponentID { get; set; }
+        public string PackageName { get; set; }
+        public Nullable<decimal> ExpectedPackageAmount { get; set; }
+        public Nullable<decimal> ExpectedAmount { get; set; }
+        public Nullable<decimal> ReceiviptAmount { get; set; }
+        public Nullable<decimal> WrongComponentAmount { get; set; }
+        public Nullable<decimal> ShortageAmount { get; set; }
+        public Nullable<decimal> DisqualifiedAmount { get; set; }
+        public string ManufactureNo { get; set; }
+        public Nullable<System.DateTime> InventoryDate { get; set; }
+        public Nullable<System.DateTime> ManufactureDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public string RealRightProperty { get; set; }
+        public string BoxNo { get; set; }
         public Nullable<int> ComponentProjectID { get; set; }
         public Nullable<int> ComponentWarehouseID { get; set; }
         public Nullable<int> ComponentSupplierID { get; set; }
@@ -49,8 +49,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketVoucherYear { get; set; }
-        public string ReceiptTicketReletedVoucherNo { get; set; }
         public string ReceiptTicketReletedVoucherLineNo { get; set; }
         public Nullable<System.DateTime> ReceiptTicketReletedVoucherYear { get; set; }
         public string ReceiptTicketHeadingText { get; set; }
@@ -88,5 +86,17 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
+        public Nullable<int> Warehouse { get; set; }
+        public string Type { get; set; }
+        public string DeliverTicketNoSRM { get; set; }
+        public string VoucherSource { get; set; }
+        public string VoucherNo { get; set; }
+        public string VoucherLineNo { get; set; }
+        public string ReletedVoucherNo { get; set; }
+        public Nullable<System.DateTime> VoucherYear { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public string State { get; set; }
+        public string No { get; set; }
+        public Nullable<int> SupplierID { get; set; }
     }
 }

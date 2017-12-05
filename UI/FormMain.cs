@@ -18,8 +18,7 @@ namespace WMS.UI
     { 
 
 
-        //private FormReceiptArrival formReceiptArrival = new FormReceiptArrival();
-        
+
         public FormMain()
         {
             InitializeComponent();
@@ -207,6 +206,17 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 FormBaseWarehouse l = new FormBaseWarehouse();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "项目")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormBase.FormBaseProject l = new FormBase.FormBaseProject();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

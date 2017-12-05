@@ -14,21 +14,21 @@ namespace WMS.DataAccess
     
     public partial class JobTicketView
     {
-        public int JobTicketID { get; set; }
-        public int JobTicketShipmentTicketID { get; set; }
-        public string JobTicketJobTicketNo { get; set; }
-        public string JobTicketJobType { get; set; }
-        public string JobTicketJobGroupName { get; set; }
-        public Nullable<decimal> JobTicketScheduledAmount { get; set; }
-        public Nullable<decimal> JobTicketRealAmount { get; set; }
-        public string JobTicketState { get; set; }
-        public Nullable<int> JobTicketPrintedTimes { get; set; }
-        public string JobTicketAssignmentArea { get; set; }
-        public string JobTicketPersonInCharge { get; set; }
-        public int JobTicketCreateUserID { get; set; }
-        public Nullable<System.DateTime> JobTicketCreateTime { get; set; }
-        public Nullable<int> JobTicketLastUpdateUserID { get; set; }
-        public Nullable<System.DateTime> JobTicketLastUpdateTime { get; set; }
+        public int ID { get; set; }
+        public int ShipmentTicketID { get; set; }
+        public string JobTicketNo { get; set; }
+        public string JobType { get; set; }
+        public string JobGroupName { get; set; }
+        public Nullable<decimal> ScheduledAmount { get; set; }
+        public Nullable<decimal> RealAmount { get; set; }
+        public string State { get; set; }
+        public Nullable<int> PrintedTimes { get; set; }
+        public string AssignmentArea { get; set; }
+        public string PersonInCharge { get; set; }
+        public int CreateUserID { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public Nullable<int> ShipmentTicketProjectID { get; set; }
         public Nullable<int> ShipmentTicketWarehouseID { get; set; }
         public string ShipmentTicketNo { get; set; }

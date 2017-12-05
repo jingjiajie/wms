@@ -14,27 +14,27 @@ namespace WMS.DataAccess
     
     public partial class PutOutStorageTicketView
     {
-        public int PutOutStorageTicketID { get; set; }
-        public int PutOutStorageTicketJobTicketID { get; set; }
-        public string PutOutStorageTicketNo { get; set; }
-        public string PutOutStorageTicketTruckLoadingTicketNo { get; set; }
-        public string PutOutStorageTicketSourse { get; set; }
-        public string PutOutStorageTicketWorkFlow { get; set; }
-        public string PutOutStorageTicketState { get; set; }
-        public string PutOutStorageTicketCarNum { get; set; }
-        public string PutOutStorageTicketDriver { get; set; }
-        public string PutOutStorageTicketSerialNo { get; set; }
-        public string PutOutStorageTicketOriginalTicketType { get; set; }
-        public string PutOutStorageTicketPullTicketNo { get; set; }
-        public string PutOutStorageTicketCrossingNo { get; set; }
-        public string PutOutStorageTicketReceiverNo { get; set; }
-        public string PutOutStorageTicketSortTypeNo { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketTruckLoadingTime { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketDeliverTime { get; set; }
-        public int PutOutStorageTicketCreateUserID { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketCreateTime { get; set; }
-        public int PutOutStorageTicketLastUpdateUserID { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketLastUpdateTime { get; set; }
+        public int ID { get; set; }
+        public int JobTicketID { get; set; }
+        public string No { get; set; }
+        public string TruckLoadingTicketNo { get; set; }
+        public string Sourse { get; set; }
+        public string WorkFlow { get; set; }
+        public string State { get; set; }
+        public string CarNum { get; set; }
+        public string Driver { get; set; }
+        public string SerialNo { get; set; }
+        public string OriginalTicketType { get; set; }
+        public string PullTicketNo { get; set; }
+        public string CrossingNo { get; set; }
+        public string ReceiverNo { get; set; }
+        public string SortTypeNo { get; set; }
+        public Nullable<System.DateTime> TruckLoadingTime { get; set; }
+        public Nullable<System.DateTime> DeliverTime { get; set; }
+        public int CreateUserID { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public int LastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public Nullable<int> JobTicketShipmentTicketID { get; set; }
         public string JobTicketJobTicketNo { get; set; }
         public string JobTicketJobType { get; set; }
@@ -97,6 +97,6 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
-        public string Name { get; set; }
+        public string WarehouseName { get; set; }
     }
 }
