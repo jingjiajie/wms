@@ -34,9 +34,9 @@ namespace WMS.UI
             }
 
             this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < StockInfoMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
             {
-                KeyName curKeyName = StockInfoMetaData.KeyNames[i];
+                KeyName curKeyName = StockInfoViewMetaData.KeyNames[i];
                 if(curKeyName.Visible == false && curKeyName.Editable == false)
                 {
                     continue;
@@ -86,7 +86,7 @@ namespace WMS.UI
                 MessageBox.Show("上架单条目ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            PutawayTicketItem[] result = (from p in wmsEntities.PutawayTicketItem
+            PutawayTicketItemView[] result = (from p in wmsEntities.PutawayTicketItemView
                                           where p.ID == putawayTicketItemID
                                           select p).ToArray();
             if (result.Length == 0)
@@ -95,8 +95,9 @@ namespace WMS.UI
                 return false;
             }
 
-            PutawayTicketItem putawayTicket = result[0];
-            Utilities.CopyPropertiesToTextBoxes(putawayTicket, this, "textBoxPutawayTicketItem");
+            PutawayTicketItemView putawayTicketView = result[0];
+            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBox");
+            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBoxPutawayTicketItem");
             return true;
         }
 
@@ -121,7 +122,7 @@ namespace WMS.UI
             }
 
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, stockInfo, StockInfoMetaData.KeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, stockInfo, StockInfoViewMetaData.KeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
