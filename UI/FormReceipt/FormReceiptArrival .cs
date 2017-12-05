@@ -26,53 +26,53 @@ namespace WMS.UI
         {
             new KeyAndName(){Name = "ID",  Key = "ID"},
             new KeyAndName(){Name = "仓库ID",  Key = "Warehouse"},
-            new KeyAndName(){Name = "序号",  Key = "SerialNumber"},
-            new KeyAndName(){Name = "单据类型名称",  Key = "TypeName"},
-            new KeyAndName(){Name = "单据号",  Key = "TicketNo"},
-            new KeyAndName(){Name = "送货单号（SRM)",  Key = "DeliverTicketNo"},
-            new KeyAndName(){Name = "凭证来源",  Key = "VoucherSource"},
-            new KeyAndName(){Name = "凭证号",  Key = "VoucherNo"},
-            new KeyAndName(){Name = "凭证行号",  Key = "VoucherLineNo"},
-            new KeyAndName(){Name = "凭证年",  Key = "VoucherYear"},
-            new KeyAndName(){Name = "关联凭证号",  Key = "ReletedVoucherNo"},
-            new KeyAndName(){Name = "关联凭证行号",  Key = "ReletedVoucherLineNo"},
-            new KeyAndName(){Name = "关联凭证年",  Key = "ReletedVoucherYear"},
-            new KeyAndName(){Name = "抬头文本",  Key = "HeadingText"},
-            new KeyAndName(){Name = "过账日期",  Key = "PostCountDate"},
-            new KeyAndName(){Name = "内向交货单号",  Key = "InwardDeliverTicketNo"},
-            new KeyAndName(){Name = "内向交货行号",  Key = "InwardDeliverLineNo"},
-            new KeyAndName(){Name = "外向交货单号",  Key = "OutwardDeliverTicketNo"},
-            new KeyAndName(){Name = "外向交货行号",  Key = "OutwardDeliverLineNo"},
-            new KeyAndName(){Name = "采购订单号",  Key = "PurchaseTicketNo"},
-            new KeyAndName(){Name = "采购订单行号",  Key = "PurchaseTicketLineNo"},
-            new KeyAndName(){Name = "订单日期",  Key = "OrderDate"},
-            new KeyAndName(){Name = "收货库位",  Key = "ReceiptStorageLocation"},
-            new KeyAndName(){Name = "托盘号",  Key = "BoardNo"},
-            new KeyAndName(){Name = "物料ID",  Key = "ComponentID"},
-            new KeyAndName(){Name = "物料代码",  Key = "ComponentNo"},
-            new KeyAndName(){Name = "收货包装",  Key = "ReceiptPackage"},
-            new KeyAndName(){Name = "期待数量",  Key = "ExpectedAmount"},
-            new KeyAndName(){Name = "收货数量",  Key = "ReceiptCount"},
-            new KeyAndName(){Name = "库存状态",  Key = "StockState"},
-            new KeyAndName(){Name = "存货日期",  Key = "InventoryDate"},
-            new KeyAndName(){Name = "收货单号",  Key = "ReceiptTacketNo"},
-            new KeyAndName(){Name = "厂商批号",  Key = "ManufactureNo"},
-            new KeyAndName(){Name = "生产日期",  Key = "ManufactureDate"},
-            new KeyAndName(){Name = "失效日期",  Key = "ExpiryDate"},
-            new KeyAndName(){Name = "项目信息",  Key = "ProjectInfo"},
-            new KeyAndName(){Name = "项目阶段信息",  Key = "ProjectPhaseInfo"},
-            new KeyAndName(){Name = "物权属性",  Key = "RealRightProperty"},
-            new KeyAndName(){Name = "供应商ID",  Key = "SupplierID"},
-            new KeyAndName(){Name = "供应商",  Key = "Supplier"},
-            new KeyAndName(){Name = "作业人员",  Key = "AssignmentPerson"},
-            new KeyAndName(){Name = "是否过账",  Key = "PostedCount"},
-            new KeyAndName(){Name = "箱号",  Key = "BoxNo"},
-            new KeyAndName(){Name = "创建时间",  Key = "CreateTime"},
-            new KeyAndName(){Name = "创建者",  Key = "Creater"},
-            new KeyAndName(){Name = "最后修改人",  Key = "LastUpdatePerson"},
-            new KeyAndName(){Name = "最后修改时间",  Key = "LastUpdateTime"},
-            new KeyAndName(){Name = "移动类型",  Key = "MoveType"},
-            new KeyAndName(){Name = "单据来源",  Key = "Source"}
+            new KeyAndName(){Name = "仓库名称", Key = "WarehouseName"},
+            new KeyAndName(){Name = "单据类型名称",  Key = "Type"},
+            new KeyAndName(){Name = "单据号",  Key = "ReceiptTicketTicketNo"},
+            new KeyAndName(){Name = "送货单号（SRM)",  Key = "ReceiptTicketDeliverTicketNoSRM"},
+            new KeyAndName(){Name = "凭证来源",  Key = "ReceiptTicketVoucherSource"},
+            new KeyAndName(){Name = "凭证号",  Key = "ReceiptTicketVoucherNo"},
+            new KeyAndName(){Name = "凭证行号",  Key = "ReceiptTicketVoucherLineNo"},
+            new KeyAndName(){Name = "凭证年",  Key = "ReceiptTicketVoucherYear"},
+            new KeyAndName(){Name = "关联凭证号",  Key = "ReceiptTicketReletedVoucherNo"},
+            new KeyAndName(){Name = "关联凭证行号",  Key = "ReceiptTicketReletedVoucherLineNo"},
+            new KeyAndName(){Name = "关联凭证年",  Key = "ReceiptTicketReletedVoucherYear"},
+            new KeyAndName(){Name = "抬头文本",  Key = "ReceiptTicketHeadingText"},
+            new KeyAndName(){Name = "过账日期",  Key = "ReceiptTicketPostCountDate"},
+            new KeyAndName(){Name = "内向交货单号",  Key = "ReceiptTicketInwardDeliverTicketNo"},
+            new KeyAndName(){Name = "内向交货行号",  Key = "ReceiptTicketInwardDeliverLineNo"},
+            new KeyAndName(){Name = "外向交货单号",  Key = "ReceiptTicketOutwardDeliverTicketNo"},
+            new KeyAndName(){Name = "外向交货行号",  Key = "ReceiptTicketOutwardDeliverLineNo"},
+            new KeyAndName(){Name = "采购订单号",  Key = "ReceiptTicketPurchaseTicketNo"},
+            new KeyAndName(){Name = "采购订单行号",  Key = "ReceiptTicketPurchaseTicketLineNo"},
+            new KeyAndName(){Name = "订单日期",  Key = "ReceiptTicketOrderDate"},
+            new KeyAndName(){Name = "收货库位",  Key = "ReceiptTicketReceiptStorageLocation"},
+            new KeyAndName(){Name = "托盘号",  Key = "ReceiptTicketBoardNo"},
+            new KeyAndName(){Name = "物料ID",  Key = "ReceiptTicketComponentID"},
+            new KeyAndName(){Name = "物料代码",  Key = "ReceiptTicketComponentNo"},
+            new KeyAndName(){Name = "收货包装",  Key = "ReceiptTicketReceiptPackage"},
+            new KeyAndName(){Name = "期待数量",  Key = "ReceiptTicketExpectedAmount"},
+            new KeyAndName(){Name = "收货数量",  Key = "ReceiptTicketReceiptCount"},
+            new KeyAndName(){Name = "库存状态",  Key = "ReceiptTicketStockState"},
+            new KeyAndName(){Name = "存货日期",  Key = "ReceiptTicketInventoryDate"},
+            new KeyAndName(){Name = "收货单号",  Key = "ReceiptTicketReceiptTacketNo"},
+            new KeyAndName(){Name = "厂商批号",  Key = "ReceiptTicketManufactureNo"},
+            new KeyAndName(){Name = "生产日期",  Key = "ReceiptTicketManufactureDate"},
+            new KeyAndName(){Name = "失效日期",  Key = "ReceiptTicketExpiryDate"},
+            new KeyAndName(){Name = "项目信息",  Key = "ReceiptTicketProjectInfo"},
+            new KeyAndName(){Name = "项目阶段信息",  Key = "ReceiptTicketProjectPhaseInfo"},
+            new KeyAndName(){Name = "物权属性",  Key = "ReceiptTicketRealRightProperty"},
+            new KeyAndName(){Name = "供应商ID",  Key = "ReceiptTicketSupplierID"},
+            new KeyAndName(){Name = "供应商",  Key = "ReceiptTicketSupplier"},
+            new KeyAndName(){Name = "作业人员",  Key = "ReceiptTicketAssignmentPerson"},
+            new KeyAndName(){Name = "是否过账",  Key = "ReceiptTicketPostedCount"},
+            new KeyAndName(){Name = "箱号",  Key = "ReceiptTicketBoxNo"},
+            new KeyAndName(){Name = "创建时间",  Key = "ReceiptTicketCreateTime"},
+            new KeyAndName(){Name = "创建者",  Key = "ReceiptTicketCreater"},
+            new KeyAndName(){Name = "最后修改人",  Key = "ReceiptTicketLastUpdatePerson"},
+            new KeyAndName(){Name = "最后修改时间",  Key = "ReceiptTicketLastUpdateTime"},
+            new KeyAndName(){Name = "移动类型",  Key = "ReceiptTicketMoveType"},
+            new KeyAndName(){Name = "单据来源",  Key = "ReceiptTicketSource"}
 
         };
         public FormReceiptArrival()
@@ -115,10 +115,10 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 var wmsEntities = new WMSEntities();
-                ReceiptTicket[] receiptTickets = null;
+                ReceiptTicketView[] receiptTicketViews = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    receiptTickets = wmsEntities.Database.SqlQuery<ReceiptTicket>("SELECT * FROM ReceiptTicket").ToArray();
+                    receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>("SELECT * FROM ReceiptTicketView").ToArray();
                 }
                 else
                 {
@@ -129,7 +129,7 @@ namespace WMS.UI
                     }
                     try
                     {
-                        receiptTickets = wmsEntities.Database.SqlQuery<ReceiptTicket>(String.Format("SELECT * FROM ReceiptTicket WHERE {0} = {1}", key, value)).ToArray();
+                        receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>(String.Format("SELECT * FROM ReceiptTicket WHERE {0} = {1}", key, value)).ToArray();
                     }
                     catch
                     {
@@ -142,11 +142,11 @@ namespace WMS.UI
                     this.lableStatus.Text = "搜索完成";
                     var worksheet = this.reoGridControlUser.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    for (int i = 0; i < receiptTickets.Length; i++)
+                    for (int i = 0; i < receiptTicketViews.Length; i++)
                     {
 
-                        ReceiptTicket curReceiptTicket = receiptTickets[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicket, (from kn in this.receiptNameKeys select kn.Key).ToArray());
+                        ReceiptTicketView curReceiptTicketView = receiptTicketViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketView, (from kn in this.receiptNameKeys select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j];
