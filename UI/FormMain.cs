@@ -151,18 +151,15 @@ namespace WMS.UI
                 Warehouse ware = allWare[i];
                 comboBoxWarehouse.Items.Add(ware.Name);
             }
-            
+
+            var allProject = (from s in wms.Project select s).ToArray();
+            for (int i = 0; i < allWare.Count(); i++)
+            {
+                Project objpro = allProject[i];
+                comboBoxProject.Items.Add(objpro.Name);
+            }
             //MessageBox.Show("请选择仓库");
-
-
-
-
-//            treeViewLeft.ExpandAll();//树形栏显示所有节点   
-//            new Thread(new ThreadStart(() =>
-//            {
-//                var wmsEntities = new WMSEntities(); //初始化EF框架
-//                wmsEntities.Database.Connection.Open(); //打开EF连接
-//            })).Start();            
+      
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)

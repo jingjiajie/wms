@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="CommonDataStructures.cs" />
     <Compile Include="FormBase\BaseProjectMetaData.cs" />
+    <Compile Include="FormBase\BaseWarehouseMetaData.cs" />
     <Compile Include="FormBase\FormBaseComponenAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +109,12 @@
     </Compile>
     <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseWarehouseModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseWarehouseModify.Designer.cs">
+      <DependentUpon>FormBaseWarehouseModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormComponenModify.cs">
       <SubType>Form</SubType>
@@ -270,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseWarehouseModify.resx">
+      <DependentUpon>FormBaseWarehouseModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormComponenModify.resx">
       <DependentUpon>FormComponenModify.cs</DependentUpon>
