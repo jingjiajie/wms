@@ -11,7 +11,7 @@ namespace WMS.UI
        private static KeyName[]  keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false},
             new KeyName(){Key="Name",Name="供货商名称"},
-            new KeyName(){Key="WarehouseID",Name="仓库ID"},
+            //new KeyName(){Key="WarehouseID",Name="仓库ID"},
             new KeyName(){Key="ContractNo",Name="合同编码"},
             new KeyName(){Key="StartDate",Name="起始有效日期"},
             new KeyName(){Key="EndDate",Name="结束有效日期"},
