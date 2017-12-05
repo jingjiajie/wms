@@ -23,6 +23,10 @@ namespace WMS.UI
             {
                 string key = keys[i];
                 PropertyInfo propertyInfo = objType.GetProperty(key);
+                if (propertyInfo == null)
+                {
+                    throw new Exception("你给的类型里没有" + key + "这个属性！检查检查你的代码吧。");
+                }
                 values[i] = propertyInfo.GetValue(obj, null);
             }
             return values;
