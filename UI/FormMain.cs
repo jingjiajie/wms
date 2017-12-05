@@ -16,7 +16,16 @@ namespace WMS.UI
 {
     public partial class FormMain : Form
     { 
+        //class NodeAuthority
+        //{
+        //    public TreeNode Node;
+        //    public int Authority;
+        //}
 
+        //NodeAuthority[] nodeAuthorities =
+        //{
+        //    new NodeAuthority(){Node = new TreeNode(),Authority = Authority.BASE_COMPONENT | Authority.BASE_COMPONENT_SUPPLIER_SELFONLY}
+        //};
 
         //private FormReceiptArrival formReceiptArrival = new FormReceiptArrival();
         
