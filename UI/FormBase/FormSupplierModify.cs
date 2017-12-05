@@ -35,26 +35,31 @@ namespace WMS.UI
             for (int i = 0; i < SupplierInfoMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = SupplierInfoMetaData.KeyNames[i];
+                if (curKeyName.Visible == false && curKeyName.Editable == false)
+                {
+                    continue;
+                }
                 Label label = new Label();
                 label.Text = curKeyName.Name;
                 this.tableLayoutPanel1.Controls.Add(label);
 
                 TextBox textBox = new TextBox();
                 textBox.Name = "textBox" + curKeyName.Key;
+                if (curKeyName.Editable == false)
+                {
+                    textBox.Enabled = false;
+                }
                 this.tableLayoutPanel1.Controls.Add(textBox);
             }
             if (this.mode == FormMode.ALTER)
             {
-                Supplier Supplier = (from s in this.wmsEntities.Supplier
+                SupplierView SupplierView = (from s in this.wmsEntities.SupplierView
                                        where s.ID == this.supplierID
                                         select s).Single();
-                Utilities.CopyPropertiesToTextBoxes(Supplier, this);
+                Utilities.CopyPropertiesToTextBoxes(SupplierView, this);
             }
+       
 
-            //Supplier supplier = (from s in this.wmsEntities.Supplier
-            //                       where s.ID == this.supplierID
-            //                       select s).Single();
-            //Utilities.CopyPropertiesToTextBoxes(supplier, this);
         }
 
         private void buttonModify_Click(object sender, EventArgs e)

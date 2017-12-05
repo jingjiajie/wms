@@ -23,6 +23,12 @@ namespace WMS.UI
 
         }
 
+        private void FormBaseSupplier_Load(object sender, EventArgs e)
+        {
+            InitSupplier();
+            this.Search();
+
+        }
 
         private void InitSupplier ()
         {
@@ -53,12 +59,7 @@ namespace WMS.UI
 
     
 
-        private void FormBaseSupplier_Load(object sender, EventArgs e)
-        {
-            InitSupplier();
-            this.Search();
-         
-        }
+        
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
@@ -99,13 +100,13 @@ namespace WMS.UI
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                
 
-                DataAccess.Supplier[] Supplier = null;
+
+            SupplierView [] SupplierView = null;
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
-                    Supplier = wmsEntities.Database.SqlQuery<DataAccess.Supplier>("SELECT * FROM Supplier").ToArray();
-                    
+                    SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM Supplier").ToArray();
+                    Console.WriteLine(SupplierView.Length);
                 }
                 else
                 {
@@ -115,7 +116,7 @@ namespace WMS.UI
                     }
                     try
                     {
-                        Supplier = wmsEntities.Database.SqlQuery<DataAccess.Supplier>(String.Format("SELECT * FROM Supplier WHERE {0} = {1}", key, value)).ToArray();
+                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1}", key, value)).ToArray();
                     }
                     catch
                     {
@@ -129,13 +130,13 @@ namespace WMS.UI
                     this.labelStatus.Text = "搜索完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
                   
-                    if (Supplier.Length == 0)
+                    if (SupplierView.Length == 0)
                     {
                         worksheet[1, 1] = "没有查询到符合条件的记录";
                     }
-                    for (int i = 0; i < Supplier.Length; i++)
+                    for (int i = 0; i < SupplierView.Length; i++)
                     {
-                        DataAccess.Supplier curComponent = Supplier[i];
+                        SupplierView curComponent = SupplierView[i]; 
                         object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierInfoMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
