@@ -33,9 +33,9 @@ namespace WMS.UI
             }
 
             this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < StockInfoMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < ComponenMetaData.KeyNames.Length; i++)
             {
-                KeyName curKeyName = StockInfoMetaData.KeyNames[i];
+                KeyName curKeyName = ComponenMetaData.KeyNames[i];
                 Label label = new Label();
                 label.Text = curKeyName.Name;
                 this.tableLayoutPanelTextBoxes.Controls.Add(label);
@@ -103,12 +103,12 @@ namespace WMS.UI
             this.mode = mode;
             if(mode == FormMode.ALTER)
             {
-                this.Text = "修改库存信息";
-                this.buttonOK.Text = "修改库存信息";
+                this.Text = "修改零件信息";
+                this.buttonOK.Text = "修改零件信息";
             }else if (mode == FormMode.ADD)
             {
-                this.Text = "添加库存信息";
-                this.buttonOK.Text = "添加库存信息";
+                this.Text = "添加零件信息";
+                this.buttonOK.Text = "添加零件信息";
             }
         }
 
