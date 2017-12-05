@@ -1,6 +1,6 @@
-﻿namespace WMS.UI.FromShipmentTicket
+﻿namespace WMS.UI.PutOutStorageTicket
 {
-    partial class FormShipmentTicket
+    partial class FormPutOutStorageTicket
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShipmentTicket));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPutOutStorageTicket));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
@@ -64,8 +64,8 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 80;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(929, 403);
-            this.reoGridControlMain.TabIndex = 9;
+            this.reoGridControlMain.Size = new System.Drawing.Size(949, 388);
+            this.reoGridControlMain.TabIndex = 12;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
             // toolStripTop
@@ -83,8 +83,8 @@
             this.buttonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(929, 28);
-            this.toolStripTop.TabIndex = 8;
+            this.toolStripTop.Size = new System.Drawing.Size(949, 28);
+            this.toolStripTop.TabIndex = 11;
             this.toolStripTop.Text = "toolStrip1";
             // 
             // labelSelect
@@ -129,7 +129,7 @@
             this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonOpen.Name = "buttonOpen";
             this.buttonOpen.Size = new System.Drawing.Size(100, 25);
-            this.buttonOpen.Text = "查看发货单";
+            this.buttonOpen.Text = "查看出库单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
             // buttonAdd
@@ -160,7 +160,6 @@
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(60, 25);
             this.buttonDelete.Text = "删除";
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // statusStrip1
             // 
@@ -168,11 +167,11 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 431);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 416);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(929, 25);
-            this.statusStrip1.TabIndex = 10;
+            this.statusStrip1.Size = new System.Drawing.Size(949, 25);
+            this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
@@ -185,19 +184,19 @@
             // 
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(84, 20);
-            this.labelStatus.Text = "发货单管理";
+            this.labelStatus.Text = "出库单管理";
             // 
-            // FormShipmentTicket
+            // FormPutOutStorageTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(929, 456);
+            this.ClientSize = new System.Drawing.Size(949, 441);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
             this.Controls.Add(this.statusStrip1);
-            this.Name = "FormShipmentTicket";
-            this.Text = "FormShipmentTicket";
-            this.Load += new System.EventHandler(this.FormShipmentTicket_Load);
+            this.Name = "FormPutOutStorageTicket";
+            this.Text = "FormPutOutStorageTicket";
+            this.Load += new System.EventHandler(this.FormPutOutStorageTicket_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

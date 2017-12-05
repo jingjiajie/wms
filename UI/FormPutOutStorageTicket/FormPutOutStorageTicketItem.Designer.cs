@@ -1,6 +1,6 @@
-﻿namespace WMS.UI.FromShipmentTicket
+﻿namespace WMS.UI.PutOutStorageTicket
 {
-    partial class FormShipmentTicketItem
+    partial class FormPutOutStorageTicketItem
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonUnfinish = new System.Windows.Forms.Button();
             this.buttonFinish = new System.Windows.Forms.Button();
             this.buttonAlter = new System.Windows.Forms.Button();
@@ -43,6 +42,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -64,8 +64,8 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 153F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1079, 462);
-            this.tableLayoutPanel1.TabIndex = 13;
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1075, 441);
+            this.tableLayoutPanel1.TabIndex = 15;
             // 
             // panel1
             // 
@@ -74,7 +74,7 @@
             this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1075, 149);
+            this.panel1.Size = new System.Drawing.Size(1071, 149);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -90,7 +90,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1075, 149);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1071, 149);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanelProperties
@@ -109,7 +109,7 @@
             this.tableLayoutPanelProperties.RowCount = 2;
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(738, 145);
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(734, 145);
             this.tableLayoutPanelProperties.TabIndex = 0;
             // 
             // panel3
@@ -120,30 +120,20 @@
             this.panel3.Controls.Add(this.buttonAlter);
             this.panel3.Controls.Add(this.buttonAdd);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(744, 2);
+            this.panel3.Location = new System.Drawing.Point(740, 2);
             this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(329, 145);
             this.panel3.TabIndex = 1;
             // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Location = new System.Drawing.Point(11, 93);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(123, 39);
-            this.buttonDelete.TabIndex = 4;
-            this.buttonDelete.Text = "删除零件";
-            this.buttonDelete.UseVisualStyleBackColor = true;
-            // 
             // buttonUnfinish
             // 
-            this.buttonUnfinish.Location = new System.Drawing.Point(177, 50);
+            this.buttonUnfinish.Location = new System.Drawing.Point(177, 67);
             this.buttonUnfinish.Margin = new System.Windows.Forms.Padding(2);
             this.buttonUnfinish.Name = "buttonUnfinish";
             this.buttonUnfinish.Size = new System.Drawing.Size(123, 39);
             this.buttonUnfinish.TabIndex = 3;
-            this.buttonUnfinish.Text = "分配未完成";
+            this.buttonUnfinish.Text = "取消返回收货";
             this.buttonUnfinish.UseVisualStyleBackColor = true;
             this.buttonUnfinish.Click += new System.EventHandler(this.buttonUnfinish_Click);
             // 
@@ -154,7 +144,7 @@
             this.buttonFinish.Name = "buttonFinish";
             this.buttonFinish.Size = new System.Drawing.Size(123, 39);
             this.buttonFinish.TabIndex = 2;
-            this.buttonFinish.Text = "分配完成";
+            this.buttonFinish.Text = "确认返回收货";
             this.buttonFinish.UseVisualStyleBackColor = true;
             this.buttonFinish.Click += new System.EventHandler(this.buttonFinish_Click);
             // 
@@ -165,9 +155,8 @@
             this.buttonAlter.Name = "buttonAlter";
             this.buttonAlter.Size = new System.Drawing.Size(123, 39);
             this.buttonAlter.TabIndex = 1;
-            this.buttonAlter.Text = "修改零件";
+            this.buttonAlter.Text = "修改物件";
             this.buttonAlter.UseVisualStyleBackColor = true;
-            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
             // buttonAdd
             // 
@@ -176,9 +165,8 @@
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(123, 39);
             this.buttonAdd.TabIndex = 0;
-            this.buttonAdd.Text = "添加零件";
+            this.buttonAdd.Text = "添加物件";
             this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // panel2
             // 
@@ -187,7 +175,7 @@
             this.panel2.Location = new System.Drawing.Point(2, 155);
             this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1075, 305);
+            this.panel2.Size = new System.Drawing.Size(1071, 284);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlMain
@@ -207,7 +195,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 80;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1075, 305);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1071, 284);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -217,11 +205,11 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 462);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 441);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1079, 25);
-            this.statusStrip1.TabIndex = 12;
+            this.statusStrip1.Size = new System.Drawing.Size(1075, 25);
+            this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
@@ -236,16 +224,26 @@
             this.labelStatus.Size = new System.Drawing.Size(84, 20);
             this.labelStatus.Text = "查看发货单";
             // 
-            // FormShipmentTicketItem
+            // buttonDelete
+            // 
+            this.buttonDelete.Location = new System.Drawing.Point(11, 93);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(123, 39);
+            this.buttonDelete.TabIndex = 5;
+            this.buttonDelete.Text = "删除物件";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            // 
+            // FormPutOutStorageTicketItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1079, 487);
+            this.ClientSize = new System.Drawing.Size(1075, 466);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
-            this.Name = "FormShipmentTicketItem";
-            this.Text = "FormShipmentTicketItem";
-            this.Load += new System.EventHandler(this.FormShipmentTicketItem_Load);
+            this.Name = "FormPutOutStorageTicketItem";
+            this.Text = "FormPutOutStorageTicketItem";
+            this.Load += new System.EventHandler(this.FormPutOutStorageTicketItem_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

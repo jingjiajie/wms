@@ -11,18 +11,19 @@ using unvell.ReoGrid;
 using System.Threading;
 using System.Data.SqlClient;
 
-namespace WMS.UI.FromShipmentTicket
+
+namespace WMS.UI.PutOutStorageTicket
 {
-    public partial class FormShipmentTicket : Form
+    public partial class FormPutOutStorageTicket : Form
     {
         WMSEntities wmsEntities = new WMSEntities();
 
-        public FormShipmentTicket()
+        public FormPutOutStorageTicket()
         {
             InitializeComponent();
         }
 
-        private void FormShipmentTicket_Load(object sender, EventArgs e)
+        private void FormPutOutStorageTicket_Load(object sender, EventArgs e)
         {
             InitComponents();
             this.Search();
@@ -32,7 +33,7 @@ namespace WMS.UI.FromShipmentTicket
         {
             this.wmsEntities.Database.Connection.Open();
 
-            string[] visibleColumnNames = (from kn in ShipmentTicketViewMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in PutOutStorageTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -46,12 +47,12 @@ namespace WMS.UI.FromShipmentTicket
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
 
-            for (int i = 0; i < ShipmentTicketViewMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < PutOutStorageTicketViewMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = ShipmentTicketViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ShipmentTicketViewMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = PutOutStorageTicketViewMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = PutOutStorageTicketViewMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = ShipmentTicketViewMetaData.KeyNames.Length; //限制表的长度
+            worksheet.Columns = PutOutStorageTicketViewMetaData.KeyNames.Length; //限制表的长度
         }
 
         private void Search()
@@ -61,7 +62,7 @@ namespace WMS.UI.FromShipmentTicket
 
             if (this.comboBoxSearchCondition.SelectedIndex != 0)
             {
-                key = (from kn in ShipmentTicketViewMetaData.KeyNames
+                key = (from kn in PutOutStorageTicketViewMetaData.KeyNames
                        where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
@@ -72,21 +73,21 @@ namespace WMS.UI.FromShipmentTicket
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                ShipmentTicketView[] shipmentTicketViews = null;
+                PutOutStorageTicketView[] putOutStorageTicketViews = null;
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
-                    shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>("SELECT * FROM ShipmentTicketView").ToArray();
+                    putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>("SELECT * FROM PutOutStorageTicketView").ToArray();
                 }
                 else
                 {
 
-                    if (Utilities.IsQuotateType(typeof(ShipmentTicketView).GetProperty(key).PropertyType))
+                    if (Utilities.IsQuotateType(typeof(PutOutStorageTicketView).GetProperty(key).PropertyType))
                     {
                         value = "'" + value + "'";
                     }
                     try
                     {
-                        shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(String.Format("SELECT * FROM ShipmentTicketView WHERE {0} = {1}", key, value)).ToArray();
+                        putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>(String.Format("SELECT * FROM PutOutStorageTicketView WHERE {0} = {1}", key, value)).ToArray();
                     }
                     catch
                     {
@@ -98,14 +99,14 @@ namespace WMS.UI.FromShipmentTicket
                 {
                     this.labelStatus.Text = "搜索完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (shipmentTicketViews.Length == 0)
+                    if (putOutStorageTicketViews.Length == 0)
                     {
                         worksheet[0, 1] = "没有查询到符合条件的记录";
                     }
-                    for (int i = 0; i < shipmentTicketViews.Length; i++)
+                    for (int i = 0; i < putOutStorageTicketViews.Length; i++)
                     {
-                        var curShipmentTicketViews = shipmentTicketViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curShipmentTicketViews, (from kn in ShipmentTicketViewMetaData.KeyNames select kn.Key).ToArray());
+                        var curPutOutStorageTicketViews = putOutStorageTicketViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curPutOutStorageTicketViews, (from kn in PutOutStorageTicketViewMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
@@ -124,13 +125,13 @@ namespace WMS.UI.FromShipmentTicket
                 {
                     throw new Exception();
                 }
-                int shipmentTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formShipmentTicketItem = new FormShipmentTicketItem(shipmentTicketID);
-                formShipmentTicketItem.SetShipmentTicketStateChangedCallback(() =>
+                int putOutStorageTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var formPutOutStorageTicketItem = new FormPutOutStorageTicketItem(putOutStorageTicketID);
+                formPutOutStorageTicketItem.SetPutOutStorageTicketStateChangedCallback(() =>
                 {
                     this.Invoke(new Action(this.Search));
                 });
-                formShipmentTicketItem.Show();
+                formPutOutStorageTicketItem.Show();
             }
             catch
             {
@@ -141,7 +142,7 @@ namespace WMS.UI.FromShipmentTicket
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormShipmentTicketModify();
+            var form = new FormPutOutStorageTicketModify();
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
@@ -159,58 +160,19 @@ namespace WMS.UI.FromShipmentTicket
                 {
                     throw new Exception();
                 }
-                int shipmentTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formShipmentTicketModify = new FormShipmentTicketModify(shipmentTicketID);
-                formShipmentTicketModify.SetModifyFinishedCallback(() =>
+                int putOutStorageTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var formPutOutStorageTicketModify = new FormPutOutStorageTicketModify(putOutStorageTicketID);
+                formPutOutStorageTicketModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();
                 });
-                formShipmentTicketModify.Show();
+                formPutOutStorageTicketModify.Show();
             }
             catch
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-        }
-
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            List<int> deleteIDs = new List<int>();
-            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
-            {
-                try
-                {
-                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
-                    deleteIDs.Add(curID);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-            if (deleteIDs.Count == 0)
-            {
-                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-            {
-                return;
-            }
-            this.labelStatus.Text = "正在删除...";
-
-
-            new Thread(new ThreadStart(() =>
-            {
-                foreach (int id in deleteIDs)
-                {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicket WHERE ID = @shipmentTicketID", new SqlParameter("shipmentTicketID", id));
-                }
-                this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
-            })).Start();
         }
     }
 }

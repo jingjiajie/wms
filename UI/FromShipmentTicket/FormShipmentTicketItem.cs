@@ -89,7 +89,7 @@ namespace WMS.UI.FromShipmentTicket
 
         private void buttonFinish_Click(object sender, EventArgs e)
         {
-            const string STRING_FINISHED = "已分配完成";
+            const string STRING_FINISHED = "已完成";
             int[] selectedIDs = this.GetSelectedIDs();
             if (selectedIDs.Length == 0)
             {
@@ -109,7 +109,7 @@ namespace WMS.UI.FromShipmentTicket
                 int unfinishedShipmentTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM ShipmentTicketItem WHERE ShipmentTicketID = {0} AND State <> '{1}'", this.shipmentTicketID, STRING_FINISHED)).Single();
                 if (unfinishedShipmentTicketItemCount == 0)
                 {
-                    if (MessageBox.Show("检测到所有的零件都已经分配完成，是否将发货单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("检测到所有的零件都已经收货完成，是否将出库单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.shipmentTicketID));
                         this.wmsEntities.SaveChanges();
@@ -139,7 +139,7 @@ namespace WMS.UI.FromShipmentTicket
 
         private void buttonUnfinish_Click(object sender, EventArgs e)
         {
-            const string STRING_UNFINISHED = "未分配完成";
+            const string STRING_UNFINISHED = "未完成";
             int[] selectedIDs = this.GetSelectedIDs();
             if (selectedIDs.Length == 0)
             {
@@ -156,6 +156,41 @@ namespace WMS.UI.FromShipmentTicket
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            var form = new FormShipmentTicketItemModify();
+            form.SetMode(FormMode.ADD);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.Search();
+            });
+            form.Show();
+        }
+
+        private void buttonAlter_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int shipmentTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var formShipmentTicketItemModify = new FormShipmentTicketItemModify(shipmentTicketItemID);
+                formShipmentTicketItemModify.SetModifyFinishedCallback(() =>
+                {
+                    this.Search();
+                });
+                formShipmentTicketItemModify.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
 }

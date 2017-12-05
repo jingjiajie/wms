@@ -11,7 +11,7 @@ namespace WMS.UI.FromShipmentTicket
 
 
 
-            new KeyName(){Key="ID",Name="ID",Visible=false},
+            new KeyName(){Key="ID",Name="ID"},
             new KeyName(){Key="ProjectID",Name="项目ID",Editable=true},
             new KeyName(){Key="WarehouseID",Name="仓库ID",Editable=true},
             new KeyName(){Key="No",Name="单号",Editable=true},
