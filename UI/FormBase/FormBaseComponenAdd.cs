@@ -49,8 +49,8 @@ namespace WMS.UI.FormBase
                 objcomponen.Category = Category.Text;
                 objcomponen.GroupPrincipal = GroupPrincipal.Text;
                 objcomponen.SingleCarUsageAmount = Convert.ToDecimal(SingleCarUsageAmount.Text);
-                objcomponen.ChargeBelow50000 = Convert.ToDecimal(ChargeBelow50000.Text);
-                objcomponen.ChargeAbove50000 = Convert.ToDecimal(ChargeAbove50000.Text);
+                objcomponen.Charge1 = Convert.ToDecimal(ChargeBelow50000.Text);
+                objcomponen.Charge1 = Convert.ToDecimal(ChargeAbove50000.Text);
                 objcomponen.InventoryRequirement1Day = Convert.ToDecimal(InventoryRequirement1Day.Text);
                 objcomponen.InventoryRequirement3Day = Convert.ToDecimal(InventoryRequirement3Day.Text);
                 objcomponen.InventoryRequirement5Day = Convert.ToDecimal(InventoryRequirement5Day.Text);

@@ -18,16 +18,12 @@ namespace WMS.DataAccess
         public Nullable<int> SubmissionTicketID { get; set; }
         public string LineItem { get; set; }
         public Nullable<int> ComponentID { get; set; }
-        public string ComponentNo { get; set; }
-        public string ComponentName { get; set; }
         public string ArriveAmount { get; set; }
         public string Unit { get; set; }
         public Nullable<decimal> SubmissionAmount { get; set; }
         public Nullable<decimal> ReturnAmount { get; set; }
-        public string PurchaseOrderNo { get; set; }
-        public string BatchNo { get; set; }
-        public string SubmissionResult { get; set; }
         public string Comment { get; set; }
+        public string State { get; set; }
     
         public virtual Component Component { get; set; }
         public virtual SubmissionTicket SubmissionTicket { get; set; }

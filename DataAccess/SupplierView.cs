@@ -12,16 +12,8 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Supplier
+    public partial class SupplierView
     {
-        public Supplier()
-        {
-            this.Component = new HashSet<Component>();
-            this.ReceiptTicket = new HashSet<ReceiptTicket>();
-            this.SupplierAnnualInfo = new HashSet<SupplierAnnualInfo>();
-            this.User = new HashSet<User>();
-        }
-    
         public int ID { get; set; }
         public string Name { get; set; }
         public string ContractNo { get; set; }
@@ -38,10 +30,5 @@ namespace WMS.DataAccess
         public string BankNo { get; set; }
         public string ZipCode { get; set; }
         public string RecipientName { get; set; }
-    
-        public virtual ICollection<Component> Component { get; set; }
-        public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
-        public virtual ICollection<SupplierAnnualInfo> SupplierAnnualInfo { get; set; }
-        public virtual ICollection<User> User { get; set; }
     }
 }

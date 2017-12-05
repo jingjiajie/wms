@@ -12,38 +12,22 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class PutawayTicketComponentInfo
+    public partial class PutawayTicketItem
     {
         public int ID { get; set; }
         public int PutawayTicketID { get; set; }
         public string DisplacementPositionNo { get; set; }
         public string TargetStorageLocation { get; set; }
         public string BoardNo { get; set; }
-        public int ComponentID { get; set; }
-        public string ComponentName { get; set; }
-        public string Packaging { get; set; }
         public Nullable<decimal> ScheduledMoveCount { get; set; }
         public Nullable<decimal> DistrabuteCount { get; set; }
         public Nullable<decimal> MoveCount { get; set; }
-        public string StorageState { get; set; }
-        public Nullable<System.DateTime> InventoryDate { get; set; }
-        public int ReceiptTicketID { get; set; }
-        public string ReceiptNo { get; set; }
-        public string ManufactureNo { get; set; }
-        public Nullable<System.DateTime> ManufactureDate { get; set; }
-        public Nullable<System.DateTime> ExpiryDate { get; set; }
-        public string ProjectInfo { get; set; }
-        public string ProjectPhaseInfo { get; set; }
-        public string RealRightProperty { get; set; }
-        public int SupplierID { get; set; }
-        public string SupplierNo { get; set; }
-        public string SupplierName { get; set; }
+        public string State { get; set; }
         public string OperatePerson { get; set; }
         public string OperateTime { get; set; }
+        public int ReceiptTicketItemID { get; set; }
     
-        public virtual Component Component { get; set; }
         public virtual PutawayTicket PutawayTicket { get; set; }
-        public virtual ReceiptTicket ReceiptTicket { get; set; }
-        public virtual Supplier Supplier { get; set; }
+        public virtual ReceiptTicketItem ReceiptTicketItem { get; set; }
     }
 }

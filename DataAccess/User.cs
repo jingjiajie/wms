@@ -14,9 +14,41 @@ namespace WMS.DataAccess
     
     public partial class User
     {
+        public User()
+        {
+            this.JobTicket = new HashSet<JobTicket>();
+            this.JobTicket1 = new HashSet<JobTicket>();
+            this.PutawayTicket = new HashSet<PutawayTicket>();
+            this.PutawayTicket1 = new HashSet<PutawayTicket>();
+            this.PutOutStorageTicket = new HashSet<PutOutStorageTicket>();
+            this.PutOutStorageTicket1 = new HashSet<PutOutStorageTicket>();
+            this.ReceiptTicket = new HashSet<ReceiptTicket>();
+            this.ReceiptTicket1 = new HashSet<ReceiptTicket>();
+            this.ShipmentTicket = new HashSet<ShipmentTicket>();
+            this.ShipmentTicket1 = new HashSet<ShipmentTicket>();
+            this.SubmissionTicket = new HashSet<SubmissionTicket>();
+            this.SubmissionTicket1 = new HashSet<SubmissionTicket>();
+        }
+    
         public int ID { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public int Authority { get; set; }
+        public string AuthorityName { get; set; }
+        public Nullable<int> SupplierID { get; set; }
+    
+        public virtual ICollection<JobTicket> JobTicket { get; set; }
+        public virtual ICollection<JobTicket> JobTicket1 { get; set; }
+        public virtual ICollection<PutawayTicket> PutawayTicket { get; set; }
+        public virtual ICollection<PutawayTicket> PutawayTicket1 { get; set; }
+        public virtual ICollection<PutOutStorageTicket> PutOutStorageTicket { get; set; }
+        public virtual ICollection<PutOutStorageTicket> PutOutStorageTicket1 { get; set; }
+        public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
+        public virtual ICollection<ReceiptTicket> ReceiptTicket1 { get; set; }
+        public virtual ICollection<ShipmentTicket> ShipmentTicket { get; set; }
+        public virtual ICollection<ShipmentTicket> ShipmentTicket1 { get; set; }
+        public virtual ICollection<SubmissionTicket> SubmissionTicket { get; set; }
+        public virtual ICollection<SubmissionTicket> SubmissionTicket1 { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }

@@ -69,8 +69,8 @@
             this.panelFill = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelLeft = new System.Windows.Forms.Panel();
-            this.panelRight = new System.Windows.Forms.Panel();
             this.treeViewLeft = new System.Windows.Forms.TreeView();
+            this.panelRight = new System.Windows.Forms.Panel();
             this.panelTop.SuspendLayout();
             this.tableLayoutBanner.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -242,15 +242,6 @@
             this.panelLeft.Size = new System.Drawing.Size(394, 696);
             this.panelLeft.TabIndex = 0;
             // 
-            // panelRight
-            // 
-            this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRight.Location = new System.Drawing.Point(404, 5);
-            this.panelRight.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(735, 692);
-            this.panelRight.TabIndex = 1;
-            // 
             // treeViewLeft
             // 
             this.treeViewLeft.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -298,6 +289,15 @@
             this.treeViewLeft.Size = new System.Drawing.Size(394, 696);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);
+            // 
+            // panelRight
+            // 
+            this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelRight.Location = new System.Drawing.Point(404, 5);
+            this.panelRight.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panelRight.Name = "panelRight";
+            this.panelRight.Size = new System.Drawing.Size(735, 692);
+            this.panelRight.TabIndex = 1;
             // 
             // FormMain
             // 

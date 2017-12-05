@@ -12,9 +12,9 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Warehouse
+    public partial class Project
     {
-        public Warehouse()
+        public Project()
         {
             this.Component = new HashSet<Component>();
             this.ReceiptTicket = new HashSet<ReceiptTicket>();

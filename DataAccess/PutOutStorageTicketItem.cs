@@ -12,20 +12,15 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Warehouse
+    public partial class PutOutStorageTicketItem
     {
-        public Warehouse()
-        {
-            this.Component = new HashSet<Component>();
-            this.ReceiptTicket = new HashSet<ReceiptTicket>();
-            this.ShipmentTicket = new HashSet<ShipmentTicket>();
-        }
-    
         public int ID { get; set; }
-        public string Name { get; set; }
+        public int StockInfoID { get; set; }
+        public int PutOutStorageTicketID { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<decimal> ExceedStockAmount { get; set; }
     
-        public virtual ICollection<Component> Component { get; set; }
-        public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
-        public virtual ICollection<ShipmentTicket> ShipmentTicket { get; set; }
+        public virtual PutOutStorageTicket PutOutStorageTicket { get; set; }
+        public virtual StockInfo StockInfo { get; set; }
     }
 }

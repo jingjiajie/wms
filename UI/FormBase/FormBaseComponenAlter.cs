@@ -66,8 +66,8 @@ namespace WMS.UI.FormBase
             objuser.Category = Category.Text;
             objuser.GroupPrincipal = GroupPrincipal.Text;
             objuser.SingleCarUsageAmount = Convert.ToDecimal(SingleCarUsageAmount.Text);
-            objuser.ChargeBelow50000 = Convert.ToDecimal(ChargeBelow50000.Text);
-            objuser.ChargeAbove50000 = Convert.ToDecimal(ChargeAbove50000.Text);
+            objuser.Charge1 = Convert.ToDecimal(ChargeBelow50000.Text);
+            objuser.Charge2 = Convert.ToDecimal(ChargeAbove50000.Text);
             objuser.InventoryRequirement1Day = Convert.ToDecimal(InventoryRequirement1Day.Text);
             objuser.InventoryRequirement3Day = Convert.ToDecimal(InventoryRequirement3Day.Text);
             objuser.InventoryRequirement5Day = Convert.ToDecimal(InventoryRequirement5Day.Text);
