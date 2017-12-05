@@ -68,31 +68,43 @@ namespace WMS.UI
         private void textBoxPutawayTicketItemID_LostFocus(object sender, EventArgs e)
         {
             TextBox textBoxPutawayTicketItemID = (TextBox)this.Controls.Find("textBoxPutawayTicketItemID", true)[0];
+            if (textBoxPutawayTicketItemID.Text.Length == 0) return;
+            CheckForeignKeyPutawayTicketItem();
+        }
+
+        private bool CheckForeignKeyPutawayTicketItem()
+        {
+            TextBox textBoxPutawayTicketItemID = (TextBox)this.Controls.Find("textBoxPutawayTicketItemID", true)[0];
             if (textBoxPutawayTicketItemID.Text.Length == 0)
             {
-                return;
+                MessageBox.Show("上架单条目ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
             int putawayTicketItemID;
-            if(int.TryParse(textBoxPutawayTicketItemID.Text,out putawayTicketItemID) == false)
+            if (int.TryParse(textBoxPutawayTicketItemID.Text, out putawayTicketItemID) == false)
             {
-                MessageBox.Show("上架单条目ID 只接受数值类型","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show("上架单条目ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
             PutawayTicketItem[] result = (from p in wmsEntities.PutawayTicketItem
-                                      where p.ID == putawayTicketItemID
-                                      select p).ToArray();
-            if(result.Length == 0)
+                                          where p.ID == putawayTicketItemID
+                                          select p).ToArray();
+            if (result.Length == 0)
             {
-                MessageBox.Show("未找到上架单条目ID为"+ putawayTicketItemID + "的上架单条目，请重新输入","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                MessageBox.Show("未找到上架单条目ID为" + putawayTicketItemID + "的上架单条目，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
             }
 
             PutawayTicketItem putawayTicket = result[0];
             Utilities.CopyPropertiesToTextBoxes(putawayTicket, this, "textBoxPutawayTicketItem");
+            return true;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            //检查外键是否合法
+            if (CheckForeignKeyPutawayTicketItem() == false) return;
+
             StockInfo stockInfo = null;
             
             //若修改，则查询原StockInfo对象。若添加，则新建一个StockInfo对象。
@@ -150,5 +162,9 @@ namespace WMS.UI
             }
         }
 
+        private void FormStockInfoModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            this.Focus();
+        }
     }
 }

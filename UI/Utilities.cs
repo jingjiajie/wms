@@ -50,9 +50,14 @@ namespace WMS.UI
 
         public static bool CopyTextBoxTextsToProperties<T>(Form form,T targetObject,KeyName[] keyNames,out string errorMessage,string textBoxNamePrefix="textBox")
         {
-            PropertyInfo[] stockInfoProperties = typeof(T).GetProperties();
-            foreach (PropertyInfo p in stockInfoProperties)
+            Type objType = typeof(T);
+            foreach (KeyName curKeyName in keyNames)
             {
+                if(curKeyName.Editable == false)
+                {
+                    continue;
+                }
+                PropertyInfo p = objType.GetProperty(curKeyName.Key);
                 Control[] foundControls = form.Controls.Find(textBoxNamePrefix + p.Name, true);
                 if (foundControls.Length == 0)
                 {

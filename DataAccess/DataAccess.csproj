@@ -96,6 +96,12 @@
     <Compile Include="PutawayTicketItem.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PutawayTicketItemView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PutawayTicketView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="PutOutStorageTicket.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>

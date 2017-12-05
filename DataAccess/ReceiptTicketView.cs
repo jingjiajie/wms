@@ -60,5 +60,9 @@ namespace WMS.DataAccess
         public string Type { get; set; }
         public string VoucherLineNo { get; set; }
         public int ID { get; set; }
+        public string No { get; set; }
+        public int SupplierID { get; set; }
+        public string State { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     }
 }
