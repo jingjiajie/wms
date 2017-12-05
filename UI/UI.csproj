@@ -135,6 +135,20 @@
     </Compile>
     <Compile Include="FormBase\ComponenMetaData.cs" />
     <Compile Include="FormBase\SupplierMetaData.cs" />
+    <Compile Include="FormJobTicket\FormJobTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormJobTicket\FormJobTicket.Designer.cs">
+      <DependentUpon>FormJobTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormJobTicket\FormJobTicketItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormJobTicket\FormJobTicketItem.Designer.cs">
+      <DependentUpon>FormJobTicketItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormJobTicket\JobTicketItemViewMetaData.cs" />
+    <Compile Include="FormJobTicket\JobTicketViewMetaData.cs" />
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,12 +173,6 @@
     </Compile>
     <Compile Include="FormBase\FormBaseWarehouseAdd.Designer.cs">
       <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormDelivery\FormDeliveryJob.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormDelivery\FormDeliveryJob.Designer.cs">
-      <DependentUpon>FormDeliveryJob.cs</DependentUpon>
     </Compile>
     <Compile Include="FormDelivery\FormDeliveryOutput.cs">
       <SubType>Form</SubType>
@@ -238,7 +246,7 @@
     <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\StockInfoMetaData.cs" />
+    <Compile Include="FormStockInfo\StockInfoViewMetaData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SMC2000M.cs">
@@ -290,6 +298,12 @@
     <EmbeddedResource Include="FormBase\FormSupplierAlter.resx">
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormJobTicket\FormJobTicket.resx">
+      <DependentUpon>FormJobTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormJobTicket\FormJobTicketItem.resx">
+      <DependentUpon>FormJobTicketItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -304,9 +318,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseWarehouseAdd.resx">
       <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormDelivery\FormDeliveryJob.resx">
-      <DependentUpon>FormDeliveryJob.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDelivery\FormDeliveryOutput.resx">
       <DependentUpon>FormDeliveryOutput.cs</DependentUpon>

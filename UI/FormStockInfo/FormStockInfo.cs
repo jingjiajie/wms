@@ -33,7 +33,7 @@ namespace WMS.UI
         {
             this.wmsEntities.Database.Connection.Open();
 
-            string[] visibleColumnNames = (from kn in StockInfoMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -46,12 +46,12 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoViewMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoViewMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoMetaData.KeyNames.Length; //限制表的长度
+            worksheet.Columns = StockInfoViewMetaData.KeyNames.Length; //限制表的长度
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)
@@ -71,7 +71,7 @@ namespace WMS.UI
 
             if (this.comboBoxSearchCondition.SelectedIndex != 0)
             {
-                key = (from kn in StockInfoMetaData.KeyNames
+                key = (from kn in StockInfoViewMetaData.KeyNames
                               where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
                               select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
@@ -115,7 +115,7 @@ namespace WMS.UI
                     for (int i = 0; i < stockInfoViews.Length; i++)
                     {
                         StockInfoView curStockInfoView = stockInfoViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoMetaData.KeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoViewMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();

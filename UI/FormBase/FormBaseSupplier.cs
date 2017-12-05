@@ -10,6 +10,7 @@ using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
 using System.Data.SqlClient;
+using unvell.ReoGrid.DataFormat;
 
 namespace WMS.UI
 {
@@ -127,6 +128,7 @@ namespace WMS.UI
                 {
                     this.labelStatus.Text = "搜索完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                  
                     if (Supplier.Length == 0)
                     {
                         worksheet[1, 1] = "没有查询到符合条件的记录";
@@ -137,7 +139,9 @@ namespace WMS.UI
                         object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierInfoMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                            
+                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();                   
+                            worksheet.SetRangeDataFormat(RangePosition.EntireRange,CellDataFormatFlag.Text,null);
                         }
                     }
                 }));

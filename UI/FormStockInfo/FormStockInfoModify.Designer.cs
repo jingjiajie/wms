@@ -814,6 +814,7 @@
             this.Name = "FormStockInfoModify";
             this.Text = "修改库存信息";
             this.Load += new System.EventHandler(this.FormStockInfoModify_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormStockInfoModify_MouseDown);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanelTextBoxes.ResumeLayout(false);
