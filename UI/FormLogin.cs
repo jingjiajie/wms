@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
+using System.Threading;
 
 namespace WMS.UI
 {
@@ -22,6 +23,7 @@ namespace WMS.UI
 
         private void buttonEnter_Click(object sender, EventArgs e)
         {
+            this.labelStatus.Text = "正在登陆，请耐心等待...";
             if (textBoxUsername.Text == string.Empty)
             {
                 MessageBox.Show("用户名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -32,30 +34,34 @@ namespace WMS.UI
                 MessageBox.Show("密码不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            WMSEntities wms = new WMSEntities();
-            User allUsers = (from s in wms.User
-                             where s.Username == textBoxUsername.Text
-                             select s).FirstOrDefault<User>();
-            if (allUsers == null)
+            new Thread(new ThreadStart(()=>
             {
-                MessageBox.Show("用户名错误，请重新输入");
-            }
-            else
-            {
-                if (allUsers.Password == textBoxPassword.Text)
+                WMSEntities wms = new WMSEntities();
+                User user = (from s in wms.User
+                                 where s.Username == textBoxUsername.Text
+                                 select s).FirstOrDefault<User>();
+                if (user == null)
                 {
-                    string a = allUsers.Username;
-                    int b = allUsers.Authority;
-                    FormMain fm = new FormMain(a,b);
-                    fm.ShowDialog();
-                    this.Close();
+                    MessageBox.Show("用户名错误，请重新输入");
+                    return;
                 }
-                else
+                else if (user.Password != textBoxPassword.Text)
                 {
                     MessageBox.Show("密码错误，请重新输入");
                 }
-            }
-            
+                else
+                {
+                    this.Invoke(new Action(()=>
+                    {
+                        this.labelStatus.Text = "";
+                        string a = user.Username;
+                        int b = user.Authority;
+                        FormMain fm = new FormMain(a, b);
+                        fm.ShowDialog();
+                        this.Close();
+                    }));
+                }
+            })).Start();
         }
 
         private void buttonClosing_Click(object sender, EventArgs e)
@@ -114,6 +120,11 @@ namespace WMS.UI
             {
                 leftFlag = false;//释放鼠标后标注为false;
             }
+        }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+            this.labelStatus.Text = "";
         }
     }
 }

@@ -16,6 +16,7 @@ namespace WMS.UI
     {
         private int jobTicketID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
+        Action jobTicketStateChangedCallback = null;
 
         private KeyName[] visibleColumns = (from kn in JobTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -25,6 +26,11 @@ namespace WMS.UI
         {
             InitializeComponent();
             this.jobTicketID = jobTicketID;
+        }
+
+        public void SetJobTicketStateChangedCallback(Action jobTicketStateChangedCallback)
+        {
+            this.jobTicketStateChangedCallback = jobTicketStateChangedCallback;
         }
 
         private void FormJobTicketItem_Load(object sender, EventArgs e)
@@ -88,6 +94,7 @@ namespace WMS.UI
 
         private void buttonFinish_Click(object sender, EventArgs e)
         {
+            const string STRING_FINISHED = "已完成";
             int[] selectedIDs = this.GetSelectedIDs();
             if(selectedIDs.Length == 0)
             {
@@ -96,15 +103,30 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(()=>
             {
+                //将状态置为已完成
                 foreach (int id in selectedIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '完成' WHERE ID = {0};", id));
+                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
                 }
                 this.wmsEntities.SaveChanges();
+                
+                //如果作业单中所有条目都完成，询问是否将作业单标记为完成
+                int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, STRING_FINISHED)).Single();
+                if (unfinishedJobTicketItemCount == 0)
+                {
+                    if (MessageBox.Show("检测到所有的作业任务都已经完成，是否将作业单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}",STRING_FINISHED,this.jobTicketID));
+                        this.wmsEntities.SaveChanges();
+                    }
+                    this.jobTicketStateChangedCallback?.Invoke();
+                }
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }
+
+
 
         private int[] GetSelectedIDs()
         {
@@ -123,6 +145,7 @@ namespace WMS.UI
 
         private void buttonUnfinish_Click(object sender, EventArgs e)
         {
+            const string STRING_UNFINISHED = "未完成";
             int[] selectedIDs = this.GetSelectedIDs();
             if (selectedIDs.Length == 0)
             {
@@ -133,7 +156,7 @@ namespace WMS.UI
             {
                 foreach (int id in selectedIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '未完成' WHERE ID = {0};", id));
+                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
                 }
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));

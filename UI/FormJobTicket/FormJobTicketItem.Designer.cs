@@ -67,7 +67,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1753, 667);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1888, 711);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -77,10 +77,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 873);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 917);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1759, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(1894, 36);
             this.statusStrip1.TabIndex = 10;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -109,7 +109,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1759, 873);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1894, 917);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
             // panel1
@@ -118,7 +118,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1753, 194);
+            this.panel1.Size = new System.Drawing.Size(1888, 194);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -133,7 +133,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1753, 194);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1888, 194);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanelProperties
@@ -151,7 +151,7 @@
             this.tableLayoutPanelProperties.RowCount = 2;
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(1247, 188);
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(1382, 188);
             this.tableLayoutPanelProperties.TabIndex = 0;
             // 
             // panel3
@@ -161,7 +161,7 @@
             this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.buttonAdd);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(1256, 3);
+            this.panel3.Location = new System.Drawing.Point(1391, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(494, 188);
             this.panel3.TabIndex = 1;
@@ -210,15 +210,14 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 203);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1753, 667);
+            this.panel2.Size = new System.Drawing.Size(1888, 711);
             this.panel2.TabIndex = 1;
             // 
             // FormJobTicketItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1759, 909);
+            this.ClientSize = new System.Drawing.Size(1894, 953);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormJobTicketItem";

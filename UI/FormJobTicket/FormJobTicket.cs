@@ -125,6 +125,10 @@ namespace WMS.UI
                 }
                 int jobTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formJobTicketItem = new FormJobTicketItem(jobTicketID);
+                formJobTicketItem.SetJobTicketStateChangedCallback(()=>
+                {
+                    this.Invoke(new Action(this.Search));
+                });
                 formJobTicketItem.Show();
             }
             catch
