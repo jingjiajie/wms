@@ -60,5 +60,24 @@ namespace WMS.DataAccess
         public string Type { get; set; }
         public string VoucherLineNo { get; set; }
         public int ID { get; set; }
+        public string No { get; set; }
+        public int SupplierID { get; set; }
+        public string State { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public string SupplierName { get; set; }
+        public string SupplierContractNo { get; set; }
+        public Nullable<System.DateTime> SupplierStartDate { get; set; }
+        public Nullable<System.DateTime> SupplierEndDate { get; set; }
+        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
+        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
+        public string SupplierFullName { get; set; }
+        public string SupplierTaxpayerNumber { get; set; }
+        public string SupplierAddress { get; set; }
+        public string SupplierSupplierTel { get; set; }
+        public string SupplierBankName { get; set; }
+        public string SupplierBankAccount { get; set; }
+        public string SupplierBankNo { get; set; }
+        public string SupplierZipCode { get; set; }
+        public string SupplierRecipientName { get; set; }
     }
 }

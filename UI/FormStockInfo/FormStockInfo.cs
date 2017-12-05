@@ -15,6 +15,7 @@ namespace WMS.UI
 {
     public partial class FormStockInfo : Form
     {
+        
         private WMSEntities wmsEntities = new WMSEntities();
         public FormStockInfo()
         {
