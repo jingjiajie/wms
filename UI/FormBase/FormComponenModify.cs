@@ -36,12 +36,20 @@ namespace WMS.UI
             for (int i = 0; i < ComponenMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = ComponenMetaData.KeyNames[i];
+                if (curKeyName.Visible == false && curKeyName.Editable == false)
+                {
+                    continue;
+                }
                 Label label = new Label();
                 label.Text = curKeyName.Name;
                 this.tableLayoutPanelTextBoxes.Controls.Add(label);
 
                 TextBox textBox = new TextBox();
                 textBox.Name = "textBox" + curKeyName.Key;
+                if (curKeyName.Editable == false)
+                {
+                    textBox.Enabled = false;
+                }
                 this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
             }
 
@@ -52,13 +60,50 @@ namespace WMS.UI
                                        select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(componen, this);
             }
+            this.Controls.Find("textBoxtextBoxProjectID", true)[0].LostFocus += textBoxtextBoxProjectID_LostFocus;
+        }
+        private void textBoxtextBoxProjectID_LostFocus(object sender, EventArgs e)
+        {
+            TextBox textBoxtextBoxProjectID = (TextBox)this.Controls.Find("textBoxtextBoxProjectID", true)[0];
+            if (textBoxtextBoxProjectID.Text.Length == 0) return;
+            CheckForeignKeyProject();
+        }
+
+        private bool CheckForeignKeyProject()
+        {
+            TextBox textBoxtextBoxProjectID = (TextBox)this.Controls.Find("textBoxtextBoxProjectID", true)[0];
+            if (textBoxtextBoxProjectID.Text.Length == 0)
+            {
+                MessageBox.Show("上架单条目ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            int putawayTicketItemID;
+            if (int.TryParse(textBoxtextBoxProjectID.Text, out putawayTicketItemID) == false)
+            {
+                MessageBox.Show("上架单条目ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            PutawayTicketItemView[] result = (from p in wmsEntities.PutawayTicketItemView
+                                              where p.ID == putawayTicketItemID
+                                              select p).ToArray();
+            if (result.Length == 0)
+            {
+                MessageBox.Show("未找到上架单条目ID为" + putawayTicketItemID + "的上架单条目，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            PutawayTicketItemView putawayTicketView = result[0];
+            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBox");
+            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBoxPutawayTicketItem");
+            return true;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            DataAccess.Component componen = null;
-            
-            //若修改，则查询原StockInfo对象。若添加，则新建一个StockInfo对象。
+            if (CheckForeignKeyProject() == false) return;
+
+
+            DataAccess.Component componen = null;           
             if (this.mode == FormMode.ALTER)
             {
                 componen = (from s in this.wmsEntities.Component
@@ -70,6 +115,7 @@ namespace WMS.UI
                 componen = new DataAccess.Component();
                 this.wmsEntities.Component.Add(componen);
             }
+
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenMetaData.KeyNames, out string errorMessage) == false)
             {

@@ -74,26 +74,24 @@ namespace WMS.UI
             }
             
             this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
-            worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
                 var wmsEntities = new WMSEntities();
-
-                DataAccess.Component[] Components = null;
-                if (key == null || value == null) //查询条件为null则查询全部内容
+                ComponentView[] componentViews = null;
+                if (key == null || value == null)        //搜索所有
                 {
-                    Components = wmsEntities.Database.SqlQuery<DataAccess.Component>("SELECT * FROM Component").ToArray();
+                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView").ToArray();
                 }
                 else
                 {
-                    if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
+                    double tmp;
+                    if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
                     {
                         value = "'" + value + "'";
                     }
                     try
                     {
-                        Components = wmsEntities.Database.SqlQuery<DataAccess.Component>(String.Format("SELECT * FROM Component WHERE {0} = {1}", key, value)).ToArray();
+                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
                     }
                     catch
                     {
@@ -104,22 +102,61 @@ namespace WMS.UI
                 this.reoGridControlComponen.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
+                    var worksheet = this.reoGridControlComponen.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (Components.Length == 0)
+                    for (int i = 0; i < componentViews.Length; i++)
                     {
-                        worksheet[1, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < Components.Length; i++)
-                    {
-                        DataAccess.Component curComponent = Components[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in ComponenMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < ComponenMetaData.KeyNames.Length; j++)
+
+                        ComponentView curComponentView = componentViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenMetaData.KeyNames select kn.Key).ToArray());
+                        for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                            worksheet[i, j] = columns[j];
                         }
                     }
                 }));
+
             })).Start();
+            //    DataAccess.Component[] Components = null;
+            //    if (key == null || value == null) //查询条件为null则查询全部内容
+            //    {
+            //        Components = wmsEntities.Database.SqlQuery<DataAccess.Component>("SELECT * FROM Component").ToArray();
+            //    }
+            //    else
+            //    {
+            //        if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
+            //        {
+            //            value = "'" + value + "'";
+            //        }
+            //        try
+            //        {
+            //            Components = wmsEntities.Database.SqlQuery<DataAccess.Component>(String.Format("SELECT * FROM Component WHERE {0} = {1}", key, value)).ToArray();
+            //        }
+            //        catch
+            //        {
+            //            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //            return;
+            //        }
+            //    }
+            //    this.reoGridControlComponen.Invoke(new Action(() =>
+            //    {
+            //        this.labelStatus.Text = "搜索完成";
+            //        worksheet.DeleteRangeData(RangePosition.EntireRange);
+            //        if (Components.Length == 0)
+            //        {
+            //            worksheet[1, 1] = "没有查询到符合条件的记录";
+            //        }
+            //        for (int i = 0; i < Components.Length; i++)
+            //        {
+            //            DataAccess.Component curComponent = Components[i];
+            //            object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in ComponenMetaData.KeyNames select kn.Key).ToArray());
+            //            for (int j = 0; j < ComponenMetaData.KeyNames.Length; j++)
+            //            {
+            //                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+            //            }
+            //        }
+            //    }));
+            //})).Start();
         }
 
 

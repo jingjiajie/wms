@@ -9,9 +9,9 @@ namespace WMS.UI
     {
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false},
-            new KeyName(){Key="ProjectID",Name="项目ID"},
-            new KeyName(){Key="WarehouseID",Name="仓库ID"},
-            new KeyName(){Key="SupplierID",Name="供货商ID"},
+            new KeyName(){Key="ProjectID",Name="项目ID",Visible=false,Editable=true},
+            new KeyName(){Key="WarehouseID",Name="仓库ID",Visible=false,Editable=true},
+            new KeyName(){Key="SupplierID",Name="供货商ID",Visible=false,Editable=true},
             new KeyName(){Key="ContainerNo",Name="容器号"},
             new KeyName(){Key="Factroy",Name="工厂"},
             new KeyName(){Key="WorkPosition",Name="工位"},
@@ -29,6 +29,7 @@ namespace WMS.UI
             new KeyName(){Key="InventoryRequirement3Day",Name="3天库存要求"},
             new KeyName(){Key="InventoryRequirement5Day",Name="5天库存要求"},
             new KeyName(){Key="InventoryRequirement10Day",Name="10天库存要求"},
+
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
