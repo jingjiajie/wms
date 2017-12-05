@@ -37,22 +37,58 @@ namespace WMS.UI
             for (int i = 0; i < StockInfoMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = StockInfoMetaData.KeyNames[i];
+                if(curKeyName.Visible == false && curKeyName.Editable == false)
+                {
+                    continue;
+                }
                 Label label = new Label();
                 label.Text = curKeyName.Name;
                 this.tableLayoutPanelTextBoxes.Controls.Add(label);
 
                 TextBox textBox = new TextBox();
                 textBox.Name = "textBox" + curKeyName.Key;
+                if (curKeyName.Editable == false)
+                {
+                    textBox.Enabled = false;
+                }
                 this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
             }
 
             if(this.mode == FormMode.ALTER)
             {
-                StockInfo stockInfo = (from s in this.wmsEntities.StockInfo
-                                       where s.ID == this.stockInfoID
-                                       select s).Single();
-                Utilities.CopyPropertiesToTextBoxes(stockInfo, this);
+                StockInfoView stockInfoView = (from s in this.wmsEntities.StockInfoView
+                                               where s.ID == this.stockInfoID
+                                               select s).Single();
+                Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
             }
+
+            this.Controls.Find("textBoxPutawayTicketID", true)[0].LostFocus += textBoxPutawayTicketID_LostFocus;
+        }
+
+        private void textBoxPutawayTicketID_LostFocus(object sender, EventArgs e)
+        {
+            TextBox textBoxPutawayTicketID = (TextBox)this.Controls.Find("textBoxPutawayTicketID", true)[0];
+            if (textBoxPutawayTicketID.Text.Length == 0)
+            {
+                return;
+            }
+            int putawayTicketID;
+            if(int.TryParse(textBoxPutawayTicketID.Text,out putawayTicketID) == false)
+            {
+                MessageBox.Show("上架单ID 只接受数值类型","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            PutawayTicket[] result = (from p in wmsEntities.PutawayTicket
+                                      where p.ID == putawayTicketID
+                                      select p).ToArray();
+            if(result.Length == 0)
+            {
+                MessageBox.Show("未找到上架单ID为"+putawayTicketID+"的上架单，请重新输入","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            PutawayTicket putawayTicket = result[0];
+            Utilities.CopyPropertiesToTextBoxes(putawayTicket, this, "textBoxPutawayTicket");
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

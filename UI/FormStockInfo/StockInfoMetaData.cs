@@ -9,6 +9,7 @@ namespace WMS.UI
     {
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false},
+            new KeyName(){Key="PutawayTicketItemID",Name="上架单条目ID",Visible=false,Editable=true},
             new KeyName(){Key="ComponentName",Name="零件名称"},
             new KeyName(){Key="ReceiptTicketNo",Name="收货单号"},
             new KeyName(){Key="ReceiptTicketItemInventoryDate",Name="存货日期"},
