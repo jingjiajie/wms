@@ -66,6 +66,7 @@
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\BaseProjectMetaData.cs" />
     <Compile Include="FormBase\FormBaseComponenAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,6 +78,18 @@
     </Compile>
     <Compile Include="FormBase\FormBaseComponenAlter.Designer.cs">
       <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseProject.Designer.cs">
+      <DependentUpon>FormBaseProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseProjectModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseProjectModify.Designer.cs">
+      <DependentUpon>FormBaseProjectModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormBaseSupplier.cs">
       <SubType>Form</SubType>
@@ -241,6 +254,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseComponenAlter.resx">
       <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseProject.resx">
+      <DependentUpon>FormBaseProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseProjectModify.resx">
+      <DependentUpon>FormBaseProjectModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
