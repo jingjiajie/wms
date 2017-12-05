@@ -35,9 +35,11 @@ namespace WMS.DataAccess
         public DbSet<PutawayTicket> PutawayTicket { get; set; }
         public DbSet<PutawayTicketItem> PutawayTicketItem { get; set; }
         public DbSet<PutOutStorageTicket> PutOutStorageTicket { get; set; }
+        public DbSet<PutOutStorageTicketItem> PutOutStorageTicketItem { get; set; }
         public DbSet<ReceiptTicket> ReceiptTicket { get; set; }
         public DbSet<ReceiptTicketItem> ReceiptTicketItem { get; set; }
         public DbSet<ShipmentTicket> ShipmentTicket { get; set; }
+        public DbSet<ShipmentTicketItem> ShipmentTicketItem { get; set; }
         public DbSet<StockInfo> StockInfo { get; set; }
         public DbSet<SubmissionTicket> SubmissionTicket { get; set; }
         public DbSet<SubmissionTicketItem> SubmissionTicketItem { get; set; }
@@ -49,8 +51,18 @@ namespace WMS.DataAccess
         public DbSet<ComponentShipmentInfoView> ComponentShipmentInfoView { get; set; }
         public DbSet<ComponentSingleBoxTranPackingInfoView> ComponentSingleBoxTranPackingInfoView { get; set; }
         public DbSet<ComponentView> ComponentView { get; set; }
+        public DbSet<JobTicketItemView> JobTicketItemView { get; set; }
+        public DbSet<JobTicketView> JobTicketView { get; set; }
         public DbSet<ProjectView> ProjectView { get; set; }
+        public DbSet<PutOutStorageTicketItemView> PutOutStorageTicketItemView { get; set; }
+        public DbSet<PutOutStorageTicketView> PutOutStorageTicketView { get; set; }
+        public DbSet<ReceiptTicketItemView> ReceiptTicketItemView { get; set; }
+        public DbSet<ReceiptTicketView> ReceiptTicketView { get; set; }
+        public DbSet<ShipmentTicketItemView> ShipmentTicketItemView { get; set; }
+        public DbSet<ShipmentTicketView> ShipmentTicketView { get; set; }
         public DbSet<StockInfoView> StockInfoView { get; set; }
+        public DbSet<SubmissionTicketItemView> SubmissionTicketItemView { get; set; }
+        public DbSet<SubmissionTicketView> SubmissionTicketView { get; set; }
         public DbSet<SupplierAnnualInfoView> SupplierAnnualInfoView { get; set; }
         public DbSet<SupplierView> SupplierView { get; set; }
         public DbSet<UserView> UserView { get; set; }

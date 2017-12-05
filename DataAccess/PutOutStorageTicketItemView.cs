@@ -12,8 +12,86 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class StockInfoView
+    public partial class PutOutStorageTicketItemView
     {
+        public int ID { get; set; }
+        public int StockInfoID { get; set; }
+        public int PutOutStorageTicketID { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<decimal> ExceedStockAmount { get; set; }
+        public Nullable<int> PutOutStorageTicketJobTicketID { get; set; }
+        public string PutOutStorageTicketNo { get; set; }
+        public string PutOutStorageTicketTruckLoadingTicketNo { get; set; }
+        public string PutOutStorageTicketSourse { get; set; }
+        public string PutOutStorageTicketWorkFlow { get; set; }
+        public string PutOutStorageTicketState { get; set; }
+        public string PutOutStorageTicketCarNum { get; set; }
+        public string PutOutStorageTicketDriver { get; set; }
+        public string PutOutStorageTicketSerialNo { get; set; }
+        public string PutOutStorageTicketOriginalTicketType { get; set; }
+        public string PutOutStorageTicketPullTicketNo { get; set; }
+        public string PutOutStorageTicketCrossingNo { get; set; }
+        public string PutOutStorageTicketReceiverNo { get; set; }
+        public string PutOutStorageTicketSortTypeNo { get; set; }
+        public Nullable<System.DateTime> PutOutStorageTicketTruckLoadingTime { get; set; }
+        public Nullable<System.DateTime> PutOutStorageTicketDeliverTime { get; set; }
+        public Nullable<int> PutOutStorageTicketCreateUserID { get; set; }
+        public Nullable<System.DateTime> PutOutStorageTicketCreateTime { get; set; }
+        public Nullable<int> PutOutStorageTicketLastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> PutOutStorageTicketLastUpdateTime { get; set; }
+        public Nullable<int> JobTicketShipmentTicketID { get; set; }
+        public string JobTicketJobTicketNo { get; set; }
+        public string JobTicketJobType { get; set; }
+        public string JobTicketJobGroupName { get; set; }
+        public Nullable<decimal> JobTicketScheduledAmount { get; set; }
+        public Nullable<decimal> JobTicketRealAmount { get; set; }
+        public string JobTicketState { get; set; }
+        public Nullable<int> JobTicketPrintedTimes { get; set; }
+        public string JobTicketAssignmentArea { get; set; }
+        public string JobTicketPersonInCharge { get; set; }
+        public Nullable<int> JobTicketCreateUserID { get; set; }
+        public Nullable<System.DateTime> JobTicketCreateTime { get; set; }
+        public Nullable<int> JobTicketLastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> JobTicketLastUpdateTime { get; set; }
+        public Nullable<int> ShipmentTicketProjectID { get; set; }
+        public Nullable<int> ShipmentTicketWarehouseID { get; set; }
+        public string ShipmentTicketNo { get; set; }
+        public string ShipmentTicketType { get; set; }
+        public string ShipmentTicketTypeNo { get; set; }
+        public string ShipmentTicketSource { get; set; }
+        public Nullable<decimal> ShipmentTicketSegmentationChainCount { get; set; }
+        public string ShipmentTicketRelatedTicketNo { get; set; }
+        public Nullable<System.DateTime> ShipmentTicketDate { get; set; }
+        public Nullable<int> ShipmentTicketTicketNum { get; set; }
+        public Nullable<System.DateTime> ShipmentTicketRequireArriveDate { get; set; }
+        public string ShipmentTicketState { get; set; }
+        public Nullable<decimal> ShipmentTicketScheduledAmount { get; set; }
+        public Nullable<decimal> ShipmentTicketAllocatedAmount { get; set; }
+        public Nullable<decimal> ShipmentTicketPickingAmount { get; set; }
+        public Nullable<decimal> ShipmentTicketShipmentAmount { get; set; }
+        public Nullable<decimal> ShipmentTicketExceedStorageAmount { get; set; }
+        public string ShipmentTicketStation { get; set; }
+        public string ShipmentTicketReverseTicketNo { get; set; }
+        public string ShipmentTicketSortType { get; set; }
+        public string ShipmentTicketProductionLine { get; set; }
+        public string ShipmentTicketReceivingPersonName { get; set; }
+        public string ShipmentTicketContactAddress { get; set; }
+        public string ShipmentTicketDeliveryPath { get; set; }
+        public string ShipmentTicketDescription { get; set; }
+        public string ShipmentTicketCloseReason { get; set; }
+        public Nullable<int> ShipmentTicketCreateUserID { get; set; }
+        public Nullable<System.DateTime> ShipmentTicketCreateTime { get; set; }
+        public Nullable<int> ShipmentTicketLastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> ShipmentTicketLastUpdateTime { get; set; }
+        public Nullable<int> ShipmentTicketPrintTimes { get; set; }
+        public Nullable<int> ShipmentTicketWaitingToBeDone { get; set; }
+        public string ShipmentTicketDeliveryTicketNo { get; set; }
+        public string ShipmentTicketOuterPhysicalDistributionPath { get; set; }
+        public string ShipmentTicketDeliveryPoint { get; set; }
+        public Nullable<int> ShipmentTicketEmergency { get; set; }
+        public string ShipmentTicketShipmentPlaceNo { get; set; }
+        public Nullable<int> ShipmentTicketBoardPrintedTimes { get; set; }
+        public Nullable<int> StockInfoPutawayTicketItemID { get; set; }
         public Nullable<int> PutawayTicketItemPutawayTicketID { get; set; }
         public Nullable<int> PutawayTicketItemReceiptTicketItemID { get; set; }
         public string PutawayTicketItemDisplacementPositionNo { get; set; }
@@ -25,8 +103,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> PutawayTicketItemMoveCount { get; set; }
         public string PutawayTicketItemOperatePerson { get; set; }
         public string PutawayTicketItemOperateTime { get; set; }
-        public int ID { get; set; }
-        public Nullable<int> PutawayTicketItemID { get; set; }
         public string PutawayTicketNo { get; set; }
         public string PutawayTicketType { get; set; }
         public Nullable<int> PutawayTicketReceiptTicketID { get; set; }
@@ -127,7 +203,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
-        public string ProjectName { get; set; }
-        public string WarehouseName { get; set; }
+        public string Name { get; set; }
+        public string Expr1 { get; set; }
     }
 }

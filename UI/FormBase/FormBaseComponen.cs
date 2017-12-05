@@ -9,48 +9,20 @@ using System.Windows.Forms;
 using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
     public partial class FormBaseComponent : Form
     {
-        class KeyName
-        {
-            public string Key;
-            public string Name;
-            public bool Visible = true;
-        }
-
-        private KeyName[] keyNames = {
-            new KeyName(){Key="ID",Name="ID",Visible=false},
-            new KeyName(){Key="WarehouseID",Name="仓库ID"},
-            new KeyName(){Key="SupplierID",Name="供货商ID"},
-            new KeyName(){Key="ContainerNo",Name="容器号"},
-            new KeyName(){Key="Factroy",Name="工厂"},
-            new KeyName(){Key="WorkPosition",Name="工位"},
-            new KeyName(){Key="No",Name="零件代号"},
-            new KeyName(){Key="Name",Name="零件名称"},
-            new KeyName(){Key="SupplierType",Name="A系列/B系列供应商"},
-            new KeyName(){Key="Type",Name="机型区分"},
-            new KeyName(){Key="Size",Name="尺寸（大件/小件）"},
-            new KeyName(){Key="Category",Name="分类"},
-            new KeyName(){Key="GroupPrincipal",Name="分组负责人"},
-            new KeyName(){Key="SingleCarUsageAmount",Name="单台用量"},
-            new KeyName(){Key="Charge1",Name="物流服务费1-50000台套"},
-            new KeyName(){Key="Charge2",Name="物流服务费50000台套以上"},
-            new KeyName(){Key="InventoryRequirement1Day",Name="1天库存要求"},
-            new KeyName(){Key="InventoryRequirement3Day",Name="3天库存要求"},
-            new KeyName(){Key="InventoryRequirement5Day",Name="5天库存要求"},
-            new KeyName(){Key="InventoryRequirement10Day",Name="10天库存要求"},
-
-        };
+        private WMSEntities wmsEntities = new WMSEntities();
         public FormBaseComponent()
         {
             InitializeComponent();
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in this.keyNames
+            string[] visibleColumnNames = (from kn in ComponenMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -63,41 +35,19 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlComponen.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < this.keyNames.Length; i++)
+            for (int i = 0; i < ComponenMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = this.keyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = this.keyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = ComponenMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = ComponenMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = this.keyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + this.keyNames.Length);
+            worksheet.Columns = ComponenMetaData.KeyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + ComponenMetaData.KeyNames.Length);
         }
 
         private void FormBaseComponent_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.Search(null, null);
-            //showreoGridControl();//显示所有数据
-            //toolStripComboBoxSelect.Items.Add("零件ID");
-            //toolStripComboBoxSelect.Items.Add("仓库ID");
-            //toolStripComboBoxSelect.Items.Add("供货商ID");
-            //toolStripComboBoxSelect.Items.Add("容器号");
-            //toolStripComboBoxSelect.Items.Add("工厂");
-            //toolStripComboBoxSelect.Items.Add("工位");
-            //toolStripComboBoxSelect.Items.Add("零件代号");
-            //toolStripComboBoxSelect.Items.Add("零件名称");
-            //toolStripComboBoxSelect.Items.Add("A系列/B系列供应商");
-            //toolStripComboBoxSelect.Items.Add("机型区分");
-            //toolStripComboBoxSelect.Items.Add("尺寸（大件/小件）");
-            //toolStripComboBoxSelect.Items.Add("分类");
-            //toolStripComboBoxSelect.Items.Add("分组负责人");
-            //toolStripComboBoxSelect.Items.Add("单台用量");
-            //toolStripComboBoxSelect.Items.Add("物流服务费1-50000台套");
-            //toolStripComboBoxSelect.Items.Add("物流服务费50000台套以上");
-            //toolStripComboBoxSelect.Items.Add("1天库存要求");
-            //toolStripComboBoxSelect.Items.Add("3天库存要求");
-            //toolStripComboBoxSelect.Items.Add("5天库存要求");
-            //toolStripComboBoxSelect.Items.Add("10天库存要求");
-
+            this.Search();
         }
 
         private void reoGridControlUser_Click(object sender, EventArgs e)
@@ -107,24 +57,22 @@ namespace WMS.UI
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                this.Search(null, null);
-                return;
-            }
-            else
-            {
-                string key = (from kn in this.keyNames
-                              where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-                              select kn.Key).First();
-                string value = this.toolStripTextBoxSelect.Text;
-                this.Search(key, value);
-                return;
-            }
+            this.Search();
         }
 
-    private void Search(string key, string value)
+    private void Search()
         {
+            string key = null;
+            string value = null;
+
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                key = (from kn in ComponenMetaData.KeyNames
+                       where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+                       select kn.Key).First();
+                value = this.toolStripTextBoxSelect.Text;
+            }
+            
             this.labelStatus.Text = "正在搜索中...";
             var worksheet = this.reoGridControlComponen.Worksheets[0];
             worksheet[0, 0] = "加载中...";
@@ -164,8 +112,8 @@ namespace WMS.UI
                     for (int i = 0; i < Components.Length; i++)
                     {
                         DataAccess.Component curComponent = Components[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in this.keyNames select kn.Key).ToArray());
-                        for (int j = 0; j < keyNames.Length; j++)
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in ComponenMetaData.KeyNames select kn.Key).ToArray());
+                        for (int j = 0; j < ComponenMetaData.KeyNames.Length; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
@@ -177,81 +125,78 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            FormBase.FormBaseComponenAdd ad = new FormBase.FormBaseComponenAdd();
-            ad.ShowDialog();
-            this.Search(null, null); 
+            var form = new FormComponenModify();
+            form.SetMode(FormMode.ADD);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.Search();
+            });
+            form.Show();
 
         }//添加
   
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            ReoGridControl grid = this.reoGridControlComponen;
-            var worksheet1 = grid.Worksheets[0];
-
-            worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
-
-            string str = worksheet1.SelectionRange.ToRelativeAddress();//返回选中地址串
-            int start = 2, length = 1;
-            //MessageBox.Show(str.Substring(start - 1, length));//返回行数
-            int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
-
-
-
-            String name = worksheet1[i - 1, 7].ToString();
-
-            WMSEntities wms = new WMSEntities();
-            DataAccess.Component allComponen = (from s in wms.Component
-                                                where s.Name == name
-                                                select s).First();
-            int a = allComponen.ID;
-            int b = allComponen.WarehouseID;
-            int c = allComponen.SupplierID;
-            string d = allComponen.ContainerNo;
-            string e1 = allComponen.Factroy;
-            string f = allComponen.WorkPosition;
-            string g = allComponen.No;
-            string h = allComponen.Name;
-            string i1 = allComponen.SupplierType;
-            string j = allComponen.Type;
-            string k = allComponen.Size;
-            string l = allComponen.Category;
-            string m = allComponen.GroupPrincipal;
-            var n = Convert.ToString(allComponen.SingleCarUsageAmount);
-            var o = Convert.ToString(allComponen.Charge1);
-            var p = Convert.ToString(allComponen.Charge2);
-            var q = Convert.ToString(allComponen.InventoryRequirement1Day);
-            var r = Convert.ToString(allComponen.InventoryRequirement3Day);
-            var s1 = Convert.ToString(allComponen.InventoryRequirement5Day);
-            var t = Convert.ToString(allComponen.InventoryRequirement10Day);
-               
-            FormBase.FormBaseComponenAlter adc = new FormBase.FormBaseComponenAlter(a,b,c,d,e1,f,g,h,i1,j,k,l,m,n,o,p,q,r,s1,t);
-            adc.ShowDialog();
-            this.Search(null, null); 
+            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var formComponenModify = new FormComponenModify(componenID);
+                formComponenModify.SetModifyFinishedCallback(() =>
+                {
+                    this.Search();
+                });
+                formComponenModify.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }//修改
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-            ReoGridControl grid = this.reoGridControlComponen;
-            var worksheet1 = grid.Worksheets[0];
+            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
 
-            worksheet1.SelectionMode = WorksheetSelectionMode.Row;//选中行操作
 
-            string str = worksheet1.SelectionRange.ToRelativeAddress();//返回选中地址串
-            int start = 2, length = 1;
-            //MessageBox.Show(str.Substring(start - 1, length));//返回行数
-            int i = Convert.ToInt32(str.Substring(start - 1, length));//变为int型
-
-            String name = worksheet1[i - 1, 7].ToString();
-
-            WMSEntities wms = new WMSEntities();
-            DataAccess.Component allComponen = (from s in wms.Component
-                                              where s.Name == name
-                                              select s).First();
-            wms.Component.Remove(allComponen);//删除
-            wms.SaveChanges();
-            worksheet1.Reset();
-            this.Search(null, null);//显示所有数据
+            new Thread(new ThreadStart(() =>
+            {
+                foreach (int id in deleteIDs)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @componenID", new SqlParameter("componenID", id));
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+            })).Start();
 
         }//删除
     }

@@ -14,6 +14,11 @@ namespace WMS.DataAccess
     
     public partial class PutOutStorageTicket
     {
+        public PutOutStorageTicket()
+        {
+            this.PutOutStorageTicketItem = new HashSet<PutOutStorageTicketItem>();
+        }
+    
         public int ID { get; set; }
         public string No { get; set; }
         public string TruckLoadingTicketNo { get; set; }
@@ -39,5 +44,6 @@ namespace WMS.DataAccess
         public virtual JobTicket JobTicket { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
+        public virtual ICollection<PutOutStorageTicketItem> PutOutStorageTicketItem { get; set; }
     }
 }

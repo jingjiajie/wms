@@ -82,5 +82,10 @@ namespace WMS.UI.FormSupplier
         {
             this.Close();
         }
+
+        private void FormSupplierAdd_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
