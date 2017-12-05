@@ -10,6 +10,7 @@ namespace WMS.UI
         public string Key;
         public string Name;
         public bool Visible = true;
+        public bool Editable = false;
     }
 
     public enum FormMode

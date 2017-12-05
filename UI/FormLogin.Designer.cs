@@ -35,6 +35,7 @@
             this.buttonClosing = new System.Windows.Forms.Button();
             this.buttonEnter = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelPsaaword
@@ -128,12 +129,24 @@
             this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
             this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
             // 
+            // labelStatus
+            // 
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.labelStatus.ForeColor = System.Drawing.Color.White;
+            this.labelStatus.Location = new System.Drawing.Point(308, 425);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(306, 35);
+            this.labelStatus.TabIndex = 11;
+            this.labelStatus.Text = "正在登陆，请耐心等待...";
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.ClientSize = new System.Drawing.Size(914, 481);
+            this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonClosing);
             this.Controls.Add(this.buttonEnter);
@@ -146,6 +159,7 @@
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormLogin";
+            this.Load += new System.EventHandler(this.FormLogin_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
@@ -163,5 +177,6 @@
         private System.Windows.Forms.Button buttonClosing;
         private System.Windows.Forms.Button buttonEnter;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelStatus;
     }
 }
