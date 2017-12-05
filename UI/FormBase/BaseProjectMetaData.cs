@@ -9,7 +9,7 @@ namespace WMS.UI.FormBase
     {
 
      private static KeyName[] keyNames = {
-            new KeyName(){Key="ID",Name="ID",Visible=false},
+            new KeyName(){Key="ID",Name="ID"},
             new KeyName(){Key="Name",Name="项目名称"},
         };
             public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

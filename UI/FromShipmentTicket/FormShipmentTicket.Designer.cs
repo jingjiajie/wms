@@ -91,7 +91,7 @@
             // 
             this.labelSelect.Name = "labelSelect";
             this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(84, 26);
+            this.labelSelect.Size = new System.Drawing.Size(84, 25);
             this.labelSelect.Text = "查询条件：";
             // 
             // comboBoxSearchCondition
@@ -99,13 +99,13 @@
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(128, 29);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(128, 28);
             // 
             // textBoxSearchValue
             // 
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(194, 27);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(194, 28);
             // 
             // buttonSearch
             // 
@@ -140,6 +140,7 @@
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(60, 25);
             this.buttonAdd.Text = "添加";
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonAlter
             // 
@@ -149,6 +150,7 @@
             this.buttonAlter.Name = "buttonAlter";
             this.buttonAlter.Size = new System.Drawing.Size(60, 25);
             this.buttonAlter.Text = "修改";
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
             // buttonDelete
             // 

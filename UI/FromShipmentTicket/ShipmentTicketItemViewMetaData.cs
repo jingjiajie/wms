@@ -11,7 +11,7 @@ namespace WMS.UI.FromShipmentTicket
         private static KeyName[] keyNames = {
 
 
-            new KeyName(){Key="ID",Name="ID",Visible=false},
+            new KeyName(){Key="ID",Name="ID"},
             new KeyName(){Key="ShipmentTicketID",Name="发货单ID"},
             new KeyName(){Key="StockInfoID",Name="库存信息ID "},
             new KeyName(){Key="ExpectedShipmentAmount",Name="预计发货数量"},

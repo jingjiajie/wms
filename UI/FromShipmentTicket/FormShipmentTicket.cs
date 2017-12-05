@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WMS.DataAccess;
 using unvell.ReoGrid;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI.FromShipmentTicket
 {
@@ -134,6 +135,41 @@ namespace WMS.UI.FromShipmentTicket
             catch
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            var form = new FormShipmentTicketModify();
+            form.SetMode(FormMode.ADD);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.Search();
+            });
+            form.Show();
+        }
+
+        private void buttonAlter_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int shipmentTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var formShipmentTicketModify = new FormShipmentTicketModify(shipmentTicketID);
+                formShipmentTicketModify.SetModifyFinishedCallback(() =>
+                {
+                    this.Search();
+                });
+                formShipmentTicketModify.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
         }
