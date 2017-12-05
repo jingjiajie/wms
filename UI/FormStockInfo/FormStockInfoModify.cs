@@ -62,33 +62,33 @@ namespace WMS.UI
                 Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
             }
 
-            this.Controls.Find("textBoxPutawayTicketID", true)[0].LostFocus += textBoxPutawayTicketID_LostFocus;
+            this.Controls.Find("textBoxPutawayTicketItemID", true)[0].LostFocus += textBoxPutawayTicketItemID_LostFocus;
         }
 
-        private void textBoxPutawayTicketID_LostFocus(object sender, EventArgs e)
+        private void textBoxPutawayTicketItemID_LostFocus(object sender, EventArgs e)
         {
-            TextBox textBoxPutawayTicketID = (TextBox)this.Controls.Find("textBoxPutawayTicketID", true)[0];
-            if (textBoxPutawayTicketID.Text.Length == 0)
+            TextBox textBoxPutawayTicketItemID = (TextBox)this.Controls.Find("textBoxPutawayTicketItemID", true)[0];
+            if (textBoxPutawayTicketItemID.Text.Length == 0)
             {
                 return;
             }
-            int putawayTicketID;
-            if(int.TryParse(textBoxPutawayTicketID.Text,out putawayTicketID) == false)
+            int putawayTicketItemID;
+            if(int.TryParse(textBoxPutawayTicketItemID.Text,out putawayTicketItemID) == false)
             {
-                MessageBox.Show("上架单ID 只接受数值类型","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("上架单条目ID 只接受数值类型","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            PutawayTicket[] result = (from p in wmsEntities.PutawayTicket
-                                      where p.ID == putawayTicketID
+            PutawayTicketItem[] result = (from p in wmsEntities.PutawayTicketItem
+                                      where p.ID == putawayTicketItemID
                                       select p).ToArray();
             if(result.Length == 0)
             {
-                MessageBox.Show("未找到上架单ID为"+putawayTicketID+"的上架单，请重新输入","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("未找到上架单条目ID为"+ putawayTicketItemID + "的上架单条目，请重新输入","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            PutawayTicket putawayTicket = result[0];
-            Utilities.CopyPropertiesToTextBoxes(putawayTicket, this, "textBoxPutawayTicket");
+            PutawayTicketItem putawayTicket = result[0];
+            Utilities.CopyPropertiesToTextBoxes(putawayTicket, this, "textBoxPutawayTicketItem");
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -107,6 +107,7 @@ namespace WMS.UI
                 stockInfo = new StockInfo();
                 this.wmsEntities.StockInfo.Add(stockInfo);
             }
+
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, stockInfo, StockInfoMetaData.KeyNames, out string errorMessage) == false)
             {

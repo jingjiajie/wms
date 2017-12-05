@@ -1330,26 +1330,26 @@
           <Property Name="LastUpdateUserAuthority" Type="int" />
           <Property Name="LastUpdateUserAuthorityName" Type="nvarchar" MaxLength="64" />
           <Property Name="LastUpdateUserSupplierID" Type="int" />
-          <Property Name="Warehouse" Type="int" />
-          <Property Name="Type" Type="nvarchar" MaxLength="64" />
-          <Property Name="DeliverTicketNoSRM" Type="nvarchar" MaxLength="64" />
-          <Property Name="VoucherSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="VoucherNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="VoucherLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReletedVoucherNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="VoucherYear" Type="datetime" />
-          <Property Name="ProjectID" Type="int" />
-          <Property Name="State" Type="nvarchar" MaxLength="64" />
-          <Property Name="No" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplierID" Type="int" />
+          <Property Name="ReceiptTicketWarehouse" Type="int" />
+          <Property Name="ReceiptTicketType" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketDeliverTicketNoSRM" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketVoucherSource" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketVoucherNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketVoucherLineNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketReletedVoucherNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketVoucherYear" Type="datetime" />
+          <Property Name="ReceiptTicketProjectID" Type="int" />
+          <Property Name="ReceiptTicketState" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketSupplierID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="ReceiptTicketView">
           <Key>
-            <PropertyRef Name="ReceiptTicketWarehouse" />
-            <PropertyRef Name="ReceiptTicketDeliverTicketNoSRM" />
-            <PropertyRef Name="ReceiptTicketID" />
+            <PropertyRef Name="Warehouse" />
+            <PropertyRef Name="DeliverTicketNoSRM" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="VoucherYear" Type="datetime" />
           <Property Name="ReletedVoucherNo" Type="nvarchar" MaxLength="64" />
@@ -1390,13 +1390,13 @@
           <Property Name="LastUpdateUserAuthority" Type="int" />
           <Property Name="LastUpdateUserAuthorityName" Type="nvarchar" MaxLength="64" />
           <Property Name="LastUpdateUserSupplierID" Type="int" />
-          <Property Name="ReceiptTicketWarehouse" Type="int" Nullable="false" />
-          <Property Name="ReceiptTicketVoucherNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketVoucherSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketDeliverTicketNoSRM" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="ReceiptTicketType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketVoucherLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketID" Type="int" Nullable="false" />
+          <Property Name="Warehouse" Type="int" Nullable="false" />
+          <Property Name="VoucherNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="VoucherSource" Type="nvarchar" MaxLength="64" />
+          <Property Name="DeliverTicketNoSRM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="64" />
+          <Property Name="VoucherLineNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ID" Type="int" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -3425,18 +3425,18 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[LastUpdateUserAuthority] AS [LastUpdateUserAuthority], 
 [ReceiptTicketItemView].[LastUpdateUserAuthorityName] AS [LastUpdateUserAuthorityName], 
 [ReceiptTicketItemView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID], 
-[ReceiptTicketItemView].[Warehouse] AS [Warehouse], 
-[ReceiptTicketItemView].[Type] AS [Type], 
-[ReceiptTicketItemView].[DeliverTicketNoSRM] AS [DeliverTicketNoSRM], 
-[ReceiptTicketItemView].[VoucherSource] AS [VoucherSource], 
-[ReceiptTicketItemView].[VoucherNo] AS [VoucherNo], 
-[ReceiptTicketItemView].[VoucherLineNo] AS [VoucherLineNo], 
-[ReceiptTicketItemView].[ReletedVoucherNo] AS [ReletedVoucherNo], 
-[ReceiptTicketItemView].[VoucherYear] AS [VoucherYear], 
-[ReceiptTicketItemView].[ProjectID] AS [ProjectID], 
-[ReceiptTicketItemView].[State] AS [State], 
-[ReceiptTicketItemView].[No] AS [No], 
-[ReceiptTicketItemView].[SupplierID] AS [SupplierID]
+[ReceiptTicketItemView].[ReceiptTicketWarehouse] AS [ReceiptTicketWarehouse], 
+[ReceiptTicketItemView].[ReceiptTicketType] AS [ReceiptTicketType], 
+[ReceiptTicketItemView].[ReceiptTicketDeliverTicketNoSRM] AS [ReceiptTicketDeliverTicketNoSRM], 
+[ReceiptTicketItemView].[ReceiptTicketVoucherSource] AS [ReceiptTicketVoucherSource], 
+[ReceiptTicketItemView].[ReceiptTicketVoucherNo] AS [ReceiptTicketVoucherNo], 
+[ReceiptTicketItemView].[ReceiptTicketVoucherLineNo] AS [ReceiptTicketVoucherLineNo], 
+[ReceiptTicketItemView].[ReceiptTicketReletedVoucherNo] AS [ReceiptTicketReletedVoucherNo], 
+[ReceiptTicketItemView].[ReceiptTicketVoucherYear] AS [ReceiptTicketVoucherYear], 
+[ReceiptTicketItemView].[ReceiptTicketProjectID] AS [ReceiptTicketProjectID], 
+[ReceiptTicketItemView].[ReceiptTicketState] AS [ReceiptTicketState], 
+[ReceiptTicketItemView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
+[ReceiptTicketItemView].[ReceiptTicketSupplierID] AS [ReceiptTicketSupplierID]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -3480,13 +3480,13 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[LastUpdateUserAuthority] AS [LastUpdateUserAuthority], 
 [ReceiptTicketView].[LastUpdateUserAuthorityName] AS [LastUpdateUserAuthorityName], 
 [ReceiptTicketView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID], 
-[ReceiptTicketView].[ReceiptTicketWarehouse] AS [ReceiptTicketWarehouse], 
-[ReceiptTicketView].[ReceiptTicketVoucherNo] AS [ReceiptTicketVoucherNo], 
-[ReceiptTicketView].[ReceiptTicketVoucherSource] AS [ReceiptTicketVoucherSource], 
-[ReceiptTicketView].[ReceiptTicketDeliverTicketNoSRM] AS [ReceiptTicketDeliverTicketNoSRM], 
-[ReceiptTicketView].[ReceiptTicketType] AS [ReceiptTicketType], 
-[ReceiptTicketView].[ReceiptTicketVoucherLineNo] AS [ReceiptTicketVoucherLineNo], 
-[ReceiptTicketView].[ReceiptTicketID] AS [ReceiptTicketID]
+[ReceiptTicketView].[Warehouse] AS [Warehouse], 
+[ReceiptTicketView].[VoucherNo] AS [VoucherNo], 
+[ReceiptTicketView].[VoucherSource] AS [VoucherSource], 
+[ReceiptTicketView].[DeliverTicketNoSRM] AS [DeliverTicketNoSRM], 
+[ReceiptTicketView].[Type] AS [Type], 
+[ReceiptTicketView].[VoucherLineNo] AS [VoucherLineNo], 
+[ReceiptTicketView].[ID] AS [ID]
 FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketItemView" EntityType="Self.ShipmentTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -5905,24 +5905,24 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateUserAuthority" Type="Int32" />
           <Property Name="LastUpdateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdateUserSupplierID" Type="Int32" />
-          <Property Name="Warehouse" Type="Int32" />
-          <Property Name="Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DeliverTicketNoSRM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="VoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="VoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="VoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="VoucherYear" Type="DateTime" Precision="3" />
-          <Property Name="ProjectID" Type="Int32" />
-          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="No" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierID" Type="Int32" />
+          <Property Name="ReceiptTicketWarehouse" Type="Int32" />
+          <Property Name="ReceiptTicketType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketDeliverTicketNoSRM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketVoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketVoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketVoucherYear" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptTicketProjectID" Type="Int32" />
+          <Property Name="ReceiptTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketSupplierID" Type="Int32" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
-            <PropertyRef Name="ReceiptTicketWarehouse" />
-            <PropertyRef Name="ReceiptTicketDeliverTicketNoSRM" />
-            <PropertyRef Name="ReceiptTicketID" />
+            <PropertyRef Name="Warehouse" />
+            <PropertyRef Name="DeliverTicketNoSRM" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="VoucherYear" Type="DateTime" Precision="3" />
           <Property Name="ReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -5963,13 +5963,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateUserAuthority" Type="Int32" />
           <Property Name="LastUpdateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdateUserSupplierID" Type="Int32" />
-          <Property Name="ReceiptTicketWarehouse" Type="Int32" Nullable="false" />
-          <Property Name="ReceiptTicketVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketVoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketDeliverTicketNoSRM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketVoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketID" Type="Int32" Nullable="false" />
+          <Property Name="Warehouse" Type="Int32" Nullable="false" />
+          <Property Name="VoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DeliverTicketNoSRM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="ShipmentTicketItemView">
           <Key>
@@ -8391,18 +8391,18 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicketItemView">
               <MappingFragment StoreEntitySet="ReceiptTicketItemView">
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="No" ColumnName="No" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
-                <ScalarProperty Name="VoucherYear" ColumnName="VoucherYear" />
-                <ScalarProperty Name="ReletedVoucherNo" ColumnName="ReletedVoucherNo" />
-                <ScalarProperty Name="VoucherLineNo" ColumnName="VoucherLineNo" />
-                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
-                <ScalarProperty Name="VoucherSource" ColumnName="VoucherSource" />
-                <ScalarProperty Name="DeliverTicketNoSRM" ColumnName="DeliverTicketNoSRM" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
+                <ScalarProperty Name="ReceiptTicketSupplierID" ColumnName="ReceiptTicketSupplierID" />
+                <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
+                <ScalarProperty Name="ReceiptTicketState" ColumnName="ReceiptTicketState" />
+                <ScalarProperty Name="ReceiptTicketProjectID" ColumnName="ReceiptTicketProjectID" />
+                <ScalarProperty Name="ReceiptTicketVoucherYear" ColumnName="ReceiptTicketVoucherYear" />
+                <ScalarProperty Name="ReceiptTicketReletedVoucherNo" ColumnName="ReceiptTicketReletedVoucherNo" />
+                <ScalarProperty Name="ReceiptTicketVoucherLineNo" ColumnName="ReceiptTicketVoucherLineNo" />
+                <ScalarProperty Name="ReceiptTicketVoucherNo" ColumnName="ReceiptTicketVoucherNo" />
+                <ScalarProperty Name="ReceiptTicketVoucherSource" ColumnName="ReceiptTicketVoucherSource" />
+                <ScalarProperty Name="ReceiptTicketDeliverTicketNoSRM" ColumnName="ReceiptTicketDeliverTicketNoSRM" />
+                <ScalarProperty Name="ReceiptTicketType" ColumnName="ReceiptTicketType" />
+                <ScalarProperty Name="ReceiptTicketWarehouse" ColumnName="ReceiptTicketWarehouse" />
                 <ScalarProperty Name="LastUpdateUserSupplierID" ColumnName="LastUpdateUserSupplierID" />
                 <ScalarProperty Name="LastUpdateUserAuthorityName" ColumnName="LastUpdateUserAuthorityName" />
                 <ScalarProperty Name="LastUpdateUserAuthority" ColumnName="LastUpdateUserAuthority" />
@@ -8481,13 +8481,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicketView">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicketView">
               <MappingFragment StoreEntitySet="ReceiptTicketView">
-                <ScalarProperty Name="ReceiptTicketID" ColumnName="ReceiptTicketID" />
-                <ScalarProperty Name="ReceiptTicketVoucherLineNo" ColumnName="ReceiptTicketVoucherLineNo" />
-                <ScalarProperty Name="ReceiptTicketType" ColumnName="ReceiptTicketType" />
-                <ScalarProperty Name="ReceiptTicketDeliverTicketNoSRM" ColumnName="ReceiptTicketDeliverTicketNoSRM" />
-                <ScalarProperty Name="ReceiptTicketVoucherSource" ColumnName="ReceiptTicketVoucherSource" />
-                <ScalarProperty Name="ReceiptTicketVoucherNo" ColumnName="ReceiptTicketVoucherNo" />
-                <ScalarProperty Name="ReceiptTicketWarehouse" ColumnName="ReceiptTicketWarehouse" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VoucherLineNo" ColumnName="VoucherLineNo" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="DeliverTicketNoSRM" ColumnName="DeliverTicketNoSRM" />
+                <ScalarProperty Name="VoucherSource" ColumnName="VoucherSource" />
+                <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
+                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
                 <ScalarProperty Name="LastUpdateUserSupplierID" ColumnName="LastUpdateUserSupplierID" />
                 <ScalarProperty Name="LastUpdateUserAuthorityName" ColumnName="LastUpdateUserAuthorityName" />
                 <ScalarProperty Name="LastUpdateUserAuthority" ColumnName="LastUpdateUserAuthority" />

@@ -53,12 +53,12 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
-        public int ReceiptTicketWarehouse { get; set; }
-        public string ReceiptTicketVoucherNo { get; set; }
-        public string ReceiptTicketVoucherSource { get; set; }
-        public string ReceiptTicketDeliverTicketNoSRM { get; set; }
-        public string ReceiptTicketType { get; set; }
-        public string ReceiptTicketVoucherLineNo { get; set; }
-        public int ReceiptTicketID { get; set; }
+        public int Warehouse { get; set; }
+        public string VoucherNo { get; set; }
+        public string VoucherSource { get; set; }
+        public string DeliverTicketNoSRM { get; set; }
+        public string Type { get; set; }
+        public string VoucherLineNo { get; set; }
+        public int ID { get; set; }
     }
 }
