@@ -69,14 +69,47 @@ namespace WMS.UI
                 label.Dock = DockStyle.Fill;
                 this.tableLayoutPanelProperties.Controls.Add(label);
 
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
+                //如果是编辑框形式
+                if (curKeyName.ComboBoxItems == null)
                 {
-                    textBox.Enabled = false;
+                    TextBox textBox = new TextBox();
+                    textBox.Name = "textBox" + curKeyName.Key;
+                    if (curKeyName.Editable == false)
+                    {
+                        textBox.Enabled = false;
+                    }
+                    textBox.Dock = DockStyle.Fill;
+                    this.tableLayoutPanelProperties.Controls.Add(textBox);
                 }
-                textBox.Dock = DockStyle.Fill;
-                this.tableLayoutPanelProperties.Controls.Add(textBox);
+                else //否则是下拉列表形式
+                {
+                    ComboBox comboBox = new ComboBox();
+                    comboBox.Name = "comboBox" + curKeyName.Key;
+                    comboBox.Items.AddRange(curKeyName.ComboBoxItems);
+                    comboBox.SelectedIndex = 0;
+                    comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                    comboBox.Dock = DockStyle.Fill;
+                    this.tableLayoutPanelProperties.Controls.Add(comboBox);
+                }
+
+            }
+
+            this.Controls.Find("textBoxStockInfoID", true)[0].TextChanged += textBoxStockInfoID_TextChanged; ;
+        }
+
+        private void textBoxStockInfoID_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBoxStockInfoID = (TextBox)this.Controls.Find("textBoxStockInfoID", true)[0];
+            if (int.TryParse(textBoxStockInfoID.Text,out int stockInfoID))
+            {
+                StockInfo stockInfo = (from s in this.wmsEntities.StockInfo
+                                       where s.ID == stockInfoID
+                                       select s).FirstOrDefault();
+                if(stockInfo == null)
+                {
+                    return;
+                }
+                Utilities.CopyPropertiesToTextBoxes(stockInfo,this);
             }
         }
 
@@ -115,6 +148,7 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+                    this.RefreshTextBoxes();
                 }));
             })).Start();
         }
@@ -224,11 +258,25 @@ namespace WMS.UI
                 return;
             }
             Utilities.CopyPropertiesToTextBoxes(jobTicketItemView, this);
+            Utilities.CopyPropertiesToComboBoxes(jobTicketItemView, this);
         }
 
         private void worksheet_SelectionRangeChanged(object sender, EventArgs e)
         {
             RefreshTextBoxes();
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            JobTicketItem newItem = new JobTicketItem();
+            if (Utilities.CopyTextBoxTextsToProperties(this, newItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            newItem.JobTicketID = this.jobTicketID;
+            this.wmsEntities.JobTicketItem.Add(newItem);
+            this.wmsEntities.SaveChanges();
         }
     }
 }
