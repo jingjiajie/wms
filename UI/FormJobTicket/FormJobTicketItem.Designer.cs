@@ -40,7 +40,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonUnfinish = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonModify = new System.Windows.Forms.Button();
             this.buttonFinish = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
@@ -178,7 +178,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.buttonUnfinish, 2, 2);
-            this.tableLayoutPanel3.Controls.Add(this.button1, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonFinish, 2, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
@@ -211,14 +211,15 @@
             this.buttonUnfinish.UseVisualStyleBackColor = true;
             this.buttonUnfinish.Click += new System.EventHandler(this.buttonUnfinish_Click);
             // 
-            // button1
+            // buttonModify
             // 
-            this.button1.Location = new System.Drawing.Point(42, 97);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 49);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "修改作业任务";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonModify.Location = new System.Drawing.Point(42, 97);
+            this.buttonModify.Name = "buttonModify";
+            this.buttonModify.Size = new System.Drawing.Size(159, 49);
+            this.buttonModify.TabIndex = 1;
+            this.buttonModify.Text = "修改作业任务";
+            this.buttonModify.UseVisualStyleBackColor = true;
+            this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
             // 
             // buttonFinish
             // 
@@ -277,7 +278,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button buttonUnfinish;
         private System.Windows.Forms.Button buttonFinish;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;

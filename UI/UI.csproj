@@ -167,11 +167,6 @@
     <Compile Include="FormJobTicket\FormJobTicketItem.Designer.cs">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormJobTicket\FormJobTicketItem1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FormJobTicketItem.resx</DependentUpon>
-    </Compile>
     <Compile Include="FormJobTicket\JobTicketItemViewMetaData.cs" />
     <Compile Include="FormJobTicket\JobTicketViewMetaData.cs" />
     <Compile Include="FormLogin.cs">
@@ -390,8 +385,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketItem.resx">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>FormJobTicketItem1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>

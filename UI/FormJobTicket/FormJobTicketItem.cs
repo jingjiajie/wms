@@ -275,8 +275,16 @@ namespace WMS.UI
                 return;
             }
             newItem.JobTicketID = this.jobTicketID;
+            ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
+            newItem.State = ((ComboBoxItem)comboBoxState.SelectedItem).Value;
             this.wmsEntities.JobTicketItem.Add(newItem);
             this.wmsEntities.SaveChanges();
+            this.Search();
+        }
+
+        private void buttonModify_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
