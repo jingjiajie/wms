@@ -22,7 +22,7 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in ComponenMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in ComponenMetaData.componenkeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -35,13 +35,13 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlComponen.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < ComponenMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = ComponenMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ComponenMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = ComponenMetaData.componenkeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = ComponenMetaData.componenkeyNames[i].Visible;
             }
-            worksheet.Columns = ComponenMetaData.KeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + ComponenMetaData.KeyNames.Length);
+            worksheet.Columns = ComponenMetaData.componenkeyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + ComponenMetaData.componenkeyNames.Length);
         }
 
         private void FormBaseComponent_Load(object sender, EventArgs e)
@@ -67,7 +67,7 @@ namespace WMS.UI
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                key = (from kn in ComponenMetaData.KeyNames
+                key = (from kn in ComponenMetaData.componenkeyNames
                        where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.toolStripTextBoxSelect.Text;
@@ -108,7 +108,7 @@ namespace WMS.UI
                     {
 
                         ComponentView curComponentView = componentViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenMetaData.KeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenMetaData.componenkeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j];

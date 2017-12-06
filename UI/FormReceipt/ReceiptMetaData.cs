@@ -50,8 +50,24 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "最后修改时间", Key = "LastUpdateTime", Visible = true, Editable = true},
             new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = false, Editable = false},
             new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = false, Editable = false},
-            new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false},
+            new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false}
 
+        };
+        public static KeyName[] checkKeyName =
+        {
+            new KeyName(){Name="ID", Key="ID",Visible=true,Editable=true},
+            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=true,Editable=true},
+            new KeyName(){Name="送检单单号", Key="No",Visible=true,Editable=true},
+            new KeyName(){Name="状态", Key="State",Visible=true,Editable=true},
+            new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=true},
+            new KeyName(){Name="送检员", Key="DeliverSubmissionPerson",Visible=true,Editable=true},
+            new KeyName(){Name="质检接收", Key="ReceivePerson",Visible=true,Editable=true},
+            new KeyName(){Name="质检员", Key="SubmissionPerson",Visible=true,Editable=true},
+            new KeyName(){Name="库房返回", Key="Result",Visible=true,Editable=true},
+            new KeyName(){Name="创建用户ID", Key="CreateUserID",Visible=true,Editable=true},
+            new KeyName(){Name="创建日期", Key="CreateTime",Visible=true,Editable=true},
+            new KeyName(){Name="最后修改用户ID", Key="LastUpdateUserID",Visible=true,Editable=true},
+            new KeyName(){Name="最后修改时间", Key="LastUpdateTime",Visible=true,Editable=true}
         };
     }
 }

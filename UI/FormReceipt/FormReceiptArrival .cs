@@ -11,6 +11,7 @@ using WMS.DataAccess;
 using System.Reflection;
 using System.Threading;
 using WMS.UI.FormReceipt;
+using System.Data.SqlClient;
 
 
 namespace WMS.UI
@@ -126,7 +127,11 @@ namespace WMS.UI
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             
-            ReceiptTicketModify receiptTicketModify = new ReceiptTicketModify();
+            FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1);
+            receiptTicketModify.SetModifyFinishedCallback(() =>
+            {
+                this.Search(null, null);
+            });
             receiptTicketModify.Show();
         }
 
@@ -140,7 +145,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int stockInfoID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var receiptTicketModify = new ReceiptTicketModify(FormMode.ALTER,stockInfoID);
+                var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER,stockInfoID);
                 receiptTicketModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search(null, null);
@@ -152,6 +157,76 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            //this.labelStatus.Text = "正在删除...";
+
+
+            new Thread(new ThreadStart(() =>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                foreach (int id in deleteIDs)
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
+                }
+                wmsEntities.SaveChanges();
+                this.Search(null, null);
+            })).Start();
+        }
+
+        private void buttonCheck_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                //var receiptTicketModify = new ReceiptTicketModify(FormMode.ALTER, stockInfoID);
+                var formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID);
+                formReceiptArrivalCheck.SetFinishedAction(() =>
+                {
+                    this.Search(null, null);
+                });
+                formReceiptArrivalCheck.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行送检", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
+
+        private void buttonCheckCancel_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

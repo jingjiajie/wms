@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace WMS.UI
 {
@@ -15,7 +16,7 @@ namespace WMS.UI
 
     public enum FormMode
     {
-        ADD,ALTER
+        ADD,ALTER,CHECK
     }
 
     public enum Authority
@@ -46,5 +47,11 @@ namespace WMS.UI
         BASE_SUPPLIER_SUPPLIER_SELFONLY = 2,
         BASE_COMPONENT = 1,
         BASE_COMPONENT_SUPPLIER_SELFONLY = 0,
+    }
+
+    public class FunctionAuthority
+    {
+        public string FunctionName;
+        public Authority Authority;
     }
 }
