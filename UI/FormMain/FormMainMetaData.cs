@@ -25,6 +25,7 @@ namespace WMS.UI
             MakeItem("库存信息",Authority.STOCKINFO|Authority.STOCKINFO_SUPPLIER_SELFONLY),
             MakeItem("库存盘点",Authority.STOCK_CHECK|Authority.STOCK_CHECK_SUPPLIER_SELFONLY),
 
+            MakeItem("送检单管理",Authority.SUBMISSION_TICKET|Authority.SUBMISSION_TICKET_SUPPLIER_SELFONLY),
         };
 
         private static FunctionAuthority MakeItem(string functionName,Authority authority)

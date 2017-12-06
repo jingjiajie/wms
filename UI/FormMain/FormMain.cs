@@ -51,6 +51,7 @@ namespace WMS.UI
                     }),
                 MakeTreeNode("收货管理",new TreeNode[]{
                     MakeTreeNode("到货管理"),
+                    MakeTreeNode("送检单管理"),
                     MakeTreeNode("上架管理"),
                     
                     }),
@@ -62,9 +63,6 @@ namespace WMS.UI
                 MakeTreeNode("库存管理",new TreeNode[]{
                     MakeTreeNode("库存信息")
                     }),
-                MakeTreeNode("送检管理", new TreeNode[]{
-                    MakeTreeNode("送检单")
-                    })
             };
 
             this.treeViewLeft.Nodes.Clear();
@@ -307,7 +305,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formBaseStock);
                 formBaseStock.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "送检单")
+            if (treeViewLeft.SelectedNode.Text == "送检单管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
