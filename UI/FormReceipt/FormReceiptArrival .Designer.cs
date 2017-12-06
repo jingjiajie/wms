@@ -194,6 +194,7 @@
             this.buttonCheckCancel.Name = "buttonCheckCancel";
             this.buttonCheckCancel.Size = new System.Drawing.Size(70, 25);
             this.buttonCheckCancel.Text = "取消送检";
+            this.buttonCheckCancel.Click += new System.EventHandler(this.buttonCheckCancel_Click);
             // 
             // buttonPrint
             // 

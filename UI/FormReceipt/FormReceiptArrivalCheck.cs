@@ -47,6 +47,8 @@ namespace WMS.UI.FormReceipt
             }
             this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = ID.ToString();
             this.Controls.Find("textBoxReceiptTicketID", true)[0].Enabled = false;
+            this.Controls.Find("textBoxState", true)[0].Text = "待检";
+            this.Controls.Find("textBoxState", true)[0].Enabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -57,7 +59,6 @@ namespace WMS.UI.FormReceipt
             if (Utilities.CopyTextBoxTextsToProperties(this, submissionTicket, ReceiptMetaData.checkKeyName, out errorInfo) == false)
             {
                 MessageBox.Show(errorInfo);
-                this.finishedAction();
             }
             //wmsEntities.ReceiptTicket.Add(receiptTicket);
             else
@@ -67,9 +68,9 @@ namespace WMS.UI.FormReceipt
                 wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '送检中' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", ID));
                 MessageBox.Show("Successful!");
                 this.finishedAction();
+                this.Close();
             }
             
-            this.Close();
         }
     }
 }

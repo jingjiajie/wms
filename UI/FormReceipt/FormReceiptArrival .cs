@@ -223,5 +223,10 @@ namespace WMS.UI
                 return;
             }
         }
+
+        private void buttonCheckCancel_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

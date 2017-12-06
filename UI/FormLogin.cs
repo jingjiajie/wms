@@ -54,11 +54,10 @@ namespace WMS.UI
                     this.Invoke(new Action(()=>
                     {
                         this.labelStatus.Text = "";
-                        string a = user.Username;
-                        int b = user.Authority;
-                        FormMain fm = new FormMain(a, b);
-                        fm.ShowDialog();
-                        this.Close();
+                        FormMain formMain = new FormMain(user.ID);
+                        formMain.SetFormClosedCallback(this.Close);
+                        formMain.Show();
+                        this.Hide();
                     }));
                 }
             })).Start();
