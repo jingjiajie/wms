@@ -29,17 +29,14 @@ namespace WMS.UI
         {
             if (this.mode == FormMode.ALTER && this.componenID == -1)
             {
-                throw new Exception("未设置源库存信息");
+                throw new Exception("未设置源零件信息");
             }
 
             this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < ComponenMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
             {
-                KeyName curKeyName = ComponenMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
+                KeyName curKeyName = ComponenMetaData.componenkeyNames[i];
+
                 Label label = new Label();
                 label.Text = curKeyName.Name;
                 this.tableLayoutPanelTextBoxes.Controls.Add(label);
@@ -55,53 +52,78 @@ namespace WMS.UI
 
             if(this.mode == FormMode.ALTER)
             {
-                DataAccess.Component componen = (from s in this.wmsEntities.Component
-                                       where s.ID == this.componenID
+                ComponentView componenView = (from s in this.wmsEntities.ComponentView
+                                              where s.ID == this.componenID
                                        select s).Single();
-                Utilities.CopyPropertiesToTextBoxes(componen, this);
+                Utilities.CopyPropertiesToTextBoxes(componenView, this);
             }
-            this.Controls.Find("textBoxtextBoxProjectID", true)[0].LostFocus += textBoxtextBoxProjectID_LostFocus;
+            this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
+            this.Controls.Find("textBoxWarehouseID", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
+            this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
         }
-        private void textBoxtextBoxProjectID_LostFocus(object sender, EventArgs e)
+        private void textBoxSupplierID_TextChanged(object sender, EventArgs e)
         {
-            TextBox textBoxtextBoxProjectID = (TextBox)this.Controls.Find("textBoxtextBoxProjectID", true)[0];
-            if (textBoxtextBoxProjectID.Text.Length == 0) return;
-            CheckForeignKeyProject();
+            var textBoxSupplierID = this.Controls.Find("textBoxSupplierID", true)[0];
+            string supplierID = textBoxSupplierID.Text;
+            int iSupplierID;
+            if (int.TryParse(supplierID, out iSupplierID) == false)
+            {
+                return;
+            }
+            try
+            {
+                Supplier supplierName = (from s in this.wmsEntities.Supplier where s.ID == iSupplierID select s).Single();
+                this.Controls.Find("TextBoxSupplierName", true)[0].Text = supplierName.Name;
+            }
+            catch
+            {
+
+            }
         }
 
-        private bool CheckForeignKeyProject()
+        private void textBoxWarehouseID_TextChanged(object sender, EventArgs e)
         {
-            TextBox textBoxtextBoxProjectID = (TextBox)this.Controls.Find("textBoxtextBoxProjectID", true)[0];
-            if (textBoxtextBoxProjectID.Text.Length == 0)
+            var textBoxWarehouseID = this.Controls.Find("textBoxWarehouseID", true)[0];
+            string warehouseID = textBoxWarehouseID.Text;
+            int iWarehouseID;
+            if (int.TryParse(warehouseID, out iWarehouseID) == false)
             {
-                MessageBox.Show("上架单条目ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return;
             }
-            int putawayTicketItemID;
-            if (int.TryParse(textBoxtextBoxProjectID.Text, out putawayTicketItemID) == false)
+            try
             {
-                MessageBox.Show("上架单条目ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                Warehouse warehouseName = (from s in this.wmsEntities.Warehouse where s.ID == iWarehouseID select s).Single();
+                this.Controls.Find("TextBoxWarehouseName", true)[0].Text = warehouseName.Name;
             }
-            PutawayTicketItemView[] result = (from p in wmsEntities.PutawayTicketItemView
-                                              where p.ID == putawayTicketItemID
-                                              select p).ToArray();
-            if (result.Length == 0)
+            catch
             {
-                MessageBox.Show("未找到上架单条目ID为" + putawayTicketItemID + "的上架单条目，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+
             }
 
-            PutawayTicketItemView putawayTicketView = result[0];
-            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBox");
-            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBoxPutawayTicketItem");
-            return true;
+        }
+
+        private void textBoxProjectID_TextChanged(object sender, EventArgs e)
+        {
+            var textBoxProjectID = this.Controls.Find("textBoxProjectID", true)[0];
+            string projectID = textBoxProjectID.Text;
+            int iProjectID;
+            if (int.TryParse(projectID, out iProjectID) == false)
+            {
+                return;
+            }
+            try
+            {
+                Project projectName = (from s in this.wmsEntities.Project where s.ID == iProjectID select s).Single();
+                this.Controls.Find("TextBoxProjectName", true)[0].Text = projectName.Name;
+            }
+            catch
+            {
+
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if (CheckForeignKeyProject() == false) return;
-
 
             DataAccess.Component componen = null;           
             if (this.mode == FormMode.ALTER)
@@ -117,7 +139,7 @@ namespace WMS.UI
             }
 
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenMetaData.KeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenMetaData.componenkeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

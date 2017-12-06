@@ -87,8 +87,8 @@ namespace WMS.UI
                 return false;
             }
             PutawayTicketItemView[] result = (from p in wmsEntities.PutawayTicketItemView
-                                          where p.ID == putawayTicketItemID
-                                          select p).ToArray();
+                                              where p.ID == putawayTicketItemID
+                                              select p).ToArray();
             if (result.Length == 0)
             {
                 MessageBox.Show("未找到上架单条目ID为" + putawayTicketItemID + "的上架单条目，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
