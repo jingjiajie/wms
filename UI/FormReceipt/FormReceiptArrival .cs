@@ -18,8 +18,14 @@ namespace WMS.UI
 {
     public partial class FormReceiptArrival : Form
     {
+        const string STRING_WAIT_CHECK = "待检";
+        const string STRING_SEND_CHECK = "送检中";
+        const string STRING_FINISHED = "捡毕";
+        const string STRING_RECEIPT = "收货";
+        const string STRING_REFUSE = "拒收";
+
+        const string STRING_CANCEL = "作废";
         //Dictionary<string, string> receiptNameKeys = new Dictionary<string, string>() { { "ID", "ID" }, { "仓库ID", "Warehouse" }, { "序号", "SerialNumber" }, { "单据类型名称", "TypeName" }, { "单据号", "TicketNo" }, { "送货单号（SRM)", "DeliverTicketNo" }, { "凭证来源", "VoucherSource" }, { "凭证号", "VoucherNo" }, { "凭证行号", "VoucherLineNo" }, { "凭证年", "VoucherYear" }, { "关联凭证号", "ReletedVoucherNo" }, { "关联凭证行号", "ReletedVoucherLineNo" }, { "关联凭证年", "ReletedVoucherYear" }, { "抬头文本", "HeadingText" }, { "过账日期", "PostCountDate" }, { "内向交货单号", "InwardDeliverTicketNo" }, { "内向交货行号", "InwardDeliverLineNo" }, { "外向交货单号", "OutwardDeliverTicketNo" }, { "外向交货行号", "OutwardDeliverLineNo" }, { "采购订单号", "PurchaseTicketNo" }, { "采购订单行号", "PurchaseTicketLineNo" }, { "订单日期", "OrderDate" }, { "收货库位", "ReceiptStorageLocation" }, { "托盘号", "BoardNo" }, { "物料ID", "ComponentID" }, { "物料代码", "ComponentNo" }, { "收货包装", "ReceiptPackage" }, { "期待数量", "ExpectedAmount" }, { "收货数量", "ReceiptCount" }, { "库存状态", "StockState" }, { "存货日期", "InventoryDate" }, { "收货单号", "ReceiptTacketNo" }, { "厂商批号", "ManufactureNo" }, { "生产日期", "ManufactureDate" }, { "失效日期", "ExpiryDate" }, { "项目信息", "ProjectInfo" }, { "项目阶段信息", "ProjectPhaseInfo" }, { "物权属性", "RealRightProperty" }, { "供应商ID", "SupplierID" }, { "供应商", "Supplier" }, { "作业人员", "AssignmentPerson" }, { "是否过账", "PostedCount" }, { "箱号", "BoxNo" }, { "创建时间", "CreateTime" }, { "创建者", "Creater" }, { "最后修改人", "LastUpdatePerson" }, { "最后修改时间", "LastUpdateTime" }, { "移动类型", "MoveType" }, { "单据来源", "Source" } };
-     
         public FormReceiptArrival()
         {
             InitializeComponent();
@@ -119,8 +125,17 @@ namespace WMS.UI
             else
             {
                 string condition = this.comboBoxSelect.Text;
+                string key = "";
+                foreach(KeyName kn in ReceiptMetaData.receiptNameKeys)
+                {
+                    if (condition == kn.Name)
+                    {
+                        key = kn.Key;
+                        break;
+                    }
+                }
                 string value = this.textBoxSelect.Text;
-                Search(condition, value);
+                Search(key, value);
             }
         }
 
@@ -226,7 +241,36 @@ namespace WMS.UI
 
         private void buttonCheckCancel_Click(object sender, EventArgs e)
         {
-            
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                WMSEntities wmsEntities = new WMSEntities();
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
+                SubmissionTicket submissionTicket = (from sb in wmsEntities.SubmissionTicket where sb.ReceiptTicketID == receiptTicketID select sb).Single();
+                
+                if (receiptTicket.State == STRING_SEND_CHECK)
+                {
+                    receiptTicket.State = STRING_WAIT_CHECK;
+                    submissionTicket.State = STRING_CANCEL;
+                    wmsEntities.SaveChanges();
+                }
+                else
+                {
+                    MessageBox.Show("此收货单并未送检!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请选择要取消送检的送检单。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Search(null, null);
+
         }
     }
 }
