@@ -17,91 +17,110 @@ using WMS.DataAccess;
 namespace WMS.UI
 {
     public partial class FormMain : Form
-    { 
+    {
+        private User user = null;
+        private WMSEntities wmsEntities = new WMSEntities();
 
+        private Action formClosedCallback;
 
-
-        public FormMain()
+        public FormMain(int userID)
         {
             InitializeComponent();
-        }
-        public FormMain(string a, int b)
-        {
-            InitializeComponent();
-            labelUsername.Text = a;
-            string auth = "无";
-            if(b==2)
-            {
-                auth = "收货员";
-            }
-            if (b == 4)
-            {
-                auth = "发货员";
-            }
-            if (b == 8)
-            {
-                auth = "结算员";
-            }
-            if (b == 15)
-            {
-                auth = "管理员";
-            }
-            labelAuth.Text = auth;
-
-        }
-        private void ShowAllSubNodes(TreeNode node)
-        {
-            foreach (TreeNode curSubNode in node.Nodes)
-            {
-                curSubNode.ForeColor = Color.Black;
-                this.ShowAllSubNodes(curSubNode);
-            }
+            User user = (from u in this.wmsEntities.User
+                         where u.ID == userID
+                         select u).Single();
+            this.user = user;
         }
 
-        private void ShowAll()
+        public void SetFormClosedCallback(Action callback)
         {
-            foreach (TreeNode curNode in this.treeViewLeft.Nodes)
+            this.formClosedCallback = callback;
+        }
+
+        private void RefreshTreeView()
+        {
+            TreeNode[] treeNodes = new TreeNode[]
             {
-                curNode.ForeColor = Color.Black;
-                this.ShowAllSubNodes(curNode);
+                MakeTreeNode("基本信息",new TreeNode[]{
+                    MakeTreeNode("用户管理"),
+                    MakeTreeNode("供应商管理"),
+                    MakeTreeNode("零件管理"),
+                    MakeTreeNode("仓库管理"),
+                    MakeTreeNode("项目管理"),
+                    }),
+                MakeTreeNode("收货管理",new TreeNode[]{
+                    MakeTreeNode("到货管理"),
+                    MakeTreeNode("上架管理"),
+                    }),
+                MakeTreeNode("发货管理",new TreeNode[]{
+                    MakeTreeNode("发货单管理"),
+                    MakeTreeNode("作业单管理"),
+                    MakeTreeNode("出库单管理"),
+                    }),
+                MakeTreeNode("库存管理",new TreeNode[]{
+                    MakeTreeNode("库存信息")
+                    })
+            };
+
+            this.treeViewLeft.Nodes.Clear();
+            this.treeViewLeft.Nodes.AddRange((from node in
+                                                  (from node in treeNodes
+                                                   where HasAuthority(node.Text)
+                                                   select GetAuthenticatedSubTreeNodes(node))
+                                              where node.Nodes.Count > 0
+                                              select node).ToArray());
+        }
+
+        //检测用户是否有相应功能的权限
+        private bool HasAuthority(string funcName)
+        {
+            var searchResult = (from fa in FormMainMetaData.FunctionAuthorities
+                                where fa.FunctionName == funcName
+                                select fa.Authority).ToArray();
+            if (searchResult.Length == 0) {
+                return true;
             }
+            Authority authority = searchResult[0];
+            if (((int)authority & this.user.Authority) > 0)
+            {
+                return true;
+            }
+            return false;
         }
 
-        private void HideAll()
+        //获取有权限的所有子节点
+        private TreeNode GetAuthenticatedSubTreeNodes(TreeNode node)
         {
-            this.HideBase();
-            this.HideDelivery();
-            this.HideReceipt();
-            this.HideStock();
+            if (HasAuthority(node.Text) == false)
+            {
+                return null;
+            }
+
+            TreeNode newNode = (TreeNode)node.Clone();
+            newNode.Nodes.Clear();
+
+            foreach (TreeNode curNode in node.Nodes)
+            {
+                if (HasAuthority(curNode.Text))
+                {
+                    newNode.Nodes.Add(GetAuthenticatedSubTreeNodes(curNode));
+                }
+            }
+            return newNode;
         }
 
-        private void HideBase()
+        private static TreeNode MakeTreeNode(string text, TreeNode[] subNodes = null)
         {
-            treeViewLeft.Nodes[0].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[0].Nodes[0].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[0].Nodes[1].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[0].Nodes[2].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[0].Nodes[3].ForeColor = SystemColors.Control;
-        }
-        private void HideReceipt()
-        {
-            treeViewLeft.Nodes[1].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[1].Nodes[0].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[1].Nodes[1].ForeColor = SystemColors.Control;
-        }
-        private void HideDelivery()
-        {
-            treeViewLeft.Nodes[2].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[2].Nodes[0].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[2].Nodes[1].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[2].Nodes[2].ForeColor = SystemColors.Control;
-        }
-        private void HideStock()
-        {
-            treeViewLeft.Nodes[3].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[3].Nodes[0].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[3].Nodes[1].ForeColor = SystemColors.Control;
-            treeViewLeft.Nodes[3].Nodes[2].ForeColor = SystemColors.Control;
+            TreeNode node = new TreeNode() { Text = text };
+            if (subNodes == null)
+            {
+                return node;
+            }
+            foreach (TreeNode subNode in subNodes)
+            {
+                node.Nodes.Add(subNode);
+            }
+            return node;
         }
 
         private void treeViewLeft_BeforeSelect(object sender, TreeViewCancelEventArgs e)
@@ -126,24 +145,20 @@ namespace WMS.UI
             }
         }
 
-        private void creatTreeList()
-        {
- 
-        }
-
         private void FormMain_Load(object sender, EventArgs e)
         {
-            //panelLeft.Visible = false;
-            //panelFill.Visible = false;
+            //刷新左边树形框
+            this.RefreshTreeView();
 
-            this.HideAll();
+            //刷新顶部
+            this.labelUsername.Text = this.user.Username;
+            this.labelAuth.Text = this.user.AuthorityName;
 
             //窗体大小根据显示屏改变
             int DeskWidth = Screen.PrimaryScreen.WorkingArea.Width;
             int DeskHeight = Screen.PrimaryScreen.WorkingArea.Height;
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
-            //formReceiptArrival.InitComponents();
 
             //下拉栏显示仓库
             WMSEntities wms = new WMSEntities();
@@ -160,8 +175,6 @@ namespace WMS.UI
                 Project objpro = allProject[i];
                 comboBoxProject.Items.Add(objpro.Name);
             }
-            //MessageBox.Show("请选择仓库");
-      
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
@@ -294,38 +307,12 @@ namespace WMS.UI
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //panelLeft.Visible = true;
-            //panelFill.Visible = true;
-            treeViewLeft.ExpandAll();//树形栏显示所有节点   
 
-            //判断用户身份显示树节点
-            this.ShowAll();
-            if (labelAuth.Text == "无")//游客
-                {
-                    HideBase();
-                    HideReceipt();
-                    HideDelivery();
-                    HideStock();
-                }
-            if (labelAuth.Text == "收货员")//收货员
-                {
-                    HideBase();
-                    HideDelivery();
-                    HideStock();
-                }
-            if (labelAuth.Text == "发货员")//发货员
-                {
-                    HideBase();
-                    HideReceipt();
-                    HideStock();
-                }
-            if (labelAuth.Text == "结算员")
-                {
-                    HideBase();
-                    HideReceipt();
-                    HideDelivery();
-                }
+        }
 
+        private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.formClosedCallback?.Invoke();
         }
     }
 }
