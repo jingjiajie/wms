@@ -11,6 +11,7 @@ namespace WMS.UI
         public string Key;
         public string Name;
         public bool Visible = true;
+        public ComboBoxItem[] ComboBoxItems = null;
         public bool Editable = true;
         public bool Save = true;
     }
@@ -22,6 +23,8 @@ namespace WMS.UI
 
     public enum Authority
     {
+        SUBMISSION_TICKET = 67108864,
+        SUBMISSION_TICKET_SUPPLIER_SELFONLY = 33554432,
         SETTLEMENT = 16777216,
         SETTLEMENT_SUPPLIER_SELFONLY = 8388608,
         STOCK_CHECK = 4194304,
@@ -54,5 +57,20 @@ namespace WMS.UI
     {
         public string FunctionName;
         public Authority Authority;
+    }
+
+    public class ComboBoxItem
+    {
+        public string Text = "";
+        public string Value = "";
+        public ComboBoxItem(string _Text, string _Value)
+        {
+            Text = _Text;
+            Value = _Value;
+        }
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

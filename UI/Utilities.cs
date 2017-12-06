@@ -48,19 +48,42 @@ namespace WMS.UI
             }
         }
 
+        public static void CopyPropertiesToComboBoxes<T>(T sourceObject, Form form, string comboBoxNamePrefix = "comboBox")
+        {
+            PropertyInfo[] stockInfoProperties = sourceObject.GetType().GetProperties();
+            foreach (PropertyInfo p in stockInfoProperties)
+            {
+                Control[] foundControls = form.Controls.Find(comboBoxNamePrefix + p.Name, true);
+                if (foundControls.Length == 0)
+                {
+                    continue;
+                }
+                ComboBox curComboBox = (ComboBox)foundControls[0];
+                object value = p.GetValue(sourceObject, null);
+                foreach(object item in curComboBox.Items)
+                {
+                    if(item.ToString() == value.ToString())
+                    {
+                        curComboBox.SelectedItem = item;
+                        break;
+                    }
+                }
+            }
+        }
+
         public static bool CopyTextBoxTextsToProperties<T>(Form form,T targetObject,KeyName[] keyNames,out string errorMessage,string textBoxNamePrefix="textBox")
         {
             Type objType = typeof(T);
             foreach (KeyName curKeyName in keyNames)
             {
-                if(curKeyName.Editable == false)
+                if(curKeyName.Save == false)
                 {
                     continue;
                 }
                 PropertyInfo p = objType.GetProperty(curKeyName.Key);
                 if(p == null)
                 {
-                    throw new Exception("您的对象里没有"+ curKeyName.Key + "这个属性！请检查您的代码！");
+                    throw new Exception("你的对象里没有"+ curKeyName.Key + "这个属性！检查一下你的代码吧！");
                 }
                 Control[] foundControls = form.Controls.Find(textBoxNamePrefix + p.Name, true);
                 if (foundControls.Length == 0)
