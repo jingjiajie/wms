@@ -175,7 +175,15 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="FormReceipt\FormReceiptArrivalCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptArrivalCheck.Designer.cs">
+      <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain\FormMainMetaData.cs" />
+
     <Compile Include="FormReceipt\ReceiptMetaData.cs" />
     <Compile Include="FormReceipt\ReceiptTicketModify.cs">
       <SubType>Form</SubType>
@@ -385,6 +393,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseSupplierAlter.resx">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormReceiptArrivalCheck.resx">
+      <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\ReceiptTicketModify.resx">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>

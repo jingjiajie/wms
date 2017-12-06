@@ -42,7 +42,6 @@ namespace WMS.UI.FormBase
                 worksheet.ColumnHeaders[i].IsVisible = BaseProjectMetaData.KeyNames[i].Visible;
             }
             worksheet.Columns = BaseProjectMetaData.KeyNames.Length;//限制表的长度
-            //Console.WriteLine("表格行数：" + BaseProjectMetaData.KeyNames.Length);
         }
 
         private void FormBaseProject_Load(object sender, EventArgs e)
@@ -78,7 +77,7 @@ namespace WMS.UI.FormBase
                 }
                 else
                 {
-                    if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
+                    if (Utilities.IsQuotateType(typeof(Project).GetProperty(key).PropertyType)) //不是数字则加上单引号
                     {
                         value = "'" + value + "'";
                     }
@@ -120,14 +119,11 @@ namespace WMS.UI.FormBase
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var a1 = new FormBaseProjectModify();
-            a1.SetMode(FormMode.ADD);
+            var formBaseProjectModify = new FormBaseProjectModify();
+            formBaseProjectModify.SetMode(FormMode.ADD);
 
-            a1.SetAddFinishedCallback(() =>
-            {
-                this.Search();
-            });
-            a1.Show();
+            formBaseProjectModify.SetAddFinishedCallback(this.Search);
+            formBaseProjectModify.Show();
         }
 
 
@@ -141,12 +137,9 @@ namespace WMS.UI.FormBase
                     throw new Exception();
                 }
                 int projectID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var a1 = new FormBaseProjectModify(projectID);
-                a1.SetModifyFinishedCallback(() =>
-                {
-                    this.Search();
-                });
-                a1.Show();
+                var formBaseProjectModify = new FormBaseProjectModify(projectID);
+                formBaseProjectModify.SetModifyFinishedCallback(this.Search);
+                formBaseProjectModify.Show();
             }
             catch
             {

@@ -35,7 +35,7 @@ namespace WMS.UI
             for (int i = 0; i < SupplierInfoMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = SupplierInfoMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
+                if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
                 {
                     continue;
                 }
