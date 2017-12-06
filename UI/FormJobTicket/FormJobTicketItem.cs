@@ -46,6 +46,7 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            worksheet.SelectionRangeChanged += this.worksheet_SelectionRangeChanged;
 
             for (int i = 0; i < JobTicketItemViewMetaData.KeyNames.Length; i++)
             {
@@ -53,6 +54,37 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = JobTicketItemViewMetaData.KeyNames[i].Visible;
             }
             worksheet.Columns = JobTicketItemViewMetaData.KeyNames.Length; //限制表的长度
+
+            //初始化属性编辑框
+            this.tableLayoutPanelProperties.Controls.Clear();
+            for (int i = 0; i < JobTicketItemViewMetaData.KeyNames.Length; i++)
+            {
+                KeyName curKeyName = JobTicketItemViewMetaData.KeyNames[i];
+                if (curKeyName.Visible == false && curKeyName.Editable == false)
+                {
+                    continue;
+                }
+                Label label = new Label();
+                label.Text = curKeyName.Name;
+                label.Dock = DockStyle.Fill;
+                this.tableLayoutPanelProperties.Controls.Add(label);
+
+                TextBox textBox = new TextBox();
+                textBox.Name = "textBox" + curKeyName.Key;
+                if (curKeyName.Editable == false)
+                {
+                    textBox.Enabled = false;
+                }
+                textBox.Dock = DockStyle.Fill;
+                this.tableLayoutPanelProperties.Controls.Add(textBox);
+            }
+        }
+
+        private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
+        {
+            return (from jt in this.wmsEntities.JobTicketView
+                    where jt.JobTicketNo == jobTicketNo
+                    select jt).FirstOrDefault();
         }
 
         private void Search()
@@ -162,6 +194,41 @@ namespace WMS.UI
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
+        }
+
+        private void ClearTextBoxes()
+        {
+            foreach (Control control in this.tableLayoutPanelProperties.Controls)
+            {
+                if(control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    textBox.Text = "";
+                }
+            }
+        }
+
+        private void RefreshTextBoxes()
+        {
+            this.ClearTextBoxes();
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            int[] ids = this.GetSelectedIDs();
+            if (ids.Length == 0) return;
+            int id = ids[0];
+            JobTicketItemView jobTicketItemView = (from jti in this.wmsEntities.JobTicketItemView
+                                           where jti.ID == id
+                                           select jti).FirstOrDefault();
+            if (jobTicketItemView == null)
+            {
+                MessageBox.Show("系统错误，未找到相应作业单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Utilities.CopyPropertiesToTextBoxes(jobTicketItemView, this);
+        }
+
+        private void worksheet_SelectionRangeChanged(object sender, EventArgs e)
+        {
+            RefreshTextBoxes();
         }
     }
 }
