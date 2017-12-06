@@ -115,6 +115,7 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+                    this.RefreshTextBoxes();
                 }));
             })).Start();
         }
@@ -229,6 +230,18 @@ namespace WMS.UI
         private void worksheet_SelectionRangeChanged(object sender, EventArgs e)
         {
             RefreshTextBoxes();
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            JobTicketItem newItem = new JobTicketItem();
+            if (Utilities.CopyTextBoxTextsToProperties(this, newItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.wmsEntities.JobTicketItem.Add(newItem);
+            this.wmsEntities.SaveChanges();
         }
     }
 }
