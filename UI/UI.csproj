@@ -141,7 +141,20 @@
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\ComponenMetaData.cs" />
+    <Compile Include="FormBase\FormUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormUser.Designer.cs">
+      <DependentUpon>FormUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormUserModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormUserModify.Designer.cs">
+      <DependentUpon>FormUserModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\SupplierMetaData.cs" />
+    <Compile Include="FormBase\UserMetaData.cs" />
     <Compile Include="FormJobTicket\FormJobTicket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,7 +175,15 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="FormReceipt\FormReceiptArrivalCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptArrivalCheck.Designer.cs">
+      <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormMain\FormMainMetaData.cs" />
+
     <Compile Include="FormReceipt\ReceiptMetaData.cs" />
     <Compile Include="FormReceipt\ReceiptTicketModify.cs">
       <SubType>Form</SubType>
@@ -355,6 +376,12 @@
     <EmbeddedResource Include="FormBase\FormSupplierAlter.resx">
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormUser.resx">
+      <DependentUpon>FormUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormUserModify.resx">
+      <DependentUpon>FormUserModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicket.resx">
       <DependentUpon>FormJobTicket.cs</DependentUpon>
     </EmbeddedResource>
@@ -366,6 +393,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseSupplierAlter.resx">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormReceiptArrivalCheck.resx">
+      <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\ReceiptTicketModify.resx">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
