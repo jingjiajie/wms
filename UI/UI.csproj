@@ -141,7 +141,20 @@
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\ComponenMetaData.cs" />
+    <Compile Include="FormBase\FormUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormUser.Designer.cs">
+      <DependentUpon>FormUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormUserModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormUserModify.Designer.cs">
+      <DependentUpon>FormUserModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\SupplierMetaData.cs" />
+    <Compile Include="FormBase\UserMetaData.cs" />
     <Compile Include="FormJobTicket\FormJobTicket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -354,6 +367,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSupplierAlter.resx">
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormUser.resx">
+      <DependentUpon>FormUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormUserModify.resx">
+      <DependentUpon>FormUserModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicket.resx">
       <DependentUpon>FormJobTicket.cs</DependentUpon>

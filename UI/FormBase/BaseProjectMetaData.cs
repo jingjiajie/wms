@@ -8,10 +8,11 @@ namespace WMS.UI.FormBase
     class BaseProjectMetaData
     {
 
-     private static KeyName[] keyNames = {
-            new KeyName(){Key="ID",Name="ID"},
-            new KeyName(){Key="Name",Name="项目名称"},
+        public static KeyName[] keyNames = {
+            new KeyName(){Name = "ID", Key = "ID", Editable = false},
+            new KeyName(){Name = "项目名称", Key = "Name"}
+
         };
-            public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
-        }
+        public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
+    }
 }
