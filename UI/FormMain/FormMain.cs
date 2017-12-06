@@ -12,6 +12,7 @@ using WMS.UI.FormReceipt;
 using WMS.UI.FormDelivery;
 using WMS.UI.FromShipmentTicket;
 using WMS.UI.PutOutStorageTicket;
+using WMS.UI.FormBase;
 using WMS.DataAccess;
 
 namespace WMS.UI
@@ -188,7 +189,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FromBaseUser l = new FromBaseUser();//实例化子窗口
+                FormUser l = new FormUser();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

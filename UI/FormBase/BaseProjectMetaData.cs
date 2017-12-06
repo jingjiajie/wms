@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +10,8 @@ namespace WMS.UI.FormBase
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false},
-            new KeyName(){Key="Name",Name="é¡¹ç›®åç§°",Visible=true,Editable=true},
+            new KeyName(){Key="Name",Name="ÏîÄ¿Ãû³Æ",Visible=true,Editable=true},
         };
-            public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
-        }
+        public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
+    }
 }
