@@ -117,4 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="STRING QUALIFIED" xml:space="preserve">
+    <value>合格</value>
+  </data>
+  <data name="STRING_UNQUALIFIED" xml:space="preserve">
+    <value>不合格</value>
+  </data>
+  <data name="STRING_WAIT_CHECK" xml:space="preserve">
+    <value>待检</value>
+  </data>
 </root>

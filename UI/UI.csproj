@@ -162,7 +162,11 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-
+    <Compile Include="FormReceipt\FormReceiptArrival 1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormReceiptArrival .resx</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormReceiptArrivalCheck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,7 +174,6 @@
       <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain\FormMainMetaData.cs" />
-
     <Compile Include="FormReceipt\ReceiptMetaData.cs" />
     <Compile Include="FormReceipt\ReceiptTicketModify.cs">
       <SubType>Form</SubType>
@@ -289,6 +292,12 @@
     </Compile>
     <Compile Include="FromShipmentTicket\ShipmentTicketItemViewMetaData.cs" />
     <Compile Include="FromShipmentTicket\ShipmentTicketViewMetaData.cs" />
+    <Compile Include="FormSubmission\FormSubmissionManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSubmission\FormSubmissionManage.Designer.cs">
+      <DependentUpon>FormSubmissionManage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicket.cs">
@@ -416,6 +425,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptArrival .resx">
       <DependentUpon>FormReceiptArrival .cs</DependentUpon>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FormReceiptArrival 1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptShelves.resx">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
@@ -434,6 +445,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicketModify.resx">
       <DependentUpon>FormShipmentTicketModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSubmission\FormSubmissionManage.resx">
+      <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
