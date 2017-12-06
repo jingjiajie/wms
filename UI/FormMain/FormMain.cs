@@ -191,7 +191,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "供应商")
+            if (treeViewLeft.SelectedNode.Text == "供应商管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
@@ -202,7 +202,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "零件")
+            if (treeViewLeft.SelectedNode.Text == "零件管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
@@ -213,7 +213,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "仓库")
+            if (treeViewLeft.SelectedNode.Text == "仓库管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
@@ -224,7 +224,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "项目")
+            if (treeViewLeft.SelectedNode.Text == "项目管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
