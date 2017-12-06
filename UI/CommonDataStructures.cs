@@ -15,7 +15,7 @@ namespace WMS.UI
 
     public enum FormMode
     {
-        ADD,ALTER
+        ADD,ALTER,CHECK
     }
 
     public enum Authority
