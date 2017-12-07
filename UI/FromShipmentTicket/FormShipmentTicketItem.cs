@@ -171,26 +171,26 @@ namespace WMS.UI
 
         private void buttonAlter_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            try
-            {
-                if (worksheet.SelectionRange.Rows != 1)
-                {
-                    throw new Exception();
-                }
-                int shipmentTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formShipmentTicketItemModify = new FormShipmentTicketModify(shipmentTicketItemID);
-                formShipmentTicketItemModify.SetModifyFinishedCallback(() =>
-                {
-                    this.Search();
-                });
-                formShipmentTicketItemModify.Show();
-            }
-            catch
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //var worksheet = this.reoGridControlMain.Worksheets[0];
+            //try
+            //{
+            //    if (worksheet.SelectionRange.Rows != 1)
+            //    {
+            //        throw new Exception();
+            //    }
+            //    int shipmentTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+            //    var formShipmentTicketItemModify = new FormShipmentTicketModify(shipmentTicketItemID);
+            //    formShipmentTicketItemModify.SetModifyFinishedCallback(() =>
+            //    {
+            //        this.Search();
+            //    });
+            //    formShipmentTicketItemModify.Show();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
         }
     }
 }

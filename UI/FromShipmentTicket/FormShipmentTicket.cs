@@ -17,11 +17,15 @@ namespace WMS.UI
     {
         WMSEntities wmsEntities = new WMSEntities();
         int userID = -1;
+        int projectID = -1;
+        int warehouseID = -1;
 
-        public FormShipmentTicket(int userID)
+        public FormShipmentTicket(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
             this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         private void FormShipmentTicket_Load(object sender, EventArgs e)
@@ -143,7 +147,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormShipmentTicketModify(this.userID);
+            var form = new FormShipmentTicketModify(this.projectID,this.warehouseID,this.userID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
@@ -162,7 +166,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int shipmentTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formShipmentTicketModify = new FormShipmentTicketModify(this.userID,shipmentTicketID);
+                var formShipmentTicketModify = new FormShipmentTicketModify(this.projectID,this.warehouseID,this.userID,shipmentTicketID);
                 formShipmentTicketModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();

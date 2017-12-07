@@ -14,17 +14,21 @@ namespace WMS.UI
     public partial class FormShipmentTicketModify : Form
     {
         private int shipmentTicketID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
         private int userID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormShipmentTicketModify(int userID,int shipmentTicketID = -1)
+        public FormShipmentTicketModify(int projectID,int warehouseID, int userID,int shipmentTicketID = -1)
         {
             InitializeComponent();
             this.shipmentTicketID = shipmentTicketID;
             this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         private void FormShipmentTicketModify_Load(object sender, EventArgs e)
