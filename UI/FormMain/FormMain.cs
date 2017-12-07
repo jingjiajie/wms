@@ -61,7 +61,7 @@ namespace WMS.UI
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
                     MakeTreeNode("库存信息")
-                    }),
+                    })
             };
 
             this.treeViewLeft.Nodes.Clear();
