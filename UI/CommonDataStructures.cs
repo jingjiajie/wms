@@ -62,11 +62,16 @@ namespace WMS.UI
     public class ComboBoxItem
     {
         public string Text = "";
-        public string Value = "";
-        public ComboBoxItem(string _Text, string _Value)
+        public object Value = null;
+        public ComboBoxItem(string text, object value)
         {
-            Text = _Text;
-            Value = _Value;
+            Text = text;
+            Value = value;
+        }
+        public ComboBoxItem(object value)
+        {
+            Text = value.ToString();
+            Value = value;
         }
         public override string ToString()
         {

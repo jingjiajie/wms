@@ -9,150 +9,143 @@ using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Reflection;
 
-namespace WMS.UI.FromShipmentTicket
+namespace WMS.UI
 {
     public partial class FormShipmentTicketModify : Form
     {
         private int shipmentTicketID = -1;
+        private int userID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormShipmentTicketModify(int shipmentTicketID = -1)
+        public FormShipmentTicketModify(int userID,int shipmentTicketID = -1)
         {
             InitializeComponent();
             this.shipmentTicketID = shipmentTicketID;
+            this.userID = userID;
         }
 
         private void FormShipmentTicketModify_Load(object sender, EventArgs e)
         {
             if (this.mode == FormMode.ALTER && this.shipmentTicketID == -1)
             {
-                throw new Exception("未设置源库存信息");
+                throw new Exception("未设置源发货单信息");
             }
 
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < ShipmentTicketViewMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = ShipmentTicketViewMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ShipmentTicketViewMetaData.KeyNames);
 
             if (this.mode == FormMode.ALTER)
             {
-                ShipmentTicketView shipmentTicketView = (from s in this.wmsEntities.ShipmentTicketView
-                                               where s.ID == this.shipmentTicketID
+                this.Text = "修改发货单信息";
+                ShipmentTicketView ShipmentTicketView = (from s in this.wmsEntities.ShipmentTicketView
+                                                                 where s.ID == this.shipmentTicketID
                                                          select s).Single();
-                Utilities.CopyPropertiesToTextBoxes(shipmentTicketView, this);
+                Utilities.CopyPropertiesToTextBoxes(ShipmentTicketView, this);
+                Utilities.CopyPropertiesToComboBoxes(ShipmentTicketView, this);
             }
-            
-            this.Controls.Find("textBoxProjectID", true)[0].LostFocus += textBoxProjectID_LostFocus;
-            this.Controls.Find("textBoxWarehouseID", true)[0].LostFocus += textBoxWarehouseID_LostFocus;
-        }
-
-        private void textBoxProjectID_LostFocus(object sender, EventArgs e)
-        {
-            TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
-            if (textBoxProjectID.Text.Length == 0) return;
-            CheckForeignKeyProjectID();
-        }
-        private void textBoxWarehouseID_LostFocus(object sender, EventArgs e)
-        {
-            TextBox textBoxWarehouseID = (TextBox)this.Controls.Find("textBoxWarehouseID", true)[0];
-            if (textBoxWarehouseID.Text.Length == 0) return;
-            CheckForeignKeyWarehouseID();
-        }
-
-        private bool CheckForeignKeyProjectID()
-        {
-            TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
-            if (textBoxProjectID.Text.Length == 0)
+            else if(this.mode == FormMode.ADD)
             {
-                MessageBox.Show("项目ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Text = "添加发货单";
+            }
+            //this.Controls.Find("textBoxShipmentTicketID", true)[0].LostFocus += textBoxShipmentTicketID_LostFocus;
+            //this.Controls.Find("textBoxStockInfoID", true)[0].LostFocus += textBoxStockInfoID_LostFocus;
+        }
+
+        private void textBoxShipmentTicketID_LostFocus(object sender, EventArgs e)
+        {
+            TextBox textBoxShipmentTicketID = (TextBox)this.Controls.Find("textBoxShipmentTicketID", true)[0];
+            if (textBoxShipmentTicketID.Text.Length == 0) return;
+            CheckForeignKeyShipmentTicketID();
+        }
+        private void textBoxStockInfoID_LostFocus(object sender, EventArgs e)
+        {
+            TextBox textBoxStockInfoID = (TextBox)this.Controls.Find("textBoxStockInfoID", true)[0];
+            if (textBoxStockInfoID.Text.Length == 0) return;
+            CheckForeignKeyStockInfoID();
+        }
+
+        private bool CheckForeignKeyShipmentTicketID()
+        {
+            TextBox textBoxShipmentTicketID = (TextBox)this.Controls.Find("textBoxShipmentTicketID", true)[0];
+            if (textBoxShipmentTicketID.Text.Length == 0)
+            {
+                MessageBox.Show("发货单ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            int projectID;
-            if (int.TryParse(textBoxProjectID.Text, out projectID) == false)
+            int shipmentTicketID;
+            if (int.TryParse(textBoxShipmentTicketID.Text, out shipmentTicketID) == false)
             {
-                MessageBox.Show("项目ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("发货单ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            ProjectView[] result = (from p in wmsEntities.ProjectView
-                                              where p.ID == projectID
-                                              select p).ToArray();
+            ShipmentTicketView[] result = (from p in wmsEntities.ShipmentTicketView
+                                    where p.ID == shipmentTicketID
+                                           select p).ToArray();
             if (result.Length == 0)
             {
-                MessageBox.Show("未找到项目ID为" + projectID + "的项目，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("未找到发货单ID为" + shipmentTicketID + "的单据，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            ProjectView projectView = result[0];
-            Utilities.CopyPropertiesToTextBoxes(projectView, this, "textBox");
-            Utilities.CopyPropertiesToTextBoxes(projectView, this, "textBoxProject");
+            ShipmentTicketView shipmentTicketView = result[0];
+            Utilities.CopyPropertiesToTextBoxes(shipmentTicketView, this, "textBox");
+            Utilities.CopyPropertiesToTextBoxes(shipmentTicketView, this, "textBoxShipmentTicket");
             return true;
         }
 
-        private bool CheckForeignKeyWarehouseID()
+        private bool CheckForeignKeyStockInfoID()
         {
-            TextBox textBoxWarehouseID = (TextBox)this.Controls.Find("textBoxWarehouseID", true)[0];
-            if (textBoxWarehouseID.Text.Length == 0)
+            TextBox textBoxStockInfoID = (TextBox)this.Controls.Find("textBoxStockInfoID", true)[0];
+            if (textBoxStockInfoID.Text.Length == 0)
             {
-                MessageBox.Show("仓库ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("库存零件ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            int warehouseID;
-            if (int.TryParse(textBoxWarehouseID.Text, out warehouseID) == false)
+            int stockInfoID;
+            if (int.TryParse(textBoxStockInfoID.Text, out stockInfoID) == false)
             {
-                MessageBox.Show("仓库ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("库存零件ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            WarehouseView[] result = (from p in wmsEntities.WarehouseView
-                                    where p.ID == warehouseID
-                                    select p).ToArray();
+            StockInfoView[] result = (from p in wmsEntities.StockInfoView
+                                      where p.ID == stockInfoID
+                                      select p).ToArray();
             if (result.Length == 0)
             {
-                MessageBox.Show("未找到仓库ID为" + warehouseID + "的仓库，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("未找到库存零件ID为" + stockInfoID + "的零件，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            WarehouseView warehouseView = result[0];
-            Utilities.CopyPropertiesToTextBoxes(warehouseView, this, "textBox");
-            Utilities.CopyPropertiesToTextBoxes(warehouseView, this, "textBoxWarehouse");
+            StockInfoView stockInfoView = result[0];
+            Utilities.CopyPropertiesToTextBoxes(stockInfoView, this, "textBox");
+            Utilities.CopyPropertiesToTextBoxes(stockInfoView, this, "textBoxStockInfo");
             return true;
         }
+
+
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             ShipmentTicket shipmentTicket = null;
-            //StockInfo stockInfo = null;
 
-            //若修改，则查询原StockInfo对象。若添加，则新建一个StockInfo对象。
+            //若修改，则查询原对象。若添加，则新建一个对象。
             if (this.mode == FormMode.ALTER)
             {
                 shipmentTicket = (from s in this.wmsEntities.ShipmentTicket
-                             where s.ID == this.shipmentTicketID
-                             select s).Single();
+                                      where s.ID == this.shipmentTicketID
+                                      select s).Single();
+                shipmentTicket.LastUpdateUserID = this.userID;
+                shipmentTicket.LastUpdateTime = DateTime.Now;
             }
             else if (mode == FormMode.ADD)
             {
                 shipmentTicket = new ShipmentTicket();
+                shipmentTicket.CreateTime = DateTime.Now;
+                shipmentTicket.CreateUserID = this.userID;
                 this.wmsEntities.ShipmentTicket.Add(shipmentTicket);
             }
 
@@ -161,6 +154,10 @@ namespace WMS.UI.FromShipmentTicket
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+            else
+            {
+                Utilities.CopyComboBoxsToProperties(this, shipmentTicket, ShipmentTicketViewMetaData.KeyNames);
             }
             wmsEntities.SaveChanges();
             //调用回调函数
@@ -173,7 +170,6 @@ namespace WMS.UI.FromShipmentTicket
                 this.addFinishedCallback();
             }
             this.Close();
-
         }
 
         public void SetModifyFinishedCallback(Action callback)
@@ -191,19 +187,14 @@ namespace WMS.UI.FromShipmentTicket
             this.mode = mode;
             if (mode == FormMode.ALTER)
             {
-                this.Text = "修改发货单信息";
-                this.buttonOK.Text = "修改发货单信息";
+                this.Text = "修改发货单零件信息";
+                this.buttonOK.Text = "修改发货单零件信息";
             }
             else if (mode == FormMode.ADD)
             {
-                this.Text = "添加发货单信息";
-                this.buttonOK.Text = "添加发货单信息";
+                this.Text = "添加发货单零件信息";
+                this.buttonOK.Text = "添加发货单零件信息";
             }
-        }
-
-        private void FormShipmentTicketModify_MouseDown(object sender, MouseEventArgs e)
-        {
-            this.Focus();
         }
     }
 }

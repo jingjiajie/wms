@@ -55,44 +55,7 @@ namespace WMS.UI
             }
             worksheet.Columns = JobTicketItemViewMetaData.KeyNames.Length; //限制表的长度
 
-            //初始化属性编辑框
-            this.tableLayoutPanelProperties.Controls.Clear();
-            for (int i = 0; i < JobTicketItemViewMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = JobTicketItemViewMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                label.Dock = DockStyle.Fill;
-                this.tableLayoutPanelProperties.Controls.Add(label);
-
-                //如果是编辑框形式
-                if (curKeyName.ComboBoxItems == null)
-                {
-                    TextBox textBox = new TextBox();
-                    textBox.Name = "textBox" + curKeyName.Key;
-                    if (curKeyName.Editable == false)
-                    {
-                        textBox.Enabled = false;
-                    }
-                    textBox.Dock = DockStyle.Fill;
-                    this.tableLayoutPanelProperties.Controls.Add(textBox);
-                }
-                else //否则是下拉列表形式
-                {
-                    ComboBox comboBox = new ComboBox();
-                    comboBox.Name = "comboBox" + curKeyName.Key;
-                    comboBox.Items.AddRange(curKeyName.ComboBoxItems);
-                    comboBox.SelectedIndex = 0;
-                    comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-                    comboBox.Dock = DockStyle.Fill;
-                    this.tableLayoutPanelProperties.Controls.Add(comboBox);
-                }
-
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
 
             this.Controls.Find("textBoxStockInfoID", true)[0].TextChanged += textBoxStockInfoID_TextChanged; ;
         }
@@ -274,9 +237,12 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if(Utilities.CopyComboBoxsToProperties(this,newItem, JobTicketItemViewMetaData.KeyNames) == false)
+            {
+                MessageBox.Show("内部错误：拷贝单选框数据失败","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             newItem.JobTicketID = this.jobTicketID;
-            ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
-            newItem.State = ((ComboBoxItem)comboBoxState.SelectedItem).Value;
             this.wmsEntities.JobTicketItem.Add(newItem);
             this.wmsEntities.SaveChanges();
             this.Search();

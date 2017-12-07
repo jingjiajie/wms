@@ -11,15 +11,17 @@ using unvell.ReoGrid;
 using System.Threading;
 using System.Data.SqlClient;
 
-namespace WMS.UI.FromShipmentTicket
+namespace WMS.UI
 {
     public partial class FormShipmentTicket : Form
     {
         WMSEntities wmsEntities = new WMSEntities();
+        int userID = -1;
 
-        public FormShipmentTicket()
+        public FormShipmentTicket(int userID)
         {
             InitializeComponent();
+            this.userID = userID;
         }
 
         private void FormShipmentTicket_Load(object sender, EventArgs e)
@@ -141,7 +143,7 @@ namespace WMS.UI.FromShipmentTicket
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormShipmentTicketModify();
+            var form = new FormShipmentTicketModify(this.userID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
@@ -160,7 +162,7 @@ namespace WMS.UI.FromShipmentTicket
                     throw new Exception();
                 }
                 int shipmentTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formShipmentTicketModify = new FormShipmentTicketModify(shipmentTicketID);
+                var formShipmentTicketModify = new FormShipmentTicketModify(this.userID,shipmentTicketID);
                 formShipmentTicketModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();
@@ -176,21 +178,8 @@ namespace WMS.UI.FromShipmentTicket
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            List<int> deleteIDs = new List<int>();
-            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
-            {
-                try
-                {
-                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
-                    deleteIDs.Add(curID);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-            if (deleteIDs.Count == 0)
+            int[] deleteIDs = this.GetSelectedIDs();
+            if (deleteIDs.Length == 0)
             {
                 MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -211,6 +200,55 @@ namespace WMS.UI.FromShipmentTicket
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
             })).Start();
+        }
+
+        private void buttonGenerateJobTicket_Click(object sender, EventArgs e)
+        {
+            int[] ids = this.GetSelectedIDs();
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行操作","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int shipmentTicketID = ids[0];
+            ShipmentTicket shipmentTicket = (from s in this.wmsEntities.ShipmentTicket
+                                             where s.ID == shipmentTicketID
+                                             select s).FirstOrDefault();
+
+            JobTicket jobTicket = new JobTicket();
+            jobTicket.JobTicketNo = "ZYD1234567";
+            jobTicket.JobType = "移位";
+            jobTicket.ShipmentTicketID = shipmentTicket.ID;
+            jobTicket.ScheduledAmount = shipmentTicket.ScheduledAmount;
+            jobTicket.State = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
+            jobTicket.PrintedTimes = 0;
+            jobTicket.CreateUserID = this.userID;
+            jobTicket.CreateTime = DateTime.Now;
+            jobTicket.LastUpdateUserID = this.userID;
+            jobTicket.LastUpdateTime = DateTime.Now;
+
+            this.wmsEntities.JobTicket.Add(jobTicket);
+            this.wmsEntities.SaveChanges();
+            MessageBox.Show("生成作业单成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private int[] GetSelectedIDs()
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            List<int> ids = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    ids.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return ids.ToArray();
         }
     }
 }
