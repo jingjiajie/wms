@@ -36,8 +36,6 @@
             this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
             this.buttonPrint = new System.Windows.Forms.ToolStripButton();
-            this.buttonCheckCancel = new System.Windows.Forms.ToolStripButton();
-            this.buttonCheck = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
@@ -115,28 +113,6 @@
             this.buttonPrint.Name = "buttonPrint";
             this.buttonPrint.Size = new System.Drawing.Size(80, 25);
             this.buttonPrint.Text = "打印送检单";
-            // 
-            // buttonCheckCancel
-            // 
-            this.buttonCheckCancel.AutoSize = false;
-            this.buttonCheckCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonCheckCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheckCancel.Image")));
-            this.buttonCheckCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonCheckCancel.Name = "buttonCheckCancel";
-            this.buttonCheckCancel.Size = new System.Drawing.Size(70, 25);
-            this.buttonCheckCancel.Text = "取消送检";
-            // 
-            // buttonCheck
-            // 
-            this.buttonCheck.AutoSize = false;
-            this.buttonCheck.BackColor = System.Drawing.SystemColors.Control;
-            this.buttonCheck.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonCheck.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheck.Image")));
-            this.buttonCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonCheck.Name = "buttonCheck";
-            this.buttonCheck.Size = new System.Drawing.Size(40, 25);
-            this.buttonCheck.Text = "送检";
-            this.buttonCheck.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             // 
             // toolStripSeparator2
             // 
@@ -217,8 +193,6 @@
             this.buttonAlter,
             this.buttonDelete,
             this.toolStripSeparator2,
-            this.buttonCheck,
-            this.buttonCheckCancel,
             this.buttonPrint,
             this.buttonReceipt,
             this.buttonReceiptCancel,
@@ -280,8 +254,6 @@
         private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
         private System.Windows.Forms.ToolStripButton buttonReceipt;
         private System.Windows.Forms.ToolStripButton buttonPrint;
-        private System.Windows.Forms.ToolStripButton buttonCheckCancel;
-        private System.Windows.Forms.ToolStripButton buttonCheck;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.ToolStripButton buttonAlter;
