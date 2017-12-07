@@ -15,8 +15,9 @@ namespace WMS.UI
 {
     public partial class FormReceiptItems : Form
     {
-        private int ID;
+        private int receiptTicketItemsID;
         private FormMode formMode;
+        private int receiptTicketID;
         Action callBack = null;
         public FormReceiptItems()
         {
@@ -28,11 +29,12 @@ namespace WMS.UI
             callBack = action;
         }
 
-        public FormReceiptItems(FormMode formMode, int ID)
+        public FormReceiptItems(FormMode formMode, int receiptTicketItemsID, int receiptTicketID)
         {
             InitializeComponent();
-            this.ID = ID;
+            this.receiptTicketItemsID = receiptTicketItemsID;
             this.formMode = formMode;
+            this.receiptTicketID = receiptTicketID;
         }
 
         private void InitComponents()
@@ -54,7 +56,7 @@ namespace WMS.UI
         {
             InitComponents();
             WMSEntities wmsEntities = new WMSEntities();
-            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == ID select rt).Single();
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketItemsID select rt).Single();
             Utilities.CopyPropertiesToTextBoxes(receiptTicket, this);
             Search();
         }
@@ -96,8 +98,12 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormReceiptItems formReceiptItems = new FormReceiptItems(FormMode.ADD, ID);
-            formReceiptItems.Show();
+            FormReceiptItemsModify formReceiptItemsModify = new FormReceiptItemsModify(FormMode.ADD, receiptTicketItemsID, receiptTicketID);
+            formReceiptItemsModify.SetCallBack(() =>
+            {
+                Search();
+            });
+            formReceiptItemsModify.Show();
         }
 
         private void buttonModify_Click(object sender, EventArgs e)
@@ -110,7 +116,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formReceiptItemsModify = new FormReceiptItemsModify(FormMode.ALTER, receiptItemID);
+                var formReceiptItemsModify = new FormReceiptItemsModify(FormMode.ALTER, receiptItemID, receiptTicketID);
                 formReceiptItemsModify.SetCallBack(() =>
                 {
                     this.Search();

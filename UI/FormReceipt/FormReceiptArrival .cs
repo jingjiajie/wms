@@ -283,7 +283,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER ,receiptTicketID);
+                var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER ,receiptTicketID, receiptTicketID);
                 formReceiptTicketIems.SetCallback(() =>
                 {
                     this.Search(null, null);
