@@ -137,5 +137,48 @@ namespace WMS.UI
                 return;
             }
         }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            int[] ids = this.GetSelectedIDs();
+            if(ids.Length == 0)
+            {
+                MessageBox.Show("请选择要删除的项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(MessageBox.Show("确定要删除选中项吗？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question)!= DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除";
+            new Thread(new ThreadStart(()=>
+            {
+                foreach (int id in ids)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand(string.Format("DELETE FROM JobTicket WHERE ID = {0}", id));
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+            })).Start();
+        }
+
+        private int[] GetSelectedIDs()
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            List<int> ids = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    ids.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return ids.ToArray();
+        }
     }
 }

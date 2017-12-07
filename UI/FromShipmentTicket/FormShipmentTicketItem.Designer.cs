@@ -1,4 +1,4 @@
-﻿namespace WMS.UI.FromShipmentTicket
+﻿namespace WMS.UI
 {
     partial class FormShipmentTicketItem
     {

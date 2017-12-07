@@ -10,7 +10,7 @@ using System.Threading;
 using WMS.DataAccess;
 using unvell.ReoGrid;
 
-namespace WMS.UI.FromShipmentTicket
+namespace WMS.UI
 {
     public partial class FormShipmentTicketItem : Form
     {
@@ -160,13 +160,13 @@ namespace WMS.UI.FromShipmentTicket
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormShipmentTicketItemModify();
-            form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback(() =>
-            {
-                this.Search();
-            });
-            form.Show();
+            //var form = new FormShipmentTicketModify();
+            //form.SetMode(FormMode.ADD);
+            //form.SetAddFinishedCallback(() =>
+            //{
+            //    this.Search();
+            //});
+            //form.Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -179,7 +179,7 @@ namespace WMS.UI.FromShipmentTicket
                     throw new Exception();
                 }
                 int shipmentTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formShipmentTicketItemModify = new FormShipmentTicketItemModify(shipmentTicketItemID);
+                var formShipmentTicketItemModify = new FormShipmentTicketModify(shipmentTicketItemID);
                 formShipmentTicketItemModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();

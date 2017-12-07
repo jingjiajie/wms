@@ -10,7 +10,6 @@ using System.Threading;
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormDelivery;
-using WMS.UI.FromShipmentTicket;
 using WMS.UI.PutOutStorageTicket;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
@@ -265,7 +264,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormShipmentTicket l = new FormShipmentTicket();//实例化子窗口
+                FormShipmentTicket l = new FormShipmentTicket(this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
