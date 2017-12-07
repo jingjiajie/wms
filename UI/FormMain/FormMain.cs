@@ -62,9 +62,6 @@ namespace WMS.UI
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
                     MakeTreeNode("库存信息")
-                    }),
-                MakeTreeNode("送检管理", new TreeNode[]{
-                    MakeTreeNode("送检单管理")
                     })
             };
 
