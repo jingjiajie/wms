@@ -187,6 +187,12 @@
       <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain\FormMainMetaData.cs" />
+    <Compile Include="FormReceipt\FormReceiptItemsArrival.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptItemsArrival.Designer.cs">
+      <DependentUpon>FormReceiptItemsArrival.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\ReceiptMetaData.cs" />
     <Compile Include="FormReceipt\ReceiptTicketModify.cs">
       <SubType>Form</SubType>
@@ -299,10 +305,10 @@
     </Compile>
     <Compile Include="FromShipmentTicket\ShipmentTicketItemViewMetaData.cs" />
     <Compile Include="FromShipmentTicket\ShipmentTicketViewMetaData.cs" />
-    <Compile Include="FormSubmission\FormSubmissionManage.cs">
+    <Compile Include="FormReceipt\FormSubmissionManage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSubmission\FormSubmissionManage.Designer.cs">
+    <Compile Include="FormReceipt\FormSubmissionManage.Designer.cs">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -456,7 +462,7 @@
     <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicketModify.resx">
       <DependentUpon>FormShipmentTicketModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSubmission\FormSubmissionManage.resx">
+    <EmbeddedResource Include="FormReceipt\FormSubmissionManage.resx">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -507,6 +513,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="FormSubmission\" />
     <Folder Include="icon\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
