@@ -187,11 +187,17 @@
       <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain\FormMainMetaData.cs" />
-    <Compile Include="FormReceipt\FormReceiptItemsArrival.cs">
+    <Compile Include="FormReceipt\FormReceiptItems.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceiptItemsArrival.Designer.cs">
-      <DependentUpon>FormReceiptItemsArrival.cs</DependentUpon>
+    <Compile Include="FormReceipt\FormReceiptItems.Designer.cs">
+      <DependentUpon>FormReceiptItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReceipt\FormRecieptItemsModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormRecieptItemsModify.Designer.cs">
+      <DependentUpon>FormRecieptItemsModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\ReceiptMetaData.cs" />
     <Compile Include="FormReceipt\ReceiptTicketModify.cs">
@@ -405,6 +411,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptArrivalCheck.resx">
       <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormReceiptItems.resx">
+      <DependentUpon>FormReceiptItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormRecieptItemsModify.resx">
+      <DependentUpon>FormRecieptItemsModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\ReceiptTicketModify.resx">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>

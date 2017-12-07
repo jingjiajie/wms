@@ -42,7 +42,7 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonCheck = new System.Windows.Forms.ToolStripButton();
             this.buttonCheckCancel = new System.Windows.Forms.ToolStripButton();
-            this.buttonPrint = new System.Windows.Forms.ToolStripButton();
+            this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
             this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
@@ -90,7 +90,7 @@
             this.toolStripSeparator2,
             this.buttonCheck,
             this.buttonCheckCancel,
-            this.buttonPrint,
+            this.buttonItems,
             this.buttonReceipt,
             this.buttonReceiptCancel,
             this.toolStripButton1});
@@ -196,15 +196,17 @@
             this.buttonCheckCancel.Text = "取消送检";
             this.buttonCheckCancel.Click += new System.EventHandler(this.buttonCheckCancel_Click);
             // 
-            // buttonPrint
+            // buttonItems
             // 
-            this.buttonPrint.AutoSize = false;
-            this.buttonPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonPrint.Image = ((System.Drawing.Image)(resources.GetObject("buttonPrint.Image")));
-            this.buttonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonPrint.Name = "buttonPrint";
-            this.buttonPrint.Size = new System.Drawing.Size(80, 25);
-            this.buttonPrint.Text = "打印送检单";
+            this.buttonItems.AutoSize = false;
+            this.buttonItems.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonItems.Image = ((System.Drawing.Image)(resources.GetObject("buttonItems.Image")));
+            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonItems.Name = "buttonItems";
+            this.buttonItems.Size = new System.Drawing.Size(80, 25);
+            this.buttonItems.Text = "查看零件条目";
+            this.buttonItems.ToolTipText = "查看零件条目";
+            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
             // 
             // buttonReceipt
             // 
@@ -295,7 +297,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton buttonCheck;
         private System.Windows.Forms.ToolStripButton buttonCheckCancel;
-        private System.Windows.Forms.ToolStripButton buttonPrint;
+        private System.Windows.Forms.ToolStripButton buttonItems;
         private System.Windows.Forms.ToolStripButton buttonReceipt;
         private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
         private System.Windows.Forms.ToolStripButton toolStripButton1;

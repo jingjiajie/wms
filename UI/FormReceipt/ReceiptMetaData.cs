@@ -69,5 +69,26 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="最后修改用户ID", Key="LastUpdateUserID",Visible=true,Editable=true},
             new KeyName(){Name="最后修改时间", Key="LastUpdateTime",Visible=true,Editable=true}
         };
+
+        public static KeyName[] itemsKeyName =
+        {
+            new KeyName(){Name="ID", Key="ID",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="零件ID", Key="ComponentID",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="包装名称", Key="PackageName",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="期待包装数量", Key="ExpectedPackageAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="期待数量", Key="ExpectedAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="错件数", Key="WrongComponentAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="短缺数量", Key="ShortageAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="不合格数量", Key="DisqualifiedAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="厂商批号", Key="ManufactureNo",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="存货日期", Key="InventoryDate",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="生产日期", Key="ManufactureDate",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="物权属性", Key="RealRightProperty",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="箱号", Key="BoxNo",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false}
+        };
     }
 }

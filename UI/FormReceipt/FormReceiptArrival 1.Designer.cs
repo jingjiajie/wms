@@ -113,9 +113,9 @@ namespace WMS.UI.FormReceipt {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        public static System.Drawing.Bitmap buttonPrint_Image {
+        public static System.Drawing.Bitmap buttonItems_Image {
             get {
-                object obj = ResourceManager.GetObject("buttonPrint.Image", resourceCulture);
+                object obj = ResourceManager.GetObject("buttonItems.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -157,33 +157,6 @@ namespace WMS.UI.FormReceipt {
             get {
                 object obj = ResourceManager.GetObject("statusStrip1.TrayLocation", resourceCulture);
                 return ((System.Drawing.Point)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 送检中 的本地化字符串。
-        /// </summary>
-        public static string STRING_CHECKING {
-            get {
-                return ResourceManager.GetString("STRING_CHECKING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 收货 的本地化字符串。
-        /// </summary>
-        public static string STRING_RECEIPT {
-            get {
-                return ResourceManager.GetString("STRING_RECEIPT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 拒收 的本地化字符串。
-        /// </summary>
-        public static string STRING_REFUSE {
-            get {
-                return ResourceManager.GetString("STRING_REFUSE", resourceCulture);
             }
         }
         

@@ -159,8 +159,8 @@ namespace WMS.UI
                 {
                     throw new Exception();
                 }
-                int stockInfoID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER,stockInfoID);
+                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID);
                 receiptTicketModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search(null, null);
@@ -271,6 +271,30 @@ namespace WMS.UI
             }
             Search(null, null);
 
+        }
+
+        private void buttonItems_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER ,receiptTicketID);
+                formReceiptTicketIems.SetCallback(() =>
+                {
+                    this.Search(null, null);
+                });
+                formReceiptTicketIems.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
 }
