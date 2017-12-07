@@ -19,6 +19,8 @@ namespace WMS.UI
     public partial class FormMain : Form
     {
         private User user = null;
+        private Project project = null;
+        private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
 
         private Action formClosedCallback;
@@ -164,19 +166,23 @@ namespace WMS.UI
 
             //下拉栏显示仓库
             WMSEntities wms = new WMSEntities();
-            var allWare = (from s in wms.Warehouse select s).ToArray();
-            for (int i = 0; i < allWare.Count(); i++)
+            var allWarehouses = (from s in wms.Warehouse select s).ToArray();
+            for (int i = 0; i < allWarehouses.Count(); i++)
             {
-                Warehouse ware = allWare[i];
-                comboBoxWarehouse.Items.Add(ware.Name);
+                Warehouse warehouse = allWarehouses[i];
+                comboBoxWarehouse.Items.Add(new ComboBoxItem(warehouse.Name, warehouse));
             }
+            this.comboBoxWarehouse.SelectedIndex = 0;
+            this.warehouse = allWarehouses[0];
 
-            var allProject = (from s in wms.Project select s).ToArray();
-            for (int i = 0; i < allWare.Count(); i++)
+            var allProjects = (from s in wms.Project select s).ToArray();
+            for (int i = 0; i < allProjects.Count(); i++)
             {
-                Project objpro = allProject[i];
-                comboBoxProject.Items.Add(objpro.Name);
+                Project project = allProjects[i];
+                comboBoxProject.Items.Add(new ComboBoxItem(project.Name, project));
             }
+            this.comboBoxProject.SelectedIndex = 0;
+            this.project = allProjects[0];
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
@@ -264,7 +270,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormShipmentTicket l = new FormShipmentTicket(this.user.ID);//实例化子窗口
+                FormShipmentTicket l = new FormShipmentTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -326,6 +332,11 @@ namespace WMS.UI
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.formClosedCallback?.Invoke();
+        }
+
+        private void comboBoxProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
