@@ -153,6 +153,9 @@ namespace WMS.UI
                 this.wmsEntities.ShipmentTicket.Add(shipmentTicket);
             }
 
+            shipmentTicket.ProjectID = this.projectID;
+            shipmentTicket.WarehouseID = this.warehouseID;
+
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicket, ShipmentTicketViewMetaData.KeyNames, out string errorMessage) == false)
             {
@@ -173,6 +176,7 @@ namespace WMS.UI
             {
                 this.addFinishedCallback();
             }
+            MessageBox.Show("修改成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
 

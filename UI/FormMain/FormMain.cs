@@ -324,11 +324,6 @@ namespace WMS.UI
             Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, IntPtr.Zero);
         }
 
-        private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.formClosedCallback?.Invoke();
@@ -336,7 +331,14 @@ namespace WMS.UI
 
         private void comboBoxProject_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
+            this.panelRight.Controls.Clear();
+        }
 
+        private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
+            this.panelRight.Controls.Clear();
         }
     }
 }

@@ -28,37 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("用户管理");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("供应商");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("零件");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("仓库");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("基本信息", new System.Windows.Forms.TreeNode[] {
-            treeNode19,
-            treeNode20,
-            treeNode21,
-            treeNode22});
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("到货管理");
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("上架管理");
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("收货管理", new System.Windows.Forms.TreeNode[] {
-            treeNode24,
-            treeNode25});
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("发货单管理");
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("作业单管理");
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("出库单管理");
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("发货管理", new System.Windows.Forms.TreeNode[] {
-            treeNode27,
-            treeNode28,
-            treeNode29});
-            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("库存信息");
-            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("库存日志");
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("库存汇总");
-            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("库存信息", new System.Windows.Forms.TreeNode[] {
-            treeNode31,
-            treeNode32,
-            treeNode33});
-            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("送检单");
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("送检管理", new System.Windows.Forms.TreeNode[] {
-            treeNode35});
+            System.Windows.Forms.TreeNode treeNode49 = new System.Windows.Forms.TreeNode("用户管理");
+            System.Windows.Forms.TreeNode treeNode50 = new System.Windows.Forms.TreeNode("供应商");
+            System.Windows.Forms.TreeNode treeNode51 = new System.Windows.Forms.TreeNode("零件");
+            System.Windows.Forms.TreeNode treeNode52 = new System.Windows.Forms.TreeNode("仓库");
+            System.Windows.Forms.TreeNode treeNode53 = new System.Windows.Forms.TreeNode("基本信息", new System.Windows.Forms.TreeNode[] {
+            treeNode49,
+            treeNode50,
+            treeNode51,
+            treeNode52});
+            System.Windows.Forms.TreeNode treeNode54 = new System.Windows.Forms.TreeNode("到货管理");
+            System.Windows.Forms.TreeNode treeNode55 = new System.Windows.Forms.TreeNode("上架管理");
+            System.Windows.Forms.TreeNode treeNode56 = new System.Windows.Forms.TreeNode("收货管理", new System.Windows.Forms.TreeNode[] {
+            treeNode54,
+            treeNode55});
+            System.Windows.Forms.TreeNode treeNode57 = new System.Windows.Forms.TreeNode("发货单管理");
+            System.Windows.Forms.TreeNode treeNode58 = new System.Windows.Forms.TreeNode("作业单管理");
+            System.Windows.Forms.TreeNode treeNode59 = new System.Windows.Forms.TreeNode("出库单管理");
+            System.Windows.Forms.TreeNode treeNode60 = new System.Windows.Forms.TreeNode("发货管理", new System.Windows.Forms.TreeNode[] {
+            treeNode57,
+            treeNode58,
+            treeNode59});
+            System.Windows.Forms.TreeNode treeNode61 = new System.Windows.Forms.TreeNode("库存信息");
+            System.Windows.Forms.TreeNode treeNode62 = new System.Windows.Forms.TreeNode("库存信息", new System.Windows.Forms.TreeNode[] {
+            treeNode61});
+            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("送检单");
+            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("送检管理", new System.Windows.Forms.TreeNode[] {
+            treeNode63});
             this.panelTop = new System.Windows.Forms.Panel();
             this.tableLayoutBanner = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -295,48 +291,44 @@
             this.treeViewLeft.Location = new System.Drawing.Point(0, 0);
             this.treeViewLeft.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeViewLeft.Name = "treeViewLeft";
-            treeNode19.Name = "节点11";
-            treeNode19.Text = "用户管理";
-            treeNode20.Name = "节点12";
-            treeNode20.Text = "供应商";
-            treeNode21.Name = "节点13";
-            treeNode21.Text = "零件";
-            treeNode22.Name = "节点14";
-            treeNode22.Text = "仓库";
-            treeNode23.Name = "节点1";
-            treeNode23.Text = "基本信息";
-            treeNode24.Name = "节点21";
-            treeNode24.Text = "到货管理";
-            treeNode25.Name = "节点22";
-            treeNode25.Text = "上架管理";
-            treeNode26.Name = "节点2";
-            treeNode26.Text = "收货管理";
-            treeNode27.Name = "节点31";
-            treeNode27.Text = "发货单管理";
-            treeNode28.Name = "节点32";
-            treeNode28.Text = "作业单管理";
-            treeNode29.Name = "节点33";
-            treeNode29.Text = "出库单管理";
-            treeNode30.Name = "节点3";
-            treeNode30.Text = "发货管理";
-            treeNode31.Name = "节点41";
-            treeNode31.Text = "库存信息";
-            treeNode32.Name = "节点42";
-            treeNode32.Text = "库存日志";
-            treeNode33.Name = "节点43";
-            treeNode33.Text = "库存汇总";
-            treeNode34.Name = "节点4";
-            treeNode34.Text = "库存信息";
-            treeNode35.Name = "节点3";
-            treeNode35.Text = "送检单";
-            treeNode36.Name = "节点2";
-            treeNode36.Text = "送检管理";
+            treeNode49.Name = "节点11";
+            treeNode49.Text = "用户管理";
+            treeNode50.Name = "节点12";
+            treeNode50.Text = "供应商";
+            treeNode51.Name = "节点13";
+            treeNode51.Text = "零件";
+            treeNode52.Name = "节点14";
+            treeNode52.Text = "仓库";
+            treeNode53.Name = "节点1";
+            treeNode53.Text = "基本信息";
+            treeNode54.Name = "节点21";
+            treeNode54.Text = "到货管理";
+            treeNode55.Name = "节点22";
+            treeNode55.Text = "上架管理";
+            treeNode56.Name = "节点2";
+            treeNode56.Text = "收货管理";
+            treeNode57.Name = "节点31";
+            treeNode57.Text = "发货单管理";
+            treeNode58.Name = "节点32";
+            treeNode58.Text = "作业单管理";
+            treeNode59.Name = "节点33";
+            treeNode59.Text = "出库单管理";
+            treeNode60.Name = "节点3";
+            treeNode60.Text = "发货管理";
+            treeNode61.Name = "节点41";
+            treeNode61.Text = "库存信息";
+            treeNode62.Name = "节点4";
+            treeNode62.Text = "库存信息";
+            treeNode63.Name = "节点3";
+            treeNode63.Text = "送检单";
+            treeNode64.Name = "节点2";
+            treeNode64.Text = "送检管理";
             this.treeViewLeft.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode23,
-            treeNode26,
-            treeNode30,
-            treeNode34,
-            treeNode36});
+            treeNode53,
+            treeNode56,
+            treeNode60,
+            treeNode62,
+            treeNode64});
             this.treeViewLeft.Size = new System.Drawing.Size(394, 696);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);

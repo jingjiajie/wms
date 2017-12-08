@@ -37,13 +37,13 @@
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
+            this.buttonGenerateJobTicket = new System.Windows.Forms.ToolStripButton();
             this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.buttonGenerateJobTicket = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -118,6 +118,7 @@
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(60, 25);
             this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // toolStripSeparator1
             // 
@@ -134,6 +135,16 @@
             this.buttonOpen.Size = new System.Drawing.Size(100, 25);
             this.buttonOpen.Text = "查看发货单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
+            // 
+            // buttonGenerateJobTicket
+            // 
+            this.buttonGenerateJobTicket.AutoSize = false;
+            this.buttonGenerateJobTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGenerateJobTicket.Image")));
+            this.buttonGenerateJobTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonGenerateJobTicket.Name = "buttonGenerateJobTicket";
+            this.buttonGenerateJobTicket.Size = new System.Drawing.Size(100, 25);
+            this.buttonGenerateJobTicket.Text = "生成作业单";
+            this.buttonGenerateJobTicket.Click += new System.EventHandler(this.buttonGenerateJobTicket_Click);
             // 
             // buttonAdd
             // 
@@ -189,16 +200,6 @@
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(134, 31);
             this.labelStatus.Text = "发货单管理";
-            // 
-            // buttonGenerateJobTicket
-            // 
-            this.buttonGenerateJobTicket.AutoSize = false;
-            this.buttonGenerateJobTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGenerateJobTicket.Image")));
-            this.buttonGenerateJobTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonGenerateJobTicket.Name = "buttonGenerateJobTicket";
-            this.buttonGenerateJobTicket.Size = new System.Drawing.Size(100, 25);
-            this.buttonGenerateJobTicket.Text = "生成作业单";
-            this.buttonGenerateJobTicket.Click += new System.EventHandler(this.buttonGenerateJobTicket_Click);
             // 
             // FormShipmentTicket
             // 

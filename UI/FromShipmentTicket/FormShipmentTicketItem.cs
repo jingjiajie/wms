@@ -53,7 +53,48 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = ShipmentTicketItemViewMetaData.KeyNames[i].Visible;
             }
             worksheet.Columns = ShipmentTicketItemViewMetaData.KeyNames.Length; //限制表的长度
+
+            Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ShipmentTicketItemViewMetaData.KeyNames);
+
+            this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
         }
+
+        private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        {
+            this.RefreshTextBoxes();
+        }
+
+        private void ClearTextBoxes()
+        {
+            foreach (Control control in this.tableLayoutPanelProperties.Controls)
+            {
+                if (control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    textBox.Text = "";
+                }
+            }
+        }
+
+        private void RefreshTextBoxes()
+        {
+            this.ClearTextBoxes();
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            int[] ids = this.GetSelectedIDs();
+            if (ids.Length == 0) return;
+            int id = ids[0];
+            ShipmentTicketItemView shipmentTicketItemView = (from s in this.wmsEntities.ShipmentTicketItemView
+                                                             where s.ID == id
+                                                             select s).FirstOrDefault();
+            if (shipmentTicketItemView == null)
+            {
+                MessageBox.Show("系统错误，未找到相应发货单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Utilities.CopyPropertiesToTextBoxes(shipmentTicketItemView, this);
+            Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
+        }
+
 
         private void Search()
         {
@@ -66,7 +107,7 @@ namespace WMS.UI
                                                           where j.ShipmentTicketID == this.shipmentTicketID
                                                           select j).ToArray();
 
-                this.reoGridControlMain.Invoke(new Action(() =>
+                this.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "加载完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
@@ -83,6 +124,7 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+                    this.Invoke(new Action(this.RefreshTextBoxes));
                 }));
             })).Start();
         }
@@ -160,6 +202,8 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            var form = new FormShipmentTicketSelectStockInfo();
+            form.Show();
             //var form = new FormShipmentTicketModify();
             //form.SetMode(FormMode.ADD);
             //form.SetAddFinishedCallback(() =>

@@ -79,20 +79,30 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 ShipmentTicketView[] shipmentTicketViews = null;
+                string sql = "SELECT * FROM ShipmentTicketView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                
+                if(this.projectID != -1)
+                {
+                    sql += "AND ProjectID = @projectID ";
+                    parameters.Add(new SqlParameter("projectID",this.projectID));
+                }
+                if(warehouseID != -1)
+                {
+                    sql += "AND WarehouseID = @warehouseID ";
+                    parameters.Add(new SqlParameter("warehouseID",this.warehouseID));
+                }
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
-                    shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>("SELECT * FROM ShipmentTicketView").ToArray();
+                    shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(sql, parameters.ToArray()).ToArray();
                 }
                 else
                 {
-
-                    if (Utilities.IsQuotateType(typeof(ShipmentTicketView).GetProperty(key).PropertyType))
-                    {
-                        value = "'" + value + "'";
-                    }
                     try
                     {
-                        shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(String.Format("SELECT * FROM ShipmentTicketView WHERE {0} = {1}", key, value)).ToArray();
+                        sql += "AND " + key + " = @value ";
+                        parameters.Add(new SqlParameter("value",value));
+                        shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(sql,parameters.ToArray()).ToArray();
                     }
                     catch
                     {
@@ -253,6 +263,11 @@ namespace WMS.UI
                 }
             }
             return ids.ToArray();
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            this.Search();
         }
     }
 }
