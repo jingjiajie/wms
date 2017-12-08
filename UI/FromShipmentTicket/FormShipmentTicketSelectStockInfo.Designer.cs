@@ -38,7 +38,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.textBoxComponentNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSearch = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonSelect = new System.Windows.Forms.Button();
@@ -70,7 +70,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1218, 548);
+            this.reoGridControlMain.Size = new System.Drawing.Size(768, 423);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -80,10 +80,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 618);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1224, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(774, 36);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -111,7 +111,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1224, 654);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(774, 529);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // panel1
@@ -120,14 +120,14 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1218, 94);
+            this.panel1.Size = new System.Drawing.Size(768, 94);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -135,7 +135,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1218, 94);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(768, 94);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -147,21 +147,21 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.textBoxComponentNo, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.label1, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.button1, 3, 1);
+            this.tableLayoutPanel3.Controls.Add(this.buttonSearch, 3, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(812, 88);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(512, 88);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // textBoxComponentNo
             // 
             this.textBoxComponentNo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxComponentNo.Location = new System.Drawing.Point(369, 22);
+            this.textBoxComponentNo.Location = new System.Drawing.Point(219, 27);
             this.textBoxComponentNo.Name = "textBoxComponentNo";
             this.textBoxComponentNo.Size = new System.Drawing.Size(194, 38);
             this.textBoxComponentNo.TabIndex = 3;
@@ -170,28 +170,29 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(249, 19);
+            this.label1.Location = new System.Drawing.Point(99, 24);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 50);
+            this.label1.Size = new System.Drawing.Size(114, 40);
             this.label1.TabIndex = 2;
             this.label1.Text = "零件编号";
             // 
-            // button1
+            // buttonSearch
             // 
-            this.button1.Location = new System.Drawing.Point(569, 22);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(132, 44);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "搜索";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonSearch.Location = new System.Drawing.Point(419, 27);
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(90, 34);
+            this.buttonSearch.TabIndex = 4;
+            this.buttonSearch.Text = "搜索";
+            this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tableLayoutPanel4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(821, 3);
+            this.panel3.Location = new System.Drawing.Point(521, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(394, 88);
+            this.panel3.Size = new System.Drawing.Size(244, 88);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel4
@@ -208,18 +209,19 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(394, 88);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(244, 88);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // buttonSelect
             // 
             this.buttonSelect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSelect.Location = new System.Drawing.Point(120, 22);
+            this.buttonSelect.Location = new System.Drawing.Point(45, 22);
             this.buttonSelect.Name = "buttonSelect";
             this.buttonSelect.Size = new System.Drawing.Size(154, 44);
             this.buttonSelect.TabIndex = 5;
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.UseVisualStyleBackColor = true;
+            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
             // panel2
             // 
@@ -227,14 +229,14 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 103);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1218, 548);
+            this.panel2.Size = new System.Drawing.Size(768, 423);
             this.panel2.TabIndex = 1;
             // 
             // FormShipmentTicketSelectStockInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1224, 654);
+            this.ClientSize = new System.Drawing.Size(774, 529);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("黑体", 10F);
@@ -268,7 +270,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TextBox textBoxComponentNo;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Button buttonSelect;
