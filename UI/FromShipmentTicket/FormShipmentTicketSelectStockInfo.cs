@@ -15,12 +15,13 @@ namespace WMS.UI
     public partial class FormShipmentTicketSelectStockInfo : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
-
+        private int defaultStockInfoID = -1;
         private Action<int> selectFinishCallback = null;
 
-        public FormShipmentTicketSelectStockInfo()
+        public FormShipmentTicketSelectStockInfo(int defaultStockInfoID = -1)
         {
             InitializeComponent();
+            this.defaultStockInfoID = defaultStockInfoID;
         }
 
         public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
@@ -44,6 +45,12 @@ namespace WMS.UI
         private void FormJobTicketSelectStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
+            if(this.defaultStockInfoID != -1)
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                this.textBoxComponentNo.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.ComponentNo).FirstOrDefault();
+                this.Search();
+            }
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -87,16 +94,18 @@ namespace WMS.UI
 
         private void buttonSelect_Click(object sender, EventArgs e)
         {
+            this.SelectItem();
+        }
+
+        private void SelectItem()
+        {
             int[] ids = this.GetSelectedIDs();
-            if(ids.Length != 1)
+            if (ids.Length != 1)
             {
                 MessageBox.Show("请选择一项");
                 return;
             }
-            if(this.selectFinishCallback != null)
-            {
-                this.selectFinishCallback(ids[0]);
-            }
+            this.selectFinishCallback?.Invoke(ids[0]);
             this.Close();
         }
 
@@ -113,6 +122,14 @@ namespace WMS.UI
                 }
             }
             return ids.ToArray();
+        }
+
+        private void textBoxComponentNo_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == 13)
+            {
+                this.buttonSearch.PerformClick();
+            }
         }
     }
 }

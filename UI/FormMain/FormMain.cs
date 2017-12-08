@@ -333,12 +333,14 @@ namespace WMS.UI
         {
             this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
             this.panelRight.Controls.Clear();
+            this.treeViewLeft.SelectedNode = null;
         }
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
             this.panelRight.Controls.Clear();
+            this.treeViewLeft.SelectedNode = null;
         }
     }
 }
