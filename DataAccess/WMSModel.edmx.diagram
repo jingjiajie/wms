@@ -5,50 +5,50 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0298289884b349a6836a9fc7868152a1" Name="Diagram1" ZoomLevel="54">
-        <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="3" PointY="35.125" />
-        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="5.25" PointY="52.25" />
-        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfo" Width="1.5" PointX="5.25" PointY="32.875" />
-        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfo" Width="1.5" PointX="5.25" PointY="56.125" />
-        <EntityTypeShape EntityType="WMSModel.JobTicket" Width="1.5" PointX="10.5" PointY="51.875" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketItem" Width="1.5" PointX="12.75" PointY="52.25" />
-        <EntityTypeShape EntityType="WMSModel.Project" Width="1.5" PointX="0.75" PointY="41.75" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicket" Width="1.5" PointX="5.25" PointY="62.125" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicketItem" Width="1.5" PointX="10.75" PointY="57.75" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicket" Width="1.5" PointX="15.75" PointY="51.375" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItem" Width="1.5" PointX="18" PointY="53.125" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicket" Width="1.5" PointX="5.25" PointY="41.625" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItem" Width="1.5" PointX="7.5" PointY="40.75" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicket" Width="1.5" PointX="8.25" PointY="49.625" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItem" Width="1.5" PointX="13.5" PointY="47" />
-        <EntityTypeShape EntityType="WMSModel.StockInfo" Width="1.5" PointX="10.5" PointY="44.25" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicket" Width="1.5" PointX="10.5" PointY="47" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItem" Width="1.5" PointX="5.25" PointY="36.75" />
-        <EntityTypeShape EntityType="WMSModel.Supplier" Width="1.5" PointX="0.75" PointY="36" />
-        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfo" Width="1.5" PointX="3" PointY="57.25" />
-        <EntityTypeShape EntityType="WMSModel.User" Width="1.5" PointX="3" PointY="52" />
-        <EntityTypeShape EntityType="WMSModel.Warehouse" Width="1.5" PointX="0.75" PointY="33" />
+        <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="6" PointY="35.25" />
+        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="8.25" PointY="33" />
+        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfo" Width="1.5" PointX="8.25" PointY="40.625" />
+        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfo" Width="1.5" PointX="8.25" PointY="49.375" />
+        <EntityTypeShape EntityType="WMSModel.JobTicket" Width="1.5" PointX="7.5" PointY="63.75" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketItem" Width="1.5" PointX="12.75" PointY="64.125" />
+        <EntityTypeShape EntityType="WMSModel.Project" Width="1.5" PointX="3.75" PointY="42.125" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicket" Width="1.5" PointX="5.25" PointY="79.375" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicketItem" Width="1.5" PointX="15.5" PointY="61.875" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicket" Width="1.5" PointX="9.75" PointY="63.25" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItem" Width="1.5" PointX="15" PointY="66.875" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicket" Width="1.5" PointX="5.25" PointY="47.5" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItem" Width="1.5" PointX="11.25" PointY="43.75" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicket" Width="1.5" PointX="5.25" PointY="61.375" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItem" Width="1.5" PointX="12.5" PointY="58.75" />
+        <EntityTypeShape EntityType="WMSModel.StockInfo" Width="1.5" PointX="10.5" PointY="70.125" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicket" Width="1.5" PointX="7.5" PointY="55.875" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItem" Width="1.5" PointX="11.25" PointY="36.75" />
+        <EntityTypeShape EntityType="WMSModel.Supplier" Width="1.5" PointX="0.75" PointY="36.125" />
+        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfo" Width="1.5" PointX="3" PointY="30.25" />
+        <EntityTypeShape EntityType="WMSModel.User" Width="1.5" PointX="3" PointY="63.75" />
+        <EntityTypeShape EntityType="WMSModel.Warehouse" Width="1.5" PointX="3.75" PointY="44.75" />
         <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSizeView" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfoView" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfoView" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="WMSModel.ComponentView" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketItemView" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketView" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketItemView" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketView" Width="1.5" PointX="6.75" PointY="9.75" />
         <EntityTypeShape EntityType="WMSModel.ProjectView" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="WMSModel.PutawayTicketItemView" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="WMSModel.PutawayTicketView" Width="1.5" PointX="2.75" PointY="12.75" />
         <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItemView" Width="1.5" PointX="14.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketView" Width="1.5" PointX="4.75" PointY="12.75" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItemView" Width="1.5" PointX="16.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketView" Width="1.5" PointX="18.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItemView" Width="1.5" PointX="18.75" PointY="14.75" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketView" Width="1.5" PointX="16.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItemView" Width="1.5" PointX="18.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketView" Width="1.5" PointX="16.75" PointY="18.75" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItemView" Width="1.5" PointX="18.75" PointY="18.75" />
         <EntityTypeShape EntityType="WMSModel.ShipmentTicketView" Width="1.5" PointX="20.75" PointY="0.75" />
         <EntityTypeShape EntityType="WMSModel.StockInfoView" Width="1.5" PointX="20.75" PointY="12.75" />
         <EntityTypeShape EntityType="WMSModel.SubmissionTicketItemView" Width="1.5" PointX="22.75" PointY="0.75" />
         <EntityTypeShape EntityType="WMSModel.SubmissionTicketView" Width="1.5" PointX="22.75" PointY="22.75" />
-        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfoView" Width="1.5" PointX="10.75" PointY="23.75" />
-        <EntityTypeShape EntityType="WMSModel.SupplierView" Width="1.5" PointX="24.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WMSModel.UserView" Width="1.5" PointX="24.75" PointY="5.75" />
-        <EntityTypeShape EntityType="WMSModel.WarehouseView" Width="1.5" PointX="24.75" PointY="11.75" />
+        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfoView" Width="1.5" PointX="24.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WMSModel.SupplierView" Width="1.5" PointX="4.75" PointY="23.75" />
+        <EntityTypeShape EntityType="WMSModel.UserView" Width="1.5" PointX="6.75" PointY="23.75" />
+        <EntityTypeShape EntityType="WMSModel.WarehouseView" Width="1.5" PointX="24.75" PointY="15.75" />
         <AssociationConnector Association="WMSModel.FK__Component__Compo__239E4DCF" />
         <AssociationConnector Association="WMSModel.FK__Component__Compo__29572725" />
         <AssociationConnector Association="WMSModel.FK__Component__Compo__2C3393D0" />

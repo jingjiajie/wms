@@ -168,6 +168,13 @@
     <Compile Include="FormJobTicket\FormJobTicketItem.Designer.cs">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormSubmissionTicketItemModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormSubmissionTicketItemModify.Designer.cs">
+      <DependentUpon>FormSubmissionTicketItemModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReceipt\ReceiptUtilities.cs" />
     <Compile Include="FromShipmentTicket\FormShipmentTicketSelectStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -409,6 +416,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketItem.resx">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormSubmissionTicketItemModify.resx">
+      <DependentUpon>FormSubmissionTicketItemModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicketSelectStockInfo.resx">
       <DependentUpon>FormShipmentTicketSelectStockInfo.cs</DependentUpon>

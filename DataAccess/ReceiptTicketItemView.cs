@@ -99,5 +99,6 @@ namespace WMS.DataAccess
         public string ReceiptTicketNo { get; set; }
         public Nullable<int> ReceiptTicketSupplierID { get; set; }
         public int ID { get; set; }
+        public string State { get; set; }
     }
 }

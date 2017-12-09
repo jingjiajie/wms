@@ -48,10 +48,9 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "创建时间", Key = "CreateTime", Visible = true, Editable = true},
             new KeyName(){Name = "最后修改用户ID", Key = "LastUpdateUserID", Visible = true, Editable = true},
             new KeyName(){Name = "最后修改时间", Key = "LastUpdateTime", Visible = true, Editable = true},
-            new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = false, Editable = false},
-            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = false, Editable = false},
-            new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false}
-
+            new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = false, Editable = false, Save=false},
+            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = false, Editable = false, Save=false},
+            new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false, Save=false}
         };
         public static KeyName[] checkKeyName =
         {
@@ -88,7 +87,22 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="物权属性", Key="RealRightProperty",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="箱号", Key="BoxNo",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false}
+            new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false},
+            new KeyName(){Name="是否送检", Key="State", Visible=true, Editable=false,Save=true}
+        };
+
+        public static KeyName[] submissionTicketItemKeyName =
+        {
+            new KeyName(){Name="ID", Key="ID",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="送检单ID", Key="SubmissionTicketID",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="行项目", Key="LineItem",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="物料ID", Key="ComponentID",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="状态", Key="State",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="到货数量", Key="ArriveAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="单位", Key="Unit",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="送检数量", Key="SubmissionAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="返回数量", Key="ReturnAmount",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="备注", Key="Comment",Visible=true,Editable=true,Save=true},
         };
     }
 }

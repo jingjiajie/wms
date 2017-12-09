@@ -39,7 +39,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public int CreateUserID { get; set; }
         public int JobTicketID { get; set; }
-        public int LastUpdateUserID { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
     
         public virtual JobTicket JobTicket { get; set; }
         public virtual User User { get; set; }

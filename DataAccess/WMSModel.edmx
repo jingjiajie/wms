@@ -185,7 +185,7 @@
           <Property Name="LastUpdateTime" Type="datetime" />
           <Property Name="CreateUserID" Type="int" Nullable="false" />
           <Property Name="JobTicketID" Type="int" Nullable="false" />
-          <Property Name="LastUpdateUserID" Type="int" Nullable="false" />
+          <Property Name="LastUpdateUserID" Type="int" />
         </EntityType>
         <EntityType Name="PutOutStorageTicketItem">
           <Key>
@@ -260,6 +260,7 @@
           <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="RealRightProperty" Type="nvarchar" MaxLength="64" />
           <Property Name="BoxNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="State" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="ShipmentTicket">
           <Key>
@@ -1553,6 +1554,7 @@
           <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketSupplierID" Type="int" />
           <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2567,7 +2569,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PutOutSto__LastU__76969D2E">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="PutOutStorageTicket" Type="Self.PutOutStorageTicket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -3864,7 +3866,8 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[ReceiptTicketState] AS [ReceiptTicketState], 
 [ReceiptTicketItemView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
 [ReceiptTicketItemView].[ReceiptTicketSupplierID] AS [ReceiptTicketSupplierID], 
-[ReceiptTicketItemView].[ID] AS [ID]
+[ReceiptTicketItemView].[ID] AS [ID], 
+[ReceiptTicketItemView].[State] AS [State]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -5175,7 +5178,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="CreateUserID" Type="Int32" Nullable="false" />
           <Property Name="JobTicketID" Type="Int32" Nullable="false" />
-          <Property Name="LastUpdateUserID" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdateUserID" Type="Int32" />
           <NavigationProperty Name="JobTicket" Relationship="WMSModel.FK__PutOutSto__JobTi__75A278F5" FromRole="PutOutStorageTicket" ToRole="JobTicket" />
           <NavigationProperty Name="User" Relationship="WMSModel.FK__PutOutSto__Creat__74AE54BC" FromRole="PutOutStorageTicket" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="WMSModel.FK__PutOutSto__LastU__76969D2E" FromRole="PutOutStorageTicket" ToRole="User" />
@@ -5263,6 +5266,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="RealRightProperty" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="BoxNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Component" Relationship="WMSModel.FK__PutInStor__Compo__412EB0B6" FromRole="ReceiptTicketItem" ToRole="Component" />
           <NavigationProperty Name="PutawayTicketItem" Relationship="WMSModel.FK__PutawayTi__Recei__2DE6D218" FromRole="ReceiptTicketItem" ToRole="PutawayTicketItem" />
           <NavigationProperty Name="ReceiptTicket" Relationship="WMSModel.FK__PutInStor__Recei__4222D4EF" FromRole="ReceiptTicketItem" ToRole="ReceiptTicket" />
@@ -6573,6 +6577,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketSupplierID" Type="Int32" />
           <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
@@ -7591,7 +7596,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PutOutSto__LastU__76969D2E">
-          <End Type="WMSModel.User" Role="User" Multiplicity="1" />
+          <End Type="WMSModel.User" Role="User" Multiplicity="0..1" />
           <End Type="WMSModel.PutOutStorageTicket" Role="PutOutStorageTicket" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -8074,6 +8079,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicketItem">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicketItem">
               <MappingFragment StoreEntitySet="ReceiptTicketItem">
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="BoxNo" ColumnName="BoxNo" />
                 <ScalarProperty Name="RealRightProperty" ColumnName="RealRightProperty" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
@@ -9267,6 +9273,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicketItemView">
               <MappingFragment StoreEntitySet="ReceiptTicketItemView">
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ReceiptTicketSupplierID" ColumnName="ReceiptTicketSupplierID" />
                 <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />

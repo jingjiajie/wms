@@ -35,6 +35,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public string RealRightProperty { get; set; }
         public string BoxNo { get; set; }
+        public string State { get; set; }
     
         public virtual Component Component { get; set; }
         public virtual ICollection<PutawayTicketItem> PutawayTicketItem { get; set; }
