@@ -203,7 +203,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseSupplier l = new FormBaseSupplier();//实例化子窗口
+                FormBaseSupplier l = new FormBaseSupplier(user.Authority);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
