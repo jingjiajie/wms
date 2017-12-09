@@ -16,9 +16,18 @@ namespace WMS.UI
     public partial class FormBaseComponent : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormBaseComponent()
+        private int authority;
+        private int authority_self = 1;
+        int userID = -1;
+        int projectID = -1;
+        int warehouseID = -1;
+        public FormBaseComponent(int authority1, int userID, int projectID, int warehouseID)
         {
             InitializeComponent();
+            this.authority = authority1;
+            this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
         private void InitComponents()
         {
@@ -117,52 +126,12 @@ namespace WMS.UI
                 }));
 
             })).Start();
-            //    DataAccess.Component[] Components = null;
-            //    if (key == null || value == null) //查询条件为null则查询全部内容
-            //    {
-            //        Components = wmsEntities.Database.SqlQuery<DataAccess.Component>("SELECT * FROM Component").ToArray();
-            //    }
-            //    else
-            //    {
-            //        if (Double.TryParse(value, out double tmp) == false) //不是数字则加上单引号
-            //        {
-            //            value = "'" + value + "'";
-            //        }
-            //        try
-            //        {
-            //            Components = wmsEntities.Database.SqlQuery<DataAccess.Component>(String.Format("SELECT * FROM Component WHERE {0} = {1}", key, value)).ToArray();
-            //        }
-            //        catch
-            //        {
-            //            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //            return;
-            //        }
-            //    }
-            //    this.reoGridControlComponen.Invoke(new Action(() =>
-            //    {
-            //        this.labelStatus.Text = "搜索完成";
-            //        worksheet.DeleteRangeData(RangePosition.EntireRange);
-            //        if (Components.Length == 0)
-            //        {
-            //            worksheet[1, 1] = "没有查询到符合条件的记录";
-            //        }
-            //        for (int i = 0; i < Components.Length; i++)
-            //        {
-            //            DataAccess.Component curComponent = Components[i];
-            //            object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in ComponenMetaData.KeyNames select kn.Key).ToArray());
-            //            for (int j = 0; j < ComponenMetaData.KeyNames.Length; j++)
-            //            {
-            //                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-            //            }
-            //        }
-            //    }));
-            //})).Start();
         }
 
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormComponenModify();
+            var form = new FormComponenModify(this.projectID, this.warehouseID, this.userID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
@@ -183,7 +152,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formComponenModify = new FormComponenModify(componenID);
+                var formComponenModify = new FormComponenModify(this.projectID, this.warehouseID, this.userID,componenID);
                 formComponenModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();
