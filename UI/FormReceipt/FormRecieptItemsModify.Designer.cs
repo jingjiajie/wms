@@ -92,7 +92,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.tableLayoutPanelTextBoxes);
             this.Name = "FormReceiptItemsModify";
-            this.Text = "FormRecieptTicketModify";
+            this.Text = "FormRecieptTicketItemModify";
             this.Load += new System.EventHandler(this.FormRecieptTicketItemsModify_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

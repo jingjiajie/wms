@@ -219,13 +219,20 @@ namespace WMS.UI
             var worksheet = this.reoGridControlUser.Worksheets[0];
             try
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 if (worksheet.SelectionRange.Rows != 1)
                 {
                     throw new Exception();
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
+                if (receiptTicket.State == STRING_SEND_CHECK)
+                {
+                    MessageBox.Show("该收货单已送检");
+                    return;
+                }
                 //var receiptTicketModify = new ReceiptTicketModify(FormMode.ALTER, stockInfoID);
-                var formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID);
+                var formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, AllOrPartial.ALL);
                 formReceiptArrivalCheck.SetFinishedAction(() =>
                 {
                     this.Search(null, null);
@@ -242,8 +249,8 @@ namespace WMS.UI
         private void buttonCheckCancel_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            try
-            {
+            //try
+            //{
                 if (worksheet.SelectionRange.Rows != 1)
                 {
                     throw new Exception();
@@ -251,24 +258,28 @@ namespace WMS.UI
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 WMSEntities wmsEntities = new WMSEntities();
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-                SubmissionTicket submissionTicket = (from sb in wmsEntities.SubmissionTicket where sb.ReceiptTicketID == receiptTicketID select sb).Single();
-                
-                if (receiptTicket.State == STRING_SEND_CHECK)
+                SubmissionTicket submissionTicket = (from sb in wmsEntities.SubmissionTicket where sb.ReceiptTicketID == receiptTicketID && sb.State != STRING_CANCEL select sb).Single();
+                SubmissionTicketItem[] submissionTicketItems = (from sbi in wmsEntities.SubmissionTicketItem where sbi.SubmissionTicketID == submissionTicket.ID select sbi).ToArray();
+                if (receiptTicket.State == STRING_SEND_CHECK || receiptTicket.State == "部分送检中")
                 {
                     receiptTicket.State = STRING_WAIT_CHECK;
                     submissionTicket.State = STRING_CANCEL;
+                    foreach(SubmissionTicketItem sti in submissionTicketItems)
+                    {
+                        sti.State = STRING_CANCEL;
+                    }
                     wmsEntities.SaveChanges();
                 }
                 else
                 {
                     MessageBox.Show("此收货单并未送检!");
                 }
-            }
-            catch
-            {
-                MessageBox.Show("请选择要取消送检的送检单。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("请选择收货单");
+            //}
+
             Search(null, null);
 
         }
@@ -283,7 +294,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER ,receiptTicketID, receiptTicketID);
+                var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 formReceiptTicketIems.SetCallback(() =>
                 {
                     this.Search(null, null);

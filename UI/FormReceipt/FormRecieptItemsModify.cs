@@ -52,9 +52,9 @@ namespace WMS.UI
                 {
                     textBox.Enabled = false;
                 }
+                Console.WriteLine("{0}  {1}", label.Text, textBox.Name);
 
                 this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-               // this.Controls.Find("textBoxReceiptTicketID", true)[0].Enabled = false;
             }
             if (this.formMode == FormMode.ALTER)
             {
@@ -65,6 +65,8 @@ namespace WMS.UI
                 Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
                 
             }
+            this.Controls.Find("textBoxReceiptTicketID", true)[0].Enabled = false;
+            this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

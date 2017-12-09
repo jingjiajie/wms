@@ -51,9 +51,9 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonUnfinish = new System.Windows.Forms.Button();
+            this.buttonAddItem = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
-            this.buttonFinish = new System.Windows.Forms.Button();
+            this.buttonItemCheck = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -299,9 +299,9 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonUnfinish, 2, 2);
+            this.tableLayoutPanel3.Controls.Add(this.buttonAddItem, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.buttonFinish, 2, 1);
+            this.tableLayoutPanel3.Controls.Add(this.buttonItemCheck, 2, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -323,14 +323,15 @@
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // buttonUnfinish
+            // buttonAddItem
             // 
-            this.buttonUnfinish.Location = new System.Drawing.Point(207, 97);
-            this.buttonUnfinish.Name = "buttonUnfinish";
-            this.buttonUnfinish.Size = new System.Drawing.Size(144, 49);
-            this.buttonUnfinish.TabIndex = 3;
-            this.buttonUnfinish.Text = "任务未完成";
-            this.buttonUnfinish.UseVisualStyleBackColor = true;
+            this.buttonAddItem.Location = new System.Drawing.Point(207, 97);
+            this.buttonAddItem.Name = "buttonAddItem";
+            this.buttonAddItem.Size = new System.Drawing.Size(144, 49);
+            this.buttonAddItem.TabIndex = 3;
+            this.buttonAddItem.Text = "添加送检条目";
+            this.buttonAddItem.UseVisualStyleBackColor = true;
+            this.buttonAddItem.Click += new System.EventHandler(this.buttonAddItem_Click);
             // 
             // buttonModify
             // 
@@ -342,14 +343,15 @@
             this.buttonModify.UseVisualStyleBackColor = true;
             this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
             // 
-            // buttonFinish
+            // buttonItemCheck
             // 
-            this.buttonFinish.Location = new System.Drawing.Point(207, 42);
-            this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(144, 49);
-            this.buttonFinish.TabIndex = 2;
-            this.buttonFinish.Text = "任务完成";
-            this.buttonFinish.UseVisualStyleBackColor = true;
+            this.buttonItemCheck.Location = new System.Drawing.Point(207, 42);
+            this.buttonItemCheck.Name = "buttonItemCheck";
+            this.buttonItemCheck.Size = new System.Drawing.Size(144, 49);
+            this.buttonItemCheck.TabIndex = 2;
+            this.buttonItemCheck.Text = "条目送检";
+            this.buttonItemCheck.UseVisualStyleBackColor = true;
+            this.buttonItemCheck.Click += new System.EventHandler(this.buttonItemCheck_Click);
             // 
             // panel2
             // 
@@ -398,9 +400,9 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.Button buttonUnfinish;
+        private System.Windows.Forms.Button buttonAddItem;
         private System.Windows.Forms.Button buttonModify;
-        private System.Windows.Forms.Button buttonFinish;
+        private System.Windows.Forms.Button buttonItemCheck;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;

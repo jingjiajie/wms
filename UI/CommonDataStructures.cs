@@ -21,6 +21,11 @@ namespace WMS.UI
         ADD,ALTER,CHECK
     }
 
+    public enum AllOrPartial
+    {
+        ALL, PARTIAL
+    }
+
     public enum Authority
     {
         SUBMISSION_TICKET = 67108864,

@@ -17,11 +17,13 @@ namespace WMS.UI
     public partial class FormBaseSupplier : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormBaseSupplier()
+        private int authority;
+        private int authority_self = 2;
+        public FormBaseSupplier(int authority1)
         {
             InitializeComponent();
-
-        }
+            this.authority = authority1;
+        } 
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
@@ -86,7 +88,7 @@ namespace WMS.UI
         {
             string key = null;
             string value = null;
-
+            int ID=4;
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
@@ -98,55 +100,104 @@ namespace WMS.UI
             this.labelStatus.Text = "正在搜索中...";
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet[0, 0] = "加载中...";
-            new Thread(new ThreadStart(() =>
+            
+            
+                new Thread(new ThreadStart(() =>
             {
+                SupplierView[] SupplierView = null;
+
+                if ((this.authority&authority_self)>0)
+                {
+
+                    if (key == null || value == null) //查询条件为null则查询全部内容
+                    {
+                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView  ").ToArray();
+                        Console.WriteLine(SupplierView.Length);
+                    }
+                    else
+                    {
+                        if (decimal.TryParse(value, out decimal result) == false)
+                        {
+                            value = "'" + value + "'";
+                        }
+                        try
+                        {
+                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} ", key, value, ID)).ToArray();
+
+                        }
+                        catch
+                        {
+                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
 
 
-            SupplierView [] SupplierView = null;
-                if (key == null || value == null) //查询条件为null则查询全部内容
+
+                if ((this.authority&authority_self)==0)
                 {
-                    SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM Supplier").ToArray();
-                    Console.WriteLine(SupplierView.Length);
+
+                    if (key == null || value == null) //查询条件为null则查询全部内容
+                    {
+                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView WHERE ID = 4 ").ToArray();
+                        Console.WriteLine(SupplierView.Length);
+                    }
+                    else
+                    {
+                        if (decimal.TryParse(value, out decimal result) == false)
+                        {
+                            value = "'" + value + "'";
+                        }
+                        try
+                        {
+                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} ", key, value, ID)).ToArray();
+
+                        }
+                        catch
+                        {
+                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
                 }
-                else
-                {
-                    if (decimal.TryParse(value, out decimal result) == false)
-                    {
-                        value = "'" + value + "'";
-                    }
-                    try
-                    {
-                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1}", key, value)).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
+
+
+
+
+
 
                 this.reoGridControlUser.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                  
+
                     if (SupplierView.Length == 0)
                     {
                         worksheet[1, 1] = "没有查询到符合条件的记录";
                     }
                     for (int i = 0; i < SupplierView.Length; i++)
                     {
-                        SupplierView curComponent = SupplierView[i]; 
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierInfoMetaData.KeyNames select kn.Key).ToArray());
+                        SupplierView curComponent = SupplierView[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierInfoMetaData.KeyNames
+
+
+                                                                                              select kn.Key).ToArray());
+
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();                   
-                            worksheet.SetRangeDataFormat(RangePosition.EntireRange,CellDataFormatFlag.Text,null);
+
+                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                            worksheet.SetRangeDataFormat(RangePosition.EntireRange, CellDataFormatFlag.Text, null);
                         }
                     }
+
                 }));
-            })).Start();
+            }
+            
+            )).Start();
+
+
         }
 
 
