@@ -7,10 +7,11 @@ namespace WMS.UI
 {
     class ShipmentTicketViewMetaData
     {
-        const string STRING_STATE_NOT_ASSIGNED = "未分配";
-        const string STRING_STATE_WAITING_PUTOUT = "待出库";
-        const string STRING_STATE_FINISHED = "已完成";
-        const string STRING_STATE_CANCELED = "作废";
+        public const string STRING_STATE_NOT_ASSIGNED = "未分配";
+        public const string STRING_STATE_WAITING_PUTOUT = "待出库";
+        public const string STRING_STATE_DELIVERING = "送货中";
+        public const string STRING_STATE_FINISHED = "已完成";
+        public const string STRING_STATE_CANCELED = "作废";
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},

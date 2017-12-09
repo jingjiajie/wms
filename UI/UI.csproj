@@ -174,6 +174,9 @@
     <Compile Include="FormReceipt\FormSubmissionItem.Designer.cs">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\FormSelectStockInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormReceipt\FormSubmissionTicketItemModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,11 +184,8 @@
       <DependentUpon>FormSubmissionTicketItemModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\ReceiptUtilities.cs" />
-    <Compile Include="FromShipmentTicket\FormShipmentTicketSelectStockInfo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FromShipmentTicket\FormShipmentTicketSelectStockInfo.Designer.cs">
-      <DependentUpon>FormShipmentTicketSelectStockInfo.cs</DependentUpon>
+    <Compile Include="FormStockInfo\FormSelectStockInfo.Designer.cs">
+      <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="FormJobTicket\JobTicketItemViewMetaData.cs" />
     <Compile Include="FormJobTicket\JobTicketViewMetaData.cs" />
@@ -425,12 +425,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSubmissionItem.resx">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
+    <EmbeddedResource Include="FormStockInfo\FormSelectStockInfo.resx">
+      <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSubmissionTicketItemModify.resx">
       <DependentUpon>FormSubmissionTicketItemModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicketSelectStockInfo.resx">
-      <DependentUpon>FormShipmentTicketSelectStockInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>

@@ -1,4 +1,4 @@
-﻿namespace WMS.UI.PutOutStorageTicket
+﻿namespace WMS.UI
 {
     partial class FormPutOutStorageTicket
     {
@@ -37,7 +37,6 @@
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
-            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -53,8 +52,8 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 39);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -62,9 +61,9 @@
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 80;
+            this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(949, 388);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1424, 631);
             this.reoGridControlMain.TabIndex = 12;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -78,12 +77,12 @@
             this.buttonSearch,
             this.toolStripSeparator1,
             this.buttonOpen,
-            this.buttonAdd,
             this.buttonAlter,
             this.buttonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(949, 28);
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(1424, 39);
             this.toolStripTop.TabIndex = 11;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -91,7 +90,7 @@
             // 
             this.labelSelect.Name = "labelSelect";
             this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(84, 25);
+            this.labelSelect.Size = new System.Drawing.Size(134, 36);
             this.labelSelect.Text = "查询条件：";
             // 
             // comboBoxSearchCondition
@@ -99,13 +98,13 @@
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(128, 28);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 39);
             // 
             // textBoxSearchValue
             // 
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(194, 28);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
             // 
             // buttonSearch
             // 
@@ -115,6 +114,7 @@
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(60, 25);
             this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // toolStripSeparator1
             // 
@@ -131,16 +131,6 @@
             this.buttonOpen.Size = new System.Drawing.Size(100, 25);
             this.buttonOpen.Text = "查看出库单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
-            // 
-            // buttonAdd
-            // 
-            this.buttonAdd.AutoSize = false;
-            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
-            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
-            this.buttonAdd.Text = "添加";
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonAlter
             // 
@@ -160,6 +150,7 @@
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(60, 25);
             this.buttonDelete.Text = "删除";
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // statusStrip1
             // 
@@ -167,33 +158,34 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 416);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 670);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(949, 25);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1424, 36);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(84, 20);
+            this.labelStatus.Size = new System.Drawing.Size(134, 31);
             this.labelStatus.Text = "出库单管理";
             // 
             // FormPutOutStorageTicket
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(949, 441);
+            this.ClientSize = new System.Drawing.Size(1424, 706);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
             this.Controls.Add(this.statusStrip1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormPutOutStorageTicket";
             this.Text = "FormPutOutStorageTicket";
             this.Load += new System.EventHandler(this.FormPutOutStorageTicket_Load);
@@ -216,7 +208,6 @@
         private System.Windows.Forms.ToolStripButton buttonSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonOpen;
-        private System.Windows.Forms.ToolStripButton buttonAdd;
         private System.Windows.Forms.ToolStripButton buttonAlter;
         private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.StatusStrip statusStrip1;

@@ -15,10 +15,12 @@ namespace WMS.UI
     public partial class FormJobTicket : Form
     {
         WMSEntities wmsEntities = new WMSEntities();
+        private int userID;
 
-        public FormJobTicket()
+        public FormJobTicket(int userID)
         {
             InitializeComponent();
+            this.userID = userID;
         }
 
         private void FormJobTicket_Load(object sender, EventArgs e)
@@ -116,26 +118,7 @@ namespace WMS.UI
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            try
-            {
-                if (worksheet.SelectionRange.Rows != 1)
-                {
-                    throw new Exception();
-                }
-                int jobTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formJobTicketItem = new FormJobTicketItem(jobTicketID);
-                formJobTicketItem.SetJobTicketStateChangedCallback(()=>
-                {
-                    this.Invoke(new Action(this.Search));
-                });
-                formJobTicketItem.Show();
-            }
-            catch
-            {
-                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -179,6 +162,49 @@ namespace WMS.UI
                 }
             }
             return ids.ToArray();
+        }
+
+        private void buttonGeneratePutOutStorageTicket_Click(object sender, EventArgs e)
+        {
+            int[] ids = this.GetSelectedIDs();
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行操作","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            int id = ids[0];
+
+            new Thread(new ThreadStart(()=>
+            {
+                JobTicket jobTicket = (from j in this.wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
+                if (jobTicket == null)
+                {
+                    MessageBox.Show("未找到作业单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                jobTicket.ShipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
+                PutOutStorageTicket putOutStorageTicket = new PutOutStorageTicket();
+                wmsEntities.PutOutStorageTicket.Add(putOutStorageTicket);
+                putOutStorageTicket.CreateUserID = this.userID;
+                putOutStorageTicket.CreateTime = DateTime.Now;
+                putOutStorageTicket.LastUpdateUserID = this.userID;
+                putOutStorageTicket.LastUpdateTime = DateTime.Now;
+                putOutStorageTicket.JobTicketID = id;
+                putOutStorageTicket.No = "";
+
+                foreach (JobTicketItem jobTicketItem in jobTicket.JobTicketItem)
+                {
+                    PutOutStorageTicketItem putOutStorageTicketItem = new PutOutStorageTicketItem();
+                    putOutStorageTicket.PutOutStorageTicketItem.Add(putOutStorageTicketItem);
+                    putOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
+                }
+
+                wmsEntities.SaveChanges();
+                putOutStorageTicket.No = Utilities.GenerateNo("CKD",putOutStorageTicket.ID);
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+                MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
         }
     }
 }

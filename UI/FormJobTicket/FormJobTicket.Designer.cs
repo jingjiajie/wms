@@ -36,7 +36,7 @@
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonOpen = new System.Windows.Forms.ToolStripButton();
+            this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
             this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
@@ -44,6 +44,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -78,7 +79,8 @@
             this.textBoxSearchValue,
             this.buttonSearch,
             this.toolStripSeparator1,
-            this.buttonOpen,
+            this.toolStripButton2,
+            this.buttonGeneratePutOutStorageTicket,
             this.buttonAdd,
             this.buttonAlter,
             this.buttonDelete,
@@ -125,15 +127,15 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
-            // buttonOpen
+            // buttonGeneratePutOutStorageTicket
             // 
-            this.buttonOpen.AutoSize = false;
-            this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
-            this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(100, 25);
-            this.buttonOpen.Text = "查看作业单";
-            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
+            this.buttonGeneratePutOutStorageTicket.AutoSize = false;
+            this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
+            this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
+            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(100, 25);
+            this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
+            this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
             // 
             // buttonAdd
             // 
@@ -197,6 +199,15 @@
             this.labelStatus.Size = new System.Drawing.Size(110, 31);
             this.labelStatus.Text = "库存管理";
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.AutoSize = false;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(100, 25);
+            this.toolStripButton2.Text = "查看作业单";
+            // 
             // FormJobTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -233,6 +244,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
-        private System.Windows.Forms.ToolStripButton buttonOpen;
+        private System.Windows.Forms.ToolStripButton buttonGeneratePutOutStorageTicket;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }

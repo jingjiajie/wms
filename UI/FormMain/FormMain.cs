@@ -10,7 +10,6 @@ using System.Threading;
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormDelivery;
-using WMS.UI.PutOutStorageTicket;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
 
@@ -281,7 +280,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormJobTicket l = new FormJobTicket();//实例化子窗口
+                FormJobTicket l = new FormJobTicket(this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -292,7 +291,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormPutOutStorageTicket l = new FormPutOutStorageTicket();//实例化子窗口
+                FormPutOutStorageTicket l = new FormPutOutStorageTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

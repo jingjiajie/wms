@@ -70,7 +70,7 @@ namespace WMS.UI
         private void textBoxComponentName_Click(object sender, EventArgs e)
         {
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            var formSelectStockInfo = new FormShipmentTicketSelectStockInfo(this.curStockInfoID);
+            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
             formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID)=>
             {
                 this.curStockInfoID = selectedStockInfoID;
@@ -109,7 +109,7 @@ namespace WMS.UI
         {
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            int[] ids = this.GetSelectedIDs();
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (ids.Length == 0)
             {
                 this.curStockInfoID = -1;
@@ -167,7 +167,7 @@ namespace WMS.UI
         private void buttonFinish_Click(object sender, EventArgs e)
         {
             const string STRING_FINISHED = "已完成";
-            int[] selectedIDs = this.GetSelectedIDs();
+            int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (selectedIDs.Length == 0)
             {
                 MessageBox.Show("请选择您要操作的条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -202,25 +202,10 @@ namespace WMS.UI
 
         }
 
-        private int[] GetSelectedIDs()
-        {
-            List<int> ids = new List<int>();
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            for (int row = worksheet.SelectionRange.Row; row <= worksheet.SelectionRange.EndRow; row++)
-            {
-                if (worksheet[row, 0] == null) continue;
-                if (int.TryParse(worksheet[row, 0].ToString(), out int shipmentTicketID))
-                {
-                    ids.Add(shipmentTicketID);
-                }
-            }
-            return ids.ToArray();
-        }
-
         private void buttonUnfinish_Click(object sender, EventArgs e)
         {
             const string STRING_UNFINISHED = "未完成";
-            int[] selectedIDs = this.GetSelectedIDs();
+            int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (selectedIDs.Length == 0)
             {
                 MessageBox.Show("请选择您要操作的条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -265,7 +250,7 @@ namespace WMS.UI
 
         private void buttonAlter_Click(object sender, EventArgs e)
         {
-            int[] ids = this.GetSelectedIDs();
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if(ids.Length != 1)
             {
                 MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -297,7 +282,7 @@ namespace WMS.UI
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            int[] ids = this.GetSelectedIDs();
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if(ids.Length == 0)
             {
                 MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
