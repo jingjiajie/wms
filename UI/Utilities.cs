@@ -5,6 +5,7 @@ using System.Text;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using unvell.ReoGrid;
 
 namespace WMS.UI
 {
@@ -272,5 +273,47 @@ namespace WMS.UI
                 }
             }
         }
+
+        public static string GenerateNo(string prefix, int id)
+        {
+            return prefix + id.ToString().PadLeft(5, '0');
+        }
+
+        public static int[] GetSelectedIDs(ReoGridControl reoGridControl)
+        {
+            List<int> ids = new List<int>();
+            var worksheet = reoGridControl.Worksheets[0];
+            for (int row = worksheet.SelectionRange.Row; row <= worksheet.SelectionRange.EndRow; row++)
+            {
+                if (worksheet[row, 0] == null) continue;
+                if (int.TryParse(worksheet[row, 0].ToString(), out int shipmentTicketID))
+                {
+                    ids.Add(shipmentTicketID);
+                }
+            }
+            return ids.ToArray();
+        }
+
+        public static void SelectLineByID(ReoGridControl reoGridControl,int id)
+        {
+            var worksheet = reoGridControl.Worksheets[0];
+            for (int i = 0; i < worksheet.Rows; i++)
+            {
+                if(worksheet[i,0] == null)
+                {
+                    continue;
+                }
+                if (int.TryParse(worksheet[i,0].ToString(),out int value) == true)
+                {
+                    if(value != id)
+                    {
+                        continue;
+                    }
+                    worksheet.SelectionRange = new RangePosition(i,0,1,1);
+                    return;
+                }
+            }
+        }
+
     }
 }

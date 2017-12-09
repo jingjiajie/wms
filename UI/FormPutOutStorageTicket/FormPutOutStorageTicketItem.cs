@@ -9,14 +9,14 @@ using System.Windows.Forms;
 using System.Threading;
 using WMS.DataAccess;
 using unvell.ReoGrid;
+using System.Data.SqlClient;
 
-namespace WMS.UI.PutOutStorageTicket
+namespace WMS.UI
 {
     public partial class FormPutOutStorageTicketItem : Form
     {
         private int putOutStorageTicketID = -1;
-        private WMSEntities wmsEntities = new WMSEntities();
-        Action putOutStorageTicketStateChangedCallback = null;
+        private int curStockInfoID = -1;
 
         private KeyName[] visibleColumns = (from kn in PutOutStorageTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -28,11 +28,6 @@ namespace WMS.UI.PutOutStorageTicket
             this.putOutStorageTicketID = putOutStorageTicketID;
         }
 
-        public void SetPutOutStorageTicketStateChangedCallback(Action jobTicketStateChangedCallback)
-        {
-            this.putOutStorageTicketStateChangedCallback = jobTicketStateChangedCallback;
-        }//??????????????????????????????????
-
         private void FormPutOutStorageTicketItem_Load(object sender, EventArgs e)
         {
             InitComponents();
@@ -41,8 +36,6 @@ namespace WMS.UI.PutOutStorageTicket
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
@@ -53,15 +46,98 @@ namespace WMS.UI.PutOutStorageTicket
                 worksheet.ColumnHeaders[i].IsVisible = PutOutStorageTicketItemViewMetaData.KeyNames[i].Visible;
             }
             worksheet.Columns = PutOutStorageTicketItemViewMetaData.KeyNames.Length; //限制表的长度
+
+            Utilities.CreateEditPanel(this.tableLayoutPanelProperties, PutOutStorageTicketItemViewMetaData.KeyNames);
+            worksheet.SelectionRangeChanged += worksheet_SelectionRangeChanged;
+
+            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            textBoxComponentName.Click += textBoxComponentName_Click;
+            textBoxComponentName.BackColor = Color.White;
+
         }
 
-        private void Search()
+        private void textBoxComponentName_Click(object sender, EventArgs e)
+        {
+            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
+            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
+            {
+                this.curStockInfoID = selectedStockInfoID;
+                new Thread(new ThreadStart(() =>
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    StockInfoView stockInfoView = (from s in wmsEntities.StockInfoView
+                                                   where s.ID == selectedStockInfoID
+                                                   select s).Single();
+                    this.Invoke(new Action(() =>
+                    {
+                        Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
+                    }));
+                })).Start();
+            });
+            formSelectStockInfo.Show();
+        }
+
+        private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        {
+            this.RefreshTextBoxes();
+        }
+
+        private void ClearTextBoxes()
+        {
+            foreach (Control control in this.tableLayoutPanelProperties.Controls)
+            {
+                if (control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    textBox.Text = "";
+                }
+            }
+        }
+
+        private void RefreshTextBoxes()
+        {
+            this.ClearTextBoxes();
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            int[] ids = this.GetSelectedIDs();
+            if(ids.Length == 0)
+            {
+                this.curStockInfoID = -1; //如果没有选择任何一项，则库存信息ID也为空
+                return;
+            }
+
+            int id = ids[0];
+            this.labelStatus.Text = "加载中...";
+            new Thread(new ThreadStart(()=>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                PutOutStorageTicketItemView putOutStorageTicketItemView = (from p in wmsEntities.PutOutStorageTicketItemView
+                                                                           where p.ID == id
+                                                                           select p).FirstOrDefault();
+                if (putOutStorageTicketItemView == null)
+                {
+                    MessageBox.Show("系统错误，未找到相应出库单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                this.curStockInfoID = putOutStorageTicketItemView.StockInfoID;
+                this.Invoke(new Action(()=>
+                {
+                    this.labelStatus.Text = "加载完成";
+                    Utilities.CopyPropertiesToTextBoxes(putOutStorageTicketItemView, this);
+                    Utilities.CopyPropertiesToComboBoxes(putOutStorageTicketItemView, this);
+                }));
+            })).Start();
+        }
+
+        private void Search(int selectID = -1)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
 
             worksheet[0, 1] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 PutOutStorageTicketItemView[] putOutStorageTicketItemViews = (from j in wmsEntities.PutOutStorageTicketItemView
                                                                          where j.PutOutStorageTicketID == this.putOutStorageTicketID
                                                                     select j).ToArray();
@@ -83,44 +159,16 @@ namespace WMS.UI.PutOutStorageTicket
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+                    if(selectID != -1)
+                    {
+                        Utilities.SelectLineByID(this.reoGridControlMain, selectID);
+                    }
+                    this.RefreshTextBoxes();
                 }));
             })).Start();
         }
 
-        private void buttonFinish_Click(object sender, EventArgs e)
-        {
-            const string STRING_FINISHED = "已分配完成";
-            int[] selectedIDs = this.GetSelectedIDs();
-            if (selectedIDs.Length == 0)
-            {
-                MessageBox.Show("请选择您要操作的条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            new Thread(new ThreadStart(() =>
-            {
-                //将状态置为已完成
-                foreach (int id in selectedIDs)
-                {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
-                }
-                this.wmsEntities.SaveChanges();
-
-                //如果作业单中所有条目都完成，询问是否将作业单标记为完成
-                int unfinishedPutOutStorageTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM PutOutStorageTicketItem WHERE PutOutStorageTicketID = {0} AND State <> '{1}'", this.putOutStorageTicketID, STRING_FINISHED)).Single();
-                if (unfinishedPutOutStorageTicketItemCount == 0)
-                {
-                    if (MessageBox.Show("检测到所有的零件都已经分配完成，是否将发货单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.putOutStorageTicketID));
-                        this.wmsEntities.SaveChanges();
-                    }
-                    this.putOutStorageTicketStateChangedCallback?.Invoke();
-                }
-                this.Invoke(new Action(this.Search));
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
-        }
-
+      
         private int[] GetSelectedIDs()
         {
             List<int> ids = new List<int>();
@@ -136,24 +184,90 @@ namespace WMS.UI.PutOutStorageTicket
             return ids.ToArray();
         }
 
-            private void buttonUnfinish_Click(object sender, EventArgs e)
+        private void buttonAdd_Click(object sender, EventArgs e)
         {
-            const string STRING_UNFINISHED = "未分配完成";
-            int[] selectedIDs = this.GetSelectedIDs();
-            if (selectedIDs.Length == 0)
+            if (this.curStockInfoID == -1)
             {
-                MessageBox.Show("请选择您要操作的条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("未选择零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            PutOutStorageTicketItem putOutStorageTicketItem = new PutOutStorageTicketItem();
+            putOutStorageTicketItem.StockInfoID = this.curStockInfoID;
+            putOutStorageTicketItem.PutOutStorageTicketID = this.putOutStorageTicketID;
+
+            if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             new Thread(new ThreadStart(() =>
             {
-                foreach (int id in selectedIDs)
+                WMSEntities wmsEntities = new WMSEntities();
+                wmsEntities.PutOutStorageTicketItem.Add(putOutStorageTicketItem);
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(()=>
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
+                    this.Search(putOutStorageTicketItem.ID);
+                }));
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
+        }
+
+        private void buttonModify_Click(object sender, EventArgs e)
+        {
+            if (this.curStockInfoID == -1)
+            {
+                MessageBox.Show("未选择零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行修改","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int id = ids[0];
+
+            new Thread(new ThreadStart(() =>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                PutOutStorageTicketItem putOutStorageTicketItem = (from p in wmsEntities.PutOutStorageTicketItem where p.ID == id select p).FirstOrDefault();
+                if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                putOutStorageTicketItem.StockInfoID = this.curStockInfoID;
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(() =>
+                {
+                    this.Search(putOutStorageTicketItem.ID);
+                }));
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if (ids.Length == 0)
+            {
+                MessageBox.Show("请选择要删除的项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
+            new Thread(new ThreadStart(()=>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                foreach (int id in ids)
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicketItem WHERE ID = @id", new SqlParameter("@id", id));
+                }
+                wmsEntities.SaveChanges();
+                this.Search();
+                MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             })).Start();
         }
     }
