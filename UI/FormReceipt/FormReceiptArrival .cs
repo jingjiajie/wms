@@ -94,15 +94,22 @@ namespace WMS.UI
                     this.lableStatus.Text = "搜索完成";
                     var worksheet = this.reoGridControlUser.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    int n = 0;
                     for (int i = 0; i < receiptTicketViews.Length; i++)
                     {
 
                         ReceiptTicketView curReceiptTicketView = receiptTicketViews[i];
+                        if (curReceiptTicketView.State == "作废")
+                        {
+                            continue;
+                        }
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketView, (from kn in ReceiptMetaData.receiptNameKeys select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[i, j] = columns[j];
+                            
+                            worksheet[n, j] = columns[j];
                         }
+                        n++;
                     }
                 }));
                     
@@ -207,7 +214,8 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 foreach (int id in deleteIDs)
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
+                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='作废' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
+                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='作废' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
                 }
                 wmsEntities.SaveChanges();
                 this.Search(null, null);
