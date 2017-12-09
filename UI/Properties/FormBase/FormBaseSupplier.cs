@@ -18,11 +18,14 @@ namespace WMS.UI
     {
         private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
-        private int authority_self = 2;
-        public FormBaseSupplier(int authority1)
+        private int au = 4;
+        private int id;
+       
+        public FormBaseSupplier(int authority1,int id)
         {
             InitializeComponent();
             this.authority = authority1;
+            this.id = id;
         } 
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
@@ -106,7 +109,7 @@ namespace WMS.UI
             {
                 SupplierView[] SupplierView = null;
 
-                if ((this.authority&authority_self)>0)
+                if ((this.authority&au)>0)
                 {
 
                     if (key == null || value == null) //查询条件为null则查询全部内容
@@ -135,12 +138,12 @@ namespace WMS.UI
 
 
 
-                if ((this.authority&authority_self)==0)
+                if ((this.authority&au )==0)
                 {
 
                     if (key == null || value == null) //查询条件为null则查询全部内容
                     {
-                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView WHERE ID = 4 ").ToArray();
+                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView WHERE ID = {0}",id ).ToArray();
                         Console.WriteLine(SupplierView.Length);
                     }
                     else
@@ -151,7 +154,7 @@ namespace WMS.UI
                         }
                         try
                         {
-                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} ", key, value, ID)).ToArray();
+                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} AND id = {2} ", key, value, id )).ToArray();
 
                         }
                         catch
