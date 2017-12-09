@@ -425,6 +425,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSubmissionItem.resx">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormSelectStockInfo.resx">
       <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
     </EmbeddedResource>
