@@ -12,15 +12,22 @@ using System.Threading;
 using System.Data.SqlClient;
 
 
-namespace WMS.UI.PutOutStorageTicket
+namespace WMS.UI
 {
     public partial class FormPutOutStorageTicket : Form
     {
         WMSEntities wmsEntities = new WMSEntities();
 
-        public FormPutOutStorageTicket()
+        int userID = -1;
+        int projectID = -1;
+        int warehouseID = -1;
+
+        public FormPutOutStorageTicket(int userID, int projectID, int warehouseID)
         {
             InitializeComponent();
+            this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         private void FormPutOutStorageTicket_Load(object sender, EventArgs e)
@@ -127,10 +134,6 @@ namespace WMS.UI.PutOutStorageTicket
                 }
                 int putOutStorageTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formPutOutStorageTicketItem = new FormPutOutStorageTicketItem(putOutStorageTicketID);
-                formPutOutStorageTicketItem.SetPutOutStorageTicketStateChangedCallback(() =>
-                {
-                    this.Invoke(new Action(this.Search));
-                });
                 formPutOutStorageTicketItem.Show();
             }
             catch
@@ -138,17 +141,6 @@ namespace WMS.UI.PutOutStorageTicket
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-        }
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            var form = new FormPutOutStorageTicketModify();
-            form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback(() =>
-            {
-                this.Search();
-            });
-            form.Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -161,7 +153,7 @@ namespace WMS.UI.PutOutStorageTicket
                     throw new Exception();
                 }
                 int putOutStorageTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formPutOutStorageTicketModify = new FormPutOutStorageTicketModify(putOutStorageTicketID);
+                var formPutOutStorageTicketModify = new FormPutOutStorageTicketModify(this.userID,putOutStorageTicketID);
                 formPutOutStorageTicketModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();
@@ -173,6 +165,51 @@ namespace WMS.UI.PutOutStorageTicket
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            this.Search();
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            int[] ids = this.GetSelectedIDs();
+            if(ids.Length == 0)
+            {
+                MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            new Thread(new ThreadStart(()=>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                foreach(int id in ids)
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicket WHERE ID = @id",new SqlParameter("@id",id));
+                }
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+                MessageBox.Show("删除成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
+        }
+
+        private int[] GetSelectedIDs()
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            List<int> ids = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    ids.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return ids.ToArray();
         }
     }
 }
