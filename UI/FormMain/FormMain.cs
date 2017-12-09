@@ -203,7 +203,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseSupplier l = new FormBaseSupplier();//实例化子窗口
+                FormBaseSupplier l = new FormBaseSupplier(user.Authority);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -333,12 +333,14 @@ namespace WMS.UI
         {
             this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
             this.panelRight.Controls.Clear();
+            this.treeViewLeft.SelectedNode = null;
         }
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
             this.panelRight.Controls.Clear();
+            this.treeViewLeft.SelectedNode = null;
         }
     }
 }

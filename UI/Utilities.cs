@@ -255,7 +255,7 @@ namespace WMS.UI
                     textBox.Name = "textBox" + curKeyName.Key;
                     if (curKeyName.Editable == false)
                     {
-                        textBox.Enabled = false;
+                        textBox.ReadOnly = true;
                     }
                     textBox.Dock = DockStyle.Fill;
                     tableLayoutPanel.Controls.Add(textBox);
