@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Threading;
 using WMS.DataAccess;
 using unvell.ReoGrid;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
@@ -17,6 +18,8 @@ namespace WMS.UI
         private int shipmentTicketID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         Action shipmentTicketStateChangedCallback = null;
+
+        private int curStockInfoID = -1;
 
         private KeyName[] visibleColumns = (from kn in ShipmentTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -57,6 +60,32 @@ namespace WMS.UI
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ShipmentTicketItemViewMetaData.KeyNames);
 
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
+
+            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            textBoxComponentName.Click += textBoxComponentName_Click;
+            textBoxComponentName.ReadOnly = true;
+            textBoxComponentName.BackColor = Color.White;
+        }
+
+        private void textBoxComponentName_Click(object sender, EventArgs e)
+        {
+            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            var formSelectStockInfo = new FormShipmentTicketSelectStockInfo(this.curStockInfoID);
+            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID)=>
+            {
+                this.curStockInfoID = selectedStockInfoID;
+                new Thread(new ThreadStart(()=>
+                {
+                    StockInfoView stockInfoView = (from s in this.wmsEntities.StockInfoView
+                                                   where s.ID == selectedStockInfoID
+                                                   select s).Single();
+                    this.Invoke(new Action(() =>
+                    {
+                        Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
+                    }));
+                })).Start();
+            });
+            formSelectStockInfo.Show();
         }
 
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
@@ -81,7 +110,11 @@ namespace WMS.UI
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
             int[] ids = this.GetSelectedIDs();
-            if (ids.Length == 0) return;
+            if (ids.Length == 0)
+            {
+                this.curStockInfoID = -1;
+                return;
+            }
             int id = ids[0];
             ShipmentTicketItemView shipmentTicketItemView = (from s in this.wmsEntities.ShipmentTicketItemView
                                                              where s.ID == id
@@ -91,6 +124,7 @@ namespace WMS.UI
                 MessageBox.Show("系统错误，未找到相应发货单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            this.curStockInfoID = shipmentTicketItemView.StockInfoID;
             Utilities.CopyPropertiesToTextBoxes(shipmentTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
         }
@@ -98,14 +132,15 @@ namespace WMS.UI
 
         private void Search()
         {
+            this.wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControlMain.Worksheets[0];
 
             worksheet[0, 1] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                ShipmentTicketItemView[] shipmentTicketItemViews = (from j in wmsEntities.ShipmentTicketItemView
-                                                          where j.ShipmentTicketID == this.shipmentTicketID
-                                                          select j).ToArray();
+                ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView
+                                                                    where s.ShipmentTicketID == this.shipmentTicketID
+                                                                    select s).ToArray();
 
                 this.Invoke(new Action(() =>
                 {
@@ -158,7 +193,10 @@ namespace WMS.UI
                     }
                     this.shipmentTicketStateChangedCallback?.Invoke();
                 }
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(()=>
+                {
+                    this.Search();
+                }));
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
 
@@ -202,39 +240,77 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormShipmentTicketSelectStockInfo();
-            form.Show();
-            //var form = new FormShipmentTicketModify();
-            //form.SetMode(FormMode.ADD);
-            //form.SetAddFinishedCallback(() =>
-            //{
-            //    this.Search();
-            //});
-            //form.Show();
+            if (this.curStockInfoID == -1)
+            {
+                MessageBox.Show("未选择零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            ShipmentTicketItem shipmentTicketItem = new ShipmentTicketItem();
+            shipmentTicketItem.StockInfoID = this.curStockInfoID;
+            shipmentTicketItem.ShipmentTicketID = this.shipmentTicketID;
+          
+            if(Utilities.CopyTextBoxTextsToProperties(this,shipmentTicketItem,ShipmentTicketItemViewMetaData.KeyNames,out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            new Thread(new ThreadStart(()=>
+            {
+                this.wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+                MessageBox.Show("添加成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
         {
-            //var worksheet = this.reoGridControlMain.Worksheets[0];
-            //try
-            //{
-            //    if (worksheet.SelectionRange.Rows != 1)
-            //    {
-            //        throw new Exception();
-            //    }
-            //    int shipmentTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-            //    var formShipmentTicketItemModify = new FormShipmentTicketModify(shipmentTicketItemID);
-            //    formShipmentTicketItemModify.SetModifyFinishedCallback(() =>
-            //    {
-            //        this.Search();
-            //    });
-            //    formShipmentTicketItemModify.Show();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
+            int[] ids = this.GetSelectedIDs();
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            new Thread(new ThreadStart(() =>
+            {
+                int id = ids[0];
+                var shipmentTicketItem = (from s in this.wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
+              
+                if (shipmentTicketItem == null)
+                {
+                    MessageBox.Show("未找到此发货单条目信息","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                shipmentTicketItem.StockInfoID = this.curStockInfoID;
+
+                if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicketItem, ShipmentTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            int[] ids = this.GetSelectedIDs();
+            if(ids.Length == 0)
+            {
+                MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            foreach(int id in ids)
+            {
+                this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicketItem WHERE ID = @id",new SqlParameter("@id",id));
+            }
+            this.wmsEntities.SaveChanges();
+            this.Search();
+            MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
         }
     }
 }
