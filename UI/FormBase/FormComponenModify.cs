@@ -13,15 +13,21 @@ namespace WMS.UI
 {
     public partial class FormComponenModify : Form
     {
+        private int projectID = -1;
+        private int warehouseID = -1;
+        private int userID = -1;
         private int componenID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormComponenModify(int componenID = -1)
+        public FormComponenModify(int projectID, int warehouseID, int userID, int componenID = -1)
         {
             InitializeComponent();
+            this.warehouseID = warehouseID;
+            this.userID = userID;
+            this.projectID = projectID;
             this.componenID = componenID;
         }
         
@@ -32,34 +38,36 @@ namespace WMS.UI
                 throw new Exception("未设置源零件信息");
             }
 
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
-            {
-                KeyName curKeyName = ComponenMetaData.componenkeyNames[i];
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenMetaData.KeyNames);
 
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
+            //this.tableLayoutPanelTextBoxes.Controls.Clear();
+            //for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
+            //{
+            //    KeyName curKeyName = ComponenMetaData.componenkeyNames[i];
 
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            }
+            //    Label label = new Label();
+            //    label.Text = curKeyName.Name;
+            //    this.tableLayoutPanelTextBoxes.Controls.Add(label);
 
-            if(this.mode == FormMode.ALTER)
+            //    TextBox textBox = new TextBox();
+            //    textBox.Name = "textBox" + curKeyName.Key;
+            //    if (curKeyName.Editable == false)
+            //    {
+            //        textBox.Enabled = false;
+            //    }
+            //    this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
+            //}
+
+            if (this.mode == FormMode.ALTER)
             {
                 ComponentView componenView = (from s in this.wmsEntities.ComponentView
                                               where s.ID == this.componenID
                                        select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(componenView, this);
             }
-            this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
-            this.Controls.Find("textBoxWarehouseID", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
-            this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
+            //this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
+            //this.Controls.Find("textBoxWarehouseID", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
+            //this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
         }
         private void textBoxSupplierID_TextChanged(object sender, EventArgs e)
         {
@@ -138,22 +146,34 @@ namespace WMS.UI
                 this.wmsEntities.Component.Add(componen);
             }
 
+            componen.ProjectID = this.projectID;
+            componen.WarehouseID = this.warehouseID;
+
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenMetaData.componenkeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            else
+            {
+                Utilities.CopyComboBoxsToProperties(this, componen, ComponenMetaData.KeyNames);
+            }
             wmsEntities.SaveChanges();
             //调用回调函数
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
                 this.modifyFinishedCallback();
-            }else if(this.mode == FormMode.ADD && this.addFinishedCallback != null)
+                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            else if(this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
                 this.addFinishedCallback();
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
-            this.Close();
+            
         }
 
         public void SetModifyFinishedCallback(Action callback)

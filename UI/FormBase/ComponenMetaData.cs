@@ -8,9 +8,9 @@ namespace WMS.UI
     public class ComponenMetaData
     {
         public static KeyName[] componenkeyNames = {
-            new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false},
-            new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = true},
-            new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = true},
+            new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = true},
+            //new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = true},
             new KeyName(){Name = "供应商ID", Key = "SupplierID", Visible = false, Editable = true},
             new KeyName(){Key="ContainerNo",Name="容器号",Visible = true, Editable = true},
             new KeyName(){Key="Factroy",Name="工厂",Visible = true, Editable = true},
@@ -29,9 +29,9 @@ namespace WMS.UI
             new KeyName(){Key="InventoryRequirement3Day",Name="3天库存要求",Visible = true, Editable = true},
             new KeyName(){Key="InventoryRequirement5Day",Name="5天库存要求",Visible = true, Editable = true},
             new KeyName(){Key="InventoryRequirement10Day",Name="10天库存要求",Visible = true, Editable = true},
-            new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = false, Editable = false},
-            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = false, Editable = false},
-            new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false},
+            //new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = false, Editable = false},
+            //new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = false, Editable = false},
+            //new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false},
 
         };
         public static KeyName[] KeyNames { get => componenkeyNames; set => componenkeyNames = value; }
