@@ -67,95 +67,95 @@
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonDataStructures.cs" />
-    <Compile Include="FormBase\BaseProjectMetaData.cs" />
-    <Compile Include="FormBase\BaseWarehouseMetaData.cs" />
-    <Compile Include="FormBase\FormBaseComponenAdd.cs">
+    <Compile Include="Properties\FormBase\BaseProjectMetaData.cs" />
+    <Compile Include="Properties\FormBase\BaseWarehouseMetaData.cs" />
+    <Compile Include="Properties\FormBase\FormBaseComponenAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponenAdd.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseComponenAdd.Designer.cs">
       <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponenAlter.cs">
+    <Compile Include="Properties\FormBase\FormBaseComponenAlter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponenAlter.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseComponenAlter.Designer.cs">
       <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseProject.cs">
+    <Compile Include="Properties\FormBase\FormBaseProject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseProject.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseProject.Designer.cs">
       <DependentUpon>FormBaseProject.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseProjectModify.cs">
+    <Compile Include="Properties\FormBase\FormBaseProjectModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseProjectModify.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseProjectModify.Designer.cs">
       <DependentUpon>FormBaseProjectModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplier.cs">
+    <Compile Include="Properties\FormBase\FormBaseSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplier.designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseSupplier.designer.cs">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAdd.cs">
+    <Compile Include="Properties\FormBase\FormBaseSupplierAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAdd.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseSupplierAdd.Designer.cs">
       <DependentUpon>FormBaseSupplierAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAlter.cs">
+    <Compile Include="Properties\FormBase\FormBaseSupplierAlter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseSupplierAlter.Designer.cs">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseModify.cs">
+    <Compile Include="Properties\FormBase\FormBaseWarehouseModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseModify.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseWarehouseModify.Designer.cs">
       <DependentUpon>FormBaseWarehouseModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormComponenModify.cs">
+    <Compile Include="Properties\FormBase\FormComponenModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormComponenModify.Designer.cs">
+    <Compile Include="Properties\FormBase\FormComponenModify.Designer.cs">
       <DependentUpon>FormComponenModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierModify.cs">
+    <Compile Include="Properties\FormBase\FormSupplierModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplierModify.Designer.cs">
+    <Compile Include="Properties\FormBase\FormSupplierModify.Designer.cs">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAdd.cs">
+    <Compile Include="Properties\FormBase\FormSupplierAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAdd.designer.cs">
+    <Compile Include="Properties\FormBase\FormSupplierAdd.designer.cs">
       <DependentUpon>FormSupplierAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAlter.cs">
+    <Compile Include="Properties\FormBase\FormSupplierAlter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAlter.designer.cs">
+    <Compile Include="Properties\FormBase\FormSupplierAlter.designer.cs">
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\ComponenMetaData.cs" />
-    <Compile Include="FormBase\FormUser.cs">
+    <Compile Include="Properties\FormBase\ComponenMetaData.cs" />
+    <Compile Include="Properties\FormBase\FormUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormUser.Designer.cs">
+    <Compile Include="Properties\FormBase\FormUser.Designer.cs">
       <DependentUpon>FormUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormUserModify.cs">
+    <Compile Include="Properties\FormBase\FormUserModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormUserModify.Designer.cs">
+    <Compile Include="Properties\FormBase\FormUserModify.Designer.cs">
       <DependentUpon>FormUserModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplierMetaData.cs" />
-    <Compile Include="FormBase\UserMetaData.cs" />
+    <Compile Include="Properties\FormBase\SupplierMetaData.cs" />
+    <Compile Include="Properties\FormBase\UserMetaData.cs" />
     <Compile Include="FormJobTicket\FormJobTicket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -232,10 +232,10 @@
     <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.cs">
+    <Compile Include="Properties\FormBase\FormBaseWarehouseAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseWarehouseAdd.Designer.cs">
       <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
     </Compile>
     <Compile Include="FormDelivery\FormDeliveryOutput.cs">
@@ -262,34 +262,34 @@
     <Compile Include="FormMain\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponen.cs">
+    <Compile Include="Properties\FormBase\FormBaseComponen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponen.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseComponen.Designer.cs">
       <DependentUpon>FormBaseComponen.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseUser.cs">
+    <Compile Include="Properties\FormBase\FormBaseUser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseUser.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseUser.Designer.cs">
       <DependentUpon>FormBaseUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseUserAdd.cs">
+    <Compile Include="Properties\FormBase\FormBaseUserAdd.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseUserAdd.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseUserAdd.Designer.cs">
       <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseUserAlter.cs">
+    <Compile Include="Properties\FormBase\FormBaseUserAlter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseUserAlter.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseUserAlter.Designer.cs">
       <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouse.cs">
+    <Compile Include="Properties\FormBase\FormBaseWarehouse.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouse.Designer.cs">
+    <Compile Include="Properties\FormBase\FormBaseWarehouse.Designer.cs">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\FormReceiptArrival .cs">
@@ -381,40 +381,40 @@
     <EmbeddedResource Include="BSM\BMS4200M.resx">
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponenAdd.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseComponenAdd.resx">
       <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponenAlter.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseComponenAlter.resx">
       <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseProject.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseProject.resx">
       <DependentUpon>FormBaseProject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseProjectModify.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseProjectModify.resx">
       <DependentUpon>FormBaseProjectModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseSupplier.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseSupplier.resx">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouseModify.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseWarehouseModify.resx">
       <DependentUpon>FormBaseWarehouseModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormComponenModify.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormComponenModify.resx">
       <DependentUpon>FormComponenModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierAdd.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormSupplierAdd.resx">
       <DependentUpon>FormSupplierAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierAlter.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormSupplierAlter.resx">
       <DependentUpon>FormSupplierAlter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormUser.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormUser.resx">
       <DependentUpon>FormUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormUserModify.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormUserModify.resx">
       <DependentUpon>FormUserModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicket.resx">
@@ -435,7 +435,7 @@
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseSupplierAlter.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseSupplierAlter.resx">
       <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptArrivalCheck.resx">
@@ -453,7 +453,7 @@
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouseAdd.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseWarehouseAdd.resx">
       <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDelivery\FormDeliveryOutput.resx">
@@ -468,19 +468,19 @@
     <EmbeddedResource Include="FormMain\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponen.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseComponen.resx">
       <DependentUpon>FormBaseComponen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseUser.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseUser.resx">
       <DependentUpon>FormBaseUser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseUserAdd.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseUserAdd.resx">
       <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseUserAlter.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseUserAlter.resx">
       <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouse.resx">
+    <EmbeddedResource Include="Properties\FormBase\FormBaseWarehouse.resx">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptArrival .resx">
