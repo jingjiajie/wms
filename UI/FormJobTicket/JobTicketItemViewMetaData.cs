@@ -12,9 +12,9 @@ namespace WMS.UI
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="No",Name="编号"},
-            new KeyName(){Key="JobTicketJobTicketNo",Name="作业单号",Editable=true,Save=false},
-            new KeyName(){Key="StockInfoID",Name="库存信息ID",Editable=true,Save=true},
+            //new KeyName(){Key="No",Name="编号"},
+            new KeyName(){Key="JobTicketJobTicketNo",Name="关联作业单号",Editable=false,Save=false},
+            //new KeyName(){Key="StockInfoID",Name="库存信息ID",Editable=true,Save=true},
             new KeyName(){Key="ComponentName",Name="零件名",Editable=false,Save=false},
             new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false},
             new KeyName(){Key="Type",Name="任务类型"},

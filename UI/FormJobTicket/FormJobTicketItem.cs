@@ -57,24 +57,23 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
 
-            this.Controls.Find("textBoxStockInfoID", true)[0].TextChanged += textBoxStockInfoID_TextChanged; ;
         }
 
-        private void textBoxStockInfoID_TextChanged(object sender, EventArgs e)
-        {
-            TextBox textBoxStockInfoID = (TextBox)this.Controls.Find("textBoxStockInfoID", true)[0];
-            if (int.TryParse(textBoxStockInfoID.Text,out int stockInfoID))
-            {
-                StockInfo stockInfo = (from s in this.wmsEntities.StockInfo
-                                       where s.ID == stockInfoID
-                                       select s).FirstOrDefault();
-                if(stockInfo == null)
-                {
-                    return;
-                }
-                Utilities.CopyPropertiesToTextBoxes(stockInfo,this);
-            }
-        }
+        //private void textBoxStockInfoID_TextChanged(object sender, EventArgs e)
+        //{
+        //    TextBox textBoxStockInfoID = (TextBox)this.Controls.Find("textBoxStockInfoID", true)[0];
+        //    if (int.TryParse(textBoxStockInfoID.Text,out int stockInfoID))
+        //    {
+        //        StockInfo stockInfo = (from s in this.wmsEntities.StockInfo
+        //                               where s.ID == stockInfoID
+        //                               select s).FirstOrDefault();
+        //        if(stockInfo == null)
+        //        {
+        //            return;
+        //        }
+        //        Utilities.CopyPropertiesToTextBoxes(stockInfo,this);
+        //    }
+        //}
 
         private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
         {
@@ -92,6 +91,7 @@ namespace WMS.UI
             {
                 JobTicketItemView[] jobTicketItemViews = (from j in wmsEntities.JobTicketItemView
                                                           where j.JobTicketID == this.jobTicketID
+                                                          orderby j.ID descending
                                                           select j).ToArray();
 
                 this.reoGridControlMain.Invoke(new Action(() =>

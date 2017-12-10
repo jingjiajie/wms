@@ -67,6 +67,12 @@
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormJobTicket\FormJobTicketModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormJobTicket\FormJobTicketModify.Designer.cs">
+      <DependentUpon>FormJobTicketModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\FormBase\BaseProjectMetaData.cs" />
     <Compile Include="Properties\FormBase\BaseWarehouseMetaData.cs" />
     <Compile Include="Properties\FormBase\FormBaseComponenAdd.cs">
@@ -380,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSM\BMS4200M.resx">
       <DependentUpon>BMS4200M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormJobTicket\FormJobTicketModify.resx">
+      <DependentUpon>FormJobTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\FormBase\FormBaseComponenAdd.resx">
       <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>

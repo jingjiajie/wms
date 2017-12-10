@@ -36,15 +36,14 @@
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonOpen = new System.Windows.Forms.ToolStripButton();
             this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
-            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -79,9 +78,8 @@
             this.textBoxSearchValue,
             this.buttonSearch,
             this.toolStripSeparator1,
-            this.toolStripButton2,
+            this.buttonOpen,
             this.buttonGeneratePutOutStorageTicket,
-            this.buttonAdd,
             this.buttonAlter,
             this.buttonDelete,
             this.toolStripButton1});
@@ -120,12 +118,23 @@
             this.buttonSearch.Name = "buttonSearch";
             this.buttonSearch.Size = new System.Drawing.Size(60, 25);
             this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.AutoSize = false;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
+            // 
+            // buttonOpen
+            // 
+            this.buttonOpen.AutoSize = false;
+            this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
+            this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonOpen.Name = "buttonOpen";
+            this.buttonOpen.Size = new System.Drawing.Size(100, 25);
+            this.buttonOpen.Text = "查看作业单";
+            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
             // buttonGeneratePutOutStorageTicket
             // 
@@ -137,15 +146,6 @@
             this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
             this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
             // 
-            // buttonAdd
-            // 
-            this.buttonAdd.AutoSize = false;
-            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
-            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
-            this.buttonAdd.Text = "添加";
-            // 
             // buttonAlter
             // 
             this.buttonAlter.AutoSize = false;
@@ -154,6 +154,7 @@
             this.buttonAlter.Name = "buttonAlter";
             this.buttonAlter.Size = new System.Drawing.Size(60, 25);
             this.buttonAlter.Text = "修改";
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
             // buttonDelete
             // 
@@ -199,15 +200,6 @@
             this.labelStatus.Size = new System.Drawing.Size(110, 31);
             this.labelStatus.Text = "库存管理";
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.AutoSize = false;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(100, 25);
-            this.toolStripButton2.Text = "查看作业单";
-            // 
             // FormJobTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -237,7 +229,6 @@
         private System.Windows.Forms.ToolStripTextBox textBoxSearchValue;
         private System.Windows.Forms.ToolStripButton buttonSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton buttonAdd;
         private System.Windows.Forms.ToolStripButton buttonAlter;
         private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
@@ -245,6 +236,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.ToolStripButton buttonGeneratePutOutStorageTicket;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton buttonOpen;
     }
 }

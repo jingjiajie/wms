@@ -139,8 +139,9 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 PutOutStorageTicketItemView[] putOutStorageTicketItemViews = (from j in wmsEntities.PutOutStorageTicketItemView
-                                                                         where j.PutOutStorageTicketID == this.putOutStorageTicketID
-                                                                    select j).ToArray();
+                                                                              where j.PutOutStorageTicketID == this.putOutStorageTicketID
+                                                                              orderby j.ID descending
+                                                                              select j).ToArray();
 
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {

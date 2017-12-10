@@ -9,18 +9,23 @@ using System.Windows.Forms;
 using WMS.DataAccess;
 using unvell.ReoGrid;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
     public partial class FormJobTicket : Form
     {
         WMSEntities wmsEntities = new WMSEntities();
-        private int userID;
+        private int userID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
 
-        public FormJobTicket(int userID)
+        public FormJobTicket(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
             this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         private void FormJobTicket_Load(object sender, EventArgs e)
@@ -74,27 +79,26 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 JobTicketView[] jobTicketViews = null;
-                if (key == null || value == null) //查询条件为null则查询全部内容
+                string sql = "SELECT * FROM JobTicketView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+
+                if (this.projectID != -1)
                 {
-                    jobTicketViews = wmsEntities.Database.SqlQuery<JobTicketView>("SELECT * FROM JobTicketView").ToArray();
+                    sql += "AND ShipmentTicketProjectID = @projectID ";
+                    parameters.Add(new SqlParameter("projectID", this.projectID));
                 }
-                else
+                if (warehouseID != -1)
                 {
-                    
-                    if (Utilities.IsQuotateType(typeof(JobTicketView).GetProperty(key).PropertyType))
-                    {
-                        value = "'" + value + "'";
-                    }
-                    try
-                    {
-                        jobTicketViews = wmsEntities.Database.SqlQuery<JobTicketView>(String.Format("SELECT * FROM JobTicketView WHERE {0} = {1}", key, value)).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    sql += "AND ShipmentTicketWarehouseID = @warehouseID ";
+                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
                 }
+                if (key != null && value != null) //查询条件不为null则增加查询条件
+                {
+                    sql += "AND " + key + " = @value ";
+                    parameters.Add(new SqlParameter("value", value));
+                }
+                sql += " ORDER BY ID DESC"; //倒序排序
+                jobTicketViews = wmsEntities.Database.SqlQuery<JobTicketView>(sql, parameters.ToArray()).ToArray();
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -118,7 +122,15 @@ namespace WMS.UI
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
-
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            FormJobTicketItem formJobTicketItem = new FormJobTicketItem(ids[0]);
+            formJobTicketItem.SetJobTicketStateChangedCallback(new Action(this.Search));
+            formJobTicketItem.Show();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -205,6 +217,27 @@ namespace WMS.UI
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
+        }
+
+        private void buttonAlter_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行修改","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            FormJobTicketModify formJobTicketModify = new FormJobTicketModify(this.userID,ids[0]);
+            formJobTicketModify.SetModifyFinishedCallback(new Action(()=>
+            {
+                this.Search();
+            }));
+            formJobTicketModify.Show();
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            this.Search();
         }
     }
 }

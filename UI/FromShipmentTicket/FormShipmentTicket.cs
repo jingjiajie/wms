@@ -92,24 +92,13 @@ namespace WMS.UI
                     sql += "AND WarehouseID = @warehouseID ";
                     parameters.Add(new SqlParameter("warehouseID",this.warehouseID));
                 }
-                if (key == null || value == null) //查询条件为null则查询全部内容
+                if (key != null && value != null) //查询条件不为null则增加查询条件
                 {
-                    shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(sql, parameters.ToArray()).ToArray();
+                    sql += "AND " + key + " = @value ";
+                    parameters.Add(new SqlParameter("value", value));
                 }
-                else
-                {
-                    try
-                    {
-                        sql += "AND " + key + " = @value ";
-                        parameters.Add(new SqlParameter("value",value));
-                        shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(sql,parameters.ToArray()).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
+                sql += " ORDER BY ID DESC";
+                shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(sql, parameters.ToArray()).ToArray();
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";

@@ -140,6 +140,7 @@ namespace WMS.UI
             {
                 ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView
                                                                     where s.ShipmentTicketID == this.shipmentTicketID
+                                                                    orderby s.ID descending
                                                                     select s).ToArray();
 
                 this.Invoke(new Action(() =>

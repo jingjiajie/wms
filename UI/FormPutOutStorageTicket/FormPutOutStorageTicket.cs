@@ -81,27 +81,26 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 PutOutStorageTicketView[] putOutStorageTicketViews = null;
-                if (key == null || value == null) //查询条件为null则查询全部内容
-                {
-                    putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>("SELECT * FROM PutOutStorageTicketView").ToArray();
-                }
-                else
-                {
+                string sql = "SELECT * FROM PutOutStorageTicketView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
 
-                    if (Utilities.IsQuotateType(typeof(PutOutStorageTicketView).GetProperty(key).PropertyType))
-                    {
-                        value = "'" + value + "'";
-                    }
-                    try
-                    {
-                        putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>(String.Format("SELECT * FROM PutOutStorageTicketView WHERE {0} = {1}", key, value)).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                if (this.projectID != -1)
+                {
+                    sql += "AND ShipmentTicketProjectID = @projectID ";
+                    parameters.Add(new SqlParameter("projectID", this.projectID));
                 }
+                if (warehouseID != -1)
+                {
+                    sql += "AND ShipmentTicketWarehouseID = @warehouseID ";
+                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
+                }
+                if (key != null && value != null) //查询条件不为null则增加查询条件
+                {
+                    sql += "AND " + key + " = @value ";
+                    parameters.Add(new SqlParameter("value", value));
+                }
+                sql += " ORDER BY ID DESC";
+                putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>(sql, parameters.ToArray()).ToArray();
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -178,6 +177,10 @@ namespace WMS.UI
             if(ids.Length == 0)
             {
                 MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("确定删除选中的项目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
                 return;
             }
             new Thread(new ThreadStart(()=>

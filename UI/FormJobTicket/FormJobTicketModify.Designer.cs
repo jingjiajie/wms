@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class FormPutOutStorageTicketModify
+    partial class FormJobTicketModify
     {
         /// <summary>
         /// Required designer variable.
@@ -602,11 +602,11 @@
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(190, 45);
             this.buttonOK.TabIndex = 30;
-            this.buttonOK.Text = "修改出库单信息";
+            this.buttonOK.Text = "修改作业单信息";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // FormPutOutStorageTicketModify
+            // FormJobTicketModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -614,9 +614,9 @@
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("黑体", 10F);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.Name = "FormPutOutStorageTicketModify";
-            this.Text = "修改出库单信息";
-            this.Load += new System.EventHandler(this.FormPutOutStorageTicketModify_Load);
+            this.Name = "FormJobTicketModify";
+            this.Text = "修改作业单信息";
+            this.Load += new System.EventHandler(this.FormJobTicketModify_Load);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanelTextBoxes.ResumeLayout(false);
