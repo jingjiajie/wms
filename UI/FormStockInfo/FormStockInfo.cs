@@ -149,11 +149,6 @@ namespace WMS.UI
             }
         }
 
-        private void comboBoxSearchCondition_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             var form = new FormStockInfoModify();
@@ -202,6 +197,27 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
             })).Start();
+        }
+
+        private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                this.Search();
+            }
+        }
+
+        private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.comboBoxSearchCondition.SelectedIndex == 0)
+            {
+                this.textBoxSearchValue.Text = "";
+                this.textBoxSearchValue.Enabled = false;
+            }
+            else
+            {
+                this.textBoxSearchValue.Enabled = true;
+            }
         }
     }
 }

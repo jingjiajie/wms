@@ -40,7 +40,6 @@
             this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -81,8 +80,7 @@
             this.buttonOpen,
             this.buttonGeneratePutOutStorageTicket,
             this.buttonAlter,
-            this.buttonDelete,
-            this.toolStripButton1});
+            this.buttonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -103,12 +101,15 @@
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
             this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 39);
+            this.comboBoxSearchCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxSearchCondition_SelectedIndexChanged);
             // 
             // textBoxSearchValue
             // 
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxSearchValue.Enabled = false;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
             this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
+            this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
             // buttonSearch
             // 
@@ -166,15 +167,6 @@
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 36);
-            this.toolStripButton1.Text = "toolStripButton1";
-            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -231,7 +223,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonAlter;
         private System.Windows.Forms.ToolStripButton buttonDelete;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;

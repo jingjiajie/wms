@@ -239,5 +239,26 @@ namespace WMS.UI
         {
             this.Search();
         }
+
+        private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.comboBoxSearchCondition.SelectedIndex == 0)
+            {
+                this.textBoxSearchValue.Text = "";
+                this.textBoxSearchValue.Enabled = false;
+            }
+            else
+            {
+                this.textBoxSearchValue.Enabled = true;
+            }
+        }
+
+        private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                this.Search();
+            }
+        }
     }
 }
