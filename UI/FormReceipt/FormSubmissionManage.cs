@@ -145,7 +145,7 @@ namespace WMS.UI
                 SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).Single();
                 wmsEntities.Database.ExecuteSqlCommand("UPDATE SubmissionTicket SET State='合格' WHERE ID=@submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID));
                 wmsEntities.Database.ExecuteSqlCommand("UPDATE SubmissionTicketItem SET State='合格' WHERE SubmissionTicketID=@submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID));
-                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='不合格' WHERE ID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
+                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='合格' WHERE ID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
             }
             catch
             {
@@ -196,6 +196,31 @@ namespace WMS.UI
             catch
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.Search(null, null);
+        }
+
+        private void buttonItems_Click(object sender, EventArgs e)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            var worksheet = this.reoGridControl1.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(submissionTicketID);
+                formReceiptArrivalCheck.SetFinishedAction(()=> {
+                    Search(null, null);
+                });
+                formReceiptArrivalCheck.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             this.Search(null, null);

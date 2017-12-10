@@ -67,6 +67,23 @@
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormReceipt\FormAddPutawayItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormAddPutawayItem.Designer.cs">
+      <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReceipt\FormPutaway.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormPutaway.Designer.cs">
+      <DependentUpon>FormPutaway.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReceipt\FormPutwayTicketModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormPutwayTicketModify.Designer.cs">
+      <DependentUpon>FormPutwayTicketModify.cs</DependentUpon>
     <Compile Include="FormJobTicket\FormJobTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -387,6 +404,14 @@
     <EmbeddedResource Include="BSM\BMS4200M.resx">
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormAddPutawayItem.resx">
+      <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormPutaway.resx">
+      <DependentUpon>FormPutaway.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormPutwayTicketModify.resx">
+      <DependentUpon>FormPutwayTicketModify.cs</DependentUpon>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketModify.resx">
       <DependentUpon>FormJobTicketModify.cs</DependentUpon>
     </EmbeddedResource>

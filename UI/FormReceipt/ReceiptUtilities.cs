@@ -21,5 +21,17 @@ namespace WMS.UI
 
             return submissionTicketItem;
         }
+
+        public static PutawayTicketItem ReceiptTicketItemToPutawayTicketItem(ReceiptTicketItem receiptTicketItem, int putawayTicketID)
+        {
+            PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
+
+            putawayTicketItem.PutawayTicketID = putawayTicketID;
+            putawayTicketItem.ReceiptTicketItemID = receiptTicketItem.ID;
+            putawayTicketItem.State = "待上架";
+            putawayTicketItem.ID = 0;
+
+            return putawayTicketItem;
+        }
     }
 }

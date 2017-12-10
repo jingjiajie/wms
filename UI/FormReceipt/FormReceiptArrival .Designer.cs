@@ -43,7 +43,7 @@
             this.buttonCheck = new System.Windows.Forms.ToolStripButton();
             this.buttonCheckCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
-            this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
+            this.buttonPutaway = new System.Windows.Forms.ToolStripButton();
             this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -91,7 +91,7 @@
             this.buttonCheck,
             this.buttonCheckCancel,
             this.buttonItems,
-            this.buttonReceipt,
+            this.buttonPutaway,
             this.buttonReceiptCancel,
             this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
@@ -208,15 +208,16 @@
             this.buttonItems.ToolTipText = "查看零件条目";
             this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
             // 
-            // buttonReceipt
+            // buttonPutaway
             // 
-            this.buttonReceipt.AutoSize = false;
-            this.buttonReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceipt.Image")));
-            this.buttonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceipt.Name = "buttonReceipt";
-            this.buttonReceipt.Size = new System.Drawing.Size(40, 25);
-            this.buttonReceipt.Text = "收货";
+            this.buttonPutaway.AutoSize = false;
+            this.buttonPutaway.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonPutaway.Image = ((System.Drawing.Image)(resources.GetObject("buttonPutaway.Image")));
+            this.buttonPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPutaway.Name = "buttonPutaway";
+            this.buttonPutaway.Size = new System.Drawing.Size(40, 25);
+            this.buttonPutaway.Text = "收货";
+            this.buttonPutaway.Click += new System.EventHandler(this.buttonMakePutaway_Click);
             // 
             // buttonReceiptCancel
             // 
@@ -298,7 +299,7 @@
         private System.Windows.Forms.ToolStripButton buttonCheck;
         private System.Windows.Forms.ToolStripButton buttonCheckCancel;
         private System.Windows.Forms.ToolStripButton buttonItems;
-        private System.Windows.Forms.ToolStripButton buttonReceipt;
+        private System.Windows.Forms.ToolStripButton buttonPutaway;
         private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.StatusStrip statusStrip1;
