@@ -84,6 +84,11 @@
     </Compile>
     <Compile Include="FormReceipt\FormPutwayTicketModify.Designer.cs">
       <DependentUpon>FormPutwayTicketModify.cs</DependentUpon>
+    <Compile Include="FormJobTicket\FormJobTicketModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormJobTicket\FormJobTicketModify.Designer.cs">
+      <DependentUpon>FormJobTicketModify.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\FormBase\BaseProjectMetaData.cs" />
     <Compile Include="Properties\FormBase\BaseWarehouseMetaData.cs" />
@@ -407,6 +412,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutwayTicketModify.resx">
       <DependentUpon>FormPutwayTicketModify.cs</DependentUpon>
+    <EmbeddedResource Include="FormJobTicket\FormJobTicketModify.resx">
+      <DependentUpon>FormJobTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\FormBase\FormBaseComponenAdd.resx">
       <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>

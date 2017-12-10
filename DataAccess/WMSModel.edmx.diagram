@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a036b768399a4ff1aecfeab674d48c11" Name="Diagram1" ZoomLevel="52">
+      <Diagram DiagramId="a036b768399a4ff1aecfeab674d48c11" Name="Diagram1" ZoomLevel="31">
         <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="3" PointY="35.25" IsExpanded="true" />
         <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="5.25" PointY="33" IsExpanded="true" />
         <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfo" Width="1.5" PointX="5.25" PointY="36.75" IsExpanded="true" />
