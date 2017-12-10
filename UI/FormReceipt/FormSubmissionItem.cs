@@ -15,6 +15,7 @@ namespace WMS.UI.FormReceipt
 {
     public partial class FormSubmissionItem : Form
     {
+        private WMSEntities wmsEntities = new WMSEntities();
         private int submissionTicketID;
         public FormSubmissionItem()
         {
@@ -30,9 +31,65 @@ namespace WMS.UI.FormReceipt
         private void FormSubmissionItem_Load(object sender, EventArgs e)
         {
             InitComponents();
+            InitPanel();
             WMSEntities wmsEntities = new WMSEntities();
-            this.textBoxID.Text = this.submissionTicketID.ToString();
+            
             Search();
+        }
+
+        private void InitPanel()
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            //this.Controls.Clear();
+            Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.submissionTicketItemKeyName);
+
+            this.reoGridControlSubmissionItems.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
+
+            //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            //textBoxComponentName.Click += textBoxComponentName_Click;
+            //textBoxComponentName.ReadOnly = true;
+            //textBoxComponentName.BackColor = Color.White;
+        }
+
+        private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        {
+            this.RefreshTextBoxes();
+        }
+
+        private void RefreshTextBoxes()
+        {
+            this.ClearTextBoxes();
+            var worksheet = this.reoGridControlSubmissionItems.Worksheets[0];
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlSubmissionItems);
+            if (ids.Length == 0)
+            {
+                this.submissionTicketID = -1;
+                return;
+            }
+            int id = ids[0];
+            SubmissionTicketItemView submissionTicketItemView = (from s in this.wmsEntities.SubmissionTicketItemView
+                                                             where s.ID == id
+                                                             select s).FirstOrDefault();
+            if (submissionTicketItemView == null)
+            {
+                MessageBox.Show("系统错误，未找到相应送检单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            this.submissionTicketID = int.Parse(submissionTicketItemView.SubmissionTicketID.ToString());
+            Utilities.CopyPropertiesToTextBoxes(submissionTicketItemView, this);
+            //Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
+        }
+
+        private void ClearTextBoxes()
+        {
+            foreach (Control control in this.tableLayoutPanelProperties.Controls)
+            {
+                if (control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    textBox.Text = "";
+                }
+            }
         }
 
         private void InitComponents()
@@ -83,7 +140,7 @@ namespace WMS.UI.FormReceipt
                         n++;
                     }
                 }));
-
+                this.Invoke(new Action(this.RefreshTextBoxes));
             })).Start();
 
         }
@@ -111,6 +168,7 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             this.Search();
+            this.RefreshTextBoxes();
         }
 
         private void buttonItemNoPass_Click(object sender, EventArgs e)
@@ -134,6 +192,61 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             this.Search();
+            this.RefreshTextBoxes();
+        }
+
+        private void buttonModify_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlSubmissionItems);
+            if (ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            new Thread(new ThreadStart(() =>
+            {
+                int id = ids[0];
+                var submissionTicketItem = (from s in this.wmsEntities.SubmissionTicketItem where s.ID == id select s).FirstOrDefault();
+
+                if (submissionTicketItem == null)
+                {
+                    MessageBox.Show("未找到此送检单单条目信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                submissionTicketItem.SubmissionTicketID = this.submissionTicketID;
+
+                if (Utilities.CopyTextBoxTextsToProperties(this, submissionTicketItem, ReceiptMetaData.submissionTicketItemKeyName, out string errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
+        }
+
+        private void buttonDeleteItem_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlSubmissionItems.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int submissionTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicketItem SET State='作废' WHERE ID={0}", submissionTicketItemID));
+                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ReceiptTicket SET State='部分送检' WHERE ID={0}", submissionTicketID));
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.Search();
+            this.RefreshTextBoxes();
         }
     }
 }

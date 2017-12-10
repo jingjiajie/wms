@@ -42,12 +42,12 @@
             this.buttonItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.buttonItems = new System.Windows.Forms.ToolStripButton();
+            this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
+            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
-            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
-            this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
-            this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -199,6 +199,38 @@
             this.toolStripTop.TabIndex = 8;
             this.toolStripTop.Text = "toolStrip1";
             // 
+            // buttonItems
+            // 
+            this.buttonItems.AutoSize = false;
+            this.buttonItems.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonItems.Image = ((System.Drawing.Image)(resources.GetObject("buttonItems.Image")));
+            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonItems.Name = "buttonItems";
+            this.buttonItems.Size = new System.Drawing.Size(80, 25);
+            this.buttonItems.Text = "修改送检单";
+            this.buttonItems.ToolTipText = "查看零件条目";
+            this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
+            // 
+            // buttonReceipt
+            // 
+            this.buttonReceipt.AutoSize = false;
+            this.buttonReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceipt.Image")));
+            this.buttonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReceipt.Name = "buttonReceipt";
+            this.buttonReceipt.Size = new System.Drawing.Size(40, 25);
+            this.buttonReceipt.Text = "收货";
+            // 
+            // buttonReceiptCancel
+            // 
+            this.buttonReceiptCancel.AutoSize = false;
+            this.buttonReceiptCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
+            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
+            this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
+            this.buttonReceiptCancel.Text = "取消收货";
+            // 
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
@@ -222,37 +254,6 @@
             this.statusStrip2.Size = new System.Drawing.Size(1602, 36);
             this.statusStrip2.TabIndex = 10;
             this.statusStrip2.Text = "statusStrip2";
-            // 
-            // buttonReceiptCancel
-            // 
-            this.buttonReceiptCancel.AutoSize = false;
-            this.buttonReceiptCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
-            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
-            this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
-            this.buttonReceiptCancel.Text = "取消收货";
-            // 
-            // buttonReceipt
-            // 
-            this.buttonReceipt.AutoSize = false;
-            this.buttonReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceipt.Image")));
-            this.buttonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceipt.Name = "buttonReceipt";
-            this.buttonReceipt.Size = new System.Drawing.Size(40, 25);
-            this.buttonReceipt.Text = "收货";
-            // 
-            // buttonItems
-            // 
-            this.buttonItems.AutoSize = false;
-            this.buttonItems.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonItems.Image = ((System.Drawing.Image)(resources.GetObject("buttonItems.Image")));
-            this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonItems.Name = "buttonItems";
-            this.buttonItems.Size = new System.Drawing.Size(80, 25);
-            this.buttonItems.Text = "查看零件条目";
-            this.buttonItems.ToolTipText = "查看零件条目";
             // 
             // FormSubmissionManage
             // 

@@ -53,7 +53,8 @@
             this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(0, 28);
+            this.reoGridControlUser.Location = new System.Drawing.Point(0, 39);
+            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.reoGridControlUser.Name = "reoGridControlUser";
             this.reoGridControlUser.Readonly = true;
             this.reoGridControlUser.RowHeaderContextMenuStrip = null;
@@ -61,9 +62,9 @@
             this.reoGridControlUser.SheetTabContextMenuStrip = null;
             this.reoGridControlUser.SheetTabNewButtonVisible = true;
             this.reoGridControlUser.SheetTabVisible = true;
-            this.reoGridControlUser.SheetTabWidth = 60;
+            this.reoGridControlUser.SheetTabWidth = 90;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1094, 431);
+            this.reoGridControlUser.Size = new System.Drawing.Size(1641, 695);
             this.reoGridControlUser.TabIndex = 5;
             this.reoGridControlUser.Text = "reoGridControl1";
             // 
@@ -86,7 +87,8 @@
             this.toolStripButtonOperationCancel});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1094, 28);
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(1641, 39);
             this.toolStripTop.TabIndex = 4;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -94,18 +96,18 @@
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 36);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // toolStripComboBoxSelect
             // 
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(150, 28);
+            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(223, 39);
             // 
             // toolStripTextBoxSelect
             // 
             this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(200, 28);
+            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(298, 39);
             // 
             // toolStripButtonSelect
             // 
@@ -200,13 +202,15 @@
             // 
             // FormReceiptShelves
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1094, 459);
+            this.ClientSize = new System.Drawing.Size(1641, 734);
             this.Controls.Add(this.reoGridControlUser);
             this.Controls.Add(this.toolStripTop);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormReceiptShelves";
             this.Text = "FormReceiptShelves";
+            this.Load += new System.EventHandler(this.FormReceiptShelves_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);

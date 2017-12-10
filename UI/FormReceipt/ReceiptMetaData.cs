@@ -104,5 +104,23 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="返回数量", Key="ReturnAmount",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="备注", Key="Comment",Visible=true,Editable=true,Save=true},
         };
+
+        public static KeyName[] putawayTicketKeyName =
+        {
+            new KeyName{Name = "ID", Key = "ID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "单据号", Key = "No", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "单据类型", Key = "Type", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "收货单ID", Key = "ReceiptTicketID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "状态", Key = "State", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "计划移位数量", Key = "ScheduledDisplacementAmount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "实际移位数量", Key = "DisplacementAmount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "分配数量", Key = "DistributeAmount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "打印次数", Key = "PrintTimes", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "作业组名称", Key = "JobGroupName", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "创建用户ID", Key = "CreateUserID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "创建时间", Key = "CreateTime", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "最后操作员姓名", Key = "LastUpdateUserID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "最后更新时间", Key = "LastUpdateTime", Visible = true, Editable = true, Save = true}
+        };
     }
 }

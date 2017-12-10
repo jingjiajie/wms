@@ -123,9 +123,9 @@ namespace WMS.UI.FormReceipt {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        public static System.Drawing.Bitmap buttonReceipt_Image {
+        public static System.Drawing.Bitmap buttonPutaway_Image {
             get {
-                object obj = ResourceManager.GetObject("buttonReceipt.Image", resourceCulture);
+                object obj = ResourceManager.GetObject("buttonPutaway.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

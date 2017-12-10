@@ -315,5 +315,46 @@ namespace WMS.UI
                 return;
             }
         }
+
+        private void buttonMakePutaway_Click(object sender, EventArgs e)
+        {
+
+
+            
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                WMSEntities wmsEntities = new WMSEntities();
+                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
+                FormPutaway formPutaway = new FormPutaway(receiptTicketID);
+                formPutaway.Show();
+                /*
+                if (receiptTicket.State == "收货")
+                {
+                    MessageBox.Show("已收货");
+                    return;
+                }
+                FormPutwayTicketModify formPutwayTicketModify = new FormPutwayTicketModify(receiptTicketID, FormMode.ADD);
+                formPutwayTicketModify.SetCallBack(() =>
+                {
+                    
+                    this.Search(null, null);
+                });
+                formPutwayTicketModify.Show();
+                */
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            
+        }
     }
 }
