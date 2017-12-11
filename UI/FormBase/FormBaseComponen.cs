@@ -79,35 +79,70 @@ namespace WMS.UI
                 key = (from kn in ComponenMetaData.componenkeyNames
                        where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
                        select kn.Key).First();
-                value = this.toolStripTextBoxSelect.Text;
+                value = this.textBoxSearchValue.Text;
             }
             
             this.labelStatus.Text = "正在搜索中...";
+
+
             new Thread(new ThreadStart(() =>
             {
                 var wmsEntities = new WMSEntities();
                 ComponentView[] componentViews = null;
-                if (key == null || value == null)        //搜索所有
+
+
+                if ((this.authority & authority_self) == 1)
                 {
-                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView").ToArray();
-                }
-                else
-                {
-                    double tmp;
-                    if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                    if (key == null || value == null)        //搜索所有
                     {
+                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView").ToArray();
+                    }
+                    else
+                    {
+                        //double tmp;
+                        //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                        //{
                         value = "'" + value + "'";
-                    }
-                    try
-                    {
-                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                        //}
+                        try
+                        {
+                            componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                     }
                 }
+                if ((this.authority & authority_self) == 0)
+                {
+                    if (key == null || value == null)        //搜索所有
+                    {
+                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView WHERE SupplierID = {0}", userID).ToArray();
+                    }
+                    else
+                    {
+                        //double tmp;
+                        //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                        //{
+                        value = "'" + value + "'";
+                        //}
+                        try
+                        {
+                            componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1} AND SupplierID = {2}", key, value,userID)).ToArray();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                }
+
+
+
+
                 this.reoGridControlComponen.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -198,12 +233,27 @@ namespace WMS.UI
             {
                 foreach (int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @componenID", new SqlParameter("componenID", id));
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
                 }
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
             })).Start();
 
         }//删除
+
+
+
+        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                this.textBoxSearchValue.Text = "";
+                this.textBoxSearchValue.Enabled = false;
+            }
+            else
+            {
+                this.textBoxSearchValue.Enabled = true;
+            }
+        }
     }
-}
+    }
