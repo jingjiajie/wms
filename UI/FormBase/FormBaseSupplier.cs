@@ -91,7 +91,7 @@ namespace WMS.UI
         {
             string key = null;
             string value = null;
-            int ID=4;
+           
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
@@ -119,13 +119,13 @@ namespace WMS.UI
                     }
                     else
                     {
-                        if (decimal.TryParse(value, out decimal result) == false)
-                        {
+                       // if (decimal.TryParse(value, out decimal result) == false)
+                       // {
                             value = "'" + value + "'";
-                        }
-                        try
+                       // }
+                       try
                         {
-                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} ", key, value, ID)).ToArray();
+                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} ", key, value)).ToArray();
 
                         }
                         catch
@@ -148,13 +148,13 @@ namespace WMS.UI
                     }
                     else
                     {
-                        if (decimal.TryParse(value, out decimal result) == false)
-                        {
+                        //if (decimal.TryParse(value, out decimal result) == false)
+                        //{
                             value = "'" + value + "'";
-                        }
+                        //}
                         try
                         {
-                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} AND id = {2} ", key, value, id )).ToArray();
+                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} AND ID = {2} ", key, value, id )).ToArray();
 
                         }
                         catch
@@ -284,6 +284,20 @@ namespace WMS.UI
         private void reoGridControlUser_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                this.toolStripTextBoxSelect.Text = "";
+                this.toolStripTextBoxSelect.Enabled = false;
+                this.Search();
+            }
+            else
+            {
+                this.toolStripTextBoxSelect.Enabled = true;
+            }
         }
     }
 
