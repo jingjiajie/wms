@@ -15,21 +15,20 @@ namespace WMS.DataAccess
     public partial class JobTicketItem
     {
         public int ID { get; set; }
+        public int JobTickedID { get; set; }
+        public Nullable<int> StockInfoID { get; set; }
         public string No { get; set; }
         public string Type { get; set; }
         public string MoveOutStorageLocation { get; set; }
         public string SourceBoardNo { get; set; }
         public string MoveInStorageLocation { get; set; }
+        public string State { get; set; }
         public Nullable<decimal> ScheduledMoveCount { get; set; }
         public Nullable<decimal> MoveCount { get; set; }
         public Nullable<decimal> HaveBackedCount { get; set; }
         public string ActualJobPerson { get; set; }
         public Nullable<System.DateTime> HappenTime { get; set; }
-        public int JobTicketID { get; set; }
-        public string State { get; set; }
-        public Nullable<int> StockInfoID { get; set; }
     
         public virtual JobTicket JobTicket { get; set; }
-        public virtual StockInfo StockInfo { get; set; }
     }
 }

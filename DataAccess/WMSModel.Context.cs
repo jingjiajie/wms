@@ -41,6 +41,8 @@ namespace WMS.DataAccess
         public DbSet<ShipmentTicket> ShipmentTicket { get; set; }
         public DbSet<ShipmentTicketItem> ShipmentTicketItem { get; set; }
         public DbSet<StockInfo> StockInfo { get; set; }
+        public DbSet<StockInfoCheckTicket> StockInfoCheckTicket { get; set; }
+        public DbSet<StockInfoCheckTicketItem> StockInfoCheckTicketItem { get; set; }
         public DbSet<SubmissionTicket> SubmissionTicket { get; set; }
         public DbSet<SubmissionTicketItem> SubmissionTicketItem { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
@@ -62,6 +64,8 @@ namespace WMS.DataAccess
         public DbSet<ReceiptTicketView> ReceiptTicketView { get; set; }
         public DbSet<ShipmentTicketItemView> ShipmentTicketItemView { get; set; }
         public DbSet<ShipmentTicketView> ShipmentTicketView { get; set; }
+        public DbSet<StockInfoCheckTicketItemView> StockInfoCheckTicketItemView { get; set; }
+        public DbSet<StockInfoCheckTicketView> StockInfoCheckTicketView { get; set; }
         public DbSet<StockInfoView> StockInfoView { get; set; }
         public DbSet<SubmissionTicketItemView> SubmissionTicketItemView { get; set; }
         public DbSet<SubmissionTicketView> SubmissionTicketView { get; set; }

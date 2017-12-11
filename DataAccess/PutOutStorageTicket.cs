@@ -41,7 +41,6 @@ namespace WMS.DataAccess
         public Nullable<int> JobTicketID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
     
-        public virtual JobTicket JobTicket { get; set; }
         public virtual ICollection<PutOutStorageTicketItem> PutOutStorageTicketItem { get; set; }
     }
 }

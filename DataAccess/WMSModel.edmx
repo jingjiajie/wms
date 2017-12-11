@@ -83,39 +83,39 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ShipmentTicketID" Type="int" />
           <Property Name="JobTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="JobType" Type="nvarchar" MaxLength="64" />
           <Property Name="JobGroupName" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="RealAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
-          <Property Name="CreateTime" Type="datetime" />
           <Property Name="PrintedTimes" Type="int" />
           <Property Name="AssignmentArea" Type="nvarchar" MaxLength="64" />
           <Property Name="PersonInCharge" Type="nvarchar" MaxLength="64" />
-          <Property Name="LastUpdateTime" Type="datetime" />
-          <Property Name="ShipmentTicketID" Type="int" />
-          <Property Name="LastUpdateUserID" Type="int" />
           <Property Name="CreateUserID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="LastUpdateUserID" Type="int" />
+          <Property Name="LastUpdateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="JobTicketItem">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobTickedID" Type="int" Nullable="false" />
+          <Property Name="StockInfoID" Type="int" />
           <Property Name="No" Type="nvarchar" MaxLength="64" />
           <Property Name="Type" Type="nvarchar" MaxLength="64" />
           <Property Name="MoveOutStorageLocation" Type="nvarchar" MaxLength="64" />
           <Property Name="SourceBoardNo" Type="nvarchar" MaxLength="64" />
           <Property Name="MoveInStorageLocation" Type="nvarchar" MaxLength="64" />
+          <Property Name="State" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledMoveCount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="MoveCount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="HaveBackedCount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ActualJobPerson" Type="nvarchar" MaxLength="64" />
           <Property Name="HappenTime" Type="datetime" />
-          <Property Name="JobTicketID" Type="int" Nullable="false" />
-          <Property Name="State" Type="nvarchar" MaxLength="64" />
-          <Property Name="StockInfoID" Type="int" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -334,6 +334,29 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PutawayTicketItemID" Type="int" />
+        </EntityType>
+        <EntityType Name="StockInfoCheckTicket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="CreateUserID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="LastUpdateUserID" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastUpdateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StockInfoCheckTicketItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="StockInfoID" Type="int" />
+          <Property Name="ExcpetedOverflowAreaAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExpectedShipmentAreaAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RealOverflowAreaAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RealShipmentAreaAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SubmissionTicket">
           <Key>
@@ -1871,6 +1894,72 @@
           <Property Name="LastUpdateUserSupplierID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
+警告 6002: 表/视图“wms.dbo.StockInfoCheckTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="StockInfoCheckTicketItemView">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="StockInfoID" Type="int" />
+          <Property Name="ExcpetedOverflowAreaAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExpectedShipmentAreaAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RealOverflowAreaAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RealShipmentAreaAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierContractNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierStartDate" Type="datetime" />
+          <Property Name="SupplierEndDate" Type="datetime" />
+          <Property Name="SupplierInvoiceDate" Type="datetime" />
+          <Property Name="SupplierBalanceDate" Type="datetime" />
+          <Property Name="SupplierFullName" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierTaxpayerNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierAddress" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierTel" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierBankName" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierBankAccount" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierBankNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierZipCode" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierRecipientName" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentProjectID" Type="int" />
+          <Property Name="ComponentWarehouseID" Type="int" />
+          <Property Name="ComponentSupplierID" Type="int" />
+          <Property Name="ComponentContainerNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentFactroy" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentWorkPosition" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentName" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentSupplierType" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentType" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentSize" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentCategory" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentGroupPrincipal" Type="nvarchar" MaxLength="64" />
+          <Property Name="ComponentSingleCarUsageAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentCharge1" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentCharge2" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement1Day" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement3Day" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement5Day" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement10Day" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“wms.dbo.StockInfoCheckTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="StockInfoCheckTicketView">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="CreateUserID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="LastUpdateUserID" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastUpdateTime" Type="datetime" />
+          <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.StockInfoView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="StockInfoView">
           <Key>
@@ -2412,7 +2501,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__JobTicket__JobTi__72C60C4A">
+        <Association Name="FK__JobTicket__JobTi__5D60DB10">
           <End Role="JobTicket" Type="Self.JobTicket" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -2422,7 +2511,19 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="JobTicketItem">
-              <PropertyRef Name="JobTicketID" />
+              <PropertyRef Name="JobTickedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__JobTicket__Shipm__3B0BC30C">
+          <End Role="ShipmentTicket" Type="Self.ShipmentTicket" Multiplicity="0..1" />
+          <End Role="JobTicket" Type="Self.JobTicket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShipmentTicket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="JobTicket">
+              <PropertyRef Name="ShipmentTicketID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2437,18 +2538,6 @@
             </Principal>
             <Dependent Role="PutawayTicketItem">
               <PropertyRef Name="PutawayTicketID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__PutOutSto__JobTi__75A278F5">
-          <End Role="JobTicket" Type="Self.JobTicket" Multiplicity="0..1" />
-          <End Role="PutOutStorageTicket" Type="Self.PutOutStorageTicket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="JobTicket">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PutOutStorageTicket">
-              <PropertyRef Name="JobTicketID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2508,6 +2597,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__StockInfo__Stock__6319B466">
+          <End Role="StockInfo" Type="Self.StockInfo" Multiplicity="0..1" />
+          <End Role="StockInfoCheckTicketItem" Type="Self.StockInfoCheckTicketItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInfoCheckTicketItem">
+              <PropertyRef Name="StockInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Submissio__Submi__4D94879B">
           <End Role="SubmissionTicket" Type="Self.SubmissionTicket" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2533,18 +2634,6 @@
             </Principal>
             <Dependent Role="SupplierAnnualInfo">
               <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobTicketItem_StockInfo">
-          <End Role="StockInfo" Type="Self.StockInfo" Multiplicity="0..1" />
-          <End Role="JobTicketItem" Type="Self.JobTicketItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockInfo">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="JobTicketItem">
-              <PropertyRef Name="StockInfoID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2681,6 +2770,8 @@
           <EntitySet Name="ShipmentTicket" EntityType="Self.ShipmentTicket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShipmentTicketItem" EntityType="Self.ShipmentTicketItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StockInfo" EntityType="Self.StockInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockInfoCheckTicket" EntityType="Self.StockInfoCheckTicket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockInfoCheckTicketItem" EntityType="Self.StockInfoCheckTicketItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubmissionTicket" EntityType="Self.SubmissionTicket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubmissionTicketItem" EntityType="Self.SubmissionTicketItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
@@ -4012,6 +4103,66 @@ FROM [dbo].[ShipmentTicketItemView] AS [ShipmentTicketItemView]</DefiningQuery>
 [ShipmentTicketView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID]
 FROM [dbo].[ShipmentTicketView] AS [ShipmentTicketView]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="StockInfoCheckTicketItemView" EntityType="Self.StockInfoCheckTicketItemView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[StockInfoCheckTicketItemView].[ID] AS [ID], 
+[StockInfoCheckTicketItemView].[CheckDate] AS [CheckDate], 
+[StockInfoCheckTicketItemView].[StockInfoID] AS [StockInfoID], 
+[StockInfoCheckTicketItemView].[ExcpetedOverflowAreaAmount] AS [ExcpetedOverflowAreaAmount], 
+[StockInfoCheckTicketItemView].[ExpectedShipmentAreaAmount] AS [ExpectedShipmentAreaAmount], 
+[StockInfoCheckTicketItemView].[RealOverflowAreaAmount] AS [RealOverflowAreaAmount], 
+[StockInfoCheckTicketItemView].[RealShipmentAreaAmount] AS [RealShipmentAreaAmount], 
+[StockInfoCheckTicketItemView].[SupplierName] AS [SupplierName], 
+[StockInfoCheckTicketItemView].[SupplierContractNo] AS [SupplierContractNo], 
+[StockInfoCheckTicketItemView].[SupplierStartDate] AS [SupplierStartDate], 
+[StockInfoCheckTicketItemView].[SupplierEndDate] AS [SupplierEndDate], 
+[StockInfoCheckTicketItemView].[SupplierInvoiceDate] AS [SupplierInvoiceDate], 
+[StockInfoCheckTicketItemView].[SupplierBalanceDate] AS [SupplierBalanceDate], 
+[StockInfoCheckTicketItemView].[SupplierFullName] AS [SupplierFullName], 
+[StockInfoCheckTicketItemView].[SupplierTaxpayerNumber] AS [SupplierTaxpayerNumber], 
+[StockInfoCheckTicketItemView].[SupplierAddress] AS [SupplierAddress], 
+[StockInfoCheckTicketItemView].[SupplierTel] AS [SupplierTel], 
+[StockInfoCheckTicketItemView].[SupplierBankName] AS [SupplierBankName], 
+[StockInfoCheckTicketItemView].[SupplierBankAccount] AS [SupplierBankAccount], 
+[StockInfoCheckTicketItemView].[SupplierBankNo] AS [SupplierBankNo], 
+[StockInfoCheckTicketItemView].[SupplierZipCode] AS [SupplierZipCode], 
+[StockInfoCheckTicketItemView].[SupplierRecipientName] AS [SupplierRecipientName], 
+[StockInfoCheckTicketItemView].[ComponentProjectID] AS [ComponentProjectID], 
+[StockInfoCheckTicketItemView].[ComponentWarehouseID] AS [ComponentWarehouseID], 
+[StockInfoCheckTicketItemView].[ComponentSupplierID] AS [ComponentSupplierID], 
+[StockInfoCheckTicketItemView].[ComponentContainerNo] AS [ComponentContainerNo], 
+[StockInfoCheckTicketItemView].[ComponentFactroy] AS [ComponentFactroy], 
+[StockInfoCheckTicketItemView].[ComponentWorkPosition] AS [ComponentWorkPosition], 
+[StockInfoCheckTicketItemView].[ComponentNo] AS [ComponentNo], 
+[StockInfoCheckTicketItemView].[ComponentName] AS [ComponentName], 
+[StockInfoCheckTicketItemView].[ComponentSupplierType] AS [ComponentSupplierType], 
+[StockInfoCheckTicketItemView].[ComponentType] AS [ComponentType], 
+[StockInfoCheckTicketItemView].[ComponentSize] AS [ComponentSize], 
+[StockInfoCheckTicketItemView].[ComponentCategory] AS [ComponentCategory], 
+[StockInfoCheckTicketItemView].[ComponentGroupPrincipal] AS [ComponentGroupPrincipal], 
+[StockInfoCheckTicketItemView].[ComponentSingleCarUsageAmount] AS [ComponentSingleCarUsageAmount], 
+[StockInfoCheckTicketItemView].[ComponentCharge1] AS [ComponentCharge1], 
+[StockInfoCheckTicketItemView].[ComponentCharge2] AS [ComponentCharge2], 
+[StockInfoCheckTicketItemView].[ComponentInventoryRequirement1Day] AS [ComponentInventoryRequirement1Day], 
+[StockInfoCheckTicketItemView].[ComponentInventoryRequirement3Day] AS [ComponentInventoryRequirement3Day], 
+[StockInfoCheckTicketItemView].[ComponentInventoryRequirement5Day] AS [ComponentInventoryRequirement5Day], 
+[StockInfoCheckTicketItemView].[ComponentInventoryRequirement10Day] AS [ComponentInventoryRequirement10Day], 
+[StockInfoCheckTicketItemView].[WarehouseName] AS [WarehouseName], 
+[StockInfoCheckTicketItemView].[ProjectName] AS [ProjectName]
+FROM [dbo].[StockInfoCheckTicketItemView] AS [StockInfoCheckTicketItemView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StockInfoCheckTicketView" EntityType="Self.StockInfoCheckTicketView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[StockInfoCheckTicketView].[ID] AS [ID], 
+[StockInfoCheckTicketView].[CheckDate] AS [CheckDate], 
+[StockInfoCheckTicketView].[CreateUserID] AS [CreateUserID], 
+[StockInfoCheckTicketView].[CreateTime] AS [CreateTime], 
+[StockInfoCheckTicketView].[LastUpdateUserID] AS [LastUpdateUserID], 
+[StockInfoCheckTicketView].[LastUpdateTime] AS [LastUpdateTime], 
+[StockInfoCheckTicketView].[CreateUserUsername] AS [CreateUserUsername], 
+[StockInfoCheckTicketView].[LastUpdateUserUsername] AS [LastUpdateUserUsername]
+FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="StockInfoView" EntityType="Self.StockInfoView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
 [StockInfoView].[PutawayTicketItemPutawayTicketID] AS [PutawayTicketItemPutawayTicketID], 
@@ -4469,17 +4620,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="Component" EntitySet="Component" />
           </AssociationSet>
-          <AssociationSet Name="FK__JobTicket__JobTi__72C60C4A" Association="Self.FK__JobTicket__JobTi__72C60C4A">
+          <AssociationSet Name="FK__JobTicket__JobTi__5D60DB10" Association="Self.FK__JobTicket__JobTi__5D60DB10">
             <End Role="JobTicket" EntitySet="JobTicket" />
             <End Role="JobTicketItem" EntitySet="JobTicketItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__JobTicket__Shipm__3B0BC30C" Association="Self.FK__JobTicket__Shipm__3B0BC30C">
+            <End Role="ShipmentTicket" EntitySet="ShipmentTicket" />
+            <End Role="JobTicket" EntitySet="JobTicket" />
           </AssociationSet>
           <AssociationSet Name="FK__PutawayTi__Putaw__534D60F1" Association="Self.FK__PutawayTi__Putaw__534D60F1">
             <End Role="PutawayTicket" EntitySet="PutawayTicket" />
             <End Role="PutawayTicketItem" EntitySet="PutawayTicketItem" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PutOutSto__JobTi__75A278F5" Association="Self.FK__PutOutSto__JobTi__75A278F5">
-            <End Role="JobTicket" EntitySet="JobTicket" />
-            <End Role="PutOutStorageTicket" EntitySet="PutOutStorageTicket" />
           </AssociationSet>
           <AssociationSet Name="FK__PutOutSto__PutOu__18EBB532" Association="Self.FK__PutOutSto__PutOu__18EBB532">
             <End Role="PutOutStorageTicket" EntitySet="PutOutStorageTicket" />
@@ -4497,6 +4648,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="ShipmentTicket" EntitySet="ShipmentTicket" />
           </AssociationSet>
+          <AssociationSet Name="FK__StockInfo__Stock__6319B466" Association="Self.FK__StockInfo__Stock__6319B466">
+            <End Role="StockInfo" EntitySet="StockInfo" />
+            <End Role="StockInfoCheckTicketItem" EntitySet="StockInfoCheckTicketItem" />
+          </AssociationSet>
           <AssociationSet Name="FK__Submissio__Submi__4D94879B" Association="Self.FK__Submissio__Submi__4D94879B">
             <End Role="SubmissionTicket" EntitySet="SubmissionTicket" />
             <End Role="SubmissionTicketItem" EntitySet="SubmissionTicketItem" />
@@ -4504,10 +4659,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <AssociationSet Name="FK__SupplierA__Suppl__02084FDA" Association="Self.FK__SupplierA__Suppl__02084FDA">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierAnnualInfo" EntitySet="SupplierAnnualInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobTicketItem_StockInfo" Association="Self.FK_JobTicketItem_StockInfo">
-            <End Role="StockInfo" EntitySet="StockInfo" />
-            <End Role="JobTicketItem" EntitySet="JobTicketItem" />
           </AssociationSet>
           <AssociationSet Name="FK_PutawayTicket_ReceiptTicket" Association="Self.FK_PutawayTicket_ReceiptTicket">
             <End Role="ReceiptTicket" EntitySet="ReceiptTicket" />
@@ -4567,6 +4718,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySet Name="ShipmentTicket" EntityType="WMSModel.ShipmentTicket" />
           <EntitySet Name="ShipmentTicketItem" EntityType="WMSModel.ShipmentTicketItem" />
           <EntitySet Name="StockInfo" EntityType="WMSModel.StockInfo" />
+          <EntitySet Name="StockInfoCheckTicket" EntityType="WMSModel.StockInfoCheckTicket" />
+          <EntitySet Name="StockInfoCheckTicketItem" EntityType="WMSModel.StockInfoCheckTicketItem" />
           <EntitySet Name="SubmissionTicket" EntityType="WMSModel.SubmissionTicket" />
           <EntitySet Name="SubmissionTicketItem" EntityType="WMSModel.SubmissionTicketItem" />
           <EntitySet Name="Supplier" EntityType="WMSModel.Supplier" />
@@ -4588,6 +4741,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySet Name="ReceiptTicketView" EntityType="WMSModel.ReceiptTicketView" />
           <EntitySet Name="ShipmentTicketItemView" EntityType="WMSModel.ShipmentTicketItemView" />
           <EntitySet Name="ShipmentTicketView" EntityType="WMSModel.ShipmentTicketView" />
+          <EntitySet Name="StockInfoCheckTicketItemView" EntityType="WMSModel.StockInfoCheckTicketItemView" />
+          <EntitySet Name="StockInfoCheckTicketView" EntityType="WMSModel.StockInfoCheckTicketView" />
           <EntitySet Name="StockInfoView" EntityType="WMSModel.StockInfoView" />
           <EntitySet Name="SubmissionTicketItemView" EntityType="WMSModel.SubmissionTicketItemView" />
           <EntitySet Name="SubmissionTicketView" EntityType="WMSModel.SubmissionTicketView" />
@@ -4619,17 +4774,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="Component" EntitySet="Component" />
           </AssociationSet>
-          <AssociationSet Name="FK__JobTicket__JobTi__72C60C4A" Association="WMSModel.FK__JobTicket__JobTi__72C60C4A">
+          <AssociationSet Name="FK__JobTicket__JobTi__5D60DB10" Association="WMSModel.FK__JobTicket__JobTi__5D60DB10">
             <End Role="JobTicket" EntitySet="JobTicket" />
             <End Role="JobTicketItem" EntitySet="JobTicketItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__PutOutSto__JobTi__75A278F5" Association="WMSModel.FK__PutOutSto__JobTi__75A278F5">
+          <AssociationSet Name="FK__JobTicket__Shipm__3B0BC30C" Association="WMSModel.FK__JobTicket__Shipm__3B0BC30C">
+            <End Role="ShipmentTicket" EntitySet="ShipmentTicket" />
             <End Role="JobTicket" EntitySet="JobTicket" />
-            <End Role="PutOutStorageTicket" EntitySet="PutOutStorageTicket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JobTicketItem_StockInfo" Association="WMSModel.FK_JobTicketItem_StockInfo">
-            <End Role="StockInfo" EntitySet="StockInfo" />
-            <End Role="JobTicketItem" EntitySet="JobTicketItem" />
           </AssociationSet>
           <AssociationSet Name="FK__ShipmentT__Proje__6C190EBB" Association="WMSModel.FK__ShipmentT__Proje__6C190EBB">
             <End Role="Project" EntitySet="Project" />
@@ -4682,6 +4833,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <AssociationSet Name="FK_ShipmentTicketItem_ShipmentTicket" Association="WMSModel.FK_ShipmentTicketItem_ShipmentTicket">
             <End Role="ShipmentTicket" EntitySet="ShipmentTicket" />
             <End Role="ShipmentTicketItem" EntitySet="ShipmentTicketItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StockInfo__Stock__6319B466" Association="WMSModel.FK__StockInfo__Stock__6319B466">
+            <End Role="StockInfo" EntitySet="StockInfo" />
+            <End Role="StockInfoCheckTicketItem" EntitySet="StockInfoCheckTicketItem" />
           </AssociationSet>
           <AssociationSet Name="FK__Submissio__Submi__4D94879B" Association="WMSModel.FK__Submissio__Submi__4D94879B">
             <End Role="SubmissionTicket" EntitySet="SubmissionTicket" />
@@ -4783,43 +4938,42 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShipmentTicketID" Type="Int32" />
           <Property Name="JobTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="JobType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="JobGroupName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="RealAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="PrintedTimes" Type="Int32" />
           <Property Name="AssignmentArea" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="PersonInCharge" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketID" Type="Int32" />
-          <Property Name="LastUpdateUserID" Type="Int32" />
           <Property Name="CreateUserID" Type="Int32" />
-          <NavigationProperty Name="JobTicketItem" Relationship="WMSModel.FK__JobTicket__JobTi__72C60C4A" FromRole="JobTicket" ToRole="JobTicketItem" />
-          <NavigationProperty Name="PutOutStorageTicket" Relationship="WMSModel.FK__PutOutSto__JobTi__75A278F5" FromRole="JobTicket" ToRole="PutOutStorageTicket" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateUserID" Type="Int32" />
+          <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="JobTicketItem" Relationship="WMSModel.FK__JobTicket__JobTi__5D60DB10" FromRole="JobTicket" ToRole="JobTicketItem" />
+          <NavigationProperty Name="ShipmentTicket" Relationship="WMSModel.FK__JobTicket__Shipm__3B0BC30C" FromRole="JobTicket" ToRole="ShipmentTicket" />
         </EntityType>
         <EntityType Name="JobTicketItem">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobTickedID" Type="Int32" Nullable="false" />
+          <Property Name="StockInfoID" Type="Int32" />
           <Property Name="No" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="MoveOutStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SourceBoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="MoveInStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledMoveCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="MoveCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="HaveBackedCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ActualJobPerson" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HappenTime" Type="DateTime" Precision="3" />
-          <Property Name="JobTicketID" Type="Int32" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="StockInfoID" Type="Int32" />
-          <NavigationProperty Name="JobTicket" Relationship="WMSModel.FK__JobTicket__JobTi__72C60C4A" FromRole="JobTicketItem" ToRole="JobTicket" />
-          <NavigationProperty Name="StockInfo" Relationship="WMSModel.FK_JobTicketItem_StockInfo" FromRole="JobTicketItem" ToRole="StockInfo" />
+          <NavigationProperty Name="JobTicket" Relationship="WMSModel.FK__JobTicket__JobTi__5D60DB10" FromRole="JobTicketItem" ToRole="JobTicket" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -4897,7 +5051,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="CreateUserID" Type="Int32" />
           <Property Name="JobTicketID" Type="Int32" />
           <Property Name="LastUpdateUserID" Type="Int32" />
-          <NavigationProperty Name="JobTicket" Relationship="WMSModel.FK__PutOutSto__JobTi__75A278F5" FromRole="PutOutStorageTicket" ToRole="JobTicket" />
           <NavigationProperty Name="PutOutStorageTicketItem" Relationship="WMSModel.FK__PutOutSto__PutOu__18EBB532" FromRole="PutOutStorageTicket" ToRole="PutOutStorageTicketItem" />
         </EntityType>
         <EntityType Name="PutOutStorageTicketItem">
@@ -5027,6 +5180,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ProjectID" Type="Int32" Nullable="false" />
           <Property Name="CreateUserID" Type="Int32" />
           <Property Name="LastUpdateUserID" Type="Int32" />
+          <NavigationProperty Name="JobTicket" Relationship="WMSModel.FK__JobTicket__Shipm__3B0BC30C" FromRole="ShipmentTicket" ToRole="JobTicket" />
           <NavigationProperty Name="Project" Relationship="WMSModel.FK__ShipmentT__Proje__6C190EBB" FromRole="ShipmentTicket" ToRole="Project" />
           <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK__ShipmentT__Wareh__2F10007B" FromRole="ShipmentTicket" ToRole="Warehouse" />
           <NavigationProperty Name="ShipmentTicketItem" Relationship="WMSModel.FK_ShipmentTicketItem_ShipmentTicket" FromRole="ShipmentTicket" ToRole="ShipmentTicketItem" />
@@ -5060,9 +5214,33 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PutawayTicketItemID" Type="Int32" />
-          <NavigationProperty Name="JobTicketItem" Relationship="WMSModel.FK_JobTicketItem_StockInfo" FromRole="StockInfo" ToRole="JobTicketItem" />
           <NavigationProperty Name="PutawayTicketItem" Relationship="WMSModel.FK_StockInfo_PutawayTicketItem" FromRole="StockInfo" ToRole="PutawayTicketItem" />
           <NavigationProperty Name="PutOutStorageTicketItem" Relationship="WMSModel.FK_PutOutStorageTicketItem_StockInfo" FromRole="StockInfo" ToRole="PutOutStorageTicketItem" />
+          <NavigationProperty Name="StockInfoCheckTicketItem" Relationship="WMSModel.FK__StockInfo__Stock__6319B466" FromRole="StockInfo" ToRole="StockInfoCheckTicketItem" />
+        </EntityType>
+        <EntityType Name="StockInfoCheckTicket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CheckDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateUserID" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateUserID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="StockInfoCheckTicketItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CheckDate" Type="DateTime" Precision="3" />
+          <Property Name="StockInfoID" Type="Int32" />
+          <Property Name="ExcpetedOverflowAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExpectedShipmentAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RealOverflowAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RealShipmentAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="StockInfo" Relationship="WMSModel.FK__StockInfo__Stock__6319B466" FromRole="StockInfoCheckTicketItem" ToRole="StockInfo" />
         </EntityType>
         <EntityType Name="SubmissionTicket">
           <Key>
@@ -6581,6 +6759,68 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdateUserSupplierID" Type="Int32" />
         </EntityType>
+        <EntityType Name="StockInfoCheckTicketItemView">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CheckDate" Type="DateTime" Precision="3" />
+          <Property Name="StockInfoID" Type="Int32" />
+          <Property Name="ExcpetedOverflowAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExpectedShipmentAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RealOverflowAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RealShipmentAreaAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierContractNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierStartDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierEndDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierInvoiceDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierBalanceDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierFullName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierTaxpayerNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierAddress" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierTel" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierBankName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierBankAccount" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierBankNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierZipCode" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierRecipientName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentProjectID" Type="Int32" />
+          <Property Name="ComponentWarehouseID" Type="Int32" />
+          <Property Name="ComponentSupplierID" Type="Int32" />
+          <Property Name="ComponentContainerNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentFactroy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentWorkPosition" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentSupplierType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentSize" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentCategory" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentGroupPrincipal" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ComponentSingleCarUsageAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentCharge1" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentCharge2" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement1Day" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement3Day" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement5Day" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ComponentInventoryRequirement10Day" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StockInfoCheckTicketView">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="CheckDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateUserID" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateUserID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="StockInfoView">
           <Key>
             <PropertyRef Name="ID" />
@@ -7109,7 +7349,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__JobTicket__JobTi__72C60C4A">
+        <Association Name="FK__JobTicket__JobTi__5D60DB10">
           <End Type="WMSModel.JobTicket" Role="JobTicket" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -7119,31 +7359,19 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="JobTicketItem">
-              <PropertyRef Name="JobTicketID" />
+              <PropertyRef Name="JobTickedID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PutOutSto__JobTi__75A278F5">
-          <End Type="WMSModel.JobTicket" Role="JobTicket" Multiplicity="0..1" />
-          <End Type="WMSModel.PutOutStorageTicket" Role="PutOutStorageTicket" Multiplicity="*" />
+        <Association Name="FK__JobTicket__Shipm__3B0BC30C">
+          <End Type="WMSModel.ShipmentTicket" Role="ShipmentTicket" Multiplicity="0..1" />
+          <End Type="WMSModel.JobTicket" Role="JobTicket" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="JobTicket">
+            <Principal Role="ShipmentTicket">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="PutOutStorageTicket">
-              <PropertyRef Name="JobTicketID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_JobTicketItem_StockInfo">
-          <End Type="WMSModel.StockInfo" Role="StockInfo" Multiplicity="0..1" />
-          <End Type="WMSModel.JobTicketItem" Role="JobTicketItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockInfo">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="JobTicketItem">
-              <PropertyRef Name="StockInfoID" />
+            <Dependent Role="JobTicket">
+              <PropertyRef Name="ShipmentTicketID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7319,6 +7547,18 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__StockInfo__Stock__6319B466">
+          <End Type="WMSModel.StockInfo" Role="StockInfo" Multiplicity="0..1" />
+          <End Type="WMSModel.StockInfoCheckTicketItem" Role="StockInfoCheckTicketItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInfoCheckTicketItem">
+              <PropertyRef Name="StockInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Submissio__Submi__4D94879B">
           <End Type="WMSModel.SubmissionTicket" Role="SubmissionTicket" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -7361,7 +7601,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -7447,20 +7687,20 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="JobTicket">
             <EntityTypeMapping TypeName="WMSModel.JobTicket">
               <MappingFragment StoreEntitySet="JobTicket">
-                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
-                <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
-                <ScalarProperty Name="ShipmentTicketID" ColumnName="ShipmentTicketID" />
                 <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
+                <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
                 <ScalarProperty Name="PersonInCharge" ColumnName="PersonInCharge" />
                 <ScalarProperty Name="AssignmentArea" ColumnName="AssignmentArea" />
                 <ScalarProperty Name="PrintedTimes" ColumnName="PrintedTimes" />
-                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="RealAmount" ColumnName="RealAmount" />
                 <ScalarProperty Name="ScheduledAmount" ColumnName="ScheduledAmount" />
                 <ScalarProperty Name="JobGroupName" ColumnName="JobGroupName" />
                 <ScalarProperty Name="JobType" ColumnName="JobType" />
                 <ScalarProperty Name="JobTicketNo" ColumnName="JobTicketNo" />
+                <ScalarProperty Name="ShipmentTicketID" ColumnName="ShipmentTicketID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -7468,19 +7708,19 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="JobTicketItem">
             <EntityTypeMapping TypeName="WMSModel.JobTicketItem">
               <MappingFragment StoreEntitySet="JobTicketItem">
-                <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="JobTicketID" ColumnName="JobTicketID" />
                 <ScalarProperty Name="HappenTime" ColumnName="HappenTime" />
                 <ScalarProperty Name="ActualJobPerson" ColumnName="ActualJobPerson" />
                 <ScalarProperty Name="HaveBackedCount" ColumnName="HaveBackedCount" />
                 <ScalarProperty Name="MoveCount" ColumnName="MoveCount" />
                 <ScalarProperty Name="ScheduledMoveCount" ColumnName="ScheduledMoveCount" />
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="MoveInStorageLocation" ColumnName="MoveInStorageLocation" />
                 <ScalarProperty Name="SourceBoardNo" ColumnName="SourceBoardNo" />
                 <ScalarProperty Name="MoveOutStorageLocation" ColumnName="MoveOutStorageLocation" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="No" ColumnName="No" />
+                <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
+                <ScalarProperty Name="JobTickedID" ColumnName="JobTickedID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -7709,6 +7949,31 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <EntityTypeMapping TypeName="WMSModel.StockInfo">
               <MappingFragment StoreEntitySet="StockInfo">
                 <ScalarProperty Name="PutawayTicketItemID" ColumnName="PutawayTicketItemID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInfoCheckTicket">
+            <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicket">
+              <MappingFragment StoreEntitySet="StockInfoCheckTicket">
+                <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
+                <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInfoCheckTicketItem">
+            <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketItem">
+              <MappingFragment StoreEntitySet="StockInfoCheckTicketItem">
+                <ScalarProperty Name="RealShipmentAreaAmount" ColumnName="RealShipmentAreaAmount" />
+                <ScalarProperty Name="RealOverflowAreaAmount" ColumnName="RealOverflowAreaAmount" />
+                <ScalarProperty Name="ExpectedShipmentAreaAmount" ColumnName="ExpectedShipmentAreaAmount" />
+                <ScalarProperty Name="ExcpetedOverflowAreaAmount" ColumnName="ExcpetedOverflowAreaAmount" />
+                <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -9200,6 +9465,70 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="No" ColumnName="No" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInfoCheckTicketItemView">
+            <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketItemView">
+              <MappingFragment StoreEntitySet="StockInfoCheckTicketItemView">
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="ComponentInventoryRequirement10Day" ColumnName="ComponentInventoryRequirement10Day" />
+                <ScalarProperty Name="ComponentInventoryRequirement5Day" ColumnName="ComponentInventoryRequirement5Day" />
+                <ScalarProperty Name="ComponentInventoryRequirement3Day" ColumnName="ComponentInventoryRequirement3Day" />
+                <ScalarProperty Name="ComponentInventoryRequirement1Day" ColumnName="ComponentInventoryRequirement1Day" />
+                <ScalarProperty Name="ComponentCharge2" ColumnName="ComponentCharge2" />
+                <ScalarProperty Name="ComponentCharge1" ColumnName="ComponentCharge1" />
+                <ScalarProperty Name="ComponentSingleCarUsageAmount" ColumnName="ComponentSingleCarUsageAmount" />
+                <ScalarProperty Name="ComponentGroupPrincipal" ColumnName="ComponentGroupPrincipal" />
+                <ScalarProperty Name="ComponentCategory" ColumnName="ComponentCategory" />
+                <ScalarProperty Name="ComponentSize" ColumnName="ComponentSize" />
+                <ScalarProperty Name="ComponentType" ColumnName="ComponentType" />
+                <ScalarProperty Name="ComponentSupplierType" ColumnName="ComponentSupplierType" />
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+                <ScalarProperty Name="ComponentNo" ColumnName="ComponentNo" />
+                <ScalarProperty Name="ComponentWorkPosition" ColumnName="ComponentWorkPosition" />
+                <ScalarProperty Name="ComponentFactroy" ColumnName="ComponentFactroy" />
+                <ScalarProperty Name="ComponentContainerNo" ColumnName="ComponentContainerNo" />
+                <ScalarProperty Name="ComponentSupplierID" ColumnName="ComponentSupplierID" />
+                <ScalarProperty Name="ComponentWarehouseID" ColumnName="ComponentWarehouseID" />
+                <ScalarProperty Name="ComponentProjectID" ColumnName="ComponentProjectID" />
+                <ScalarProperty Name="SupplierRecipientName" ColumnName="SupplierRecipientName" />
+                <ScalarProperty Name="SupplierZipCode" ColumnName="SupplierZipCode" />
+                <ScalarProperty Name="SupplierBankNo" ColumnName="SupplierBankNo" />
+                <ScalarProperty Name="SupplierBankAccount" ColumnName="SupplierBankAccount" />
+                <ScalarProperty Name="SupplierBankName" ColumnName="SupplierBankName" />
+                <ScalarProperty Name="SupplierTel" ColumnName="SupplierTel" />
+                <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
+                <ScalarProperty Name="SupplierTaxpayerNumber" ColumnName="SupplierTaxpayerNumber" />
+                <ScalarProperty Name="SupplierFullName" ColumnName="SupplierFullName" />
+                <ScalarProperty Name="SupplierBalanceDate" ColumnName="SupplierBalanceDate" />
+                <ScalarProperty Name="SupplierInvoiceDate" ColumnName="SupplierInvoiceDate" />
+                <ScalarProperty Name="SupplierEndDate" ColumnName="SupplierEndDate" />
+                <ScalarProperty Name="SupplierStartDate" ColumnName="SupplierStartDate" />
+                <ScalarProperty Name="SupplierContractNo" ColumnName="SupplierContractNo" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="RealShipmentAreaAmount" ColumnName="RealShipmentAreaAmount" />
+                <ScalarProperty Name="RealOverflowAreaAmount" ColumnName="RealOverflowAreaAmount" />
+                <ScalarProperty Name="ExpectedShipmentAreaAmount" ColumnName="ExpectedShipmentAreaAmount" />
+                <ScalarProperty Name="ExcpetedOverflowAreaAmount" ColumnName="ExcpetedOverflowAreaAmount" />
+                <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInfoCheckTicketView">
+            <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketView">
+              <MappingFragment StoreEntitySet="StockInfoCheckTicketView">
+                <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
+                <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
+                <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
+                <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
