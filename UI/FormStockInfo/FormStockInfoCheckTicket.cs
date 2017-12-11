@@ -13,15 +13,15 @@ using System.Data.SqlClient;
 
 namespace WMS.UI
 {
-    public partial class FormStockCheck : Form
+    public partial class FormStockInfoCheckTicket : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormStockCheck()
+        public FormStockInfoCheckTicket()
         {
             InitializeComponent();
         }
 
-        private void FormStockCheck_Load(object sender, EventArgs e)
+        private void FormStockInfoCheckTicket_Load(object sender, EventArgs e)
         {
             InitComponents();
             this.Search();
@@ -30,7 +30,7 @@ namespace WMS.UI
         {
             this.wmsEntities.Database.Connection.Open();
 
-            string[] visibleColumnNames = (from kn in StockCheckViewMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -43,12 +43,12 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockCheckViewMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockCheckViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockCheckViewMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicketViewMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicketViewMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockCheckViewMetaData.KeyNames.Length; //限制表的长度
+            worksheet.Columns = StockInfoCheckTicketViewMetaData.KeyNames.Length; //限制表的长度
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)
@@ -68,7 +68,7 @@ namespace WMS.UI
 
             if (this.comboBoxSearchCondition.SelectedIndex != 0)
             {
-                key = (from kn in StockCheckViewMetaData.KeyNames
+                key = (from kn in StockInfoCheckTicketViewMetaData.KeyNames
                        where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
@@ -79,10 +79,10 @@ namespace WMS.UI
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                StockCheckView[] stockCheckViews = null;
+                StockInfoCheckTicketView[] stockCheckViews = null;
                 if (key == null || value == null) //查询条件为null则查询全部内容
                 {
-                    stockCheckViews = wmsEntities.Database.SqlQuery<StockCheckView>("SELECT * FROM StockCheckView").ToArray();
+                    stockCheckViews = wmsEntities.Database.SqlQuery<StockInfoCheckTicketView>("SELECT * FROM StockInfoCheckTicketView").ToArray();
                     Console.WriteLine(stockCheckViews.Length);
                 }
                 else
@@ -93,7 +93,7 @@ namespace WMS.UI
                     }
                     try
                     {
-                        stockCheckViews = wmsEntities.Database.SqlQuery<StockCheckView>(String.Format("SELECT * FROM StockCheckView WHERE {0} = {1}", key, value)).ToArray();
+                        stockCheckViews = wmsEntities.Database.SqlQuery<StockInfoCheckTicketView>(String.Format("SELECT * FROM StockInfoCheckTicketView WHERE {0} = {1}", key, value)).ToArray();
                     }
                     catch
                     {
@@ -111,8 +111,8 @@ namespace WMS.UI
                     }
                     for (int i = 0; i < stockCheckViews.Length; i++)
                     {
-                        StockCheckView curStockCheckView = stockCheckViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockCheckView, (from kn in StockCheckViewMetaData.KeyNames select kn.Key).ToArray());
+                        StockInfoCheckTicketView curStockInfoCheckTicketView = stockCheckViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoCheckTicketView, (from kn in StockInfoCheckTicketViewMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
@@ -132,12 +132,13 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int stockCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formStockCheckModify = new FormStockCheckModify(stockCheckID);
-                formStockCheckModify.SetModifyFinishedCallback(() =>
+                //var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify(stockCheckID);
+                var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify();
+                formStockInfoCheckTicketModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();
                 });
-                formStockCheckModify.Show();
+                formStockInfoCheckTicketModify.Show();
             }
             catch
             {
@@ -148,7 +149,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormStockCheckModify();
+            var form = new FormStockInfoCheckTicketModify();
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
@@ -189,7 +190,7 @@ namespace WMS.UI
             {
                 foreach (int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockCheck WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicket WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
                 }
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));

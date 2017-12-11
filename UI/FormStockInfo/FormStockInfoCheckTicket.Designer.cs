@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class FormStockCheck
+    partial class FormStockInfoCheckTicket
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockCheck));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockInfoCheckTicket));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
@@ -187,7 +187,7 @@
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormStockCheck";
             this.Text = "库存盘点";
-            this.Load += new System.EventHandler(this.FormStockCheck_Load);
+            this.Load += new System.EventHandler(this.FormStockInfoCheckTicket_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
