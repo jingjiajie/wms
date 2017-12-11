@@ -69,7 +69,7 @@ namespace WMS.UI.FormReceipt
             int id = ids[0];
             PutawayTicketItemView putawayTicketItemView = (from s in this.wmsEntities.PutawayTicketItemView
                                                            where s.ID == id
-                                                                 select s).FirstOrDefault();
+                                                           select s).FirstOrDefault();
             if (putawayTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应上架单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -143,6 +143,110 @@ namespace WMS.UI.FormReceipt
                 this.Invoke(new Action(this.RefreshTextBoxes));
             })).Start();
 
+        }
+
+        private void buttonModify_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlPutaway.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                if (putawayTicketItem == null)
+                {
+                    MessageBox.Show("错误 无法修改此条目");
+                }
+                else
+                {
+                    string errorInfo;
+                    if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicketItem, ReceiptMetaData.putawayTicketItemKeyName, out errorInfo) == false)
+                    {
+                        MessageBox.Show(errorInfo);
+                        return;
+                    }
+                    else
+                    {
+                        new Thread(() =>
+                        {
+                            wmsEntities.SaveChanges();
+                            this.Invoke(new Action(() =>
+                            {
+                                Search();
+                            }));
+                            MessageBox.Show("成功");
+                        }).Start();
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlPutaway.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                if (putawayTicketItem == null)
+                {
+                    MessageBox.Show("错误 无法修改此条目");
+                }
+                else
+                {
+                    putawayTicketItem.State = "作废";
+                    ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
+                    if (receiptTicketItem != null)
+                    {
+                        receiptTicketItem.State = "待收货";
+                    }
+                    new Thread(() =>
+                    {
+                        wmsEntities.SaveChanges();
+                        this.Invoke(new Action(() =>
+                        {
+                            Search();
+                        }));
+                        MessageBox.Show("成功");
+                    }).Start();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
+
+        private void buttonFInished_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlPutaway.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
 }

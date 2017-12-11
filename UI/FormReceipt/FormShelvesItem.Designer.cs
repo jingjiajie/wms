@@ -30,11 +30,11 @@
         {
             this.panel2 = new System.Windows.Forms.Panel();
             this.reoGridControlPutaway = new unvell.ReoGrid.ReoGridControl();
-            this.buttonCreatePutaway = new System.Windows.Forms.Button();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonAddItem = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonItemCheck = new System.Windows.Forms.Button();
+            this.buttonFInished = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
@@ -82,14 +82,15 @@
             this.reoGridControlPutaway.TabIndex = 9;
             this.reoGridControlPutaway.Text = "reoGridControlPutaway";
             // 
-            // buttonCreatePutaway
+            // buttonDelete
             // 
-            this.buttonCreatePutaway.Location = new System.Drawing.Point(42, 42);
-            this.buttonCreatePutaway.Name = "buttonCreatePutaway";
-            this.buttonCreatePutaway.Size = new System.Drawing.Size(159, 49);
-            this.buttonCreatePutaway.TabIndex = 0;
-            this.buttonCreatePutaway.Text = "新建上架单";
-            this.buttonCreatePutaway.UseVisualStyleBackColor = true;
+            this.buttonDelete.Location = new System.Drawing.Point(42, 42);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(159, 49);
+            this.buttonDelete.TabIndex = 0;
+            this.buttonDelete.Text = "删除上架单";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonAddItem
             // 
@@ -107,6 +108,7 @@
             this.buttonModify.TabIndex = 1;
             this.buttonModify.Text = "修改上架单条目";
             this.buttonModify.UseVisualStyleBackColor = true;
+            this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
             // 
             // tableLayoutPanel3
             // 
@@ -115,10 +117,10 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 165F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonCreatePutaway, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.buttonAddItem, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.buttonItemCheck, 2, 1);
+            this.tableLayoutPanel3.Controls.Add(this.buttonFInished, 2, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -130,14 +132,15 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(394, 188);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
-            // buttonItemCheck
+            // buttonFInished
             // 
-            this.buttonItemCheck.Location = new System.Drawing.Point(207, 42);
-            this.buttonItemCheck.Name = "buttonItemCheck";
-            this.buttonItemCheck.Size = new System.Drawing.Size(144, 49);
-            this.buttonItemCheck.TabIndex = 2;
-            this.buttonItemCheck.Text = "修改上架单";
-            this.buttonItemCheck.UseVisualStyleBackColor = true;
+            this.buttonFInished.Location = new System.Drawing.Point(207, 42);
+            this.buttonFInished.Name = "buttonFInished";
+            this.buttonFInished.Size = new System.Drawing.Size(144, 49);
+            this.buttonFInished.TabIndex = 2;
+            this.buttonFInished.Text = "上架完成";
+            this.buttonFInished.UseVisualStyleBackColor = true;
+            this.buttonFInished.Click += new System.EventHandler(this.buttonFInished_Click);
             // 
             // panel3
             // 
@@ -260,11 +263,11 @@
 
         private System.Windows.Forms.Panel panel2;
         private unvell.ReoGrid.ReoGridControl reoGridControlPutaway;
-        private System.Windows.Forms.Button buttonCreatePutaway;
+        private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonAddItem;
         private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.Button buttonItemCheck;
+        private System.Windows.Forms.Button buttonFInished;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelProperties;
