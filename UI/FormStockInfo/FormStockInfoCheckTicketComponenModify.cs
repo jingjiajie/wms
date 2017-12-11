@@ -9,14 +9,19 @@ using System.Windows.Forms;
 
 namespace WMS.UI
 {
-    public partial class FormStockCheckComponenModify : Form
+    public partial class FormStockInfoCheckTicketComponenModify : Form
     {
-        public FormStockCheckComponenModify()
+        public FormStockInfoCheckTicketComponenModify()
         {
             InitializeComponent();
-        }
+        } 
 
         private void FormStockCheckComponenModify_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelStatus_Click(object sender, EventArgs e)
         {
 
         }

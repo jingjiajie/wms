@@ -262,23 +262,23 @@
     <Compile Include="FormReceipt\ReceiptTicketModify.Designer.cs">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockCheck.cs">
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponenModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockCheck.Designer.cs">
-      <DependentUpon>FormStockCheck.cs</DependentUpon>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponenModify.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketComponenModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockCheckComponenModify.cs">
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockCheckComponenModify.Designer.cs">
-      <DependentUpon>FormStockCheckComponenModify.cs</DependentUpon>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockCheckModify.cs">
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicket.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockCheckModify.Designer.cs">
-      <DependentUpon>FormStockCheckModify.cs</DependentUpon>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicket.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicket.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStockInfo\FormStockInfo.cs">
       <SubType>Form</SubType>
@@ -364,6 +364,7 @@
     <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
     <Compile Include="FormStockInfo\StockInfoViewMetaData.cs" />
     <Compile Include="FromShipmentTicket\FormShipmentTicket.cs">
       <SubType>Form</SubType>
@@ -522,14 +523,8 @@
     <EmbeddedResource Include="FormReceipt\ReceiptTicketModify.resx">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockCheck.resx">
-      <DependentUpon>FormStockCheck.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockCheckComponenModify.resx">
-      <DependentUpon>FormStockCheckComponenModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockCheckModify.resx">
-      <DependentUpon>FormStockCheckModify.cs</DependentUpon>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicket.resx">
+      <DependentUpon>FormStockInfoCheckTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
