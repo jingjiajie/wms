@@ -12,13 +12,13 @@ using System.Threading;
 
 namespace WMS.UI
 {
-    public partial class FormSelectStockInfo : Form
+    public partial class FormSelectSupplier : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
         private int defaultStockInfoID = -1;
         private Action<int> selectFinishCallback = null;
 
-        public FormSelectStockInfo(int defaultStockInfoID = -1)
+        public FormSelectSupplier(int defaultStockInfoID = -1)
         {
             InitializeComponent();
             this.defaultStockInfoID = defaultStockInfoID;

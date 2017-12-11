@@ -143,6 +143,7 @@ namespace WMS.UI.FormBase
                 formUserModify.SetModifyFinishedCallback(() =>
                 {
                     this.Search();
+                    Utilities.SelectLineByID(this.reoGridControlMain, userID);
                 });
                 formUserModify.Show();
             }
@@ -185,7 +186,7 @@ namespace WMS.UI.FormBase
             {
                 foreach (int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM User WHERE ID = @userID", new SqlParameter("userID", id));
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM [User] WHERE ID = @userID", new SqlParameter("@userID", id));
                 }
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));

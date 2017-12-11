@@ -59,7 +59,7 @@ namespace WMS.UI
         private void textBoxComponentName_Click(object sender, EventArgs e)
         {
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
+            var formSelectStockInfo = new FormSelectSupplier(this.curStockInfoID);
             formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
             {
                 this.curStockInfoID = selectedStockInfoID;

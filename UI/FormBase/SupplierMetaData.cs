@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WMS.UI
 {
-    class SupplierInfoMetaData
+    class SupplierMetaData
     {
 
        private static KeyName[]  keyNames = {
