@@ -17,6 +17,7 @@ namespace WMS.UI
         private int warehouseID = -1;
         private int userID = -1;
         private int componenID = -1;
+        private int supplierID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
@@ -67,21 +68,16 @@ namespace WMS.UI
             }
             //this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
             //this.Controls.Find("textBoxWarehouseID", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
-            //this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
+            //this.Controls.Find("textBoxSupplierName", true)[0].TextChanged += textBoxSupplierName_TextChanged;
         }
-        private void textBoxSupplierID_TextChanged(object sender, EventArgs e)
+        private void textBoxSupplierName_TextChanged(object sender, EventArgs e)
         {
-            var textBoxSupplierID = this.Controls.Find("textBoxSupplierID", true)[0];
-            string supplierID = textBoxSupplierID.Text;
-            int iSupplierID;
-            if (int.TryParse(supplierID, out iSupplierID) == false)
-            {
-                return;
-            }
+            var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
+            string supplierName = textBoxSupplierName.Text;
             try
             {
-                Supplier supplierName = (from s in this.wmsEntities.Supplier where s.ID == iSupplierID select s).Single();
-                this.Controls.Find("TextBoxSupplierName", true)[0].Text = supplierName.Name;
+                Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
+                this.supplierID = supplierID.ID;
             }
             catch
             {
@@ -133,6 +129,30 @@ namespace WMS.UI
         private void buttonOK_Click(object sender, EventArgs e)
         {
 
+            var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
+            if (textBoxSupplierName.Text == string.Empty)
+            {
+                MessageBox.Show("供应商名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string supplierName = textBoxSupplierName.Text;
+            try
+            {
+                Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
+
+                this.supplierID = supplierID.ID;
+            }
+            catch
+            {
+
+            }
+
+            if (this.supplierID == -1)
+            {
+                MessageBox.Show("请输入正确的供应商名称！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             DataAccess.Component componen = null;           
             if (this.mode == FormMode.ALTER)
             {
@@ -148,6 +168,7 @@ namespace WMS.UI
 
             componen.ProjectID = this.projectID;
             componen.WarehouseID = this.warehouseID;
+            componen.SupplierID = this.supplierID;
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenMetaData.componenkeyNames, out string errorMessage) == false)

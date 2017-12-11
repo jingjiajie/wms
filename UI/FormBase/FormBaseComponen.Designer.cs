@@ -32,7 +32,7 @@
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripTextBoxSelect = new System.Windows.Forms.ToolStripTextBox();
+            this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripButtonSelect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
@@ -53,7 +53,7 @@
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabelSelect,
             this.toolStripComboBoxSelect,
-            this.toolStripTextBoxSelect,
+            this.textBoxSearchValue,
             this.toolStripButtonSelect,
             this.toolStripSeparator1,
             this.toolStripButtonAdd,
@@ -78,11 +78,12 @@
             this.toolStripComboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
             this.toolStripComboBoxSelect.Size = new System.Drawing.Size(114, 28);
+            this.toolStripComboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelect_SelectedIndexChanged);
             // 
-            // toolStripTextBoxSelect
+            // textBoxSearchValue
             // 
-            this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(151, 28);
+            this.textBoxSearchValue.Name = "textBoxSearchValue";
+            this.textBoxSearchValue.Size = new System.Drawing.Size(151, 28);
             // 
             // toolStripButtonSelect
             // 
@@ -137,7 +138,7 @@
             this.reoGridControlComponen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlComponen.LeadHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlComponen.Name = "reoGridControlComponen";
             this.reoGridControlComponen.RowHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Script = null;
@@ -184,7 +185,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.reoGridControlComponen);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormBaseComponent";
             this.Text = "零件信息";
             this.Load += new System.EventHandler(this.FormBaseComponent_Load);
@@ -201,7 +202,7 @@
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSelect;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelect;
-        private System.Windows.Forms.ToolStripTextBox toolStripTextBoxSelect;
+        private System.Windows.Forms.ToolStripTextBox textBoxSearchValue;
         private System.Windows.Forms.ToolStripButton toolStripButtonSelect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;

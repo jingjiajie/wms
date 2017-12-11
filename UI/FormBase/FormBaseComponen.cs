@@ -79,7 +79,7 @@ namespace WMS.UI
                 key = (from kn in ComponenMetaData.componenkeyNames
                        where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
                        select kn.Key).First();
-                value = this.toolStripTextBoxSelect.Text;
+                value = this.textBoxSearchValue.Text;
             }
             
             this.labelStatus.Text = "正在搜索中...";
@@ -93,11 +93,11 @@ namespace WMS.UI
                 }
                 else
                 {
-                    double tmp;
-                    if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
-                    {
-                        value = "'" + value + "'";
-                    }
+                    //double tmp;
+                    //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                    //{
+                    value = "'" + value + "'";
+                    //}
                     try
                     {
                         componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
@@ -198,12 +198,27 @@ namespace WMS.UI
             {
                 foreach (int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @componenID", new SqlParameter("componenID", id));
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
                 }
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
             })).Start();
 
         }//删除
+
+
+
+        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                this.textBoxSearchValue.Text = "";
+                this.textBoxSearchValue.Enabled = false;
+            }
+            else
+            {
+                this.textBoxSearchValue.Enabled = true;
+            }
+        }
     }
-}
+    }
