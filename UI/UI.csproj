@@ -198,6 +198,12 @@
     <Compile Include="FormJobTicket\FormJobTicketItem.Designer.cs">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormShelvesItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormShelvesItem.Designer.cs">
+      <DependentUpon>FormShelvesItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormSubmissionItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -486,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketItem.resx">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormShelvesItem.resx">
+      <DependentUpon>FormShelvesItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSubmissionItem.resx">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>

@@ -12,15 +12,16 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class PutOutStorageTicketItem
+    public partial class StockInfoCheckTicketItem
     {
         public int ID { get; set; }
+        public Nullable<System.DateTime> CheckDate { get; set; }
         public Nullable<int> StockInfoID { get; set; }
-        public int PutOutStorageTicketID { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-        public Nullable<decimal> ExceedStockAmount { get; set; }
+        public Nullable<decimal> ExcpetedOverflowAreaAmount { get; set; }
+        public Nullable<decimal> ExpectedShipmentAreaAmount { get; set; }
+        public Nullable<decimal> RealOverflowAreaAmount { get; set; }
+        public Nullable<decimal> RealShipmentAreaAmount { get; set; }
     
-        public virtual PutOutStorageTicket PutOutStorageTicket { get; set; }
         public virtual StockInfo StockInfo { get; set; }
     }
 }

@@ -317,10 +317,7 @@ namespace WMS.UI
         }
 
         private void buttonMakePutaway_Click(object sender, EventArgs e)
-        {
-
-
-            
+        {   
             var worksheet = this.reoGridControlUser.Worksheets[0];
             try
             {
@@ -354,6 +351,11 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            
+        }
+
+        private void buttonReceiptCancel_Click(object sender, EventArgs e)
+        {
             
         }
     }

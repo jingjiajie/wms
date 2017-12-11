@@ -13,7 +13,7 @@ namespace WMS.UI
             //WMSEntities wmsEntities = new WMSEntities();
             SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
             //ReceiptTicketItemView receiptTicketItemView = (from rti in wmsEntities.ReceiptTicketItemView where rti.ID == receiptTicketItem.ID select rti).Single();
-            submissionTicketItem.ComponentID = receiptTicketItem.ComponentID;
+            //submissionTicketItem.ComponentID = receiptTicketItem.ComponentID;
             submissionTicketItem.SubmissionTicketID = submissionTicketID;
             submissionTicketItem.ID = 0;
             submissionTicketItem.State = "送检中";

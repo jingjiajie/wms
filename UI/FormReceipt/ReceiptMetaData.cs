@@ -122,5 +122,22 @@ namespace WMS.UI.FormReceipt
             new KeyName{Name = "最后操作员姓名", Key = "LastUpdateUserID", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "最后更新时间", Key = "LastUpdateTime", Visible = true, Editable = true, Save = true}
         };
+
+        public static KeyName[] putawayTicketItemKeyName =
+        {
+            new KeyName{Name = "ID", Key = "ID", Visible = true, Editable = false, Save = true},
+            new KeyName{Name = "上架单ID", Key = "PutawayTicketID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "收货单条目ID", Key = "ReceiptTicketItemID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "移位库位编码", Key = "DisplacementPositionNo", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "目标库位", Key = "TargetStorageLocation", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "托盘号", Key = "BoardNo", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "状态", Key = "State", Visible = true, Editable = false, Save = true},
+            new KeyName{Name = "计划移位数量", Key = "ScheduledMoveCount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "分配数量", Key = "DistrabuteCount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "移位数量", Key = "MoveCount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "实际作业人", Key = "OperatePerson", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "作业时间", Key = "OperateTime", Visible = true, Editable = true, Save = true},
+
+        };
     }
 }

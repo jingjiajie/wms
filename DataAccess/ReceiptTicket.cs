@@ -16,6 +16,7 @@ namespace WMS.DataAccess
     {
         public ReceiptTicket()
         {
+            this.PutawayTicket = new HashSet<PutawayTicket>();
             this.ReceiptTicketItem = new HashSet<ReceiptTicketItem>();
             this.SubmissionTicket = new HashSet<SubmissionTicket>();
         }
@@ -47,7 +48,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> ReceiptCount { get; set; }
         public string State { get; set; }
         public string No { get; set; }
-        public int SupplierID { get; set; }
+        public Nullable<int> SupplierID { get; set; }
         public string AssignmentPerson { get; set; }
         public Nullable<int> PostedCount { get; set; }
         public string BoxNo { get; set; }
@@ -55,14 +56,13 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public string MoveType { get; set; }
         public string Source { get; set; }
-        public Nullable<int> ProjectID { get; set; }
+        public int ProjectID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<int> CreateUserID { get; set; }
     
         public virtual Project Project { get; set; }
+        public virtual ICollection<PutawayTicket> PutawayTicket { get; set; }
         public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Warehouse Warehouse1 { get; set; }
         public virtual ICollection<SubmissionTicket> SubmissionTicket { get; set; }

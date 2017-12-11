@@ -141,6 +141,18 @@
     <Compile Include="StockInfo.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="StockInfoCheckTicket.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInfoCheckTicketItem.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInfoCheckTicketItemView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StockInfoCheckTicketView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="StockInfoView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>

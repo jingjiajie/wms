@@ -14,14 +14,8 @@ namespace WMS.DataAccess
     
     public partial class ReceiptTicketItem
     {
-        public ReceiptTicketItem()
-        {
-            this.PutawayTicketItem = new HashSet<PutawayTicketItem>();
-        }
-    
         public int ID { get; set; }
-        public int ComponentID { get; set; }
-        public int ReceiptTicketID { get; set; }
+        public Nullable<int> ComponentID { get; set; }
         public string PackageName { get; set; }
         public Nullable<decimal> ExpectedPackageAmount { get; set; }
         public Nullable<decimal> ExpectedAmount { get; set; }
@@ -36,9 +30,8 @@ namespace WMS.DataAccess
         public string RealRightProperty { get; set; }
         public string BoxNo { get; set; }
         public string State { get; set; }
+        public Nullable<int> ReceiptTicketID { get; set; }
     
-        public virtual Component Component { get; set; }
-        public virtual ICollection<PutawayTicketItem> PutawayTicketItem { get; set; }
         public virtual ReceiptTicket ReceiptTicket { get; set; }
     }
 }

@@ -62,9 +62,7 @@ namespace WMS.DataAccess
     
         public virtual ICollection<JobTicket> JobTicket { get; set; }
         public virtual Project Project { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual ICollection<ShipmentTicketItem> ShipmentTicketItem { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual ICollection<ShipmentTicketItem> ShipmentTicketItem { get; set; }
     }
 }
