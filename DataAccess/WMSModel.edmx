@@ -103,7 +103,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="JobTickedID" Type="int" Nullable="false" />
+          <Property Name="JobTicketID" Type="int" Nullable="false" />
           <Property Name="StockInfoID" Type="int" />
           <Property Name="No" Type="nvarchar" MaxLength="64" />
           <Property Name="Type" Type="nvarchar" MaxLength="64" />
@@ -2511,7 +2511,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="JobTicketItem">
-              <PropertyRef Name="JobTickedID" />
+              <PropertyRef Name="JobTicketID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4960,7 +4960,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="JobTickedID" Type="Int32" Nullable="false" />
+          <Property Name="JobTicketID" Type="Int32" Nullable="false" />
           <Property Name="StockInfoID" Type="Int32" />
           <Property Name="No" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -7359,7 +7359,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="JobTicketItem">
-              <PropertyRef Name="JobTickedID" />
+              <PropertyRef Name="JobTicketID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7720,7 +7720,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="No" ColumnName="No" />
                 <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
-                <ScalarProperty Name="JobTickedID" ColumnName="JobTickedID" />
+                <ScalarProperty Name="JobTicketID" ColumnName="JobTicketID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
