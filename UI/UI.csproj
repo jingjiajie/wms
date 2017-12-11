@@ -67,6 +67,12 @@
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\FormSelectSupplier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
+      <DependentUpon>FormSelectSupplier.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormAddPutawayItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -404,6 +410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSM\BMS4200M.resx">
       <DependentUpon>BMS4200M.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
+      <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormAddPutawayItem.resx">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
