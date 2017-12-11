@@ -83,31 +83,66 @@ namespace WMS.UI
             }
             
             this.labelStatus.Text = "正在搜索中...";
+
+
             new Thread(new ThreadStart(() =>
             {
                 var wmsEntities = new WMSEntities();
                 ComponentView[] componentViews = null;
-                if (key == null || value == null)        //搜索所有
+
+
+                if ((this.authority & authority_self) == 1)
                 {
-                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView").ToArray();
+                    if (key == null || value == null)        //搜索所有
+                    {
+                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView").ToArray();
+                    }
+                    else
+                    {
+                        //double tmp;
+                        //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                        //{
+                        value = "'" + value + "'";
+                        //}
+                        try
+                        {
+                            componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
                 }
-                else
+                if ((this.authority & authority_self) == 0)
                 {
-                    //double tmp;
-                    //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
-                    //{
-                    value = "'" + value + "'";
-                    //}
-                    try
+                    if (key == null || value == null)        //搜索所有
                     {
-                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
+                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView WHERE SupplierID = {0}", userID).ToArray();
                     }
-                    catch
+                    else
                     {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
+                        //double tmp;
+                        //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                        //{
+                        value = "'" + value + "'";
+                        //}
+                        try
+                        {
+                            componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1} AND SupplierID = {2}", key, value,userID)).ToArray();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                     }
                 }
+
+
+
+
                 this.reoGridControlComponen.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
