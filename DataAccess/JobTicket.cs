@@ -32,14 +32,11 @@ namespace WMS.DataAccess
         public string AssignmentArea { get; set; }
         public string PersonInCharge { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
-        public int ShipmentTicketID { get; set; }
-        public int CreateUserID { get; set; }
+        public Nullable<int> ShipmentTicketID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
     
-        public virtual User User { get; set; }
         public virtual ICollection<JobTicketItem> JobTicketItem { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual ShipmentTicket ShipmentTicket { get; set; }
         public virtual ICollection<PutOutStorageTicket> PutOutStorageTicket { get; set; }
     }
 }

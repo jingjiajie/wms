@@ -67,6 +67,12 @@
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </Compile>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\FormSelectSupplier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
+      <DependentUpon>FormSelectSupplier.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormAddPutawayItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,6 +256,24 @@
     <Compile Include="FormReceipt\ReceiptTicketModify.Designer.cs">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\FormStockCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockCheck.Designer.cs">
+      <DependentUpon>FormStockCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockCheckComponenModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockCheckComponenModify.Designer.cs">
+      <DependentUpon>FormStockCheckComponenModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockCheckModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockCheckModify.Designer.cs">
+      <DependentUpon>FormStockCheckModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -405,6 +429,9 @@
     <EmbeddedResource Include="BSM\BMS4200M.resx">
       <DependentUpon>BMS4200M.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
+      <DependentUpon>FormSelectSupplier.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormAddPutawayItem.resx">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
     </EmbeddedResource>
@@ -485,6 +512,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\ReceiptTicketModify.resx">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockCheck.resx">
+      <DependentUpon>FormStockCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockCheckComponenModify.resx">
+      <DependentUpon>FormStockCheckComponenModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockCheckModify.resx">
+      <DependentUpon>FormStockCheckModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>

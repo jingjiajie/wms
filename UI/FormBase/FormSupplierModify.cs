@@ -32,9 +32,9 @@ namespace WMS.UI
                 throw new Exception("未设置源库存信息");
             }
             this.tableLayoutPanel1.Controls.Clear();
-            for (int i = 0; i < SupplierInfoMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
             {
-                KeyName curKeyName = SupplierInfoMetaData.KeyNames[i];
+                KeyName curKeyName = SupplierMetaData.KeyNames[i];
                 if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
                 {
                     continue;
@@ -96,7 +96,7 @@ namespace WMS.UI
                 this.wmsEntities.Supplier.Add(supplier);
             }
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, supplier ,SupplierInfoMetaData .KeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, supplier ,SupplierMetaData .KeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

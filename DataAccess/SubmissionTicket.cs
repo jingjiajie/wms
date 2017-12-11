@@ -20,7 +20,7 @@ namespace WMS.DataAccess
         }
     
         public int ID { get; set; }
-        public int ReceiptTicketID { get; set; }
+        public Nullable<int> ReceiptTicketID { get; set; }
         public string CreateTime { get; set; }
         public string No { get; set; }
         public Nullable<int> HasSelfInspectionReport { get; set; }
@@ -34,8 +34,6 @@ namespace WMS.DataAccess
         public Nullable<int> CreateUserID { get; set; }
     
         public virtual ReceiptTicket ReceiptTicket { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> HappenTime { get; set; }
         public int JobTicketID { get; set; }
         public string State { get; set; }
-        public int StockInfoID { get; set; }
+        public Nullable<int> StockInfoID { get; set; }
     
         public virtual JobTicket JobTicket { get; set; }
         public virtual StockInfo StockInfo { get; set; }

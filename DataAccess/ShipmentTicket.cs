@@ -16,7 +16,6 @@ namespace WMS.DataAccess
     {
         public ShipmentTicket()
         {
-            this.JobTicket = new HashSet<JobTicket>();
             this.ShipmentTicketItem = new HashSet<ShipmentTicketItem>();
         }
     
@@ -60,11 +59,8 @@ namespace WMS.DataAccess
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
     
-        public virtual ICollection<JobTicket> JobTicket { get; set; }
         public virtual Project Project { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual ICollection<ShipmentTicketItem> ShipmentTicketItem { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual ICollection<ShipmentTicketItem> ShipmentTicketItem { get; set; }
     }
 }

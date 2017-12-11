@@ -37,13 +37,11 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> DeliverTime { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
-        public int CreateUserID { get; set; }
-        public int JobTicketID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
+        public Nullable<int> JobTicketID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
     
         public virtual JobTicket JobTicket { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
         public virtual ICollection<PutOutStorageTicketItem> PutOutStorageTicketItem { get; set; }
     }
 }

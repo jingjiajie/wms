@@ -61,8 +61,9 @@ namespace WMS.UI
                     MakeTreeNode("出库单管理"),
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
-                    MakeTreeNode("库存信息")
-                    })
+                    MakeTreeNode("库存信息"),
+                    MakeTreeNode("库存盘点"),
+                    }),
             };
 
             this.treeViewLeft.Nodes.Clear();
@@ -303,6 +304,17 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 var formBaseStock = new FormStockInfo();//实例化子窗口
+                formBaseStock.TopLevel = false;
+                formBaseStock.Dock = DockStyle.Fill;//窗口大小
+                formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(formBaseStock);
+                formBaseStock.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "库存盘点")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                var formBaseStock = new FormStockCheck();//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
                 formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏

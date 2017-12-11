@@ -15,7 +15,7 @@ namespace WMS.DataAccess
     public partial class PutOutStorageTicketItem
     {
         public int ID { get; set; }
-        public int StockInfoID { get; set; }
+        public Nullable<int> StockInfoID { get; set; }
         public int PutOutStorageTicketID { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> ExceedStockAmount { get; set; }
