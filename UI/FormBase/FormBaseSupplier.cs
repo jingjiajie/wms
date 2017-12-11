@@ -37,7 +37,7 @@ namespace WMS.UI
 
         private void InitSupplier ()
         {
-            string[] visibleColumnNames = (from kn in SupplierInfoMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -50,12 +50,12 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < SupplierInfoMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = SupplierInfoMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = SupplierInfoMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = SupplierMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = SupplierMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = SupplierInfoMetaData.KeyNames.Length;//限制表的长度
+            worksheet.Columns = SupplierMetaData.KeyNames.Length;//限制表的长度
            
         }
 
@@ -95,7 +95,7 @@ namespace WMS.UI
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                key = (from kn in SupplierInfoMetaData.KeyNames
+                key = (from kn in SupplierMetaData.KeyNames
                                where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
                                select kn.Key).First();
                 value = this.toolStripTextBoxSelect.Text;
@@ -182,7 +182,7 @@ namespace WMS.UI
                     for (int i = 0; i < SupplierView.Length; i++)
                     {
                         SupplierView curComponent = SupplierView[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierInfoMetaData.KeyNames
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierMetaData.KeyNames
 
 
                                                                                               select kn.Key).ToArray());

@@ -8,16 +8,21 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Reflection;
+using System.Threading;
 
 namespace WMS.UI.FormBase
 {
     public partial class FormUserModify : Form
     {
         private int userID = -1;
-        private WMSEntities wmsEntities = new WMSEntities();
+        private int curSupplierID = -1; //这个ID对应界面上的供应商名
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
+
+        TextBox textBoxUsername = null;
+        TextBox textBoxPassword = null;
+        TextBox textBoxAuthorityName = null;
 
         public FormUserModify(int userID = -1)
         {
@@ -32,51 +37,78 @@ namespace WMS.UI.FormBase
                 throw new Exception("未设置源库存信息");
             }
 
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < UserMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = UserMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
+            WMSEntities wmsEntities = new WMSEntities();
 
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, UserMetaData.KeyNames);
+            this.textBoxAuthorityName = (TextBox)this.Controls.Find("textBoxAuthorityName",true)[0];
+            this.textBoxUsername = (TextBox)this.Controls.Find("textBoxUsername", true)[0];
+            this.textBoxPassword = (TextBox)this.Controls.Find("textBoxPassword", true)[0];
+
+            this.textBoxPassword.PasswordChar = '*';
 
             if (this.mode == FormMode.ALTER)
             {
-                UserView userView = (from s in this.wmsEntities.UserView
+                UserView userView = (from s in wmsEntities.UserView
                                                where s.ID == this.userID
                                                select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(userView, this);
+                if(userView.SupplierID.HasValue)
+                {
+                    this.curSupplierID = userView.SupplierID.Value;
+                }
+
+                if((userView.Authority & (int)UserMetaData.AUTHORITY_MANAGER) == (int)UserMetaData.AUTHORITY_MANAGER)
+                {
+                    this.checkBoxAuthorityManager.Checked = true;
+                }else if ((userView.Authority & (int)UserMetaData.AUTHORITY_SUPPLIER) == (int)UserMetaData.AUTHORITY_SUPPLIER)
+                {
+                    this.checkBoxAuthoritySupplier.Checked = true;
+                }
+                else
+                {
+                    if((userView.Authority & (int)UserMetaData.AUTHORITY_RECEIPT_MANAGER) == (int)UserMetaData.AUTHORITY_RECEIPT_MANAGER)
+                    {
+                        this.checkBoxAuthorityReceipt.Checked = true;
+                    }
+                    if ((userView.Authority & (int)UserMetaData.AUTHORITY_SHIPMENT_MANAGER) == (int)UserMetaData.AUTHORITY_SHIPMENT_MANAGER)
+                    {
+                        this.checkBoxAuthorityShipment.Checked = true;
+                    }
+                    if((userView.Authority & (int)UserMetaData.AUTHORITY_STOCK_MANAGER) == (int)UserMetaData.AUTHORITY_STOCK_MANAGER)
+                    {
+                        this.checkBoxAuthorityStock.Checked = true;
+                    }
+                }
             }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+
+            WMSEntities wmsEntities = new WMSEntities();
             User user = null;
 
-            //若修改，则查询原StockInfo对象。若添加，则新建一个StockInfo对象。
+            if(textBoxUsername.Text.Length == 0)
+            {
+                MessageBox.Show("用户名不允许为空","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }else if (textBoxPassword.Text.Length == 0)
+            {
+                MessageBox.Show("密码不允许为空","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            //若修改，则查询原对象。若添加，则新建一个对象。
             if (this.mode == FormMode.ALTER)
             {
-                user = (from s in this.wmsEntities.User
+                user = (from s in wmsEntities.User
                              where s.ID == this.userID
                              select s).Single();
             }
             else if (mode == FormMode.ADD)
             {
                 user = new User();
-                this.wmsEntities.User.Add(user);
+                wmsEntities.User.Add(user);
             }
 
             //开始数据库操作
@@ -85,17 +117,56 @@ namespace WMS.UI.FormBase
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            wmsEntities.SaveChanges();
-            //调用回调函数
-            if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
+
+            if(this.curSupplierID != -1)
             {
-                this.modifyFinishedCallback();
+                user.SupplierID = this.curSupplierID;
             }
-            else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+            else
             {
-                this.addFinishedCallback();
+                user.SupplierID = null;
             }
-            this.Close();
+
+            user.Authority = 0;
+            if (this.checkBoxAuthorityManager.Checked)
+            {
+                user.Authority |= UserMetaData.AUTHORITY_MANAGER;
+            }
+            if (this.checkBoxAuthorityReceipt.Checked)
+            {
+                user.Authority |= UserMetaData.AUTHORITY_RECEIPT_MANAGER;
+            }
+            if (this.checkBoxAuthorityShipment.Checked)
+            {
+                user.Authority |= UserMetaData.AUTHORITY_SHIPMENT_MANAGER;
+            }
+            if (this.checkBoxAuthorityStock.Checked)
+            {
+                user.Authority |= UserMetaData.AUTHORITY_STOCK_MANAGER;
+            }
+            if (this.checkBoxAuthoritySupplier.Checked)
+            {
+                user.Authority |= UserMetaData.AUTHORITY_SUPPLIER;
+            }
+
+            new Thread(()=>
+            {
+                wmsEntities.SaveChanges();
+
+                this.Invoke(new Action(()=>
+                {
+                    //调用回调函数
+                    if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
+                    {
+                        this.modifyFinishedCallback();
+                    }
+                    else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+                    {
+                        this.addFinishedCallback();
+                    }
+                    this.Close();
+                }));
+            }).Start();
         }
 
         public void SetModifyFinishedCallback(Action callback)
@@ -120,6 +191,148 @@ namespace WMS.UI.FormBase
             {
                 this.Text = "添加用户信息";
                 this.buttonOK.Text = "添加用户信息";
+            }
+        }
+
+
+        private void checkBoxAuthorityManager_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxAuthorityShipment_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxAuthorityReceipt_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxAuthorityStock_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxAuthoritySupplier_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteAuthorityName(TextBox textBox,string delText)
+        {
+            string srcText = textBox.Text;
+            textBox.Text = srcText.Replace(delText, "");
+        }
+
+        private void addAuthorityName(TextBox textBox, string addName)
+        {
+            if(textBox.Text.Contains(addName) == false)
+            {
+                textBox.Text += addName;
+            }
+        }
+
+        private void checkBoxAuthorityManager_Click(object sender, EventArgs e)
+        {
+            if (this.checkBoxAuthorityManager.Checked)
+            {
+                addAuthorityName(this.textBoxAuthorityName, "管理员");
+                this.checkBoxAuthorityReceipt.Enabled = false;
+                this.checkBoxAuthorityReceipt.Checked = false;
+                this.checkBoxAuthorityShipment.Enabled = false;
+                this.checkBoxAuthorityShipment.Checked = false;
+                this.checkBoxAuthorityStock.Enabled = false;
+                this.checkBoxAuthorityStock.Checked = false;
+                this.checkBoxAuthoritySupplier.Enabled = false;
+                this.checkBoxAuthoritySupplier.Checked = false;
+            }
+            else
+            {
+                DeleteAuthorityName(this.textBoxAuthorityName, "管理员");
+                this.checkBoxAuthorityReceipt.Enabled = true;
+                this.checkBoxAuthorityShipment.Enabled = true;
+                this.checkBoxAuthorityStock.Enabled = true;
+                this.checkBoxAuthoritySupplier.Enabled = true;
+            }
+        }
+
+        private void checkBoxAuthorityShipment_Click(object sender, EventArgs e)
+        {
+            if (this.checkBoxAuthorityShipment.Checked)
+            {
+                addAuthorityName(this.textBoxAuthorityName, "发货员");
+            }
+            else
+            {
+                DeleteAuthorityName(this.textBoxAuthorityName, "发货员");
+            }
+        }
+
+        private void checkBoxAuthorityReceipt_Click(object sender, EventArgs e)
+        {
+            if (this.checkBoxAuthorityReceipt.Checked)
+            {
+                addAuthorityName(this.textBoxAuthorityName, "收货员");
+            }
+            else
+            {
+                DeleteAuthorityName(this.textBoxAuthorityName, "收货员");
+            }
+        }
+
+        private void checkBoxAuthorityStock_Click(object sender, EventArgs e)
+        {
+            if (this.checkBoxAuthorityStock.Checked)
+            {
+                addAuthorityName(this.textBoxAuthorityName, "库存管理员");
+            }
+            else
+            {
+                DeleteAuthorityName(this.textBoxAuthorityName, "库存管理员");
+            }
+        }
+
+        private void checkBoxAuthoritySupplier_Click(object sender, EventArgs e)
+        {
+            if (this.checkBoxAuthoritySupplier.Checked)
+            {
+                this.checkBoxAuthorityManager.Enabled = false;
+                this.checkBoxAuthorityManager.Checked = false;
+                this.checkBoxAuthorityReceipt.Enabled = false;
+                this.checkBoxAuthorityReceipt.Checked = false;
+                this.checkBoxAuthorityShipment.Enabled = false;
+                this.checkBoxAuthorityShipment.Checked = false;
+                this.checkBoxAuthorityStock.Enabled = false;
+                this.checkBoxAuthorityStock.Checked = false;
+                var formSelectSupplier = new FormSelectSupplier();
+                formSelectSupplier.SetSelectFinishCallback((selectedID) =>
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    string supplierName = (from s in wmsEntities.SupplierView
+                                           where s.ID == selectedID
+                                           select s.Name).FirstOrDefault();
+                    if (supplierName == null)
+                    {
+                        MessageBox.Show("选择供应商失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    addAuthorityName(this.textBoxAuthorityName, "供应商");
+                    this.curSupplierID = selectedID;
+                    this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName;
+                });
+                formSelectSupplier.Show();
+            }
+            else
+            {
+                DeleteAuthorityName(this.textBoxAuthorityName, "供应商");
+                this.curSupplierID = -1;
+                this.Controls.Find("textBoxSupplierName", true)[0].Text = "";
+                this.checkBoxAuthorityReceipt.Enabled = true;
+                this.checkBoxAuthorityShipment.Enabled = true;
+                this.checkBoxAuthorityStock.Enabled = true;
+                this.checkBoxAuthorityManager.Enabled = true;
             }
         }
     }
