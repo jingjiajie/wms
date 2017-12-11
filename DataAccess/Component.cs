@@ -19,13 +19,9 @@ namespace WMS.DataAccess
             this.ComponentShipmentInfo = new HashSet<ComponentShipmentInfo>();
             this.ComponentOuterPackingSize = new HashSet<ComponentOuterPackingSize>();
             this.ComponentSingleBoxTranPackingInfo = new HashSet<ComponentSingleBoxTranPackingInfo>();
-            this.ReceiptTicketItem = new HashSet<ReceiptTicketItem>();
-            this.SubmissionTicketItem = new HashSet<SubmissionTicketItem>();
         }
     
         public int ID { get; set; }
-        public int WarehouseID { get; set; }
-        public int SupplierID { get; set; }
         public string ContainerNo { get; set; }
         public string Factroy { get; set; }
         public string WorkPosition { get; set; }
@@ -44,6 +40,8 @@ namespace WMS.DataAccess
         public Nullable<decimal> InventoryRequirement5Day { get; set; }
         public Nullable<decimal> InventoryRequirement10Day { get; set; }
         public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> SupplierID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
     
         public virtual ICollection<ComponentShipmentInfo> ComponentShipmentInfo { get; set; }
         public virtual ICollection<ComponentOuterPackingSize> ComponentOuterPackingSize { get; set; }
@@ -51,7 +49,5 @@ namespace WMS.DataAccess
         public virtual Project Project { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Warehouse Warehouse { get; set; }
-        public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }
-        public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace WMS.DataAccess
     {
         public int ID { get; set; }
         public int ShipmentTicketID { get; set; }
-        public int StockInfoID { get; set; }
+        public Nullable<int> StockInfoID { get; set; }
         public Nullable<decimal> ExpectedShipmentAmount { get; set; }
         public Nullable<decimal> AssignedAmount { get; set; }
         public Nullable<decimal> PickingAmount { get; set; }
@@ -33,6 +33,5 @@ namespace WMS.DataAccess
         public string Unit { get; set; }
     
         public virtual ShipmentTicket ShipmentTicket { get; set; }
-        public virtual StockInfo StockInfo { get; set; }
     }
 }
