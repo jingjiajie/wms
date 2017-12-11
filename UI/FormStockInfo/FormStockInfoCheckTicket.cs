@@ -122,41 +122,41 @@ namespace WMS.UI
             })).Start();
         }
 
-        private void buttonAlter_Click(object sender, EventArgs e)
-        {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            try
-            {
-                if (worksheet.SelectionRange.Rows != 1)
-                {
-                    throw new Exception();
-                }
-                int stockCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                //var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify(stockCheckID);
-                var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify();
-                formStockInfoCheckTicketModify.SetModifyFinishedCallback(() =>
-                {
-                    this.Search();
-                });
-                formStockInfoCheckTicketModify.Show();
-            }
-            catch
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-        }
+        //private void buttonAlter_Click(object sender, EventArgs e)
+        //{
+        //    var worksheet = this.reoGridControlMain.Worksheets[0];
+        //    try
+        //    {
+        //        if (worksheet.SelectionRange.Rows != 1)
+        //        {
+        //            throw new Exception();
+        //        }
+        //        int stockCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+        //        //var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify(stockCheckID);
+        //        var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify();
+        //        formStockInfoCheckTicketModify.SetModifyFinishedCallback(() =>
+        //        {
+        //            this.Search();
+        //        });
+        //        formStockInfoCheckTicketModify.Show();
+        //    }
+        //    catch
+        //    {
+        //        MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
+        //}
 
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            var form = new FormStockInfoCheckTicketModify();
-            form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback(() =>
-            {
-                this.Search();
-            });
-            form.Show();
-        }
+        //private void buttonAdd_Click(object sender, EventArgs e)
+        //{
+        //    var form = new FormStockInfoCheckTicketModify();
+        //    form.SetMode(FormMode.ADD);
+        //    form.SetAddFinishedCallback(() =>
+        //    {
+        //        this.Search();
+        //    });
+        //    form.Show();
+        //}
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
@@ -216,6 +216,12 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Enabled = true;
             }
+        }
+
+        private void buttonAdd_Click_1(object sender, EventArgs e)
+        {
+            FormStockInfoCheckTicketModify  a1 = new  FormStockInfoCheckTicketModify();
+            a1.Show();
         }
     }
 }

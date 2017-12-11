@@ -262,6 +262,18 @@
     <Compile Include="FormReceipt\ReceiptTicketModify.Designer.cs">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponenModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponenModify.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketComponenModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicket.cs">
       <SubType>Form</SubType>
     </Compile>
