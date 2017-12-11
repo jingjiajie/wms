@@ -228,6 +228,7 @@
             this.buttonReceiptCancel.Name = "buttonReceiptCancel";
             this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
             this.buttonReceiptCancel.Text = "取消收货";
+            this.buttonReceiptCancel.Click += new System.EventHandler(this.buttonReceiptCancel_Click);
             // 
             // toolStripButton1
             // 

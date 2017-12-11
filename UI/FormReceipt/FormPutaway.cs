@@ -41,11 +41,10 @@ namespace WMS.UI.FormReceipt
             WMSEntities wmsEntities = new WMSEntities();
             //this.Controls.Clear();
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.putawayTicketKeyName);
-            this.Controls.Find("textBoxState", true)[0].Text = "待上架";
-            this.Controls.Find("textBoxState", true)[0].Enabled = false;
-
             this.reoGridControlPutaway.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
-
+            TextBox textBoxReceiptTitcket = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
+            textBoxReceiptTitcket.Text = this.receiptTicketID.ToString();
+            textBoxReceiptTitcket.Enabled = false;
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             //textBoxComponentName.Click += textBoxComponentName_Click;
             //textBoxComponentName.ReadOnly = true;
@@ -76,8 +75,10 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("系统错误，未找到相应送检单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            //putawayTicketView.ReceiptTicketID = this.receiptTicketID;
             //this.putawayTicketID = int.Parse(submissionTicketItemView.SubmissionTicketID.ToString());
             Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
+            //this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
             //Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
         }
 
@@ -91,6 +92,7 @@ namespace WMS.UI.FormReceipt
                     textBox.Text = "";
                 }
             }
+            this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
         }
 
         private void InitComponents()
@@ -161,8 +163,10 @@ namespace WMS.UI.FormReceipt
                 {
                     wmsEntities.PutawayTicket.Add(putawayTicket);
                     wmsEntities.SaveChanges();
+                    this.Invoke(new Action(() => Search()));
+                    MessageBox.Show("成功");
                 }).Start();
-                MessageBox.Show("成功");
+                
             }
         }
 
@@ -178,7 +182,7 @@ namespace WMS.UI.FormReceipt
                 int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).Single();
                 string errorInfo;
-                if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo))
+                if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo) == false)
                 {
                     MessageBox.Show(errorInfo);
                     Search();
@@ -189,10 +193,11 @@ namespace WMS.UI.FormReceipt
                     new Thread(() =>
                     {
                         wmsEntities.SaveChanges();
+                        Search();
                         MessageBox.Show("成功");
-                    });
+                    }).Start();
                 }
-                Search();
+                
             }
             catch
             {
@@ -211,23 +216,8 @@ namespace WMS.UI.FormReceipt
                     throw new Exception();
                 }
                 int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).Single();
-                string errorInfo;
-                if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo))
-                {
-                    MessageBox.Show(errorInfo);
-                    Search();
-                    return;
-                }
-                else
-                {
-                    new Thread(() =>
-                    {
-                        wmsEntities.SaveChanges();
-                        MessageBox.Show("成功");
-                    });
-                }
-                Search();
+                FormAddPutawayItem formAddPutawayItem = new FormAddPutawayItem(putawayTicketID, this.receiptTicketID);
+                formAddPutawayItem.Show();
             }
             catch
             {
