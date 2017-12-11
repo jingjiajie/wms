@@ -85,6 +85,7 @@
             this.buttonReceiptCancel.Name = "buttonReceiptCancel";
             this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
             this.buttonReceiptCancel.Text = "取消收货";
+            this.buttonReceiptCancel.Click += new System.EventHandler(this.buttonReceiptCancel_Click);
             // 
             // buttonPutaway
             // 
@@ -95,6 +96,7 @@
             this.buttonPutaway.Name = "buttonPutaway";
             this.buttonPutaway.Size = new System.Drawing.Size(40, 25);
             this.buttonPutaway.Text = "收货";
+            this.buttonPutaway.Click += new System.EventHandler(this.buttonPutaway_Click);
             // 
             // buttonDelete
             // 

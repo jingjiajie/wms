@@ -317,10 +317,7 @@ namespace WMS.UI
         }
 
         private void buttonMakePutaway_Click(object sender, EventArgs e)
-        {
-
-
-            
+        {   
             var worksheet = this.reoGridControlUser.Worksheets[0];
             try
             {
