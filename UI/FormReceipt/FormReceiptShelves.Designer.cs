@@ -39,7 +39,7 @@
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonDistribute = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDistributeCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPrint = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonOperation = new System.Windows.Forms.ToolStripButton();
@@ -80,7 +80,7 @@
             this.toolStripButtonAlter,
             this.toolStripButtonDelete,
             this.toolStripSeparator2,
-            this.toolStripButtonDistribute,
+            this.toolStripButtonItem,
             this.toolStripButtonDistributeCancel,
             this.toolStripButtonPrint,
             this.toolStripButtonOperation,
@@ -148,17 +148,18 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
             // 
-            // toolStripButtonDistribute
+            // toolStripButtonItem
             // 
-            this.toolStripButtonDistribute.AutoSize = false;
-            this.toolStripButtonDistribute.BackColor = System.Drawing.SystemColors.Control;
-            this.toolStripButtonDistribute.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButtonDistribute.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDistribute.Image")));
-            this.toolStripButtonDistribute.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonDistribute.Name = "toolStripButtonDistribute";
-            this.toolStripButtonDistribute.Size = new System.Drawing.Size(40, 25);
-            this.toolStripButtonDistribute.Text = "分配";
-            this.toolStripButtonDistribute.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.toolStripButtonItem.AutoSize = false;
+            this.toolStripButtonItem.BackColor = System.Drawing.SystemColors.Control;
+            this.toolStripButtonItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButtonItem.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonItem.Image")));
+            this.toolStripButtonItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonItem.Name = "toolStripButtonItem";
+            this.toolStripButtonItem.Size = new System.Drawing.Size(80, 25);
+            this.toolStripButtonItem.Text = "查看详细";
+            this.toolStripButtonItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            this.toolStripButtonItem.Click += new System.EventHandler(this.toolStripButtonItem_Click);
             // 
             // toolStripButtonDistributeCancel
             // 
@@ -230,7 +231,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDistribute;
+        private System.Windows.Forms.ToolStripButton toolStripButtonItem;
         private System.Windows.Forms.ToolStripButton toolStripButtonDistributeCancel;
         private System.Windows.Forms.ToolStripButton toolStripButtonPrint;
         private System.Windows.Forms.ToolStripButton toolStripButtonOperation;

@@ -60,7 +60,7 @@ namespace WMS.UI.FormReceipt
                             worksheet[n, j] = columns[j];
                         }
                         CheckBoxCell checkboxCell;
-                        worksheet[i, worksheet.Columns-1] = new object[] { checkboxCell = new CheckBoxCell() };
+                        worksheet[n, worksheet.Columns-1] = new object[] { checkboxCell = new CheckBoxCell() };
                         this.checkColumn = worksheet.Columns-1;
                         n++;
                     }
@@ -95,6 +95,70 @@ namespace WMS.UI.FormReceipt
         private void buttonPutaway_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
+            List<ReceiptTicketItem> ids = new List<ReceiptTicketItem>();
+            bool result;
+            for (int i = 0; i < this.countRow; i++)
+            {
+                result = (worksheet[i, this.checkColumn] as bool?) ?? false;
+                if (result == true)
+                {
+                    int id;
+                    if (int.TryParse(worksheet[i, 0].ToString(), out id) == false)
+                    {
+                        MessageBox.Show(worksheet[i, 0].ToString() + "加入失败");
+                    }
+                    else
+                    {
+                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
+                        if (receiptTicketItem.State == "已收货" || receiptTicketItem.State == "送检中")
+                        {
+                            MessageBox.Show(receiptTicketItem.ID + " " + receiptTicketItem.State);
+                            return;
+                        }
+                        else
+                        {
+                            ids.Add(receiptTicketItem);
+                        }
+                    }
+                }
+            }
+            if (ids.Count == 0)
+            {
+                MessageBox.Show("请选择一项上架");
+                return;
+            }
+            else
+            {
+                foreach (ReceiptTicketItem i in ids)
+                {
+                    //PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == i && pti.State != "已收货" && pti.State != "送检中" select pti).FirstOrDefault();
+                    if (i == null)
+                    {
+                        MessageBox.Show(i + "不能添加此条目上架");
+                    }
+                    else
+                    {
+                        PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
+                        putawayTicketItem.ReceiptTicketItemID = i.ID;
+                        putawayTicketItem.PutawayTicketID = this.putawayTicketID;
+                        putawayTicketItem.State = "待上架";
+                        putawayTicketItem.DisplacementPositionNo = "No";
+                        putawayTicketItem.TargetStorageLocation = "Location";
+                        wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
+                        i.State = "已收货";
+                    }
+                }
+                new Thread(() =>
+                {
+                    wmsEntities.SaveChanges();
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Search();
+                    }));
+                    MessageBox.Show("添加成功");
+                }).Start();
+            }
+            /*
             bool result;
             for (int i = 0; i < this.countRow; i++)
             {
@@ -144,11 +208,78 @@ namespace WMS.UI.FormReceipt
                     this.Search();
                 }));
                 MessageBox.Show("添加成功");
-            }).Start();
+            }).Start();*/
         }
 
         private void buttonReceiptCancel_Click(object sender, EventArgs e)
         {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            List<ReceiptTicketItem> ids = new List<ReceiptTicketItem>();
+            bool result;
+            for (int i = 0; i < this.countRow; i++)
+            {
+                result = (worksheet[i, this.checkColumn] as bool?) ?? false;
+                if (result == true)
+                {
+                    int id;
+                    if (int.TryParse(worksheet[i, 0].ToString(), out id) == false)
+                    {
+                        MessageBox.Show(worksheet[i, 0].ToString() + "加入失败");
+                    }
+                    else
+                    {
+                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
+                        if (receiptTicketItem.State != "已收货")
+                        {
+                            MessageBox.Show(receiptTicketItem.ID + "没有收货");
+                            return;
+                        }
+                        else
+                        {
+                            ids.Add(receiptTicketItem);
+                        }
+                    }
+                }
+            }
+            if (ids.Count == 0)
+            {
+                MessageBox.Show("请选择一项取消收货");
+                return;
+            }
+            else
+            {
+                foreach (ReceiptTicketItem i in ids)
+                {
+                    //PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == i && pti.State != "已收货" && pti.State != "送检中" select pti).FirstOrDefault();
+                    if (i == null)
+                    {
+                        MessageBox.Show(i + "不能取消");
+                    }
+                    else
+                    {
+                        PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ReceiptTicketItemID == i.ID select pti).FirstOrDefault();
+                        if (putawayTicketItem == null)
+                        {
+                            MessageBox.Show("不能取消");
+                        }
+                        else
+                        {
+                            putawayTicketItem.State = "作废";
+                        }
+                        i.State = "待收货";
+                    }
+                }
+                new Thread(() =>
+                {
+                    wmsEntities.SaveChanges();
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Search();
+                    }));
+                    MessageBox.Show("已取消");
+                }).Start();
+            }
+            /*
             var worksheet = this.reoGridControlUser.Worksheets[0];
             bool result;
             for (int i = 0; i < this.countRow; i++)
@@ -188,6 +319,7 @@ namespace WMS.UI.FormReceipt
                 }));
                 MessageBox.Show("取消成功");
             }).Start();
+            */
         }
     }
 }

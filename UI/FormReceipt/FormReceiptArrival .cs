@@ -353,5 +353,10 @@ namespace WMS.UI
             }
             
         }
+
+        private void buttonReceiptCancel_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
