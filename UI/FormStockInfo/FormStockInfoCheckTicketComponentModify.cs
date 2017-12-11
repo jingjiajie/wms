@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace WMS.UI
 {
-    public partial class FormStockInfoCheckTicketComponenModify : Form
+    public partial class FormStockInfoCheckTicketComponentModify : Form
     {
-        public FormStockInfoCheckTicketComponenModify()
+        public FormStockInfoCheckTicketComponentModify()
         {
             InitializeComponent();
         } 
