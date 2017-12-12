@@ -11,6 +11,7 @@ namespace WMS.UI
 {
     public partial class FormStockInfoCheckTicketComponentModify : Form
     {
+        private Action<int> selectFinishCallback = null;
         public FormStockInfoCheckTicketComponentModify()
         {
             InitializeComponent();
@@ -18,7 +19,7 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in ComponenMetaData.componenkeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTickettModifyViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -31,13 +32,37 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlComponen.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTickettModifyViewMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = ComponenMetaData.componenkeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ComponenMetaData.componenkeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTickettModifyViewMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTickettModifyViewMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = ComponenMetaData.componenkeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + ComponenMetaData.componenkeyNames.Length);
+            worksheet.Columns = StockInfoCheckTickettModifyViewMetaData.KeyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + StockInfoCheckTickettModifyViewMetaData.KeyNames.Length);
+
+            this.tableLayoutPanel2.Controls.Clear();
+            for (int i = 0; i < StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length; i++)
+            {
+                KeyName curKeyName = StockInfoCheckTickettModifyViewMetaData1.KeyNames[i];
+                if (curKeyName.Visible == false && curKeyName.Editable == false)
+                {
+                    continue;
+                }
+                Label label = new Label();
+                label.Text = curKeyName.Name;
+                this.tableLayoutPanel2.Controls.Add(label);
+
+                TextBox textBox = new TextBox();
+                textBox.Name = "textBox" + curKeyName.Key;
+                if (curKeyName.Editable == false)
+                {
+                    textBox.Enabled = false;
+                }
+                this.tableLayoutPanel2.Controls.Add(textBox);
+            }
+
+
+
         }
 
         private void FormStockInfoCheckTicketComponentModify_Load(object sender, EventArgs e)
@@ -59,7 +84,7 @@ namespace WMS.UI
 
             if (this.toolStripComboBoxSelect1.SelectedIndex != 0)
             {
-                key = (from kn in ComponenMetaData.componenkeyNames
+                key = (from kn in StockInfoCheckTickettModifyViewMetaData.KeyNames
                        where kn.Name == this.toolStripComboBoxSelect1.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
@@ -72,24 +97,22 @@ namespace WMS.UI
             {
                 var wmsEntities = new WMS.DataAccess.WMSEntities();
 
-                WMS.DataAccess.ComponentView[] componentViews = null;
+                WMS.DataAccess.StockInfoView [] componentViews = null;
 
 
                
                     if (key == null || value == null)        //搜索所有
                     {
-                        componentViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.ComponentView>("SELECT * FROM ComponentView").ToArray();
+                        componentViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoView >("SELECT * FROM StockInfoView").ToArray();
                     }
                     else
                     {
-                        //double tmp;
-                        //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
-                        //{
+                      
                         value = "'" + value + "'";
-                        //}
+                      
                         try
                         {
-                            componentViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
+                            componentViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoView>(String.Format("SELECT * FROM StockInfoView WHERE {0} = {1}", key, value)).ToArray();
                         }
                         catch
                         {
@@ -108,8 +131,8 @@ namespace WMS.UI
                     for (int i = 0; i < componentViews.Length; i++)
                     {
 
-                        WMS.DataAccess.ComponentView curComponentView = componentViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenMetaData.componenkeyNames select kn.Key).ToArray());
+                        WMS.DataAccess.StockInfoView curComponentView = componentViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in StockInfoCheckTickettModifyViewMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j];
@@ -132,19 +155,48 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            this.SelectItem();
+        //    this.SelectItem();
         }
 
-        private void SelectItem()
+        //private void SelectItem()
+        //{
+        //    int[] ids = Utilities.GetSelectedIDs(this.reoGridControlComponen);
+        //    if (ids.Length != 1)
+        //    {
+        //        MessageBox.Show("请选择一项");
+        //        return;
+        //    }
+        //    this.selectFinishCallback?.Invoke(ids[0]);
+
+        //}
+
+
+
+        //private int[] GetSelectedIDs()
+        //{
+        //    List<int> ids = new List<int>();
+        //    var worksheet = this.reoGridControlComponen.Worksheets[0];
+        //    for (int row = worksheet.SelectionRange.Row; row <= worksheet.SelectionRange.EndRow; row++)
+        //    {
+        //        if (worksheet[row, 0] == null) continue;
+        //        if (int.TryParse(worksheet[row, 0].ToString(), out int shipmentTicketID))
+        //        {
+        //            ids.Add(shipmentTicketID);
+        //        }
+        //    }
+        //    return ids.ToArray();
+
+
+        //}
+
+            private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
-            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlComponen);
-            if (ids.Length != 1)
-            {
-                MessageBox.Show("请选择一项");
-                return;
-            }
-            //this.selectFinishCallback?.Invoke(ids[0]);
-            this.Close();
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
