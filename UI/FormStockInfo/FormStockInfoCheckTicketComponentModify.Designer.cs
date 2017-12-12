@@ -174,7 +174,7 @@
             this.Controls.Add(this.toolStripTop);
             this.Name = "FormStockInfoCheckTicketComponenModify";
             this.Text = "FormStockInfoCheckTicketComponenModify";
-            this.Load += new System.EventHandler(this.FormStockInfoCheckTicketComponenModify_Load);
+            this.Load += new System.EventHandler(this.FormStockInfoCheckTicketComponentModify_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
