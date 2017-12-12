@@ -84,12 +84,12 @@ namespace WMS.UI
 
                 if (this.projectID != -1)
                 {
-                    sql += "AND ShipmentTicketProjectID = @projectID ";
+                    sql += "AND ProjectID = @projectID ";
                     parameters.Add(new SqlParameter("projectID", this.projectID));
                 }
                 if (warehouseID != -1)
                 {
-                    sql += "AND ShipmentTicketWarehouseID = @warehouseID ";
+                    sql += "AND WarehouseID = @warehouseID ";
                     parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
                 }
                 if (key != null && value != null) //查询条件不为null则增加查询条件
