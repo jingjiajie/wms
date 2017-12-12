@@ -142,6 +142,7 @@
             this.buttonAlter.Name = "buttonAlter";
             this.buttonAlter.Size = new System.Drawing.Size(60, 25);
             this.buttonAlter.Text = "修改";
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
             // buttonDelete
             // 
