@@ -242,7 +242,7 @@ namespace WMS.UI
                 MessageBox.Show("内部错误：拷贝单选框数据失败","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            //newItem.JobTicketID = this.jobTicketID;
+            newItem.JobTicketID = this.jobTicketID;
             this.wmsEntities.JobTicketItem.Add(newItem);
             this.wmsEntities.SaveChanges();
             this.Search();
@@ -250,7 +250,7 @@ namespace WMS.UI
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
-
+        
         }
     }
 }

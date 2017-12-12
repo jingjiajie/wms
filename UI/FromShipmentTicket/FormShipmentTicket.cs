@@ -217,9 +217,10 @@ namespace WMS.UI
             ShipmentTicket shipmentTicket = (from s in this.wmsEntities.ShipmentTicket
                                              where s.ID == shipmentTicketID
                                              select s).FirstOrDefault();
+            shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_WAITING_PUTOUT; //更新发货单状态
 
             JobTicket jobTicket = new JobTicket();
-            jobTicket.JobTicketNo = "ZYD1234567";
+            jobTicket.JobTicketNo = "";
             jobTicket.JobType = "发货";
             jobTicket.ShipmentTicketID = shipmentTicket.ID;
             jobTicket.ScheduledAmount = shipmentTicket.ScheduledAmount;
@@ -230,19 +231,23 @@ namespace WMS.UI
             jobTicket.LastUpdateUserID = this.userID;
             jobTicket.LastUpdateTime = DateTime.Now;
 
-            this.wmsEntities.JobTicket.Add(jobTicket);
+            wmsEntities.JobTicket.Add(jobTicket);
 
             foreach (var shipmentTicketItem in shipmentTicket.ShipmentTicketItem)
             {
                 var jobTicketItem = new JobTicketItem();
                 jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
-                jobTicketItem.No = "ZY1234567";
+                jobTicketItem.No = "";
                 jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
 
                 jobTicket.JobTicketItem.Add(jobTicketItem);
             }
 
-            this.wmsEntities.SaveChanges();
+            wmsEntities.SaveChanges();
+
+            jobTicket.JobTicketNo = Utilities.GenerateNo("Z", jobTicket.ID);
+            wmsEntities.SaveChanges();
+            this.Search();
             MessageBox.Show("生成作业单成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

@@ -262,11 +262,11 @@
     <Compile Include="FormReceipt\ReceiptTicketModify.Designer.cs">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponenModify.cs">
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponenModify.Designer.cs">
-      <DependentUpon>FormStockInfoCheckTicketComponenModify.cs</DependentUpon>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.cs">
       <SubType>Form</SubType>
@@ -637,7 +637,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FormSubmission\" />
     <Folder Include="icon\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
