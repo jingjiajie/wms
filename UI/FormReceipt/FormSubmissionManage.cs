@@ -32,7 +32,7 @@ namespace WMS.UI
         {
             //初始化
             this.comboBoxSelect.Items.Add("无");
-            string[] columnNames = (from kn in ReceiptMetaData.checkKeyName select kn.Name).ToArray();
+            string[] columnNames = (from kn in ReceiptMetaData.submissionTicketKeyName select kn.Name).ToArray();
             this.comboBoxSelect.Items.AddRange(columnNames);
             this.comboBoxSelect.SelectedIndex = 0;
 
@@ -42,7 +42,7 @@ namespace WMS.UI
             for (int i = 0; i < columnNames.Length; i++)
             {
                 worksheet.ColumnHeaders[i].Text = columnNames[i];
-                worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.checkKeyName[i].Visible;
+                worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.submissionTicketKeyName[i].Visible;
             }
             worksheet.Columns = columnNames.Length;
         }
@@ -90,7 +90,7 @@ namespace WMS.UI
                             continue;
                         }
                         SubmissionTicketView curSubmissionTicketView = submissionTicketView[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curSubmissionTicketView, (from kn in ReceiptMetaData.checkKeyName select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curSubmissionTicketView, (from kn in ReceiptMetaData.submissionTicketKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[n, j] = columns[j];
@@ -118,7 +118,7 @@ namespace WMS.UI
             {
                 string condition = this.comboBoxSelect.Text;
                 string key = "";
-                foreach (KeyName kn in ReceiptMetaData.checkKeyName)
+                foreach (KeyName kn in ReceiptMetaData.submissionTicketKeyName)
                 {
                     if (condition == kn.Name)
                     {

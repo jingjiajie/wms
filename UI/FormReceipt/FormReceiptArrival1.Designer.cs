@@ -22,14 +22,14 @@ namespace WMS.UI.FormReceipt {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class FormReceiptArrival_ {
+    public class FormReceiptArrival {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal FormReceiptArrival_() {
+        internal FormReceiptArrival() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace WMS.UI.FormReceipt {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WMS.UI.FormReceipt.FormReceiptArrival ", typeof(FormReceiptArrival_).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WMS.UI.FormReceipt.FormReceiptArrival", typeof(FormReceiptArrival).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -123,9 +123,9 @@ namespace WMS.UI.FormReceipt {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        public static System.Drawing.Bitmap buttonPutaway_Image {
+        public static System.Drawing.Bitmap buttonItemSubmission_Image {
             get {
-                object obj = ResourceManager.GetObject("buttonPutaway.Image", resourceCulture);
+                object obj = ResourceManager.GetObject("buttonItemSubmission.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace WMS.UI.FormReceipt {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        public static System.Drawing.Bitmap buttonReceiptCancel_Image {
+        public static System.Drawing.Bitmap buttonPutaway_Image {
             get {
-                object obj = ResourceManager.GetObject("buttonReceiptCancel.Image", resourceCulture);
+                object obj = ResourceManager.GetObject("buttonPutaway.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -166,6 +166,16 @@ namespace WMS.UI.FormReceipt {
         public static System.Drawing.Bitmap toolStripButton1_Image {
             get {
                 object obj = ResourceManager.GetObject("toolStripButton1.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap toolStripButton2_Image {
+            get {
+                object obj = ResourceManager.GetObject("toolStripButton2.Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -241,6 +241,63 @@ namespace WMS.UI.FormReceipt
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                if (putawayTicketItem != null)
+                {
+                    putawayTicketItem.State = "已上架";
+                    StockInfo stockInfo = ReceiptUtilities.PutawayTicketItemToStockInfo(putawayTicketItem);
+                    wmsEntities.StockInfo.Add(stockInfo);
+                    new Thread(() =>
+                    {
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search();
+                        }));
+                    }).Start();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlPutaway.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                if (putawayTicketItem != null)
+                {
+                    if (putawayTicketItem.State != "已上架")
+                    {
+                        MessageBox.Show("该上架单项目未上架");
+                        this.Search();
+                    }
+                    else
+                    {
+                        putawayTicketItem.State = "待上架";
+                       // StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.PutawayTicketItemID == putawayTicketItem.ID select si).FirstOrDefault();
+                        
+                    }
+                    new Thread(() =>
+                    {
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search();
+                        }));
+                    }).Start();
+                }
             }
             catch
             {

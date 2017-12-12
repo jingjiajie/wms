@@ -9,14 +9,17 @@ using System.Windows.Forms;
 using System.Threading;
 using WMS.DataAccess;
 using unvell.ReoGrid;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
     public partial class FormJobTicketItem : Form
     {
         private int jobTicketID = -1;
-        private WMSEntities wmsEntities = new WMSEntities();
+        private int curStockInfoID = -1;
         Action jobTicketStateChangedCallback = null;
+
+        TextBox textBoxComponentName = null;
 
         private KeyName[] visibleColumns = (from kn in JobTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -41,8 +44,6 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
@@ -56,39 +57,48 @@ namespace WMS.UI
             worksheet.Columns = JobTicketItemViewMetaData.KeyNames.Length; //限制表的长度
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
-
+            this.textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName",true)[0];
+            this.textBoxComponentName.BackColor = Color.White;
+            this.textBoxComponentName.Click += textBoxComponentName_Click;
         }
 
-        //private void textBoxStockInfoID_TextChanged(object sender, EventArgs e)
-        //{
-        //    TextBox textBoxStockInfoID = (TextBox)this.Controls.Find("textBoxStockInfoID", true)[0];
-        //    if (int.TryParse(textBoxStockInfoID.Text,out int stockInfoID))
-        //    {
-        //        StockInfo stockInfo = (from s in this.wmsEntities.StockInfo
-        //                               where s.ID == stockInfoID
-        //                               select s).FirstOrDefault();
-        //        if(stockInfo == null)
-        //        {
-        //            return;
-        //        }
-        //        Utilities.CopyPropertiesToTextBoxes(stockInfo,this);
-        //    }
-        //}
+        private void textBoxComponentName_Click(object sender, EventArgs e)
+        {
+            var formSelectStockInfo = new FormSelectSupplier(this.curStockInfoID);
+            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
+            {
+                this.curStockInfoID = selectedStockInfoID;
+                new Thread(new ThreadStart(() =>
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    StockInfoView stockInfoView = (from s in wmsEntities.StockInfoView
+                                                   where s.ID == selectedStockInfoID
+                                                   select s).Single();
+                    this.Invoke(new Action(() =>
+                    {
+                        Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
+                    }));
+                })).Start();
+            });
+            formSelectStockInfo.Show();
+        }
 
         private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
         {
-            return (from jt in this.wmsEntities.JobTicketView
+            WMSEntities wmsEntities = new WMSEntities();
+            return (from jt in wmsEntities.JobTicketView
                     where jt.JobTicketNo == jobTicketNo
                     select jt).FirstOrDefault();
         }
 
-        private void Search()
+        private void Search(int selectID = -1)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
 
             worksheet[0, 1] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 JobTicketItemView[] jobTicketItemViews = (from j in wmsEntities.JobTicketItemView
                                                           where j.JobTicketID == this.jobTicketID
                                                           orderby j.ID descending
@@ -111,6 +121,10 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+                    if (selectID != -1)
+                    {
+                        Utilities.SelectLineByID(this.reoGridControlMain, selectID);
+                    }
                     this.RefreshTextBoxes();
                 }));
             })).Start();
@@ -132,12 +146,13 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(()=>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 //将状态置为已完成
                 foreach (int id in selectedIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
                 }
-                this.wmsEntities.SaveChanges();
+                wmsEntities.SaveChanges();
                 
                 //如果作业单中所有条目都完成，询问是否将作业单标记为完成
                 int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, STRING_FINISHED)).Single();
@@ -145,12 +160,12 @@ namespace WMS.UI
                 {
                     if (MessageBox.Show("检测到所有的作业任务都已经完成，是否将作业单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}",STRING_FINISHED,this.jobTicketID));
-                        this.wmsEntities.SaveChanges();
+                        wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}",STRING_FINISHED,this.jobTicketID));
+                        wmsEntities.SaveChanges();
                     }
                     this.jobTicketStateChangedCallback?.Invoke();
                 }
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(()=> this.Search()));
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }
@@ -183,12 +198,13 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(() =>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 foreach (int id in selectedIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
                 }
-                this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(() => this.Search()));
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }
@@ -210,15 +226,28 @@ namespace WMS.UI
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
             int[] ids = this.GetSelectedIDs();
-            if (ids.Length == 0) return;
+            if (ids.Length == 0)
+            {
+                this.curStockInfoID = -1;
+                return;
+            }
             int id = ids[0];
-            JobTicketItemView jobTicketItemView = (from jti in this.wmsEntities.JobTicketItemView
+            WMSEntities wmsEntities = new WMSEntities();
+            JobTicketItemView jobTicketItemView = (from jti in wmsEntities.JobTicketItemView
                                            where jti.ID == id
                                            select jti).FirstOrDefault();
             if (jobTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应作业单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+            if(jobTicketItemView.StockInfoID != null)
+            {
+                this.curStockInfoID = jobTicketItemView.StockInfoID.Value;
+            }
+            else
+            {
+                this.curStockInfoID = -1;
             }
             Utilities.CopyPropertiesToTextBoxes(jobTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(jobTicketItemView, this);
@@ -231,6 +260,11 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            if (this.curStockInfoID == -1)
+            {
+                MessageBox.Show("未选择零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             JobTicketItem newItem = new JobTicketItem();
             if (Utilities.CopyTextBoxTextsToProperties(this, newItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
             {
@@ -243,14 +277,83 @@ namespace WMS.UI
                 return;
             }
             newItem.JobTicketID = this.jobTicketID;
-            this.wmsEntities.JobTicketItem.Add(newItem);
-            this.wmsEntities.SaveChanges();
-            this.Search();
+            newItem.StockInfoID = this.curStockInfoID;
+            new Thread(()=>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                wmsEntities.JobTicketItem.Add(newItem);
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(()=>
+                {
+                    this.Search(newItem.ID);
+                }));
+                MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }).Start();
         }
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
-        
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行修改","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int id = ids[0];
+            new Thread(() =>
+            {
+                WMSEntities wmsEntities1 = new WMSEntities();
+                JobTicketItem jobTicketItem = (from j in wmsEntities1.JobTicketItem where j.ID == id select j).FirstOrDefault();
+                if(jobTicketItem == null)
+                {
+                    MessageBox.Show("找不到此作业任务","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                this.Invoke(new Action(()=>
+                {
+                    if (Utilities.CopyTextBoxTextsToProperties(this, jobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+                    {
+                        MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (Utilities.CopyComboBoxsToProperties(this, jobTicketItem, JobTicketItemViewMetaData.KeyNames) == false)
+                    {
+                        MessageBox.Show("内部错误：拷贝单选框数据失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    new Thread(()=>
+                    {
+                        wmsEntities1.SaveChanges();
+                        this.Invoke(new Action(() => this.Search()));
+                        MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }).Start();
+                }));
+            }).Start();
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length == 0)
+            {
+                MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(MessageBox.Show("确定要删除选中项吗？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            new Thread(()=>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                foreach (int id in ids)
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM JobTicketItem WHERE ID = @id", new SqlParameter("id", id));
+                }
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(() => this.Search()));
+                MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }).Start();
         }
     }
 }

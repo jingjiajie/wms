@@ -15,11 +15,17 @@ namespace WMS.UI
 {
     public partial class FormStockInfo : Form
     {
-        
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormStockInfo()
+        private int userID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
+
+        public FormStockInfo(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
+            this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
 
@@ -83,27 +89,26 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 StockInfoView[] stockInfoViews = null;
-                if (key == null || value == null) //查询条件为null则查询全部内容
+                string sql = "SELECT * FROM StockInfoView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+
+                if (this.projectID != -1)
                 {
-                    stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>("SELECT * FROM StockInfoView").ToArray();
-                    Console.WriteLine(stockInfoViews.Length);
+                    sql += "AND ProjectID = @projectID ";
+                    parameters.Add(new SqlParameter("projectID", this.projectID));
                 }
-                else
+                if (warehouseID != -1)
                 {
-                    if(decimal.TryParse(value,out decimal result) == false)
-                    {
-                        value = "'" + value + "'";
-                    }
-                    try
-                    {
-                        stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(String.Format("SELECT * FROM StockInfoView WHERE {0} = {1}",key,value)).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    sql += "AND WarehouseID = @warehouseID ";
+                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
                 }
+                if (key != null && value != null) //查询条件不为null则增加查询条件
+                {
+                    sql += "AND " + key + " = @value ";
+                    parameters.Add(new SqlParameter("value", value));
+                }
+                sql += " ORDER BY ID DESC"; //倒序排序
+                stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(sql, parameters.ToArray()).ToArray();
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";

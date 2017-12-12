@@ -124,13 +124,20 @@ namespace WMS.UI
                 MessageBox.Show("系统错误，未找到相应发货单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            this.curStockInfoID = shipmentTicketItemView.StockInfoID;
+            if (shipmentTicketItemView.StockInfoID != null)
+            {
+                this.curStockInfoID = shipmentTicketItemView.StockInfoID.Value;
+            }
+            else
+            {
+                this.curStockInfoID = -1;
+            }
             Utilities.CopyPropertiesToTextBoxes(shipmentTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
         }
 
 
-        private void Search()
+        private void Search(int selectID = -1)
         {
             this.wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControlMain.Worksheets[0];
@@ -159,6 +166,10 @@ namespace WMS.UI
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
+                    }
+                    if(selectID != -1)
+                    {
+                        Utilities.SelectLineByID(this.reoGridControlMain, selectID);
                     }
                     this.Invoke(new Action(this.RefreshTextBoxes));
                 }));
@@ -219,7 +230,7 @@ namespace WMS.UI
                     this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
                 }
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action<int>(this.Search));
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }
@@ -246,8 +257,7 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(()=>
                 {
-                    this.Search();
-                    Utilities.SelectLineByID(this.reoGridControlMain,shipmentTicketItem.ID);
+                    this.Search(shipmentTicketItem.ID);
                 }));
                 MessageBox.Show("添加成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();

@@ -17,7 +17,7 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
             //new KeyName(){Key="ProjectName",Name="项目",Editable=false,Save=false},
             //new KeyName(){Key="WarehouseName",Name="仓库",Editable=false,Save=false},
-            new KeyName(){Key="No",Name="单号",Editable=false,Save=false},
+            new KeyName(){Key="No",Name="发货单号",Editable=false,Save=false},
             new KeyName(){Key="Type",Name="单据类型名称",Editable=true},
             new KeyName(){Key="TypeNo",Name="单据类型编码",Editable=true},
             new KeyName(){Key="Source",Name="单据来源",Editable=true},

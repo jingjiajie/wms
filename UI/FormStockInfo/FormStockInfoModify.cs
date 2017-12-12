@@ -33,26 +33,7 @@ namespace WMS.UI
                 throw new Exception("未设置源库存信息");
             }
 
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = StockInfoViewMetaData.KeyNames[i];
-                if(curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, StockInfoViewMetaData.KeyNames);
 
             if(this.mode == FormMode.ALTER)
             {
@@ -62,50 +43,10 @@ namespace WMS.UI
                 Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
             }
 
-            this.Controls.Find("textBoxPutawayTicketItemID", true)[0].LostFocus += textBoxPutawayTicketItemID_LostFocus;
-        }
-
-        private void textBoxPutawayTicketItemID_LostFocus(object sender, EventArgs e)
-        {
-            TextBox textBoxPutawayTicketItemID = (TextBox)this.Controls.Find("textBoxPutawayTicketItemID", true)[0];
-            if (textBoxPutawayTicketItemID.Text.Length == 0) return;
-            CheckForeignKeyPutawayTicketItem();
-        }
-
-        private bool CheckForeignKeyPutawayTicketItem()
-        {
-            TextBox textBoxPutawayTicketItemID = (TextBox)this.Controls.Find("textBoxPutawayTicketItemID", true)[0];
-            if (textBoxPutawayTicketItemID.Text.Length == 0)
-            {
-                MessageBox.Show("上架单条目ID 不可以为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            int putawayTicketItemID;
-            if (int.TryParse(textBoxPutawayTicketItemID.Text, out putawayTicketItemID) == false)
-            {
-                MessageBox.Show("上架单条目ID 只接受数值类型", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            PutawayTicketItemView[] result = (from p in wmsEntities.PutawayTicketItemView
-                                              where p.ID == putawayTicketItemID
-                                              select p).ToArray();
-            if (result.Length == 0)
-            {
-                MessageBox.Show("未找到上架单条目ID为" + putawayTicketItemID + "的上架单条目，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            PutawayTicketItemView putawayTicketView = result[0];
-            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBox");
-            Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this, "textBoxPutawayTicketItem");
-            return true;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            //检查外键是否合法
-            if (CheckForeignKeyPutawayTicketItem() == false) return;
-
             StockInfo stockInfo = null;
             
             //若修改，则查询原StockInfo对象。若添加，则新建一个StockInfo对象。
