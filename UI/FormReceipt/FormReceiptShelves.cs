@@ -10,6 +10,7 @@ using WMS.DataAccess;
 using unvell.ReoGrid;
 using WMS.UI;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI.FormReceipt
 {
@@ -18,9 +19,21 @@ namespace WMS.UI.FormReceipt
         private FormMode formMode;
         private int receiptTicketID;
         private WMSEntities wmsEntities = new WMSEntities();
+        private int userID;
+        private int warehouseID;
+        private int projectID;
+
         public FormReceiptShelves()
         {
             InitializeComponent();
+        }
+
+        public FormReceiptShelves(int projectID, int warehouseID, int userID)
+        {
+            InitializeComponent();
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
         }
 
         public FormReceiptShelves(FormMode formMode, int receiptTicketID)
@@ -76,7 +89,7 @@ namespace WMS.UI.FormReceipt
                     }
                     try
                     {
-                        putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = {1}", key, value)).ToArray();
+                        putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = @key AND Warehouse = @warehouseID AND ProjectID = @projectID ", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
                     }
                     catch
                     {

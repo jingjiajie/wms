@@ -25,11 +25,23 @@ namespace WMS.UI
         const string STRING_REFUSE = "拒收";
 
         const string STRING_CANCEL = "作废";
+        private int projectID;
+        private int warehouseID;
+        private int userID;
         //Dictionary<string, string> receiptNameKeys = new Dictionary<string, string>() { { "ID", "ID" }, { "仓库ID", "Warehouse" }, { "序号", "SerialNumber" }, { "单据类型名称", "TypeName" }, { "单据号", "TicketNo" }, { "送货单号（SRM)", "DeliverTicketNo" }, { "凭证来源", "VoucherSource" }, { "凭证号", "VoucherNo" }, { "凭证行号", "VoucherLineNo" }, { "凭证年", "VoucherYear" }, { "关联凭证号", "ReletedVoucherNo" }, { "关联凭证行号", "ReletedVoucherLineNo" }, { "关联凭证年", "ReletedVoucherYear" }, { "抬头文本", "HeadingText" }, { "过账日期", "PostCountDate" }, { "内向交货单号", "InwardDeliverTicketNo" }, { "内向交货行号", "InwardDeliverLineNo" }, { "外向交货单号", "OutwardDeliverTicketNo" }, { "外向交货行号", "OutwardDeliverLineNo" }, { "采购订单号", "PurchaseTicketNo" }, { "采购订单行号", "PurchaseTicketLineNo" }, { "订单日期", "OrderDate" }, { "收货库位", "ReceiptStorageLocation" }, { "托盘号", "BoardNo" }, { "物料ID", "ComponentID" }, { "物料代码", "ComponentNo" }, { "收货包装", "ReceiptPackage" }, { "期待数量", "ExpectedAmount" }, { "收货数量", "ReceiptCount" }, { "库存状态", "StockState" }, { "存货日期", "InventoryDate" }, { "收货单号", "ReceiptTacketNo" }, { "厂商批号", "ManufactureNo" }, { "生产日期", "ManufactureDate" }, { "失效日期", "ExpiryDate" }, { "项目信息", "ProjectInfo" }, { "项目阶段信息", "ProjectPhaseInfo" }, { "物权属性", "RealRightProperty" }, { "供应商ID", "SupplierID" }, { "供应商", "Supplier" }, { "作业人员", "AssignmentPerson" }, { "是否过账", "PostedCount" }, { "箱号", "BoxNo" }, { "创建时间", "CreateTime" }, { "创建者", "Creater" }, { "最后修改人", "LastUpdatePerson" }, { "最后修改时间", "LastUpdateTime" }, { "移动类型", "MoveType" }, { "单据来源", "Source" } };
         public FormReceiptArrival()
         {
             InitializeComponent();
         }
+
+        public FormReceiptArrival(int projectID, int warehouseID, int userID)
+        {
+            InitializeComponent();
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
+        }
+
         private void InitComponents()
         {
             //初始化
@@ -70,7 +82,7 @@ namespace WMS.UI
                 ReceiptTicketView[] receiptTicketViews = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>("SELECT * FROM ReceiptTicketView").ToArray();
+                    receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>("SELECT * FROM ReceiptTicketView WHERE Warehouse = @warehouseID AND ProjectID = @projectID", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID)}).ToArray();
                 }
                 else
                 {
@@ -81,7 +93,7 @@ namespace WMS.UI
                     }
                     try
                     {
-                        receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>(String.Format("SELECT * FROM ReceiptTicketView WHERE {0} = {1}", key, value)).ToArray();
+                        receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>(String.Format("SELECT * FROM ReceiptTicketView WHERE {0} = @key AND Warehouse = @warehouseID AND ProjectID = @projectID ", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID)}).ToArray();
                     }
                     catch
                     {
@@ -261,8 +273,8 @@ namespace WMS.UI
         private void buttonCheckCancel_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            //try
-            //{
+            try
+            {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
                     throw new Exception();
@@ -272,28 +284,23 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 SubmissionTicket submissionTicket = (from sb in wmsEntities.SubmissionTicket where sb.ReceiptTicketID == receiptTicketID && sb.State != STRING_CANCEL select sb).Single();
                 SubmissionTicketItem[] submissionTicketItems = (from sbi in wmsEntities.SubmissionTicketItem where sbi.SubmissionTicketID == submissionTicket.ID select sbi).ToArray();
-                if (receiptTicket.State == STRING_SEND_CHECK || receiptTicket.State == "部分送检中")
+                if (receiptTicket.State == "送检中" || receiptTicket.State == "部分送检中")
                 {
-                    receiptTicket.State = STRING_WAIT_CHECK;
-                    submissionTicket.State = STRING_CANCEL;
-                    foreach(SubmissionTicketItem sti in submissionTicketItems)
-                    {
-                        sti.State = STRING_CANCEL;
-                    }
+                    receiptTicket.State = "待检";
+                    //submissionTicket.State = STRING_CANCEL;
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ReceiptTicketID=@receiptTicketID", new SqlParameter("receiptTicket", receiptTicketID));
                     wmsEntities.SaveChanges();
                 }
                 else
                 {
                     MessageBox.Show("此收货单并未送检!");
                 }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("请选择收货单");
-            //}
-
+            }
+            catch
+            {
+                MessageBox.Show("请选择收货单");
+            }
             Search(null, null);
-
         }
 
         private void buttonItems_Click(object sender, EventArgs e)

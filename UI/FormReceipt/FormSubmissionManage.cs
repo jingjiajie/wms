@@ -17,9 +17,21 @@ namespace WMS.UI
 {
     public partial class FormSubmissionManage : Form
     {
+        private int projectID;
+        private int warehouseID;
+        private int userID;
+
         public FormSubmissionManage()
         {
             InitializeComponent();
+        }
+
+        public FormSubmissionManage(int projectID, int warehouseID, int userID)
+        {
+            InitializeComponent();
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
         }
 
         private void FormSubmissionManage_Load(object sender, EventArgs e)
@@ -58,7 +70,7 @@ namespace WMS.UI
                 SubmissionTicketView[] submissionTicketView = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    submissionTicketView = wmsEntities.Database.SqlQuery<SubmissionTicketView>("SELECT * FROM SubmissionTicketView").ToArray();
+                    submissionTicketView = wmsEntities.Database.SqlQuery<SubmissionTicketView>("SELECT * FROM SubmissionTicketView WHERE ReceiptTicketWarehouse = @warehouseID AND ReceiptTicketProjectID = @projectID", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID) }).ToArray();
                 }
                 else
                 {
@@ -69,7 +81,7 @@ namespace WMS.UI
                     }
                     try
                     {
-                        submissionTicketView = wmsEntities.Database.SqlQuery<SubmissionTicketView>(String.Format("SELECT * FROM SubmissionTicketView WHERE {0} = {1}", key, value)).ToArray();
+                        submissionTicketView = wmsEntities.Database.SqlQuery<SubmissionTicketView>(String.Format("SELECT * FROM SubmissionTicketView WHERE {0} = @key AND ReceiptTicketWarehouse = @warehouseID AND ReceiptTicketProjectID = @projectID ", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
                     }
                     catch
                     {

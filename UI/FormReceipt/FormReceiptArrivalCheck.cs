@@ -249,6 +249,7 @@ namespace WMS.UI.FormReceipt
             {
                 new Thread(() =>
                 {
+                    submissionTicket.State = "待检";
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
                     wmsEntities.SaveChanges();
                     this.Invoke(new Action(() => Search()));
