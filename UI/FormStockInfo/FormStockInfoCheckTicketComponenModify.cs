@@ -40,13 +40,13 @@ namespace WMS.UI
             Console.WriteLine("表格行数：" + ComponenMetaData.componenkeyNames.Length);
         }
 
-        private void FormStockCheckComponenModify_Load(object sender, EventArgs e)
+        private void FormStockInfoCheckTicketComponenModify_Load(object sender, EventArgs e)
         {
             this.InitComponents();
             this.Search();
 
 
-        }
+        } 
 
         private void labelStatus_Click(object sender, EventArgs e)
         {
