@@ -19,7 +19,7 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in StockInfoCheckTickettModifyViewMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -32,18 +32,18 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlComponen.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTickettModifyViewMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTickettModifyViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTickettModifyViewMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoViewMetaData.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoViewMetaData.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoCheckTickettModifyViewMetaData.KeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + StockInfoCheckTickettModifyViewMetaData.KeyNames.Length);
+            worksheet.Columns = StockInfoViewMetaData.KeyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + StockInfoViewMetaData.KeyNames.Length);
 
             this.tableLayoutPanel2.Controls.Clear();
-            for (int i = 0; i < StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
             {
-                KeyName curKeyName = StockInfoCheckTickettModifyViewMetaData1.KeyNames[i];
+                KeyName curKeyName = StockInfoViewMetaData.KeyNames[i];
                 if (curKeyName.Visible == false && curKeyName.Editable == false)
                 {
                     continue;
@@ -84,7 +84,7 @@ namespace WMS.UI
 
             if (this.toolStripComboBoxSelect1.SelectedIndex != 0)
             {
-                key = (from kn in StockInfoCheckTickettModifyViewMetaData.KeyNames
+                key = (from kn in StockInfoCheckTickettModifyViewMetaData1.KeyNames
                        where kn.Name == this.toolStripComboBoxSelect1.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
@@ -132,7 +132,7 @@ namespace WMS.UI
                     {
 
                         WMS.DataAccess.StockInfoView curComponentView = componentViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in StockInfoCheckTickettModifyViewMetaData.KeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in StockInfoViewMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j];
