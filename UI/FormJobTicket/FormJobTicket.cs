@@ -206,6 +206,8 @@ namespace WMS.UI
                 shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
                 PutOutStorageTicket putOutStorageTicket = new PutOutStorageTicket();
                 wmsEntities.PutOutStorageTicket.Add(putOutStorageTicket);
+                putOutStorageTicket.ProjectID = this.projectID;
+                putOutStorageTicket.WarehouseID = this.warehouseID;
                 putOutStorageTicket.CreateUserID = this.userID;
                 putOutStorageTicket.CreateTime = DateTime.Now;
                 putOutStorageTicket.LastUpdateUserID = this.userID;

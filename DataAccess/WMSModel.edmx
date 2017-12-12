@@ -725,9 +725,6 @@
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="JobTicketID" />
-            <PropertyRef Name="StockInfoID" />
-            <PropertyRef Name="No" />
-            <PropertyRef Name="State" />
           </Key>
           <Property Name="JobTicketShipmentTicketID" Type="int" />
           <Property Name="JobTicketJobTicketNo" Type="nvarchar" MaxLength="64" />
@@ -745,82 +742,18 @@
           <Property Name="JobTicketLastUpdateTime" Type="datetime" />
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="JobTicketID" Type="int" Nullable="false" />
-          <Property Name="StockInfoID" Type="int" Nullable="false" />
-          <Property Name="No" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="StockInfoID" Type="int" />
+          <Property Name="No" Type="nvarchar" MaxLength="64" />
           <Property Name="Type" Type="nvarchar" MaxLength="64" />
           <Property Name="MoveOutStorageLocation" Type="nvarchar" MaxLength="64" />
           <Property Name="SourceBoardNo" Type="nvarchar" MaxLength="64" />
           <Property Name="MoveInStorageLocation" Type="nvarchar" MaxLength="64" />
-          <Property Name="State" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledMoveCount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="MoveCount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="HaveBackedCount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ActualJobPerson" Type="nvarchar" MaxLength="64" />
           <Property Name="HappenTime" Type="datetime" />
-          <Property Name="ShipmentTicketProjectID" Type="int" />
-          <Property Name="ShipmentTicketWarehouseID" Type="int" />
-          <Property Name="ShipmentTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketTypeNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketSegmentationChainCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketRelatedTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDate" Type="datetime" />
-          <Property Name="ShipmentTicketTicketNum" Type="int" />
-          <Property Name="ShipmentTicketRequireArriveDate" Type="datetime" />
-          <Property Name="ShipmentTicketState" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketScheduledAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketAllocatedAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketPickingAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketShipmentAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketExceedStorageAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketStation" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketReverseTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketSortType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketProductionLine" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketReceivingPersonName" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketContactAddress" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDeliveryPath" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDescription" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketCloseReason" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketCreateUserID" Type="int" />
-          <Property Name="ShipmentTicketCreateTime" Type="datetime" />
-          <Property Name="ShipmentTicketLastUpdateUserID" Type="int" />
-          <Property Name="ShipmentTicketLastUpdateTime" Type="datetime" />
-          <Property Name="ShipmentTicketPrintTimes" Type="int" />
-          <Property Name="ShipmentTicketWaitingToBeDone" Type="int" />
-          <Property Name="ShipmentTicketDeliveryTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketOuterPhysicalDistributionPath" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDeliveryPoint" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketEmergency" Type="int" />
-          <Property Name="ShipmentTicketShipmentPlaceNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketBoardPrintedTimes" Type="int" />
-          <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
-          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
-          <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
-          <Property Name="CreateUserPassword" Type="nvarchar" MaxLength="64" />
-          <Property Name="CreateUserAuthority" Type="int" />
-          <Property Name="CreateUserAuthorityName" Type="nvarchar" MaxLength="64" />
-          <Property Name="CreateUserSupplierID" Type="int" />
-          <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
-          <Property Name="LastUpdateUserPassword" Type="nvarchar" MaxLength="64" />
-          <Property Name="LastUpdateUserAuthority" Type="int" />
-          <Property Name="LastUpdateUserAuthorityName" Type="nvarchar" MaxLength="64" />
-          <Property Name="LastUpdateUserSupplierID" Type="int" />
-          <Property Name="StockInfoPutawayTicketItemID" Type="int" />
-          <Property Name="PutawayTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketType" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketReceiptTicketID" Type="int" />
-          <Property Name="PutawayTicketState" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketScheduledDisplacementAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDisplacementAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDistributeAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketPrintTimes" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketJobGroupName" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketCreateUserID" Type="int" />
-          <Property Name="PutawayTicketCreateTime" Type="datetime" />
-          <Property Name="PutawayTicketLastUpdateUserID" Type="int" />
-          <Property Name="PutawayTicketLastUpdateTime" Type="datetime" />
           <Property Name="ReceiptTicketItemReceiptTicketID" Type="int" />
           <Property Name="ReceiptTicketItemComponentID" Type="int" />
           <Property Name="ReceiptTicketItemPackageName" Type="nvarchar" MaxLength="64" />
@@ -836,33 +769,6 @@
           <Property Name="ReceiptTicketItemExpiryDate" Type="datetime" />
           <Property Name="ReceiptTicketItemRealRightProperty" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketItemBoxNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketVoucherYear" Type="datetime" />
-          <Property Name="ReceiptTicketReletedVoucherNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketReletedVoucherLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketReletedVoucherYear" Type="datetime" />
-          <Property Name="ReceiptTicketHeadingText" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPostCountDate" Type="datetime" />
-          <Property Name="ReceiptTicketInwardDeliverTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketInwardDeliverLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketOutwardDeliverTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketOutwardDeliverLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPurchaseTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPurchaseTicketLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketOrderDate" Type="datetime" />
-          <Property Name="ReceiptTicketReceiptStorageLocation" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketBoardNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketReceiptPackage" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketExpectedAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketReceiptCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketMoveType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketAssignmentPerson" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPostedCount" Type="int" />
-          <Property Name="ReceiptTicketBoxNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketCreateUserID" Type="int" />
-          <Property Name="ReceiptTicketCreateTime" Type="datetime" />
-          <Property Name="ReceiptTicketLastUpdateUserID" Type="int" />
-          <Property Name="ReceiptTicketLastUpdateTime" Type="datetime" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierContractNo" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierStartDate" Type="datetime" />
@@ -898,18 +804,6 @@
           <Property Name="ComponentInventoryRequirement3Day" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ComponentInventoryRequirement5Day" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ComponentInventoryRequirement10Day" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemPutawayTicketID" Type="int" />
-          <Property Name="PutawayTicketItemTargetStorageLocation" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemDisplacementPositionNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemID" Type="int" />
-          <Property Name="PutawayTicketItemBoardNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemScheduledMoveCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemDistrabuteCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemMoveCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemState" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemOperatePerson" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemOperateTime" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketLastUpdateUserName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.JobTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1208,11 +1102,10 @@
         <EntityType Name="PutOutStorageTicketItemView">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="StockInfoID" />
             <PropertyRef Name="PutOutStorageTicketID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="StockInfoID" Type="int" Nullable="false" />
+          <Property Name="StockInfoID" Type="int" />
           <Property Name="PutOutStorageTicketID" Type="int" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ExceedStockAmount" Type="decimal" Precision="18" Scale="0" />
@@ -1236,83 +1129,6 @@
           <Property Name="PutOutStorageTicketCreateTime" Type="datetime" />
           <Property Name="PutOutStorageTicketLastUpdateUserID" Type="int" />
           <Property Name="PutOutStorageTicketLastUpdateTime" Type="datetime" />
-          <Property Name="JobTicketShipmentTicketID" Type="int" />
-          <Property Name="JobTicketJobTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="JobTicketJobType" Type="nvarchar" MaxLength="64" />
-          <Property Name="JobTicketJobGroupName" Type="nvarchar" MaxLength="64" />
-          <Property Name="JobTicketScheduledAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="JobTicketRealAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="JobTicketState" Type="nvarchar" MaxLength="64" />
-          <Property Name="JobTicketPrintedTimes" Type="int" />
-          <Property Name="JobTicketAssignmentArea" Type="nvarchar" MaxLength="64" />
-          <Property Name="JobTicketPersonInCharge" Type="nvarchar" MaxLength="64" />
-          <Property Name="JobTicketCreateUserID" Type="int" />
-          <Property Name="JobTicketCreateTime" Type="datetime" />
-          <Property Name="JobTicketLastUpdateUserID" Type="int" />
-          <Property Name="JobTicketLastUpdateTime" Type="datetime" />
-          <Property Name="ShipmentTicketProjectID" Type="int" />
-          <Property Name="ShipmentTicketWarehouseID" Type="int" />
-          <Property Name="ShipmentTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketTypeNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketSegmentationChainCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketRelatedTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDate" Type="datetime" />
-          <Property Name="ShipmentTicketTicketNum" Type="int" />
-          <Property Name="ShipmentTicketRequireArriveDate" Type="datetime" />
-          <Property Name="ShipmentTicketState" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketScheduledAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketAllocatedAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketPickingAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketShipmentAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketExceedStorageAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketStation" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketReverseTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketSortType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketProductionLine" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketReceivingPersonName" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketContactAddress" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDeliveryPath" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDescription" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketCloseReason" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketCreateUserID" Type="int" />
-          <Property Name="ShipmentTicketCreateTime" Type="datetime" />
-          <Property Name="ShipmentTicketLastUpdateUserID" Type="int" />
-          <Property Name="ShipmentTicketLastUpdateTime" Type="datetime" />
-          <Property Name="ShipmentTicketPrintTimes" Type="int" />
-          <Property Name="ShipmentTicketWaitingToBeDone" Type="int" />
-          <Property Name="ShipmentTicketDeliveryTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketOuterPhysicalDistributionPath" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketDeliveryPoint" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketEmergency" Type="int" />
-          <Property Name="ShipmentTicketShipmentPlaceNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentTicketBoardPrintedTimes" Type="int" />
-          <Property Name="StockInfoPutawayTicketItemID" Type="int" />
-          <Property Name="PutawayTicketItemPutawayTicketID" Type="int" />
-          <Property Name="PutawayTicketItemReceiptTicketItemID" Type="int" />
-          <Property Name="PutawayTicketItemDisplacementPositionNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemTargetStorageLocation" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemBoardNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemState" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemScheduledMoveCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemDistrabuteCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemMoveCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemOperatePerson" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketItemOperateTime" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketType" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketReceiptTicketID" Type="int" />
-          <Property Name="PutawayTicketState" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketScheduledDisplacementAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDisplacementAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDistributeAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketPrintTimes" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketJobGroupName" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketCreateUserID" Type="int" />
-          <Property Name="PutawayTicketCreateTime" Type="datetime" />
-          <Property Name="PutawayTicketLastUpdateUserID" Type="int" />
-          <Property Name="PutawayTicketLastUpdateTime" Type="datetime" />
           <Property Name="ReceiptTicketItemReceiptTicketID" Type="int" />
           <Property Name="ReceiptTicketItemComponentID" Type="int" />
           <Property Name="ReceiptTicketItemPackageName" Type="nvarchar" MaxLength="64" />
@@ -1328,43 +1144,6 @@
           <Property Name="ReceiptTicketItemExpiryDate" Type="datetime" />
           <Property Name="ReceiptTicketItemRealRightProperty" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketItemBoxNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketProjectID" Type="int" />
-          <Property Name="ReceiptTicketWarehouse" Type="int" />
-          <Property Name="ReceiptTicketSupplierID" Type="int" />
-          <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketState" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketDeliverTicketNoSRM" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketVoucherSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketVoucherNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketVoucherLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketVoucherYear" Type="datetime" />
-          <Property Name="ReceiptTicketReletedVoucherNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketReletedVoucherLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketReletedVoucherYear" Type="datetime" />
-          <Property Name="ReceiptTicketHeadingText" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPostCountDate" Type="datetime" />
-          <Property Name="ReceiptTicketInwardDeliverTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketInwardDeliverLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketOutwardDeliverTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketOutwardDeliverLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPurchaseTicketNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPurchaseTicketLineNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketOrderDate" Type="datetime" />
-          <Property Name="ReceiptTicketReceiptStorageLocation" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketBoardNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketReceiptPackage" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketExpectedAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketReceiptCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketMoveType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketAssignmentPerson" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketPostedCount" Type="int" />
-          <Property Name="ReceiptTicketBoxNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketCreateUserID" Type="int" />
-          <Property Name="ReceiptTicketCreateTime" Type="datetime" />
-          <Property Name="ReceiptTicketLastUpdateUserID" Type="int" />
-          <Property Name="ReceiptTicketLastUpdateTime" Type="datetime" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierContractNo" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierStartDate" Type="datetime" />
@@ -2018,12 +1797,13 @@
         <EntityType Name="SubmissionTicketItemView">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="SubmissionTicketID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="SubmissionTicketID" Type="int" />
+          <Property Name="SubmissionTicketID" Type="int" Nullable="false" />
           <Property Name="LineItem" Type="nvarchar" MaxLength="64" />
-          <Property Name="ComponentID" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketItemID" Type="int" />
           <Property Name="ArriveAmount" Type="nvarchar" MaxLength="64" />
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
           <Property Name="SubmissionAmount" Type="decimal" Precision="18" Scale="0" />
@@ -3049,70 +2829,6 @@ FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
 [JobTicketItemView].[HaveBackedCount] AS [HaveBackedCount], 
 [JobTicketItemView].[ActualJobPerson] AS [ActualJobPerson], 
 [JobTicketItemView].[HappenTime] AS [HappenTime], 
-[JobTicketItemView].[ShipmentTicketProjectID] AS [ShipmentTicketProjectID], 
-[JobTicketItemView].[ShipmentTicketWarehouseID] AS [ShipmentTicketWarehouseID], 
-[JobTicketItemView].[ShipmentTicketNo] AS [ShipmentTicketNo], 
-[JobTicketItemView].[ShipmentTicketType] AS [ShipmentTicketType], 
-[JobTicketItemView].[ShipmentTicketTypeNo] AS [ShipmentTicketTypeNo], 
-[JobTicketItemView].[ShipmentTicketSource] AS [ShipmentTicketSource], 
-[JobTicketItemView].[ShipmentTicketSegmentationChainCount] AS [ShipmentTicketSegmentationChainCount], 
-[JobTicketItemView].[ShipmentTicketRelatedTicketNo] AS [ShipmentTicketRelatedTicketNo], 
-[JobTicketItemView].[ShipmentTicketDate] AS [ShipmentTicketDate], 
-[JobTicketItemView].[ShipmentTicketTicketNum] AS [ShipmentTicketTicketNum], 
-[JobTicketItemView].[ShipmentTicketRequireArriveDate] AS [ShipmentTicketRequireArriveDate], 
-[JobTicketItemView].[ShipmentTicketState] AS [ShipmentTicketState], 
-[JobTicketItemView].[ShipmentTicketScheduledAmount] AS [ShipmentTicketScheduledAmount], 
-[JobTicketItemView].[ShipmentTicketAllocatedAmount] AS [ShipmentTicketAllocatedAmount], 
-[JobTicketItemView].[ShipmentTicketPickingAmount] AS [ShipmentTicketPickingAmount], 
-[JobTicketItemView].[ShipmentTicketShipmentAmount] AS [ShipmentTicketShipmentAmount], 
-[JobTicketItemView].[ShipmentTicketExceedStorageAmount] AS [ShipmentTicketExceedStorageAmount], 
-[JobTicketItemView].[ShipmentTicketStation] AS [ShipmentTicketStation], 
-[JobTicketItemView].[ShipmentTicketReverseTicketNo] AS [ShipmentTicketReverseTicketNo], 
-[JobTicketItemView].[ShipmentTicketSortType] AS [ShipmentTicketSortType], 
-[JobTicketItemView].[ShipmentTicketProductionLine] AS [ShipmentTicketProductionLine], 
-[JobTicketItemView].[ShipmentTicketReceivingPersonName] AS [ShipmentTicketReceivingPersonName], 
-[JobTicketItemView].[ShipmentTicketContactAddress] AS [ShipmentTicketContactAddress], 
-[JobTicketItemView].[ShipmentTicketDeliveryPath] AS [ShipmentTicketDeliveryPath], 
-[JobTicketItemView].[ShipmentTicketDescription] AS [ShipmentTicketDescription], 
-[JobTicketItemView].[ShipmentTicketCloseReason] AS [ShipmentTicketCloseReason], 
-[JobTicketItemView].[ShipmentTicketCreateUserID] AS [ShipmentTicketCreateUserID], 
-[JobTicketItemView].[ShipmentTicketCreateTime] AS [ShipmentTicketCreateTime], 
-[JobTicketItemView].[ShipmentTicketLastUpdateUserID] AS [ShipmentTicketLastUpdateUserID], 
-[JobTicketItemView].[ShipmentTicketLastUpdateTime] AS [ShipmentTicketLastUpdateTime], 
-[JobTicketItemView].[ShipmentTicketPrintTimes] AS [ShipmentTicketPrintTimes], 
-[JobTicketItemView].[ShipmentTicketWaitingToBeDone] AS [ShipmentTicketWaitingToBeDone], 
-[JobTicketItemView].[ShipmentTicketDeliveryTicketNo] AS [ShipmentTicketDeliveryTicketNo], 
-[JobTicketItemView].[ShipmentTicketOuterPhysicalDistributionPath] AS [ShipmentTicketOuterPhysicalDistributionPath], 
-[JobTicketItemView].[ShipmentTicketDeliveryPoint] AS [ShipmentTicketDeliveryPoint], 
-[JobTicketItemView].[ShipmentTicketEmergency] AS [ShipmentTicketEmergency], 
-[JobTicketItemView].[ShipmentTicketShipmentPlaceNo] AS [ShipmentTicketShipmentPlaceNo], 
-[JobTicketItemView].[ShipmentTicketBoardPrintedTimes] AS [ShipmentTicketBoardPrintedTimes], 
-[JobTicketItemView].[ProjectName] AS [ProjectName], 
-[JobTicketItemView].[WarehouseName] AS [WarehouseName], 
-[JobTicketItemView].[CreateUserUsername] AS [CreateUserUsername], 
-[JobTicketItemView].[CreateUserPassword] AS [CreateUserPassword], 
-[JobTicketItemView].[CreateUserAuthority] AS [CreateUserAuthority], 
-[JobTicketItemView].[CreateUserAuthorityName] AS [CreateUserAuthorityName], 
-[JobTicketItemView].[CreateUserSupplierID] AS [CreateUserSupplierID], 
-[JobTicketItemView].[LastUpdateUserUsername] AS [LastUpdateUserUsername], 
-[JobTicketItemView].[LastUpdateUserPassword] AS [LastUpdateUserPassword], 
-[JobTicketItemView].[LastUpdateUserAuthority] AS [LastUpdateUserAuthority], 
-[JobTicketItemView].[LastUpdateUserAuthorityName] AS [LastUpdateUserAuthorityName], 
-[JobTicketItemView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID], 
-[JobTicketItemView].[StockInfoPutawayTicketItemID] AS [StockInfoPutawayTicketItemID], 
-[JobTicketItemView].[PutawayTicketNo] AS [PutawayTicketNo], 
-[JobTicketItemView].[PutawayTicketType] AS [PutawayTicketType], 
-[JobTicketItemView].[PutawayTicketReceiptTicketID] AS [PutawayTicketReceiptTicketID], 
-[JobTicketItemView].[PutawayTicketState] AS [PutawayTicketState], 
-[JobTicketItemView].[PutawayTicketScheduledDisplacementAmount] AS [PutawayTicketScheduledDisplacementAmount], 
-[JobTicketItemView].[PutawayTicketDisplacementAmount] AS [PutawayTicketDisplacementAmount], 
-[JobTicketItemView].[PutawayTicketDistributeAmount] AS [PutawayTicketDistributeAmount], 
-[JobTicketItemView].[PutawayTicketPrintTimes] AS [PutawayTicketPrintTimes], 
-[JobTicketItemView].[PutawayTicketJobGroupName] AS [PutawayTicketJobGroupName], 
-[JobTicketItemView].[PutawayTicketCreateUserID] AS [PutawayTicketCreateUserID], 
-[JobTicketItemView].[PutawayTicketCreateTime] AS [PutawayTicketCreateTime], 
-[JobTicketItemView].[PutawayTicketLastUpdateUserID] AS [PutawayTicketLastUpdateUserID], 
-[JobTicketItemView].[PutawayTicketLastUpdateTime] AS [PutawayTicketLastUpdateTime], 
 [JobTicketItemView].[ReceiptTicketItemReceiptTicketID] AS [ReceiptTicketItemReceiptTicketID], 
 [JobTicketItemView].[ReceiptTicketItemComponentID] AS [ReceiptTicketItemComponentID], 
 [JobTicketItemView].[ReceiptTicketItemPackageName] AS [ReceiptTicketItemPackageName], 
@@ -3128,33 +2844,6 @@ FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
 [JobTicketItemView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
 [JobTicketItemView].[ReceiptTicketItemRealRightProperty] AS [ReceiptTicketItemRealRightProperty], 
 [JobTicketItemView].[ReceiptTicketItemBoxNo] AS [ReceiptTicketItemBoxNo], 
-[JobTicketItemView].[ReceiptTicketVoucherYear] AS [ReceiptTicketVoucherYear], 
-[JobTicketItemView].[ReceiptTicketReletedVoucherNo] AS [ReceiptTicketReletedVoucherNo], 
-[JobTicketItemView].[ReceiptTicketReletedVoucherLineNo] AS [ReceiptTicketReletedVoucherLineNo], 
-[JobTicketItemView].[ReceiptTicketReletedVoucherYear] AS [ReceiptTicketReletedVoucherYear], 
-[JobTicketItemView].[ReceiptTicketHeadingText] AS [ReceiptTicketHeadingText], 
-[JobTicketItemView].[ReceiptTicketPostCountDate] AS [ReceiptTicketPostCountDate], 
-[JobTicketItemView].[ReceiptTicketInwardDeliverTicketNo] AS [ReceiptTicketInwardDeliverTicketNo], 
-[JobTicketItemView].[ReceiptTicketInwardDeliverLineNo] AS [ReceiptTicketInwardDeliverLineNo], 
-[JobTicketItemView].[ReceiptTicketOutwardDeliverTicketNo] AS [ReceiptTicketOutwardDeliverTicketNo], 
-[JobTicketItemView].[ReceiptTicketOutwardDeliverLineNo] AS [ReceiptTicketOutwardDeliverLineNo], 
-[JobTicketItemView].[ReceiptTicketPurchaseTicketNo] AS [ReceiptTicketPurchaseTicketNo], 
-[JobTicketItemView].[ReceiptTicketPurchaseTicketLineNo] AS [ReceiptTicketPurchaseTicketLineNo], 
-[JobTicketItemView].[ReceiptTicketOrderDate] AS [ReceiptTicketOrderDate], 
-[JobTicketItemView].[ReceiptTicketReceiptStorageLocation] AS [ReceiptTicketReceiptStorageLocation], 
-[JobTicketItemView].[ReceiptTicketBoardNo] AS [ReceiptTicketBoardNo], 
-[JobTicketItemView].[ReceiptTicketReceiptPackage] AS [ReceiptTicketReceiptPackage], 
-[JobTicketItemView].[ReceiptTicketExpectedAmount] AS [ReceiptTicketExpectedAmount], 
-[JobTicketItemView].[ReceiptTicketReceiptCount] AS [ReceiptTicketReceiptCount], 
-[JobTicketItemView].[ReceiptTicketMoveType] AS [ReceiptTicketMoveType], 
-[JobTicketItemView].[ReceiptTicketSource] AS [ReceiptTicketSource], 
-[JobTicketItemView].[ReceiptTicketAssignmentPerson] AS [ReceiptTicketAssignmentPerson], 
-[JobTicketItemView].[ReceiptTicketPostedCount] AS [ReceiptTicketPostedCount], 
-[JobTicketItemView].[ReceiptTicketBoxNo] AS [ReceiptTicketBoxNo], 
-[JobTicketItemView].[ReceiptTicketCreateUserID] AS [ReceiptTicketCreateUserID], 
-[JobTicketItemView].[ReceiptTicketCreateTime] AS [ReceiptTicketCreateTime], 
-[JobTicketItemView].[ReceiptTicketLastUpdateUserID] AS [ReceiptTicketLastUpdateUserID], 
-[JobTicketItemView].[ReceiptTicketLastUpdateTime] AS [ReceiptTicketLastUpdateTime], 
 [JobTicketItemView].[SupplierName] AS [SupplierName], 
 [JobTicketItemView].[SupplierContractNo] AS [SupplierContractNo], 
 [JobTicketItemView].[SupplierStartDate] AS [SupplierStartDate], 
@@ -3189,19 +2878,7 @@ FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
 [JobTicketItemView].[ComponentInventoryRequirement1Day] AS [ComponentInventoryRequirement1Day], 
 [JobTicketItemView].[ComponentInventoryRequirement3Day] AS [ComponentInventoryRequirement3Day], 
 [JobTicketItemView].[ComponentInventoryRequirement5Day] AS [ComponentInventoryRequirement5Day], 
-[JobTicketItemView].[ComponentInventoryRequirement10Day] AS [ComponentInventoryRequirement10Day], 
-[JobTicketItemView].[PutawayTicketItemPutawayTicketID] AS [PutawayTicketItemPutawayTicketID], 
-[JobTicketItemView].[PutawayTicketItemTargetStorageLocation] AS [PutawayTicketItemTargetStorageLocation], 
-[JobTicketItemView].[PutawayTicketItemDisplacementPositionNo] AS [PutawayTicketItemDisplacementPositionNo], 
-[JobTicketItemView].[PutawayTicketItemID] AS [PutawayTicketItemID], 
-[JobTicketItemView].[PutawayTicketItemBoardNo] AS [PutawayTicketItemBoardNo], 
-[JobTicketItemView].[PutawayTicketItemScheduledMoveCount] AS [PutawayTicketItemScheduledMoveCount], 
-[JobTicketItemView].[PutawayTicketItemDistrabuteCount] AS [PutawayTicketItemDistrabuteCount], 
-[JobTicketItemView].[PutawayTicketItemMoveCount] AS [PutawayTicketItemMoveCount], 
-[JobTicketItemView].[PutawayTicketItemState] AS [PutawayTicketItemState], 
-[JobTicketItemView].[PutawayTicketItemOperatePerson] AS [PutawayTicketItemOperatePerson], 
-[JobTicketItemView].[PutawayTicketItemOperateTime] AS [PutawayTicketItemOperateTime], 
-[JobTicketItemView].[PutawayTicketLastUpdateUserName] AS [PutawayTicketLastUpdateUserName]
+[JobTicketItemView].[ComponentInventoryRequirement10Day] AS [ComponentInventoryRequirement10Day]
 FROM [dbo].[JobTicketItemView] AS [JobTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="JobTicketView" EntityType="Self.JobTicketView" store:Type="Views" store:Schema="dbo">
@@ -3507,83 +3184,6 @@ FROM [dbo].[PutawayTicketView] AS [PutawayTicketView]</DefiningQuery>
 [PutOutStorageTicketItemView].[PutOutStorageTicketCreateTime] AS [PutOutStorageTicketCreateTime], 
 [PutOutStorageTicketItemView].[PutOutStorageTicketLastUpdateUserID] AS [PutOutStorageTicketLastUpdateUserID], 
 [PutOutStorageTicketItemView].[PutOutStorageTicketLastUpdateTime] AS [PutOutStorageTicketLastUpdateTime], 
-[PutOutStorageTicketItemView].[JobTicketShipmentTicketID] AS [JobTicketShipmentTicketID], 
-[PutOutStorageTicketItemView].[JobTicketJobTicketNo] AS [JobTicketJobTicketNo], 
-[PutOutStorageTicketItemView].[JobTicketJobType] AS [JobTicketJobType], 
-[PutOutStorageTicketItemView].[JobTicketJobGroupName] AS [JobTicketJobGroupName], 
-[PutOutStorageTicketItemView].[JobTicketScheduledAmount] AS [JobTicketScheduledAmount], 
-[PutOutStorageTicketItemView].[JobTicketRealAmount] AS [JobTicketRealAmount], 
-[PutOutStorageTicketItemView].[JobTicketState] AS [JobTicketState], 
-[PutOutStorageTicketItemView].[JobTicketPrintedTimes] AS [JobTicketPrintedTimes], 
-[PutOutStorageTicketItemView].[JobTicketAssignmentArea] AS [JobTicketAssignmentArea], 
-[PutOutStorageTicketItemView].[JobTicketPersonInCharge] AS [JobTicketPersonInCharge], 
-[PutOutStorageTicketItemView].[JobTicketCreateUserID] AS [JobTicketCreateUserID], 
-[PutOutStorageTicketItemView].[JobTicketCreateTime] AS [JobTicketCreateTime], 
-[PutOutStorageTicketItemView].[JobTicketLastUpdateUserID] AS [JobTicketLastUpdateUserID], 
-[PutOutStorageTicketItemView].[JobTicketLastUpdateTime] AS [JobTicketLastUpdateTime], 
-[PutOutStorageTicketItemView].[ShipmentTicketProjectID] AS [ShipmentTicketProjectID], 
-[PutOutStorageTicketItemView].[ShipmentTicketWarehouseID] AS [ShipmentTicketWarehouseID], 
-[PutOutStorageTicketItemView].[ShipmentTicketNo] AS [ShipmentTicketNo], 
-[PutOutStorageTicketItemView].[ShipmentTicketType] AS [ShipmentTicketType], 
-[PutOutStorageTicketItemView].[ShipmentTicketTypeNo] AS [ShipmentTicketTypeNo], 
-[PutOutStorageTicketItemView].[ShipmentTicketSource] AS [ShipmentTicketSource], 
-[PutOutStorageTicketItemView].[ShipmentTicketSegmentationChainCount] AS [ShipmentTicketSegmentationChainCount], 
-[PutOutStorageTicketItemView].[ShipmentTicketRelatedTicketNo] AS [ShipmentTicketRelatedTicketNo], 
-[PutOutStorageTicketItemView].[ShipmentTicketDate] AS [ShipmentTicketDate], 
-[PutOutStorageTicketItemView].[ShipmentTicketTicketNum] AS [ShipmentTicketTicketNum], 
-[PutOutStorageTicketItemView].[ShipmentTicketRequireArriveDate] AS [ShipmentTicketRequireArriveDate], 
-[PutOutStorageTicketItemView].[ShipmentTicketState] AS [ShipmentTicketState], 
-[PutOutStorageTicketItemView].[ShipmentTicketScheduledAmount] AS [ShipmentTicketScheduledAmount], 
-[PutOutStorageTicketItemView].[ShipmentTicketAllocatedAmount] AS [ShipmentTicketAllocatedAmount], 
-[PutOutStorageTicketItemView].[ShipmentTicketPickingAmount] AS [ShipmentTicketPickingAmount], 
-[PutOutStorageTicketItemView].[ShipmentTicketShipmentAmount] AS [ShipmentTicketShipmentAmount], 
-[PutOutStorageTicketItemView].[ShipmentTicketExceedStorageAmount] AS [ShipmentTicketExceedStorageAmount], 
-[PutOutStorageTicketItemView].[ShipmentTicketStation] AS [ShipmentTicketStation], 
-[PutOutStorageTicketItemView].[ShipmentTicketReverseTicketNo] AS [ShipmentTicketReverseTicketNo], 
-[PutOutStorageTicketItemView].[ShipmentTicketSortType] AS [ShipmentTicketSortType], 
-[PutOutStorageTicketItemView].[ShipmentTicketProductionLine] AS [ShipmentTicketProductionLine], 
-[PutOutStorageTicketItemView].[ShipmentTicketReceivingPersonName] AS [ShipmentTicketReceivingPersonName], 
-[PutOutStorageTicketItemView].[ShipmentTicketContactAddress] AS [ShipmentTicketContactAddress], 
-[PutOutStorageTicketItemView].[ShipmentTicketDeliveryPath] AS [ShipmentTicketDeliveryPath], 
-[PutOutStorageTicketItemView].[ShipmentTicketDescription] AS [ShipmentTicketDescription], 
-[PutOutStorageTicketItemView].[ShipmentTicketCloseReason] AS [ShipmentTicketCloseReason], 
-[PutOutStorageTicketItemView].[ShipmentTicketCreateUserID] AS [ShipmentTicketCreateUserID], 
-[PutOutStorageTicketItemView].[ShipmentTicketCreateTime] AS [ShipmentTicketCreateTime], 
-[PutOutStorageTicketItemView].[ShipmentTicketLastUpdateUserID] AS [ShipmentTicketLastUpdateUserID], 
-[PutOutStorageTicketItemView].[ShipmentTicketLastUpdateTime] AS [ShipmentTicketLastUpdateTime], 
-[PutOutStorageTicketItemView].[ShipmentTicketPrintTimes] AS [ShipmentTicketPrintTimes], 
-[PutOutStorageTicketItemView].[ShipmentTicketWaitingToBeDone] AS [ShipmentTicketWaitingToBeDone], 
-[PutOutStorageTicketItemView].[ShipmentTicketDeliveryTicketNo] AS [ShipmentTicketDeliveryTicketNo], 
-[PutOutStorageTicketItemView].[ShipmentTicketOuterPhysicalDistributionPath] AS [ShipmentTicketOuterPhysicalDistributionPath], 
-[PutOutStorageTicketItemView].[ShipmentTicketDeliveryPoint] AS [ShipmentTicketDeliveryPoint], 
-[PutOutStorageTicketItemView].[ShipmentTicketEmergency] AS [ShipmentTicketEmergency], 
-[PutOutStorageTicketItemView].[ShipmentTicketShipmentPlaceNo] AS [ShipmentTicketShipmentPlaceNo], 
-[PutOutStorageTicketItemView].[ShipmentTicketBoardPrintedTimes] AS [ShipmentTicketBoardPrintedTimes], 
-[PutOutStorageTicketItemView].[StockInfoPutawayTicketItemID] AS [StockInfoPutawayTicketItemID], 
-[PutOutStorageTicketItemView].[PutawayTicketItemPutawayTicketID] AS [PutawayTicketItemPutawayTicketID], 
-[PutOutStorageTicketItemView].[PutawayTicketItemReceiptTicketItemID] AS [PutawayTicketItemReceiptTicketItemID], 
-[PutOutStorageTicketItemView].[PutawayTicketItemDisplacementPositionNo] AS [PutawayTicketItemDisplacementPositionNo], 
-[PutOutStorageTicketItemView].[PutawayTicketItemTargetStorageLocation] AS [PutawayTicketItemTargetStorageLocation], 
-[PutOutStorageTicketItemView].[PutawayTicketItemBoardNo] AS [PutawayTicketItemBoardNo], 
-[PutOutStorageTicketItemView].[PutawayTicketItemState] AS [PutawayTicketItemState], 
-[PutOutStorageTicketItemView].[PutawayTicketItemScheduledMoveCount] AS [PutawayTicketItemScheduledMoveCount], 
-[PutOutStorageTicketItemView].[PutawayTicketItemDistrabuteCount] AS [PutawayTicketItemDistrabuteCount], 
-[PutOutStorageTicketItemView].[PutawayTicketItemMoveCount] AS [PutawayTicketItemMoveCount], 
-[PutOutStorageTicketItemView].[PutawayTicketItemOperatePerson] AS [PutawayTicketItemOperatePerson], 
-[PutOutStorageTicketItemView].[PutawayTicketItemOperateTime] AS [PutawayTicketItemOperateTime], 
-[PutOutStorageTicketItemView].[PutawayTicketNo] AS [PutawayTicketNo], 
-[PutOutStorageTicketItemView].[PutawayTicketType] AS [PutawayTicketType], 
-[PutOutStorageTicketItemView].[PutawayTicketReceiptTicketID] AS [PutawayTicketReceiptTicketID], 
-[PutOutStorageTicketItemView].[PutawayTicketState] AS [PutawayTicketState], 
-[PutOutStorageTicketItemView].[PutawayTicketScheduledDisplacementAmount] AS [PutawayTicketScheduledDisplacementAmount], 
-[PutOutStorageTicketItemView].[PutawayTicketDisplacementAmount] AS [PutawayTicketDisplacementAmount], 
-[PutOutStorageTicketItemView].[PutawayTicketDistributeAmount] AS [PutawayTicketDistributeAmount], 
-[PutOutStorageTicketItemView].[PutawayTicketPrintTimes] AS [PutawayTicketPrintTimes], 
-[PutOutStorageTicketItemView].[PutawayTicketJobGroupName] AS [PutawayTicketJobGroupName], 
-[PutOutStorageTicketItemView].[PutawayTicketCreateUserID] AS [PutawayTicketCreateUserID], 
-[PutOutStorageTicketItemView].[PutawayTicketCreateTime] AS [PutawayTicketCreateTime], 
-[PutOutStorageTicketItemView].[PutawayTicketLastUpdateUserID] AS [PutawayTicketLastUpdateUserID], 
-[PutOutStorageTicketItemView].[PutawayTicketLastUpdateTime] AS [PutawayTicketLastUpdateTime], 
 [PutOutStorageTicketItemView].[ReceiptTicketItemReceiptTicketID] AS [ReceiptTicketItemReceiptTicketID], 
 [PutOutStorageTicketItemView].[ReceiptTicketItemComponentID] AS [ReceiptTicketItemComponentID], 
 [PutOutStorageTicketItemView].[ReceiptTicketItemPackageName] AS [ReceiptTicketItemPackageName], 
@@ -3599,43 +3199,6 @@ FROM [dbo].[PutawayTicketView] AS [PutawayTicketView]</DefiningQuery>
 [PutOutStorageTicketItemView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
 [PutOutStorageTicketItemView].[ReceiptTicketItemRealRightProperty] AS [ReceiptTicketItemRealRightProperty], 
 [PutOutStorageTicketItemView].[ReceiptTicketItemBoxNo] AS [ReceiptTicketItemBoxNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketProjectID] AS [ReceiptTicketProjectID], 
-[PutOutStorageTicketItemView].[ReceiptTicketWarehouse] AS [ReceiptTicketWarehouse], 
-[PutOutStorageTicketItemView].[ReceiptTicketSupplierID] AS [ReceiptTicketSupplierID], 
-[PutOutStorageTicketItemView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketType] AS [ReceiptTicketType], 
-[PutOutStorageTicketItemView].[ReceiptTicketState] AS [ReceiptTicketState], 
-[PutOutStorageTicketItemView].[ReceiptTicketDeliverTicketNoSRM] AS [ReceiptTicketDeliverTicketNoSRM], 
-[PutOutStorageTicketItemView].[ReceiptTicketVoucherSource] AS [ReceiptTicketVoucherSource], 
-[PutOutStorageTicketItemView].[ReceiptTicketVoucherNo] AS [ReceiptTicketVoucherNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketVoucherLineNo] AS [ReceiptTicketVoucherLineNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketVoucherYear] AS [ReceiptTicketVoucherYear], 
-[PutOutStorageTicketItemView].[ReceiptTicketReletedVoucherNo] AS [ReceiptTicketReletedVoucherNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketReletedVoucherLineNo] AS [ReceiptTicketReletedVoucherLineNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketReletedVoucherYear] AS [ReceiptTicketReletedVoucherYear], 
-[PutOutStorageTicketItemView].[ReceiptTicketHeadingText] AS [ReceiptTicketHeadingText], 
-[PutOutStorageTicketItemView].[ReceiptTicketPostCountDate] AS [ReceiptTicketPostCountDate], 
-[PutOutStorageTicketItemView].[ReceiptTicketInwardDeliverTicketNo] AS [ReceiptTicketInwardDeliverTicketNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketInwardDeliverLineNo] AS [ReceiptTicketInwardDeliverLineNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketOutwardDeliverTicketNo] AS [ReceiptTicketOutwardDeliverTicketNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketOutwardDeliverLineNo] AS [ReceiptTicketOutwardDeliverLineNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketPurchaseTicketNo] AS [ReceiptTicketPurchaseTicketNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketPurchaseTicketLineNo] AS [ReceiptTicketPurchaseTicketLineNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketOrderDate] AS [ReceiptTicketOrderDate], 
-[PutOutStorageTicketItemView].[ReceiptTicketReceiptStorageLocation] AS [ReceiptTicketReceiptStorageLocation], 
-[PutOutStorageTicketItemView].[ReceiptTicketBoardNo] AS [ReceiptTicketBoardNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketReceiptPackage] AS [ReceiptTicketReceiptPackage], 
-[PutOutStorageTicketItemView].[ReceiptTicketExpectedAmount] AS [ReceiptTicketExpectedAmount], 
-[PutOutStorageTicketItemView].[ReceiptTicketReceiptCount] AS [ReceiptTicketReceiptCount], 
-[PutOutStorageTicketItemView].[ReceiptTicketMoveType] AS [ReceiptTicketMoveType], 
-[PutOutStorageTicketItemView].[ReceiptTicketSource] AS [ReceiptTicketSource], 
-[PutOutStorageTicketItemView].[ReceiptTicketAssignmentPerson] AS [ReceiptTicketAssignmentPerson], 
-[PutOutStorageTicketItemView].[ReceiptTicketPostedCount] AS [ReceiptTicketPostedCount], 
-[PutOutStorageTicketItemView].[ReceiptTicketBoxNo] AS [ReceiptTicketBoxNo], 
-[PutOutStorageTicketItemView].[ReceiptTicketCreateUserID] AS [ReceiptTicketCreateUserID], 
-[PutOutStorageTicketItemView].[ReceiptTicketCreateTime] AS [ReceiptTicketCreateTime], 
-[PutOutStorageTicketItemView].[ReceiptTicketLastUpdateUserID] AS [ReceiptTicketLastUpdateUserID], 
-[PutOutStorageTicketItemView].[ReceiptTicketLastUpdateTime] AS [ReceiptTicketLastUpdateTime], 
 [PutOutStorageTicketItemView].[SupplierName] AS [SupplierName], 
 [PutOutStorageTicketItemView].[SupplierContractNo] AS [SupplierContractNo], 
 [PutOutStorageTicketItemView].[SupplierStartDate] AS [SupplierStartDate], 
@@ -4258,8 +3821,8 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[ID] AS [ID], 
 [SubmissionTicketItemView].[SubmissionTicketID] AS [SubmissionTicketID], 
 [SubmissionTicketItemView].[LineItem] AS [LineItem], 
-[SubmissionTicketItemView].[ComponentID] AS [ComponentID], 
 [SubmissionTicketItemView].[State] AS [State], 
+[SubmissionTicketItemView].[ReceiptTicketItemID] AS [ReceiptTicketItemID], 
 [SubmissionTicketItemView].[ArriveAmount] AS [ArriveAmount], 
 [SubmissionTicketItemView].[Unit] AS [Unit], 
 [SubmissionTicketItemView].[SubmissionAmount] AS [SubmissionAmount], 
@@ -5654,9 +5217,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="JobTicketID" />
-            <PropertyRef Name="StockInfoID" />
-            <PropertyRef Name="No" />
-            <PropertyRef Name="State" />
           </Key>
           <Property Name="JobTicketShipmentTicketID" Type="Int32" />
           <Property Name="JobTicketJobTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -5674,82 +5234,18 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="JobTicketLastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="JobTicketID" Type="Int32" Nullable="false" />
-          <Property Name="StockInfoID" Type="Int32" Nullable="false" />
-          <Property Name="No" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="StockInfoID" Type="Int32" />
+          <Property Name="No" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="MoveOutStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SourceBoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="MoveInStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledMoveCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="MoveCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="HaveBackedCount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ActualJobPerson" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HappenTime" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketProjectID" Type="Int32" />
-          <Property Name="ShipmentTicketWarehouseID" Type="Int32" />
-          <Property Name="ShipmentTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketTypeNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketSegmentationChainCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketRelatedTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDate" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketTicketNum" Type="Int32" />
-          <Property Name="ShipmentTicketRequireArriveDate" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketScheduledAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketAllocatedAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketPickingAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketExceedStorageAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketStation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketReverseTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketSortType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketProductionLine" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketReceivingPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketContactAddress" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDeliveryPath" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDescription" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketCloseReason" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketCreateUserID" Type="Int32" />
-          <Property Name="ShipmentTicketCreateTime" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketLastUpdateUserID" Type="Int32" />
-          <Property Name="ShipmentTicketLastUpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketPrintTimes" Type="Int32" />
-          <Property Name="ShipmentTicketWaitingToBeDone" Type="Int32" />
-          <Property Name="ShipmentTicketDeliveryTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketOuterPhysicalDistributionPath" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDeliveryPoint" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketEmergency" Type="Int32" />
-          <Property Name="ShipmentTicketShipmentPlaceNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketBoardPrintedTimes" Type="Int32" />
-          <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CreateUserPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CreateUserAuthority" Type="Int32" />
-          <Property Name="CreateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="CreateUserSupplierID" Type="Int32" />
-          <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdateUserPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdateUserAuthority" Type="Int32" />
-          <Property Name="LastUpdateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="LastUpdateUserSupplierID" Type="Int32" />
-          <Property Name="StockInfoPutawayTicketItemID" Type="Int32" />
-          <Property Name="PutawayTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketReceiptTicketID" Type="Int32" />
-          <Property Name="PutawayTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketScheduledDisplacementAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDisplacementAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDistributeAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketPrintTimes" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketJobGroupName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketCreateUserID" Type="Int32" />
-          <Property Name="PutawayTicketCreateTime" Type="DateTime" Precision="3" />
-          <Property Name="PutawayTicketLastUpdateUserID" Type="Int32" />
-          <Property Name="PutawayTicketLastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketItemReceiptTicketID" Type="Int32" />
           <Property Name="ReceiptTicketItemComponentID" Type="Int32" />
           <Property Name="ReceiptTicketItemPackageName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -5765,33 +5261,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketItemRealRightProperty" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketItemBoxNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketVoucherYear" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketReletedVoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketReletedVoucherYear" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketHeadingText" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPostCountDate" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketInwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketInwardDeliverLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketOutwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketOutwardDeliverLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPurchaseTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPurchaseTicketLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketOrderDate" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketReceiptStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketBoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketReceiptPackage" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketExpectedAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketReceiptCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketMoveType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketAssignmentPerson" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPostedCount" Type="Int32" />
-          <Property Name="ReceiptTicketBoxNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketCreateUserID" Type="Int32" />
-          <Property Name="ReceiptTicketCreateTime" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketLastUpdateUserID" Type="Int32" />
-          <Property Name="ReceiptTicketLastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierContractNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierStartDate" Type="DateTime" Precision="3" />
@@ -5827,18 +5296,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ComponentInventoryRequirement3Day" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ComponentInventoryRequirement5Day" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ComponentInventoryRequirement10Day" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemPutawayTicketID" Type="Int32" />
-          <Property Name="PutawayTicketItemTargetStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemDisplacementPositionNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemID" Type="Int32" />
-          <Property Name="PutawayTicketItemBoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemScheduledMoveCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemDistrabuteCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemMoveCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemOperatePerson" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemOperateTime" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketLastUpdateUserName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JobTicketView">
           <Key>
@@ -6127,11 +5584,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
         <EntityType Name="PutOutStorageTicketItemView">
           <Key>
             <PropertyRef Name="ID" />
-            <PropertyRef Name="StockInfoID" />
             <PropertyRef Name="PutOutStorageTicketID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="StockInfoID" Type="Int32" Nullable="false" />
+          <Property Name="StockInfoID" Type="Int32" />
           <Property Name="PutOutStorageTicketID" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ExceedStockAmount" Type="Decimal" Precision="18" Scale="0" />
@@ -6155,83 +5611,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="PutOutStorageTicketCreateTime" Type="DateTime" Precision="3" />
           <Property Name="PutOutStorageTicketLastUpdateUserID" Type="Int32" />
           <Property Name="PutOutStorageTicketLastUpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="JobTicketShipmentTicketID" Type="Int32" />
-          <Property Name="JobTicketJobTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="JobTicketJobType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="JobTicketJobGroupName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="JobTicketScheduledAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="JobTicketRealAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="JobTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="JobTicketPrintedTimes" Type="Int32" />
-          <Property Name="JobTicketAssignmentArea" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="JobTicketPersonInCharge" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="JobTicketCreateUserID" Type="Int32" />
-          <Property Name="JobTicketCreateTime" Type="DateTime" Precision="3" />
-          <Property Name="JobTicketLastUpdateUserID" Type="Int32" />
-          <Property Name="JobTicketLastUpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketProjectID" Type="Int32" />
-          <Property Name="ShipmentTicketWarehouseID" Type="Int32" />
-          <Property Name="ShipmentTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketTypeNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketSegmentationChainCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketRelatedTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDate" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketTicketNum" Type="Int32" />
-          <Property Name="ShipmentTicketRequireArriveDate" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketScheduledAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketAllocatedAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketPickingAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketExceedStorageAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentTicketStation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketReverseTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketSortType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketProductionLine" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketReceivingPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketContactAddress" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDeliveryPath" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDescription" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketCloseReason" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketCreateUserID" Type="Int32" />
-          <Property Name="ShipmentTicketCreateTime" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketLastUpdateUserID" Type="Int32" />
-          <Property Name="ShipmentTicketLastUpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentTicketPrintTimes" Type="Int32" />
-          <Property Name="ShipmentTicketWaitingToBeDone" Type="Int32" />
-          <Property Name="ShipmentTicketDeliveryTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketOuterPhysicalDistributionPath" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketDeliveryPoint" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketEmergency" Type="Int32" />
-          <Property Name="ShipmentTicketShipmentPlaceNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentTicketBoardPrintedTimes" Type="Int32" />
-          <Property Name="StockInfoPutawayTicketItemID" Type="Int32" />
-          <Property Name="PutawayTicketItemPutawayTicketID" Type="Int32" />
-          <Property Name="PutawayTicketItemReceiptTicketItemID" Type="Int32" />
-          <Property Name="PutawayTicketItemDisplacementPositionNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemTargetStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemBoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemScheduledMoveCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemDistrabuteCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemMoveCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketItemOperatePerson" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketItemOperateTime" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketReceiptTicketID" Type="Int32" />
-          <Property Name="PutawayTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketScheduledDisplacementAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDisplacementAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketDistributeAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketPrintTimes" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayTicketJobGroupName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketCreateUserID" Type="Int32" />
-          <Property Name="PutawayTicketCreateTime" Type="DateTime" Precision="3" />
-          <Property Name="PutawayTicketLastUpdateUserID" Type="Int32" />
-          <Property Name="PutawayTicketLastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketItemReceiptTicketID" Type="Int32" />
           <Property Name="ReceiptTicketItemComponentID" Type="Int32" />
           <Property Name="ReceiptTicketItemPackageName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -6247,43 +5626,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketItemRealRightProperty" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketItemBoxNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketProjectID" Type="Int32" />
-          <Property Name="ReceiptTicketWarehouse" Type="Int32" />
-          <Property Name="ReceiptTicketSupplierID" Type="Int32" />
-          <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketDeliverTicketNoSRM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketVoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketVoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketVoucherYear" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketReletedVoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketReletedVoucherYear" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketHeadingText" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPostCountDate" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketInwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketInwardDeliverLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketOutwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketOutwardDeliverLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPurchaseTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPurchaseTicketLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketOrderDate" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketReceiptStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketBoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketReceiptPackage" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketExpectedAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketReceiptCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptTicketMoveType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketAssignmentPerson" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketPostedCount" Type="Int32" />
-          <Property Name="ReceiptTicketBoxNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketCreateUserID" Type="Int32" />
-          <Property Name="ReceiptTicketCreateTime" Type="DateTime" Precision="3" />
-          <Property Name="ReceiptTicketLastUpdateUserID" Type="Int32" />
-          <Property Name="ReceiptTicketLastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierContractNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierStartDate" Type="DateTime" Precision="3" />
@@ -6919,12 +6261,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="SubmissionTicketID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="SubmissionTicketID" Type="Int32" />
+          <Property Name="SubmissionTicketID" Type="Int32" Nullable="false" />
           <Property Name="LineItem" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ComponentID" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketItemID" Type="Int32" />
           <Property Name="ArriveAmount" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
@@ -8425,18 +7768,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="JobTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.JobTicketItemView">
               <MappingFragment StoreEntitySet="JobTicketItemView">
-                <ScalarProperty Name="PutawayTicketLastUpdateUserName" ColumnName="PutawayTicketLastUpdateUserName" />
-                <ScalarProperty Name="PutawayTicketItemOperateTime" ColumnName="PutawayTicketItemOperateTime" />
-                <ScalarProperty Name="PutawayTicketItemOperatePerson" ColumnName="PutawayTicketItemOperatePerson" />
-                <ScalarProperty Name="PutawayTicketItemState" ColumnName="PutawayTicketItemState" />
-                <ScalarProperty Name="PutawayTicketItemMoveCount" ColumnName="PutawayTicketItemMoveCount" />
-                <ScalarProperty Name="PutawayTicketItemDistrabuteCount" ColumnName="PutawayTicketItemDistrabuteCount" />
-                <ScalarProperty Name="PutawayTicketItemScheduledMoveCount" ColumnName="PutawayTicketItemScheduledMoveCount" />
-                <ScalarProperty Name="PutawayTicketItemBoardNo" ColumnName="PutawayTicketItemBoardNo" />
-                <ScalarProperty Name="PutawayTicketItemID" ColumnName="PutawayTicketItemID" />
-                <ScalarProperty Name="PutawayTicketItemDisplacementPositionNo" ColumnName="PutawayTicketItemDisplacementPositionNo" />
-                <ScalarProperty Name="PutawayTicketItemTargetStorageLocation" ColumnName="PutawayTicketItemTargetStorageLocation" />
-                <ScalarProperty Name="PutawayTicketItemPutawayTicketID" ColumnName="PutawayTicketItemPutawayTicketID" />
                 <ScalarProperty Name="ComponentInventoryRequirement10Day" ColumnName="ComponentInventoryRequirement10Day" />
                 <ScalarProperty Name="ComponentInventoryRequirement5Day" ColumnName="ComponentInventoryRequirement5Day" />
                 <ScalarProperty Name="ComponentInventoryRequirement3Day" ColumnName="ComponentInventoryRequirement3Day" />
@@ -8472,33 +7803,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplierStartDate" ColumnName="SupplierStartDate" />
                 <ScalarProperty Name="SupplierContractNo" ColumnName="SupplierContractNo" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="ReceiptTicketLastUpdateTime" ColumnName="ReceiptTicketLastUpdateTime" />
-                <ScalarProperty Name="ReceiptTicketLastUpdateUserID" ColumnName="ReceiptTicketLastUpdateUserID" />
-                <ScalarProperty Name="ReceiptTicketCreateTime" ColumnName="ReceiptTicketCreateTime" />
-                <ScalarProperty Name="ReceiptTicketCreateUserID" ColumnName="ReceiptTicketCreateUserID" />
-                <ScalarProperty Name="ReceiptTicketBoxNo" ColumnName="ReceiptTicketBoxNo" />
-                <ScalarProperty Name="ReceiptTicketPostedCount" ColumnName="ReceiptTicketPostedCount" />
-                <ScalarProperty Name="ReceiptTicketAssignmentPerson" ColumnName="ReceiptTicketAssignmentPerson" />
-                <ScalarProperty Name="ReceiptTicketSource" ColumnName="ReceiptTicketSource" />
-                <ScalarProperty Name="ReceiptTicketMoveType" ColumnName="ReceiptTicketMoveType" />
-                <ScalarProperty Name="ReceiptTicketReceiptCount" ColumnName="ReceiptTicketReceiptCount" />
-                <ScalarProperty Name="ReceiptTicketExpectedAmount" ColumnName="ReceiptTicketExpectedAmount" />
-                <ScalarProperty Name="ReceiptTicketReceiptPackage" ColumnName="ReceiptTicketReceiptPackage" />
-                <ScalarProperty Name="ReceiptTicketBoardNo" ColumnName="ReceiptTicketBoardNo" />
-                <ScalarProperty Name="ReceiptTicketReceiptStorageLocation" ColumnName="ReceiptTicketReceiptStorageLocation" />
-                <ScalarProperty Name="ReceiptTicketOrderDate" ColumnName="ReceiptTicketOrderDate" />
-                <ScalarProperty Name="ReceiptTicketPurchaseTicketLineNo" ColumnName="ReceiptTicketPurchaseTicketLineNo" />
-                <ScalarProperty Name="ReceiptTicketPurchaseTicketNo" ColumnName="ReceiptTicketPurchaseTicketNo" />
-                <ScalarProperty Name="ReceiptTicketOutwardDeliverLineNo" ColumnName="ReceiptTicketOutwardDeliverLineNo" />
-                <ScalarProperty Name="ReceiptTicketOutwardDeliverTicketNo" ColumnName="ReceiptTicketOutwardDeliverTicketNo" />
-                <ScalarProperty Name="ReceiptTicketInwardDeliverLineNo" ColumnName="ReceiptTicketInwardDeliverLineNo" />
-                <ScalarProperty Name="ReceiptTicketInwardDeliverTicketNo" ColumnName="ReceiptTicketInwardDeliverTicketNo" />
-                <ScalarProperty Name="ReceiptTicketPostCountDate" ColumnName="ReceiptTicketPostCountDate" />
-                <ScalarProperty Name="ReceiptTicketHeadingText" ColumnName="ReceiptTicketHeadingText" />
-                <ScalarProperty Name="ReceiptTicketReletedVoucherYear" ColumnName="ReceiptTicketReletedVoucherYear" />
-                <ScalarProperty Name="ReceiptTicketReletedVoucherLineNo" ColumnName="ReceiptTicketReletedVoucherLineNo" />
-                <ScalarProperty Name="ReceiptTicketReletedVoucherNo" ColumnName="ReceiptTicketReletedVoucherNo" />
-                <ScalarProperty Name="ReceiptTicketVoucherYear" ColumnName="ReceiptTicketVoucherYear" />
                 <ScalarProperty Name="ReceiptTicketItemBoxNo" ColumnName="ReceiptTicketItemBoxNo" />
                 <ScalarProperty Name="ReceiptTicketItemRealRightProperty" ColumnName="ReceiptTicketItemRealRightProperty" />
                 <ScalarProperty Name="ReceiptTicketItemExpiryDate" ColumnName="ReceiptTicketItemExpiryDate" />
@@ -8514,70 +7818,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemPackageName" ColumnName="ReceiptTicketItemPackageName" />
                 <ScalarProperty Name="ReceiptTicketItemComponentID" ColumnName="ReceiptTicketItemComponentID" />
                 <ScalarProperty Name="ReceiptTicketItemReceiptTicketID" ColumnName="ReceiptTicketItemReceiptTicketID" />
-                <ScalarProperty Name="PutawayTicketLastUpdateTime" ColumnName="PutawayTicketLastUpdateTime" />
-                <ScalarProperty Name="PutawayTicketLastUpdateUserID" ColumnName="PutawayTicketLastUpdateUserID" />
-                <ScalarProperty Name="PutawayTicketCreateTime" ColumnName="PutawayTicketCreateTime" />
-                <ScalarProperty Name="PutawayTicketCreateUserID" ColumnName="PutawayTicketCreateUserID" />
-                <ScalarProperty Name="PutawayTicketJobGroupName" ColumnName="PutawayTicketJobGroupName" />
-                <ScalarProperty Name="PutawayTicketPrintTimes" ColumnName="PutawayTicketPrintTimes" />
-                <ScalarProperty Name="PutawayTicketDistributeAmount" ColumnName="PutawayTicketDistributeAmount" />
-                <ScalarProperty Name="PutawayTicketDisplacementAmount" ColumnName="PutawayTicketDisplacementAmount" />
-                <ScalarProperty Name="PutawayTicketScheduledDisplacementAmount" ColumnName="PutawayTicketScheduledDisplacementAmount" />
-                <ScalarProperty Name="PutawayTicketState" ColumnName="PutawayTicketState" />
-                <ScalarProperty Name="PutawayTicketReceiptTicketID" ColumnName="PutawayTicketReceiptTicketID" />
-                <ScalarProperty Name="PutawayTicketType" ColumnName="PutawayTicketType" />
-                <ScalarProperty Name="PutawayTicketNo" ColumnName="PutawayTicketNo" />
-                <ScalarProperty Name="StockInfoPutawayTicketItemID" ColumnName="StockInfoPutawayTicketItemID" />
-                <ScalarProperty Name="LastUpdateUserSupplierID" ColumnName="LastUpdateUserSupplierID" />
-                <ScalarProperty Name="LastUpdateUserAuthorityName" ColumnName="LastUpdateUserAuthorityName" />
-                <ScalarProperty Name="LastUpdateUserAuthority" ColumnName="LastUpdateUserAuthority" />
-                <ScalarProperty Name="LastUpdateUserPassword" ColumnName="LastUpdateUserPassword" />
-                <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
-                <ScalarProperty Name="CreateUserSupplierID" ColumnName="CreateUserSupplierID" />
-                <ScalarProperty Name="CreateUserAuthorityName" ColumnName="CreateUserAuthorityName" />
-                <ScalarProperty Name="CreateUserAuthority" ColumnName="CreateUserAuthority" />
-                <ScalarProperty Name="CreateUserPassword" ColumnName="CreateUserPassword" />
-                <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
-                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
-                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="ShipmentTicketBoardPrintedTimes" ColumnName="ShipmentTicketBoardPrintedTimes" />
-                <ScalarProperty Name="ShipmentTicketShipmentPlaceNo" ColumnName="ShipmentTicketShipmentPlaceNo" />
-                <ScalarProperty Name="ShipmentTicketEmergency" ColumnName="ShipmentTicketEmergency" />
-                <ScalarProperty Name="ShipmentTicketDeliveryPoint" ColumnName="ShipmentTicketDeliveryPoint" />
-                <ScalarProperty Name="ShipmentTicketOuterPhysicalDistributionPath" ColumnName="ShipmentTicketOuterPhysicalDistributionPath" />
-                <ScalarProperty Name="ShipmentTicketDeliveryTicketNo" ColumnName="ShipmentTicketDeliveryTicketNo" />
-                <ScalarProperty Name="ShipmentTicketWaitingToBeDone" ColumnName="ShipmentTicketWaitingToBeDone" />
-                <ScalarProperty Name="ShipmentTicketPrintTimes" ColumnName="ShipmentTicketPrintTimes" />
-                <ScalarProperty Name="ShipmentTicketLastUpdateTime" ColumnName="ShipmentTicketLastUpdateTime" />
-                <ScalarProperty Name="ShipmentTicketLastUpdateUserID" ColumnName="ShipmentTicketLastUpdateUserID" />
-                <ScalarProperty Name="ShipmentTicketCreateTime" ColumnName="ShipmentTicketCreateTime" />
-                <ScalarProperty Name="ShipmentTicketCreateUserID" ColumnName="ShipmentTicketCreateUserID" />
-                <ScalarProperty Name="ShipmentTicketCloseReason" ColumnName="ShipmentTicketCloseReason" />
-                <ScalarProperty Name="ShipmentTicketDescription" ColumnName="ShipmentTicketDescription" />
-                <ScalarProperty Name="ShipmentTicketDeliveryPath" ColumnName="ShipmentTicketDeliveryPath" />
-                <ScalarProperty Name="ShipmentTicketContactAddress" ColumnName="ShipmentTicketContactAddress" />
-                <ScalarProperty Name="ShipmentTicketReceivingPersonName" ColumnName="ShipmentTicketReceivingPersonName" />
-                <ScalarProperty Name="ShipmentTicketProductionLine" ColumnName="ShipmentTicketProductionLine" />
-                <ScalarProperty Name="ShipmentTicketSortType" ColumnName="ShipmentTicketSortType" />
-                <ScalarProperty Name="ShipmentTicketReverseTicketNo" ColumnName="ShipmentTicketReverseTicketNo" />
-                <ScalarProperty Name="ShipmentTicketStation" ColumnName="ShipmentTicketStation" />
-                <ScalarProperty Name="ShipmentTicketExceedStorageAmount" ColumnName="ShipmentTicketExceedStorageAmount" />
-                <ScalarProperty Name="ShipmentTicketShipmentAmount" ColumnName="ShipmentTicketShipmentAmount" />
-                <ScalarProperty Name="ShipmentTicketPickingAmount" ColumnName="ShipmentTicketPickingAmount" />
-                <ScalarProperty Name="ShipmentTicketAllocatedAmount" ColumnName="ShipmentTicketAllocatedAmount" />
-                <ScalarProperty Name="ShipmentTicketScheduledAmount" ColumnName="ShipmentTicketScheduledAmount" />
-                <ScalarProperty Name="ShipmentTicketState" ColumnName="ShipmentTicketState" />
-                <ScalarProperty Name="ShipmentTicketRequireArriveDate" ColumnName="ShipmentTicketRequireArriveDate" />
-                <ScalarProperty Name="ShipmentTicketTicketNum" ColumnName="ShipmentTicketTicketNum" />
-                <ScalarProperty Name="ShipmentTicketDate" ColumnName="ShipmentTicketDate" />
-                <ScalarProperty Name="ShipmentTicketRelatedTicketNo" ColumnName="ShipmentTicketRelatedTicketNo" />
-                <ScalarProperty Name="ShipmentTicketSegmentationChainCount" ColumnName="ShipmentTicketSegmentationChainCount" />
-                <ScalarProperty Name="ShipmentTicketSource" ColumnName="ShipmentTicketSource" />
-                <ScalarProperty Name="ShipmentTicketTypeNo" ColumnName="ShipmentTicketTypeNo" />
-                <ScalarProperty Name="ShipmentTicketType" ColumnName="ShipmentTicketType" />
-                <ScalarProperty Name="ShipmentTicketNo" ColumnName="ShipmentTicketNo" />
-                <ScalarProperty Name="ShipmentTicketWarehouseID" ColumnName="ShipmentTicketWarehouseID" />
-                <ScalarProperty Name="ShipmentTicketProjectID" ColumnName="ShipmentTicketProjectID" />
                 <ScalarProperty Name="HappenTime" ColumnName="HappenTime" />
                 <ScalarProperty Name="ActualJobPerson" ColumnName="ActualJobPerson" />
                 <ScalarProperty Name="HaveBackedCount" ColumnName="HaveBackedCount" />
@@ -8933,43 +8173,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplierStartDate" ColumnName="SupplierStartDate" />
                 <ScalarProperty Name="SupplierContractNo" ColumnName="SupplierContractNo" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
-                <ScalarProperty Name="ReceiptTicketLastUpdateTime" ColumnName="ReceiptTicketLastUpdateTime" />
-                <ScalarProperty Name="ReceiptTicketLastUpdateUserID" ColumnName="ReceiptTicketLastUpdateUserID" />
-                <ScalarProperty Name="ReceiptTicketCreateTime" ColumnName="ReceiptTicketCreateTime" />
-                <ScalarProperty Name="ReceiptTicketCreateUserID" ColumnName="ReceiptTicketCreateUserID" />
-                <ScalarProperty Name="ReceiptTicketBoxNo" ColumnName="ReceiptTicketBoxNo" />
-                <ScalarProperty Name="ReceiptTicketPostedCount" ColumnName="ReceiptTicketPostedCount" />
-                <ScalarProperty Name="ReceiptTicketAssignmentPerson" ColumnName="ReceiptTicketAssignmentPerson" />
-                <ScalarProperty Name="ReceiptTicketSource" ColumnName="ReceiptTicketSource" />
-                <ScalarProperty Name="ReceiptTicketMoveType" ColumnName="ReceiptTicketMoveType" />
-                <ScalarProperty Name="ReceiptTicketReceiptCount" ColumnName="ReceiptTicketReceiptCount" />
-                <ScalarProperty Name="ReceiptTicketExpectedAmount" ColumnName="ReceiptTicketExpectedAmount" />
-                <ScalarProperty Name="ReceiptTicketReceiptPackage" ColumnName="ReceiptTicketReceiptPackage" />
-                <ScalarProperty Name="ReceiptTicketBoardNo" ColumnName="ReceiptTicketBoardNo" />
-                <ScalarProperty Name="ReceiptTicketReceiptStorageLocation" ColumnName="ReceiptTicketReceiptStorageLocation" />
-                <ScalarProperty Name="ReceiptTicketOrderDate" ColumnName="ReceiptTicketOrderDate" />
-                <ScalarProperty Name="ReceiptTicketPurchaseTicketLineNo" ColumnName="ReceiptTicketPurchaseTicketLineNo" />
-                <ScalarProperty Name="ReceiptTicketPurchaseTicketNo" ColumnName="ReceiptTicketPurchaseTicketNo" />
-                <ScalarProperty Name="ReceiptTicketOutwardDeliverLineNo" ColumnName="ReceiptTicketOutwardDeliverLineNo" />
-                <ScalarProperty Name="ReceiptTicketOutwardDeliverTicketNo" ColumnName="ReceiptTicketOutwardDeliverTicketNo" />
-                <ScalarProperty Name="ReceiptTicketInwardDeliverLineNo" ColumnName="ReceiptTicketInwardDeliverLineNo" />
-                <ScalarProperty Name="ReceiptTicketInwardDeliverTicketNo" ColumnName="ReceiptTicketInwardDeliverTicketNo" />
-                <ScalarProperty Name="ReceiptTicketPostCountDate" ColumnName="ReceiptTicketPostCountDate" />
-                <ScalarProperty Name="ReceiptTicketHeadingText" ColumnName="ReceiptTicketHeadingText" />
-                <ScalarProperty Name="ReceiptTicketReletedVoucherYear" ColumnName="ReceiptTicketReletedVoucherYear" />
-                <ScalarProperty Name="ReceiptTicketReletedVoucherLineNo" ColumnName="ReceiptTicketReletedVoucherLineNo" />
-                <ScalarProperty Name="ReceiptTicketReletedVoucherNo" ColumnName="ReceiptTicketReletedVoucherNo" />
-                <ScalarProperty Name="ReceiptTicketVoucherYear" ColumnName="ReceiptTicketVoucherYear" />
-                <ScalarProperty Name="ReceiptTicketVoucherLineNo" ColumnName="ReceiptTicketVoucherLineNo" />
-                <ScalarProperty Name="ReceiptTicketVoucherNo" ColumnName="ReceiptTicketVoucherNo" />
-                <ScalarProperty Name="ReceiptTicketVoucherSource" ColumnName="ReceiptTicketVoucherSource" />
-                <ScalarProperty Name="ReceiptTicketDeliverTicketNoSRM" ColumnName="ReceiptTicketDeliverTicketNoSRM" />
-                <ScalarProperty Name="ReceiptTicketState" ColumnName="ReceiptTicketState" />
-                <ScalarProperty Name="ReceiptTicketType" ColumnName="ReceiptTicketType" />
-                <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
-                <ScalarProperty Name="ReceiptTicketSupplierID" ColumnName="ReceiptTicketSupplierID" />
-                <ScalarProperty Name="ReceiptTicketWarehouse" ColumnName="ReceiptTicketWarehouse" />
-                <ScalarProperty Name="ReceiptTicketProjectID" ColumnName="ReceiptTicketProjectID" />
                 <ScalarProperty Name="ReceiptTicketItemBoxNo" ColumnName="ReceiptTicketItemBoxNo" />
                 <ScalarProperty Name="ReceiptTicketItemRealRightProperty" ColumnName="ReceiptTicketItemRealRightProperty" />
                 <ScalarProperty Name="ReceiptTicketItemExpiryDate" ColumnName="ReceiptTicketItemExpiryDate" />
@@ -8985,83 +8188,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemPackageName" ColumnName="ReceiptTicketItemPackageName" />
                 <ScalarProperty Name="ReceiptTicketItemComponentID" ColumnName="ReceiptTicketItemComponentID" />
                 <ScalarProperty Name="ReceiptTicketItemReceiptTicketID" ColumnName="ReceiptTicketItemReceiptTicketID" />
-                <ScalarProperty Name="PutawayTicketLastUpdateTime" ColumnName="PutawayTicketLastUpdateTime" />
-                <ScalarProperty Name="PutawayTicketLastUpdateUserID" ColumnName="PutawayTicketLastUpdateUserID" />
-                <ScalarProperty Name="PutawayTicketCreateTime" ColumnName="PutawayTicketCreateTime" />
-                <ScalarProperty Name="PutawayTicketCreateUserID" ColumnName="PutawayTicketCreateUserID" />
-                <ScalarProperty Name="PutawayTicketJobGroupName" ColumnName="PutawayTicketJobGroupName" />
-                <ScalarProperty Name="PutawayTicketPrintTimes" ColumnName="PutawayTicketPrintTimes" />
-                <ScalarProperty Name="PutawayTicketDistributeAmount" ColumnName="PutawayTicketDistributeAmount" />
-                <ScalarProperty Name="PutawayTicketDisplacementAmount" ColumnName="PutawayTicketDisplacementAmount" />
-                <ScalarProperty Name="PutawayTicketScheduledDisplacementAmount" ColumnName="PutawayTicketScheduledDisplacementAmount" />
-                <ScalarProperty Name="PutawayTicketState" ColumnName="PutawayTicketState" />
-                <ScalarProperty Name="PutawayTicketReceiptTicketID" ColumnName="PutawayTicketReceiptTicketID" />
-                <ScalarProperty Name="PutawayTicketType" ColumnName="PutawayTicketType" />
-                <ScalarProperty Name="PutawayTicketNo" ColumnName="PutawayTicketNo" />
-                <ScalarProperty Name="PutawayTicketItemOperateTime" ColumnName="PutawayTicketItemOperateTime" />
-                <ScalarProperty Name="PutawayTicketItemOperatePerson" ColumnName="PutawayTicketItemOperatePerson" />
-                <ScalarProperty Name="PutawayTicketItemMoveCount" ColumnName="PutawayTicketItemMoveCount" />
-                <ScalarProperty Name="PutawayTicketItemDistrabuteCount" ColumnName="PutawayTicketItemDistrabuteCount" />
-                <ScalarProperty Name="PutawayTicketItemScheduledMoveCount" ColumnName="PutawayTicketItemScheduledMoveCount" />
-                <ScalarProperty Name="PutawayTicketItemState" ColumnName="PutawayTicketItemState" />
-                <ScalarProperty Name="PutawayTicketItemBoardNo" ColumnName="PutawayTicketItemBoardNo" />
-                <ScalarProperty Name="PutawayTicketItemTargetStorageLocation" ColumnName="PutawayTicketItemTargetStorageLocation" />
-                <ScalarProperty Name="PutawayTicketItemDisplacementPositionNo" ColumnName="PutawayTicketItemDisplacementPositionNo" />
-                <ScalarProperty Name="PutawayTicketItemReceiptTicketItemID" ColumnName="PutawayTicketItemReceiptTicketItemID" />
-                <ScalarProperty Name="PutawayTicketItemPutawayTicketID" ColumnName="PutawayTicketItemPutawayTicketID" />
-                <ScalarProperty Name="StockInfoPutawayTicketItemID" ColumnName="StockInfoPutawayTicketItemID" />
-                <ScalarProperty Name="ShipmentTicketBoardPrintedTimes" ColumnName="ShipmentTicketBoardPrintedTimes" />
-                <ScalarProperty Name="ShipmentTicketShipmentPlaceNo" ColumnName="ShipmentTicketShipmentPlaceNo" />
-                <ScalarProperty Name="ShipmentTicketEmergency" ColumnName="ShipmentTicketEmergency" />
-                <ScalarProperty Name="ShipmentTicketDeliveryPoint" ColumnName="ShipmentTicketDeliveryPoint" />
-                <ScalarProperty Name="ShipmentTicketOuterPhysicalDistributionPath" ColumnName="ShipmentTicketOuterPhysicalDistributionPath" />
-                <ScalarProperty Name="ShipmentTicketDeliveryTicketNo" ColumnName="ShipmentTicketDeliveryTicketNo" />
-                <ScalarProperty Name="ShipmentTicketWaitingToBeDone" ColumnName="ShipmentTicketWaitingToBeDone" />
-                <ScalarProperty Name="ShipmentTicketPrintTimes" ColumnName="ShipmentTicketPrintTimes" />
-                <ScalarProperty Name="ShipmentTicketLastUpdateTime" ColumnName="ShipmentTicketLastUpdateTime" />
-                <ScalarProperty Name="ShipmentTicketLastUpdateUserID" ColumnName="ShipmentTicketLastUpdateUserID" />
-                <ScalarProperty Name="ShipmentTicketCreateTime" ColumnName="ShipmentTicketCreateTime" />
-                <ScalarProperty Name="ShipmentTicketCreateUserID" ColumnName="ShipmentTicketCreateUserID" />
-                <ScalarProperty Name="ShipmentTicketCloseReason" ColumnName="ShipmentTicketCloseReason" />
-                <ScalarProperty Name="ShipmentTicketDescription" ColumnName="ShipmentTicketDescription" />
-                <ScalarProperty Name="ShipmentTicketDeliveryPath" ColumnName="ShipmentTicketDeliveryPath" />
-                <ScalarProperty Name="ShipmentTicketContactAddress" ColumnName="ShipmentTicketContactAddress" />
-                <ScalarProperty Name="ShipmentTicketReceivingPersonName" ColumnName="ShipmentTicketReceivingPersonName" />
-                <ScalarProperty Name="ShipmentTicketProductionLine" ColumnName="ShipmentTicketProductionLine" />
-                <ScalarProperty Name="ShipmentTicketSortType" ColumnName="ShipmentTicketSortType" />
-                <ScalarProperty Name="ShipmentTicketReverseTicketNo" ColumnName="ShipmentTicketReverseTicketNo" />
-                <ScalarProperty Name="ShipmentTicketStation" ColumnName="ShipmentTicketStation" />
-                <ScalarProperty Name="ShipmentTicketExceedStorageAmount" ColumnName="ShipmentTicketExceedStorageAmount" />
-                <ScalarProperty Name="ShipmentTicketShipmentAmount" ColumnName="ShipmentTicketShipmentAmount" />
-                <ScalarProperty Name="ShipmentTicketPickingAmount" ColumnName="ShipmentTicketPickingAmount" />
-                <ScalarProperty Name="ShipmentTicketAllocatedAmount" ColumnName="ShipmentTicketAllocatedAmount" />
-                <ScalarProperty Name="ShipmentTicketScheduledAmount" ColumnName="ShipmentTicketScheduledAmount" />
-                <ScalarProperty Name="ShipmentTicketState" ColumnName="ShipmentTicketState" />
-                <ScalarProperty Name="ShipmentTicketRequireArriveDate" ColumnName="ShipmentTicketRequireArriveDate" />
-                <ScalarProperty Name="ShipmentTicketTicketNum" ColumnName="ShipmentTicketTicketNum" />
-                <ScalarProperty Name="ShipmentTicketDate" ColumnName="ShipmentTicketDate" />
-                <ScalarProperty Name="ShipmentTicketRelatedTicketNo" ColumnName="ShipmentTicketRelatedTicketNo" />
-                <ScalarProperty Name="ShipmentTicketSegmentationChainCount" ColumnName="ShipmentTicketSegmentationChainCount" />
-                <ScalarProperty Name="ShipmentTicketSource" ColumnName="ShipmentTicketSource" />
-                <ScalarProperty Name="ShipmentTicketTypeNo" ColumnName="ShipmentTicketTypeNo" />
-                <ScalarProperty Name="ShipmentTicketType" ColumnName="ShipmentTicketType" />
-                <ScalarProperty Name="ShipmentTicketNo" ColumnName="ShipmentTicketNo" />
-                <ScalarProperty Name="ShipmentTicketWarehouseID" ColumnName="ShipmentTicketWarehouseID" />
-                <ScalarProperty Name="ShipmentTicketProjectID" ColumnName="ShipmentTicketProjectID" />
-                <ScalarProperty Name="JobTicketLastUpdateTime" ColumnName="JobTicketLastUpdateTime" />
-                <ScalarProperty Name="JobTicketLastUpdateUserID" ColumnName="JobTicketLastUpdateUserID" />
-                <ScalarProperty Name="JobTicketCreateTime" ColumnName="JobTicketCreateTime" />
-                <ScalarProperty Name="JobTicketCreateUserID" ColumnName="JobTicketCreateUserID" />
-                <ScalarProperty Name="JobTicketPersonInCharge" ColumnName="JobTicketPersonInCharge" />
-                <ScalarProperty Name="JobTicketAssignmentArea" ColumnName="JobTicketAssignmentArea" />
-                <ScalarProperty Name="JobTicketPrintedTimes" ColumnName="JobTicketPrintedTimes" />
-                <ScalarProperty Name="JobTicketState" ColumnName="JobTicketState" />
-                <ScalarProperty Name="JobTicketRealAmount" ColumnName="JobTicketRealAmount" />
-                <ScalarProperty Name="JobTicketScheduledAmount" ColumnName="JobTicketScheduledAmount" />
-                <ScalarProperty Name="JobTicketJobGroupName" ColumnName="JobTicketJobGroupName" />
-                <ScalarProperty Name="JobTicketJobType" ColumnName="JobTicketJobType" />
-                <ScalarProperty Name="JobTicketJobTicketNo" ColumnName="JobTicketJobTicketNo" />
-                <ScalarProperty Name="JobTicketShipmentTicketID" ColumnName="JobTicketShipmentTicketID" />
                 <ScalarProperty Name="PutOutStorageTicketLastUpdateTime" ColumnName="PutOutStorageTicketLastUpdateTime" />
                 <ScalarProperty Name="PutOutStorageTicketLastUpdateUserID" ColumnName="PutOutStorageTicketLastUpdateUserID" />
                 <ScalarProperty Name="PutOutStorageTicketCreateTime" ColumnName="PutOutStorageTicketCreateTime" />
@@ -9788,8 +8914,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SubmissionAmount" ColumnName="SubmissionAmount" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="ArriveAmount" ColumnName="ArriveAmount" />
+                <ScalarProperty Name="ReceiptTicketItemID" ColumnName="ReceiptTicketItemID" />
                 <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
                 <ScalarProperty Name="LineItem" ColumnName="LineItem" />
                 <ScalarProperty Name="SubmissionTicketID" ColumnName="SubmissionTicketID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -10027,7 +9153,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>

@@ -33,26 +33,7 @@ namespace WMS.UI
                 throw new Exception("未设置源库存信息");
             }
 
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = StockInfoViewMetaData.KeyNames[i];
-                if(curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, StockInfoViewMetaData.KeyNames);
 
             if(this.mode == FormMode.ALTER)
             {

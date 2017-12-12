@@ -34,11 +34,11 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.textBoxComponentNo = new System.Windows.Forms.ToolStripTextBox();
+            this.textBoxSearchContition = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.buttonSelect = new System.Windows.Forms.ToolStripButton();
+            this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +49,7 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 38);
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 39);
             this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
@@ -60,7 +60,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(774, 455);
+            this.reoGridControlMain.Size = new System.Drawing.Size(774, 454);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -94,33 +94,27 @@
             this.toolStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F);
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.textBoxComponentNo,
+            this.comboBoxSearchCondition,
+            this.textBoxSearchContition,
             this.toolStripSeparator1,
             this.buttonSearch,
             this.buttonSelect});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(774, 38);
+            this.toolStrip1.Size = new System.Drawing.Size(774, 39);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripLabel1
+            // textBoxSearchContition
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(123, 35);
-            this.toolStripLabel1.Text = "零件编号";
-            // 
-            // textBoxComponentNo
-            // 
-            this.textBoxComponentNo.Name = "textBoxComponentNo";
-            this.textBoxComponentNo.Size = new System.Drawing.Size(200, 38);
-            this.textBoxComponentNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxComponentNo_KeyPress);
+            this.textBoxSearchContition.Name = "textBoxSearchContition";
+            this.textBoxSearchContition.Size = new System.Drawing.Size(200, 39);
+            this.textBoxSearchContition.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxComponentNo_KeyPress);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
             // buttonSearch
             // 
@@ -141,6 +135,15 @@
             this.buttonSelect.Size = new System.Drawing.Size(60, 25);
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
+            // 
+            // comboBoxSearchCondition
+            // 
+            this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSearchCondition.Items.AddRange(new object[] {
+            "零件编号",
+            "零件名称"});
+            this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(121, 39);
             // 
             // FormSelectSupplier
             // 
@@ -171,10 +174,10 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripTextBox textBoxComponentNo;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripTextBox textBoxSearchContition;
         private System.Windows.Forms.ToolStripButton buttonSearch;
         private System.Windows.Forms.ToolStripButton buttonSelect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripComboBox comboBoxSearchCondition;
     }
 }

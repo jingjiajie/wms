@@ -119,8 +119,14 @@ namespace WMS.UI
                     MessageBox.Show("系统错误，未找到相应出库单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-                this.curStockInfoID = putOutStorageTicketItemView.StockInfoID;
+                if (putOutStorageTicketItemView.StockInfoID != null)
+                {
+                    this.curStockInfoID = putOutStorageTicketItemView.StockInfoID.Value;
+                }
+                else
+                {
+                    this.curStockInfoID = -1;
+                }
                 this.Invoke(new Action(()=>
                 {
                     this.labelStatus.Text = "加载完成";
@@ -245,7 +251,7 @@ namespace WMS.UI
                 {
                     this.Search(putOutStorageTicketItem.ID);
                 }));
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }
 

@@ -43,6 +43,7 @@
             this.buttonModify = new System.Windows.Forms.Button();
             this.buttonFinish = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -127,7 +128,7 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelProperties, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -157,45 +158,48 @@
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(562, 188);
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(662, 188);
             this.tableLayoutPanelProperties.TabIndex = 0;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tableLayoutPanel3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(571, 3);
+            this.panel3.Location = new System.Drawing.Point(671, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(394, 188);
+            this.panel3.Size = new System.Drawing.Size(294, 188);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 4;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 165F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.buttonUnfinish, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonFinish, 2, 1);
+            this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 4;
+            this.tableLayoutPanel3.RowCount = 5;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(394, 188);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(294, 188);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(42, 42);
+            this.buttonAdd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAdd.Location = new System.Drawing.Point(30, 37);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(159, 49);
+            this.buttonAdd.Size = new System.Drawing.Size(114, 34);
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.Text = "添加作业任务";
             this.buttonAdd.UseVisualStyleBackColor = true;
@@ -203,9 +207,10 @@
             // 
             // buttonUnfinish
             // 
-            this.buttonUnfinish.Location = new System.Drawing.Point(207, 97);
+            this.buttonUnfinish.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonUnfinish.Location = new System.Drawing.Point(150, 77);
             this.buttonUnfinish.Name = "buttonUnfinish";
-            this.buttonUnfinish.Size = new System.Drawing.Size(144, 49);
+            this.buttonUnfinish.Size = new System.Drawing.Size(114, 34);
             this.buttonUnfinish.TabIndex = 3;
             this.buttonUnfinish.Text = "任务未完成";
             this.buttonUnfinish.UseVisualStyleBackColor = true;
@@ -213,9 +218,10 @@
             // 
             // buttonModify
             // 
-            this.buttonModify.Location = new System.Drawing.Point(42, 97);
+            this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonModify.Location = new System.Drawing.Point(30, 77);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(159, 49);
+            this.buttonModify.Size = new System.Drawing.Size(114, 34);
             this.buttonModify.TabIndex = 1;
             this.buttonModify.Text = "修改作业任务";
             this.buttonModify.UseVisualStyleBackColor = true;
@@ -223,9 +229,10 @@
             // 
             // buttonFinish
             // 
-            this.buttonFinish.Location = new System.Drawing.Point(207, 42);
+            this.buttonFinish.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonFinish.Location = new System.Drawing.Point(150, 37);
             this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(144, 49);
+            this.buttonFinish.Size = new System.Drawing.Size(114, 34);
             this.buttonFinish.TabIndex = 2;
             this.buttonFinish.Text = "任务完成";
             this.buttonFinish.UseVisualStyleBackColor = true;
@@ -239,6 +246,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(968, 387);
             this.panel2.TabIndex = 1;
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonDelete.Location = new System.Drawing.Point(30, 117);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(114, 34);
+            this.buttonDelete.TabIndex = 4;
+            this.buttonDelete.Text = "删除作业任务";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // FormJobTicketItem
             // 
@@ -282,5 +300,6 @@
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Button buttonDelete;
     }
 }

@@ -12,8 +12,8 @@ namespace WMS.UI
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false},
-            new KeyName(){Key="JobTicketNo",Name="关联作业单号",Editable=false,Save=false},
-            new KeyName(){Key="ShipmentTicketNo",Name="发货单号",Visible=true,Editable=false,Save=false},
+            new KeyName(){Key="JobTicketNo",Name="作业单号",Editable=false,Save=false},
+            new KeyName(){Key="ShipmentTicketNo",Name="关联发货单号",Visible=true,Editable=false,Save=false},
             new KeyName(){Key="JobType",Name="作业类型"},
             new KeyName(){Key="JobGroupName",Name="作业组名称"},
             new KeyName(){Key="ScheduledAmount",Name="计划作业数量"},
