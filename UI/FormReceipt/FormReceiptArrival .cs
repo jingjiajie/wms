@@ -356,7 +356,25 @@ namespace WMS.UI
 
         private void buttonReceiptCancel_Click(object sender, EventArgs e)
         {
-            
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            //try
+            //{
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                WMSEntities wmsEntities = new WMSEntities();
+                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
+                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID);
+                formReceiptArrivalCheck.Show();
+            //}
+            ////catch
+            ////{
+            ////    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            ////    return;
+            ////}
         }
     }
 }

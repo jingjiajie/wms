@@ -79,6 +79,12 @@
     <Compile Include="FormReceipt\FormAddPutawayItem.Designer.cs">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormAddSubmissionItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormAddSubmissionItem.Designer.cs">
+      <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormPutaway.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -442,6 +448,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormAddPutawayItem.resx">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormAddSubmissionItem.resx">
+      <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutaway.resx">
       <DependentUpon>FormPutaway.cs</DependentUpon>

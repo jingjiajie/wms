@@ -44,11 +44,12 @@
             this.buttonCheckCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.buttonPutaway = new System.Windows.Forms.ToolStripButton();
-            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
+            this.buttonItemSubmission = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,7 +93,8 @@
             this.buttonCheckCancel,
             this.buttonItems,
             this.buttonPutaway,
-            this.buttonReceiptCancel,
+            this.toolStripButton2,
+            this.buttonItemSubmission,
             this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
@@ -180,8 +182,8 @@
             this.buttonCheck.Image = ((System.Drawing.Image)(resources.GetObject("buttonCheck.Image")));
             this.buttonCheck.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonCheck.Name = "buttonCheck";
-            this.buttonCheck.Size = new System.Drawing.Size(40, 25);
-            this.buttonCheck.Text = "送检";
+            this.buttonCheck.Size = new System.Drawing.Size(80, 25);
+            this.buttonCheck.Text = "整单送检";
             this.buttonCheck.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.buttonCheck.Click += new System.EventHandler(this.buttonCheck_Click);
             // 
@@ -219,16 +221,16 @@
             this.buttonPutaway.Text = "收货";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonMakePutaway_Click);
             // 
-            // buttonReceiptCancel
+            // buttonItemSubmission
             // 
-            this.buttonReceiptCancel.AutoSize = false;
-            this.buttonReceiptCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
-            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
-            this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
-            this.buttonReceiptCancel.Text = "取消收货";
-            this.buttonReceiptCancel.Click += new System.EventHandler(this.buttonReceiptCancel_Click);
+            this.buttonItemSubmission.AutoSize = false;
+            this.buttonItemSubmission.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.buttonItemSubmission.Image = ((System.Drawing.Image)(resources.GetObject("buttonItemSubmission.Image")));
+            this.buttonItemSubmission.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonItemSubmission.Name = "buttonItemSubmission";
+            this.buttonItemSubmission.Size = new System.Drawing.Size(40, 25);
+            this.buttonItemSubmission.Text = "送检";
+            this.buttonItemSubmission.Click += new System.EventHandler(this.buttonReceiptCancel_Click);
             // 
             // toolStripButton1
             // 
@@ -262,6 +264,16 @@
             this.lableStatus.Name = "lableStatus";
             this.lableStatus.Size = new System.Drawing.Size(110, 31);
             this.lableStatus.Text = "到货管理";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.AutoSize = false;
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(70, 25);
+            this.toolStripButton2.Text = "取消收货";
             // 
             // FormReceiptArrival
             // 
@@ -301,10 +313,11 @@
         private System.Windows.Forms.ToolStripButton buttonCheckCancel;
         private System.Windows.Forms.ToolStripButton buttonItems;
         private System.Windows.Forms.ToolStripButton buttonPutaway;
-        private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
+        private System.Windows.Forms.ToolStripButton buttonItemSubmission;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lableStatus;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }

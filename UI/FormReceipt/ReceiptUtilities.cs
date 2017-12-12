@@ -33,5 +33,14 @@ namespace WMS.UI
 
             return putawayTicketItem;
         }
+
+        public static StockInfo PutawayTicketItemToStockInfo(PutawayTicketItem putawayTicketItem)
+        {
+            StockInfo stockInfo = new StockInfo();
+            stockInfo.ID = 0;
+            stockInfo.PutawayTicketItemID = putawayTicketItem.ID;
+
+            return stockInfo;
+        }
     }
 }
