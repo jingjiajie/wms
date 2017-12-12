@@ -114,7 +114,7 @@ namespace WMS.UI
 
                     if (key == null || value == null) //查询条件为null则查询全部内容
                     {
-                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView  ").ToArray();
+                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView").ToArray();
                         Console.WriteLine(SupplierView.Length);
                     }
                     else
@@ -125,7 +125,7 @@ namespace WMS.UI
                        // }
                        try
                         {
-                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} ", key, value)).ToArray();
+                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1}", key, value)).ToArray();
 
                         }
                         catch
@@ -154,7 +154,7 @@ namespace WMS.UI
                         //}
                         try
                         {
-                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} AND ID = {2} ", key, value, id )).ToArray();
+                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} AND ID = {2}", key, value, id )).ToArray();
 
                         }
                         catch
