@@ -15,7 +15,7 @@ namespace WMS.DataAccess
     public partial class SubmissionTicketView
     {
         public int ID { get; set; }
-        public int ReceiptTicketID { get; set; }
+        public Nullable<int> ReceiptTicketID { get; set; }
         public string No { get; set; }
         public string State { get; set; }
         public Nullable<int> HasSelfInspectionReport { get; set; }
@@ -91,5 +91,7 @@ namespace WMS.DataAccess
         public Nullable<int> ReceiptTicketProjectID { get; set; }
         public Nullable<int> ReceiptTicketLastUpdateUserID { get; set; }
         public Nullable<int> ReceiptTicketCreateUserID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     }
 }

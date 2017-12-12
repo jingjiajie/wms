@@ -34,8 +34,11 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
     
         public virtual ICollection<JobTicketItem> JobTicketItem { get; set; }
-        public virtual ShipmentTicket ShipmentTicket { get; set; }
+        public virtual Project Project { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

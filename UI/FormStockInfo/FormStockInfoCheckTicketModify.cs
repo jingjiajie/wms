@@ -131,7 +131,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormStockInfoCheckTicketComponenModify a1 = new FormStockInfoCheckTicketComponenModify();
+            FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify();
             a1.Show();
         }
 

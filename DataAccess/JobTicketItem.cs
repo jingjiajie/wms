@@ -15,7 +15,7 @@ namespace WMS.DataAccess
     public partial class JobTicketItem
     {
         public int ID { get; set; }
-        public int JobTickedID { get; set; }
+        public int JobTicketID { get; set; }
         public Nullable<int> StockInfoID { get; set; }
         public string No { get; set; }
         public string Type { get; set; }
