@@ -93,7 +93,8 @@ namespace WMS.UI
                     }
                     try
                     {
-                        stockCheckViews = wmsEntities.Database.SqlQuery<StockInfoCheckTicketView>(String.Format("SELECT * FROM StockInfoCheckTicketView WHERE {0} = {1}", key, value)).ToArray();
+                        stockCheckViews = wmsEntities.Database.SqlQuery<StockInfoCheckTicketView>(String.Format("SELECT * FROM StockInfoCheckTicketView WHERE {0} = {1}",
+                            key, value)).ToArray();
                     }
                     catch
                     {
@@ -158,44 +159,44 @@ namespace WMS.UI
         //    form.Show();
         //}
 
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            List<int> deleteIDs = new List<int>();
-            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
-            {
-                try
-                {
-                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
-                    deleteIDs.Add(curID);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-            if (deleteIDs.Count == 0)
-            {
-                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-            {
-                return;
-            }
-            this.labelStatus.Text = "正在删除...";
+        //private void buttonDelete_Click(object sender, EventArgs e)
+        //{
+        //    var worksheet = this.reoGridControlMain.Worksheets[0];
+        //    List<int> deleteIDs = new List<int>();
+        //    for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+        //    {
+        //        try
+        //        {
+        //            int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+        //            deleteIDs.Add(curID);
+        //        }
+        //        catch
+        //        {
+        //            continue;
+        //        }
+        //    }
+        //    if (deleteIDs.Count == 0)
+        //    {
+        //        MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        return;
+        //    }
+        //    if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+        //    {
+        //        return;
+        //    }
+        //    this.labelStatus.Text = "正在删除...";
 
 
-            new Thread(new ThreadStart(() =>
-            {
-                foreach (int id in deleteIDs)
-                {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicket WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
-                }
-                this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
-            })).Start();
-        }
+        //    new Thread(new ThreadStart(() =>
+        //    {
+        //        foreach (int id in deleteIDs)
+        //        {
+        //            this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicket WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
+        //        }
+        //        this.wmsEntities.SaveChanges();
+        //        this.Invoke(new Action(this.Search));
+        //    })).Start();
+        //}
 
         private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -232,6 +233,7 @@ namespace WMS.UI
         private void buttonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
+            
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -240,6 +242,7 @@ namespace WMS.UI
                 }
                 int stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var a1 = new FormStockInfoCheckTicketModify (stockInfoCheckID);
+                a1 .SetMode(FormMode.ALTER);
                 a1.SetModifyFinishedCallback(() =>
                 {
                     this.Search();
@@ -251,6 +254,45 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+        }
+
+        private void buttonDelete_Click_1(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
+
+
+            new Thread(new ThreadStart(() =>
+            {
+                foreach (int id in deleteIDs)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicket WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+            })).Start();
         }
     }
 }

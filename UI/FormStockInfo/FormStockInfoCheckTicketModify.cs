@@ -64,10 +64,39 @@ namespace WMS.UI
                 Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
             }
 
-             
+
+            this.InitComponents();
+            //this.Search();
+
+        }
+        private void InitComponents()
+        {
+            string[] visibleColumnNames = (from kn in StockInfoCheckTickettModifyViewMetaData1.KeyNames
+                                           where kn.Visible == true
+                                           select kn.Name).ToArray();
+
+            //初始化
+            //this.toolStripComboBoxSelect1.Items.Add("无");
+            //this.toolStripComboBoxSelect1.Items.AddRange(visibleColumnNames);
+            //this.toolStripComboBoxSelect1.SelectedIndex = 0;
+
+
+            //初始化表格
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
+            for (int i = 0; i < StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length; i++)
+            {
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTickettModifyViewMetaData1.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTickettModifyViewMetaData1.KeyNames[i].Visible;
+            }
+            worksheet.Columns = StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length);
+
         }
 
-        private void buttonDelete_Click(object sender, EventArgs e)
+
+
+            private void buttonDelete_Click(object sender, EventArgs e)
         {
             WMS.DataAccess.StockInfoCheckTicket   stockInfoCheck = null;
              
@@ -143,13 +172,13 @@ namespace WMS.UI
             this.mode = mode;
             if (mode == FormMode.ALTER)
             {
-                this.Text = "修改库存信息";
-                this.buttonOK.Text = "修改库存信息";
+                this.Text = "修改盘点单信息";
+                this.buttonOK.Text = "修改盘点单信息";
             }
             else if (mode == FormMode.ADD)
             {
-                this.Text = "添加库存信息";
-                this.buttonOK.Text = "添加库存信息";
+                this.Text = "添加盘点单信息";
+                this.buttonOK.Text = "添加盘点单信息";
             }
         }
 

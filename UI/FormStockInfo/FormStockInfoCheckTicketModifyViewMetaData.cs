@@ -8,19 +8,24 @@ namespace WMS.UI
     class StockInfoCheckTickettModifyViewMetaData
     {
         private static KeyName[] keyNames = {
-            new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="CheckDate",Name="盘点日期",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="StockInfoID",Name="库存信息ID",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="DisplacementPositionNo",Name="移位库位编码",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="TargetStorageLocation",Name="目标库位",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="BoardNo",Name="托盘号",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="State",Name="状态",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="ScheduledMoveCount",Name="计划移位数量",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="DistrabuteCount",Name="分配数量",Visible=false,Editable=false,Save=false},
-            new KeyName(){Key="MoveCount",Name="移位数量",Visible=false,Editable=false,Save=false},
+            new KeyName(){Key="ID",Name="ID",              Visible=false,Editable=false,Save=false},
+            new KeyName(){Key="ComponentName",Name="零件名称",Visible=true ,Editable=false,Save=false},
+            new KeyName(){Key="ComponentNo",Name="零件代号",Visible=true ,Editable=false,Save=false},
+            new KeyName(){Key="SupplierName",Name="供货商名称",Visible=true ,Editable=false,Save=false},
+            // new KeyName(){Key="StockInfoCheckTicketID",Name="盘点单ID",Visible=false,Editable=false,Save=false},
+            // new KeyName(){Key="StockInfoID",Name="库存信息ID",Visible=false,Editable=false,Save=false},
 
 
+           // new KeyName(){Key="ExcpetedOverflowAreaAmount",Name="溢库区数量",Visible=true ,Editable=false,Save=true },
+           // new KeyName(){Key="ExpectedShipmentAreaAmount",Name="发货区数量",Visible=true ,Editable=false,Save=true },
+            //new KeyName(){Key="RealOverflowAreaAmount",Name="实际溢库区数量",Visible=true ,Editable=false,Save=true },
+           // new KeyName(){Key="RealShipmentAreaAmount",Name="实际发货区数量",Visible=true ,Editable=false,Save=true },
 
+
+            new KeyName(){Key="ProjectName",Name="项目名称",Visible=true ,Editable=false,Save=false},
+            new KeyName(){Key="WarehouseName",Name="仓库名",Visible=true ,Editable=false,Save=false},
+            
+      
 
 
         };
