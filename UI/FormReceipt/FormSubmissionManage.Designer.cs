@@ -69,7 +69,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 90;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1602, 725);
+            this.reoGridControlUser.Size = new System.Drawing.Size(1648, 975);
             this.reoGridControlUser.TabIndex = 6;
             this.reoGridControlUser.Text = "reoGridControl1";
             // 
@@ -90,7 +90,7 @@
             this.reoGridControl1.SheetTabVisible = true;
             this.reoGridControl1.SheetTabWidth = 90;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(1602, 686);
+            this.reoGridControl1.Size = new System.Drawing.Size(1648, 936);
             this.reoGridControl1.TabIndex = 9;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
@@ -195,7 +195,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1602, 39);
+            this.toolStripTop.Size = new System.Drawing.Size(1648, 39);
             this.toolStripTop.TabIndex = 8;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -249,9 +249,9 @@
             this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel3,
             this.toolStripStatusLabel2});
-            this.statusStrip2.Location = new System.Drawing.Point(0, 689);
+            this.statusStrip2.Location = new System.Drawing.Point(0, 939);
             this.statusStrip2.Name = "statusStrip2";
-            this.statusStrip2.Size = new System.Drawing.Size(1602, 36);
+            this.statusStrip2.Size = new System.Drawing.Size(1648, 36);
             this.statusStrip2.TabIndex = 10;
             this.statusStrip2.Text = "statusStrip2";
             // 
@@ -259,7 +259,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1602, 725);
+            this.ClientSize = new System.Drawing.Size(1648, 975);
             this.Controls.Add(this.statusStrip2);
             this.Controls.Add(this.reoGridControl1);
             this.Controls.Add(this.toolStripTop);

@@ -85,6 +85,12 @@
     <Compile Include="FormReceipt\FormAddSubmissionItem.Designer.cs">
       <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormAddSubmissionTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormAddSubmissionTicket.Designer.cs">
+      <DependentUpon>FormAddSubmissionTicket.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormPutaway.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,10 +243,10 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceiptArrival 1.Designer.cs">
+    <Compile Include="FormReceipt\FormReceiptArrival1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FormReceiptArrival .resx</DependentUpon>
+      <DependentUpon>FormReceiptArrival.resx</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\FormReceiptArrivalCheck.cs">
       <SubType>Form</SubType>
@@ -352,11 +358,11 @@
     <Compile Include="FormBase\FormBaseWarehouse.Designer.cs">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceiptArrival .cs">
+    <Compile Include="FormReceipt\FormReceiptArrival.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormReceiptArrival .Designer.cs">
-      <DependentUpon>FormReceiptArrival .cs</DependentUpon>
+    <Compile Include="FormReceipt\FormReceiptArrival.Designer.cs">
+      <DependentUpon>FormReceiptArrival.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\FormReceiptShelves.cs">
       <SubType>Form</SubType>
@@ -451,6 +457,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormAddSubmissionItem.resx">
       <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormAddSubmissionTicket.resx">
+      <DependentUpon>FormAddSubmissionTicket.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutaway.resx">
       <DependentUpon>FormPutaway.cs</DependentUpon>
@@ -569,10 +578,10 @@
     <EmbeddedResource Include="FormBase\FormBaseWarehouse.resx">
       <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceiptArrival .resx">
-      <DependentUpon>FormReceiptArrival .cs</DependentUpon>
+    <EmbeddedResource Include="FormReceipt\FormReceiptArrival.resx">
+      <DependentUpon>FormReceiptArrival.cs</DependentUpon>
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>FormReceiptArrival 1.Designer.cs</LastGenOutput>
+      <LastGenOutput>FormReceiptArrival1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptShelves.resx">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>

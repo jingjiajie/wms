@@ -96,7 +96,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="ID", Key="ID",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="送检单ID", Key="SubmissionTicketID",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="行项目", Key="LineItem",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="物料ID", Key="ComponentID",Visible=true,Editable=true,Save=true},
+            //new KeyName(){Name="物料ID", Key="ComponentID",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="状态", Key="State",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="到货数量", Key="ArriveAmount",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="单位", Key="Unit",Visible=true,Editable=true,Save=true},

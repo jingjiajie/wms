@@ -214,8 +214,10 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 foreach (int id in deleteIDs)
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='作废' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
-                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='作废' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", id));
+
+                    //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='作废' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
+                    //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='作废' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
                 }
                 wmsEntities.SaveChanges();
                 this.Search(null, null);
@@ -234,18 +236,20 @@ namespace WMS.UI
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-                if (receiptTicket.State == STRING_SEND_CHECK)
+                if (receiptTicket.State == "送检中" || receiptTicket.State == "已收货")
                 {
-                    MessageBox.Show("该收货单已送检");
+                    MessageBox.Show("该收货单"+ receiptTicket.State);
                     return;
                 }
+                FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(receiptTicketID);
+                formAddSubmissionTicket.Show();
                 //var receiptTicketModify = new ReceiptTicketModify(FormMode.ALTER, stockInfoID);
-                var formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, AllOrPartial.ALL);
-                formReceiptArrivalCheck.SetFinishedAction(() =>
+                //var formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, AllOrPartial.ALL);
+                formAddSubmissionTicket.SetCallBack(() =>
                 {
                     this.Search(null, null);
                 });
-                formReceiptArrivalCheck.Show();
+                formAddSubmissionTicket.Show();
             }
             catch
             {

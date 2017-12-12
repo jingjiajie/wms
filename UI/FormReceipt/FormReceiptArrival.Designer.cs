@@ -44,12 +44,12 @@
             this.buttonCheckCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
             this.buttonPutaway = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.buttonItemSubmission = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +71,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 90;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1648, 837);
+            this.reoGridControlUser.Size = new System.Drawing.Size(1662, 867);
             this.reoGridControlUser.TabIndex = 3;
             this.reoGridControlUser.Text = "reoGridControl1";
             this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click);
@@ -99,7 +99,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1648, 39);
+            this.toolStripTop.Size = new System.Drawing.Size(1662, 39);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
@@ -221,6 +221,16 @@
             this.buttonPutaway.Text = "收货";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonMakePutaway_Click);
             // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.AutoSize = false;
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(70, 25);
+            this.toolStripButton2.Text = "取消收货";
+            // 
             // buttonItemSubmission
             // 
             this.buttonItemSubmission.AutoSize = false;
@@ -247,9 +257,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lableStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 840);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 870);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1648, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(1662, 36);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -265,21 +275,11 @@
             this.lableStatus.Size = new System.Drawing.Size(110, 31);
             this.lableStatus.Text = "到货管理";
             // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.AutoSize = false;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(70, 25);
-            this.toolStripButton2.Text = "取消收货";
-            // 
             // FormReceiptArrival
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1648, 876);
+            this.ClientSize = new System.Drawing.Size(1662, 906);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.reoGridControlUser);
             this.Controls.Add(this.toolStripTop);

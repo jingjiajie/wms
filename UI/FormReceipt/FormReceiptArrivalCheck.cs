@@ -116,6 +116,8 @@ namespace WMS.UI.FormReceipt
             {
                 textBoxState.Text = "待检";
             }
+            TextBox textBoxReceiptTicketID = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
+            textBoxReceiptTicketID.Text = this.receiptTicketID.ToString();
         }
 
         private void InitComponents()

@@ -10,6 +10,7 @@ using WMS.UI;
 using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI.FormReceipt
 {
@@ -156,10 +157,32 @@ namespace WMS.UI.FormReceipt
                     throw new Exception();
                 }
                 int submissionTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).Single();
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicketItem SET State='合格' WHERE ID={0}", submissionTicketItemID));
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicket SET State='部分合格' WHERE ID={0}", submissionTicketID));
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ReceiptTicket SET State='部分合格' WHERE ID={0}", submissionTicket.ID));
+                //SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).Single();
+                SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ID == submissionTicketItemID select sti).FirstOrDefault();
+                submissionTicketItem.State = "合格";
+                if (MessageBox.Show("是否同时收货？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='已收货' WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", submissionTicketItem.ReceiptTicketItemID));
+                    new Thread(() =>
+                    {
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        Search();
+                    }).Start();
+                }
+                else
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='过检' WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", submissionTicketItem.ReceiptTicketItemID));
+                    new Thread(() =>
+                    {
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search();
+                        }));
+                    }).Start();
+                }
 
             }
             catch
@@ -182,16 +205,41 @@ namespace WMS.UI.FormReceipt
                     throw new Exception();
                 }
                 int submissionTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicketItem SET State='不合格' WHERE ID={0}", submissionTicketItemID));
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicket SET State='部分合格' WHERE ID={0}", submissionTicketID));
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ReceiptTicket SET State='部分合格' WHERE ID={0}", submissionTicketID));
+                SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ID == submissionTicketItemID select sti).FirstOrDefault();
+                submissionTicketItem.State = "不合格";
+                if (MessageBox.Show("是否将该收货单条目设为拒收？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='拒收' WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", submissionTicketItem.ReceiptTicketItemID));
+                    new Thread(() =>
+                    {
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search();
+                        }));
+                    }).Start();
+                }
+                else
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='送检中' WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", submissionTicketItem.ReceiptTicketItemID));
+                    new Thread(() =>
+                    {
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        Search();
+                    }).Start();
+                }
+                //wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicketItem SET State='不合格' WHERE ID={0}", submissionTicketItemID));
+                //wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicket SET State='部分合格' WHERE ID={0}", submissionTicketID));
+                //wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ReceiptTicket SET State='部分合格' WHERE ID={0}", submissionTicketID));
             }
             catch
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            this.Search();
+            //this.Search();
             this.RefreshTextBoxes();
         }
 

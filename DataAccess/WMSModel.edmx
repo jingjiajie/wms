@@ -2018,12 +2018,13 @@
         <EntityType Name="SubmissionTicketItemView">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="SubmissionTicketID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="SubmissionTicketID" Type="int" />
+          <Property Name="SubmissionTicketID" Type="int" Nullable="false" />
           <Property Name="LineItem" Type="nvarchar" MaxLength="64" />
-          <Property Name="ComponentID" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketItemID" Type="int" />
           <Property Name="ArriveAmount" Type="nvarchar" MaxLength="64" />
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
           <Property Name="SubmissionAmount" Type="decimal" Precision="18" Scale="0" />
@@ -4258,8 +4259,8 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[ID] AS [ID], 
 [SubmissionTicketItemView].[SubmissionTicketID] AS [SubmissionTicketID], 
 [SubmissionTicketItemView].[LineItem] AS [LineItem], 
-[SubmissionTicketItemView].[ComponentID] AS [ComponentID], 
 [SubmissionTicketItemView].[State] AS [State], 
+[SubmissionTicketItemView].[ReceiptTicketItemID] AS [ReceiptTicketItemID], 
 [SubmissionTicketItemView].[ArriveAmount] AS [ArriveAmount], 
 [SubmissionTicketItemView].[Unit] AS [Unit], 
 [SubmissionTicketItemView].[SubmissionAmount] AS [SubmissionAmount], 
@@ -6919,12 +6920,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="SubmissionTicketID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="SubmissionTicketID" Type="Int32" />
+          <Property Name="SubmissionTicketID" Type="Int32" Nullable="false" />
           <Property Name="LineItem" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ComponentID" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketItemID" Type="Int32" />
           <Property Name="ArriveAmount" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
@@ -9788,8 +9790,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SubmissionAmount" ColumnName="SubmissionAmount" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="ArriveAmount" ColumnName="ArriveAmount" />
+                <ScalarProperty Name="ReceiptTicketItemID" ColumnName="ReceiptTicketItemID" />
                 <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
                 <ScalarProperty Name="LineItem" ColumnName="LineItem" />
                 <ScalarProperty Name="SubmissionTicketID" ColumnName="SubmissionTicketID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

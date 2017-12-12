@@ -18,6 +18,7 @@ namespace WMS.UI
             submissionTicketItem.ID = 0;
             submissionTicketItem.State = "送检中";
             submissionTicketItem.SubmissionAmount = receiptTicketItem.ReceiviptAmount;
+            submissionTicketItem.ReceiptTicketItemID = receiptTicketItem.ID;
 
             return submissionTicketItem;
         }
@@ -38,7 +39,7 @@ namespace WMS.UI
         {
             StockInfo stockInfo = new StockInfo();
             stockInfo.ID = 0;
-            stockInfo.PutawayTicketItemID = putawayTicketItem.ID;
+            stockInfo.ReceiptTicketItemID = putawayTicketItem.ReceiptTicketItemID;
 
             return stockInfo;
         }
