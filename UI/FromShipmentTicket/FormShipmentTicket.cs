@@ -221,6 +221,8 @@ namespace WMS.UI
 
             JobTicket jobTicket = new JobTicket();
             jobTicket.JobTicketNo = "";
+            jobTicket.ProjectID = this.projectID;
+            jobTicket.WarehouseID = this.warehouseID;
             jobTicket.JobType = "发货";
             jobTicket.ShipmentTicketID = shipmentTicket.ID;
             jobTicket.ScheduledAmount = shipmentTicket.ScheduledAmount;

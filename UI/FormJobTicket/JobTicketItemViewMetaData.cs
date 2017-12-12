@@ -23,9 +23,9 @@ namespace WMS.UI
             new KeyName(){Key="MoveInStorageLocation",Name="移入库位"},
             new KeyName(){Key="State",Name="状态",
                          ComboBoxItems = new ComboBoxItem[]{
-                             new ComboBoxItem(STRING_STATE_UNFINISHED , STRING_STATE_UNFINISHED),
-                             new ComboBoxItem( STRING_STATE_FINISHED , STRING_STATE_FINISHED),
-                         }},
+                             new ComboBoxItem(STRING_STATE_UNFINISHED),
+                             new ComboBoxItem( STRING_STATE_FINISHED),
+                         } },
             new KeyName(){Key="ScheduledMoveCount",Name="计划移位数量"},
             new KeyName(){Key="MoveCount",Name="实际移位数量"},
             new KeyName(){Key="HaveBackedCount",Name="已退拣数量"},

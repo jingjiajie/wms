@@ -31,6 +31,8 @@ namespace WMS.UI
 
         private void InitComponents()
         {
+            this.comboBoxSearchCondition.SelectedIndex = 0;
+
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
@@ -48,7 +50,7 @@ namespace WMS.UI
             if(this.defaultStockInfoID != -1)
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                this.textBoxComponentNo.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.ComponentNo).FirstOrDefault();
+                this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.ComponentNo).FirstOrDefault();
                 this.Search();
             }
         }
@@ -60,16 +62,34 @@ namespace WMS.UI
 
         private void Search()
         {
-            string ComponentNo = this.textBoxComponentNo.Text;
+            string value = this.textBoxSearchContition.Text;
+            string key = this.comboBoxSearchCondition.SelectedItem.ToString();
             this.labelStatus.Text = "正在搜索...";
             new Thread(new ThreadStart(()=>
             {
-                StockInfoView[] stockInfoViews = (from s in this.wmsEntities.StockInfoView
-                                                  where s.ComponentNo == ComponentNo
-                                                  orderby s.ReceiptTicketItemManufactureDate ascending,
-                                                            s.ReceiptTicketItemInventoryDate ascending,
-                                                            s.ReceiptTicketItemExpiryDate descending
-                                                  select s).ToArray();
+                StockInfoView[] stockInfoViews = null;
+                if (key == "零件编号")
+                {
+                    stockInfoViews = (from s in this.wmsEntities.StockInfoView
+                                      where s.ComponentNo == value
+                                      orderby s.ReceiptTicketItemManufactureDate ascending,
+                                                s.ReceiptTicketItemInventoryDate ascending,
+                                                s.ReceiptTicketItemExpiryDate descending
+                                      select s).ToArray();
+                }else if(key == "零件名称")
+                {
+                    stockInfoViews = (from s in this.wmsEntities.StockInfoView
+                                      where s.ComponentName.Contains(value)
+                                      orderby s.ReceiptTicketItemManufactureDate ascending,
+                                                s.ReceiptTicketItemInventoryDate ascending,
+                                                s.ReceiptTicketItemExpiryDate descending
+                                      select s).ToArray();
+                }
+                else
+                {
+                    MessageBox.Show("内部错误，无法识别查询条件","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(()=>
                 {
                     var worksheet = this.reoGridControlMain.Worksheets[0];
