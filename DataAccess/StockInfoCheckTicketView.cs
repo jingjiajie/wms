@@ -22,5 +22,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public string CreateUserUsername { get; set; }
         public string LastUpdateUserUsername { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
     }
 }

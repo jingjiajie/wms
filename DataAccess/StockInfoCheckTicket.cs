@@ -14,11 +14,22 @@ namespace WMS.DataAccess
     
     public partial class StockInfoCheckTicket
     {
+        public StockInfoCheckTicket()
+        {
+            this.StockInfoCheckTicketItem = new HashSet<StockInfoCheckTicketItem>();
+        }
+    
         public int ID { get; set; }
         public Nullable<System.DateTime> CheckDate { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+    
+        public virtual Project Project { get; set; }
+        public virtual ICollection<StockInfoCheckTicketItem> StockInfoCheckTicketItem { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

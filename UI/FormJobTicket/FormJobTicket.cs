@@ -129,7 +129,10 @@ namespace WMS.UI
                 return;
             }
             FormJobTicketItem formJobTicketItem = new FormJobTicketItem(ids[0]);
-            formJobTicketItem.SetJobTicketStateChangedCallback(new Action(this.Search));
+            formJobTicketItem.SetJobTicketStateChangedCallback(new Action(() =>
+            {
+                this.Invoke(new Action(this.Search));
+            }));
             formJobTicketItem.Show();
         }
 
@@ -194,7 +197,13 @@ namespace WMS.UI
                     MessageBox.Show("未找到作业单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                //jobTicket.ShipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
+                ShipmentTicket shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == jobTicket.ShipmentTicketID select s).FirstOrDefault();
+                if (shipmentTicket == null)
+                {
+                    MessageBox.Show("未找到对应发货单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
                 PutOutStorageTicket putOutStorageTicket = new PutOutStorageTicket();
                 wmsEntities.PutOutStorageTicket.Add(putOutStorageTicket);
                 putOutStorageTicket.CreateUserID = this.userID;
@@ -212,7 +221,7 @@ namespace WMS.UI
                 }
 
                 wmsEntities.SaveChanges();
-                putOutStorageTicket.No = Utilities.GenerateNo("CKD",putOutStorageTicket.ID);
+                putOutStorageTicket.No = Utilities.GenerateNo("C",putOutStorageTicket.ID);
                 wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

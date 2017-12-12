@@ -244,7 +244,11 @@ namespace WMS.UI
             {
                 this.wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(()=>
+                {
+                    this.Search();
+                    Utilities.SelectLineByID(this.reoGridControlMain,shipmentTicketItem.ID);
+                }));
                 MessageBox.Show("添加成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }
@@ -276,7 +280,11 @@ namespace WMS.UI
                     return;
                 }
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                    Utilities.SelectLineByID(this.reoGridControlMain, shipmentTicketItem.ID);
+                }));
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }

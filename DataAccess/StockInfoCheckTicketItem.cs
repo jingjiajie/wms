@@ -15,13 +15,13 @@ namespace WMS.DataAccess
     public partial class StockInfoCheckTicketItem
     {
         public int ID { get; set; }
-        public Nullable<System.DateTime> CheckDate { get; set; }
         public Nullable<int> StockInfoID { get; set; }
         public Nullable<decimal> ExcpetedOverflowAreaAmount { get; set; }
         public Nullable<decimal> ExpectedShipmentAreaAmount { get; set; }
         public Nullable<decimal> RealOverflowAreaAmount { get; set; }
         public Nullable<decimal> RealShipmentAreaAmount { get; set; }
+        public Nullable<int> StockInfoCheckTicketID { get; set; }
     
-        public virtual StockInfo StockInfo { get; set; }
+        public virtual StockInfoCheckTicket StockInfoCheckTicket { get; set; }
     }
 }

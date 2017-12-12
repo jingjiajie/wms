@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Reflection;
+using System.Threading;
 
 namespace WMS.UI
 {
@@ -166,18 +167,28 @@ namespace WMS.UI
             {
                 Utilities.CopyComboBoxsToProperties(this, shipmentTicket, ShipmentTicketViewMetaData.KeyNames);
             }
-            wmsEntities.SaveChanges();
-            //调用回调函数
-            if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
+
+            new Thread(()=>
             {
-                this.modifyFinishedCallback();
-            }
-            else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
-            {
-                this.addFinishedCallback();
-            }
-            MessageBox.Show("修改成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
+                wmsEntities.SaveChanges();
+                shipmentTicket.No = Utilities.GenerateNo("F", shipmentTicket.ID);
+                wmsEntities.SaveChanges();
+                this.Invoke(new Action(()=>
+                {
+                    //调用回调函数
+                    if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
+                    {
+                        this.modifyFinishedCallback();
+                        MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+                    {
+                        this.addFinishedCallback();
+                        MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    this.Close();
+                }));
+            }).Start();
         }
 
         public void SetModifyFinishedCallback(Action callback)
@@ -195,13 +206,13 @@ namespace WMS.UI
             this.mode = mode;
             if (mode == FormMode.ALTER)
             {
-                this.Text = "修改发货单零件信息";
-                this.buttonOK.Text = "修改发货单零件信息";
+                this.Text = "修改发货单";
+                this.buttonOK.Text = "修改发货单";
             }
             else if (mode == FormMode.ADD)
             {
-                this.Text = "添加发货单零件信息";
-                this.buttonOK.Text = "添加发货单零件信息";
+                this.Text = "添加发货单";
+                this.buttonOK.Text = "添加发货单";
             }
         }
     }

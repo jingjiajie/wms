@@ -29,6 +29,7 @@ namespace WMS.UI
             new KeyName(){Key="State",Name="状态",Editable=true,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_NOT_ASSIGNED),
                 new ComboBoxItem(STRING_STATE_WAITING_PUTOUT),
+                new ComboBoxItem(STRING_STATE_DELIVERING),
                 new ComboBoxItem(STRING_STATE_FINISHED),
                 new ComboBoxItem(STRING_STATE_CANCELED)
              } },
