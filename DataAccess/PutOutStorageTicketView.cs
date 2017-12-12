@@ -15,7 +15,7 @@ namespace WMS.DataAccess
     public partial class PutOutStorageTicketView
     {
         public int ID { get; set; }
-        public int JobTicketID { get; set; }
+        public Nullable<int> JobTicketID { get; set; }
         public string No { get; set; }
         public string TruckLoadingTicketNo { get; set; }
         public string Sourse { get; set; }
@@ -31,9 +31,9 @@ namespace WMS.DataAccess
         public string SortTypeNo { get; set; }
         public Nullable<System.DateTime> TruckLoadingTime { get; set; }
         public Nullable<System.DateTime> DeliverTime { get; set; }
-        public int CreateUserID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
-        public int LastUpdateUserID { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public Nullable<int> JobTicketShipmentTicketID { get; set; }
         public string JobTicketJobTicketNo { get; set; }
@@ -98,5 +98,7 @@ namespace WMS.DataAccess
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
         public string WarehouseName { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     }
 }

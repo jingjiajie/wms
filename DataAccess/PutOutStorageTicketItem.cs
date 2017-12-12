@@ -21,6 +21,5 @@ namespace WMS.DataAccess
         public Nullable<decimal> ExceedStockAmount { get; set; }
     
         public virtual PutOutStorageTicket PutOutStorageTicket { get; set; }
-        public virtual StockInfo StockInfo { get; set; }
     }
 }

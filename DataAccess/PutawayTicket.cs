@@ -34,8 +34,11 @@ namespace WMS.DataAccess
         public string LastUpdateUserName { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     
+        public virtual Project Project { get; set; }
         public virtual ICollection<PutawayTicketItem> PutawayTicketItem { get; set; }
-        public virtual ReceiptTicket ReceiptTicket { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

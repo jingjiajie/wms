@@ -15,7 +15,6 @@ namespace WMS.DataAccess
     public partial class StockInfoCheckTicketItemView
     {
         public int ID { get; set; }
-        public Nullable<System.DateTime> CheckDate { get; set; }
         public Nullable<int> StockInfoID { get; set; }
         public Nullable<decimal> ExcpetedOverflowAreaAmount { get; set; }
         public Nullable<decimal> ExpectedShipmentAreaAmount { get; set; }
@@ -56,7 +55,8 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
         public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
-        public string WarehouseName { get; set; }
+        public Nullable<int> StockInfoCheckTicketID { get; set; }
         public string ProjectName { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

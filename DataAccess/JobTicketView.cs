@@ -15,7 +15,7 @@ namespace WMS.DataAccess
     public partial class JobTicketView
     {
         public int ID { get; set; }
-        public int ShipmentTicketID { get; set; }
+        public Nullable<int> ShipmentTicketID { get; set; }
         public string JobTicketNo { get; set; }
         public string JobType { get; set; }
         public string JobGroupName { get; set; }
@@ -25,7 +25,7 @@ namespace WMS.DataAccess
         public Nullable<int> PrintedTimes { get; set; }
         public string AssignmentArea { get; set; }
         public string PersonInCharge { get; set; }
-        public int CreateUserID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
@@ -79,5 +79,7 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
     }
 }
