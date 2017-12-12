@@ -31,7 +31,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.reoGridControlPutaway = new unvell.ReoGrid.ReoGridControl();
             this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonAddItem = new System.Windows.Forms.Button();
+            this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonFInished = new System.Windows.Forms.Button();
@@ -92,13 +92,15 @@
             this.buttonDelete.UseVisualStyleBackColor = true;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // buttonAddItem
+            // buttonCancel
             // 
-            this.buttonAddItem.Location = new System.Drawing.Point(207, 97);
-            this.buttonAddItem.Name = "buttonAddItem";
-            this.buttonAddItem.Size = new System.Drawing.Size(144, 49);
-            this.buttonAddItem.TabIndex = 3;
-            this.buttonAddItem.UseVisualStyleBackColor = true;
+            this.buttonCancel.Location = new System.Drawing.Point(207, 97);
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(144, 49);
+            this.buttonCancel.TabIndex = 3;
+            this.buttonCancel.Text = "取消上架";
+            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // buttonModify
             // 
@@ -118,7 +120,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonAddItem, 2, 2);
+            this.tableLayoutPanel3.Controls.Add(this.buttonCancel, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonFInished, 2, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -264,7 +266,7 @@
         private System.Windows.Forms.Panel panel2;
         private unvell.ReoGrid.ReoGridControl reoGridControlPutaway;
         private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.Button buttonAddItem;
+        private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonFInished;
