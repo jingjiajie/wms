@@ -14,11 +14,6 @@ namespace WMS.DataAccess
     
     public partial class PutawayTicketItem
     {
-        public PutawayTicketItem()
-        {
-            this.StockInfo = new HashSet<StockInfo>();
-        }
-    
         public int ID { get; set; }
         public int PutawayTicketID { get; set; }
         public string DisplacementPositionNo { get; set; }
@@ -33,6 +28,5 @@ namespace WMS.DataAccess
         public Nullable<int> ReceiptTicketItemID { get; set; }
     
         public virtual PutawayTicket PutawayTicket { get; set; }
-        public virtual ICollection<StockInfo> StockInfo { get; set; }
     }
 }

@@ -17,15 +17,27 @@ namespace WMS.DataAccess
         public Warehouse()
         {
             this.Component = new HashSet<Component>();
+            this.JobTicket = new HashSet<JobTicket>();
+            this.PutawayTicket = new HashSet<PutawayTicket>();
+            this.PutOutStorageTicket = new HashSet<PutOutStorageTicket>();
             this.ReceiptTicket = new HashSet<ReceiptTicket>();
             this.ShipmentTicket = new HashSet<ShipmentTicket>();
+            this.StockInfo = new HashSet<StockInfo>();
+            this.StockInfoCheckTicket = new HashSet<StockInfoCheckTicket>();
+            this.SubmissionTicket = new HashSet<SubmissionTicket>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
     
         public virtual ICollection<Component> Component { get; set; }
+        public virtual ICollection<JobTicket> JobTicket { get; set; }
+        public virtual ICollection<PutawayTicket> PutawayTicket { get; set; }
+        public virtual ICollection<PutOutStorageTicket> PutOutStorageTicket { get; set; }
         public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
         public virtual ICollection<ShipmentTicket> ShipmentTicket { get; set; }
+        public virtual ICollection<StockInfo> StockInfo { get; set; }
+        public virtual ICollection<StockInfoCheckTicket> StockInfoCheckTicket { get; set; }
+        public virtual ICollection<SubmissionTicket> SubmissionTicket { get; set; }
     }
 }

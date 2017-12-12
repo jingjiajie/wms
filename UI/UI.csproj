@@ -370,6 +370,7 @@
     <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyViewMetaData.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
     <Compile Include="FormStockInfo\StockInfoViewMetaData.cs" />
     <Compile Include="FromShipmentTicket\FormShipmentTicket.cs">
@@ -575,6 +576,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptShelves.resx">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.resx">
+      <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModify.resx">
+      <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfoModify.resx">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>

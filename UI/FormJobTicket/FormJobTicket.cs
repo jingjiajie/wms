@@ -84,12 +84,12 @@ namespace WMS.UI
 
                 if (this.projectID != -1)
                 {
-                    sql += "AND ShipmentTicketProjectID = @projectID ";
+                    sql += "AND ProjectID = @projectID ";
                     parameters.Add(new SqlParameter("projectID", this.projectID));
                 }
                 if (warehouseID != -1)
                 {
-                    sql += "AND ShipmentTicketWarehouseID = @warehouseID ";
+                    sql += "AND WarehouseID = @warehouseID ";
                     parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
                 }
                 if (key != null && value != null) //查询条件不为null则增加查询条件
@@ -197,7 +197,13 @@ namespace WMS.UI
                     MessageBox.Show("未找到作业单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                jobTicket.ShipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
+                ShipmentTicket shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == jobTicket.ShipmentTicketID select s).FirstOrDefault();
+                if (shipmentTicket == null)
+                {
+                    MessageBox.Show("未找到对应发货单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
                 PutOutStorageTicket putOutStorageTicket = new PutOutStorageTicket();
                 wmsEntities.PutOutStorageTicket.Add(putOutStorageTicket);
                 putOutStorageTicket.CreateUserID = this.userID;

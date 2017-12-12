@@ -220,8 +220,37 @@ namespace WMS.UI
 
         private void buttonAdd_Click_1(object sender, EventArgs e)
         {
-            FormStockInfoCheckTicketModify  a1 = new  FormStockInfoCheckTicketModify();
-            a1.Show();
+            var form = new FormStockInfoCheckTicketModify();
+            form.SetMode(FormMode.ADD);
+            form.SetAddFinishedCallback(() =>
+            {
+                this.Search();
+            });
+            form.Show();
+        }
+
+        private void buttonAlter_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var a1 = new FormStockInfoCheckTicketModify (stockInfoCheckID);
+                a1.SetModifyFinishedCallback(() =>
+                {
+                    this.Search();
+                });
+                a1.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
 }

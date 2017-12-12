@@ -124,7 +124,14 @@ namespace WMS.UI
                 MessageBox.Show("系统错误，未找到相应发货单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            this.curStockInfoID = shipmentTicketItemView.StockInfoID;
+            if (shipmentTicketItemView.StockInfoID != null)
+            {
+                this.curStockInfoID = shipmentTicketItemView.StockInfoID.Value;
+            }
+            else
+            {
+                this.curStockInfoID = -1;
+            }
             Utilities.CopyPropertiesToTextBoxes(shipmentTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
         }

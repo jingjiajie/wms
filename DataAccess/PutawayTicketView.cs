@@ -17,14 +17,14 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public string No { get; set; }
         public string Type { get; set; }
-        public int ReceiptTicketID { get; set; }
+        public Nullable<int> ReceiptTicketID { get; set; }
         public string State { get; set; }
         public Nullable<decimal> ScheduledDisplacementAmount { get; set; }
         public Nullable<decimal> DisplacementAmount { get; set; }
         public Nullable<decimal> DistributeAmount { get; set; }
         public Nullable<decimal> PrintTimes { get; set; }
         public string JobGroupName { get; set; }
-        public int CreateUserID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
@@ -91,5 +91,8 @@ namespace WMS.DataAccess
         public string SupplierBankNo { get; set; }
         public string SupplierZipCode { get; set; }
         public string SupplierRecipientName { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public string LastUpdateUserName { get; set; }
     }
 }
