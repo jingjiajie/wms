@@ -568,6 +568,9 @@
     <EmbeddedResource Include="FormReceipt\FormReceiptShelves.resx">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.resx">
+      <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModify.resx">
       <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </EmbeddedResource>

@@ -173,8 +173,8 @@
             this.Controls.Add(this.reoGridControlComponen);
             this.Controls.Add(this.toolStripTop);
             this.Name = "FormStockInfoCheckTicketComponenModify";
-            this.Text = "FormStockCheckComponenModify";
-            this.Load += new System.EventHandler(this.FormStockCheckComponenModify_Load);
+            this.Text = "FormStockInfoCheckTicketComponenModify";
+            this.Load += new System.EventHandler(this.FormStockInfoCheckTicketComponentModify_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

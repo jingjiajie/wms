@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace WMS.UI
 {
-    public partial class FormStockInfoCheckTicketComponentModify : Form
+    public partial class FormStockInfoCheckTicketComponenModify : Form
     {
-        public FormStockInfoCheckTicketComponentModify()
+        public FormStockInfoCheckTicketComponenModify()
         {
             InitializeComponent();
 
@@ -40,13 +40,13 @@ namespace WMS.UI
             Console.WriteLine("表格行数：" + ComponenMetaData.componenkeyNames.Length);
         }
 
-        private void FormStockInfoCheckTicketComponentModify_Load(object sender, EventArgs e)
+        private void FormStockInfoCheckTicketComponenModify_Load(object sender, EventArgs e)
         {
             this.InitComponents();
             this.Search();
 
 
-        }
+        } 
 
         private void labelStatus_Click(object sender, EventArgs e)
         {
