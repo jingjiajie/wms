@@ -185,6 +185,7 @@ namespace WMS.UI.FormReceipt
                 if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicket, ReceiptMetaData.receiptNameKeys, out errorInfo) == false)
                 {
                     MessageBox.Show(errorInfo);
+                    return;
                 }
                 //wmsEntities.ReceiptTicket.Add(receiptTicket);
                 else
