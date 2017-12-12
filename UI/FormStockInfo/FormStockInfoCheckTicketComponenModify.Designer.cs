@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockCheckComponenModify));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockInfoCheckTicketComponenModify));
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripComboBoxSelect1 = new System.Windows.Forms.ToolStripComboBox();
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButtonSelect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
+            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
+            this.buttonCancel = new System.Windows.Forms.ToolStripButton();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
@@ -51,12 +51,12 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabelSelect,
-            this.toolStripComboBoxSelect,
+            this.toolStripComboBoxSelect1,
             this.textBoxSearchValue,
-            this.toolStripButtonSelect,
             this.toolStripSeparator1,
-            this.toolStripButtonAdd,
-            this.toolStripButtonCancel});
+            this.buttonSearch,
+            this.buttonAdd,
+            this.buttonCancel});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(840, 28);
@@ -70,26 +70,17 @@
             this.toolStripLabelSelect.Size = new System.Drawing.Size(68, 25);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
-            // toolStripComboBoxSelect
+            // toolStripComboBoxSelect1
             // 
-            this.toolStripComboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.toolStripComboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(114, 28);
+            this.toolStripComboBoxSelect1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBoxSelect1.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.toolStripComboBoxSelect1.Name = "toolStripComboBoxSelect1";
+            this.toolStripComboBoxSelect1.Size = new System.Drawing.Size(114, 28);
             // 
             // textBoxSearchValue
             // 
             this.textBoxSearchValue.Name = "textBoxSearchValue";
             this.textBoxSearchValue.Size = new System.Drawing.Size(151, 28);
-            // 
-            // toolStripButtonSelect
-            // 
-            this.toolStripButtonSelect.AutoSize = false;
-            this.toolStripButtonSelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelect.Image")));
-            this.toolStripButtonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSelect.Name = "toolStripButtonSelect";
-            this.toolStripButtonSelect.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonSelect.Text = "查询";
             // 
             // toolStripSeparator1
             // 
@@ -97,24 +88,35 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
-            // toolStripButtonAdd
+            // buttonSearch
             // 
-            this.toolStripButtonAdd.AutoSize = false;
-            this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
-            this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonAdd.Text = "添加";
+            this.buttonSearch.AutoSize = false;
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(60, 25);
+            this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
-            // toolStripButtonCancel
+            // buttonAdd
             // 
-            this.toolStripButtonCancel.AutoSize = false;
-            this.toolStripButtonCancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonCancel.Image")));
-            this.toolStripButtonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonCancel.Name = "toolStripButtonCancel";
-            this.toolStripButtonCancel.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonCancel.Text = "删除";
-            this.toolStripButtonCancel.ToolTipText = "取消";
+            this.buttonAdd.AutoSize = false;
+            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
+            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
+            this.buttonAdd.Text = "添加";
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // buttonCancel
+            // 
+            this.buttonCancel.AutoSize = false;
+            this.buttonCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonCancel.Image")));
+            this.buttonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonCancel.Name = "buttonCancel";
+            this.buttonCancel.Size = new System.Drawing.Size(60, 25);
+            this.buttonCancel.Text = "取消";
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // toolStrip1
             // 
@@ -162,7 +164,7 @@
             this.reoGridControlComponen.TabIndex = 6;
             this.reoGridControlComponen.Text = "reoGridControl1";
             // 
-            // FormStockCheckComponenModify
+            // FormStockInfoCheckTicketComponenModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -170,9 +172,9 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.reoGridControlComponen);
             this.Controls.Add(this.toolStripTop);
-            this.Name = "FormStockCheckComponenModify";
-            this.Text = "FormStockCheckComponenModify";
-            this.Load += new System.EventHandler(this.FormStockCheckComponenModify_Load);
+            this.Name = "FormStockInfoCheckTicketComponenModify";
+            this.Text = "FormStockInfoCheckTicketComponenModify";
+            this.Load += new System.EventHandler(this.FormStockInfoCheckTicketComponenModify_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -186,16 +188,16 @@
 
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripLabel toolStripLabelSelect;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelect;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelect1;
         private System.Windows.Forms.ToolStripTextBox textBoxSearchValue;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSelect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButtonCancel;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripLabel labelStatus;
         private unvell.ReoGrid.ReoGridControl reoGridControlComponen;
+        private System.Windows.Forms.ToolStripButton buttonSearch;
+        private System.Windows.Forms.ToolStripButton buttonAdd;
+        private System.Windows.Forms.ToolStripButton buttonCancel;
     }
 }
