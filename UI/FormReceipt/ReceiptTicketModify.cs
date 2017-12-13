@@ -17,16 +17,22 @@ namespace WMS.UI.FormReceipt
         WMSEntities wmsEntities = new WMSEntities();
         Action modifyFinishedCallback = null;
         Action addFinishedCallback = null;
+        int projectID;
+        int warehouseID;
+        int userID;
 
         public FormReceiptTicketModify()
         {
             InitializeComponent();
         }
-        public FormReceiptTicketModify(FormMode formMode, int ID)
+        public FormReceiptTicketModify(FormMode formMode, int ID, int projectID, int warehouseID ,int userID)
         {
             InitializeComponent();
             this.formMode = formMode;
             this.ID = ID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
         }
 
         private void ReceiptTicketModify_Load(object sender, EventArgs e)
@@ -42,7 +48,7 @@ namespace WMS.UI.FormReceipt
 
                 TextBox textBox = new TextBox();
                 textBox.Name = "textBox" + curKeyName.Key;
-                if(this.formMode == FormMode.ALTER && curKeyName.Editable == false)
+                if(curKeyName.Editable == false)
                 {
                     textBox.Enabled = false;
                 }
@@ -55,6 +61,21 @@ namespace WMS.UI.FormReceipt
                                                        where s.ID == this.ID
                                                        select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(receiptTicketView, this);
+                TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserID", true)[0];
+                textBoxLastUpdateUserID.Text = this.userID.ToString();
+            }
+            else
+            {
+                TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
+                textBoxProjectID.Text = this.projectID.ToString();
+                //textBoxProjectID.Enabled = false;
+                TextBox textBoxCreateUserID = (TextBox)this.Controls.Find("textBoxCreateUserID", true)[0];
+                textBoxCreateUserID.Text = this.userID.ToString();
+                TextBox textBoxWarehouse = (TextBox)this.Controls.Find("textBoxWarehouse", true)[0];
+                textBoxWarehouse.Text = this.warehouseID.ToString();
+                TextBox textBoxID = (TextBox)this.Controls.Find("textBoxID", true)[0];
+                textBoxID.Text = "0";
+                //textBoxCreateUserID.Enabled = false;
             }
             //else (this.formMode == FormMode.ADD);
             
@@ -65,7 +86,7 @@ namespace WMS.UI.FormReceipt
             this.Controls.Find("textBoxState", true)[0].Text = "待检";
             this.Controls.Find("textBoxState", true)[0].Enabled = false;
         }
-
+        
         private void textBoxSupplierID_TextChanged(object sender, EventArgs e)
         {
             var textBoxSupplierID = this.Controls.Find("textBoxSupplierID", true)[0];

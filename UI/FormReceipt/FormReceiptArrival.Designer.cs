@@ -50,6 +50,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripPutawayTicket = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +93,7 @@
             this.buttonCheck,
             this.buttonCheckCancel,
             this.buttonItems,
+            this.toolStripPutawayTicket,
             this.buttonPutaway,
             this.toolStripButton2,
             this.buttonItemSubmission,
@@ -218,7 +220,7 @@
             this.buttonPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPutaway.Name = "buttonPutaway";
             this.buttonPutaway.Size = new System.Drawing.Size(40, 25);
-            this.buttonPutaway.Text = "收货";
+            this.buttonPutaway.Text = "生成上架单";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonMakePutaway_Click);
             // 
             // toolStripButton2
@@ -275,6 +277,17 @@
             this.lableStatus.Size = new System.Drawing.Size(110, 31);
             this.lableStatus.Text = "到货管理";
             // 
+            // toolStripPutawayTicket
+            // 
+            this.toolStripPutawayTicket.AutoSize = false;
+            this.toolStripPutawayTicket.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripPutawayTicket.Image = ((System.Drawing.Image)(resources.GetObject("toolStripPutawayTicket.Image")));
+            this.toolStripPutawayTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripPutawayTicket.Name = "toolStripPutawayTicket";
+            this.toolStripPutawayTicket.Size = new System.Drawing.Size(40, 25);
+            this.toolStripPutawayTicket.Text = "收货";
+            this.toolStripPutawayTicket.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
             // FormReceiptArrival
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -319,5 +332,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lableStatus;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripPutawayTicket;
     }
 }

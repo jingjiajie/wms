@@ -181,6 +181,16 @@ namespace WMS.UI.FormReceipt {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap toolStripPutawayTicket_Image {
+            get {
+                object obj = ResourceManager.GetObject("toolStripPutawayTicket.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似于 {X=17,Y=17} 的 System.Drawing.Point 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Point toolStripTop_TrayLocation {
