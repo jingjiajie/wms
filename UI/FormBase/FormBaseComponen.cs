@@ -17,14 +17,14 @@ namespace WMS.UI
     {
         private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
-        private int authority_self = 1;
+        private int authority_self = (int)Authority.BASE_COMPONENT;
         int userID = -1;
         int projectID = -1;
         int warehouseID = -1;
-        public FormBaseComponent(int authority1, int userID, int projectID, int warehouseID)
+        public FormBaseComponent(int authority, int userID, int projectID, int warehouseID)
         {
             InitializeComponent();
-            this.authority = authority1;
+            this.authority = authority;
             this.userID = userID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
@@ -50,7 +50,7 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = ComponenMetaData.componenkeyNames[i].Visible;
             }
             worksheet.Columns = ComponenMetaData.componenkeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + ComponenMetaData.componenkeyNames.Length);
+            //Console.WriteLine("表格行数：" + ComponenMetaData.componenkeyNames.Length);
         }
 
         private void FormBaseComponent_Load(object sender, EventArgs e)
@@ -89,55 +89,54 @@ namespace WMS.UI
             {
                 var wmsEntities = new WMSEntities();
                 ComponentView[] componentViews = null;
+                string sql = "SELECT * FROM ComponentView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
 
-
-                if ((this.authority & authority_self) == 1)
+                if ((this.authority & authority_self) == authority_self)
                 {
-                    if (key == null || value == null)        //搜索所有
+
+                    if (this.projectID != -1)
                     {
-                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView").ToArray();
+                        sql += "AND ProjectID = @projectID ";
+                        parameters.Add(new SqlParameter("projectID", this.projectID));
                     }
-                    else
+                    if (warehouseID != -1)
                     {
-                        //double tmp;
-                        //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
-                        //{
-                        value = "'" + value + "'";
-                        //}
-                        try
-                        {
-                            componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1}", key, value)).ToArray();
-                        }
-                        catch
-                        {
-                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                        sql += "AND WarehouseID = @warehouseID ";
+                        parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
                     }
+                    if (key != null && value != null) //查询条件不为null则增加查询条件
+                    {
+                        sql += "AND " + key + " = @value ";
+                        parameters.Add(new SqlParameter("value", value));
+                    }
+                    sql += " ORDER BY ID DESC"; //倒序排序
+                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
+
                 }
                 if ((this.authority & authority_self) == 0)
                 {
-                    if (key == null || value == null)        //搜索所有
+
+                    sql += "AND SupplierID = @userID ";
+                    parameters.Add(new SqlParameter("userID", this.userID));
+
+                    if (this.projectID != -1)
                     {
-                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>("SELECT * FROM ComponentView WHERE SupplierID = {0}", userID).ToArray();
+                        sql += "AND ProjectID = @projectID ";
+                        parameters.Add(new SqlParameter("projectID", this.projectID));
                     }
-                    else
+                    if (warehouseID != -1)
                     {
-                        //double tmp;
-                        //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
-                        //{
-                        value = "'" + value + "'";
-                        //}
-                        try
-                        {
-                            componentViews = wmsEntities.Database.SqlQuery<ComponentView>(String.Format("SELECT * FROM ComponentView WHERE {0} = {1} AND SupplierID = {2}", key, value,userID)).ToArray();
-                        }
-                        catch
-                        {
-                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                        sql += "AND WarehouseID = @warehouseID ";
+                        parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
                     }
+                    if (key != null && value != null) //查询条件不为null则增加查询条件
+                    {
+                        sql += "AND " + key + " = @value ";
+                        parameters.Add(new SqlParameter("value", value));
+                    }
+                    sql += " ORDER BY ID DESC"; //倒序排序
+                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
                 }
 
 
@@ -148,6 +147,10 @@ namespace WMS.UI
                     this.labelStatus.Text = "搜索完成";
                     var worksheet = this.reoGridControlComponen.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    if (componentViews.Length == 0)
+                    {
+                        worksheet[0, 1] = "没有查询到符合条件的记录";
+                    }
                     for (int i = 0; i < componentViews.Length; i++)
                     {
 
