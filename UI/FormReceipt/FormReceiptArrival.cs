@@ -412,6 +412,10 @@ namespace WMS.UI
                 else
                 {
                     receiptTicket.State = "已收货";
+                    wmsEntities.Database.ExecuteSqlCommand(
+                        "UPDATE ReceiptTicketItem SET State='已收货' " +
+                        "WHERE ReceiptTicketID=@receiptTicketID", 
+                        new SqlParameter("receiptTicketID", receiptTicketID));
                     new Thread(() =>
                     {
                         wmsEntities.SaveChanges();

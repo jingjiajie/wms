@@ -43,6 +43,7 @@
             this.buttonCheck = new System.Windows.Forms.ToolStripButton();
             this.buttonCheckCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
+            this.toolStripPutawayTicket = new System.Windows.Forms.ToolStripButton();
             this.buttonPutaway = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.buttonItemSubmission = new System.Windows.Forms.ToolStripButton();
@@ -50,7 +51,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripPutawayTicket = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -212,6 +212,17 @@
             this.buttonItems.ToolTipText = "查看零件条目";
             this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
             // 
+            // toolStripPutawayTicket
+            // 
+            this.toolStripPutawayTicket.AutoSize = false;
+            this.toolStripPutawayTicket.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripPutawayTicket.Image = ((System.Drawing.Image)(resources.GetObject("toolStripPutawayTicket.Image")));
+            this.toolStripPutawayTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripPutawayTicket.Name = "toolStripPutawayTicket";
+            this.toolStripPutawayTicket.Size = new System.Drawing.Size(40, 25);
+            this.toolStripPutawayTicket.Text = "收货";
+            this.toolStripPutawayTicket.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
             // buttonPutaway
             // 
             this.buttonPutaway.AutoSize = false;
@@ -219,7 +230,7 @@
             this.buttonPutaway.Image = ((System.Drawing.Image)(resources.GetObject("buttonPutaway.Image")));
             this.buttonPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPutaway.Name = "buttonPutaway";
-            this.buttonPutaway.Size = new System.Drawing.Size(40, 25);
+            this.buttonPutaway.Size = new System.Drawing.Size(80, 25);
             this.buttonPutaway.Text = "生成上架单";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonMakePutaway_Click);
             // 
@@ -276,17 +287,6 @@
             this.lableStatus.Name = "lableStatus";
             this.lableStatus.Size = new System.Drawing.Size(110, 31);
             this.lableStatus.Text = "到货管理";
-            // 
-            // toolStripPutawayTicket
-            // 
-            this.toolStripPutawayTicket.AutoSize = false;
-            this.toolStripPutawayTicket.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripPutawayTicket.Image = ((System.Drawing.Image)(resources.GetObject("toolStripPutawayTicket.Image")));
-            this.toolStripPutawayTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripPutawayTicket.Name = "toolStripPutawayTicket";
-            this.toolStripPutawayTicket.Size = new System.Drawing.Size(40, 25);
-            this.toolStripPutawayTicket.Text = "收货";
-            this.toolStripPutawayTicket.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // FormReceiptArrival
             // 

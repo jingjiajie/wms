@@ -159,6 +159,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
+                putawayTicket.State = "待上架";
                 new Thread(()=>
                 {
                     wmsEntities.PutawayTicket.Add(putawayTicket);

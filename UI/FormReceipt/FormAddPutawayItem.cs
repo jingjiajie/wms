@@ -110,9 +110,9 @@ namespace WMS.UI.FormReceipt
                     else
                     {
                         ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
-                        if (receiptTicketItem.State == "已收货" || receiptTicketItem.State == "送检中")
+                        if (receiptTicketItem.State != "已收货")
                         {
-                            MessageBox.Show(receiptTicketItem.ID + " " + receiptTicketItem.State);
+                            MessageBox.Show(receiptTicketItem.ID + " " + receiptTicketItem.State + ",请先收货");
                             return;
                         }
                         else

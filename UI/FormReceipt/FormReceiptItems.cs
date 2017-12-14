@@ -73,16 +73,6 @@ namespace WMS.UI
         private void FormReceiptArrivalItems_Load(object sender, EventArgs e)
         {
             InitComponents();
-            if (SubmissionTicketIsExist() == true)
-            {
-                this.buttonItemCheck.Enabled = false;
-                this.buttonAddItem.Enabled = true;
-            }
-            else
-            {
-                this.buttonItemCheck.Enabled = true;
-                this.buttonAddItem.Enabled = false;
-            }
             WMSEntities wmsEntities = new WMSEntities();
             ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
             Utilities.CopyPropertiesToTextBoxes(receiptTicket, this);
@@ -216,6 +206,16 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项送检", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void reoGridControlReceiptItems_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

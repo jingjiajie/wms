@@ -136,6 +136,7 @@ namespace WMS.UI.FormReceipt
                 }
                 int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+
                 formShelvesItem.Show();
             }
             catch

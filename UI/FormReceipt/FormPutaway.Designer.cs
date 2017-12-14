@@ -138,7 +138,7 @@
             this.buttonItemCheck.Name = "buttonItemCheck";
             this.buttonItemCheck.Size = new System.Drawing.Size(144, 49);
             this.buttonItemCheck.TabIndex = 2;
-            this.buttonItemCheck.Text = "修改上架单";
+            this.buttonItemCheck.Text = "修改上架单条目";
             this.buttonItemCheck.UseVisualStyleBackColor = true;
             this.buttonItemCheck.Click += new System.EventHandler(this.buttonItemCheck_Click);
             // 

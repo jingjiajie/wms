@@ -37,9 +37,14 @@ namespace WMS.UI
 
         public static StockInfo PutawayTicketItemToStockInfo(PutawayTicketItem putawayTicketItem)
         {
+            WMSEntities wmsEntities = new WMSEntities();
             StockInfo stockInfo = new StockInfo();
             stockInfo.ID = 0;
             stockInfo.ReceiptTicketItemID = putawayTicketItem.ReceiptTicketItemID;
+            stockInfo.OverflowAreaAmount = 10000;
+            ReceiptTicketItemView receiptTicketItemView = (from rti in wmsEntities.ReceiptTicketItemView where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
+            stockInfo.ProjectID = receiptTicketItemView.ReceiptTicketProjectID;
+            stockInfo.WarehouseID = receiptTicketItemView.ReceiptTicketWarehouse;
 
             return stockInfo;
         }

@@ -83,7 +83,7 @@ namespace WMS.UI.FormReceipt
             this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
             this.Controls.Find("textBoxWarehouse", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
             this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
-            this.Controls.Find("textBoxState", true)[0].Text = "待检";
+            this.Controls.Find("textBoxState", true)[0].Text = "待送检";
             this.Controls.Find("textBoxState", true)[0].Enabled = false;
         }
         

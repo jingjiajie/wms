@@ -46,7 +46,7 @@
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(110, 33);
+            this.lableStatus.Size = new System.Drawing.Size(110, 31);
             this.lableStatus.Text = "到货管理";
             // 
             // statusStrip1
@@ -64,7 +64,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 33);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // toolStripButton1
@@ -73,7 +73,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(24, 25);
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 35);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
             // buttonReceiptCancel
@@ -95,7 +95,7 @@
             this.buttonPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPutaway.Name = "buttonPutaway";
             this.buttonPutaway.Size = new System.Drawing.Size(40, 25);
-            this.buttonPutaway.Text = "收货";
+            this.buttonPutaway.Text = "生成上架单";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonPutaway_Click);
             // 
             // buttonDelete
@@ -128,7 +128,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1428, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(1428, 38);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -138,7 +138,7 @@
             this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(0, 28);
+            this.reoGridControlUser.Location = new System.Drawing.Point(0, 38);
             this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.reoGridControlUser.Name = "reoGridControlUser";
             this.reoGridControlUser.Readonly = true;
@@ -149,7 +149,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 90;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1428, 885);
+            this.reoGridControlUser.Size = new System.Drawing.Size(1428, 875);
             this.reoGridControlUser.TabIndex = 8;
             this.reoGridControlUser.Text = "reoGridControl1";
             // 

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WMS.DataAccess;
 using unvell.ReoGrid;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI.FormReceipt
 {
@@ -285,6 +286,7 @@ namespace WMS.UI.FormReceipt
                     else
                     {
                         putawayTicketItem.State = "待上架";
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ReceiptTicketItemID=@receiptTicketItem", new SqlParameter("receiptTicketItem", putawayTicketItem.ReceiptTicketItemID));
                        // StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.PutawayTicketItemID == putawayTicketItem.ID select si).FirstOrDefault();
                         
                     }

@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.reoGridControlReceiptItems = new unvell.ReoGrid.ReoGridControl();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.reoGridControlReceiptItems = new unvell.ReoGrid.ReoGridControl();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -51,53 +51,57 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonAddItem = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
-            this.buttonItemCheck = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanelProperties.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // reoGridControlReceiptItems
+            // tableLayoutPanel1
             // 
-            this.reoGridControlReceiptItems.BackColor = System.Drawing.Color.White;
-            this.reoGridControlReceiptItems.ColumnHeaderContextMenuStrip = null;
-            this.reoGridControlReceiptItems.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridControlReceiptItems.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlReceiptItems.Location = new System.Drawing.Point(0, 0);
-            this.reoGridControlReceiptItems.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.reoGridControlReceiptItems.Name = "reoGridControlReceiptItems";
-            this.reoGridControlReceiptItems.Readonly = true;
-            this.reoGridControlReceiptItems.RowHeaderContextMenuStrip = null;
-            this.reoGridControlReceiptItems.Script = null;
-            this.reoGridControlReceiptItems.SheetTabContextMenuStrip = null;
-            this.reoGridControlReceiptItems.SheetTabNewButtonVisible = true;
-            this.reoGridControlReceiptItems.SheetTabVisible = true;
-            this.reoGridControlReceiptItems.SheetTabWidth = 140;
-            this.reoGridControlReceiptItems.ShowScrollEndSpacing = true;
-            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(1200, 645);
-            this.reoGridControlReceiptItems.TabIndex = 9;
-            this.reoGridControlReceiptItems.Text = "reoGridControlRecieptItems";
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 788F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 72F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1206, 851);
+            this.tableLayoutPanel1.TabIndex = 13;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.reoGridControlReceiptItems);
+            this.panel1.Controls.Add(this.tableLayoutPanel2);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1200, 782);
+            this.panel1.TabIndex = 0;
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 815);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 788);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1206, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(286, 36);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
             // toolStripStatusLabel1
             // 
@@ -111,29 +115,26 @@
             this.labelStatus.Size = new System.Drawing.Size(182, 31);
             this.labelStatus.Text = "查看收货单条目";
             // 
-            // tableLayoutPanel1
+            // reoGridControlReceiptItems
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1206, 851);
-            this.tableLayoutPanel1.TabIndex = 13;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.tableLayoutPanel2);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1200, 194);
-            this.panel1.TabIndex = 0;
+            this.reoGridControlReceiptItems.BackColor = System.Drawing.Color.White;
+            this.reoGridControlReceiptItems.ColumnHeaderContextMenuStrip = null;
+            this.reoGridControlReceiptItems.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlReceiptItems.LeadHeaderContextMenuStrip = null;
+            this.reoGridControlReceiptItems.Location = new System.Drawing.Point(0, 166);
+            this.reoGridControlReceiptItems.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.reoGridControlReceiptItems.Name = "reoGridControlReceiptItems";
+            this.reoGridControlReceiptItems.Readonly = true;
+            this.reoGridControlReceiptItems.RowHeaderContextMenuStrip = null;
+            this.reoGridControlReceiptItems.Script = null;
+            this.reoGridControlReceiptItems.SheetTabContextMenuStrip = null;
+            this.reoGridControlReceiptItems.SheetTabNewButtonVisible = true;
+            this.reoGridControlReceiptItems.SheetTabVisible = true;
+            this.reoGridControlReceiptItems.SheetTabWidth = 140;
+            this.reoGridControlReceiptItems.ShowScrollEndSpacing = true;
+            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(1200, 616);
+            this.reoGridControlReceiptItems.TabIndex = 11;
+            this.reoGridControlReceiptItems.Text = "reoGridControlRecieptItems";
             // 
             // tableLayoutPanel2
             // 
@@ -142,12 +143,12 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelProperties, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1200, 194);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1200, 166);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanelProperties
@@ -177,13 +178,13 @@
             this.tableLayoutPanelProperties.RowCount = 2;
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(794, 188);
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(794, 160);
             this.tableLayoutPanelProperties.TabIndex = 0;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(531, 94);
+            this.label6.Location = new System.Drawing.Point(531, 80);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(58, 24);
             this.label6.TabIndex = 12;
@@ -192,7 +193,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(267, 94);
+            this.label5.Location = new System.Drawing.Point(267, 80);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(58, 24);
             this.label5.TabIndex = 11;
@@ -201,7 +202,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 94);
+            this.label4.Location = new System.Drawing.Point(3, 80);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(106, 24);
             this.label4.TabIndex = 10;
@@ -260,7 +261,7 @@
             // 
             // textBoxSupplierID
             // 
-            this.textBoxSupplierID.Location = new System.Drawing.Point(116, 97);
+            this.textBoxSupplierID.Location = new System.Drawing.Point(116, 83);
             this.textBoxSupplierID.Name = "textBoxSupplierID";
             this.textBoxSupplierID.ReadOnly = true;
             this.textBoxSupplierID.Size = new System.Drawing.Size(100, 35);
@@ -268,7 +269,7 @@
             // 
             // textBoxNo
             // 
-            this.textBoxNo.Location = new System.Drawing.Point(380, 97);
+            this.textBoxNo.Location = new System.Drawing.Point(380, 83);
             this.textBoxNo.Name = "textBoxNo";
             this.textBoxNo.ReadOnly = true;
             this.textBoxNo.Size = new System.Drawing.Size(100, 35);
@@ -276,7 +277,7 @@
             // 
             // textBoxState
             // 
-            this.textBoxState.Location = new System.Drawing.Point(644, 97);
+            this.textBoxState.Location = new System.Drawing.Point(644, 83);
             this.textBoxState.Name = "textBoxState";
             this.textBoxState.ReadOnly = true;
             this.textBoxState.Size = new System.Drawing.Size(100, 35);
@@ -288,7 +289,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(803, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(394, 188);
+            this.panel3.Size = new System.Drawing.Size(394, 160);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -299,9 +300,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonAddItem, 2, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
-            this.tableLayoutPanel3.Controls.Add(this.buttonItemCheck, 2, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -310,12 +309,12 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(394, 188);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(394, 160);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(42, 42);
+            this.buttonAdd.Location = new System.Drawing.Point(42, 28);
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(159, 49);
             this.buttonAdd.TabIndex = 0;
@@ -323,19 +322,9 @@
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
-            // buttonAddItem
-            // 
-            this.buttonAddItem.Location = new System.Drawing.Point(207, 97);
-            this.buttonAddItem.Name = "buttonAddItem";
-            this.buttonAddItem.Size = new System.Drawing.Size(144, 49);
-            this.buttonAddItem.TabIndex = 3;
-            this.buttonAddItem.Text = "添加送检条目";
-            this.buttonAddItem.UseVisualStyleBackColor = true;
-            this.buttonAddItem.Click += new System.EventHandler(this.buttonAddItem_Click);
-            // 
             // buttonModify
             // 
-            this.buttonModify.Location = new System.Drawing.Point(42, 97);
+            this.buttonModify.Location = new System.Drawing.Point(42, 83);
             this.buttonModify.Name = "buttonModify";
             this.buttonModify.Size = new System.Drawing.Size(159, 49);
             this.buttonModify.TabIndex = 1;
@@ -343,56 +332,30 @@
             this.buttonModify.UseVisualStyleBackColor = true;
             this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
             // 
-            // buttonItemCheck
-            // 
-            this.buttonItemCheck.Location = new System.Drawing.Point(207, 42);
-            this.buttonItemCheck.Name = "buttonItemCheck";
-            this.buttonItemCheck.Size = new System.Drawing.Size(144, 49);
-            this.buttonItemCheck.TabIndex = 2;
-            this.buttonItemCheck.Text = "条目送检";
-            this.buttonItemCheck.UseVisualStyleBackColor = true;
-            this.buttonItemCheck.Click += new System.EventHandler(this.buttonItemCheck_Click);
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.reoGridControlReceiptItems);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 203);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1200, 645);
-            this.panel2.TabIndex = 1;
-            // 
             // FormReceiptItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1206, 851);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormReceiptItems";
             this.Text = "FormReceiptItemsArrival";
             this.Load += new System.EventHandler(this.FormReceiptArrivalItems_Load);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanelProperties.ResumeLayout(false);
             this.tableLayoutPanelProperties.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private unvell.ReoGrid.ReoGridControl reoGridControlReceiptItems;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -400,10 +363,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonAdd;
-        private System.Windows.Forms.Button buttonAddItem;
         private System.Windows.Forms.Button buttonModify;
-        private System.Windows.Forms.Button buttonItemCheck;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -416,5 +376,9 @@
         private System.Windows.Forms.TextBox textBoxSupplierID;
         private System.Windows.Forms.TextBox textBoxNo;
         private System.Windows.Forms.TextBox textBoxState;
+        private unvell.ReoGrid.ReoGridControl reoGridControlReceiptItems;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel labelStatus;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
