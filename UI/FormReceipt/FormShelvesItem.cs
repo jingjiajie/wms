@@ -242,11 +242,24 @@ namespace WMS.UI.FormReceipt
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM PutawayTicketItem WHERE PutawayTicketID = @putawayTicketID AND State <> '已上架'", new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
                 if (putawayTicketItem != null)
                 {
                     putawayTicketItem.State = "已上架";
                     StockInfo stockInfo = ReceiptUtilities.PutawayTicketItemToStockInfo(putawayTicketItem);
                     wmsEntities.StockInfo.Add(stockInfo);
+                    if (count == 0)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("UPDATE PutawayTicket SET State = '已上架' " +
+                            "WHERE ID = @putawayTicketID", 
+                            new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                    }
+                    else
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("UPDATE PutawayTicket SET State = '部分上架' " +
+                            "WHERE ID = @putawayTicketID",
+                            new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                    }
                     new Thread(() =>
                     {
                         wmsEntities.SaveChanges();
@@ -276,6 +289,9 @@ namespace WMS.UI.FormReceipt
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM PutawayTicketItem " +
+                    "WHERE PutawayTicketID = @putawayTicketID AND State <> '待上架'", 
+                    new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
                 if (putawayTicketItem != null)
                 {
                     if (putawayTicketItem.State != "已上架")
@@ -286,9 +302,25 @@ namespace WMS.UI.FormReceipt
                     else
                     {
                         putawayTicketItem.State = "待上架";
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ReceiptTicketItemID=@receiptTicketItem", new SqlParameter("receiptTicketItem", putawayTicketItem.ReceiptTicketItemID));
+                        wmsEntities.Database.ExecuteSqlCommand(
+                            "DELETE FROM StockInfo WHERE ReceiptTicketItemID=@receiptTicketItem", 
+                            new SqlParameter("receiptTicketItem", putawayTicketItem.ReceiptTicketItemID));
                        // StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.PutawayTicketItemID == putawayTicketItem.ID select si).FirstOrDefault();
                         
+                    }
+                    if (count == 0)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand(
+                            "UPDATE PutawayTicket SET State = '待上架' " +
+                            "WHERE ID = @putawayTicketID",
+                            new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                    }
+                    else
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand(
+                             "UPDATE PutawayTicket SET State = '部分上架' " +
+                             "WHERE ID = @putawayTicketID",
+                             new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
                     }
                     new Thread(() =>
                     {
