@@ -71,7 +71,7 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in StockInfoCheckTickettModifyViewMetaData1.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -84,13 +84,13 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTicksModifyMetaDate.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTickettModifyViewMetaData1.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTickettModifyViewMetaData1.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + StockInfoCheckTickettModifyViewMetaData1.KeyNames.Length);
+            worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + StockInfoCheckTicksModifyMetaDate.KeyNames.Length);
 
         }
 

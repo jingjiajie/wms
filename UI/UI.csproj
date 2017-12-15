@@ -379,6 +379,7 @@
     </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyViewMetaData.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
+    <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDate.cs" />
     <Compile Include="FormStockInfo\StockInfoViewMetaData.cs" />
     <Compile Include="FromShipmentTicket\FormShipmentTicket.cs">
       <SubType>Form</SubType>

@@ -6,12 +6,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WMS.DataAccess;
+using unvell.ReoGrid;
+using System.Threading;
 
 namespace WMS.UI
 {
     public partial class FormStockInfoCheckTicketComponentModify : Form
     {
         private Action<int> selectFinishCallback = null;
+        private WMSEntities wmsEntities = new WMSEntities();
         public FormStockInfoCheckTicketComponentModify()
         {
             InitializeComponent();
@@ -41,9 +45,9 @@ namespace WMS.UI
             Console.WriteLine("表格行数：" + StockInfoViewMetaData.KeyNames.Length);
 
             this.tableLayoutPanel2.Controls.Clear();
-            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTicksModifyMetaDate.KeyNames.Length; i++)
             {
-                KeyName curKeyName = StockInfoViewMetaData.KeyNames[i];
+                KeyName curKeyName = StockInfoCheckTicksModifyMetaDate.KeyNames[i];
                 if (curKeyName.Visible == false && curKeyName.Editable == false)
                 {
                     continue;
@@ -196,6 +200,23 @@ namespace WMS.UI
 
         private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
         {
+
+        }
+
+        private void reoGridControlComponen_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlComponen);
+            
+            if (ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项");
+                return;
+            }
+            int b = ids[0];
+            WMS.DataAccess.StockInfoView a = (from s in this.wmsEntities.StockInfoView 
+                                             where s.ID == (b)
+                                             select s).Single();
+            Utilities.CopyPropertiesToTextBoxes(a, this);
 
         }
     }
