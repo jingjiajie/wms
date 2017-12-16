@@ -13,16 +13,20 @@ namespace WMS.UI
     {
         private FormMode mode = FormMode.ALTER;
         private int stockInfoCheckID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
 
 
 
-        public FormStockInfoCheckTicketModify(int stockInfoCheckID = -1)
+        public FormStockInfoCheckTicketModify(int projectID, int warehouseID, int stockInfoCheckID=-1)
         {
             InitializeComponent();
             this.stockInfoCheckID = stockInfoCheckID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         private void FormStockCheckModify_Load(object sender, EventArgs e)
@@ -99,7 +103,7 @@ namespace WMS.UI
             private void buttonDelete_Click(object sender, EventArgs e)
         {
             WMS.DataAccess.StockInfoCheckTicket   stockInfoCheck = null;
-             
+            
             if (this.mode == FormMode.ALTER)
             {
                 stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
@@ -111,6 +115,8 @@ namespace WMS.UI
                 stockInfoCheck = new WMS.DataAccess.StockInfoCheckTicket();
                 this.wmsEntities.StockInfoCheckTicket.Add(stockInfoCheck);
             }
+            stockInfoCheck.WarehouseID = warehouseID;
+            stockInfoCheck.ProjectID  = projectID;
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
             {

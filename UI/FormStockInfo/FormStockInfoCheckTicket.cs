@@ -16,8 +16,12 @@ namespace WMS.UI
     public partial class FormStockInfoCheckTicket : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormStockInfoCheckTicket()
+        int projectID = -1;
+        int warehouseID = -1;
+        public FormStockInfoCheckTicket(int projectID, int warehouseID)
         {
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
             InitializeComponent();
         }
 
@@ -222,7 +226,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click_1(object sender, EventArgs e)
         {
-            var form = new FormStockInfoCheckTicketModify();
+            var form = new FormStockInfoCheckTicketModify(this.projectID, this.warehouseID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
@@ -242,7 +246,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var a1 = new FormStockInfoCheckTicketModify (stockInfoCheckID);
+                var a1 = new FormStockInfoCheckTicketModify (this.projectID, this.warehouseID,stockInfoCheckID);
                 a1 .SetMode(FormMode.ALTER);
                 a1.SetModifyFinishedCallback(() =>
                 {
