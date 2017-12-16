@@ -112,7 +112,7 @@ namespace WMS.UI
                 this.wmsEntities.StockInfoCheckTicket.Add(stockInfoCheck);
             }
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData .KeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

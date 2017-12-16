@@ -212,6 +212,7 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Text = "";
                 this.textBoxSearchValue.Enabled = false;
+                this.Search();
             }
             else
             {
@@ -293,6 +294,11 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
             })).Start();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.Search();
         }
     }
 }
