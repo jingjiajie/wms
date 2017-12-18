@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using unvell.ReoGrid;
+using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
@@ -27,6 +30,7 @@ namespace WMS.UI
             this.stockInfoCheckID = stockInfoCheckID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+
         }
 
         private void FormStockCheckModify_Load(object sender, EventArgs e)
@@ -40,6 +44,7 @@ namespace WMS.UI
             for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
+               
                 if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
                 {
                     continue;
@@ -70,12 +75,12 @@ namespace WMS.UI
 
 
             this.InitComponents();
-            //this.Search();
+            this.Search();
 
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDatexianshi.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -88,13 +93,13 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTicksModifyMetaDate.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTicksModifyMetaDatexianshi.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + StockInfoCheckTicksModifyMetaDate.KeyNames.Length);
+            worksheet.Columns = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames.Length;//限制表的长度
+            Console.WriteLine("表格行数：" + StockInfoCheckTicksModifyMetaDatexianshi.KeyNames.Length);
 
         }
 
@@ -125,6 +130,7 @@ namespace WMS.UI
             }
             wmsEntities.SaveChanges();
             //调用回调函数
+          
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
                 this.modifyFinishedCallback();
@@ -133,7 +139,10 @@ namespace WMS.UI
             {
                 this.addFinishedCallback();
             }
+
+
             this.Close();
+
 
         }
         public void SetModifyFinishedCallback(Action callback)
@@ -166,7 +175,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify();
+            FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify(-1);
             a1.Show();
         }
 
@@ -187,6 +196,53 @@ namespace WMS.UI
                 this.buttonOK.Text = "添加盘点单信息";
             }
         }
+
+        private void Search()
+        {
+
+            string key = null;
+            string value = null;
+
+           
+
+           
+            var worksheet = this.reoGridControlMain .Worksheets[0];
+            worksheet[0, 0] = "加载中...";
+            new Thread(new ThreadStart(() =>
+            {
+                WMS.DataAccess.StockInfoCheckTicketItemView[] stockInfoViews = null;
+                string sql = "SELECT * FROM StockInfoCheckTicketItemView WHERE 1=1";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+
+
+               
+                sql += " ORDER BY ID DESC"; //倒序排序
+                stockInfoViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoCheckTicketItemView>(sql, parameters.ToArray()).ToArray();
+                this.reoGridControlMain .Invoke(new Action(() =>
+                {
+                    this.labelStatus.Text = "搜索完成";
+                    worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    if (stockInfoViews.Length == 0)
+                    {
+                        worksheet[0, 1] = "没有查询到符合条件的记录";
+                    }
+                    for (int i = 0; i < stockInfoViews.Length; i++)
+                    {
+                        WMS.DataAccess.StockInfoCheckTicketItemView curStockInfoView = stockInfoViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDatexianshi.KeyNames select kn.Key).ToArray());
+                        for (int j = 0; j < worksheet.Columns; j++)
+                        {
+                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                        }
+                    }
+                }));
+
+            })).Start();
+        }
+
+
+
+
 
 
     }
