@@ -38,6 +38,7 @@ namespace WMS.UI.FormBase
             //初始化
             this.comboBoxSearchCondition.Items.Add("无");
             this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
+            this.comboBoxSearchCondition.Items.Remove("密码"); //不能按密码搜索
             this.comboBoxSearchCondition.SelectedIndex = 0;
 
 
@@ -52,7 +53,7 @@ namespace WMS.UI.FormBase
             worksheet.Columns = UserMetaData.KeyNames.Length; //限制表的长度
         }
 
-        private void Search()
+        private void Search(int selectedID = -1)
         {
             string key = null;
             string value = null;
@@ -70,28 +71,20 @@ namespace WMS.UI.FormBase
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
+
                 UserView[] userViews = null;
-                if (key == null || value == null) //查询条件为null则查询全部内容
+                string sql = "SELECT * FROM UserView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+
+                if (key != null && value != null) //查询条件不为null则增加查询条件
                 {
-                    userViews = wmsEntities.Database.SqlQuery<UserView>("SELECT * FROM UserView").ToArray();
-                    Console.WriteLine(userViews.Length);
+                    sql += "AND " + key + " = @value ";
+                    parameters.Add(new SqlParameter("value", value));
                 }
-                else
-                {
-                    if (decimal.TryParse(value, out decimal result) == false)
-                    {
-                        value = "'" + value + "'";
-                    }
-                    try
-                    {
-                        userViews = wmsEntities.Database.SqlQuery<UserView>(String.Format("SELECT * FROM UserView WHERE {0} = {1}", key, value)).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
+                sql += " ORDER BY ID DESC"; //倒序排序
+
+                userViews = wmsEntities.Database.SqlQuery<UserView>(sql, parameters.ToArray()).ToArray();
+
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -109,6 +102,10 @@ namespace WMS.UI.FormBase
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+                    if(selectedID != -1)
+                    {
+                        Utilities.SelectLineByID(this.reoGridControlMain, selectedID);
+                    }
                 }));
             })).Start();
         }
@@ -122,9 +119,9 @@ namespace WMS.UI.FormBase
         {
             var form = new FormUserModify();
             form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback(() =>
+            form.SetAddFinishedCallback((addedID) =>
             {
-                this.Search();
+                this.Search(addedID);
             });
             form.Show();
         }
@@ -140,10 +137,9 @@ namespace WMS.UI.FormBase
                 }
                 int userID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formUserModify = new FormUserModify(userID);
-                formUserModify.SetModifyFinishedCallback(() =>
+                formUserModify.SetModifyFinishedCallback((addedID) =>
                 {
-                    this.Search();
-                    Utilities.SelectLineByID(this.reoGridControlMain, userID);
+                    this.Search(addedID);
                 });
                 formUserModify.Show();
             }
@@ -189,8 +185,25 @@ namespace WMS.UI.FormBase
                     this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM [User] WHERE ID = @userID", new SqlParameter("@userID", id));
                 }
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                }));
+                MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
+        }
+
+        private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.comboBoxSearchCondition.SelectedIndex == 0)
+            {
+                this.textBoxSearchValue.Text = "";
+                this.textBoxSearchValue.Enabled = false;
+            }
+            else
+            {
+                this.textBoxSearchValue.Enabled = true;
+            }
         }
     }
 }

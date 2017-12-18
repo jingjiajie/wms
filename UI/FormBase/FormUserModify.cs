@@ -16,8 +16,8 @@ namespace WMS.UI.FormBase
     {
         private int userID = -1;
         private int curSupplierID = -1; //这个ID对应界面上的供应商名
-        private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
+        private Action<int> modifyFinishedCallback = null;
+        private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
         TextBox textBoxUsername = null;
@@ -148,7 +148,11 @@ namespace WMS.UI.FormBase
             {
                 user.Authority |= UserMetaData.AUTHORITY_SUPPLIER;
             }
-
+            if(user.Authority == 0)
+            {
+                MessageBox.Show("用户权限不可以为空","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             new Thread(()=>
             {
                 wmsEntities.SaveChanges();
@@ -158,23 +162,31 @@ namespace WMS.UI.FormBase
                     //调用回调函数
                     if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
                     {
-                        this.modifyFinishedCallback();
+                        this.Invoke(new Action(()=>
+                        {
+                            this.modifyFinishedCallback(user.ID);
+                        }));
+                        MessageBox.Show("修改成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
                     {
-                        this.addFinishedCallback();
+                        this.Invoke(new Action(() =>
+                        {
+                            this.addFinishedCallback(user.ID);
+                        }));
+                        MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     this.Close();
                 }));
             }).Start();
         }
 
-        public void SetModifyFinishedCallback(Action callback)
+        public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
         }
 
-        public void SetAddFinishedCallback(Action callback)
+        public void SetAddFinishedCallback(Action<int> callback)
         {
             this.addFinishedCallback = callback;
         }

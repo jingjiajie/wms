@@ -38,7 +38,7 @@ namespace WMS.UI.FormBase
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
             new KeyName(){Key="Username",Name="用户名",Editable=true},
-            new KeyName(){Key="Password",Name="密码",Editable=true},
+            new KeyName(){Key="Password",Name="密码",Visible=false, Editable=true,Save=true},
             //new KeyName(){Key="Authority",Name="权限",Editable=true},
             new KeyName(){Key="AuthorityName",Name="角色"},
             new KeyName(){Key="SupplierName",Name="供应商名",Editable=false,Save=false},
