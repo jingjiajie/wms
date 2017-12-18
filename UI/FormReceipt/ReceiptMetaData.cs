@@ -10,10 +10,10 @@ namespace WMS.UI.FormReceipt
     {
         public static KeyName[] receiptNameKeys =
         {
-            new KeyName(){Name = "ID", Key = "ID", Visible = true, Editable = false},
-            new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = true, Editable = false},
-            new KeyName(){Name = "仓库ID", Key = "Warehouse", Visible = true, Editable = false},
-            new KeyName(){Name = "供应商ID", Key = "SupplierID", Visible = true, Editable = true},
+            new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false},
+            new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false},
+            new KeyName(){Name = "仓库ID", Key = "Warehouse", Visible = false, Editable = false},
+            new KeyName(){Name = "供应商ID", Key = "SupplierID", Visible = false, Editable = true},
             new KeyName(){Name = "单号", Key = "No", Visible = true, Editable = true},
             new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true},
             new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false},

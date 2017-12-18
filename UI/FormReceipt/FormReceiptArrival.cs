@@ -432,5 +432,10 @@ namespace WMS.UI
                 return;
             }
         }
+
+        private void comboBoxSelect_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

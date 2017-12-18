@@ -118,6 +118,7 @@
             this.comboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSelect.Name = "comboBoxSelect";
             this.comboBoxSelect.Size = new System.Drawing.Size(223, 39);
+            this.comboBoxSelect.Click += new System.EventHandler(this.comboBoxSelect_Click);
             // 
             // textBoxSelect
             // 
