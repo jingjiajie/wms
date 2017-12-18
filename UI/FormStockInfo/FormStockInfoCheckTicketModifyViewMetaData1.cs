@@ -17,16 +17,7 @@ namespace WMS.UI
             new KeyName(){Key="ShipmentAreaAmount",Name="发货区数量",Editable=true,Save=true},
              new KeyName(){Key="RealOverflowAreaAmount",Name="实际溢库区数量",Editable=true,Save=true},
             new KeyName(){Key="RealShipmentAreaAmount",Name="实际发货区数量",Editable=true,Save=true},
-            //new KeyName(){Key="ReceiptTicketNo",Name="收货单号",Editable=false,Save=false},
-           // new KeyName(){Key="ReceiptTicketItemInventoryDate",Name="存货日期",Editable=false,Save=false},
-           // new KeyName(){Key="ReceiptTicketItemManufactureDate",Name="生产日期",Editable=false,Save=false},
-           // new KeyName(){Key="ReceiptTicketItemExpiryDate",Name="失效日期",Editable=false,Save=false},
-            //new KeyName(){Key="ReceiptTicketItemPackageName",Name="包装",Editable=false,Save=false},
-           // new KeyName(){Key="ReceiptTicketBoardNo",Name="托盘号",Editable=false,Save=false},
-            //new KeyName(){Key="ReceiptTicketItemManufactureNo",Name="厂商批号",Editable=false,Save=false},
-            //new KeyName(){Key="ProjectName",Name="项目",Editable=false,Save=false},
-            //new KeyName(){Key="ReceiptTicketItemRealRightProperty",Name="物权属性",Editable=false,Save=false},
-            //new KeyName(){Key="ReceiptTicketItemBoxNo",Name="箱号",Editable=false,Save=false},
+            
 
 
 

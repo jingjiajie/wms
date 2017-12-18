@@ -6,9 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WMS.DataAccess;
 using unvell.ReoGrid;
+using WMS.DataAccess;
+
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
@@ -16,8 +18,13 @@ namespace WMS.UI
     {
         private Action<int> selectFinishCallback = null;
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormStockInfoCheckTicketComponentModify()
+        int stockinfocheckid = -1;
+        int stockinfoid = -1;
+        public FormStockInfoCheckTicketComponentModify(int stockinfocheckid)
+            
         {
+            
+            this.stockinfocheckid = stockinfocheckid;
             InitializeComponent();
 
         }
@@ -73,6 +80,9 @@ namespace WMS.UI
         {
             this.InitComponents();
             this.Search();
+           
+            
+           
 
 
         }
@@ -83,63 +93,50 @@ namespace WMS.UI
         }
         private void Search()
         {
+           
             string key = null;
             string value = null;
 
             if (this.toolStripComboBoxSelect1.SelectedIndex != 0)
             {
-                key = (from kn in StockInfoCheckTickettModifyViewMetaData1.KeyNames
-                       where kn.Name == this.toolStripComboBoxSelect1.SelectedItem.ToString()
+                key = (from kn in StockInfoViewMetaData.KeyNames
+                       where kn.Name == this.toolStripComboBoxSelect1 .SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
             }
 
             this.labelStatus.Text = "正在搜索中...";
-
-
-            new System.Threading.Thread(new System.Threading.ThreadStart(() =>
+            var worksheet = this.reoGridControlComponen .Worksheets[0];
+            worksheet[0, 0] = "加载中...";
+            new Thread(new ThreadStart(() =>
             {
-                var wmsEntities = new WMS.DataAccess.WMSEntities();
+                StockInfoView[] stockInfoViews = null;
+                string sql = "SELECT * FROM StockInfoView WHERE 1=1";
+                List<SqlParameter> parameters = new List<SqlParameter>();
 
-                WMS.DataAccess.StockInfoView [] componentViews = null;
-
-
-               
-                    if (key == null || value == null)        //搜索所有
-                    {
-                        componentViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoView >("SELECT * FROM StockInfoView").ToArray();
-                    }
-                    else
-                    {
-                      
-                        value = "'" + value + "'";
-                      
-                        try
-                        {
-                            componentViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoView>(String.Format("SELECT * FROM StockInfoView WHERE {0} = {1}", key, value)).ToArray();
-                        }
-                        catch
-                        {
-                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
-               
-              
-
+             
+                if (key != null && value != null) //查询条件不为null则增加查询条件
+                {
+                    sql += "AND " + key + " = @value ";
+                    parameters.Add(new SqlParameter("value", value));
+                }
+                sql += " ORDER BY ID DESC"; //倒序排序
+                stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(sql, parameters.ToArray()).ToArray();
                 this.reoGridControlComponen.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
-                    var worksheet = this.reoGridControlComponen.Worksheets[0];
-                    worksheet.DeleteRangeData(unvell.ReoGrid.RangePosition.EntireRange);
-                    for (int i = 0; i < componentViews.Length; i++)
+                    worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    if (stockInfoViews.Length == 0)
                     {
-
-                        WMS.DataAccess.StockInfoView curComponentView = componentViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in StockInfoViewMetaData.KeyNames select kn.Key).ToArray());
+                        worksheet[0, 1] = "没有查询到符合条件的记录";
+                    }
+                    for (int i = 0; i < stockInfoViews.Length; i++)
+                    {
+                        StockInfoView curStockInfoView = stockInfoViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoViewMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[i, j] = columns[j];
+                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
                 }));
@@ -159,41 +156,52 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-        //    this.SelectItem();
+            DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
+
+
+
+            StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
+            this.wmsEntities.StockInfoCheckTicketItem.Add(StockInfoCheckTicketItem);
+
+
+            StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockinfocheckid;
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlComponen );
+
+            if (ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项");
+                return;
+            }
+            else if ((ids.Length == 1))
+            {
+                int stockiofocheckid = ids[0];
+                
+                        }
+            this.stockinfoid = ids[0];
+            StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
+            
+
+            //开始数据库操作
+            if (Utilities.CopyTextBoxTextsToProperties(this, StockInfoCheckTicketItem, StockInfoCheckTicksModifyMetaDate.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                Utilities.CopyComboBoxsToProperties(this, StockInfoCheckTicketItem, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            }
+            wmsEntities.SaveChanges();
+            MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+
         }
 
-        //private void SelectItem()
-        //{
-        //    int[] ids = Utilities.GetSelectedIDs(this.reoGridControlComponen);
-        //    if (ids.Length != 1)
-        //    {
-        //        MessageBox.Show("请选择一项");
-        //        return;
-        //    }
-        //    this.selectFinishCallback?.Invoke(ids[0]);
-
-        //}
 
 
 
-        //private int[] GetSelectedIDs()
-        //{
-        //    List<int> ids = new List<int>();
-        //    var worksheet = this.reoGridControlComponen.Worksheets[0];
-        //    for (int row = worksheet.SelectionRange.Row; row <= worksheet.SelectionRange.EndRow; row++)
-        //    {
-        //        if (worksheet[row, 0] == null) continue;
-        //        if (int.TryParse(worksheet[row, 0].ToString(), out int shipmentTicketID))
-        //        {
-        //            ids.Add(shipmentTicketID);
-        //        }
-        //    }
-        //    return ids.ToArray();
-
-
-        //}
-
-            private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
@@ -218,6 +226,20 @@ namespace WMS.UI
                                              select s).Single();
             Utilities.CopyPropertiesToTextBoxes(a, this);
 
+        }
+
+        private void toolStripComboBoxSelect1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect1.SelectedIndex == 0)
+            {
+                this.textBoxSearchValue.Text = "";
+                this.textBoxSearchValue.Enabled = false;
+                this.Search();
+            }
+            else
+            {
+                this.textBoxSearchValue.Enabled = true;
+            }
         }
     }
 }

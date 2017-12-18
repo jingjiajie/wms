@@ -87,28 +87,7 @@ namespace WMS.UI
                 var wmsEntities = new WMSEntities();
                 string sql = "SELECT * FROM StockInfoCheckTicketView WHERE 1=1 ";
                 List<SqlParameter> parameters = new List<SqlParameter>();
-                //if (key == null || value == null) //查询条件为null则查询全部内容
-                //{
-                //    stockCheckViews = wmsEntities.Database.SqlQuery<StockInfoCheckTicketView>("SELECT * FROM StockInfoCheckTicketView").ToArray();
-                //    Console.WriteLine(stockCheckViews.Length);
-                //}
-                //else
-                //{
-                //    if (decimal.TryParse(value, out decimal result) == false)
-                //    {
-                //        value = "'" + value + "'";
-                //    }
-                //    try
-                //    {
-                //        stockCheckViews = wmsEntities.Database.SqlQuery<StockInfoCheckTicketView>(String.Format("SELECT * FROM StockInfoCheckTicketView WHERE {0} = {1}",
-                //            key, value)).ToArray();
-                //    }
-                //    catch
-                //    {
-                //        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //        return;
-                //    }
-                //}
+           
                 if (this.projectID != -1)
                 {
                     sql += "AND ProjectID = @projectID ";
@@ -150,80 +129,7 @@ namespace WMS.UI
             })).Start();
         }
 
-        //private void buttonAlter_Click(object sender, EventArgs e)
-        //{
-        //    var worksheet = this.reoGridControlMain.Worksheets[0];
-        //    try
-        //    {
-        //        if (worksheet.SelectionRange.Rows != 1)
-        //        {
-        //            throw new Exception();
-        //        }
-        //        int stockCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-        //        //var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify(stockCheckID);
-        //        var formStockInfoCheckTicketModify = new FormStockInfoCheckTicketModify();
-        //        formStockInfoCheckTicketModify.SetModifyFinishedCallback(() =>
-        //        {
-        //            this.Search();
-        //        });
-        //        formStockInfoCheckTicketModify.Show();
-        //    }
-        //    catch
-        //    {
-        //        MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return;
-        //    }
-        //}
-
-        //private void buttonAdd_Click(object sender, EventArgs e)
-        //{
-        //    var form = new FormStockInfoCheckTicketModify();
-        //    form.SetMode(FormMode.ADD);
-        //    form.SetAddFinishedCallback(() =>
-        //    {
-        //        this.Search();
-        //    });
-        //    form.Show();
-        //}
-
-        //private void buttonDelete_Click(object sender, EventArgs e)
-        //{
-        //    var worksheet = this.reoGridControlMain.Worksheets[0];
-        //    List<int> deleteIDs = new List<int>();
-        //    for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
-        //    {
-        //        try
-        //        {
-        //            int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
-        //            deleteIDs.Add(curID);
-        //        }
-        //        catch
-        //        {
-        //            continue;
-        //        }
-        //    }
-        //    if (deleteIDs.Count == 0)
-        //    {
-        //        MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        return;
-        //    }
-        //    if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-        //    {
-        //        return;
-        //    }
-        //    this.labelStatus.Text = "正在删除...";
-
-
-        //    new Thread(new ThreadStart(() =>
-        //    {
-        //        foreach (int id in deleteIDs)
-        //        {
-        //            this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicket WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
-        //        }
-        //        this.wmsEntities.SaveChanges();
-        //        this.Invoke(new Action(this.Search));
-        //    })).Start();
-        //}
+       
 
         private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -249,11 +155,27 @@ namespace WMS.UI
 
         private void buttonAdd_Click_1(object sender, EventArgs e)
         {
+           
             var form = new FormStockInfoCheckTicketModify(this.projectID, this.warehouseID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
+
+                
                 this.Search();
+                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+
+                //if (ids.Length != 1)
+                //{
+                //    MessageBox.Show("请选择一项");
+                //    return;
+                //}
+                //else if ((ids.Length == 1))
+                //{
+                //    int stockiofocheckid = ids[0];
+                //    FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify(stockiofocheckid);
+                //    a1.Show();
+                //}
             });
             form.Show();
         }
@@ -326,6 +248,23 @@ namespace WMS.UI
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             this.Search();
+        }
+
+        private void button_additeam_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+
+            if (ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项");
+                return;
+            }
+            else if ((ids.Length == 1))
+            {
+                int stockiofocheckid = ids[0];
+                FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify(stockiofocheckid);
+                a1.Show();
+            }
         }
     }
 }
