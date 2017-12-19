@@ -20,6 +20,7 @@ namespace WMS.UI
         private WMSEntities wmsEntities = new WMSEntities();
         int stockinfocheckid = -1;
         int stockinfoid = -1;
+        private Action addFinishedCallback = null;
         public FormStockInfoCheckTicketComponentModify(int stockinfocheckid)
             
         {
@@ -194,7 +195,10 @@ namespace WMS.UI
             wmsEntities.SaveChanges();
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-
+            if ( this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
 
         }
 
@@ -240,6 +244,12 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Enabled = true;
             }
+        }
+
+
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
         }
     }
 }

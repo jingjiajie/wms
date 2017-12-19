@@ -167,7 +167,7 @@
             this.reoGridControlComponen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlComponen.LeadHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Location = new System.Drawing.Point(2, 2);
-            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlComponen.Name = "reoGridControlComponen";
             this.reoGridControlComponen.RowHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Script = null;
@@ -212,6 +212,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
             this.Name = "FormStockInfoCheckTicketComponentModify";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormStockInfoCheckTicketComponenModify";
             this.Load += new System.EventHandler(this.FormStockInfoCheckTicketComponentModify_Load);
             this.toolStripTop.ResumeLayout(false);
