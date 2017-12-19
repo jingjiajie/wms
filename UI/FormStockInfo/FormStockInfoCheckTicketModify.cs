@@ -21,6 +21,8 @@ namespace WMS.UI
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
+        //private Action checkFinishedCallback = null;
+       
 
 
 
@@ -40,11 +42,27 @@ namespace WMS.UI
             {
                 throw new Exception("未设置源库存信息");
             }
+            if(this.mode==FormMode.ADD||this.mode==FormMode.ALTER)
+            {
+                this.reoGridControlMain .Visible = false;
+                this.buttonAdd.Visible = false;
+                this.buttonAlter.Visible = false;
+                this.buttonDelete.Visible = false;
+                this.buttonfinish.Visible = false;
+
+            }
+            if(this.mode==FormMode.CHECK)
+            {
+                this.buttonOK.Visible = false;
+                this.buttonCancel.Visible = false;
+
+
+            }
 
             for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
-               
+                
                 if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
                 {
                     continue;
@@ -55,7 +73,7 @@ namespace WMS.UI
 
                 TextBox textBox = new TextBox();
                 textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
+                if (curKeyName.Editable == false||this.mode==FormMode.CHECK)
                 {
                     textBox.Enabled = false;
                 }
@@ -64,7 +82,7 @@ namespace WMS.UI
 
 
 
-            if (this.mode == FormMode.ALTER)
+            if (this.mode == FormMode.ALTER||this.mode==FormMode.CHECK)
             {
                 WMS.DataAccess.StockInfoCheckTicketView  stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
                                                where s.ID == this.stockInfoCheckID
@@ -154,7 +172,7 @@ namespace WMS.UI
         {
             this.addFinishedCallback = callback;
         }
-
+     
 
         private void tableLayoutPanelProperties_Paint(object sender, PaintEventArgs e)
         {
@@ -175,7 +193,12 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify(-1);
+            FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify(this.stockInfoCheckID);
+            a1.SetAddFinishedCallback(() =>
+            {
+                this.Search();
+               
+            });
             a1.Show();
         }
 
@@ -195,27 +218,28 @@ namespace WMS.UI
                 this.Text = "添加盘点单信息";
                 this.buttonOK.Text = "添加盘点单信息";
             }
+            else if (mode == FormMode.CHECK)
+                this.Text = "盘点单条目";
+                
+                
         }
 
         private void Search()
         {
-
-            string key = null;
-            string value = null;
-
-           
-
-           
-            var worksheet = this.reoGridControlMain .Worksheets[0];
+           var worksheet = this.reoGridControlMain .Worksheets[0];
             worksheet[0, 0] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
                 WMS.DataAccess.StockInfoCheckTicketItemView[] stockInfoViews = null;
                 string sql = "SELECT * FROM StockInfoCheckTicketItemView WHERE 1=1";
                 List<SqlParameter> parameters = new List<SqlParameter>();
+                if (this.stockInfoCheckID != -1)
+                {
+                    sql += "AND StockInfoCheckTicketID = @StockInfoCheckTicketID ";
+                    parameters.Add(new SqlParameter("StockInfoCheckTicketID", this.stockInfoCheckID));
+                }
 
 
-               
                 sql += " ORDER BY ID DESC"; //倒序排序
                 stockInfoViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoCheckTicketItemView>(sql, parameters.ToArray()).ToArray();
                 this.reoGridControlMain .Invoke(new Action(() =>
@@ -240,10 +264,19 @@ namespace WMS.UI
             })).Start();
         }
 
+        private void buttonAlter_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void buttonfinish_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
+        private void buttonDelete_Click_1(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }

@@ -39,10 +39,10 @@
             this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
+            this.button_additeam = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button_additeam = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,7 +54,7 @@
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
             this.reoGridControlMain.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -157,6 +157,16 @@
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click_1);
             // 
+            // button_additeam
+            // 
+            this.button_additeam.AutoSize = false;
+            this.button_additeam.Image = ((System.Drawing.Image)(resources.GetObject("button_additeam.Image")));
+            this.button_additeam.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_additeam.Name = "button_additeam";
+            this.button_additeam.Size = new System.Drawing.Size(80, 25);
+            this.button_additeam.Text = "添加盘点";
+            this.button_additeam.Click += new System.EventHandler(this.button_additeam_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -182,16 +192,6 @@
             this.labelStatus.Size = new System.Drawing.Size(56, 17);
             this.labelStatus.Text = "库存管理";
             // 
-            // button_additeam
-            // 
-            this.button_additeam.AutoSize = false;
-            this.button_additeam.Image = ((System.Drawing.Image)(resources.GetObject("button_additeam.Image")));
-            this.button_additeam.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.button_additeam.Name = "button_additeam";
-            this.button_additeam.Size = new System.Drawing.Size(60, 25);
-            this.button_additeam.Text = "盘点";
-            this.button_additeam.Click += new System.EventHandler(this.button_additeam_Click);
-            // 
             // FormStockInfoCheckTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -200,7 +200,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormStockInfoCheckTicket";
             this.Text = "库存盘点";
             this.Load += new System.EventHandler(this.FormStockInfoCheckTicket_Load);

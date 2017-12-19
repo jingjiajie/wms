@@ -30,13 +30,14 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.buttonAlter = new System.Windows.Forms.Button();
+            this.buttonfinish = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOK = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.buttonAlter = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -44,7 +45,6 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -67,14 +67,40 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.buttonfinish);
+            this.panel1.Controls.Add(this.buttonDelete);
             this.panel1.Controls.Add(this.tableLayoutPanel3);
+            this.panel1.Controls.Add(this.buttonAlter);
             this.panel1.Controls.Add(this.tableLayoutPanel2);
+            this.panel1.Controls.Add(this.buttonAdd);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(4, 4);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(873, 142);
             this.panel1.TabIndex = 0;
+            // 
+            // buttonfinish
+            // 
+            this.buttonfinish.Location = new System.Drawing.Point(718, 38);
+            this.buttonfinish.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonfinish.Name = "buttonfinish";
+            this.buttonfinish.Size = new System.Drawing.Size(61, 28);
+            this.buttonfinish.TabIndex = 7;
+            this.buttonfinish.Text = "完成";
+            this.buttonfinish.UseVisualStyleBackColor = true;
+            this.buttonfinish.Click += new System.EventHandler(this.buttonfinish_Click);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Location = new System.Drawing.Point(641, 38);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(69, 28);
+            this.buttonDelete.TabIndex = 1;
+            this.buttonDelete.Text = "删除";
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click_1);
             // 
             // tableLayoutPanel3
             // 
@@ -83,12 +109,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.51773F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 66F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonCancel, 1, 0);
-            this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 4, 0);
-            this.tableLayoutPanel3.Controls.Add(this.buttonAlter, 3, 0);
-            this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 2, 0);
-            this.tableLayoutPanel3.Controls.Add(this.buttonOK, 0, 0);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 72F));
             this.tableLayoutPanel3.Location = new System.Drawing.Point(483, 90);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
@@ -96,43 +117,12 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(369, 44);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
-            // buttonAdd
-            // 
-            this.buttonAdd.Location = new System.Drawing.Point(145, 4);
-            this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(69, 28);
-            this.buttonAdd.TabIndex = 0;
-            this.buttonAdd.Text = "添加";
-            this.buttonAdd.UseVisualStyleBackColor = true;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
-            // buttonAlter
-            // 
-            this.buttonAlter.Location = new System.Drawing.Point(223, 4);
-            this.buttonAlter.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(69, 28);
-            this.buttonAlter.TabIndex = 6;
-            this.buttonAlter.Text = "修改";
-            this.buttonAlter.UseVisualStyleBackColor = true;
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Location = new System.Drawing.Point(306, 4);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(59, 28);
-            this.buttonDelete.TabIndex = 1;
-            this.buttonDelete.Text = "删除";
-            this.buttonDelete.UseVisualStyleBackColor = true;
-            // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(4, 4);
+            this.buttonOK.Location = new System.Drawing.Point(114, 4);
             this.buttonOK.Margin = new System.Windows.Forms.Padding(4);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(66, 28);
+            this.buttonOK.Size = new System.Drawing.Size(63, 28);
             this.buttonOK.TabIndex = 4;
             this.buttonOK.Text = "确认";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -140,13 +130,24 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(78, 4);
+            this.buttonCancel.Location = new System.Drawing.Point(255, 4);
             this.buttonCancel.Margin = new System.Windows.Forms.Padding(4);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(59, 28);
+            this.buttonCancel.Size = new System.Drawing.Size(56, 28);
             this.buttonCancel.TabIndex = 5;
             this.buttonCancel.Text = "取消";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            // 
+            // buttonAlter
+            // 
+            this.buttonAlter.Location = new System.Drawing.Point(564, 38);
+            this.buttonAlter.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAlter.Name = "buttonAlter";
+            this.buttonAlter.Size = new System.Drawing.Size(69, 28);
+            this.buttonAlter.TabIndex = 6;
+            this.buttonAlter.Text = "修改";
+            this.buttonAlter.UseVisualStyleBackColor = true;
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -166,8 +167,21 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(477, 126);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Location = new System.Drawing.Point(487, 38);
+            this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(69, 28);
+            this.buttonAdd.TabIndex = 0;
+            this.buttonAdd.Text = "添加";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.buttonCancel);
+            this.panel2.Controls.Add(this.buttonOK);
             this.panel2.Controls.Add(this.reoGridControlMain);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(4, 154);
@@ -234,7 +248,6 @@
             this.Load += new System.EventHandler(this.FormStockCheckModify_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -258,5 +271,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
+        private System.Windows.Forms.Button buttonfinish;
     }
 }

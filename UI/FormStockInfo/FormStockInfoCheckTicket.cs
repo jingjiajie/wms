@@ -160,10 +160,12 @@ namespace WMS.UI
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
-
-                
                 this.Search();
-                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+                //var worksheet = this.reoGridControlMain.Worksheets[0];
+                //var range = worksheet.SelectionRange;
+                //worksheet.SelectionRange = new RangePosition("A1:A1");
+
+                //int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
 
                 //if (ids.Length != 1)
                 //{
@@ -262,9 +264,36 @@ namespace WMS.UI
             else if ((ids.Length == 1))
             {
                 int stockiofocheckid = ids[0];
-                FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify(stockiofocheckid);
+                var a1 = new FormStockInfoCheckTicketModify(-1, -1, stockiofocheckid);
+                a1.SetMode(FormMode.CHECK);
                 a1.Show();
             }
+
+            //var worksheet = this.reoGridControlMain.Worksheets[0];
+
+            //try
+            //{
+            //    if (worksheet.SelectionRange.Rows != 1)
+            //    {
+            //        throw new Exception();
+            //    }
+            //    int stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+            //    var a1 = new FormStockInfoCheckTicketModify(this.projectID, this.warehouseID, stockInfoCheckID);
+            //    a1.SetMode(FormMode.CHECK);
+            //    a1.SetCheckFinishedCallback(() =>
+            //    {
+            //        this.Search();
+            //    });
+            //    a1.Show();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+
+
+
         }
     }
 }
