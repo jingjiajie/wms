@@ -117,8 +117,7 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames[i].Visible;
             }
             worksheet.Columns = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + StockInfoCheckTicksModifyMetaDatexianshi.KeyNames.Length);
-
+           
         }
 
 
