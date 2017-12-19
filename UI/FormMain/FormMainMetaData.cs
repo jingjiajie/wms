@@ -12,7 +12,7 @@ namespace WMS.UI
             MakeItem("用户管理",Authority.BASE_USER|Authority.BASE_USER_SUPPLIER_SELFONLY),
             MakeItem("供应商管理",Authority.BASE_SUPPLIER|Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY),
             MakeItem("零件管理",Authority.BASE_COMPONENT|Authority.BASE_COMPONENT_SUPPLIER_SELFONLY),
-            MakeItem("仓库管理",Authority.BASE_WAREHOUSE|Authority.BASE_WAREHOUSE),
+            MakeItem("仓库管理",Authority.BASE_WAREHOUSE|Authority.BASE_WAREHOUSE_SUPPLIER_SELFONLY),
             MakeItem("项目管理",Authority.BASE_PROJECT|Authority.BASE_PROJECT_SUPPLIER_SELFONLY),
 
             MakeItem("到货管理",Authority.RECEIPT_ARRIVAL|Authority.RECEIPT_ARRIVAL_SUPPLIER_SELFONLY),

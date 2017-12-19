@@ -53,7 +53,7 @@ namespace WMS.UI
                     MakeTreeNode("到货管理"),
                     MakeTreeNode("送检单管理"),
                     MakeTreeNode("上架管理"),
-                    
+
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
                     MakeTreeNode("发货单管理"),
@@ -67,12 +67,12 @@ namespace WMS.UI
             };
 
             this.treeViewLeft.Nodes.Clear();
-            this.treeViewLeft.Nodes.AddRange((from node in
-                                                  (from node in treeNodes
-                                                   where HasAuthority(node.Text)
-                                                   select GetAuthenticatedSubTreeNodes(node))
-                                              where node.Nodes.Count > 0
-                                              select node).ToArray());
+            TreeNode[] nodes = (from node in (from node in treeNodes
+                                              where HasAuthority(node.Text)
+                                              select GetAuthenticatedSubTreeNodes(node))
+                                where node.Nodes.Count > 0
+                                select node).ToArray();
+            this.treeViewLeft.Nodes.AddRange(nodes);
         }
 
         //检测用户是否有相应功能的权限

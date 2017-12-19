@@ -89,7 +89,7 @@ namespace WMS.UI
             //this.toolStripComboBoxSelect1.Items.AddRange(visibleColumnNames);
             //this.toolStripComboBoxSelect1.SelectedIndex = 0;
 
-
+           
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
