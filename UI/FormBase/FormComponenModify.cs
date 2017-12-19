@@ -19,8 +19,8 @@ namespace WMS.UI
         private int componenID = -1;
         private int supplierID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
-        private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
+        private Action<int> modifyFinishedCallback = null;
+        private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
         public FormComponenModify(int projectID, int warehouseID, int userID, int componenID = -1)
@@ -130,6 +130,18 @@ namespace WMS.UI
         {
 
             var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
+            var textBoxNo = this.Controls.Find("textBoxNo", true)[0];
+            var textBoxName = this.Controls.Find("textBoxName", true)[0];
+            if (textBoxNo.Text == string.Empty)
+            {
+                MessageBox.Show("零件代号不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (textBoxName.Text == string.Empty)
+            {
+                MessageBox.Show("零件名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (textBoxSupplierName.Text == string.Empty)
             {
                 MessageBox.Show("供应商名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -184,25 +196,25 @@ namespace WMS.UI
             //调用回调函数
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                this.modifyFinishedCallback();
+                this.modifyFinishedCallback(componen.ID);
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             else if(this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
-                this.addFinishedCallback();
+                this.addFinishedCallback(componen.ID);
                 MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             
         }
 
-        public void SetModifyFinishedCallback(Action callback)
+        public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
         }
 
-        public void SetAddFinishedCallback(Action callback)
+        public void SetAddFinishedCallback(Action<int> callback)
         {
             this.addFinishedCallback = callback;
         }

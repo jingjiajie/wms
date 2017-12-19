@@ -128,7 +128,9 @@
             this.ClientSize = new System.Drawing.Size(722, 310);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("黑体", 10F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
             this.Name = "FormComponenModify";
             this.Text = "修改库存信息";
             this.Load += new System.EventHandler(this.FormComponenModify_Load);
