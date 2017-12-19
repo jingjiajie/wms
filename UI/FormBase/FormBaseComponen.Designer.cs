@@ -82,8 +82,11 @@
             // 
             // textBoxSearchValue
             // 
+            this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxSearchValue.Enabled = false;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
             this.textBoxSearchValue.Size = new System.Drawing.Size(151, 28);
+            this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
             // toolStripButtonSelect
             // 

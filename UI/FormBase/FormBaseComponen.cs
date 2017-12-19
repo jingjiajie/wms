@@ -18,14 +18,14 @@ namespace WMS.UI
         private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
         private int authority_self = (int)Authority.BASE_COMPONENT;
-        int userID = -1;
+        int supplierID = -1;
         int projectID = -1;
         int warehouseID = -1;
-        public FormBaseComponent(int authority, int userID, int projectID, int warehouseID)
+        public FormBaseComponent(int authority, int supplierID, int projectID, int warehouseID)
         {
             InitializeComponent();
             this.authority = authority;
-            this.userID = userID;
+            this.supplierID = supplierID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
         }
@@ -69,7 +69,7 @@ namespace WMS.UI
             this.Search();
         }
 
-    private void Search()
+    private void Search(int selectedID = -1)
         {
             string key = null;
             string value = null;
@@ -117,8 +117,8 @@ namespace WMS.UI
                 if ((this.authority & authority_self) == 0)
                 {
 
-                    sql += "AND SupplierID = @userID ";
-                    parameters.Add(new SqlParameter("userID", this.userID));
+                    sql += "AND SupplierID = @supplierID ";
+                    parameters.Add(new SqlParameter("supplierID", this.supplierID));
 
                     if (this.projectID != -1)
                     {
@@ -161,6 +161,10 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j];
                         }
                     }
+                    if (selectedID != -1)
+                    {
+                        Utilities.SelectLineByID(this.reoGridControlComponen, selectedID);
+                    }
                 }));
 
             })).Start();
@@ -169,11 +173,11 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormComponenModify(this.projectID, this.warehouseID, this.userID);
+            var form = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID);
             form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback(() =>
+            form.SetAddFinishedCallback((addedID) =>
             {
-                this.Search();
+                this.Search(addedID);
             });
             form.Show();
 
@@ -190,10 +194,10 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formComponenModify = new FormComponenModify(this.projectID, this.warehouseID, this.userID,componenID);
-                formComponenModify.SetModifyFinishedCallback(() =>
+                var formComponenModify = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID, componenID);
+                formComponenModify.SetModifyFinishedCallback((addedID) =>
                 {
-                    this.Search();
+                    this.Search(addedID);
                 });
                 formComponenModify.Show();
             }
@@ -239,12 +243,21 @@ namespace WMS.UI
                     this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
                 }
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                }));
             })).Start();
-
+            MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }//删除
 
-
+        private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                this.Search();
+            }
+        }
 
         private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
