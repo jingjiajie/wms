@@ -46,15 +46,17 @@ namespace WMS.UI
             {
                 this.reoGridControlMain .Visible = false;
                 this.buttonAdd.Visible = false;
-                this.buttonAlter.Visible = false;
+
                 this.buttonDelete.Visible = false;
                 this.buttonfinish.Visible = false;
+                this.Size = new Size(500, 250);
 
             }
             if(this.mode==FormMode.CHECK)
             {
                 this.buttonOK.Visible = false;
                 this.buttonCancel.Visible = false;
+               // this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 
 
             }
@@ -263,10 +265,7 @@ namespace WMS.UI
             })).Start();
         }
 
-        private void buttonAlter_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void buttonfinish_Click(object sender, EventArgs e)
         {
@@ -275,7 +274,42 @@ namespace WMS.UI
 
         private void buttonDelete_Click_1(object sender, EventArgs e)
         {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
 
+
+            new Thread(new ThreadStart(() =>
+            {
+                foreach (int id in deleteIDs)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicketItem WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+            })).Start();
         }
     }
+    
 }

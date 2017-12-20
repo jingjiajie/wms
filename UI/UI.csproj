@@ -370,7 +370,6 @@
     <Compile Include="FormReceipt\FormReceiptShelves.Designer.cs">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyViewMetaData1.cs" />
     <Compile Include="FormStockInfo\FormStockInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
