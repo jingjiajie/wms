@@ -27,6 +27,7 @@ namespace WMS.UI
 
         private void FormSupplierModify_Load(object sender, EventArgs e)
         {
+            this.MaximizeBox = false;
             if (this.mode == FormMode.ALTER&&this.supplierID == -1)
             { 
                 throw new Exception("未设置源库存信息");

@@ -78,6 +78,9 @@ namespace WMS.UI
             a1.SetAddFinishedCallback(() =>
             {
                 this.Search();
+                var worksheet = this.reoGridControlUser.Worksheets[0];
+                
+                worksheet.SelectionRange = new RangePosition("A1:A1");
             });
             a1.Show();  
         }
@@ -158,7 +161,7 @@ namespace WMS.UI
 
                     if (SupplierView.Length == 0)
                     {
-                        worksheet1[1, 1] = "没有查询到符合条件的记录";
+                        worksheet1[0, 1] = "没有查询到符合条件的记录";
                     }
                     for (int i = 0; i < SupplierView.Length; i++)
                     {
