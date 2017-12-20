@@ -18,6 +18,7 @@ namespace WMS.UI
         private int stockInfoCheckID = -1;
         private int projectID = -1;
         private int warehouseID = -1;
+        private int userID = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
@@ -26,12 +27,13 @@ namespace WMS.UI
 
 
 
-        public FormStockInfoCheckTicketModify(int projectID, int warehouseID, int stockInfoCheckID=-1)
+        public FormStockInfoCheckTicketModify(int projectID, int warehouseID,int userID ,int stockInfoCheckID=-1)
         {
             InitializeComponent();
             this.stockInfoCheckID = stockInfoCheckID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+            this.userID = userID;
 
         }
 
@@ -133,14 +135,18 @@ namespace WMS.UI
                 stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
                              where s.ID == this.stockInfoCheckID 
                              select s).Single();
+                stockInfoCheck.LastUpdateUserID = Convert.ToString( userID);
             }
             else if (mode == FormMode.ADD)
             {
                 stockInfoCheck = new WMS.DataAccess.StockInfoCheckTicket();
                 this.wmsEntities.StockInfoCheckTicket.Add(stockInfoCheck);
+                stockInfoCheck.CreateUserID = userID;
             }
             stockInfoCheck.WarehouseID = warehouseID;
             stockInfoCheck.ProjectID  = projectID;
+            
+            stockInfoCheck.LastUpdateUserID = Convert.ToString( userID);
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
             {

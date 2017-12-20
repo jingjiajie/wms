@@ -314,7 +314,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                var formBaseStock = new FormStockInfoCheckTicket(this.project .ID ,this.warehouse .ID );//实例化子窗口
+                var formBaseStock = new FormStockInfoCheckTicket(this.project .ID ,this.warehouse .ID ,this.user.ID);//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
                 formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
