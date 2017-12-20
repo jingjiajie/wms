@@ -13,10 +13,10 @@ namespace WMS.DataAccess
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class WMSEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public WMSEntities()
-            : base("name=WMSEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
