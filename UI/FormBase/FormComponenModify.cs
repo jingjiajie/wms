@@ -68,21 +68,28 @@ namespace WMS.UI
             }
             //this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
             //this.Controls.Find("textBoxWarehouseID", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
-            //this.Controls.Find("textBoxSupplierName", true)[0].TextChanged += textBoxSupplierName_TextChanged;
+            this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
         }
-        private void textBoxSupplierName_TextChanged(object sender, EventArgs e)
+        private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
-            var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
-            string supplierName = textBoxSupplierName.Text;
-            try
+           
+                var formSelectSupplier = new WMS.UI.FormBase.FormSelectSupplier();
+            formSelectSupplier.SetSelectFinishCallback((selectedID) =>
             {
-                Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
-                this.supplierID = supplierID.ID;
-            }
-            catch
-            {
-
-            }
+                WMSEntities wmsEntities = new WMSEntities();
+                string supplierName = (from s in wmsEntities.SupplierView
+                                       where s.ID == selectedID
+                                       select s.Name).FirstOrDefault();
+                if (supplierName == null)
+                {
+                    MessageBox.Show("选择供应商失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.supplierID = selectedID;
+                this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName;
+            });
+            formSelectSupplier.Show();
+            
         }
 
         private void textBoxWarehouseID_TextChanged(object sender, EventArgs e)
@@ -144,33 +151,33 @@ namespace WMS.UI
             }
             if (textBoxSupplierName.Text == string.Empty)
             {
-                MessageBox.Show("供应商名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("请选择供应商！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string supplierName = textBoxSupplierName.Text;
-            try
-            {
-                Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
+            //string supplierName = textBoxSupplierName.Text;
+            //try
+            //{
+            //    Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
 
-                this.supplierID = supplierID.ID;
-            }
-            catch
-            {
+            //    this.supplierID = supplierID.ID;
+            //}
+            //catch
+            //{
 
-            }
+            //}
 
-            if (this.supplierID == -1)
-            {
-                MessageBox.Show("请输入正确的供应商名称！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            DataAccess.Component componen = null;           
+            //if (this.supplierID == -1)
+            //{
+            //    MessageBox.Show("请输入正确的供应商名称！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+            DataAccess.Component componen = null;
             if (this.mode == FormMode.ALTER)
             {
                 componen = (from s in this.wmsEntities.Component
-                             where s.ID == this.componenID
-                             select s).Single();
+                            where s.ID == this.componenID
+                            select s).Single();
             }
             else if (mode == FormMode.ADD)
             {
