@@ -131,6 +131,7 @@
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
             this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
+            this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
             // buttonSearch
             // 

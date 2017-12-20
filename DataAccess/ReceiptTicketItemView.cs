@@ -14,8 +14,8 @@ namespace WMS.DataAccess
     
     public partial class ReceiptTicketItemView
     {
-        public int ReceiptTicketID { get; set; }
-        public int ComponentID { get; set; }
+        public Nullable<int> ReceiptTicketID { get; set; }
+        public Nullable<int> ComponentID { get; set; }
         public string PackageName { get; set; }
         public Nullable<decimal> ExpectedPackageAmount { get; set; }
         public Nullable<decimal> ExpectedAmount { get; set; }

@@ -48,9 +48,19 @@ namespace WMS.UI.FormBase
 
             if (this.mode == FormMode.ALTER)
             {
-                UserView userView = (from s in wmsEntities.UserView
-                                               where s.ID == this.userID
-                                               select s).Single();
+                UserView userView = null;
+                try
+                {
+                    userView = (from s in wmsEntities.UserView
+                                where s.ID == this.userID
+                                select s).Single();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到服务器，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
                 Utilities.CopyPropertiesToTextBoxes(userView, this);
                 if(userView.SupplierID.HasValue)
                 {

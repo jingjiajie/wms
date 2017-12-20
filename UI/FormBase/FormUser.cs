@@ -87,7 +87,7 @@ namespace WMS.UI.FormBase
                 {
                     userViews = wmsEntities.Database.SqlQuery<UserView>(sql, parameters.ToArray()).ToArray();
                 }
-                catch (SqlException)
+                catch
                 {
                     MessageBox.Show("查询失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -177,11 +177,19 @@ namespace WMS.UI.FormBase
 
             new Thread(new ThreadStart(() =>
             {
-                foreach (int id in deleteIDs)
+                try
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM [User] WHERE ID = @userID", new SqlParameter("@userID", id));
+                    foreach (int id in deleteIDs)
+                    {
+                        this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM [User] WHERE ID = @userID", new SqlParameter("@userID", id));
+                    }
+                    this.wmsEntities.SaveChanges();
                 }
-                this.wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(() =>
                 {
                     this.Search();
@@ -200,6 +208,14 @@ namespace WMS.UI.FormBase
             else
             {
                 this.textBoxSearchValue.Enabled = true;
+            }
+        }
+
+        private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == 13)
+            {
+                this.Search();
             }
         }
     }

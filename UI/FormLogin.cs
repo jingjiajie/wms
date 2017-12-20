@@ -31,17 +31,33 @@ namespace WMS.UI
             set
             {
                 clickCount = value;
-                if(clickCount > 1)
+                if (clickCount > 1)
                 {
-                    this.labelClickCount.Text = clickCount.ToString();
-                    int size = ((int)Math.Pow(clickCount,1.5) + 100) / 10;
-                    this.labelClickCount.Font = new Font("黑体", size > 40 ? 40 : size);
-                    this.labelClickCount.Visible = true;
+                    if (this.IsDisposed)
+                    {
+                        return;
+                    }
+                    this.Invoke(new Action(()=>
+                    {
+                        this.labelClickCount.Text = clickCount.ToString();
+                        int size = ((int)Math.Pow(clickCount, 1.5) + 100) / 10;
+                        this.labelClickCount.Font = new Font("黑体", size > 40 ? 40 : size);
+                        this.labelClickCount.Visible = true;
+                    }));
+
                 }
                 else
                 {
-                    this.labelClickCount.Visible = false;
+                    if (this.IsDisposed)
+                    {
+                        return;
+                    }
+                    this.Invoke(new Action(() =>
+                    {
+                        this.labelClickCount.Visible = false;
+                    }));
                 }
+
             }
         }
 

@@ -227,7 +227,10 @@
             this.ClientSize = new System.Drawing.Size(574, 243);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("黑体", 10F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormUserModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "修改用户信息";
