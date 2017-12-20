@@ -21,9 +21,29 @@ namespace WMS.UI
         User possibleUser = null;
         Mutex possibleUserMutex = new Mutex();
 
-        bool clickedButtonEnter = false; //防止用户心情不好时疯狂点击登录按钮
+        int clickCount = 0; //防止用户心情不好时疯狂点击登录按钮
 
         WMSEntities wmsEntities = new WMSEntities();
+
+        public int ClickCount
+        {
+            get => clickCount;
+            set
+            {
+                clickCount = value;
+                if(clickCount > 1)
+                {
+                    this.labelClickCount.Text = clickCount.ToString();
+                    int size = ((int)Math.Pow(clickCount,1.5) + 100) / 10;
+                    this.labelClickCount.Font = new Font("黑体", size > 40 ? 40 : size);
+                    this.labelClickCount.Visible = true;
+                }
+                else
+                {
+                    this.labelClickCount.Visible = false;
+                }
+            }
+        }
 
         public FormLogin()
         {
@@ -32,24 +52,21 @@ namespace WMS.UI
 
         private void buttonEnter_Click(object sender, EventArgs e)
         {
-            if(clickedButtonEnter == true)
+            ClickCount++;
+            if (ClickCount > 1)
             {
                 return;
-            }
-            else
-            {
-                clickedButtonEnter = true;
             }
             if (textBoxUsername.Text == string.Empty)
             {
                 MessageBox.Show("用户名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                clickedButtonEnter = false;
+                ClickCount = 0;
                 return;
             }
             if (textBoxPassword.Text == string.Empty)
             {
                 MessageBox.Show("密码不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                clickedButtonEnter = false;
+                ClickCount = 0;
                 return;
             }
             this.labelStatus.Text = "正在登陆，请耐心等待...";
@@ -64,13 +81,14 @@ namespace WMS.UI
                 }
                 if (this.networkError == true) //如果networkError，直接返回
                 {
+                    if (this.IsDisposed) return;
                     this.Invoke(new Action(() =>
                     {
                         this.labelStatus.Text = "";
                     }));
                     this.possibleUserMutex.ReleaseMutex();
                     this.refreshedPossibleUser = false;
-                    clickedButtonEnter = false;
+                    ClickCount = 0;
                     return;
                 }
                 User user = this.possibleUser;
@@ -78,14 +96,14 @@ namespace WMS.UI
                 {
                     MessageBox.Show("用户名错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.possibleUserMutex.ReleaseMutex();
-                    clickedButtonEnter = false;
+                    ClickCount = 0;
                     return;
                 }
                 else if (user.Password != textBoxPassword.Text)
                 {
                     MessageBox.Show("密码错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.possibleUserMutex.ReleaseMutex();
-                    clickedButtonEnter = false;
+                    ClickCount = 0;
                     return;
                 }
                 else
@@ -98,7 +116,7 @@ namespace WMS.UI
                         formMain.SetFormClosedCallback(this.Close);
                         formMain.Show();
                         this.Hide();
-                        clickedButtonEnter = false;
+                        ClickCount = 0;
                     }));
                 }
             })).Start();
@@ -165,6 +183,9 @@ namespace WMS.UI
         private void FormLogin_Load(object sender, EventArgs e)
         {
             this.labelStatus.Text = "";
+            this.labelClickCount.Visible = false;
+            this.labelClickCount.ForeColor = Color.White;
+            this.labelClickCount.Font = new Font("黑体", 12);
         }
 
         private void textBoxUsername_Leave(object sender, EventArgs e)
@@ -192,8 +213,11 @@ namespace WMS.UI
             }
             catch (Exception)
             {
-                MessageBox.Show("连接数据库失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.networkError = true;
+                if(this.IsDisposed == false)
+                {
+                    MessageBox.Show("连接数据库失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 return;
             }
             finally

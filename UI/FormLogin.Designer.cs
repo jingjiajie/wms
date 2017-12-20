@@ -36,6 +36,7 @@
             this.buttonEnter = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
+            this.labelClickCount = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelPsaaword
@@ -141,12 +142,22 @@
             this.labelStatus.TabIndex = 11;
             this.labelStatus.Text = "正在登陆，请耐心等待...";
             // 
+            // labelClickCount
+            // 
+            this.labelClickCount.AutoSize = true;
+            this.labelClickCount.Location = new System.Drawing.Point(667, 362);
+            this.labelClickCount.Name = "labelClickCount";
+            this.labelClickCount.Size = new System.Drawing.Size(22, 24);
+            this.labelClickCount.TabIndex = 12;
+            this.labelClickCount.Text = "1";
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.ClientSize = new System.Drawing.Size(914, 481);
+            this.Controls.Add(this.labelClickCount);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonClosing);
@@ -179,5 +190,6 @@
         private System.Windows.Forms.Button buttonEnter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Label labelClickCount;
     }
 }
