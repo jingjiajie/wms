@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
+using WMS.UI.FormBase;
 
 namespace WMS.UI.FormReceipt
 {
@@ -66,6 +67,28 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
+                Warehouse warehouse = (from wh in wmsEntities.Warehouse where ID == this.warehouseID select wh).FirstOrDefault();
+                if (warehouse == null)
+                {
+                    Console.Write("this warehouse is null");
+                }
+                else
+                {
+                    TextBox textBoxWarehouseName = (TextBox)this.Controls.Find("textBoxWarehouseName", true)[0];
+                    textBoxWarehouseName.Text = warehouse.Name;
+                    textBoxWarehouseName.Enabled = false;
+                }
+                Project project = (from p in wmsEntities.Project where p.ID == this.projectID select p).FirstOrDefault();
+                if (project == null)
+                {
+                    Console.Write("this project is null");
+                }
+                else
+                {
+                    TextBox textBoxProjectName = (TextBox)this.Controls.Find("textBoxProjectName", true)[0];
+                    textBoxProjectName.Text = project.Name;
+                    textBoxProjectName.Enabled = false;
+                }
                 TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
                 textBoxProjectID.Text = this.projectID.ToString();
                 //textBoxProjectID.Enabled = false;
@@ -78,15 +101,31 @@ namespace WMS.UI.FormReceipt
                 //textBoxCreateUserID.Enabled = false;
             }
             //else (this.formMode == FormMode.ADD);
-            
+
             //this.Controls.Find("textBoxID", true)[0].TextChanged += textBoxID_TextChanged;
-            this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
-            this.Controls.Find("textBoxWarehouse", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
-            this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
+            //this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
+            //this.Controls.Find("textBoxWarehouse", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
+            //this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
+            this.Controls.Find("textBoxSupplierID", true)[0].Click += textBoxSupplierID_Click;
             this.Controls.Find("textBoxState", true)[0].Text = "待送检";
             this.Controls.Find("textBoxState", true)[0].Enabled = false;
         }
         
+        private void textBoxSupplierID_Click(object sender, EventArgs e)
+        {
+            FormSelectSupplier formSelectSupplier = new FormSelectSupplier();
+            formSelectSupplier.Show();
+            formSelectSupplier.SetSelectFinishCallback(new Action<int>((int ID)=> 
+            {
+                this.Controls.Find("textBoxSupplierID", true)[0].Text = ID.ToString();
+                Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();
+                if (supplier != null)
+                {
+                    this.Controls.Find("textBoxSupplierName", true)[0].Text = supplier.Name;
+                }
+            }));
+        }
+
         private void textBoxSupplierID_TextChanged(object sender, EventArgs e)
         {
             var textBoxSupplierID = this.Controls.Find("textBoxSupplierID", true)[0];

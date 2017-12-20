@@ -160,7 +160,6 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            
             FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID,this.userID);
             receiptTicketModify.SetModifyFinishedCallback(() =>
             {

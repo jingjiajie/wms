@@ -64,7 +64,7 @@ namespace WMS.UI
 
         private void textBoxComponentName_Click(object sender, EventArgs e)
         {
-            var formSelectStockInfo = new FormSelectSupplier(this.curStockInfoID);
+            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
             formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
             {
                 this.curStockInfoID = selectedStockInfoID;
