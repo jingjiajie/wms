@@ -49,12 +49,12 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTicketViewMetaDataxianshi.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicketViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicketViewMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicketViewMetaDataxianshi.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicketViewMetaDataxianshi.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoCheckTicketViewMetaData.KeyNames.Length; //限制表的长度
+            worksheet.Columns = StockInfoCheckTicketViewMetaDataxianshi.KeyNames.Length; //限制表的长度
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)
@@ -74,7 +74,7 @@ namespace WMS.UI
 
             if (this.comboBoxSearchCondition.SelectedIndex != 0)
             {
-                key = (from kn in StockInfoCheckTicketViewMetaData.KeyNames
+                key = (from kn in StockInfoCheckTicketViewMetaDataxianshi.KeyNames
                        where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
@@ -121,7 +121,7 @@ namespace WMS.UI
                     for (int i = 0; i < stockCheckViews.Length; i++)
                     {
                         StockInfoCheckTicketView curStockInfoCheckTicketView = stockCheckViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoCheckTicketView, (from kn in StockInfoCheckTicketViewMetaData.KeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoCheckTicketView, (from kn in StockInfoCheckTicketViewMetaDataxianshi.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
@@ -266,7 +266,7 @@ namespace WMS.UI
             else if ((ids.Length == 1))
             {
                 int stockiofocheckid = ids[0];
-                var a1 = new FormStockInfoCheckTicketModify(-1, -1, stockiofocheckid);
+                var a1 = new FormStockInfoCheckTicketModify(-1, -1,-1, stockiofocheckid);
                 a1.SetMode(FormMode.CHECK);
                 a1.Show();
             }
