@@ -99,16 +99,45 @@ namespace WMS.UI.FormBase
             }
 
             //若修改，则查询原对象。若添加，则新建一个对象。
-            if (this.mode == FormMode.ALTER)
+            try
             {
-                user = (from s in wmsEntities.User
-                             where s.ID == this.userID
-                             select s).Single();
+                if (this.mode == FormMode.ALTER)
+                {
+                    user = (from s in wmsEntities.User
+                            where s.ID == this.userID
+                            select s).Single();
+
+                    //检测用户名同名
+                    var sameNameUsers = (from u in wmsEntities.User
+                                         where u.Username == textBoxUsername.Text
+                                            && u.ID != user.ID
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("修改用户名失败，已存在同名用户：" + textBoxUsername.Text,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                else if (mode == FormMode.ADD)
+                {
+                    //检测用户名同名
+                    var sameNameUsers = (from u in wmsEntities.User
+                                         where u.Username == textBoxUsername.Text
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("添加用户失败，已存在同名用户：" + textBoxUsername.Text,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    user = new User();
+                    wmsEntities.User.Add(user);
+                }
             }
-            else if (mode == FormMode.ADD)
+            catch
             {
-                user = new User();
-                wmsEntities.User.Add(user);
+                MessageBox.Show("操作失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             //开始数据库操作
@@ -155,7 +184,15 @@ namespace WMS.UI.FormBase
             }
             new Thread(()=>
             {
-                wmsEntities.SaveChanges();
+                try
+                {
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("连接数据库失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 this.Invoke(new Action(()=>
                 {
@@ -250,7 +287,7 @@ namespace WMS.UI.FormBase
         {
             if (this.checkBoxAuthorityManager.Checked)
             {
-                addAuthorityName(this.textBoxAuthorityName, "管理员");
+                this.textBoxAuthorityName.Text = "管理员";
                 this.checkBoxAuthorityReceipt.Enabled = false;
                 this.checkBoxAuthorityReceipt.Checked = false;
                 this.checkBoxAuthorityShipment.Enabled = false;
@@ -310,29 +347,40 @@ namespace WMS.UI.FormBase
         {
             if (this.checkBoxAuthoritySupplier.Checked)
             {
-                this.checkBoxAuthorityManager.Enabled = false;
-                this.checkBoxAuthorityManager.Checked = false;
-                this.checkBoxAuthorityReceipt.Enabled = false;
-                this.checkBoxAuthorityReceipt.Checked = false;
-                this.checkBoxAuthorityShipment.Enabled = false;
-                this.checkBoxAuthorityShipment.Checked = false;
-                this.checkBoxAuthorityStock.Enabled = false;
-                this.checkBoxAuthorityStock.Checked = false;
+                this.checkBoxAuthoritySupplier.Checked = false; //假设用户直接关闭了选择供应商的窗口，则不选中供应商权限
                 var formSelectSupplier = new FormSelectSupplier();
                 formSelectSupplier.SetSelectFinishCallback((selectedID) =>
                 {
                     WMSEntities wmsEntities = new WMSEntities();
-                    string supplierName = (from s in wmsEntities.SupplierView
-                                           where s.ID == selectedID
-                                           select s.Name).FirstOrDefault();
+                    string supplierName = null;
+                    try
+                    {
+                        supplierName = (from s in wmsEntities.SupplierView
+                                               where s.ID == selectedID
+                                               select s.Name).FirstOrDefault();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接服务器，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     if (supplierName == null)
                     {
                         MessageBox.Show("选择供应商失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    addAuthorityName(this.textBoxAuthorityName, "供应商");
+                    this.textBoxAuthorityName.Text = "供应商";
                     this.curSupplierID = selectedID;
                     this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName;
+                    this.checkBoxAuthoritySupplier.Checked = true;
+                    this.checkBoxAuthorityManager.Enabled = false;
+                    this.checkBoxAuthorityManager.Checked = false;
+                    this.checkBoxAuthorityReceipt.Enabled = false;
+                    this.checkBoxAuthorityReceipt.Checked = false;
+                    this.checkBoxAuthorityShipment.Enabled = false;
+                    this.checkBoxAuthorityShipment.Checked = false;
+                    this.checkBoxAuthorityStock.Enabled = false;
+                    this.checkBoxAuthorityStock.Checked = false;
                 });
                 formSelectSupplier.Show();
             }
@@ -346,6 +394,11 @@ namespace WMS.UI.FormBase
                 this.checkBoxAuthorityStock.Enabled = true;
                 this.checkBoxAuthorityManager.Enabled = true;
             }
+        }
+
+        private void checkBoxAuthorityManager_CheckedChanged_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

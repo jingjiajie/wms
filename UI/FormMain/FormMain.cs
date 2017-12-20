@@ -164,25 +164,36 @@ namespace WMS.UI
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
 
-            //下拉栏显示仓库
-            WMSEntities wms = new WMSEntities();
-            var allWarehouses = (from s in wms.Warehouse select s).ToArray();
-            for (int i = 0; i < allWarehouses.Count(); i++)
+            new Thread(()=>
             {
-                Warehouse warehouse = allWarehouses[i];
-                comboBoxWarehouse.Items.Add(new ComboBoxItem(warehouse.Name, warehouse));
-            }
-            this.comboBoxWarehouse.SelectedIndex = 0;
-            this.warehouse = allWarehouses[0];
+                //下拉栏显示仓库
+                WMSEntities wms = new WMSEntities();
+                var allWarehouses = (from s in wms.Warehouse select s).ToArray();
+                var allProjects = (from s in wms.Project select s).ToArray();
 
-            var allProjects = (from s in wms.Project select s).ToArray();
-            for (int i = 0; i < allProjects.Count(); i++)
-            {
-                Project project = allProjects[i];
-                comboBoxProject.Items.Add(new ComboBoxItem(project.Name, project));
-            }
-            this.comboBoxProject.SelectedIndex = 0;
-            this.project = allProjects[0];
+                if (this.IsDisposed)
+                {
+                    return;
+                }
+                this.Invoke(new Action(()=>
+                {
+                    for (int i = 0; i < allWarehouses.Count(); i++)
+                    {
+                        Warehouse warehouse = allWarehouses[i];
+                        comboBoxWarehouse.Items.Add(new ComboBoxItem(warehouse.Name, warehouse));
+                    }
+                    this.comboBoxWarehouse.SelectedIndex = 0;
+                    this.warehouse = allWarehouses[0];
+
+                    for (int i = 0; i < allProjects.Count(); i++)
+                    {
+                        Project project = allProjects[i];
+                        comboBoxProject.Items.Add(new ComboBoxItem(project.Name, project));
+                    }
+                    this.comboBoxProject.SelectedIndex = 0;
+                    this.project = allProjects[0];
+                }));
+            }).Start();
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)

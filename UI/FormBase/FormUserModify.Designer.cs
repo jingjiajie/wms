@@ -168,6 +168,7 @@
             this.checkBoxAuthorityManager.TabIndex = 1;
             this.checkBoxAuthorityManager.Text = "管理员";
             this.checkBoxAuthorityManager.UseVisualStyleBackColor = true;
+            this.checkBoxAuthorityManager.CheckedChanged += new System.EventHandler(this.checkBoxAuthorityManager_CheckedChanged_1);
             this.checkBoxAuthorityManager.Click += new System.EventHandler(this.checkBoxAuthorityManager_Click);
             // 
             // tableLayoutPanelTextBoxes
