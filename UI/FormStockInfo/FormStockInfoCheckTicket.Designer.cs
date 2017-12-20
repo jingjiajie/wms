@@ -39,10 +39,10 @@
             this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
+            this.button_additeam = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button_additeam = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -157,6 +157,16 @@
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click_1);
             // 
+            // button_additeam
+            // 
+            this.button_additeam.AutoSize = false;
+            this.button_additeam.Image = ((System.Drawing.Image)(resources.GetObject("button_additeam.Image")));
+            this.button_additeam.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.button_additeam.Name = "button_additeam";
+            this.button_additeam.Size = new System.Drawing.Size(100, 25);
+            this.button_additeam.Text = "盘点单条目";
+            this.button_additeam.Click += new System.EventHandler(this.button_additeam_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
@@ -181,16 +191,6 @@
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(56, 17);
             this.labelStatus.Text = "库存管理";
-            // 
-            // button_additeam
-            // 
-            this.button_additeam.AutoSize = false;
-            this.button_additeam.Image = ((System.Drawing.Image)(resources.GetObject("button_additeam.Image")));
-            this.button_additeam.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.button_additeam.Name = "button_additeam";
-            this.button_additeam.Size = new System.Drawing.Size(100, 25);
-            this.button_additeam.Text = "查看盘点";
-            this.button_additeam.Click += new System.EventHandler(this.button_additeam_Click);
             // 
             // FormStockInfoCheckTicket
             // 

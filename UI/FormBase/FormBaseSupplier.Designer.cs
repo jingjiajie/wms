@@ -138,7 +138,7 @@
             this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
             this.reoGridControlUser.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlUser.Name = "reoGridControlUser";
             this.reoGridControlUser.RowHeaderContextMenuStrip = null;
             this.reoGridControlUser.Script = null;
@@ -197,7 +197,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.reoGridControlUser);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormBaseSupplier";
             this.Text = "供应商信息";
             this.Load += new System.EventHandler(this.FormBaseSupplier_Load);
