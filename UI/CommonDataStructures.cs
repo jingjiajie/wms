@@ -83,4 +83,8 @@ namespace WMS.UI
             return Text;
         }
     }
+    public enum SupplierOrComponent
+    {
+        SUPPLIER, COMPONENT
+    }
 }

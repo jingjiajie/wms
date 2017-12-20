@@ -7,21 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
+using WMS.UI;
 using unvell.ReoGrid;
 using System.Threading;
 
-namespace WMS.UI
+namespace WMS.UI.FormReceipt
 {
-    public partial class FormSelectStockInfo : Form
+    public partial class FormSearch : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
-        private int defaultStockInfoID = -1;
+        private int ComponentID = -1;
+        //private Action CallBack = null;
         private Action<int> selectFinishCallback = null;
-
-        public FormSelectStockInfo(int defaultStockInfoID = -1)
+        public FormSearch()
         {
             InitializeComponent();
-            this.defaultStockInfoID = defaultStockInfoID;
         }
 
         public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
@@ -29,35 +29,27 @@ namespace WMS.UI
             this.selectFinishCallback = selectFinishedCallback;
         }
 
-        private void InitComponents()
+        private void FormSearch_Load(object sender, EventArgs e)
+        {
+            InitComponent();
+            WMSEntities wmsEntities = new WMSEntities();
+            this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView select s.ComponentNo).FirstOrDefault();
+            this.Search();
+        }
+
+        private void InitComponent()
         {
             this.comboBoxSearchCondition.SelectedIndex = 0;
 
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.componentKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoViewMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.componentKeyName[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.componentKeyName[i].Visible;
             }
-            worksheet.Columns = StockInfoViewMetaData.KeyNames.Length; //限制表的长度
-        }
-
-        private void FormJobTicketSelectStockInfo_Load(object sender, EventArgs e)
-        {
-            InitComponents();
-            if(this.defaultStockInfoID != -1)
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.ComponentNo).FirstOrDefault();
-                this.Search();
-            }
-        }
-
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
-            this.Search();
+            worksheet.Columns = ReceiptMetaData.componentKeyName.Length; //限制表的长度
         }
 
         private void Search()
@@ -65,51 +57,51 @@ namespace WMS.UI
             string value = this.textBoxSearchContition.Text;
             string key = this.comboBoxSearchCondition.SelectedItem.ToString();
             this.labelStatus.Text = "正在搜索...";
-            new Thread(new ThreadStart(()=>
+            new Thread(new ThreadStart(() =>
             {
-                StockInfoView[] stockInfoViews = null;
+                WMS.DataAccess.Component[] component = null;
                 if (key == "零件编号")
                 {
-                    stockInfoViews = (from s in this.wmsEntities.StockInfoView
-                                      where s.ComponentNo == value
-                                      orderby s.ReceiptTicketItemManufactureDate ascending,
-                                                s.ReceiptTicketItemInventoryDate ascending,
-                                                s.ReceiptTicketItemExpiryDate descending
+                    component = (from s in this.wmsEntities.Component
+                                      where s.No == value
                                       select s).ToArray();
-                }else if(key == "零件名称")
+                }
+                else if (key == "零件名称")
                 {
-                    stockInfoViews = (from s in this.wmsEntities.StockInfoView
-                                      where s.ComponentName.Contains(value)
-                                      orderby s.ReceiptTicketItemManufactureDate ascending,
-                                                s.ReceiptTicketItemInventoryDate ascending,
-                                                s.ReceiptTicketItemExpiryDate descending
+                    component = (from s in this.wmsEntities.Component
+                                      where s.Name.Contains(value)
                                       select s).ToArray();
                 }
                 else
                 {
-                    MessageBox.Show("内部错误，无法识别查询条件","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("内部错误，无法识别查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                this.Invoke(new Action(()=>
+                this.Invoke(new Action(() =>
                 {
                     var worksheet = this.reoGridControlMain.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    for (int i = 0; i < stockInfoViews.Length; i++)
+                    for (int i = 0; i < component.Length; i++)
                     {
-                        StockInfoView curStockInfoView = stockInfoViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoViewMetaData.KeyNames select kn.Key).ToArray());
+                        WMS.DataAccess.Component curComponent = component[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in ReceiptMetaData.componentKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
-                    if (stockInfoViews.Length == 0)
+                    if (component.Length == 0)
                     {
                         worksheet[0, 2] = "没有查询到符合条件的记录";
                     }
                     this.labelStatus.Text = "搜索完成";
                 }));
             })).Start();
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            this.Search();
         }
 
         private void buttonSelect_Click(object sender, EventArgs e)
@@ -143,13 +135,7 @@ namespace WMS.UI
             }
             return ids.ToArray();
         }
-
-        private void textBoxComponentNo_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if(e.KeyChar == 13)
-            {
-                this.buttonSearch.PerformClick();
-            }
-        }
     }
+
+
 }

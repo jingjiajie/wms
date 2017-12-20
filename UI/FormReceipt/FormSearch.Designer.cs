@@ -1,6 +1,6 @@
-﻿namespace WMS.UI
+﻿namespace WMS.UI.FormReceipt
 {
-    partial class FormSelectStockInfo
+    partial class FormSearch
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSelectStockInfo));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearch));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
             this.textBoxSearchContition = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.buttonSelect = new System.Windows.Forms.ToolStripButton();
-            this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -60,8 +60,8 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(774, 454);
-            this.reoGridControlMain.TabIndex = 9;
+            this.reoGridControlMain.Size = new System.Drawing.Size(1114, 848);
+            this.reoGridControlMain.TabIndex = 14;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
             // statusStrip1
@@ -70,11 +70,11 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 887);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(774, 36);
-            this.statusStrip1.TabIndex = 12;
+            this.statusStrip1.Size = new System.Drawing.Size(1114, 36);
+            this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
@@ -101,15 +101,23 @@
             this.buttonSelect});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(774, 39);
-            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Size = new System.Drawing.Size(1114, 39);
+            this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // comboBoxSearchCondition
+            // 
+            this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSearchCondition.Items.AddRange(new object[] {
+            "零件编号",
+            "零件名称"});
+            this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(121, 39);
             // 
             // textBoxSearchContition
             // 
             this.textBoxSearchContition.Name = "textBoxSearchContition";
             this.textBoxSearchContition.Size = new System.Drawing.Size(200, 39);
-            this.textBoxSearchContition.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxComponentNo_KeyPress);
             // 
             // toolStripSeparator1
             // 
@@ -136,28 +144,17 @@
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
-            // comboBoxSearchCondition
+            // FormSearch
             // 
-            this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSearchCondition.Items.AddRange(new object[] {
-            "零件编号",
-            "零件名称"});
-            this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(121, 39);
-            // 
-            // FormSelectSupplier
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 529);
+            this.ClientSize = new System.Drawing.Size(1114, 923);
             this.Controls.Add(this.reoGridControlMain);
-            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Font = new System.Drawing.Font("黑体", 10F);
-            this.Name = "FormSelectSupplier";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "选择零件";
-            this.Load += new System.EventHandler(this.FormJobTicketSelectStockInfo_Load);
+            this.Controls.Add(this.toolStrip1);
+            this.Name = "FormSearch";
+            this.Text = "FormSearch";
+            this.Load += new System.EventHandler(this.FormSearch_Load);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -174,10 +171,10 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripComboBox comboBoxSearchCondition;
         private System.Windows.Forms.ToolStripTextBox textBoxSearchContition;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonSearch;
         private System.Windows.Forms.ToolStripButton buttonSelect;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripComboBox comboBoxSearchCondition;
     }
 }

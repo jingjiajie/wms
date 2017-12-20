@@ -8,54 +8,106 @@
 <<<<<<< HEAD
         
         
-        <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="6.992933412544863" PointY="20.016274312518664" />
-        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="8.1227994040226559" PointY="9.6745477959860811" />
-        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfo" Width="1.5" PointX="1.9824792509816955" PointY="14.558981410488013" />
-        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfo" Width="1.5" PointX="1.8244652663471479" PointY="23.764813613037028" />
-        <EntityTypeShape EntityType="WMSModel.JobTicket" Width="1.5" PointX="10.924354550859125" PointY="27.571472389423974" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketItem" Width="1.5" PointX="4.1101078801369795" PointY="21.434465045777365" />
-        <EntityTypeShape EntityType="WMSModel.Project" Width="1.5" PointX="8.6057772043188" PointY="14.698892987658686" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicket" Width="1.5" PointX="8.44016187286012" PointY="24.262481700751223" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicketItem" Width="1.5" PointX="10.303649296194152" PointY="2.6921836150308063" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicket" Width="1.5" PointX="11.684440646173638" PointY="2.8039022995177203" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItem" Width="1.5" PointX="0.97121711679325307" PointY="29.096160276372061" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicket" Width="1.5" PointX="1.7604062192888959" PointY="16.467898629823651" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItem" Width="1.5" PointX="10.94845285776465" PointY="23.870946001201379" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicket" Width="1.5" PointX="7.6499411145457721" PointY="3.9297498482883673" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItem" Width="1.5" PointX="5.6277851134668033" PointY="4.7664988063119811" />
-        <EntityTypeShape EntityType="WMSModel.StockInfo" Width="1.5" PointX="1.0611447845870372" PointY="8.3456019500017167" />
-        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicket" Width="1.5" PointX="9.6487626962590785" PointY="24.611363005177754" />
-        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicketItem" Width="1.5" PointX="8.0220003239912909" PointY="17.022379838406284" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicket" Width="1.5" PointX="5.0814899304329835" PointY="31.576849877637276" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItem" Width="1.5" PointX="8.4336846901260714" PointY="14.620101354373666" />
-        <EntityTypeShape EntityType="WMSModel.Supplier" Width="1.5" PointX="0.10131621551761227" PointY="28.3419910205258" />
-        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfo" Width="1.5" PointX="10.172055617986272" PointY="31.097729637798729" />
-        <EntityTypeShape EntityType="WMSModel.User" Width="1.5" PointX="7.7563363834080921" PointY="0.27589617682429785" />
-        <EntityTypeShape EntityType="WMSModel.Warehouse" Width="1.5" PointX="4.0256678499400937" PointY="16.367733352057513" />
-        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSizeView" Width="1.5" PointX="10.698428453271477" PointY="17.972114154124686" />
-        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfoView" Width="1.5" PointX="3.6515097951756368" PointY="4.392916845340709" />
-        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfoView" Width="1.5" PointX="5.36301714804164" PointY="31.677241742460634" />
-        <EntityTypeShape EntityType="WMSModel.ComponentView" Width="1.5" PointX="8.02260812373022" PointY="21.551662157080909" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketItemView" Width="1.5" PointX="5.7456966479056035" PointY="5.1928997809034305" />
-        <EntityTypeShape EntityType="WMSModel.JobTicketView" Width="1.5" PointX="4.6795025657301315" PointY="13.415665334749811" />
-        <EntityTypeShape EntityType="WMSModel.ProjectView" Width="1.5" PointX="9.8096769143872322" PointY="0.9354908619706942" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicketItemView" Width="1.5" PointX="3.2840199914220811" PointY="24.365113329312351" />
-        <EntityTypeShape EntityType="WMSModel.PutawayTicketView" Width="1.5" PointX="9.2781573614469526" PointY="2.6146857303635618" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItemView" Width="1.5" PointX="10.389161695907433" PointY="30.337376206339048" />
-        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketView" Width="1.5" PointX="9.4900845463807162" PointY="5.4847184892207" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItemView" Width="1.5" PointX="4.0169407073487253" PointY="27.89954824554713" />
-        <EntityTypeShape EntityType="WMSModel.ReceiptTicketView" Width="1.5" PointX="4.5758841655104812" PointY="16.5384070354227" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItemView" Width="1.5" PointX="0.95014714680153278" PointY="6.2479212909228732" />
-        <EntityTypeShape EntityType="WMSModel.ShipmentTicketView" Width="1.5" PointX="0.73900448565324983" PointY="5.596686946971662" />
-        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicketItemView" Width="1.5" PointX="10.419125602775777" PointY="28.919978110548097" />
-        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicketView" Width="1.5" PointX="4.9259369005104228" PointY="4.0321096200645483" />
-        <EntityTypeShape EntityType="WMSModel.StockInfoView" Width="1.5" PointX="2.7752277398366614" PointY="29.035312815120125" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItemView" Width="1.5" PointX="10.135927257191355" PointY="30.436802580224725" />
-        <EntityTypeShape EntityType="WMSModel.SubmissionTicketView" Width="1.5" PointX="9.7665835832090035" PointY="26.052792114230243" />
-        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfoView" Width="1.5" PointX="1.2066530032114371" PointY="31.840338706895867" />
-        <EntityTypeShape EntityType="WMSModel.SupplierView" Width="1.5" PointX="0.63769579149675359" PointY="8.3577400335845251" />
-        <EntityTypeShape EntityType="WMSModel.UserView" Width="1.5" PointX="7.1618161383838466" PointY="9.074160505586379" />
-        <EntityTypeShape EntityType="WMSModel.WarehouseView" Width="1.5" PointX="7.6728610935028918" PointY="31.334685712742939" />
+<<<<<<< HEAD
+        
+        <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="9.93382221550393" PointY="16.157049961461244" />
+        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="1.6795149974895245" PointY="20.662987286533689" />
+        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfo" Width="1.5" PointX="10.732732012277811" PointY="14.03567833361946" />
+        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfo" Width="1.5" PointX="6.2162128883489469" PointY="3.4843765513433036" />
+        <EntityTypeShape EntityType="WMSModel.JobTicket" Width="1.5" PointX="1.1429392514484653" PointY="4.4375272413890468" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketItem" Width="1.5" PointX="2.3210977960010517" PointY="18.568357550803739" />
+        <EntityTypeShape EntityType="WMSModel.Project" Width="1.5" PointX="4.4985292798367" PointY="30.354664920994392" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicket" Width="1.5" PointX="7.8559796939864661" PointY="1.090729788453658" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicketItem" Width="1.5" PointX="3.991471093144022" PointY="13.404762915058416" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicket" Width="1.5" PointX="5.4781763672261388" PointY="9.2172178967004719" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItem" Width="1.5" PointX="9.2531836318099785" PointY="3.7818232643333372" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicket" Width="1.5" PointX="9.4584852296200044" PointY="3.5157423184792242" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItem" Width="1.5" PointX="10.402338159457939" PointY="25.592365187402983" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicket" Width="1.5" PointX="2.0252613397432779" PointY="18.082509242967941" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItem" Width="1.5" PointX="1.2664712095942678" PointY="5.4552865500819339" />
+        <EntityTypeShape EntityType="WMSModel.StockInfo" Width="1.5" PointX="6.8621049909210328" PointY="12.825703939807463" />
+        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicket" Width="1.5" PointX="11.669885007510839" PointY="15.151206962369013" />
+        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicketItem" Width="1.5" PointX="3.6157322617320959" PointY="14.768147654257783" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicket" Width="1.5" PointX="10.207303381621513" PointY="15.120526589043683" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItem" Width="1.5" PointX="7.2379072621641249" PointY="28.960559351817032" />
+        <EntityTypeShape EntityType="WMSModel.Supplier" Width="1.5" PointX="5.8617849060621978" PointY="14.025520003412627" />
+        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfo" Width="1.5" PointX="0.25451218162407735" PointY="30.016749097973456" />
+        <EntityTypeShape EntityType="WMSModel.User" Width="1.5" PointX="9.2663934218075088" PointY="11.753439357389436" />
+        <EntityTypeShape EntityType="WMSModel.Warehouse" Width="1.5" PointX="2.8811269788449287" PointY="27.708306474475332" />
+        <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSizeView" Width="1.5" PointX="5.1660496989106992" PointY="19.506113135957211" />
+        <EntityTypeShape EntityType="WMSModel.ComponentShipmentInfoView" Width="1.5" PointX="3.4271947161421155" PointY="30.348840712732095" />
+        <EntityTypeShape EntityType="WMSModel.ComponentSingleBoxTranPackingInfoView" Width="1.5" PointX="9.583603753514403" PointY="6.040096255969301" />
+        <EntityTypeShape EntityType="WMSModel.ComponentView" Width="1.5" PointX="11.422942997619018" PointY="22.708369310343809" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketItemView" Width="1.5" PointX="8.6004085059279625" PointY="0.96296434149284116" />
+        <EntityTypeShape EntityType="WMSModel.JobTicketView" Width="1.5" PointX="9.3462820729921958" PointY="3.0282535120045084" />
+        <EntityTypeShape EntityType="WMSModel.ProjectView" Width="1.5" PointX="3.23811803536402" PointY="30.494058459295918" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicketItemView" Width="1.5" PointX="0.0401699971594708" PointY="29.59255145378064" />
+        <EntityTypeShape EntityType="WMSModel.PutawayTicketView" Width="1.5" PointX="6.80196772459986" PointY="25.363890182862008" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketItemView" Width="1.5" PointX="7.2932490740405616" PointY="28.84487111719552" />
+        <EntityTypeShape EntityType="WMSModel.PutOutStorageTicketView" Width="1.5" PointX="7.7672670836408013" PointY="6.1811315297061258" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketItemView" Width="1.5" PointX="2.2017202890486085" PointY="27.523396326007042" />
+        <EntityTypeShape EntityType="WMSModel.ReceiptTicketView" Width="1.5" PointX="9.7888788309827817" PointY="17.647910960786003" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketItemView" Width="1.5" PointX="9.59467180520048" PointY="10.649636348080652" />
+        <EntityTypeShape EntityType="WMSModel.ShipmentTicketView" Width="1.5" PointX="1.1636715425009241" PointY="27.205878181013222" />
+        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicketItemView" Width="1.5" PointX="4.0520099476221993" PointY="15.986129067831733" />
+        <EntityTypeShape EntityType="WMSModel.StockInfoCheckTicketView" Width="1.5" PointX="6.7160099664311907" PointY="9.6923904315067411" />
+        <EntityTypeShape EntityType="WMSModel.StockInfoView" Width="1.5" PointX="1.6148912672022784" PointY="15.871143422960836" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicketItemView" Width="1.5" PointX="10.61853774013861" PointY="19.950105929723989" />
+        <EntityTypeShape EntityType="WMSModel.SubmissionTicketView" Width="1.5" PointX="7.2260352239133949" PointY="25.079597097392938" />
+        <EntityTypeShape EntityType="WMSModel.SupplierAnnualInfoView" Width="1.5" PointX="6.2587596132693619" PointY="18.933583387608447" />
+        <EntityTypeShape EntityType="WMSModel.SupplierView" Width="1.5" PointX="8.9376468644187064" PointY="26.256511342831192" />
+        <EntityTypeShape EntityType="WMSModel.UserView" Width="1.5" PointX="8.3239153978991851" PointY="16.272832520433159" />
+        <EntityTypeShape EntityType="WMSModel.WarehouseView" Width="1.5" PointX="7.6220917215673678" PointY="17.137367956869941" />
+=======
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 0a3aa8d1665fc44803525e67b2ab4c3b9b08e157
         <AssociationConnector Association="WMSModel.FK__Component__Compo__239E4DCF" />
         <AssociationConnector Association="WMSModel.FK__Component__Compo__29572725" />
         <AssociationConnector Association="WMSModel.FK__Component__Compo__2C3393D0" />
@@ -214,6 +266,88 @@
         
         
         
+<<<<<<< HEAD
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+=======
+>>>>>>> 0a3aa8d1665fc44803525e67b2ab4c3b9b08e157
 =======
         
         

@@ -41,24 +41,6 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenMetaData.KeyNames);
 
-            //this.tableLayoutPanelTextBoxes.Controls.Clear();
-            //for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
-            //{
-            //    KeyName curKeyName = ComponenMetaData.componenkeyNames[i];
-
-            //    Label label = new Label();
-            //    label.Text = curKeyName.Name;
-            //    this.tableLayoutPanelTextBoxes.Controls.Add(label);
-
-            //    TextBox textBox = new TextBox();
-            //    textBox.Name = "textBox" + curKeyName.Key;
-            //    if (curKeyName.Editable == false)
-            //    {
-            //        textBox.Enabled = false;
-            //    }
-            //    this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            //}
-
             if (this.mode == FormMode.ALTER)
             {
                 ComponentView componenView = (from s in this.wmsEntities.ComponentView
@@ -66,14 +48,13 @@ namespace WMS.UI
                                        select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(componenView, this);
             }
-            //this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
-            //this.Controls.Find("textBoxWarehouseID", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
+
             this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
         }
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
            
-                var formSelectSupplier = new WMS.UI.FormBase.FormSelectSupplier();
+                var formSelectSupplier = new FormBase.FormSelectSupplier();
             formSelectSupplier.SetSelectFinishCallback((selectedID) =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
@@ -92,46 +73,6 @@ namespace WMS.UI
             
         }
 
-        private void textBoxWarehouseID_TextChanged(object sender, EventArgs e)
-        {
-            var textBoxWarehouseID = this.Controls.Find("textBoxWarehouseID", true)[0];
-            string warehouseID = textBoxWarehouseID.Text;
-            int iWarehouseID;
-            if (int.TryParse(warehouseID, out iWarehouseID) == false)
-            {
-                return;
-            }
-            try
-            {
-                Warehouse warehouseName = (from s in this.wmsEntities.Warehouse where s.ID == iWarehouseID select s).Single();
-                this.Controls.Find("TextBoxWarehouseName", true)[0].Text = warehouseName.Name;
-            }
-            catch
-            {
-
-            }
-
-        }
-
-        private void textBoxProjectID_TextChanged(object sender, EventArgs e)
-        {
-            var textBoxProjectID = this.Controls.Find("textBoxProjectID", true)[0];
-            string projectID = textBoxProjectID.Text;
-            int iProjectID;
-            if (int.TryParse(projectID, out iProjectID) == false)
-            {
-                return;
-            }
-            try
-            {
-                Project projectName = (from s in this.wmsEntities.Project where s.ID == iProjectID select s).Single();
-                this.Controls.Find("TextBoxProjectName", true)[0].Text = projectName.Name;
-            }
-            catch
-            {
-
-            }
-        }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
@@ -175,9 +116,20 @@ namespace WMS.UI
             DataAccess.Component componen = null;
             if (this.mode == FormMode.ALTER)
             {
-                componen = (from s in this.wmsEntities.Component
-                            where s.ID == this.componenID
-                            select s).Single();
+                try
+                {
+                    componen = (from s in this.wmsEntities.Component
+                                where s.ID == this.componenID
+                                select s).Single();
+
+                }
+                catch
+                {
+                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
+                    this.Close();
+                    return;
+                }
             }
             else if (mode == FormMode.ADD)
             {

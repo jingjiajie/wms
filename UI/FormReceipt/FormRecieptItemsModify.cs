@@ -52,7 +52,7 @@ namespace WMS.UI
                 {
                     textBox.Enabled = false;
                 }
-                Console.WriteLine("{0}  {1}", label.Text, textBox.Name);
+                //Console.WriteLine("{0}  {1}", label.Text, textBox.Name);
 
                 this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
             }
@@ -63,10 +63,32 @@ namespace WMS.UI
                                                                where s.ID == this.receiptTicketItemID
                                                                select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
-                
+
             }
             this.Controls.Find("textBoxReceiptTicketID", true)[0].Enabled = false;
             this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
+            this.Controls.Find("textBoxComponentID", true)[0].Click += textBoxComponentID_Click;
+        }
+
+        private void textBoxComponentID_Click(object sender, EventArgs e)
+        {
+            FormSearch formSearch = new FormSearch();
+            formSearch.Show();
+            formSearch.SetSelectFinishCallback(new Action<int>((int ID) =>
+            {
+                Console.WriteLine(ID);
+                WMS.DataAccess.Component component = (from c in wmsEntities.Component where c.ID == ID select c).FirstOrDefault();
+                if (component != null)
+                {
+                    this.Controls.Find("textBoxComponentID", true)[0].Text = ID.ToString();
+                    this.Controls.Find("textBoxComponentName", true)[0].Text = component.Name;
+                    this.Controls.Find("textBoxComponentNo", true)[0].Text = component.No;
+                }
+                else
+                {
+                    MessageBox.Show("找不到该零件");
+                }
+            }));
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -97,6 +119,7 @@ namespace WMS.UI
                 string errorInfo;
                 if(Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == true)
                 {
+                    receiptTicketItem.ID = 0;
                     wmsEntities.ReceiptTicketItem.Add(receiptTicketItem);
                     wmsEntities.SaveChanges();
                     MessageBox.Show("Successful");
