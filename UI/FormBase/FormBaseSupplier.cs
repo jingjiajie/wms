@@ -12,19 +12,23 @@ using System.Threading;
 using System.Data.SqlClient;
 using unvell.ReoGrid.DataFormat;
 
+
 namespace WMS.UI
 {
     public partial class FormBaseSupplier : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
-        private int au = 4;
-        private int id;
+        private int authority_supplier = Convert.ToInt32(Authority.BASE_SUPPLIER);
+        private int authority_supplierself = Convert.ToInt32(Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY);
+
+
+        private int id=-1;
        
-        public FormBaseSupplier(int authority1,int id)
+        public FormBaseSupplier(int authority,int id)
         {
             InitializeComponent();
-            this.authority = authority1;
+            this.authority = authority;
             this.id = id;
         } 
 
@@ -108,61 +112,37 @@ namespace WMS.UI
                 new Thread(new ThreadStart(() =>
             {
                 SupplierView[] SupplierView = null;
-
-                if ((this.authority&au)>0)
-                {
-
-                    if (key == null || value == null) //查询条件为null则查询全部内容
+                string sql = "SELECT * FROM SupplierView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                if ((this.authority &authority_supplier )==authority_supplier  )
+                {     
+                    if (key != null && value != null) //查询条件不为null则增加查询条件
                     {
-                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView").ToArray();
-                        Console.WriteLine(SupplierView.Length);
+                        sql += "AND " + key + " = @value ";
+                        parameters.Add(new SqlParameter("value", value));
                     }
-                    else
-                    {
-                       // if (decimal.TryParse(value, out decimal result) == false)
-                       // {
-                            value = "'" + value + "'";
-                       // }
-                       try
-                        {
-                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1}", key, value)).ToArray();
+                    sql += " ORDER BY ID DESC"; //倒序排序
+                    SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
 
-                        }
-                        catch
-                        {
-                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
                 }
 
 
 
-                if ((this.authority&au )==0)
+                if ((this.authority & authority_supplier) != authority_supplier)
                 {
-
-                    if (key == null || value == null) //查询条件为null则查询全部内容
+                    if (id != -1)
                     {
-                        SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>("SELECT * FROM SupplierView WHERE ID = {0}",id ).ToArray();
-                        Console.WriteLine(SupplierView.Length);
+                        sql += "AND ID = @ID ";
+                        parameters.Add(new SqlParameter("ID", id));
                     }
-                    else
+                    if (key != null && value != null) //查询条件不为null则增加查询条件
                     {
-                        //if (decimal.TryParse(value, out decimal result) == false)
-                        //{
-                            value = "'" + value + "'";
-                        //}
-                        try
-                        {
-                            SupplierView = wmsEntities.Database.SqlQuery<DataAccess.SupplierView>(String.Format("SELECT * FROM SupplierView WHERE {0} = {1} AND ID = {2}", key, value, id )).ToArray();
-
-                        }
-                        catch
-                        {
-                            MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                        sql += "AND " + key + " = @value ";
+                        parameters.Add(new SqlParameter("value", value));
                     }
+                    sql += " ORDER BY ID DESC"; //倒序排序
+                    SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
+
                 }
 
 
@@ -173,11 +153,12 @@ namespace WMS.UI
                 this.reoGridControlUser.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    var worksheet1 = this.reoGridControlUser.Worksheets[0];
+                    worksheet1.DeleteRangeData(RangePosition.EntireRange);
 
                     if (SupplierView.Length == 0)
                     {
-                        worksheet[1, 1] = "没有查询到符合条件的记录";
+                        worksheet1[1, 1] = "没有查询到符合条件的记录";
                     }
                     for (int i = 0; i < SupplierView.Length; i++)
                     {
@@ -187,11 +168,11 @@ namespace WMS.UI
 
                                                                                               select kn.Key).ToArray());
 
-                        for (int j = 0; j < worksheet.Columns; j++)
+                        for (int j = 0; j < worksheet1.Columns; j++)
                         {
 
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                            worksheet.SetRangeDataFormat(RangePosition.EntireRange, CellDataFormatFlag.Text, null);
+                            worksheet1[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                            worksheet1.SetRangeDataFormat(RangePosition.EntireRange, CellDataFormatFlag.Text, null);
                         }
                     }
 
