@@ -35,8 +35,6 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonPutaway = new System.Windows.Forms.ToolStripButton();
-            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
-            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1.SuspendLayout();
@@ -98,30 +96,10 @@
             this.buttonPutaway.Text = "生成上架单";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonPutaway_Click);
             // 
-            // buttonDelete
-            // 
-            this.buttonDelete.AutoSize = false;
-            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
-            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(60, 25);
-            this.buttonDelete.Text = "删除";
-            // 
-            // buttonAdd
-            // 
-            this.buttonAdd.AutoSize = false;
-            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
-            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
-            this.buttonAdd.Text = "添加";
-            // 
             // toolStripTop
             // 
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonAdd,
-            this.buttonDelete,
             this.buttonPutaway,
             this.buttonReceiptCancel,
             this.toolStripButton1});
@@ -181,8 +159,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
         private System.Windows.Forms.ToolStripButton buttonPutaway;
-        private System.Windows.Forms.ToolStripButton buttonDelete;
-        private System.Windows.Forms.ToolStripButton buttonAdd;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private unvell.ReoGrid.ReoGridControl reoGridControlUser;
     }

@@ -244,6 +244,7 @@
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(70, 25);
             this.toolStripButton2.Text = "取消收货";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // buttonItemSubmission
             // 
