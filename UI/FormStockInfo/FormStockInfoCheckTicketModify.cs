@@ -52,13 +52,25 @@ namespace WMS.UI
                 this.buttonDelete.Visible = false;
                 this.buttonfinish.Visible = false;
                 this.Size = new Size(500, 250);
+               
 
             }
-            if(this.mode==FormMode.CHECK)
+            if (this.mode == FormMode.ADD)
+                {
+                this.labelStatus.Text = "添加盘点单";
+
+                 }
+            if (this.mode == FormMode.ALTER)
+            {
+                this.labelStatus.Text = "修改盘点单";
+
+            }
+            if (this.mode==FormMode.CHECK)
             {
                 this.buttonOK.Visible = false;
                 this.buttonCancel.Visible = false;
-               // this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+                this.labelStatus.Text = "盘点单条目";
+                // this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 
 
             }
@@ -219,16 +231,18 @@ namespace WMS.UI
             {
                 this.Text = "修改盘点单信息";
                 this.buttonOK.Text = "修改盘点单信息";
+               
             }
             else if (mode == FormMode.ADD)
             {
                 this.Text = "添加盘点单信息";
                 this.buttonOK.Text = "添加盘点单信息";
+               
             }
             else if (mode == FormMode.CHECK)
                 this.Text = "盘点单条目";
                 
-                
+
         }
 
         private void Search()
@@ -251,7 +265,7 @@ namespace WMS.UI
                 stockInfoViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoCheckTicketItemView>(sql, parameters.ToArray()).ToArray();
                 this.reoGridControlMain .Invoke(new Action(() =>
                 {
-                    this.labelStatus.Text = "搜索完成";
+                    
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
                     if (stockInfoViews.Length == 0)
                     {
@@ -315,6 +329,11 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
             })).Start();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
     
