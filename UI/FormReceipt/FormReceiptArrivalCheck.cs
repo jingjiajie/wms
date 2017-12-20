@@ -110,7 +110,7 @@ namespace WMS.UI.FormReceipt
                     textBox.Text = "";
                 }
             }
-            this.Controls.Find("textBoxID", true)[0].Text = "0";
+            //this.Controls.Find("textBoxID", true)[0].Text = "0";
             TextBox textBoxState = (TextBox)this.Controls.Find("textBoxState", true)[0];
             if (textBoxState.Text == null)
             {

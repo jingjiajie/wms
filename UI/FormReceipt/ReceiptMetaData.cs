@@ -54,8 +54,8 @@ namespace WMS.UI.FormReceipt
         };
         public static KeyName[] submissionTicketKeyName =
         {
-            new KeyName(){Name="ID", Key="ID",Visible=false,Editable=false},
-            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=false},
+            new KeyName(){Name="ID", Key="ID",Visible=false,Editable=true},
+            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=true},
             new KeyName(){Name="送检单单号", Key="No",Visible=true,Editable=true},
             new KeyName(){Name="状态", Key="State",Visible=true,Editable=false},
             new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=true},
@@ -71,9 +71,9 @@ namespace WMS.UI.FormReceipt
 
         public static KeyName[] itemsKeyName =
         {
-            new KeyName(){Name="ID", Key="ID",Visible=false,Editable=false,Save=true},
-            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=false,Save=true},
-            new KeyName(){Name="零件ID", Key="ComponentID",Visible=false,Editable=false,Save=true},
+            new KeyName(){Name="ID", Key="ID",Visible=false,Editable=true,Save=true},
+            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=true,Save=true},
+            new KeyName(){Name="零件ID", Key="ComponentID",Visible=false,Editable=true,Save=true},
             new KeyName(){Name="零件编号", Key="ComponentNo", Visible = true, Editable = true, Save = false},
             new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false},
             new KeyName(){Name="包装名称", Key="PackageName",Visible=true,Editable=true,Save=true},
