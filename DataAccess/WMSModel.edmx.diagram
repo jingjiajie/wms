@@ -8,6 +8,7 @@
 <<<<<<< HEAD
         
         
+<<<<<<< HEAD
         
         <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="9.93382221550393" PointY="16.157049961461244" />
         <EntityTypeShape EntityType="WMSModel.ComponentOuterPackingSize" Width="1.5" PointX="1.6795149974895245" PointY="20.662987286533689" />
@@ -57,6 +58,56 @@
         <EntityTypeShape EntityType="WMSModel.SupplierView" Width="1.5" PointX="8.9376468644187064" PointY="26.256511342831192" />
         <EntityTypeShape EntityType="WMSModel.UserView" Width="1.5" PointX="8.3239153978991851" PointY="16.272832520433159" />
         <EntityTypeShape EntityType="WMSModel.WarehouseView" Width="1.5" PointX="7.6220917215673678" PointY="17.137367956869941" />
+=======
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 0a3aa8d1665fc44803525e67b2ab4c3b9b08e157
         <AssociationConnector Association="WMSModel.FK__Component__Compo__239E4DCF" />
         <AssociationConnector Association="WMSModel.FK__Component__Compo__29572725" />
         <AssociationConnector Association="WMSModel.FK__Component__Compo__2C3393D0" />
@@ -215,6 +266,7 @@
         
         
         
+<<<<<<< HEAD
         
         
         
@@ -294,6 +346,8 @@
         
         
         
+=======
+>>>>>>> 0a3aa8d1665fc44803525e67b2ab4c3b9b08e157
 =======
         
         
