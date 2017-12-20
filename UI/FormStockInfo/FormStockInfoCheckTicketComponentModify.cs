@@ -180,13 +180,18 @@ namespace WMS.UI
                         }
             this.stockinfoid = ids[0];
             StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
-
+            
             TextBox textBoxOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxOverflowAreaAmount",true)[0];
             TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
 
-
-            StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text );
-            StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
+            if (textBoxOverflowAreaAmount.Text != string.Empty)
+            {
+                StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text);
+            }
+            if (textBoxShipmentAreaAmount.Text != string.Empty)
+            {
+                StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
+            }
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, StockInfoCheckTicketItem, StockInfoCheckTicksModifyMetaDate.KeyNames, out string errorMessage) == false)
