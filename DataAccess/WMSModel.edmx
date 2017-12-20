@@ -1375,9 +1375,8 @@
         <EntityType Name="ReceiptTicketView">
           <Key>
             <PropertyRef Name="Warehouse" />
-            <PropertyRef Name="DeliverTicketNoSRM" />
             <PropertyRef Name="ID" />
-            <PropertyRef Name="SupplierID" />
+            <PropertyRef Name="ProjectID" />
           </Key>
           <Property Name="VoucherYear" Type="datetime" />
           <Property Name="ReletedVoucherNo" Type="nvarchar" MaxLength="64" />
@@ -1421,14 +1420,14 @@
           <Property Name="Warehouse" Type="int" Nullable="false" />
           <Property Name="VoucherNo" Type="nvarchar" MaxLength="64" />
           <Property Name="VoucherSource" Type="nvarchar" MaxLength="64" />
-          <Property Name="DeliverTicketNoSRM" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="DeliverTicketNoSRM" Type="nvarchar" MaxLength="64" />
           <Property Name="Type" Type="nvarchar" MaxLength="64" />
           <Property Name="VoucherLineNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="No" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
-          <Property Name="ProjectID" Type="int" />
+          <Property Name="ProjectID" Type="int" Nullable="false" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierContractNo" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierStartDate" Type="datetime" />
@@ -5851,9 +5850,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
         <EntityType Name="ReceiptTicketView">
           <Key>
             <PropertyRef Name="Warehouse" />
-            <PropertyRef Name="DeliverTicketNoSRM" />
             <PropertyRef Name="ID" />
-            <PropertyRef Name="SupplierID" />
+            <PropertyRef Name="ProjectID" />
           </Key>
           <Property Name="VoucherYear" Type="DateTime" Precision="3" />
           <Property Name="ReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -5897,14 +5895,14 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Warehouse" Type="Int32" Nullable="false" />
           <Property Name="VoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="VoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DeliverTicketNoSRM" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DeliverTicketNoSRM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="VoucherLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="No" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ProjectID" Type="Int32" />
+          <Property Name="ProjectID" Type="Int32" Nullable="false" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierContractNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierStartDate" Type="DateTime" Precision="3" />
