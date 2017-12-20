@@ -83,7 +83,15 @@ namespace WMS.UI.FormBase
                 }
                 sql += " ORDER BY ID DESC"; //倒序排序
 
-                userViews = wmsEntities.Database.SqlQuery<UserView>(sql, parameters.ToArray()).ToArray();
+                try
+                {
+                    userViews = wmsEntities.Database.SqlQuery<UserView>(sql, parameters.ToArray()).ToArray();
+                }
+                catch (SqlException)
+                {
+                    MessageBox.Show("查询失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
@@ -153,20 +161,9 @@ namespace WMS.UI.FormBase
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            List<int> deleteIDs = new List<int>();
-            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
-            {
-                try
-                {
-                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
-                    deleteIDs.Add(curID);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-            if (deleteIDs.Count == 0)
+            int[] deleteIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
+
+            if (deleteIDs.Length == 0)
             {
                 MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

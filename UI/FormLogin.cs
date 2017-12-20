@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
@@ -15,6 +16,14 @@ namespace WMS.UI
     {
         Point mouseOff;//鼠标移动位置变量
         bool leftFlag;//标签是否为左键
+        bool networkError = false;
+        bool refreshedPossibleUser = false;
+        User possibleUser = null;
+        Mutex possibleUserMutex = new Mutex();
+
+        bool clickedButtonEnter = false; //防止用户心情不好时疯狂点击登录按钮
+
+        WMSEntities wmsEntities = new WMSEntities();
 
         public FormLogin()
         {
@@ -23,41 +32,73 @@ namespace WMS.UI
 
         private void buttonEnter_Click(object sender, EventArgs e)
         {
-            this.labelStatus.Text = "正在登陆，请耐心等待...";
+            if(clickedButtonEnter == true)
+            {
+                return;
+            }
+            else
+            {
+                clickedButtonEnter = true;
+            }
             if (textBoxUsername.Text == string.Empty)
             {
                 MessageBox.Show("用户名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                clickedButtonEnter = false;
                 return;
             }
             if (textBoxPassword.Text == string.Empty)
             {
                 MessageBox.Show("密码不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                clickedButtonEnter = false;
                 return;
             }
-            new Thread(new ThreadStart(()=>
+            this.labelStatus.Text = "正在登陆，请耐心等待...";
+            new Thread(new ThreadStart(() =>
             {
-                WMSEntities wms = new WMSEntities();
-                User user = (from s in wms.User
-                                 where s.Username == textBoxUsername.Text
-                                 select s).FirstOrDefault<User>();
+                this.possibleUserMutex.WaitOne();
+                if (this.refreshedPossibleUser == false) //如果没有调用过RefreshPossibleUser，再调用一次
+                {
+                    this.possibleUserMutex.ReleaseMutex();
+                    this.RefreshPossibleUserSync();
+                    this.possibleUserMutex.WaitOne();
+                }
+                if (this.networkError == true) //如果networkError，直接返回
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        this.labelStatus.Text = "";
+                    }));
+                    this.possibleUserMutex.ReleaseMutex();
+                    this.refreshedPossibleUser = false;
+                    clickedButtonEnter = false;
+                    return;
+                }
+                User user = this.possibleUser;
                 if (user == null)
                 {
-                    MessageBox.Show("用户名错误，请重新输入");
+                    MessageBox.Show("用户名错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.possibleUserMutex.ReleaseMutex();
+                    clickedButtonEnter = false;
                     return;
                 }
                 else if (user.Password != textBoxPassword.Text)
                 {
-                    MessageBox.Show("密码错误，请重新输入");
+                    MessageBox.Show("密码错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.possibleUserMutex.ReleaseMutex();
+                    clickedButtonEnter = false;
+                    return;
                 }
                 else
                 {
-                    this.Invoke(new Action(()=>
+                    this.possibleUserMutex.ReleaseMutex();
+                    this.Invoke(new Action(() =>
                     {
                         this.labelStatus.Text = "";
                         FormMain formMain = new FormMain(user.ID);
                         formMain.SetFormClosedCallback(this.Close);
                         formMain.Show();
                         this.Hide();
+                        clickedButtonEnter = false;
                     }));
                 }
             })).Start();
@@ -70,12 +111,12 @@ namespace WMS.UI
 
         private void textBoxUsername_TextChanged(object sender, EventArgs e)
         {
-
+            this.refreshedPossibleUser = false;
         }
 
         private void textBoxUsername_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == 13) 
+            if (e.KeyChar == 13)
             {
                 this.textBoxPassword.Focus();
                 this.textBoxPassword.SelectAll();
@@ -125,5 +166,41 @@ namespace WMS.UI
         {
             this.labelStatus.Text = "";
         }
+
+        private void textBoxUsername_Leave(object sender, EventArgs e)
+        {
+            if (this.textBoxUsername.Text.Length == 0)
+            {
+                return;
+            }
+            new Thread(() =>
+            {
+                this.RefreshPossibleUserSync();
+            }).Start();
+        }
+
+        private void RefreshPossibleUserSync()
+        {
+            this.refreshedPossibleUser = true;
+            this.possibleUserMutex.WaitOne();
+            try
+            {
+                this.possibleUser = (from u in wmsEntities.User
+                                     where u.Username == this.textBoxUsername.Text
+                                     select u).FirstOrDefault();
+                this.networkError = false;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("连接数据库失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.networkError = true;
+                return;
+            }
+            finally
+            {
+                this.possibleUserMutex.ReleaseMutex();
+            }
+        }
     }
 }
+
