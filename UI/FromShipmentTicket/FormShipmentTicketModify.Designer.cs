@@ -52,7 +52,7 @@
             this.groupBox1.Size = new System.Drawing.Size(774, 399);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "修改发货单物件信息";
+            this.groupBox1.Text = "发货单信息";
             // 
             // tableLayoutPanel2
             // 
