@@ -10,6 +10,7 @@ using unvell.ReoGrid;
 using System.Threading;
 using WMS.DataAccess;
 using unvell.ReoGrid.CellTypes;
+using System.Data.SqlClient;
 
 namespace WMS.UI.FormReceipt
 {
@@ -19,6 +20,7 @@ namespace WMS.UI.FormReceipt
         private int checkColumn;
         private int receiptTicketID;
         private int submissionTicketID;
+        private Action CallBack = null;
         public FormAddSubmissionItem()
         {
             InitializeComponent();
@@ -29,6 +31,11 @@ namespace WMS.UI.FormReceipt
             InitializeComponent();
             this.receiptTicketID = receiptTicketID;
             this.submissionTicketID = submissionTicketID;
+        }
+
+        public void SetCallBack(Action action)
+        {
+            this.CallBack = action;
         }
 
         private void FormAddSubmissionItem_Load(object sender, EventArgs e)
@@ -147,12 +154,20 @@ namespace WMS.UI.FormReceipt
                 new Thread(() =>
                 {
                     wmsEntities.SaveChanges();
+                    int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem WHERE State <> '送检中' AND ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
+                    if (count == 0)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '送检中' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", this.receiptTicketID));
+                    }
+                    wmsEntities.SaveChanges();
                     this.Invoke(new Action(() =>
                     {
                         this.Search();
+                        CallBack();
                     }));
                     MessageBox.Show("添加成功");
                 }).Start();
+                
             }
         }
     }

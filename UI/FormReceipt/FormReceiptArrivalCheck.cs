@@ -21,6 +21,7 @@ namespace WMS.UI.FormReceipt
         private int submissionTicketID;
         private int receiptTicketID;
         private FormMode formMode;
+        Action nextCallBack = null;
         Action finishedAction = null;
         private AllOrPartial allOrPartial;
         public FormReceiptArrivalCheck()
@@ -33,6 +34,11 @@ namespace WMS.UI.FormReceipt
             this.receiptTicketID = receiptTicketID;
             this.allOrPartial = allOrPartial;
             this.formMode = FormMode.ADD;
+        }
+
+        public void SetNextCallBack(Action action)
+        {
+            this.nextCallBack = action;
         }
 
         public FormReceiptArrivalCheck(int receiptTicketID)
@@ -252,6 +258,8 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.State = "待检";
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
                     wmsEntities.SaveChanges();
+                    submissionTicket.No = Utilities.GenerateNo("J", submissionTicket.ID);
+                    wmsEntities.SaveChanges();
                     this.Invoke(new Action(() => Search()));
                     MessageBox.Show("成功");
                 }).Start();
@@ -270,6 +278,7 @@ namespace WMS.UI.FormReceipt
                 }
                 int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 FormAddSubmissionItem formAddSubmissionItem = new FormAddSubmissionItem(this.receiptTicketID, submissionTicketID);
+                formAddSubmissionItem.SetCallBack(this.nextCallBack);
                 formAddSubmissionItem.Show();
             }
             catch

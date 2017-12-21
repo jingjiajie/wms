@@ -17,6 +17,8 @@ namespace WMS.UI.FormReceipt
     {
         private int putawayTicketID;
         private int receiptTicketID;
+        private int warehouseID;
+        private int projectID;
         private int checkColumn;
         private int countRow;
         private WMSEntities wmsEntities = new WMSEntities();
@@ -24,11 +26,13 @@ namespace WMS.UI.FormReceipt
         {
             InitializeComponent();
         }
-        public FormAddPutawayItem(int putawayTicketID, int receiptTicketID)
+        public FormAddPutawayItem(int putawayTicketID, int receiptTicketID, int warehouseID, int projectID)
         {
             InitializeComponent();
             this.putawayTicketID = putawayTicketID;
             this.receiptTicketID = receiptTicketID;
+            this.warehouseID = warehouseID;
+            this.projectID = projectID;
         }
 
         private void Search()
@@ -144,6 +148,7 @@ namespace WMS.UI.FormReceipt
                         putawayTicketItem.State = "待上架";
                         putawayTicketItem.DisplacementPositionNo = "No";
                         putawayTicketItem.TargetStorageLocation = "Location";
+                        
                         wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
                         i.State = "已收货";
                     }

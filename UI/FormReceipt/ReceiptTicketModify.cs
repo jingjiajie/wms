@@ -252,6 +252,8 @@ namespace WMS.UI.FormReceipt
                 {
                     wmsEntities.ReceiptTicket.Add(receiptTicket);
                     wmsEntities.SaveChanges();
+                    receiptTicket.No = Utilities.GenerateNo("H", receiptTicket.ID);
+                    wmsEntities.SaveChanges();
                     MessageBox.Show("Successful!");
                 }
             }

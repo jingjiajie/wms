@@ -78,18 +78,18 @@ namespace WMS.UI.FormReceipt
                 PutawayTicketView[] putawayTicketView = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>("SELECT * FROM PutawayTicketView").ToArray();
+                    putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>("SELECT * FROM PutawayTicketView WHERE WarehouseID = @warehouseID AND ProjectID = @projectID", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID)}).ToArray();
                 }
                 else
                 {
                     double tmp;
-                    if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
-                    {
-                        value = "'" + value + "'";
-                    }
+                    //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                    //{
+                    //    value = "'" + value + "'";
+                    //}
                     try
                     {
-                        putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = @key AND Warehouse = @warehouseID AND ProjectID = @projectID ", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
+                        putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = @key AND WarehouseID = @warehouseID AND ProjectID = @projectID ", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
                     }
                     catch
                     {
@@ -118,8 +118,16 @@ namespace WMS.UI.FormReceipt
                             worksheet[n, j] = columns[j];
                         }
                         n++;
+
                     }
                 }));
+                if (putawayTicketView.Length == 0)
+                {
+                    int m = ReceiptUtilities.GetFirstColumnIndex(ReceiptMetaData.submissionTicketKeyName);
+
+                    //this.reoGridControl1.Worksheets[0][6, 8] = "32323";
+                    this.reoGridControlUser.Worksheets[0][0, m] = "无查询结果";
+                }
 
             })).Start();
 
@@ -136,7 +144,10 @@ namespace WMS.UI.FormReceipt
                 }
                 int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
-
+                formShelvesItem.SetCallBack(new Action(() =>
+                {
+                    this.Search(null, null);
+                }));
                 formShelvesItem.Show();
             }
             catch
@@ -145,6 +156,84 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             
+        }
+
+        private void toolStripButtonSelect_Click(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                Search(null, null);
+            }
+            else
+            {
+                string condition = this.toolStripComboBoxSelect.Text;
+                string key = "";
+                foreach (KeyName kn in ReceiptMetaData.putawayTicketKeyName)
+                {
+                    if (condition == kn.Name)
+                    {
+                        key = kn.Key;
+                        break;
+                    }
+                }
+                string value = this.toolStripTextBoxSelect.Text;
+                Search(key, value);
+            }
+        }
+
+        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                this.toolStripTextBoxSelect.Text = "";
+                this.toolStripTextBoxSelect.Enabled = false;
+            }
+            else
+            {
+                this.toolStripTextBoxSelect.Text = "";
+                this.toolStripTextBoxSelect.Enabled = true;
+            }
+        }
+
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+                if (MessageBox.Show("确定删除该上架单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", putawayTicketID));
+                    }
+                    catch
+                    {
+                        MessageBox.Show("该上架单已被删除!");
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.Search(null, null);
+        }
+
+        private void toolStripButtonPrint_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
