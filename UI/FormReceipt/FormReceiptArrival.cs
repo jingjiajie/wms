@@ -178,12 +178,30 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID, this.projectID, this.warehouseID,this.userID);
-                receiptTicketModify.SetModifyFinishedCallback(() =>
+                int count;
+                try
                 {
-                    this.Search(null, null);
-                });
-                receiptTicketModify.Show();
+                    WMSEntities wmsEntities = new WMSEntities();
+                    count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicket WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID)).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("网络连接失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (count != 0)
+                {
+                    var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID, this.projectID, this.warehouseID, this.userID);
+                    receiptTicketModify.SetModifyFinishedCallback(() =>
+                    {
+                        this.Search(null, null);
+                    });
+                    receiptTicketModify.Show();
+                }
+                else
+                {
+                    MessageBox.Show("该记录已被其他用户删除");
+                }
             }
             catch
             {
@@ -492,6 +510,20 @@ namespace WMS.UI
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+        }
+
+        private void comboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.comboBoxSelect.SelectedIndex == 0)
+            {
+                this.textBoxSelect.Enabled = false;
+                this.textBoxSelect.Text = "";
+            }
+            else
+            {
+                this.textBoxSelect.Enabled = true;
+                this.textBoxSelect.Text = "";
             }
         }
     }
