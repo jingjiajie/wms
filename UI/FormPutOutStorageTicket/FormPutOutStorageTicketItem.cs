@@ -31,6 +31,24 @@ namespace WMS.UI
         private void FormPutOutStorageTicketItem_Load(object sender, EventArgs e)
         {
             InitComponents();
+            WMSEntities wmsEntities = new WMSEntities();
+            PutOutStorageTicket putOutStorageTicket = null;
+            try
+            {
+                putOutStorageTicket = (from p in wmsEntities.PutOutStorageTicket where p.ID == putOutStorageTicketID select p).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+            if (putOutStorageTicket == null)
+            {
+                MessageBox.Show("出库单信息不存在，请刷新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
             this.Search();
         }
 
@@ -111,12 +129,21 @@ namespace WMS.UI
             new Thread(new ThreadStart(()=>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                PutOutStorageTicketItemView putOutStorageTicketItemView = (from p in wmsEntities.PutOutStorageTicketItemView
-                                                                           where p.ID == id
-                                                                           select p).FirstOrDefault();
+                PutOutStorageTicketItemView putOutStorageTicketItemView = null;
+                try
+                {
+                    putOutStorageTicketItemView = (from p in wmsEntities.PutOutStorageTicketItemView
+                                                                               where p.ID == id
+                                                                               select p).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 if (putOutStorageTicketItemView == null)
                 {
-                    MessageBox.Show("系统错误，未找到相应出库单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 if (putOutStorageTicketItemView.StockInfoID != null)
@@ -211,8 +238,16 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 wmsEntities.PutOutStorageTicketItem.Add(putOutStorageTicketItem);
-                wmsEntities.SaveChanges();
-                this.Invoke(new Action(()=>
+                try
+                {
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("添加失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                this.Invoke(new Action(() =>
                 {
                     this.Search(putOutStorageTicketItem.ID);
                 }));
@@ -239,14 +274,36 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                PutOutStorageTicketItem putOutStorageTicketItem = (from p in wmsEntities.PutOutStorageTicketItem where p.ID == id select p).FirstOrDefault();
+                PutOutStorageTicketItem putOutStorageTicketItem = null;
+                try
+                {
+                    putOutStorageTicketItem = (from p in wmsEntities.PutOutStorageTicketItem where p.ID == id select p).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if(putOutStorageTicketItem == null)
+                {
+                    MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
                 {
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 putOutStorageTicketItem.StockInfoID = this.curStockInfoID;
-                wmsEntities.SaveChanges();
+                try
+                {
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(() =>
                 {
                     this.Search(putOutStorageTicketItem.ID);
@@ -267,11 +324,19 @@ namespace WMS.UI
             new Thread(new ThreadStart(()=>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                foreach (int id in ids)
+                try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicketItem WHERE ID = @id", new SqlParameter("@id", id));
+                    foreach (int id in ids)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicketItem WHERE ID = @id", new SqlParameter("@id", id));
+                    }
+                    wmsEntities.SaveChanges();
                 }
-                wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Search();
                 MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;

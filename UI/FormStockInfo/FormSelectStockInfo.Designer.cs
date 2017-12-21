@@ -34,11 +34,11 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
             this.textBoxSearchContition = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.buttonSelect = new System.Windows.Forms.ToolStripButton();
-            this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -105,6 +105,16 @@
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // comboBoxSearchCondition
+            // 
+            this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.comboBoxSearchCondition.Items.AddRange(new object[] {
+            "零件名称",
+            "零件编号"});
+            this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(121, 39);
+            // 
             // textBoxSearchContition
             // 
             this.textBoxSearchContition.Name = "textBoxSearchContition";
@@ -136,16 +146,7 @@
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
-            // comboBoxSearchCondition
-            // 
-            this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSearchCondition.Items.AddRange(new object[] {
-            "零件编号",
-            "零件名称"});
-            this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(121, 39);
-            // 
-            // FormSelectSupplier
+            // FormSelectStockInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -154,7 +155,7 @@
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("黑体", 10F);
-            this.Name = "FormSelectSupplier";
+            this.Name = "FormSelectStockInfo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "选择零件";
             this.Load += new System.EventHandler(this.FormJobTicketSelectStockInfo_Load);

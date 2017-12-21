@@ -96,6 +96,8 @@
             this.ClientSize = new System.Drawing.Size(1518, 922);
             this.Controls.Add(this.tableLayoutPanelTextBoxes);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FormReceiptTicketModify";
             this.Text = "ReceiptTicketModify";
             this.Load += new System.EventHandler(this.ReceiptTicketModify_Load);

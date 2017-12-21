@@ -18,6 +18,7 @@ namespace WMS.UI.FormReceipt
         private int putawayTicketItemID;
         private int putawayTicketID;
         WMSEntities wmsEntities = new WMSEntities();
+        private Action CallBack = null;
         public FormShelvesItem()
         {
             InitializeComponent();
@@ -27,6 +28,11 @@ namespace WMS.UI.FormReceipt
         {
             InitializeComponent();
             this.putawayTicketID = putawayTicketID;
+        }
+
+        public void SetCallBack(Action action)
+        {
+            this.CallBack = action;
         }
 
         private void FormShelvesItem_Load(object sender, EventArgs e)
@@ -267,6 +273,8 @@ namespace WMS.UI.FormReceipt
                         this.Invoke(new Action(() =>
                         {
                             this.Search();
+                            CallBack();
+
                         }));
                     }).Start();
                 }

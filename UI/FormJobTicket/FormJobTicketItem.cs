@@ -39,6 +39,24 @@ namespace WMS.UI
         private void FormJobTicketItem_Load(object sender, EventArgs e)
         {
             InitComponents();
+            WMSEntities wmsEntities = new WMSEntities();
+            JobTicket jobTicket = null;
+            try
+            {
+                jobTicket = (from j in wmsEntities.JobTicket where j.ID == jobTicketID select j).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+            if (jobTicket == null)
+            {
+                MessageBox.Show("作业单信息不存在，请刷新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
             this.Search();
         }
 
@@ -96,13 +114,22 @@ namespace WMS.UI
             var worksheet = this.reoGridControlMain.Worksheets[0];
 
             worksheet[0, 1] = "加载中...";
+            JobTicketItemView[] jobTicketItemViews = null;
             new Thread(new ThreadStart(() =>
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                JobTicketItemView[] jobTicketItemViews = (from j in wmsEntities.JobTicketItemView
-                                                          where j.JobTicketID == this.jobTicketID
-                                                          orderby j.ID descending
-                                                          select j).ToArray();
+                try
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    jobTicketItemViews = (from j in wmsEntities.JobTicketItemView
+                                                              where j.JobTicketID == this.jobTicketID
+                                                              orderby j.ID descending
+                                                              select j).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("加载数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
@@ -138,7 +165,7 @@ namespace WMS.UI
         private void buttonFinish_Click(object sender, EventArgs e)
         {
             const string STRING_FINISHED = "已完成";
-            int[] selectedIDs = this.GetSelectedIDs();
+            int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if(selectedIDs.Length == 0)
             {
                 MessageBox.Show("请选择您要操作的条目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -147,12 +174,20 @@ namespace WMS.UI
             new Thread(new ThreadStart(()=>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                //将状态置为已完成
-                foreach (int id in selectedIDs)
+                try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
+                    //将状态置为已完成
+                    foreach (int id in selectedIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
+                    }
+                    wmsEntities.SaveChanges();
                 }
-                wmsEntities.SaveChanges();
+                catch
+                {
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 
                 //如果作业单中所有条目都完成，询问是否将作业单标记为完成
                 int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, STRING_FINISHED)).Single();
@@ -160,8 +195,16 @@ namespace WMS.UI
                 {
                     if (MessageBox.Show("检测到所有的作业任务都已经完成，是否将作业单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}",STRING_FINISHED,this.jobTicketID));
-                        wmsEntities.SaveChanges();
+                        try
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.jobTicketID));
+                            wmsEntities.SaveChanges();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                     this.jobTicketStateChangedCallback?.Invoke();
                 }
@@ -170,27 +213,10 @@ namespace WMS.UI
             })).Start();
         }
 
-
-
-        private int[] GetSelectedIDs()
-        {
-            List<int> ids = new List<int>();
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            for(int row = worksheet.SelectionRange.Row; row <= worksheet.SelectionRange.EndRow; row++)
-            {
-                if (worksheet[row, 0] == null) continue;
-                if(int.TryParse(worksheet[row, 0].ToString(),out int jobTicketID))
-                {
-                    ids.Add(jobTicketID);
-                }
-            }
-            return ids.ToArray();
-        }
-
         private void buttonUnfinish_Click(object sender, EventArgs e)
         {
             const string STRING_UNFINISHED = "未完成";
-            int[] selectedIDs = this.GetSelectedIDs();
+            int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (selectedIDs.Length == 0)
             {
                 MessageBox.Show("请选择您要操作的条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -199,11 +225,19 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                foreach (int id in selectedIDs)
+                try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
+                    foreach (int id in selectedIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
+                    }
+                    wmsEntities.SaveChanges();
                 }
-                wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(() => this.Search()));
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
@@ -225,20 +259,29 @@ namespace WMS.UI
         {
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            int[] ids = this.GetSelectedIDs();
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (ids.Length == 0)
             {
                 this.curStockInfoID = -1;
                 return;
             }
             int id = ids[0];
-            WMSEntities wmsEntities = new WMSEntities();
-            JobTicketItemView jobTicketItemView = (from jti in wmsEntities.JobTicketItemView
-                                           where jti.ID == id
-                                           select jti).FirstOrDefault();
+            JobTicketItemView jobTicketItemView = null;
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                jobTicketItemView = (from jti in wmsEntities.JobTicketItemView
+                                                       where jti.ID == id
+                                                       select jti).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (jobTicketItemView == null)
             {
-                MessageBox.Show("系统错误，未找到相应作业单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("作业单项目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if(jobTicketItemView.StockInfoID != null)
@@ -282,7 +325,15 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 wmsEntities.JobTicketItem.Add(newItem);
-                wmsEntities.SaveChanges();
+                try
+                {
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("添加失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(()=>
                 {
                     this.Search(newItem.ID);
@@ -303,10 +354,19 @@ namespace WMS.UI
             new Thread(() =>
             {
                 WMSEntities wmsEntities1 = new WMSEntities();
-                JobTicketItem jobTicketItem = (from j in wmsEntities1.JobTicketItem where j.ID == id select j).FirstOrDefault();
+                JobTicketItem jobTicketItem = null;
+                try
+                {
+                    jobTicketItem = (from j in wmsEntities1.JobTicketItem where j.ID == id select j).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("修改失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 if(jobTicketItem == null)
                 {
-                    MessageBox.Show("找不到此作业任务","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("作业任务不存在，请重新查询","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 this.Invoke(new Action(()=>
@@ -323,7 +383,15 @@ namespace WMS.UI
                     }
                     new Thread(()=>
                     {
-                        wmsEntities1.SaveChanges();
+                        try
+                        {
+                            wmsEntities1.SaveChanges();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("修改失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                         this.Invoke(new Action(() => this.Search()));
                         MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }).Start();
@@ -334,23 +402,31 @@ namespace WMS.UI
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if(ids.Length == 0)
+            if (ids.Length == 0)
             {
-                MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择要删除的项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if(MessageBox.Show("确定要删除选中项吗？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show("确定要删除选中项吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
-            new Thread(()=>
+            new Thread(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                foreach (int id in ids)
+                try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM JobTicketItem WHERE ID = @id", new SqlParameter("id", id));
+                    foreach (int id in ids)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM JobTicketItem WHERE ID = @id", new SqlParameter("id", id));
+                    }
+                    wmsEntities.SaveChanges();
                 }
-                wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(() => this.Search()));
                 MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();

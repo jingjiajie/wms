@@ -49,10 +49,20 @@ namespace WMS.UI
             InitComponents();
             if(this.defaultStockInfoID != -1)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.ComponentNo).FirstOrDefault();
-                this.Search();
+                try
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    this.comboBoxSearchCondition.SelectedIndex = 1; //自动选中零件编号选项
+                    this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.ComponentNo).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("加载数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
             }
+            this.Search();
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -65,35 +75,46 @@ namespace WMS.UI
             string value = this.textBoxSearchContition.Text;
             string key = this.comboBoxSearchCondition.SelectedItem.ToString();
             this.labelStatus.Text = "正在搜索...";
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet.DeleteRangeData(RangePosition.EntireRange);
+            worksheet[0, 2] = "正在搜索中...";
+
             new Thread(new ThreadStart(()=>
             {
                 StockInfoView[] stockInfoViews = null;
-                if (key == "零件编号")
+                try
                 {
-                    stockInfoViews = (from s in this.wmsEntities.StockInfoView
-                                      where s.ComponentNo == value
-                                      orderby s.ReceiptTicketItemManufactureDate ascending,
-                                                s.ReceiptTicketItemInventoryDate ascending,
-                                                s.ReceiptTicketItemExpiryDate descending
-                                      select s).ToArray();
-                }else if(key == "零件名称")
-                {
-                    stockInfoViews = (from s in this.wmsEntities.StockInfoView
-                                      where s.ComponentName.Contains(value)
-                                      orderby s.ReceiptTicketItemManufactureDate ascending,
-                                                s.ReceiptTicketItemInventoryDate ascending,
-                                                s.ReceiptTicketItemExpiryDate descending
-                                      select s).ToArray();
+                    if (key == "零件编号")
+                    {
+                        stockInfoViews = (from s in this.wmsEntities.StockInfoView
+                                          where s.ComponentNo == value
+                                          orderby s.ReceiptTicketItemManufactureDate ascending,
+                                                    s.ReceiptTicketItemInventoryDate ascending,
+                                                    s.ReceiptTicketItemExpiryDate descending
+                                          select s).ToArray();
+                    }
+                    else if (key == "零件名称")
+                    {
+                        stockInfoViews = (from s in this.wmsEntities.StockInfoView
+                                          where s.ComponentName.Contains(value)
+                                          orderby s.ReceiptTicketItemManufactureDate ascending,
+                                                    s.ReceiptTicketItemInventoryDate ascending,
+                                                    s.ReceiptTicketItemExpiryDate descending
+                                          select s).ToArray();
+                    }
+                    else
+                    {
+                        MessageBox.Show("内部错误，无法识别查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
-                else
+                catch
                 {
-                    MessageBox.Show("内部错误，无法识别查询条件","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("查询失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 this.Invoke(new Action(()=>
                 {
-                    var worksheet = this.reoGridControlMain.Worksheets[0];
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
                     for (int i = 0; i < stockInfoViews.Length; i++)
                     {
                         StockInfoView curStockInfoView = stockInfoViews[i];
@@ -119,7 +140,7 @@ namespace WMS.UI
 
         private void SelectItem()
         {
-            int[] ids = this.GetSelectedIDs();
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (ids.Length != 1)
             {
                 MessageBox.Show("请选择一项");
@@ -127,21 +148,6 @@ namespace WMS.UI
             }
             this.selectFinishCallback?.Invoke(ids[0]);
             this.Close();
-        }
-
-        private int[] GetSelectedIDs()
-        {
-            List<int> ids = new List<int>();
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            for (int row = worksheet.SelectionRange.Row; row <= worksheet.SelectionRange.EndRow; row++)
-            {
-                if (worksheet[row, 0] == null) continue;
-                if (int.TryParse(worksheet[row, 0].ToString(), out int shipmentTicketID))
-                {
-                    ids.Add(shipmentTicketID);
-                }
-            }
-            return ids.ToArray();
         }
 
         private void textBoxComponentNo_KeyPress(object sender, KeyPressEventArgs e)

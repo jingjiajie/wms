@@ -98,7 +98,20 @@ namespace WMS.UI
                     parameters.Add(new SqlParameter("value", value));
                 }
                 sql += " ORDER BY ID DESC"; //倒序排序
-                jobTicketViews = wmsEntities.Database.SqlQuery<JobTicketView>(sql, parameters.ToArray()).ToArray();
+                try
+                {
+                    jobTicketViews = wmsEntities.Database.SqlQuery<JobTicketView>(sql, parameters.ToArray()).ToArray();
+                }
+                catch (EntityCommandExecutionException)
+                {
+                    MessageBox.Show("查询失败，请检查输入条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -138,7 +151,7 @@ namespace WMS.UI
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            int[] ids = this.GetSelectedIDs();
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if(ids.Length == 0)
             {
                 MessageBox.Show("请选择要删除的项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -151,38 +164,27 @@ namespace WMS.UI
             this.labelStatus.Text = "正在删除";
             new Thread(new ThreadStart(()=>
             {
-                foreach (int id in ids)
+                try
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(string.Format("DELETE FROM JobTicket WHERE ID = {0}", id));
+                    foreach (int id in ids)
+                    {
+                        this.wmsEntities.Database.ExecuteSqlCommand(string.Format("DELETE FROM JobTicket WHERE ID = {0}", id));
+                    }
+                    this.wmsEntities.SaveChanges();
                 }
-                this.wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(this.Search));
             })).Start();
         }
 
-        private int[] GetSelectedIDs()
-        {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            List<int> ids = new List<int>();
-            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
-            {
-                try
-                {
-                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
-                    ids.Add(curID);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-            return ids.ToArray();
-        }
-
         private void buttonGeneratePutOutStorageTicket_Click(object sender, EventArgs e)
         {
-            int[] ids = this.GetSelectedIDs();
-            if(ids.Length != 1)
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if (ids.Length != 1)
             {
                 MessageBox.Show("请选择一项进行操作","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -191,40 +193,48 @@ namespace WMS.UI
 
             new Thread(new ThreadStart(()=>
             {
-                JobTicket jobTicket = (from j in this.wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
-                if (jobTicket == null)
+                try
                 {
-                    MessageBox.Show("未找到作业单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    JobTicket jobTicket = (from j in this.wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
+                    if (jobTicket == null)
+                    {
+                        MessageBox.Show("作业单不存在，请刷新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    ShipmentTicket shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == jobTicket.ShipmentTicketID select s).FirstOrDefault();
+                    if (shipmentTicket == null)
+                    {
+                        MessageBox.Show("对应发货单信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
+                    PutOutStorageTicket putOutStorageTicket = new PutOutStorageTicket();
+                    wmsEntities.PutOutStorageTicket.Add(putOutStorageTicket);
+                    putOutStorageTicket.ProjectID = this.projectID;
+                    putOutStorageTicket.WarehouseID = this.warehouseID;
+                    putOutStorageTicket.CreateUserID = this.userID;
+                    putOutStorageTicket.CreateTime = DateTime.Now;
+                    putOutStorageTicket.LastUpdateUserID = this.userID;
+                    putOutStorageTicket.LastUpdateTime = DateTime.Now;
+                    putOutStorageTicket.JobTicketID = id;
+                    putOutStorageTicket.No = "";
+
+                    foreach (JobTicketItem jobTicketItem in jobTicket.JobTicketItem)
+                    {
+                        PutOutStorageTicketItem putOutStorageTicketItem = new PutOutStorageTicketItem();
+                        putOutStorageTicket.PutOutStorageTicketItem.Add(putOutStorageTicketItem);
+                        putOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
+                    }
+
+                    wmsEntities.SaveChanges();
+                    putOutStorageTicket.No = Utilities.GenerateNo("C", putOutStorageTicket.ID);
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("生成出库单失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                ShipmentTicket shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == jobTicket.ShipmentTicketID select s).FirstOrDefault();
-                if (shipmentTicket == null)
-                {
-                    MessageBox.Show("未找到对应发货单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_DELIVERING;
-                PutOutStorageTicket putOutStorageTicket = new PutOutStorageTicket();
-                wmsEntities.PutOutStorageTicket.Add(putOutStorageTicket);
-                putOutStorageTicket.ProjectID = this.projectID;
-                putOutStorageTicket.WarehouseID = this.warehouseID;
-                putOutStorageTicket.CreateUserID = this.userID;
-                putOutStorageTicket.CreateTime = DateTime.Now;
-                putOutStorageTicket.LastUpdateUserID = this.userID;
-                putOutStorageTicket.LastUpdateTime = DateTime.Now;
-                putOutStorageTicket.JobTicketID = id;
-                putOutStorageTicket.No = "";
-
-                foreach (JobTicketItem jobTicketItem in jobTicket.JobTicketItem)
-                {
-                    PutOutStorageTicketItem putOutStorageTicketItem = new PutOutStorageTicketItem();
-                    putOutStorageTicket.PutOutStorageTicketItem.Add(putOutStorageTicketItem);
-                    putOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
-                }
-
-                wmsEntities.SaveChanges();
-                putOutStorageTicket.No = Utilities.GenerateNo("C",putOutStorageTicket.ID);
-                wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();

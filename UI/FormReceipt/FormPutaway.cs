@@ -16,16 +16,20 @@ namespace WMS.UI.FormReceipt
     {
         private int receiptTicketID;
         private int putawayTicketID;
+        private int warehouseID;
+        private int projectID;
         WMSEntities wmsEntities = new WMSEntities();
         public FormPutaway()
         {
             InitializeComponent();
         }
 
-        public FormPutaway(int receiptTicketID)
+        public FormPutaway(int receiptTicketID, int warehouseID, int projectID)
         {
             InitializeComponent();
             this.receiptTicketID = receiptTicketID;
+            this.warehouseID = warehouseID;
+            this.projectID = projectID;
         }
 
         private void FormPutaway_Load(object sender, EventArgs e)
@@ -159,10 +163,14 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
+                putawayTicket.WarehouseID = this.warehouseID;
+                putawayTicket.ProjectID = this.projectID;
                 putawayTicket.State = "待上架";
                 new Thread(()=>
                 {
                     wmsEntities.PutawayTicket.Add(putawayTicket);
+                    wmsEntities.SaveChanges();
+                    putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
                     wmsEntities.SaveChanges();
                     this.Invoke(new Action(() => Search()));
                     MessageBox.Show("成功");
@@ -217,7 +225,7 @@ namespace WMS.UI.FormReceipt
                     throw new Exception();
                 }
                 int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                FormAddPutawayItem formAddPutawayItem = new FormAddPutawayItem(putawayTicketID, this.receiptTicketID);
+                FormAddPutawayItem formAddPutawayItem = new FormAddPutawayItem(putawayTicketID, this.receiptTicketID, this.warehouseID, this.projectID);
                 formAddPutawayItem.Show();
             }
             catch

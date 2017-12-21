@@ -103,6 +103,7 @@
             // 
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
             this.toolStripComboBoxSelect.Size = new System.Drawing.Size(223, 39);
+            this.toolStripComboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelect_SelectedIndexChanged);
             // 
             // toolStripTextBoxSelect
             // 
@@ -117,6 +118,7 @@
             this.toolStripButtonSelect.Name = "toolStripButtonSelect";
             this.toolStripButtonSelect.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonSelect.Text = "查询";
+            this.toolStripButtonSelect.Click += new System.EventHandler(this.toolStripButtonSelect_Click);
             // 
             // toolStripSeparator1
             // 
@@ -132,6 +134,7 @@
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
             this.toolStripButtonAlter.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonAlter.Text = "修改";
+            this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
             // toolStripButtonDelete
             // 
@@ -141,6 +144,7 @@
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(60, 25);
             this.toolStripButtonDelete.Text = "删除";
+            this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
             // toolStripSeparator2
             // 
@@ -180,6 +184,7 @@
             this.toolStripButtonPrint.Name = "toolStripButtonPrint";
             this.toolStripButtonPrint.Size = new System.Drawing.Size(80, 25);
             this.toolStripButtonPrint.Text = "打印上架单";
+            this.toolStripButtonPrint.Click += new System.EventHandler(this.toolStripButtonPrint_Click);
             // 
             // toolStripButtonOperation
             // 

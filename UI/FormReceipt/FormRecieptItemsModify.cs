@@ -17,6 +17,7 @@ namespace WMS.UI
         WMSEntities wmsEntities = new WMSEntities();
         int receiptTicketItemID;
         Action CallBack = null;
+        private int componentID;
         int receiptTicketID;
         public FormReceiptItemsModify()
         {
@@ -41,7 +42,10 @@ namespace WMS.UI
             for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length; i++)
             {
                 KeyName curKeyName = ReceiptMetaData.itemsKeyName[i];
-
+                if (curKeyName.Visible == false && curKeyName.Editable == false)
+                {
+                    continue;
+                }
                 Label label = new Label();
                 label.Text = curKeyName.Name;
                 this.tableLayoutPanelTextBoxes.Controls.Add(label);
@@ -65,9 +69,10 @@ namespace WMS.UI
                 Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
 
             }
-            this.Controls.Find("textBoxReceiptTicketID", true)[0].Enabled = false;
-            this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
-            this.Controls.Find("textBoxComponentID", true)[0].Click += textBoxComponentID_Click;
+            //this.Controls.Find("textBoxReceiptTicketID", true)[0].Enabled = false;
+            //this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
+            this.Controls.Find("textBoxComponentNo", true)[0].Click += textBoxComponentID_Click;
+            this.Controls.Find("textBoxComponentName", true)[0].Enabled = false;
         }
 
         private void textBoxComponentID_Click(object sender, EventArgs e)
@@ -76,13 +81,14 @@ namespace WMS.UI
             formSearch.Show();
             formSearch.SetSelectFinishCallback(new Action<int>((int ID) =>
             {
-                Console.WriteLine(ID);
+                //Console.WriteLine(ID);
                 WMS.DataAccess.Component component = (from c in wmsEntities.Component where c.ID == ID select c).FirstOrDefault();
                 if (component != null)
                 {
-                    this.Controls.Find("textBoxComponentID", true)[0].Text = ID.ToString();
+                    //this.Controls.Find("textBoxComponentID", true)[0].Text = ID.ToString();
                     this.Controls.Find("textBoxComponentName", true)[0].Text = component.Name;
                     this.Controls.Find("textBoxComponentNo", true)[0].Text = component.No;
+                    this.componentID = ID;
                 }
                 else
                 {
@@ -114,12 +120,14 @@ namespace WMS.UI
             }
             else  if(this.formMode == FormMode.ADD)
             {
-                this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
+                //this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
                 ReceiptTicketItem receiptTicketItem = new ReceiptTicketItem();
                 string errorInfo;
                 if(Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == true)
                 {
+                    receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
                     receiptTicketItem.ID = 0;
+                    receiptTicketItem.ComponentID = this.componentID;
                     wmsEntities.ReceiptTicketItem.Add(receiptTicketItem);
                     wmsEntities.SaveChanges();
                     MessageBox.Show("Successful");

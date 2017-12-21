@@ -17,11 +17,18 @@ namespace WMS.UI.FormReceipt
     {
         private WMSEntities wmsEntities = new WMSEntities();
         private int ComponentID = -1;
+        private int supplierID = -1;
         //private Action CallBack = null;
         private Action<int> selectFinishCallback = null;
         public FormSearch()
         {
             InitializeComponent();
+        }
+
+        public FormSearch(int supplierID)
+        {
+            InitializeComponent();
+            this.supplierID = supplierID;
         }
 
         public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
@@ -33,7 +40,7 @@ namespace WMS.UI.FormReceipt
         {
             InitComponent();
             WMSEntities wmsEntities = new WMSEntities();
-            this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView select s.ComponentNo).FirstOrDefault();
+            //this.textBoxSearchContition.Text = (from s in wmsEntities.Component where s.s select s.).FirstOrDefault();
             this.Search();
         }
 

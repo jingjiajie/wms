@@ -330,7 +330,7 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //this.Search();
+            this.Search();
             this.RefreshTextBoxes();
             CallBack();
         }

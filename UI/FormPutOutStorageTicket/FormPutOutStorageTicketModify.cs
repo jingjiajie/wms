@@ -33,43 +33,46 @@ namespace WMS.UI
             {
                 throw new Exception("未设置源库存信息");
             }
-
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < PutOutStorageTicketViewMetaData.KeyNames.Length; i++)
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, PutOutStorageTicketViewMetaData.KeyNames);
+            PutOutStorageTicketView putOutStorageTicketView = null;
+            try
             {
-                KeyName curKeyName = PutOutStorageTicketViewMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
+                putOutStorageTicketView = (from s in this.wmsEntities.PutOutStorageTicketView
+                                                                   where s.ID == this.putOutStorageTicketID
+                                                                   select s).FirstOrDefault();
             }
-
-            PutOutStorageTicketView putOutStorageTicketView = (from s in this.wmsEntities.PutOutStorageTicketView
-                                                               where s.ID == this.putOutStorageTicketID
-                                                               select s).Single();
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+            if(putOutStorageTicketView == null)
+            {
+                MessageBox.Show("出库单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
             Utilities.CopyPropertiesToTextBoxes(putOutStorageTicketView, this);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             PutOutStorageTicket putOutStorageTicket = null;
-            putOutStorageTicket = (from s in this.wmsEntities.PutOutStorageTicket
-                                   where s.ID == this.putOutStorageTicketID
-                                   select s).FirstOrDefault();
+            try
+            {
+                putOutStorageTicket = (from s in this.wmsEntities.PutOutStorageTicket
+                                       where s.ID == this.putOutStorageTicketID
+                                       select s).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (putOutStorageTicket == null)
             {
-                MessageBox.Show("未找到出货单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("出库单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             putOutStorageTicket.LastUpdateUserID = this.userID;
@@ -82,7 +85,15 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            wmsEntities.SaveChanges();
+            try
+            {
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             //调用回调函数
             if (this.modifyFinishedCallback != null)
             {

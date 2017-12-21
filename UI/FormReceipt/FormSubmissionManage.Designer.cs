@@ -43,8 +43,6 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
-            this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
-            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
@@ -106,6 +104,7 @@
             this.comboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSelect.Name = "comboBoxSelect";
             this.comboBoxSelect.Size = new System.Drawing.Size(223, 39);
+            this.comboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelect_SelectedIndexChanged);
             // 
             // textBoxSelect
             // 
@@ -189,8 +188,6 @@
             this.toolStripSeparator2,
             this.buttonItem,
             this.buttonItems,
-            this.buttonReceipt,
-            this.buttonReceiptCancel,
             this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
@@ -210,26 +207,6 @@
             this.buttonItems.Text = "修改送检单";
             this.buttonItems.ToolTipText = "查看零件条目";
             this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
-            // 
-            // buttonReceipt
-            // 
-            this.buttonReceipt.AutoSize = false;
-            this.buttonReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceipt.Image")));
-            this.buttonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceipt.Name = "buttonReceipt";
-            this.buttonReceipt.Size = new System.Drawing.Size(40, 25);
-            this.buttonReceipt.Text = "收货";
-            // 
-            // buttonReceiptCancel
-            // 
-            this.buttonReceiptCancel.AutoSize = false;
-            this.buttonReceiptCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
-            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
-            this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
-            this.buttonReceiptCancel.Text = "取消收货";
             // 
             // toolStripStatusLabel3
             // 
@@ -264,6 +241,8 @@
             this.Controls.Add(this.reoGridControl1);
             this.Controls.Add(this.toolStripTop);
             this.Controls.Add(this.reoGridControlUser);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "FormSubmissionManage";
             this.Text = "FormSubmissionManage";
             this.Load += new System.EventHandler(this.FormSubmissionManage_Load);
@@ -294,7 +273,5 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.StatusStrip statusStrip2;
         private System.Windows.Forms.ToolStripButton buttonItems;
-        private System.Windows.Forms.ToolStripButton buttonReceipt;
-        private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
     }
 }

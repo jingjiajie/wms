@@ -18,7 +18,6 @@ namespace WMS.UI
 
         private WMSEntities wmsEntities = new WMSEntities();
         private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
 
         public FormJobTicketModify(int userID,int jobTicketID)
         {
@@ -33,43 +32,47 @@ namespace WMS.UI
             {
                 throw new Exception("未设置源作业单信息");
             }
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, JobTicketViewMetaData.KeyNames);
 
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < JobTicketViewMetaData.KeyNames.Length; i++)
+            JobTicketView jobTicketView = null;
+            try
             {
-                KeyName curKeyName = JobTicketViewMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
+                jobTicketView = (from s in this.wmsEntities.JobTicketView
+                                               where s.ID == this.jobTicketID
+                                               select s).FirstOrDefault();
             }
-
-            JobTicketView JobTicketView = (from s in this.wmsEntities.JobTicketView
-                                                               where s.ID == this.jobTicketID
-                                                               select s).Single();
-            Utilities.CopyPropertiesToTextBoxes(JobTicketView, this);
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+            if(jobTicketView == null)
+            {
+                MessageBox.Show("作业单不存在，请刷新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+            Utilities.CopyPropertiesToTextBoxes(jobTicketView, this);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             JobTicket JobTicket = null;
-            JobTicket = (from s in this.wmsEntities.JobTicket
-                                   where s.ID == this.jobTicketID
-                                   select s).FirstOrDefault();
+            try
+            {
+                JobTicket = (from s in this.wmsEntities.JobTicket
+                             where s.ID == this.jobTicketID
+                             select s).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("修改失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (JobTicket == null)
             {
-                MessageBox.Show("未找到出货单信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("作业单不存在，请刷新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             JobTicket.LastUpdateUserID = this.userID;
@@ -82,7 +85,15 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            wmsEntities.SaveChanges();
+            try
+            {
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             //调用回调函数
             if (this.modifyFinishedCallback != null)
             {
