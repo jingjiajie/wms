@@ -69,31 +69,37 @@ namespace WMS.UI
 
         private void reoGridControlUser_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void Search(string key, string value)
         {
             this.lableStatus.Text = "搜索中...";
-            
+
             new Thread(new ThreadStart(() =>
             {
                 var wmsEntities = new WMSEntities();
                 ReceiptTicketView[] receiptTicketViews = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>("SELECT * FROM ReceiptTicketView WHERE Warehouse = @warehouseID AND ProjectID = @projectID", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID)}).ToArray();
+                    receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>("SELECT * FROM ReceiptTicketView WHERE Warehouse = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID) }).ToArray();
                 }
                 else
                 {
                     double tmp;
-                    if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
-                    {
-                        value = "'" + value + "'";
-                    }
+                    //if (Double.TryParse(value, out tmp) == false) //不是数字则加上单引号
+                    //{
+                    //    //value =  + value + "'";
+                    //}
                     try
                     {
-                        receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>(String.Format("SELECT * FROM ReceiptTicketView WHERE {0} = @key AND Warehouse = @warehouseID AND ProjectID = @projectID ", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID)}).ToArray();
+                        Console.Write(value);
+                        string sql = "SELECT * FROM ReceiptTicketView WHERE " + key + " = @key AND Warehouse = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC";
+                        Console.WriteLine(sql);
+                        receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>(sql, new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
+
+                        //receiptTicketViews = (from rtv in wmsEntities.ReceiptTicketView where rtv.State == )
+                        //receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>("SELECT * FROM ReceiptTicketView WHERE ")
                     }
                     catch
                     {
@@ -118,15 +124,22 @@ namespace WMS.UI
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketView, (from kn in ReceiptMetaData.receiptNameKeys select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            
+
                             worksheet[n, j] = columns[j];
                         }
                         n++;
                     }
                 }));
-                    
-             })).Start();
-             
+                if (receiptTicketViews.Length == 0)
+                {
+                    int m = ReceiptUtilities.GetFirstColumnIndex(ReceiptMetaData.receiptNameKeys);
+
+                    //this.reoGridControl1.Worksheets[0][6, 8] = "32323";
+                    this.reoGridControlUser.Worksheets[0][0, m] = "无查询结果";
+                }
+
+            })).Start();
+
         }
 
         private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -136,7 +149,7 @@ namespace WMS.UI
 
         private void buttonSelect_Click(object sender, EventArgs e)
         {
-            
+
             if (comboBoxSelect.SelectedIndex == 0)
             {
                 Search(null, null);
@@ -145,7 +158,7 @@ namespace WMS.UI
             {
                 string condition = this.comboBoxSelect.Text;
                 string key = "";
-                foreach(KeyName kn in ReceiptMetaData.receiptNameKeys)
+                foreach (KeyName kn in ReceiptMetaData.receiptNameKeys)
                 {
                     if (condition == kn.Name)
                     {
@@ -160,7 +173,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID,this.userID);
+            FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID, this.userID);
             receiptTicketModify.SetModifyFinishedCallback(() =>
             {
                 this.Search(null, null);
@@ -267,7 +280,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 if (receiptTicket.State == "送检中" || receiptTicket.State == "已收货")
                 {
-                    MessageBox.Show("该收货单"+ receiptTicket.State);
+                    MessageBox.Show("该收货单" + receiptTicket.State);
                     return;
                 }
                 FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(receiptTicketID);
@@ -299,18 +312,25 @@ namespace WMS.UI
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 WMSEntities wmsEntities = new WMSEntities();
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-                SubmissionTicket submissionTicket = (from sb in wmsEntities.SubmissionTicket where sb.ReceiptTicketID == receiptTicketID && sb.State != STRING_CANCEL select sb).Single();
-                SubmissionTicketItem[] submissionTicketItems = (from sbi in wmsEntities.SubmissionTicketItem where sbi.SubmissionTicketID == submissionTicket.ID select sbi).ToArray();
-                if (receiptTicket.State == "送检中" || receiptTicket.State == "部分送检中")
+                SubmissionTicket submissionTicket = (from sb in wmsEntities.SubmissionTicket where sb.ReceiptTicketID == receiptTicketID && sb.State != STRING_CANCEL select sb).FirstOrDefault();
+                if (submissionTicket == null)
                 {
-                    receiptTicket.State = "待检";
-                    //submissionTicket.State = STRING_CANCEL;
-                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ReceiptTicketID=@receiptTicketID", new SqlParameter("receiptTicket", receiptTicketID));
-                    wmsEntities.SaveChanges();
+                    MessageBox.Show("该收货单没有送检！");
                 }
                 else
                 {
-                    MessageBox.Show("此收货单并未送检!");
+                    SubmissionTicketItem[] submissionTicketItems = (from sbi in wmsEntities.SubmissionTicketItem where sbi.SubmissionTicketID == submissionTicket.ID select sbi).ToArray();
+                    if (receiptTicket.State == "送检中" || receiptTicket.State == "部分送检中")
+                    {
+                        receiptTicket.State = "待送检";
+                        //submissionTicket.State = STRING_CANCEL;
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ReceiptTicketID=@receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID));
+                        wmsEntities.SaveChanges();
+                    }
+                    else
+                    {
+                        MessageBox.Show("此收货单并未送检!");
+                    }
                 }
             }
             catch
@@ -345,7 +365,7 @@ namespace WMS.UI
         }
 
         private void buttonMakePutaway_Click(object sender, EventArgs e)
-        {   
+        {
             var worksheet = this.reoGridControlUser.Worksheets[0];
             try
             {
@@ -357,7 +377,7 @@ namespace WMS.UI
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-                FormPutaway formPutaway = new FormPutaway(receiptTicketID);
+                FormPutaway formPutaway = new FormPutaway(receiptTicketID, this.warehouseID, this.projectID);
                 formPutaway.Show();
                 /*
                 if (receiptTicket.State == "收货")
@@ -379,7 +399,7 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
         }
 
         private void buttonReceiptCancel_Click(object sender, EventArgs e)
@@ -396,6 +416,10 @@ namespace WMS.UI
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID);
+                formReceiptArrivalCheck.SetNextCallBack(new Action(() =>
+                {
+                    this.Search(null, null);
+                }));
                 formReceiptArrivalCheck.Show();
             }
             catch
@@ -431,14 +455,15 @@ namespace WMS.UI
                     receiptTicket.State = "已收货";
                     wmsEntities.Database.ExecuteSqlCommand(
                         "UPDATE ReceiptTicketItem SET State='已收货' " +
-                        "WHERE ReceiptTicketID=@receiptTicketID", 
+                        "WHERE ReceiptTicketID=@receiptTicketID",
                         new SqlParameter("receiptTicketID", receiptTicketID));
                     new Thread(() =>
                     {
                         wmsEntities.SaveChanges();
                         MessageBox.Show("成功");
-                        this.Invoke(new Action(() => {
-                            this.Search(null,null);
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search(null, null);
                         }));
                     }).Start();
                 }
@@ -452,7 +477,7 @@ namespace WMS.UI
 
         private void comboBoxSelect_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -500,7 +525,8 @@ namespace WMS.UI
                     {
                         wmsEntities.SaveChanges();
                         MessageBox.Show("成功");
-                        this.Invoke(new Action(() => {
+                        this.Invoke(new Action(() =>
+                        {
                             this.Search(null, null);
                         }));
                     }).Start();

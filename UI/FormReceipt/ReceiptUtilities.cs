@@ -48,5 +48,22 @@ namespace WMS.UI
 
             return stockInfo;
         }
+
+        public static int GetFirstColumnIndex(KeyName[] keyName)
+        {
+            int n = 0;
+            foreach(KeyName kn in keyName)
+            {
+                if (kn.Visible == false)
+                {
+                    n++;
+                }
+                else
+                {
+                    return n;
+                }
+            }
+            return n;
+        }
     }
 }

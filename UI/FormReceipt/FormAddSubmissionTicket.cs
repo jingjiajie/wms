@@ -75,6 +75,8 @@ namespace WMS.UI.FormReceipt
                 new Thread(() =>
                 {
                     wmsEntities.SaveChanges();
+                    submissionTicket.No = Utilities.GenerateNo("J", submissionTicket.ID);
+                    wmsEntities.SaveChanges();
                     MessageBox.Show("成功");
                 }).Start();
             }
