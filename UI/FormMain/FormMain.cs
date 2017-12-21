@@ -364,5 +364,13 @@ namespace WMS.UI
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
         }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("确定退出吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }
