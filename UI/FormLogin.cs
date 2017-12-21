@@ -129,7 +129,7 @@ namespace WMS.UI
                     {
                         this.labelStatus.Text = "";
                         FormMain formMain = new FormMain(user.ID);
-                        formMain.SetFormClosedCallback(this.Close);
+                        formMain.SetFormClosedCallback(this.Dispose);
                         formMain.Show();
                         this.Hide();
                         ClickCount = 0;
@@ -155,6 +155,9 @@ namespace WMS.UI
                 this.textBoxPassword.Focus();
                 this.textBoxPassword.SelectAll();
                 return;
+            }else if (e.KeyChar == 27) //ESC
+            {
+                this.Close();
             }
         }
 
@@ -165,6 +168,10 @@ namespace WMS.UI
                 this.buttonEnter.Focus();
                 this.buttonEnter.PerformClick();
                 return;
+            }
+            else if (e.KeyChar == 27) //ESC
+            {
+                this.Close();
             }
         }
 
@@ -202,6 +209,7 @@ namespace WMS.UI
             this.labelClickCount.Visible = false;
             this.labelClickCount.ForeColor = Color.White;
             this.labelClickCount.Font = new Font("黑体", 12);
+            this.CancelButton = buttonClosing;
         }
 
         private void textBoxUsername_Leave(object sender, EventArgs e)
@@ -239,6 +247,22 @@ namespace WMS.UI
             finally
             {
                 this.possibleUserMutex.ReleaseMutex();
+            }
+        }
+
+        private void FormLogin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == 27) //ESC
+            {
+                this.Close();
+            }
+        }
+
+        private void FormLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("确定退出吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                e.Cancel = true;
             }
         }
     }

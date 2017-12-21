@@ -1,4 +1,4 @@
-ï»¿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -42,27 +42,27 @@ namespace WMS.UI
         {
             TreeNode[] treeNodes = new TreeNode[]
             {
-                MakeTreeNode("åŸºæœ¬ä¿¡æ¯",new TreeNode[]{
-                    MakeTreeNode("ç”¨æˆ·ç®¡ç†"),
-                    MakeTreeNode("ä¾›åº”å•†ç®¡ç†"),
-                    MakeTreeNode("é›¶ä»¶ç®¡ç†"),
-                    MakeTreeNode("ä»“åº“ç®¡ç†"),
-                    MakeTreeNode("é¡¹ç›®ç®¡ç†"),
+                MakeTreeNode("»ù±¾ĞÅÏ¢",new TreeNode[]{
+                    MakeTreeNode("ÓÃ»§¹ÜÀí"),
+                    MakeTreeNode("¹©Ó¦ÉÌ¹ÜÀí"),
+                    MakeTreeNode("Áã¼ş¹ÜÀí"),
+                    MakeTreeNode("²Ö¿â¹ÜÀí"),
+                    MakeTreeNode("ÏîÄ¿¹ÜÀí"),
                     }),
-                MakeTreeNode("æ”¶è´§ç®¡ç†",new TreeNode[]{
-                    MakeTreeNode("åˆ°è´§ç®¡ç†"),
-                    MakeTreeNode("é€æ£€å•ç®¡ç†"),
-                    MakeTreeNode("ä¸Šæ¶ç®¡ç†"),
+                MakeTreeNode("ÊÕ»õ¹ÜÀí",new TreeNode[]{
+                    MakeTreeNode("µ½»õ¹ÜÀí"),
+                    MakeTreeNode("ËÍ¼ìµ¥¹ÜÀí"),
+                    MakeTreeNode("ÉÏ¼Ü¹ÜÀí"),
 
                     }),
-                MakeTreeNode("å‘è´§ç®¡ç†",new TreeNode[]{
-                    MakeTreeNode("å‘è´§å•ç®¡ç†"),
-                    MakeTreeNode("ä½œä¸šå•ç®¡ç†"),
-                    MakeTreeNode("å‡ºåº“å•ç®¡ç†"),
+                MakeTreeNode("·¢»õ¹ÜÀí",new TreeNode[]{
+                    MakeTreeNode("·¢»õµ¥¹ÜÀí"),
+                    MakeTreeNode("×÷Òµµ¥¹ÜÀí"),
+                    MakeTreeNode("³ö¿âµ¥¹ÜÀí"),
                     }),
-                MakeTreeNode("åº“å­˜ç®¡ç†",new TreeNode[]{
-                    MakeTreeNode("åº“å­˜ä¿¡æ¯"),
-                    MakeTreeNode("åº“å­˜ç›˜ç‚¹"),
+                MakeTreeNode("¿â´æ¹ÜÀí",new TreeNode[]{
+                    MakeTreeNode("¿â´æĞÅÏ¢"),
+                    MakeTreeNode("¿â´æÅÌµã"),
                     }),
             };
 
@@ -75,7 +75,7 @@ namespace WMS.UI
             this.treeViewLeft.Nodes.AddRange(nodes);
         }
 
-        //æ£€æµ‹ç”¨æˆ·æ˜¯å¦æœ‰ç›¸åº”åŠŸèƒ½çš„æƒé™
+        //¼ì²âÓÃ»§ÊÇ·ñÓĞÏàÓ¦¹¦ÄÜµÄÈ¨ÏŞ
         private bool HasAuthority(string funcName)
         {
             var searchResult = (from fa in FormMainMetaData.FunctionAuthorities
@@ -92,7 +92,7 @@ namespace WMS.UI
             return false;
         }
 
-        //è·å–æœ‰æƒé™çš„æ‰€æœ‰å­èŠ‚ç‚¹
+        //»ñÈ¡ÓĞÈ¨ÏŞµÄËùÓĞ×Ó½Úµã
         private TreeNode GetAuthenticatedSubTreeNodes(TreeNode node)
         {
             if (HasAuthority(node.Text) == false)
@@ -133,7 +133,7 @@ namespace WMS.UI
             {
                 if (e.Node.ForeColor == SystemColors.Control)
                 {
-                    e.Cancel = true;  //ä¸è®©é€‰ä¸­ç¦ç”¨èŠ‚ç‚¹
+                    e.Cancel = true;  //²»ÈÃÑ¡ÖĞ½ûÓÃ½Úµã
                 }
             }
         }
@@ -143,7 +143,7 @@ namespace WMS.UI
             {
                 if (e.Node.ForeColor == SystemColors.Control)
                 {
-                    e.Cancel = true; //ä¸è®©é€‰ä¸­ç¦ç”¨èŠ‚ç‚¹
+                    e.Cancel = true; //²»ÈÃÑ¡ÖĞ½ûÓÃ½Úµã
 
                 }
             }
@@ -151,14 +151,14 @@ namespace WMS.UI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            //åˆ·æ–°å·¦è¾¹æ ‘å½¢æ¡†
+            //Ë¢ĞÂ×ó±ßÊ÷ĞÎ¿ò
             this.RefreshTreeView();
 
-            //åˆ·æ–°é¡¶éƒ¨
+            //Ë¢ĞÂ¶¥²¿
             this.labelUsername.Text = this.user.Username;
-            this.labelAuth.Text = this.user.AuthorityName;
+            this.labelAuth.Text = this.user.AuthorityName+" :";
 
-            //çª—ä½“å¤§å°æ ¹æ®æ˜¾ç¤ºå±æ”¹å˜
+            //´°Ìå´óĞ¡¸ù¾İÏÔÊ¾ÆÁ¸Ä±ä
             int DeskWidth = Screen.PrimaryScreen.WorkingArea.Width;
             int DeskHeight = Screen.PrimaryScreen.WorkingArea.Height;
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
@@ -166,7 +166,7 @@ namespace WMS.UI
 
             new Thread(()=>
             {
-                //ä¸‹æ‹‰æ æ˜¾ç¤ºä»“åº“
+                //ÏÂÀ­À¸ÏÔÊ¾²Ö¿â
                 WMSEntities wms = new WMSEntities();
                 var allWarehouses = (from s in wms.Warehouse select s).ToArray();
                 var allProjects = (from s in wms.Project select s).ToArray();
@@ -199,147 +199,147 @@ namespace WMS.UI
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
             Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 0, IntPtr.Zero);
-            if (treeViewLeft.SelectedNode.Text == "ç”¨æˆ·ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "ÓÃ»§¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormUser l = new FormUser();//å®ä¾‹åŒ–å­çª—å£
+                FormUser l = new FormUser();//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "ä¾›åº”å•†ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "¹©Ó¦ÉÌ¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormBaseSupplier l = new FormBaseSupplier(user.Authority,Convert.ToInt32(this.user.SupplierID));//å®ä¾‹åŒ–å­çª—å£
+                FormBaseSupplier l = new FormBaseSupplier(user.Authority,Convert.ToInt32(this.user.SupplierID));//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "é›¶ä»¶ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "Áã¼ş¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormBaseComponent l = new FormBaseComponent(user.Authority, Convert.ToInt32(this.user.SupplierID), this.project.ID, this.warehouse.ID);//å®ä¾‹åŒ–å­çª—å£
+                FormBaseComponent l = new FormBaseComponent(user.Authority, Convert.ToInt32(this.user.SupplierID), this.project.ID, this.warehouse.ID);//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "ä»“åº“ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "²Ö¿â¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormBaseWarehouse l = new FormBaseWarehouse();//å®ä¾‹åŒ–å­çª—å£
+                FormBaseWarehouse l = new FormBaseWarehouse();//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "é¡¹ç›®ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "ÏîÄ¿¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormBase.FormBaseProject l = new FormBase.FormBaseProject();//å®ä¾‹åŒ–å­çª—å£
+                FormBase.FormBaseProject l = new FormBase.FormBaseProject();//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "åˆ°è´§ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "µ½»õ¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID);//å®ä¾‹åŒ–å­çª—å£
+                FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID);//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
           
-            if (treeViewLeft.SelectedNode.Text == "ä¸Šæ¶ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "ÉÏ¼Ü¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormReceiptShelves l = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID);//å®ä¾‹åŒ–å­çª—å£
+                FormReceiptShelves l = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID);//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "å‘è´§å•ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "·¢»õµ¥¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormShipmentTicket l = new FormShipmentTicket(this.user.ID,this.project.ID,this.warehouse.ID);//å®ä¾‹åŒ–å­çª—å£
+                FormShipmentTicket l = new FormShipmentTicket(this.user.ID,this.project.ID,this.warehouse.ID);//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "ä½œä¸šå•ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "×÷Òµµ¥¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormJobTicket l = new FormJobTicket(this.user.ID,this.project.ID,this.warehouse.ID);//å®ä¾‹åŒ–å­çª—å£
+                FormJobTicket l = new FormJobTicket(this.user.ID,this.project.ID,this.warehouse.ID);//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "å‡ºåº“å•ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "³ö¿âµ¥¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                FormPutOutStorageTicket l = new FormPutOutStorageTicket(this.user.ID,this.project.ID,this.warehouse.ID);//å®ä¾‹åŒ–å­çª—å£
+                FormPutOutStorageTicket l = new FormPutOutStorageTicket(this.user.ID,this.project.ID,this.warehouse.ID);//ÊµÀı»¯×Ó´°¿Ú
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//çª—å£å¤§å°
-                l.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//´°¿Ú´óĞ¡
+                l.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "åº“å­˜ä¿¡æ¯")
+            if (treeViewLeft.SelectedNode.Text == "¿â´æĞÅÏ¢")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                var formBaseStock = new FormStockInfo(this.user.ID,this.project.ID,this.warehouse.ID);//å®ä¾‹åŒ–å­çª—å£
+                var formBaseStock = new FormStockInfo(this.user.ID,this.project.ID,this.warehouse.ID);//ÊµÀı»¯×Ó´°¿Ú
                 formBaseStock.TopLevel = false;
-                formBaseStock.Dock = DockStyle.Fill;//çª—å£å¤§å°
-                formBaseStock.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                formBaseStock.Dock = DockStyle.Fill;//´°¿Ú´óĞ¡
+                formBaseStock.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(formBaseStock);
                 formBaseStock.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "åº“å­˜ç›˜ç‚¹")
+            if (treeViewLeft.SelectedNode.Text == "¿â´æÅÌµã")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                var formBaseStock = new FormStockInfoCheckTicket(this.project .ID ,this.warehouse .ID ,this.user.ID);//å®ä¾‹åŒ–å­çª—å£
+                var formBaseStock = new FormStockInfoCheckTicket(this.project .ID ,this.warehouse .ID ,this.user.ID);//ÊµÀı»¯×Ó´°¿Ú
                 formBaseStock.TopLevel = false;
-                formBaseStock.Dock = DockStyle.Fill;//çª—å£å¤§å°
-                formBaseStock.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                formBaseStock.Dock = DockStyle.Fill;//´°¿Ú´óĞ¡
+                formBaseStock.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(formBaseStock);
                 formBaseStock.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "é€æ£€å•ç®¡ç†")
+            if (treeViewLeft.SelectedNode.Text == "ËÍ¼ìµ¥¹ÜÀí")
             {
-                this.panelRight.Controls.Clear();//æ¸…ç©º
+                this.panelRight.Controls.Clear();//Çå¿Õ
                 panelRight.Visible = true;
-                var formSubmissionManage = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID);//å®ä¾‹åŒ–å­çª—å£
+                var formSubmissionManage = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID);//ÊµÀı»¯×Ó´°¿Ú
                 formSubmissionManage.TopLevel = false;
-                formSubmissionManage.Dock = DockStyle.Fill;//çª—å£å¤§å°
-                formSubmissionManage.FormBorderStyle = FormBorderStyle.None;//æ²¡æœ‰æ ‡é¢˜æ 
+                formSubmissionManage.Dock = DockStyle.Fill;//´°¿Ú´óĞ¡
+                formSubmissionManage.FormBorderStyle = FormBorderStyle.None;//Ã»ÓĞ±êÌâÀ¸
                 this.panelRight.Controls.Add(formSubmissionManage);
                 formSubmissionManage.Show();
             }
@@ -363,6 +363,14 @@ namespace WMS.UI
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("È·¶¨ÍË³öÂğ£¿", "ÌáÊ¾", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
