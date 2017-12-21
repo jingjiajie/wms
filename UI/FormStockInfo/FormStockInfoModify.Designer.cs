@@ -83,7 +83,7 @@
             this.groupBox1.Size = new System.Drawing.Size(774, 279);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "修改库存信息";
+            this.groupBox1.Text = "库存信息";
             // 
             // tableLayoutPanel2
             // 

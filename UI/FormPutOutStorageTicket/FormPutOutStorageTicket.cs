@@ -100,7 +100,20 @@ namespace WMS.UI
                     parameters.Add(new SqlParameter("value", value));
                 }
                 sql += " ORDER BY ID DESC";
-                putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>(sql, parameters.ToArray()).ToArray();
+                try
+                {
+                    putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>(sql, parameters.ToArray()).ToArray();
+                }
+                catch (EntityCommandExecutionException)
+                {
+                    MessageBox.Show("查询失败，请检查输入条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -125,45 +138,35 @@ namespace WMS.UI
         private void buttonOpen_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            try
-            {
-                if (worksheet.SelectionRange.Rows != 1)
-                {
-                    throw new Exception();
-                }
-                int putOutStorageTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formPutOutStorageTicketItem = new FormPutOutStorageTicketItem(putOutStorageTicketID);
-                formPutOutStorageTicketItem.Show();
-            }
-            catch
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+
+            if (ids.Length != 1)
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            int putOutStorageTicketID = ids[0];
+            var formPutOutStorageTicketItem = new FormPutOutStorageTicketItem(putOutStorageTicketID);
+            formPutOutStorageTicketItem.Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            try
-            {
-                if (worksheet.SelectionRange.Rows != 1)
-                {
-                    throw new Exception();
-                }
-                int putOutStorageTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formPutOutStorageTicketModify = new FormPutOutStorageTicketModify(this.userID,putOutStorageTicketID);
-                formPutOutStorageTicketModify.SetModifyFinishedCallback(() =>
-                {
-                    this.Search();
-                });
-                formPutOutStorageTicketModify.Show();
-            }
-            catch
+
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if (ids.Length != 1)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            int putOutStorageTicketID = ids[0];
+            var formPutOutStorageTicketModify = new FormPutOutStorageTicketModify(this.userID, putOutStorageTicketID);
+            formPutOutStorageTicketModify.SetModifyFinishedCallback(() =>
+            {
+                this.Search();
+            });
+            formPutOutStorageTicketModify.Show();
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -186,11 +189,19 @@ namespace WMS.UI
             new Thread(new ThreadStart(()=>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                foreach(int id in ids)
+                try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicket WHERE ID = @id",new SqlParameter("@id",id));
+                    foreach (int id in ids)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicket WHERE ID = @id", new SqlParameter("@id", id));
+                    }
+                    wmsEntities.SaveChanges();
                 }
-                wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("删除成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();

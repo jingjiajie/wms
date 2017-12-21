@@ -39,13 +39,29 @@ namespace WMS.UI
         private void FormShipmentTicketItem_Load(object sender, EventArgs e)
         {
             InitComponents();
+
+            ShipmentTicket shipmentTicket = null;
+            try
+            {
+                shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == shipmentTicketID select s).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+            if(shipmentTicket == null)
+            {
+                MessageBox.Show("发货单信息不存在，请刷新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
             this.Search();
         }
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
@@ -74,11 +90,27 @@ namespace WMS.UI
             formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID)=>
             {
                 this.curStockInfoID = selectedStockInfoID;
+                if (!this.IsDisposed)
+                {
+                    this.Invoke(new Action(()=>
+                    {
+                        textBoxComponentName.Text = "加载中...";
+                    }));
+                }
                 new Thread(new ThreadStart(()=>
                 {
-                    StockInfoView stockInfoView = (from s in this.wmsEntities.StockInfoView
-                                                   where s.ID == selectedStockInfoID
-                                                   select s).Single();
+                    StockInfoView stockInfoView = null;
+                    try
+                    {
+                        stockInfoView = (from s in this.wmsEntities.StockInfoView
+                                         where s.ID == selectedStockInfoID
+                                         select s).Single();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("刷新数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     this.Invoke(new Action(() =>
                     {
                         Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
@@ -116,9 +148,18 @@ namespace WMS.UI
                 return;
             }
             int id = ids[0];
-            ShipmentTicketItemView shipmentTicketItemView = (from s in this.wmsEntities.ShipmentTicketItemView
-                                                             where s.ID == id
-                                                             select s).FirstOrDefault();
+            ShipmentTicketItemView shipmentTicketItemView = null;
+            try
+            {
+                shipmentTicketItemView = (from s in this.wmsEntities.ShipmentTicketItemView
+                                          where s.ID == id
+                                          select s).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("刷新数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (shipmentTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应发货单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -145,10 +186,23 @@ namespace WMS.UI
             worksheet[0, 1] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView
-                                                                    where s.ShipmentTicketID == this.shipmentTicketID
-                                                                    orderby s.ID descending
-                                                                    select s).ToArray();
+                ShipmentTicketItemView[] shipmentTicketItemViews = null;
+                try
+                {
+                    shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView
+                                                                        where s.ShipmentTicketID == this.shipmentTicketID
+                                                                        orderby s.ID descending
+                                                                        select s).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("查询数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (this.IsDisposed == false)
+                    {
+                        this.Invoke(new Action(this.Close));
+                    }
+                    return;
+                }
 
                 this.Invoke(new Action(() =>
                 {
@@ -187,12 +241,20 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(() =>
             {
-                //将状态置为已完成
-                foreach (int id in selectedIDs)
+                try
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
+                    //将状态置为已完成
+                    foreach (int id in selectedIDs)
+                    {
+                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
+                    }
+                    this.wmsEntities.SaveChanges();
                 }
-                this.wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 //如果作业单中所有条目都完成，询问是否将作业单标记为完成
                 int unfinishedShipmentTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM ShipmentTicketItem WHERE ShipmentTicketID = {0} AND State <> '{1}'", this.shipmentTicketID, STRING_FINISHED)).Single();
@@ -200,12 +262,21 @@ namespace WMS.UI
                 {
                     if (MessageBox.Show("检测到所有的零件都已经收货完成，是否将出库单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.shipmentTicketID));
-                        this.wmsEntities.SaveChanges();
+                        try
+                        {
+                            this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.shipmentTicketID));
+                            this.wmsEntities.SaveChanges();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
                     }
                     this.shipmentTicketStateChangedCallback?.Invoke();
                 }
-                this.Invoke(new Action(()=>
+
+                this.Invoke(new Action(() =>
                 {
                     this.Search();
                 }));
@@ -225,11 +296,19 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(() =>
             {
-                foreach (int id in selectedIDs)
+                try
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
+                    foreach (int id in selectedIDs)
+                    {
+                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
+                    }
+                    this.wmsEntities.SaveChanges();
                 }
-                this.wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action<int>(this.Search));
                 MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
@@ -253,8 +332,16 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(()=>
             {
-                this.wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
-                this.wmsEntities.SaveChanges();
+                try
+                {
+                    this.wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
+                    this.wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(()=>
                 {
                     this.Search(shipmentTicketItem.ID);
@@ -275,11 +362,19 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 int id = ids[0];
-                var shipmentTicketItem = (from s in this.wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
-              
+                ShipmentTicketItem shipmentTicketItem = null;
+                try
+                {
+                    shipmentTicketItem = (from s in this.wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 if (shipmentTicketItem == null)
                 {
-                    MessageBox.Show("未找到此发货单条目信息","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("发货单条目不存在，请重新查询","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 shipmentTicketItem.StockInfoID = this.curStockInfoID;
@@ -289,7 +384,15 @@ namespace WMS.UI
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                this.wmsEntities.SaveChanges();
+                try
+                {
+                    this.wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(() =>
                 {
                     this.Search();
@@ -307,11 +410,19 @@ namespace WMS.UI
                 MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            foreach(int id in ids)
+            try
             {
-                this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicketItem WHERE ID = @id",new SqlParameter("@id",id));
+                foreach (int id in ids)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicketItem WHERE ID = @id", new SqlParameter("@id", id));
+                }
+                this.wmsEntities.SaveChanges();
             }
-            this.wmsEntities.SaveChanges();
+            catch
+            {
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             this.Search();
             MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;

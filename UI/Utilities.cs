@@ -159,6 +159,11 @@ namespace WMS.UI
                 //根据源类型不同，将编辑框中的文本转换成合适的类型
                 if (originType == typeof(String))
                 {
+                    if(curTextBox.Text.Length > 64)
+                    {
+                        errorMessage = chineseName + " 长度不允许超过64个字";
+                        return false;
+                    }
                     p.SetValue(targetObject, curTextBox.Text, null);
                 }
                 else if (originType == typeof(int?) || originType == typeof(int))
@@ -177,7 +182,13 @@ namespace WMS.UI
                 {
                     try
                     {
-                        p.SetValue(targetObject, decimal.Parse(curTextBox.Text), null);
+                        decimal value = decimal.Parse(curTextBox.Text);
+                        if(value > 1e17M || value < -1e17M)
+                        {
+                            errorMessage = chineseName + " 数值过大，请重新输入";
+                            return false;
+                        }
+                        p.SetValue(targetObject, value, null);
                     }
                     catch
                     {
