@@ -156,7 +156,7 @@ namespace WMS.UI
 
             //刷新顶部
             this.labelUsername.Text = this.user.Username;
-            this.labelAuth.Text = this.user.AuthorityName;
+            this.labelAuth.Text = this.user.AuthorityName+" :";
 
             //窗体大小根据显示屏改变
             int DeskWidth = Screen.PrimaryScreen.WorkingArea.Width;
@@ -364,5 +364,7 @@ namespace WMS.UI
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
         }
+
+
     }
 }

@@ -202,6 +202,7 @@ namespace WMS.UI
             this.labelClickCount.Visible = false;
             this.labelClickCount.ForeColor = Color.White;
             this.labelClickCount.Font = new Font("黑体", 12);
+            this.CancelButton = buttonClosing;
         }
 
         private void textBoxUsername_Leave(object sender, EventArgs e)
