@@ -337,6 +337,7 @@ namespace WMS.UI.FormReceipt
                         this.Invoke(new Action(() =>
                         {
                             this.Search();
+                            CallBack();
                         }));
                     }).Start();
                 }
