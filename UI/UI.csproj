@@ -666,7 +666,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="icon\" />
+    <None Include="icon\122.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
