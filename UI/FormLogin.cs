@@ -209,9 +209,6 @@ namespace WMS.UI
             //让窗口透明www
             this.TransparencyKey = Color.Red;
             this.BackColor = Color.Red;
-            //panel1.BackColor = Color.FromRvb(120, Color.Red);
-            panel1.BackColor = Color.FromArgb(65, 204, 212, 230);//设置panel白透明www
-            //panel1.BackColor = Color.FromArgb(65, 51, 43, 25);//设置panel黑透明www
 
             this.labelStatus.Text = "";
             this.labelClickCount.Visible = false;
@@ -319,6 +316,11 @@ namespace WMS.UI
         private void buttonClosing_MouseLeave(object sender, EventArgs e)
         {
             buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.botton2__3_;
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
