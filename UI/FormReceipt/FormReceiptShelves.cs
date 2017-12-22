@@ -197,7 +197,28 @@ namespace WMS.UI.FormReceipt
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+                FormPutawayModify formPutawayModify = new FormPutawayModify(putawayTicketID);
+                formPutawayModify.SetCallBack(new Action(() =>
+                {
+                    this.Search(null, null);
+                }));
+                formPutawayModify.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.Search(null, null);
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)

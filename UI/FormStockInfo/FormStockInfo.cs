@@ -108,7 +108,20 @@ namespace WMS.UI
                     parameters.Add(new SqlParameter("value", value));
                 }
                 sql += " ORDER BY ID DESC"; //倒序排序
-                stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(sql, parameters.ToArray()).ToArray();
+                try
+                {
+                    stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(sql, parameters.ToArray()).ToArray();
+                }
+                catch (EntityCommandExecutionException)
+                {
+                    MessageBox.Show("查询失败，请检查输入查询条件","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                catch(Exception)
+                {
+                    MessageBox.Show("查询失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.reoGridControlMain.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
