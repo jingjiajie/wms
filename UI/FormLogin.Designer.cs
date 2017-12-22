@@ -47,9 +47,10 @@
             this.labelPsaaword.BackColor = System.Drawing.Color.Transparent;
             this.labelPsaaword.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPsaaword.ForeColor = System.Drawing.Color.White;
-            this.labelPsaaword.Location = new System.Drawing.Point(106, 148);
+            this.labelPsaaword.Location = new System.Drawing.Point(159, 237);
+            this.labelPsaaword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPsaaword.Name = "labelPsaaword";
-            this.labelPsaaword.Size = new System.Drawing.Size(61, 24);
+            this.labelPsaaword.Size = new System.Drawing.Size(96, 36);
             this.labelPsaaword.TabIndex = 7;
             this.labelPsaaword.Text = "密码：";
             this.labelPsaaword.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -62,9 +63,10 @@
             this.labelusername.BackColor = System.Drawing.Color.Transparent;
             this.labelusername.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelusername.ForeColor = System.Drawing.Color.White;
-            this.labelusername.Location = new System.Drawing.Point(106, 100);
+            this.labelusername.Location = new System.Drawing.Point(159, 160);
+            this.labelusername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelusername.Name = "labelusername";
-            this.labelusername.Size = new System.Drawing.Size(78, 24);
+            this.labelusername.Size = new System.Drawing.Size(123, 36);
             this.labelusername.TabIndex = 6;
             this.labelusername.Text = "用户名：";
             this.labelusername.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -74,10 +76,11 @@
             // textBoxPassword
             // 
             this.textBoxPassword.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxPassword.Location = new System.Drawing.Point(203, 145);
+            this.textBoxPassword.Location = new System.Drawing.Point(304, 232);
+            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(193, 29);
+            this.textBoxPassword.Size = new System.Drawing.Size(288, 43);
             this.textBoxPassword.TabIndex = 2;
             this.textBoxPassword.UseSystemPasswordChar = true;
             this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPassword_KeyPress);
@@ -86,9 +89,10 @@
             // 
             this.textBoxUsername.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxUsername.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxUsername.Location = new System.Drawing.Point(203, 97);
+            this.textBoxUsername.Location = new System.Drawing.Point(304, 155);
+            this.textBoxUsername.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(193, 29);
+            this.textBoxUsername.Size = new System.Drawing.Size(288, 43);
             this.textBoxUsername.TabIndex = 1;
             this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             this.textBoxUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
@@ -98,9 +102,10 @@
             // 
             this.buttonClosing.FlatAppearance.BorderSize = 0;
             this.buttonClosing.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.buttonClosing.Location = new System.Drawing.Point(277, 194);
+            this.buttonClosing.Location = new System.Drawing.Point(416, 310);
+            this.buttonClosing.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonClosing.Name = "buttonClosing";
-            this.buttonClosing.Size = new System.Drawing.Size(117, 36);
+            this.buttonClosing.Size = new System.Drawing.Size(176, 58);
             this.buttonClosing.TabIndex = 4;
             this.buttonClosing.Text = "退出";
             this.buttonClosing.UseVisualStyleBackColor = true;
@@ -114,9 +119,10 @@
             this.buttonEnter.FlatAppearance.BorderSize = 0;
             this.buttonEnter.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.buttonEnter.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonEnter.Location = new System.Drawing.Point(118, 194);
+            this.buttonEnter.Location = new System.Drawing.Point(177, 310);
+            this.buttonEnter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonEnter.Name = "buttonEnter";
-            this.buttonEnter.Size = new System.Drawing.Size(117, 36);
+            this.buttonEnter.Size = new System.Drawing.Size(176, 58);
             this.buttonEnter.TabIndex = 3;
             this.buttonEnter.Text = "确认";
             this.buttonEnter.UseVisualStyleBackColor = false;
@@ -128,9 +134,10 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 20F, System.Drawing.FontStyle.Bold);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(30, 17);
+            this.label1.Location = new System.Drawing.Point(45, 27);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(452, 45);
+            this.label1.Size = new System.Drawing.Size(716, 72);
             this.label1.TabIndex = 10;
             this.label1.Text = "安途丰达WMS物流管理系统";
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -143,10 +150,9 @@
             this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.labelStatus.ForeColor = System.Drawing.Color.White;
-            this.labelStatus.Location = new System.Drawing.Point(205, 266);
-            this.labelStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelStatus.Location = new System.Drawing.Point(308, 426);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(192, 23);
+            this.labelStatus.Size = new System.Drawing.Size(306, 35);
             this.labelStatus.TabIndex = 11;
             this.labelStatus.Text = "正在登陆，请耐心等待...";
             // 
@@ -154,10 +160,9 @@
             // 
             this.labelClickCount.AutoSize = true;
             this.labelClickCount.BackColor = System.Drawing.Color.Transparent;
-            this.labelClickCount.Location = new System.Drawing.Point(445, 226);
-            this.labelClickCount.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelClickCount.Location = new System.Drawing.Point(668, 362);
             this.labelClickCount.Name = "labelClickCount";
-            this.labelClickCount.Size = new System.Drawing.Size(15, 15);
+            this.labelClickCount.Size = new System.Drawing.Size(22, 24);
             this.labelClickCount.TabIndex = 12;
             this.labelClickCount.Text = "1";
             // 
@@ -171,22 +176,24 @@
             this.panel1.Controls.Add(this.buttonClosing);
             this.panel1.Controls.Add(this.labelPsaaword);
             this.panel1.Controls.Add(this.buttonEnter);
-            this.panel1.Location = new System.Drawing.Point(46, 49);
+            this.panel1.Location = new System.Drawing.Point(69, 78);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(517, 251);
+            this.panel1.Size = new System.Drawing.Size(776, 402);
             this.panel1.TabIndex = 13;
             // 
             // FormLogin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
             this.BackgroundImage = global::WMS.UI.Properties.Resources._50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e;
-            this.ClientSize = new System.Drawing.Size(609, 337);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(914, 539);
             this.Controls.Add(this.labelClickCount);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.labelStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormLogin";
