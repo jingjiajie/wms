@@ -16,9 +16,15 @@ namespace WMS.UI.FormBase
     public partial class FormUser : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormUser()
+        private int userID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
+        public FormUser(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
+            this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         private void FormUser_Load(object sender, EventArgs e)
@@ -170,6 +176,11 @@ namespace WMS.UI.FormBase
             }
             if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
+                return;
+            }
+            if (deleteIDs.Contains(this.userID))
+            {
+                MessageBox.Show("登录用户不可删除自己！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             this.labelStatus.Text = "正在删除...";

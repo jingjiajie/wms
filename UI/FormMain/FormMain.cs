@@ -203,9 +203,9 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormUser l = new FormUser();//实例化子窗口
+                FormUser l = new FormUser(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
                 l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.Dock = DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
                 this.panelRight.Controls.Add(l);
                 l.Show();

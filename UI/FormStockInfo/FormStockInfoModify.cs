@@ -37,9 +37,19 @@ namespace WMS.UI
 
             if(this.mode == FormMode.ALTER)
             {
-                StockInfoView stockInfoView = (from s in this.wmsEntities.StockInfoView
-                                               where s.ID == this.stockInfoID
-                                               select s).Single();
+                StockInfoView stockInfoView = null;
+                try
+                {
+                    stockInfoView = (from s in this.wmsEntities.StockInfoView
+                                                   where s.ID == this.stockInfoID
+                                                   select s).Single();
+                }
+                catch
+                {
+                    MessageBox.Show("加载数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
                 Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
             }
 
@@ -52,9 +62,22 @@ namespace WMS.UI
             //若修改，则查询原StockInfo对象。若添加，则新建一个StockInfo对象。
             if (this.mode == FormMode.ALTER)
             {
-                stockInfo = (from s in this.wmsEntities.StockInfo
-                             where s.ID == this.stockInfoID
-                             select s).Single();
+                try
+                {
+                    stockInfo = (from s in this.wmsEntities.StockInfo
+                                 where s.ID == this.stockInfoID
+                                 select s).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("修改失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if(stockInfo == null)
+                {
+                    MessageBox.Show("库存信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             else if (mode == FormMode.ADD)
             {
@@ -68,7 +91,15 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            wmsEntities.SaveChanges();
+            try
+            {
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("修改失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             //调用回调函数
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
