@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.labelPsaaword = new System.Windows.Forms.Label();
             this.labelusername = new System.Windows.Forms.Label();
             this.textBoxPassword = new System.Windows.Forms.TextBox();
@@ -96,7 +97,9 @@
             // 
             // buttonClosing
             // 
+            this.buttonClosing.BackgroundImage = global::WMS.UI.Properties.Resources.botton2__3_;
             this.buttonClosing.FlatAppearance.BorderSize = 0;
+            this.buttonClosing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClosing.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.buttonClosing.Location = new System.Drawing.Point(277, 194);
             this.buttonClosing.Name = "buttonClosing";
@@ -105,13 +108,17 @@
             this.buttonClosing.Text = "退出";
             this.buttonClosing.UseVisualStyleBackColor = true;
             this.buttonClosing.Click += new System.EventHandler(this.buttonClosing_Click);
+            this.buttonClosing.MouseEnter += new System.EventHandler(this.buttonClosing_MouseEnter);
+            this.buttonClosing.MouseLeave += new System.EventHandler(this.buttonClosing_MouseLeave);
             // 
             // buttonEnter
             // 
             this.buttonEnter.BackColor = System.Drawing.Color.Transparent;
-            this.buttonEnter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.buttonEnter.BackgroundImage = global::WMS.UI.Properties.Resources.botton1__2_;
+            this.buttonEnter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonEnter.FlatAppearance.BorderColor = System.Drawing.Color.MintCream;
             this.buttonEnter.FlatAppearance.BorderSize = 0;
+            this.buttonEnter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEnter.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.buttonEnter.ForeColor = System.Drawing.SystemColors.ControlText;
             this.buttonEnter.Location = new System.Drawing.Point(118, 194);
@@ -121,6 +128,8 @@
             this.buttonEnter.Text = "确认";
             this.buttonEnter.UseVisualStyleBackColor = false;
             this.buttonEnter.Click += new System.EventHandler(this.buttonEnter_Click);
+            this.buttonEnter.MouseEnter += new System.EventHandler(this.buttonEnter_MouseEnter);
+            this.buttonEnter.MouseLeave += new System.EventHandler(this.buttonEnter_MouseLeave);
             // 
             // label1
             // 
@@ -181,7 +190,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RoyalBlue;
-            this.BackgroundImage = global::WMS.UI.Properties.Resources._50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(609, 337);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.labelClickCount);
