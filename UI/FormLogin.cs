@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Threading;
 using System.Data.SqlClient;
+using System.Drawing.Drawing2D;//粗糙圆角www
 
 namespace WMS.UI
 {
@@ -205,12 +206,40 @@ namespace WMS.UI
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
+            //让窗口透明www
+            this.TransparencyKey = Color.Red;
+            this.BackColor = Color.Red;
+            //panel1.BackColor = Color.FromRvb(120, Color.Red);
+            panel1.BackColor = Color.FromArgb(65, 204, 212, 230);//设置panel透明www
+
             this.labelStatus.Text = "";
             this.labelClickCount.Visible = false;
             this.labelClickCount.ForeColor = Color.White;
             this.labelClickCount.Font = new Font("黑体", 12);
             this.CancelButton = buttonClosing;
+            //粗糙圆角www
+            //this.textBox1.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.textBox1.Width, this.textBox1.Height), 10f));
         }
+        //粗糙圆角www
+        //public GraphicsPath GetRoundRectPath(RectangleF rect, float radius)
+        //{
+        //    return GetRoundRectPath(rect.X, rect.Y, rect.Width, rect.Height, radius);
+        //}
+
+        //public GraphicsPath GetRoundRectPath(float X, float Y, float width, float height, float radius)
+        //{
+        //    GraphicsPath path = new GraphicsPath();
+        //    path.AddLine(X + radius, Y, (X + width) - (radius * 2f), Y);
+        //    path.AddArc((X + width) - (radius * 2f), Y, radius * 2f, radius * 2f, 270f, 90f);
+        //    path.AddLine((float)(X + width), (float)(Y + radius), (float)(X + width), (float)((Y + height) - (radius * 2f)));
+        //    path.AddArc((float)((X + width) - (radius * 2f)), (float)((Y + height) - (radius * 2f)), (float)(radius * 2f), (float)(radius * 2f), 0f, 90f);
+        //    path.AddLine((float)((X + width) - (radius * 2f)), (float)(Y + height), (float)(X + radius), (float)(Y + height));
+        //    path.AddArc(X, (Y + height) - (radius * 2f), radius * 2f, radius * 2f, 90f, 90f);
+        //    path.AddLine(X, (Y + height) - (radius * 2f), X, Y + radius);
+        //    path.AddArc(X, Y, radius * 2f, radius * 2f, 180f, 90f);
+        //    path.CloseFigure();
+        //    return path;
+        //}
 
         private void textBoxUsername_Leave(object sender, EventArgs e)
         {
