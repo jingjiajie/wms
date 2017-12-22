@@ -17,7 +17,6 @@ namespace WMS.UI
 {
     public partial class FormBaseSupplier : Form
     {
-        private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
         private int authority_supplier = Convert.ToInt32(Authority.BASE_SUPPLIER);
         private int authority_supplierself = Convert.ToInt32(Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY);
@@ -94,31 +93,31 @@ namespace WMS.UI
         }
 
         private void Search()
-
         {
             string key = null;
             string value = null;
-           
+
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
                 key = (from kn in SupplierMetaData.KeyNames
-                               where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-                               select kn.Key).First();
+                       where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+                       select kn.Key).First();
                 value = this.toolStripTextBoxSelect.Text;
             }
             this.labelStatus.Text = "正在搜索中...";
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet[0, 0] = "加载中...";
-            
-            
-                new Thread(new ThreadStart(() =>
+
+
+            new Thread(new ThreadStart(() =>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 SupplierView[] SupplierView = null;
                 string sql = "SELECT * FROM SupplierView WHERE 1=1 ";
                 List<SqlParameter> parameters = new List<SqlParameter>();
-                if ((this.authority &authority_supplier )==authority_supplier  )
-                {     
+                if ((this.authority & authority_supplier) == authority_supplier)
+                {
                     if (key != null && value != null) //查询条件不为null则增加查询条件
                     {
                         sql += "AND " + key + " = @value ";
@@ -181,8 +180,8 @@ namespace WMS.UI
 
                 }));
             }
-            
-            )).Start();
+
+        )).Start();
 
 
         }
@@ -253,11 +252,12 @@ namespace WMS.UI
             this.labelStatus.Text = "正在删除...";
             new Thread(new ThreadStart(() =>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 foreach (int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
                 }
-                this.wmsEntities.SaveChanges();
+                wmsEntities.SaveChanges();
                 this.Invoke(new Action(this.Search));
             })).Start();
 

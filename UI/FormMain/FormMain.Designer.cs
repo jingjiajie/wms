@@ -28,33 +28,34 @@ namespace WMS.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("用户管理");
-            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("供应商");
-            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("零件");
-            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("仓库");
-            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("基本信息", new System.Windows.Forms.TreeNode[] {
-            treeNode33,
-            treeNode34,
-            treeNode35,
-            treeNode36});
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("到货管理");
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("上架管理");
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("收货管理", new System.Windows.Forms.TreeNode[] {
-            treeNode38,
-            treeNode39});
-            System.Windows.Forms.TreeNode treeNode41 = new System.Windows.Forms.TreeNode("发货单管理");
-            System.Windows.Forms.TreeNode treeNode42 = new System.Windows.Forms.TreeNode("作业单管理");
-            System.Windows.Forms.TreeNode treeNode43 = new System.Windows.Forms.TreeNode("出库单管理");
-            System.Windows.Forms.TreeNode treeNode44 = new System.Windows.Forms.TreeNode("发货管理", new System.Windows.Forms.TreeNode[] {
-            treeNode41,
-            treeNode42,
-            treeNode43});
-            System.Windows.Forms.TreeNode treeNode45 = new System.Windows.Forms.TreeNode("库存信息");
-            System.Windows.Forms.TreeNode treeNode46 = new System.Windows.Forms.TreeNode("库存信息", new System.Windows.Forms.TreeNode[] {
-            treeNode45});
-            System.Windows.Forms.TreeNode treeNode47 = new System.Windows.Forms.TreeNode("送检单");
-            System.Windows.Forms.TreeNode treeNode48 = new System.Windows.Forms.TreeNode("送检管理", new System.Windows.Forms.TreeNode[] {
-            treeNode47});
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.Windows.Forms.TreeNode treeNode49 = new System.Windows.Forms.TreeNode("用户管理");
+            System.Windows.Forms.TreeNode treeNode50 = new System.Windows.Forms.TreeNode("供应商");
+            System.Windows.Forms.TreeNode treeNode51 = new System.Windows.Forms.TreeNode("零件");
+            System.Windows.Forms.TreeNode treeNode52 = new System.Windows.Forms.TreeNode("仓库");
+            System.Windows.Forms.TreeNode treeNode53 = new System.Windows.Forms.TreeNode("基本信息", new System.Windows.Forms.TreeNode[] {
+            treeNode49,
+            treeNode50,
+            treeNode51,
+            treeNode52});
+            System.Windows.Forms.TreeNode treeNode54 = new System.Windows.Forms.TreeNode("到货管理");
+            System.Windows.Forms.TreeNode treeNode55 = new System.Windows.Forms.TreeNode("上架管理");
+            System.Windows.Forms.TreeNode treeNode56 = new System.Windows.Forms.TreeNode("收货管理", new System.Windows.Forms.TreeNode[] {
+            treeNode54,
+            treeNode55});
+            System.Windows.Forms.TreeNode treeNode57 = new System.Windows.Forms.TreeNode("发货单管理");
+            System.Windows.Forms.TreeNode treeNode58 = new System.Windows.Forms.TreeNode("作业单管理");
+            System.Windows.Forms.TreeNode treeNode59 = new System.Windows.Forms.TreeNode("出库单管理");
+            System.Windows.Forms.TreeNode treeNode60 = new System.Windows.Forms.TreeNode("发货管理", new System.Windows.Forms.TreeNode[] {
+            treeNode57,
+            treeNode58,
+            treeNode59});
+            System.Windows.Forms.TreeNode treeNode61 = new System.Windows.Forms.TreeNode("库存信息");
+            System.Windows.Forms.TreeNode treeNode62 = new System.Windows.Forms.TreeNode("库存信息", new System.Windows.Forms.TreeNode[] {
+            treeNode61});
+            System.Windows.Forms.TreeNode treeNode63 = new System.Windows.Forms.TreeNode("送检单");
+            System.Windows.Forms.TreeNode treeNode64 = new System.Windows.Forms.TreeNode("送检管理", new System.Windows.Forms.TreeNode[] {
+            treeNode63});
             this.panelTop = new System.Windows.Forms.Panel();
             this.tableLayoutBanner = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -95,7 +96,7 @@ namespace WMS.UI
             // 
             // tableLayoutBanner
             // 
-            this.tableLayoutBanner.BackColor = System.Drawing.Color.RoyalBlue;
+            this.tableLayoutBanner.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.tableLayoutBanner.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tableLayoutBanner.ColumnCount = 2;
             this.tableLayoutBanner.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -105,21 +106,23 @@ namespace WMS.UI
             this.tableLayoutBanner.Controls.Add(this.panel2, 1, 1);
             this.tableLayoutBanner.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutBanner.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutBanner.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.tableLayoutBanner.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutBanner.Name = "tableLayoutBanner";
             this.tableLayoutBanner.RowCount = 2;
             this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutBanner.Size = new System.Drawing.Size(762, 100);
             this.tableLayoutBanner.TabIndex = 3;
             // 
             // panel3
             // 
+            this.panel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel3.BackgroundImage")));
+            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tableLayoutBanner.SetColumnSpan(this.panel3, 2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(1, 1);
-            this.panel3.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panel3.Margin = new System.Windows.Forms.Padding(1);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(760, 54);
             this.panel3.TabIndex = 0;
@@ -139,12 +142,12 @@ namespace WMS.UI
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BackColor = System.Drawing.Color.RoyalBlue;
             this.panel1.Controls.Add(this.labelUsername);
             this.panel1.Controls.Add(this.labelAuth);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(1, 57);
-            this.panel1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panel1.Margin = new System.Windows.Forms.Padding(1);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(293, 42);
             this.panel1.TabIndex = 3;
@@ -153,11 +156,11 @@ namespace WMS.UI
             // 
             this.labelUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUsername.AutoSize = true;
-            this.labelUsername.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.labelUsername.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelUsername.ForeColor = System.Drawing.Color.White;
             this.labelUsername.Location = new System.Drawing.Point(91, 2);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(61, 23);
+            this.labelUsername.Size = new System.Drawing.Size(69, 26);
             this.labelUsername.TabIndex = 1;
             this.labelUsername.Text = "用户名";
             // 
@@ -165,11 +168,11 @@ namespace WMS.UI
             // 
             this.labelAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelAuth.AutoSize = true;
-            this.labelAuth.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.labelAuth.Font = new System.Drawing.Font("微软雅黑", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelAuth.ForeColor = System.Drawing.Color.White;
             this.labelAuth.Location = new System.Drawing.Point(1, 2);
             this.labelAuth.Name = "labelAuth";
-            this.labelAuth.Size = new System.Drawing.Size(48, 23);
+            this.labelAuth.Size = new System.Drawing.Size(55, 26);
             this.labelAuth.TabIndex = 2;
             this.labelAuth.Text = "权限:";
             // 
@@ -179,14 +182,14 @@ namespace WMS.UI
             this.panel2.Controls.Add(this.tableLayoutPanel2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(296, 57);
-            this.panel2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panel2.Margin = new System.Windows.Forms.Padding(1);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(465, 42);
             this.panel2.TabIndex = 4;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.RoyalBlue;
             this.tableLayoutPanel2.ColumnCount = 5;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67F));
@@ -199,7 +202,7 @@ namespace WMS.UI
             this.tableLayoutPanel2.Controls.Add(this.label3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -225,7 +228,7 @@ namespace WMS.UI
             this.comboBoxProject.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxProject.FormattingEnabled = true;
             this.comboBoxProject.Location = new System.Drawing.Point(65, 1);
-            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1);
             this.comboBoxProject.Name = "comboBoxProject";
             this.comboBoxProject.Size = new System.Drawing.Size(165, 31);
             this.comboBoxProject.TabIndex = 1;
@@ -234,6 +237,7 @@ namespace WMS.UI
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.RoyalBlue;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.label2.ForeColor = System.Drawing.Color.White;
@@ -247,6 +251,7 @@ namespace WMS.UI
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.RoyalBlue;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.label3.ForeColor = System.Drawing.Color.White;
@@ -269,13 +274,13 @@ namespace WMS.UI
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 267F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panelLeft, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelRight, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -287,9 +292,9 @@ namespace WMS.UI
             this.panelLeft.Controls.Add(this.treeViewLeft);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLeft.Location = new System.Drawing.Point(1, 1);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(1);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(265, 437);
+            this.panelLeft.Size = new System.Drawing.Size(198, 437);
             this.panelLeft.TabIndex = 0;
             // 
             // treeViewLeft
@@ -298,45 +303,45 @@ namespace WMS.UI
             this.treeViewLeft.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.treeViewLeft.Location = new System.Drawing.Point(0, 0);
             this.treeViewLeft.Name = "treeViewLeft";
-            treeNode33.Name = "节点11";
-            treeNode33.Text = "用户管理";
-            treeNode34.Name = "节点12";
-            treeNode34.Text = "供应商";
-            treeNode35.Name = "节点13";
-            treeNode35.Text = "零件";
-            treeNode36.Name = "节点14";
-            treeNode36.Text = "仓库";
-            treeNode37.Name = "节点1";
-            treeNode37.Text = "基本信息";
-            treeNode38.Name = "节点21";
-            treeNode38.Text = "到货管理";
-            treeNode39.Name = "节点22";
-            treeNode39.Text = "上架管理";
-            treeNode40.Name = "节点2";
-            treeNode40.Text = "收货管理";
-            treeNode41.Name = "节点31";
-            treeNode41.Text = "发货单管理";
-            treeNode42.Name = "节点32";
-            treeNode42.Text = "作业单管理";
-            treeNode43.Name = "节点33";
-            treeNode43.Text = "出库单管理";
-            treeNode44.Name = "节点3";
-            treeNode44.Text = "发货管理";
-            treeNode45.Name = "节点41";
-            treeNode45.Text = "库存信息";
-            treeNode46.Name = "节点4";
-            treeNode46.Text = "库存信息";
-            treeNode47.Name = "节点3";
-            treeNode47.Text = "送检单";
-            treeNode48.Name = "节点2";
-            treeNode48.Text = "送检管理";
+            treeNode49.Name = "节点11";
+            treeNode49.Text = "用户管理";
+            treeNode50.Name = "节点12";
+            treeNode50.Text = "供应商";
+            treeNode51.Name = "节点13";
+            treeNode51.Text = "零件";
+            treeNode52.Name = "节点14";
+            treeNode52.Text = "仓库";
+            treeNode53.Name = "节点1";
+            treeNode53.Text = "基本信息";
+            treeNode54.Name = "节点21";
+            treeNode54.Text = "到货管理";
+            treeNode55.Name = "节点22";
+            treeNode55.Text = "上架管理";
+            treeNode56.Name = "节点2";
+            treeNode56.Text = "收货管理";
+            treeNode57.Name = "节点31";
+            treeNode57.Text = "发货单管理";
+            treeNode58.Name = "节点32";
+            treeNode58.Text = "作业单管理";
+            treeNode59.Name = "节点33";
+            treeNode59.Text = "出库单管理";
+            treeNode60.Name = "节点3";
+            treeNode60.Text = "发货管理";
+            treeNode61.Name = "节点41";
+            treeNode61.Text = "库存信息";
+            treeNode62.Name = "节点4";
+            treeNode62.Text = "库存信息";
+            treeNode63.Name = "节点3";
+            treeNode63.Text = "送检单";
+            treeNode64.Name = "节点2";
+            treeNode64.Text = "送检管理";
             this.treeViewLeft.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode37,
-            treeNode40,
-            treeNode44,
-            treeNode46,
-            treeNode48});
-            this.treeViewLeft.Size = new System.Drawing.Size(265, 437);
+            treeNode53,
+            treeNode56,
+            treeNode60,
+            treeNode62,
+            treeNode64});
+            this.treeViewLeft.Size = new System.Drawing.Size(198, 437);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);
             // 
@@ -344,9 +349,9 @@ namespace WMS.UI
             // 
             this.panelRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRight.Location = new System.Drawing.Point(270, 3);
+            this.panelRight.Location = new System.Drawing.Point(203, 3);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(489, 433);
+            this.panelRight.Size = new System.Drawing.Size(556, 433);
             this.panelRight.TabIndex = 1;
             // 
             // FormMain

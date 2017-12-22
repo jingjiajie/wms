@@ -114,7 +114,7 @@
             // buttonEnter
             // 
             this.buttonEnter.BackColor = System.Drawing.Color.Transparent;
-            this.buttonEnter.BackgroundImage = global::WMS.UI.Properties.Resources.botton1__2_;
+            this.buttonEnter.BackgroundImage = global::WMS.UI.Properties.Resources.botton2__2_;
             this.buttonEnter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonEnter.FlatAppearance.BorderColor = System.Drawing.Color.MintCream;
             this.buttonEnter.FlatAppearance.BorderSize = 0;
@@ -193,8 +193,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(609, 337);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.labelClickCount);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.labelStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FormLogin";
