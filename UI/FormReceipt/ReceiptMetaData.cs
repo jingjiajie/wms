@@ -19,7 +19,7 @@ namespace WMS.UI.FormReceipt
             //new KeyName(){Name = "供应商名称", Key = "SupplierName", Visible = false, Editable = true, Save = false},
             new KeyName(){Name = "单号", Key = "No", Visible = true, Editable = false},
             new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = false, Editable = false, Save=false},
-            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = false, Editable = true, Save=false},
+            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true, Save=false},
             new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false, Save=false},
             new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true},
             new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false},
@@ -131,10 +131,11 @@ namespace WMS.UI.FormReceipt
             new KeyName{Name = "分配数量", Key = "DistributeAmount", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "打印次数", Key = "PrintTimes", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "作业组名称", Key = "JobGroupName", Visible = true, Editable = true, Save = true},
-            new KeyName{Name = "创建用户ID", Key = "CreateUserID", Visible = true, Editable = false, Save = true},
+            new KeyName{Name = "创建用户ID", Key = "CreateUserID", Visible = false, Editable = false, Save = true},
             new KeyName{Name = "创建用户用户名", Key = "CreateUserUsername", Visible = true, Editable = false, Save = false},
             new KeyName{Name = "创建时间", Key = "CreateTime", Visible = true, Editable = false, Save = true},
-            new KeyName{Name = "最后操作用户用户名", Key = "LastUpdateUserID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "最后操作用户用户ID", Key = "LastUpdateUserID", Visible = false, Editable = false, Save = true},
+            new KeyName{Name = "最后操作用户",Key = "LastUpdateUserUsername", Visible = true, Editable = false, Save = false},
             new KeyName{Name = "最后更新时间", Key = "LastUpdateTime", Visible = true, Editable = false, Save = true}
         };
 
