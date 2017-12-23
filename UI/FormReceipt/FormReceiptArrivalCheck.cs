@@ -20,6 +20,7 @@ namespace WMS.UI.FormReceipt
         WMSEntities wmsEntities = new WMSEntities();
         private int submissionTicketID;
         private int receiptTicketID;
+        private int userID;
         private FormMode formMode;
         Action nextCallBack = null;
         Action finishedAction = null;
@@ -28,11 +29,12 @@ namespace WMS.UI.FormReceipt
         {
             InitializeComponent();
         }
-        public FormReceiptArrivalCheck(int receiptTicketID, AllOrPartial allOrPartial)
+        public FormReceiptArrivalCheck(int receiptTicketID, int userID ,AllOrPartial allOrPartial)
         {
             InitializeComponent();
             this.receiptTicketID = receiptTicketID;
             this.allOrPartial = allOrPartial;
+            this.userID = userID;
             this.formMode = FormMode.ADD;
         }
 
@@ -41,10 +43,11 @@ namespace WMS.UI.FormReceipt
             this.nextCallBack = action;
         }
 
-        public FormReceiptArrivalCheck(int receiptTicketID)
+        public FormReceiptArrivalCheck(int receiptTicketID, int userID)
         {
             InitializeComponent();
             this.receiptTicketID = receiptTicketID;
+            this.userID = userID;
             //this.submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID && st.State != "作废" select st).Single();
             this.formMode = FormMode.ALTER;
         }
@@ -122,8 +125,8 @@ namespace WMS.UI.FormReceipt
             {
                 textBoxState.Text = "待检";
             }
-            TextBox textBoxReceiptTicketID = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
-            textBoxReceiptTicketID.Text = this.receiptTicketID.ToString();
+            //TextBox textBoxReceiptTicketID = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
+            //textBoxReceiptTicketID.Text = this.receiptTicketID.ToString();
         }
 
         private void InitComponents()
@@ -169,7 +172,14 @@ namespace WMS.UI.FormReceipt
                         object[] columns = Utilities.GetValuesByPropertieNames(curSubmissionTicketView, (from kn in ReceiptMetaData.submissionTicketKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[n, j] = columns[j];
+                            if (columns[j] == null)
+                            {
+                                worksheet[n, j] = columns[j];
+                            }
+                            else
+                            {
+                                worksheet[n, j] = columns[j].ToString();
+                            }       
                         }
                         n++;
                     }
@@ -255,7 +265,18 @@ namespace WMS.UI.FormReceipt
             {
                 new Thread(() =>
                 {
+                    ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+                    if(receiptTicket != null)
+                    {
+                        submissionTicket.ProjectID = receiptTicket.ProjectID;
+                        submissionTicket.WarehouseID = receiptTicket.Warehouse;
+                    }
+                    submissionTicket.CreateUserID = this.userID;
+                    submissionTicket.LastUpdateUserID = this.userID;
+                    submissionTicket.LastUpdateTime = DateTime.Now;
+                    submissionTicket.CreateTime = DateTime.Now.ToString();
                     submissionTicket.State = "待检";
+                    submissionTicket.ReceiptTicketID = receiptTicketID;
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
                     wmsEntities.SaveChanges();
                     submissionTicket.No = Utilities.GenerateNo("J", submissionTicket.ID);

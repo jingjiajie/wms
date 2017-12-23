@@ -44,19 +44,19 @@ namespace WMS.UI
         {
             //初始化
             this.comboBoxSelect.Items.Add("无");
-            string[] columnNames = (from kn in ReceiptMetaData.submissionTicketKeyName select kn.Name).ToArray();
+            string[] columnNames = (from kn in ReceiptMetaData.submissionTicketKeyName where kn.Visible == true select kn.Name).ToArray();
             this.comboBoxSelect.Items.AddRange(columnNames);
             this.comboBoxSelect.SelectedIndex = 0;
 
             //初始化表格
             var worksheet = this.reoGridControl1.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.submissionTicketKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.submissionTicketKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.submissionTicketKeyName[i].Visible;
             }
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.submissionTicketKeyName.Length;
         }
 
         private void Search(string key, string value)
@@ -106,7 +106,14 @@ namespace WMS.UI
                         object[] columns = Utilities.GetValuesByPropertieNames(curSubmissionTicketView, (from kn in ReceiptMetaData.submissionTicketKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[n, j] = columns[j];
+                            if (columns[j] == null)
+                            {  
+                                worksheet[n, j] = columns[j];
+                            }
+                            else
+                            {
+                                worksheet[n, j] = columns[j].ToString();
+                            }
                         }
                         n++;
                     }
@@ -173,6 +180,7 @@ namespace WMS.UI
                     wmsEntities.Database.ExecuteSqlCommand("UPDATE SubmissionTicketItem SET State='合格' WHERE SubmissionTicketID=@submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID));
                     wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='过检' WHERE ID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
                     wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='过检' WHERE ReceiptTicketID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
+
                     if (MessageBox.Show("是否同时收货？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
@@ -260,11 +268,19 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(submissionTicketID);
+                FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(submissionTicketID, this.userID, FormMode.ALTER);
+                formAddSubmissionTicket.SetCallBack(new Action(() =>
+                {
+                    this.Search(null, null);
+                }));
+                formAddSubmissionTicket.Show();
+                /*
+                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(submissionTicketID, this.userID);
                 formReceiptArrivalCheck.SetFinishedAction(()=> {
                     Search(null, null);
                 });
                 formReceiptArrivalCheck.Show();
+                */
             }
             catch
             {

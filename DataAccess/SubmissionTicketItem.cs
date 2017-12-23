@@ -25,6 +25,7 @@ namespace WMS.DataAccess
         public string State { get; set; }
         public Nullable<int> ReceiptTicketItemID { get; set; }
     
+        public virtual ReceiptTicketItem ReceiptTicketItem { get; set; }
         public virtual SubmissionTicket SubmissionTicket { get; set; }
     }
 }

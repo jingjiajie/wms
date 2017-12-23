@@ -14,6 +14,11 @@ namespace WMS.DataAccess
     
     public partial class ReceiptTicketItem
     {
+        public ReceiptTicketItem()
+        {
+            this.SubmissionTicketItem = new HashSet<SubmissionTicketItem>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> ComponentID { get; set; }
         public string PackageName { get; set; }
@@ -33,5 +38,6 @@ namespace WMS.DataAccess
         public Nullable<int> ReceiptTicketID { get; set; }
     
         public virtual ReceiptTicket ReceiptTicket { get; set; }
+        public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }
     }
 }

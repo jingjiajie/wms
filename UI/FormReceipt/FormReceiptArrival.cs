@@ -46,19 +46,19 @@ namespace WMS.UI
         {
             //初始化
             this.comboBoxSelect.Items.Add("无");
-            string[] columnNames = (from kn in ReceiptMetaData.receiptNameKeys select kn.Name).ToArray();
+            string[] columnNames = (from kn in ReceiptMetaData.receiptNameKeys where kn.Visible == true select kn.Name).ToArray();
             this.comboBoxSelect.Items.AddRange(columnNames);
             this.comboBoxSelect.SelectedIndex = 0;
 
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.receiptNameKeys.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.receiptNameKeys[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.receiptNameKeys[i].Visible;
             }
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.receiptNameKeys.Length;
         }
 
         private void FormReceiptArrival_Load(object sender, EventArgs e)
@@ -124,8 +124,14 @@ namespace WMS.UI
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketView, (from kn in ReceiptMetaData.receiptNameKeys select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-
-                            worksheet[n, j] = columns[j];
+                            if (columns[j] == null)
+                            { 
+                                worksheet[n, j] = columns[j];
+                            }
+                            else
+                            {
+                                worksheet[n, j] = columns[j].ToString();
+                            }
                         }
                         n++;
                     }
@@ -283,7 +289,7 @@ namespace WMS.UI
                     MessageBox.Show("该收货单" + receiptTicket.State);
                     return;
                 }
-                FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(receiptTicketID);
+                FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(receiptTicketID, this.userID, FormMode.ADD);
                 formAddSubmissionTicket.Show();
                 //var receiptTicketModify = new ReceiptTicketModify(FormMode.ALTER, stockInfoID);
                 //var formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, AllOrPartial.ALL);
@@ -377,7 +383,12 @@ namespace WMS.UI
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-                FormPutaway formPutaway = new FormPutaway(receiptTicketID, this.warehouseID, this.projectID);
+                if (receiptTicket.State != "已收货")
+                {
+                    MessageBox.Show("该收货单未收货，请先收货!");
+                    return;
+                }
+                FormPutaway formPutaway = new FormPutaway(receiptTicketID, this.warehouseID, this.projectID, this.userID);
                 formPutaway.Show();
                 /*
                 if (receiptTicket.State == "收货")
@@ -415,7 +426,7 @@ namespace WMS.UI
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID);
+                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, this.userID);
                 formReceiptArrivalCheck.SetNextCallBack(new Action(() =>
                 {
                     this.Search(null, null);
@@ -450,8 +461,20 @@ namespace WMS.UI
                 {
                     MessageBox.Show("该收货单已收货");
                 }
+                else if (receiptTicket.State == "送检中")
+                {
+                    MessageBox.Show("该收货单正在送检中");
+                }
                 else
                 {
+                    int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID)).FirstOrDefault();
+                    if (count == 0)
+                    {
+                        if (MessageBox.Show("该收货单中没有添加条目，是否继续收货", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                        {
+                            return;                            
+                        }
+                    }
                     receiptTicket.State = "已收货";
                     wmsEntities.Database.ExecuteSqlCommand(
                         "UPDATE ReceiptTicketItem SET State='已收货' " +
@@ -520,9 +543,11 @@ namespace WMS.UI
                             receiptTicket.State = "送检中";
                         }
                         wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '取消收货' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID));
+                        
                     }
                     new Thread(() =>
                     {
+                        wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待检' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID));
                         wmsEntities.SaveChanges();
                         MessageBox.Show("成功");
                         this.Invoke(new Action(() =>
@@ -550,6 +575,20 @@ namespace WMS.UI
             {
                 this.textBoxSelect.Enabled = true;
                 this.textBoxSelect.Text = "";
+            }
+        }
+
+        private void comboBoxSelect_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (this.comboBoxSelect.SelectedIndex == 0)
+            {
+                this.textBoxSelect.Text = "";
+                this.textBoxSelect.Enabled = false;
+            }
+            else
+            {
+                this.textBoxSelect.Text = "";
+                this.textBoxSelect.Enabled = true;
             }
         }
     }
