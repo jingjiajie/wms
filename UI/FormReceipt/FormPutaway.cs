@@ -16,6 +16,7 @@ namespace WMS.UI.FormReceipt
     {
         private int receiptTicketID;
         private int putawayTicketID;
+        private int userID;
         private int warehouseID;
         private int projectID;
         WMSEntities wmsEntities = new WMSEntities();
@@ -24,12 +25,13 @@ namespace WMS.UI.FormReceipt
             InitializeComponent();
         }
 
-        public FormPutaway(int receiptTicketID, int warehouseID, int projectID)
+        public FormPutaway(int receiptTicketID, int warehouseID, int projectID, int userID)
         {
             InitializeComponent();
             this.receiptTicketID = receiptTicketID;
             this.warehouseID = warehouseID;
             this.projectID = projectID;
+            this.userID = userID;
         }
 
         private void FormPutaway_Load(object sender, EventArgs e)
@@ -46,9 +48,9 @@ namespace WMS.UI.FormReceipt
             //this.Controls.Clear();
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.putawayTicketKeyName);
             this.reoGridControlPutaway.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
-            TextBox textBoxReceiptTitcket = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
-            textBoxReceiptTitcket.Text = this.receiptTicketID.ToString();
-            textBoxReceiptTitcket.Enabled = false;
+            //TextBox textBoxReceiptTitcket = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
+            //textBoxReceiptTitcket.Text = this.receiptTicketID.ToString();
+            //textBoxReceiptTitcket.Enabled = false;
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             //textBoxComponentName.Click += textBoxComponentName_Click;
             //textBoxComponentName.ReadOnly = true;
@@ -96,7 +98,7 @@ namespace WMS.UI.FormReceipt
                     textBox.Text = "";
                 }
             }
-            this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
+            //this.Controls.Find("textBoxReceiptTicketID", true)[0].Text = this.receiptTicketID.ToString();
         }
 
         private void InitComponents()
@@ -163,6 +165,10 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
+                putawayTicket.CreateTime = DateTime.Now;
+                putawayTicket.CreateUserID = this.userID;
+                putawayTicket.LastUpdateTime = DateTime.Now;
+                putawayTicket.LastUpdateUserID = this.userID;
                 putawayTicket.WarehouseID = this.warehouseID;
                 putawayTicket.ProjectID = this.projectID;
                 putawayTicket.State = "待上架";

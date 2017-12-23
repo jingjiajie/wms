@@ -31,7 +31,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> PrintTimes { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public string JobGroupName { get; set; }
-        public string LastUpdateUserName { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<int> WarehouseID { get; set; }

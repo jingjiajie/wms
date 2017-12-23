@@ -152,7 +152,7 @@ namespace WMS.UI
 
         private void buttonItemCheck_Click(object sender, EventArgs e)
         {
-            FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, AllOrPartial.PARTIAL);
+            FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, 1,AllOrPartial.PARTIAL);
             formReceiptArrivalCheck.SetFinishedAction(() =>
             {
                 this.Close();
@@ -165,7 +165,7 @@ namespace WMS.UI
         {
             if (submissionTicket == null)
             {
-                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(this.receiptTicketID, AllOrPartial.PARTIAL);
+                FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(this.receiptTicketID, 1,AllOrPartial.PARTIAL);
                 formReceiptArrivalCheck.Show();
                 this.submissionTicket = formReceiptArrivalCheck.submissionTicket;
                 //submissionTicket = new SubmissionTicket();

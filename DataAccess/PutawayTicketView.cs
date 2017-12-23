@@ -93,6 +93,5 @@ namespace WMS.DataAccess
         public string SupplierRecipientName { get; set; }
         public Nullable<int> WarehouseID { get; set; }
         public Nullable<int> ProjectID { get; set; }
-        public string LastUpdateUserName { get; set; }
     }
 }

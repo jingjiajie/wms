@@ -53,7 +53,7 @@ namespace WMS.UI.FormReceipt
         {
             //初始化
             this.toolStripComboBoxSelect.Items.Add("无");
-            string[] columnNames = (from kn in ReceiptMetaData.putawayTicketKeyName select kn.Name).ToArray();
+            string[] columnNames = (from kn in ReceiptMetaData.putawayTicketKeyName where kn.Visible == true select kn.Name).ToArray();
             this.toolStripComboBoxSelect.Items.AddRange(columnNames);
             this.toolStripComboBoxSelect.SelectedIndex = 0;
 
@@ -62,7 +62,7 @@ namespace WMS.UI.FormReceipt
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
             for (int i = 0; i < columnNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.putawayTicketKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.putawayTicketKeyName[i].Visible;
             }
             worksheet.Columns = columnNames.Length;
@@ -70,7 +70,7 @@ namespace WMS.UI.FormReceipt
 
         private void Search(string key, string value)
         {
-            //this.lableStatus.Text = "搜索中...";
+            this.lableStatus.Text = "搜索中...";
 
             new Thread(new ThreadStart(() =>
             {
@@ -78,7 +78,7 @@ namespace WMS.UI.FormReceipt
                 PutawayTicketView[] putawayTicketView = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>("SELECT * FROM PutawayTicketView WHERE WarehouseID = @warehouseID AND ProjectID = @projectID", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID)}).ToArray();
+                    putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>("SELECT * FROM PutawayTicketView WHERE WarehouseID = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID)}).ToArray();
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace WMS.UI.FormReceipt
                     //}
                     try
                     {
-                        putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = @key AND WarehouseID = @warehouseID AND ProjectID = @projectID ", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
+                        putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = @key AND WarehouseID = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
                     }
                     catch
                     {
@@ -99,7 +99,7 @@ namespace WMS.UI.FormReceipt
                 }
                 this.reoGridControlUser.Invoke(new Action(() =>
                 {
-                    //this.lableStatus.Text = "搜索完成";
+                    this.lableStatus.Text = "搜索完成";
                     var worksheet = this.reoGridControlUser.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
                     int n = 0;
@@ -253,6 +253,25 @@ namespace WMS.UI.FormReceipt
         }
 
         private void toolStripButtonPrint_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripComboBoxSelect_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                this.toolStripTextBoxSelect.Text = "";
+                this.toolStripTextBoxSelect.Enabled = false;
+            }
+            else
+            {
+                this.toolStripTextBoxSelect.Text = "";
+                this.toolStripTextBoxSelect.Enabled = true;
+            }
+        }
+
+        private void toolStripButtonDistributeCancel_Click(object sender, EventArgs e)
         {
 
         }

@@ -151,7 +151,7 @@ namespace WMS.UI.FormReceipt {
         }
         
         /// <summary>
-        ///   查找类似于 {X=237,Y=17} 的 System.Drawing.Point 类型的本地化资源。
+        ///   查找类似于 {X=668,Y=17} 的 System.Drawing.Point 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Point statusStrip1_TrayLocation {
             get {
@@ -191,7 +191,7 @@ namespace WMS.UI.FormReceipt {
         }
         
         /// <summary>
-        ///   查找类似于 {X=17,Y=17} 的 System.Drawing.Point 类型的本地化资源。
+        ///   查找类似于 {X=448,Y=17} 的 System.Drawing.Point 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Point toolStripTop_TrayLocation {
             get {

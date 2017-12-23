@@ -28,6 +28,7 @@ namespace WMS.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("ÓÃ»§¹ÜÀí");
             System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("¹©Ó¦ÉÌ");
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Áã¼þ");
@@ -91,12 +92,12 @@ namespace WMS.UI
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1143, 160);
+            this.panelTop.Size = new System.Drawing.Size(1143, 224);
             this.panelTop.TabIndex = 0;
             // 
             // tableLayoutBanner
             // 
-            this.tableLayoutBanner.BackColor = System.Drawing.Color.RoyalBlue;
+            this.tableLayoutBanner.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.tableLayoutBanner.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tableLayoutBanner.ColumnCount = 2;
             this.tableLayoutBanner.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -110,19 +111,21 @@ namespace WMS.UI
             this.tableLayoutBanner.Name = "tableLayoutBanner";
             this.tableLayoutBanner.RowCount = 2;
             this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutBanner.Size = new System.Drawing.Size(1143, 160);
+            this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.tableLayoutBanner.Size = new System.Drawing.Size(1143, 224);
             this.tableLayoutBanner.TabIndex = 3;
             // 
             // panel3
             // 
+            this.panel3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel3.BackgroundImage")));
+            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tableLayoutBanner.SetColumnSpan(this.panel3, 2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(2, 2);
             this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1139, 86);
+            this.panel3.Size = new System.Drawing.Size(1139, 156);
             this.panel3.TabIndex = 0;
             // 
             // label1
@@ -139,26 +142,28 @@ namespace WMS.UI
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BackColor = System.Drawing.Color.RoyalBlue;
+            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.Controls.Add(this.labelUsername);
             this.panel1.Controls.Add(this.labelAuth);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(2, 92);
+            this.panel1.Location = new System.Drawing.Point(2, 162);
             this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(439, 66);
+            this.panel1.Size = new System.Drawing.Size(439, 60);
             this.panel1.TabIndex = 3;
             // 
             // labelUsername
             // 
             this.labelUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUsername.AutoSize = true;
-            this.labelUsername.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.labelUsername.BackColor = System.Drawing.Color.Transparent;
+            this.labelUsername.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelUsername.ForeColor = System.Drawing.Color.White;
-            this.labelUsername.Location = new System.Drawing.Point(136, 2);
+            this.labelUsername.Location = new System.Drawing.Point(136, 5);
             this.labelUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(96, 35);
+            this.labelUsername.Size = new System.Drawing.Size(104, 39);
             this.labelUsername.TabIndex = 1;
             this.labelUsername.Text = "ÓÃ»§Ãû";
             // 
@@ -166,12 +171,13 @@ namespace WMS.UI
             // 
             this.labelAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelAuth.AutoSize = true;
-            this.labelAuth.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.labelAuth.BackColor = System.Drawing.Color.Transparent;
+            this.labelAuth.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelAuth.ForeColor = System.Drawing.Color.White;
-            this.labelAuth.Location = new System.Drawing.Point(2, 2);
+            this.labelAuth.Location = new System.Drawing.Point(2, 5);
             this.labelAuth.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelAuth.Name = "labelAuth";
-            this.labelAuth.Size = new System.Drawing.Size(76, 35);
+            this.labelAuth.Size = new System.Drawing.Size(83, 39);
             this.labelAuth.TabIndex = 2;
             this.labelAuth.Text = "È¨ÏÞ:";
             // 
@@ -180,15 +186,16 @@ namespace WMS.UI
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.tableLayoutPanel2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(445, 92);
+            this.panel2.Location = new System.Drawing.Point(445, 162);
             this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(696, 66);
+            this.panel2.Size = new System.Drawing.Size(696, 60);
             this.panel2.TabIndex = 4;
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel2.BackColor = System.Drawing.Color.RoyalBlue;
+            this.tableLayoutPanel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tableLayoutPanel2.BackgroundImage")));
             this.tableLayoutPanel2.ColumnCount = 5;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
@@ -205,7 +212,7 @@ namespace WMS.UI
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(696, 66);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(696, 60);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // comboBoxWarehouse
@@ -237,24 +244,26 @@ namespace WMS.UI
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.label2.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(349, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 66);
+            this.label2.Size = new System.Drawing.Size(94, 60);
             this.label2.TabIndex = 2;
             this.label2.Text = "²Ö¿â";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.label3.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(-1, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 66);
+            this.label3.Size = new System.Drawing.Size(94, 60);
             this.label3.TabIndex = 3;
             this.label3.Text = "ÏîÄ¿";
             // 
@@ -262,16 +271,16 @@ namespace WMS.UI
             // 
             this.panelFill.Controls.Add(this.tableLayoutPanel1);
             this.panelFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFill.Location = new System.Drawing.Point(0, 160);
+            this.panelFill.Location = new System.Drawing.Point(0, 224);
             this.panelFill.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelFill.Name = "panelFill";
-            this.panelFill.Size = new System.Drawing.Size(1143, 702);
+            this.panelFill.Size = new System.Drawing.Size(1143, 638);
             this.panelFill.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panelLeft, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelRight, 1, 0);
@@ -281,7 +290,7 @@ namespace WMS.UI
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1143, 702);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1143, 638);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // panelLeft
@@ -291,7 +300,7 @@ namespace WMS.UI
             this.panelLeft.Location = new System.Drawing.Point(2, 2);
             this.panelLeft.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(396, 698);
+            this.panelLeft.Size = new System.Drawing.Size(296, 634);
             this.panelLeft.TabIndex = 0;
             // 
             // treeViewLeft
@@ -339,18 +348,20 @@ namespace WMS.UI
             treeNode12,
             treeNode14,
             treeNode16});
-            this.treeViewLeft.Size = new System.Drawing.Size(396, 698);
+            this.treeViewLeft.Size = new System.Drawing.Size(296, 634);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);
             // 
             // panelRight
             // 
-            this.panelRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panelRight.BackColor = System.Drawing.Color.White;
+            this.panelRight.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelRight.BackgroundImage")));
+            this.panelRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRight.Location = new System.Drawing.Point(404, 5);
+            this.panelRight.Location = new System.Drawing.Point(304, 5);
             this.panelRight.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(735, 692);
+            this.panelRight.Size = new System.Drawing.Size(835, 628);
             this.panelRight.TabIndex = 1;
             // 
             // FormMain
