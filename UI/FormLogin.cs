@@ -64,7 +64,36 @@ namespace WMS.UI
 
         public FormLogin()
         {
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);  //  禁止擦除背景. 
+            SetStyle(ControlStyles.DoubleBuffer, true);  //  双缓冲 
             InitializeComponent();
+        }
+
+        private void FormLogin_Load(object sender, EventArgs e)
+        {
+            //让窗口透明www
+            this.TransparencyKey = Color.Red;
+            this.BackColor = Color.Red;
+
+            this.labelStatus.Text = "";
+            this.labelClickCount.Visible = false;
+            this.labelClickCount.ForeColor = Color.White;
+            this.labelClickCount.Font = new Font("黑体", 12);
+            this.CancelButton = buttonClosing;
+            //粗糙圆角www
+            //this.textBox1.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.textBox1.Width, this.textBox1.Height), 10f));
+        }
+
+        //启用双缓冲技术
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
         }
 
         private void buttonEnter_Click(object sender, EventArgs e)
@@ -204,20 +233,6 @@ namespace WMS.UI
             }
         }
 
-        private void FormLogin_Load(object sender, EventArgs e)
-        {
-            //让窗口透明www
-            this.TransparencyKey = Color.Red;
-            this.BackColor = Color.Red;
-
-            this.labelStatus.Text = "";
-            this.labelClickCount.Visible = false;
-            this.labelClickCount.ForeColor = Color.White;
-            this.labelClickCount.Font = new Font("黑体", 12);
-            this.CancelButton = buttonClosing;
-            //粗糙圆角www
-            //this.textBox1.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.textBox1.Width, this.textBox1.Height), 10f));
-        }
         //粗糙圆角www
         //public GraphicsPath GetRoundRectPath(RectangleF rect, float radius)
         //{
@@ -321,6 +336,11 @@ namespace WMS.UI
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void FormLogin_Shown(object sender, EventArgs e)
+        {
+            
         }
     }
 }

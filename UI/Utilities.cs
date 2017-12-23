@@ -16,7 +16,7 @@ namespace WMS.UI
         public const int WM_SETREDRAW = 0xB;
 
         [DllImport("user32")]
-        public static extern int SendMessage(IntPtr hwnd, int wMsg, int wParam, IntPtr lParam);
+        public static extern int SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
 
         public static object[] GetValuesByPropertieNames<T>(T obj, string[] keys)
         {

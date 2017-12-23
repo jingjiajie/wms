@@ -127,6 +127,7 @@ namespace WMS.UI
             return node;
         }
 
+
         private void treeViewLeft_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
             if (e.Node != null)
@@ -146,6 +147,16 @@ namespace WMS.UI
                     e.Cancel = true; //不让选中禁用节点
 
                 }
+            }
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
             }
         }
 
@@ -198,7 +209,7 @@ namespace WMS.UI
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 0, IntPtr.Zero);
+            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 0, 0);
             if (treeViewLeft.SelectedNode.Text == "用户管理")
             {
                 this.panelRight.Controls.Clear();//清空
@@ -343,7 +354,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formSubmissionManage);
                 formSubmissionManage.Show();
             }
-            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, IntPtr.Zero);
+            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
