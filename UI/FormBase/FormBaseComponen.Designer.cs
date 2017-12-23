@@ -40,6 +40,7 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.reoGridControlComponen = new unvell.ReoGrid.ReoGridControl();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripLabel();
@@ -61,7 +62,7 @@
             this.toolStripButtonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(668, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(669, 28);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -150,10 +151,23 @@
             this.reoGridControlComponen.SheetTabVisible = true;
             this.reoGridControlComponen.SheetTabWidth = 60;
             this.reoGridControlComponen.ShowScrollEndSpacing = true;
-            this.reoGridControlComponen.Size = new System.Drawing.Size(668, 340);
+            this.reoGridControlComponen.Size = new System.Drawing.Size(669, 289);
             this.reoGridControlComponen.TabIndex = 3;
             this.reoGridControlComponen.Text = "reoGridControl1";
             this.reoGridControlComponen.Click += new System.EventHandler(this.reoGridControlUser_Click);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 39);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1352, 677);
+            this.tableLayoutPanel1.TabIndex = 5;
             // 
             // toolStrip1
             // 
@@ -162,10 +176,10 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 343);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 317);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(668, 25);
-            this.toolStrip1.TabIndex = 4;
+            this.toolStrip1.Size = new System.Drawing.Size(669, 25);
+            this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripStatusLabel1
@@ -184,9 +198,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(668, 368);
-            this.Controls.Add(this.toolStrip1);
+            this.ClientSize = new System.Drawing.Size(669, 342);
             this.Controls.Add(this.reoGridControlComponen);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormBaseComponent";
@@ -213,6 +227,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private unvell.ReoGrid.ReoGridControl reoGridControlComponen;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripLabel labelStatus;

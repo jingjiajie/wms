@@ -96,17 +96,7 @@ namespace WMS.UI
                 return;
             }
 
-            //string supplierName = textBoxSupplierName.Text;
-            //try
-            //{
-            //    Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
 
-            //    this.supplierID = supplierID.ID;
-            //}
-            //catch
-            //{
-
-            //}
 
             //if (this.supplierID == -1)
             //{
@@ -121,13 +111,26 @@ namespace WMS.UI
                     componen = (from s in this.wmsEntities.Component
                                 where s.ID == this.componenID
                                 select s).Single();
+                    string supplierName = textBoxSupplierName.Text;
+                    try
+                    {
+                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
 
+                        this.supplierID = supplierID.ID;
+                    }
+                    catch
+                    {
+
+                    }
                 }
                 catch
                 {
-                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    
-                    this.Close();
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (componen == null)
+                {
+                    MessageBox.Show("库存信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -184,10 +187,12 @@ namespace WMS.UI
             if(mode == FormMode.ALTER)
             {
                 this.Text = "修改零件信息";
+                this.groupBox1.Text = "修改零件信息";
                 this.buttonOK.Text = "修改零件信息";
             }else if (mode == FormMode.ADD)
             {
                 this.Text = "添加零件信息";
+                this.groupBox1.Text = "添加零件信息";
                 this.buttonOK.Text = "添加零件信息";
             }
         }

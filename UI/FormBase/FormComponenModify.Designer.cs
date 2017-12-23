@@ -50,7 +50,7 @@
             this.groupBox1.Size = new System.Drawing.Size(722, 310);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "修改库存信息";
+            this.groupBox1.Text = "修改零件信息";
             // 
             // tableLayoutPanel2
             // 
@@ -117,7 +117,7 @@
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(194, 51);
             this.buttonOK.TabIndex = 30;
-            this.buttonOK.Text = "修改库存信息";
+            this.buttonOK.Text = "修改零件信息";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
@@ -132,7 +132,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "FormComponenModify";
-            this.Text = "修改库存信息";
+            this.Text = "修改零件信息";
             this.Load += new System.EventHandler(this.FormComponenModify_Load);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

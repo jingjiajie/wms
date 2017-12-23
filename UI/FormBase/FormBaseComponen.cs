@@ -111,7 +111,20 @@ namespace WMS.UI
                         parameters.Add(new SqlParameter("value", value));
                     }
                     sql += " ORDER BY ID DESC"; //倒序排序
-                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
+                    try
+                    {
+                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
+                    }
+                    catch (EntityCommandExecutionException)
+                    {
+                        MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                 }
                 if ((this.authority & authority_self) == 0)
@@ -136,7 +149,20 @@ namespace WMS.UI
                         parameters.Add(new SqlParameter("value", value));
                     }
                     sql += " ORDER BY ID DESC"; //倒序排序
-                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
+                    try
+                    {
+                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
+                    }
+                    catch (EntityCommandExecutionException)
+                    {
+                        MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
 
 
@@ -236,19 +262,29 @@ namespace WMS.UI
             this.labelStatus.Text = "正在删除...";
 
 
-            new Thread(new ThreadStart(() =>
-            {
-                foreach (int id in deleteIDs)
+                new Thread(new ThreadStart(() =>
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
+                try
+                {
+                    foreach (int id in deleteIDs)
+                    {
+                        this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
+                    }
                 }
-                this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(() =>
+                catch (Exception)
                 {
-                    this.Search();
-                }));
-            })).Start();
-            MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                    this.wmsEntities.SaveChanges();
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Search();
+                        MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }));
+                })).Start();
+
+
         }//删除
 
         private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
@@ -270,6 +306,11 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Enabled = true;
             }
+        }
+
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
     }
