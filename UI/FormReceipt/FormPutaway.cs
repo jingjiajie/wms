@@ -144,7 +144,14 @@ namespace WMS.UI.FormReceipt
                         object[] columns = Utilities.GetValuesByPropertieNames(curPutawayTicketView, (from kn in ReceiptMetaData.putawayTicketKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[n, j] = columns[j];
+                            if (columns[j] == null)
+                            {
+                                worksheet[n, j] = columns[j];
+                            }
+                            else
+                            {
+                                worksheet[n, j] = columns[j].ToString();
+                            }
                         }
                         n++;
                     }
@@ -165,6 +172,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
+                putawayTicket.ReceiptTicketID = this.receiptTicketID;
                 putawayTicket.CreateTime = DateTime.Now;
                 putawayTicket.CreateUserID = this.userID;
                 putawayTicket.LastUpdateTime = DateTime.Now;
