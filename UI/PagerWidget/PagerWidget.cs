@@ -249,6 +249,7 @@ namespace WMS.UI
                 this.reoGrid.Invoke(new Action(() =>
                 {
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    worksheet.Rows = results.Length;
                     if (results.Length == 0)
                     {
                         worksheet[0, 1] = "没有查询到符合条件的记录";

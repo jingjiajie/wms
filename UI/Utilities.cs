@@ -11,7 +11,7 @@ namespace WMS.UI
 {
     class Utilities
     {
-        public const int PAGE_SIZE = 5;
+        public const int PAGE_SIZE = 50;
 
         public const int WM_SETREDRAW = 0xB;
 
