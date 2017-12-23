@@ -659,5 +659,8 @@
   <ItemGroup>
     <None Include="icon\botton.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\check.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

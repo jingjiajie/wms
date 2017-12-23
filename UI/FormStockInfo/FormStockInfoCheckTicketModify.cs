@@ -51,7 +51,7 @@ namespace WMS.UI
 
                 this.buttonDelete.Visible = false;
                 this.buttonfinish.Visible = false;
-                this.Size = new Size(500, 250);
+                this.Size = new Size(500, 200);
                
 
             }

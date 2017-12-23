@@ -51,6 +51,7 @@
             // 
             // toolStripTop
             // 
+            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabelSelect,
@@ -62,7 +63,7 @@
             this.buttonCancel});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(840, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(867, 28);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -70,7 +71,7 @@
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(68, 25);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // toolStripComboBoxSelect1
@@ -78,13 +79,13 @@
             this.toolStripComboBoxSelect1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxSelect1.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxSelect1.Name = "toolStripComboBoxSelect1";
-            this.toolStripComboBoxSelect1.Size = new System.Drawing.Size(114, 28);
+            this.toolStripComboBoxSelect1.Size = new System.Drawing.Size(151, 28);
             this.toolStripComboBoxSelect1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelect1_SelectedIndexChanged);
             // 
             // textBoxSearchValue
             // 
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(151, 28);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(200, 28);
             // 
             // toolStripSeparator1
             // 
@@ -94,31 +95,28 @@
             // 
             // buttonSearch
             // 
-            this.buttonSearch.AutoSize = false;
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(60, 25);
+            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonAdd
             // 
-            this.buttonAdd.AutoSize = false;
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
+            this.buttonAdd.Size = new System.Drawing.Size(63, 25);
             this.buttonAdd.Text = "添加";
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonCancel
             // 
-            this.buttonCancel.AutoSize = false;
             this.buttonCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonCancel.Image")));
             this.buttonCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(60, 25);
+            this.buttonCancel.Size = new System.Drawing.Size(63, 25);
             this.buttonCancel.Text = "取消";
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
@@ -129,22 +127,22 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 485);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 613);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(840, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(867, 25);
             this.toolStrip1.TabIndex = 7;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(43, 22);
             this.toolStripStatusLabel1.Text = "状态:";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(104, 22);
+            this.labelStatus.Size = new System.Drawing.Size(129, 22);
             this.labelStatus.Text = "库存盘点零件信息";
             this.labelStatus.Click += new System.EventHandler(this.labelStatus_Click);
             // 
@@ -153,11 +151,12 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 89.88327F));
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlComponen, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 31);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 103);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 98.17352F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(498, 451);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(867, 506);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // reoGridControlComponen
@@ -166,54 +165,55 @@
             this.reoGridControlComponen.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlComponen.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlComponen.Location = new System.Drawing.Point(2, 2);
-            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2);
+            this.reoGridControlComponen.Location = new System.Drawing.Point(3, 2);
+            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reoGridControlComponen.Name = "reoGridControlComponen";
             this.reoGridControlComponen.RowHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Script = null;
             this.reoGridControlComponen.SheetTabContextMenuStrip = null;
             this.reoGridControlComponen.SheetTabNewButtonVisible = true;
             this.reoGridControlComponen.SheetTabVisible = true;
-            this.reoGridControlComponen.SheetTabWidth = 60;
+            this.reoGridControlComponen.SheetTabWidth = 80;
             this.reoGridControlComponen.ShowScrollEndSpacing = true;
-            this.reoGridControlComponen.Size = new System.Drawing.Size(494, 447);
+            this.reoGridControlComponen.Size = new System.Drawing.Size(861, 502);
             this.reoGridControlComponen.TabIndex = 8;
             this.reoGridControlComponen.Text = "reoGridControl1";
             this.reoGridControlComponen.Click += new System.EventHandler(this.reoGridControlComponen_Click);
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(516, 35);
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.tableLayoutPanel2.ColumnCount = 6;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.13131F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.20202F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.13131F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.20202F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.13131F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.20202F));
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 32);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 9;
+            this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 51.80723F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.19277F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 122F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(295, 447);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(867, 63);
             this.tableLayoutPanel2.TabIndex = 10;
             this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
             // 
             // FormStockInfoCheckTicketComponentModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(840, 510);
+            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.ClientSize = new System.Drawing.Size(867, 638);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormStockInfoCheckTicketComponentModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormStockInfoCheckTicketComponenModify";
+            this.Text = "库存盘点零件信息";
             this.Load += new System.EventHandler(this.FormStockInfoCheckTicketComponentModify_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
