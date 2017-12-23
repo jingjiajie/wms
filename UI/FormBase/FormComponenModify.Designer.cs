@@ -41,6 +41,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.groupBox1.Controls.Add(this.tableLayoutPanel2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
@@ -54,17 +55,18 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelTextBoxes, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 20);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 24);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(714, 286);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(714, 282);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
             // tableLayoutPanelTextBoxes
@@ -90,7 +92,7 @@
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(708, 222);
+            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(708, 219);
             this.tableLayoutPanelTextBoxes.TabIndex = 30;
             // 
             // tableLayoutPanel3
@@ -101,19 +103,22 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonOK, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 231);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 228);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(708, 52);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(708, 51);
             this.tableLayoutPanel3.TabIndex = 31;
             // 
             // buttonOK
             // 
+            this.buttonOK.BackgroundImage = global::WMS.UI.Properties.Resources.botton;
             this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonOK.Location = new System.Drawing.Point(257, 1);
+            this.buttonOK.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonOK.Location = new System.Drawing.Point(257, 0);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(194, 51);
             this.buttonOK.TabIndex = 30;
@@ -123,15 +128,17 @@
             // 
             // FormComponenModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(722, 310);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("黑体", 10F);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormComponenModify";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "修改零件信息";
             this.Load += new System.EventHandler(this.FormComponenModify_Load);
             this.groupBox1.ResumeLayout(false);

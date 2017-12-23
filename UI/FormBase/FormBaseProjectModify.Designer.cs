@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBaseProjectModify));
             this.groupBoxMain = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -44,31 +45,32 @@
             // 
             // groupBoxMain
             // 
+            this.groupBoxMain.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.groupBoxMain.Controls.Add(this.tableLayoutPanel2);
             this.groupBoxMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBoxMain.Font = new System.Drawing.Font("黑体", 10F);
             this.groupBoxMain.Location = new System.Drawing.Point(0, 0);
-            this.groupBoxMain.Margin = new System.Windows.Forms.Padding(6);
+            this.groupBoxMain.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxMain.Name = "groupBoxMain";
-            this.groupBoxMain.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBoxMain.Size = new System.Drawing.Size(801, 248);
+            this.groupBoxMain.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxMain.Size = new System.Drawing.Size(534, 155);
             this.groupBoxMain.TabIndex = 1;
             this.groupBoxMain.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 37);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 24);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.61373F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70.38627F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(789, 205);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(526, 127);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
             // tableLayoutPanel1
@@ -82,70 +84,70 @@
             this.tableLayoutPanel1.Controls.Add(this.textBoxName, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 5);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(781, 50);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(520, 31);
             this.tableLayoutPanel1.TabIndex = 30;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(6, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label1.Location = new System.Drawing.Point(4, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(144, 50);
+            this.label1.Size = new System.Drawing.Size(96, 31);
             this.label1.TabIndex = 0;
             this.label1.Text = "名称";
             // 
             // textBoxName
             // 
             this.textBoxName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxName.Location = new System.Drawing.Point(162, 6);
-            this.textBoxName.Margin = new System.Windows.Forms.Padding(6);
+            this.textBoxName.Location = new System.Drawing.Point(108, 4);
+            this.textBoxName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(222, 38);
+            this.textBoxName.Size = new System.Drawing.Size(148, 27);
             this.textBoxName.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(396, 0);
-            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label2.Location = new System.Drawing.Point(264, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(144, 50);
+            this.label2.Size = new System.Drawing.Size(96, 31);
             this.label2.TabIndex = 2;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 65);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 40);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 67F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(781, 135);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(520, 84);
             this.tableLayoutPanel3.TabIndex = 31;
             // 
             // buttonModify
             // 
+            this.buttonModify.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonModify.BackgroundImage")));
             this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonModify.Location = new System.Drawing.Point(244, 19);
-            this.buttonModify.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonModify.Location = new System.Drawing.Point(163, 11);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(292, 97);
+            this.buttonModify.Size = new System.Drawing.Size(194, 61);
             this.buttonModify.TabIndex = 30;
             this.buttonModify.Text = "修改项目信息";
             this.buttonModify.UseVisualStyleBackColor = true;
@@ -153,11 +155,13 @@
             // 
             // FormBaseProjectModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(801, 248);
+            this.ClientSize = new System.Drawing.Size(534, 155);
             this.Controls.Add(this.groupBoxMain);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormBaseProjectModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "修改项目信息";

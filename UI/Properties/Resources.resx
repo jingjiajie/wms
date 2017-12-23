@@ -121,19 +121,22 @@
   <data name="50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icon\50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="botton2 (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\botton2 (3).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botton2 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\botton2 (2).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="botton1 (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\botton1 (3).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="122" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icon\122.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="botton1 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icon\botton1 (2).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="botton1 (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\botton1 (3).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botton2 (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\botton2 (2).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="botton2 (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\botton2 (3).jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="botton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\icon\botton.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

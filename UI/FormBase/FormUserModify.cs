@@ -245,11 +245,13 @@ namespace WMS.UI.FormBase
             {
                 this.Text = "修改用户信息";
                 this.buttonOK.Text = "修改用户信息";
+                this.groupBox1.Text = "修改用户信息";
             }
             else if (mode == FormMode.ADD)
             {
                 this.Text = "添加用户信息";
                 this.buttonOK.Text = "添加用户信息";
+                this.groupBox1.Text = "添加用户信息";
             }
         }
 

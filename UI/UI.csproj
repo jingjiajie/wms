@@ -656,5 +656,8 @@
   <ItemGroup>
     <None Include="icon\botton2 %283%29.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\botton.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

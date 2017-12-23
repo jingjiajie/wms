@@ -69,11 +69,13 @@ namespace WMS.UI.FormBase
             {
                 this.Text = "修改仓库信息";
                 this.buttonModify.Text = "修改仓库信息";
+                this.groupBox1.Text = "修改仓库信息";
             }
             else if (mode == FormMode.ADD)
             {
                 this.Text = "添加仓库信息";
                 this.buttonModify.Text = "添加仓库信息";
+                this.groupBox1.Text = "添加仓库信息";
             }
         }
 

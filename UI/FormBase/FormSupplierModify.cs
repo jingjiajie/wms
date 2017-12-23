@@ -30,7 +30,7 @@ namespace WMS.UI
             this.MaximizeBox = false;
             if (this.mode == FormMode.ALTER&&this.supplierID == -1)
             { 
-                throw new Exception("未设置源库存信息");
+                throw new Exception("未设置源供应商信息");
             }
             this.tableLayoutPanel1.Controls.Clear();
             for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
@@ -136,13 +136,15 @@ namespace WMS.UI
             this.mode = mode;
             if (mode == FormMode.ALTER)
             {
-                this.Text = "修改库存信息";
-                this.buttonModify.Text = "修改库存信息";
+                this.Text = "修改供应商信息";
+                this.buttonModify.Text = "修改供应商信息";
+                this.groupBox1.Text = "修改供应商信息";
             }
             else if (mode == FormMode.ADD)
             {
-                this.Text = "添加库存信息";
-                this.buttonModify.Text = "添加库存信息";
+                this.Text = "添加供应商信息";
+                this.buttonModify.Text = "添加供应商信息";
+                this.groupBox1.Text = "添加供应商信息";
             }
         }
     }
