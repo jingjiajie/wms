@@ -19,6 +19,7 @@ namespace WMS.UI
         private int userID = -1;
         private int projectID = -1;
         private int warehouseID = -1;
+        private PagerWidget<StockInfoView> pagerWidget = null;
 
         public FormStockInfo(int userID,int projectID,int warehouseID)
         {
@@ -28,12 +29,22 @@ namespace WMS.UI
             this.warehouseID = warehouseID;
         }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
 
         private void FormStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.Search();
+            this.pagerWidget.Search();
         }
+
 
         private void InitComponents()
         {
@@ -43,11 +54,15 @@ namespace WMS.UI
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
+            //初始化查询框
             this.comboBoxSearchCondition.Items.Add("无");
             this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
             this.comboBoxSearchCondition.SelectedIndex = 0;
 
+            //初始化分页控件
+            this.pagerWidget = new PagerWidget<StockInfoView>("StockInfoView", StockInfoViewMetaData.KeyNames, this.reoGridControlMain, this.projectID, this.warehouseID);
+            this.panelPager.Controls.Add(pagerWidget);
+            pagerWidget.Show();
 
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
@@ -67,80 +82,16 @@ namespace WMS.UI
         
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            this.Search();
-        }
-
-        private void Search()
-        {
-            string key = null;
-            string value = null;
-
-            if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            if(this.comboBoxSearchCondition.SelectedIndex == 0)
             {
-                key = (from kn in StockInfoViewMetaData.KeyNames
-                              where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
-                              select kn.Key).First();
-                value = this.textBoxSearchValue.Text;
+                this.pagerWidget.KeyChinese = null;
             }
-
-            this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet[0, 0] = "加载中...";
-            new Thread(new ThreadStart(() =>
+            else
             {
-                StockInfoView[] stockInfoViews = null;
-                string sql = "SELECT * FROM StockInfoView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-
-                if (this.projectID != -1)
-                {
-                    sql += "AND ProjectID = @projectID ";
-                    parameters.Add(new SqlParameter("projectID", this.projectID));
-                }
-                if (warehouseID != -1)
-                {
-                    sql += "AND WarehouseID = @warehouseID ";
-                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
-                }
-                if (key != null && value != null) //查询条件不为null则增加查询条件
-                {
-                    sql += "AND " + key + " = @value ";
-                    parameters.Add(new SqlParameter("value", value));
-                }
-                sql += " ORDER BY ID DESC"; //倒序排序
-                try
-                {
-                    stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(sql, parameters.ToArray()).ToArray();
-                }
-                catch (EntityCommandExecutionException)
-                {
-                    MessageBox.Show("查询失败，请检查输入查询条件","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                catch(Exception)
-                {
-                    MessageBox.Show("查询失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.reoGridControlMain.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if(stockInfoViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < stockInfoViews.Length; i++)
-                    {
-                        StockInfoView curStockInfoView = stockInfoViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoViewMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
-                    }
-                }));
-            })).Start();
+                this.pagerWidget.KeyChinese = this.comboBoxSearchCondition.SelectedItem.ToString();
+            }
+            this.pagerWidget.Value = this.textBoxSearchValue.Text;
+            this.pagerWidget.Search();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -156,7 +107,7 @@ namespace WMS.UI
                 var formStockInfoModify = new FormStockInfoModify(stockInfoID);
                 formStockInfoModify.SetModifyFinishedCallback(()=>
                 {
-                    this.Search();
+                    this.pagerWidget.Search();
                 });
                 formStockInfoModify.Show();
             }
@@ -173,7 +124,7 @@ namespace WMS.UI
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
-                this.Search();
+                this.pagerWidget.Search();
             });
             form.Show();
         }
@@ -213,7 +164,10 @@ namespace WMS.UI
                     this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @stockInfoID", new SqlParameter("stockInfoID", id));
                 }
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(()=>
+                {
+                    this.pagerWidget.Search();
+                }));
             })).Start();
         }
 
@@ -221,7 +175,7 @@ namespace WMS.UI
         {
             if (e.KeyChar == 13)
             {
-                this.Search();
+                this.buttonSearch.PerformClick();
             }
         }
 

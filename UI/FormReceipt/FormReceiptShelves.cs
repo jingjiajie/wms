@@ -60,12 +60,12 @@ namespace WMS.UI.FormReceipt
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.putawayTicketKeyName.Length; i++)
             {
                 worksheet.ColumnHeaders[i].Text = ReceiptMetaData.putawayTicketKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.putawayTicketKeyName[i].Visible;
             }
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.putawayTicketKeyName.Length;
         }
 
         private void Search(string key, string value)
@@ -114,8 +114,14 @@ namespace WMS.UI.FormReceipt
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketView, (from kn in ReceiptMetaData.putawayTicketKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-
-                            worksheet[n, j] = columns[j];
+                            if (columns[j] == null)
+                            {
+                                worksheet[n, j] = columns[j];
+                            }
+                            else
+                            {
+                                worksheet[n, j] = columns[j].ToString();
+                            }
                         }
                         n++;
 

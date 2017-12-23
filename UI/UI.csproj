@@ -48,24 +48,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BSM\BMS4000M.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BSM\BMS4000M.Designer.cs">
-      <DependentUpon>BMS4000M.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSM\BMS4100M.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BSM\BMS4100M.Designer.cs">
-      <DependentUpon>BMS4100M.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSM\BMS4200M.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BSM\BMS4200M.Designer.cs">
-      <DependentUpon>BMS4200M.cs</DependentUpon>
-    </Compile>
     <Compile Include="CommonDataStructures.cs" />
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
@@ -419,6 +401,12 @@
     <Compile Include="FormReceipt\FormSubmissionManage.Designer.cs">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </Compile>
+    <Compile Include="PagerWidget\PagerWidget.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PagerWidget\PagerWidget.Designer.cs">
+      <DependentUpon>PagerWidget.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicket.cs">
@@ -441,28 +429,7 @@
     </Compile>
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
-    <Compile Include="SMC2000M.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SMC2000M.Designer.cs">
-      <DependentUpon>SMC2000M.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SMC2100M.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SMC2100M.Designer.cs">
-      <DependentUpon>SMC2100M.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utilities.cs" />
-    <EmbeddedResource Include="BSM\BMS4000M.resx">
-      <DependentUpon>BMS4000M.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSM\BMS4100M.resx">
-      <DependentUpon>BMS4100M.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSM\BMS4200M.resx">
-      <DependentUpon>BMS4200M.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
@@ -627,6 +594,9 @@
     <EmbeddedResource Include="FormReceipt\FormSubmissionManage.resx">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PagerWidget\PagerWidget.resx">
+      <DependentUpon>PagerWidget.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -645,12 +615,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketModify.resx">
       <DependentUpon>FormPutOutStorageTicketModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SMC2000M.resx">
-      <DependentUpon>SMC2000M.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SMC2100M.resx">
-      <DependentUpon>SMC2100M.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
