@@ -74,9 +74,19 @@ namespace WMS.UI
                 //若修改，则查询原对象。若添加，则新建对象。
                 if (this.mode == FormMode.ALTER)
                 {
-                    supplier = (from s in this.wmsEntities.Supplier
-                                where s.ID == this.supplierID
-                                select s).Single();
+                    try
+                    {
+                        supplier = (from s in this.wmsEntities.Supplier
+                                    where s.ID == this.supplierID
+                                    select s).Single();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        this.Close();
+                        return;
+                    }
                 }
                 else if (mode == FormMode.ADD)
                 {
