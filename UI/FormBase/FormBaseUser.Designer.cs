@@ -144,7 +144,6 @@
             this.reoGridControlUser.Size = new System.Drawing.Size(1154, 787);
             this.reoGridControlUser.TabIndex = 1;
             this.reoGridControlUser.Text = "reoGridControl1";
-            //this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click);
             // 
             // FromBaseUser
             // 

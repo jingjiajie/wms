@@ -144,10 +144,20 @@ namespace WMS.UI
             
             if (this.mode == FormMode.ALTER)
             {
-                stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
-                             where s.ID == this.stockInfoCheckID 
-                             select s).Single();
-                stockInfoCheck.LastUpdateUserID = Convert.ToString( userID);
+                try
+                {
+                    stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
+                                      where s.ID == this.stockInfoCheckID
+                                      select s).Single();
+                    stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+                }
+                catch
+                {
+                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    this.Close();
+                    return;
+                }
             }
             else if (mode == FormMode.ADD)
             {
