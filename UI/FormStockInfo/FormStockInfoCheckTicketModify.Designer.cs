@@ -93,6 +93,7 @@
             this.buttonDelete.Size = new System.Drawing.Size(92, 35);
             this.buttonDelete.TabIndex = 8;
             this.buttonDelete.Text = "删除";
+            this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonDelete.UseVisualStyleBackColor = false;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click_1);
             // 
@@ -144,6 +145,7 @@
             this.buttonAdd.Size = new System.Drawing.Size(92, 35);
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.Text = "添加";
+            this.buttonAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
