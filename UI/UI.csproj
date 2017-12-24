@@ -662,5 +662,14 @@
   <ItemGroup>
     <None Include="icon\check.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\add-b.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\delete.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\cancle.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
