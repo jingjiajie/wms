@@ -15,15 +15,22 @@ namespace WMS.UI
 {
     public partial class PagerWidget<TargetClass> : Form
     {
+        private class Condition
+        {
+            public string Sql = null;
+            public List<SqlParameter> Parameters = new List<SqlParameter>();
+        }
+
         private int curPage = 0;
         private int totalPage = 1;
         private ReoGridControl reoGrid = null;
         private string dbTableName = null;
-        private string key = null;
-        private string value = null;
         private int projectID = -1;
         private int warehouseID = -1;
         private KeyName[] keyNames = null;
+
+        private List<Condition> condition = new List<Condition>();
+        private List<Condition> staticCondition = new List<Condition>();
 
         private int RecordCount
         {
@@ -79,42 +86,113 @@ namespace WMS.UI
             }
         }
 
-        public string KeyChinese
-        {
-            set
-            {
-                if (value != null)
-                {
-                    string foundKey = (from kn in keyNames
-                           where kn.Name == value
-                           select kn.Key).FirstOrDefault();
-                    if(foundKey == null)
-                    {
-                        throw new Exception("KeyNames中不存在Name:" + value + "请检查你的代码！");
-                    }
-                    this.Key = foundKey;
-                }
-                else
-                {
-                    Key = null;
-                }
-            }
-        }
-        public string Key { get => key; set => key = value; }
-        public string Value { get => value; set => this.value = value; }
         public int ProjectID { get => projectID; set => projectID = value; }
         public int WarehouseID { get => warehouseID; set => warehouseID = value; }
 
-        public PagerWidget(string dbTableName,KeyName[] keyNames, ReoGridControl reoGridControl,int defaultProjectID,int defaultWarehouseID)
+        public PagerWidget(ReoGridControl reoGridControl, KeyName[] keyNames, int defaultProjectID = -1, int defaultWarehouseID = -1)
         {
             InitializeComponent();
             this.TopLevel = false;
             this.Dock = DockStyle.Fill;
-            this.dbTableName = dbTableName;
+            this.dbTableName = typeof(TargetClass).Name;
             this.reoGrid = reoGridControl;
             this.ProjectID = defaultProjectID;
             this.WarehouseID = defaultWarehouseID;
             this.keyNames = keyNames;
+
+            InitReoGrid();
+        }
+
+
+        private void InitReoGrid()
+        {
+            //初始化表格
+            var worksheet = this.reoGrid.Worksheets[0];
+            worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            for (int i = 0; i < this.keyNames.Length; i++)
+            {
+                worksheet.ColumnHeaders[i].Text = this.keyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = this.keyNames[i].Visible;
+            }
+            worksheet.Columns = StockInfoViewMetaData.KeyNames.Length; //限制表的长度
+        }
+
+        private Condition MakeCondition(string key, string value)
+        {
+            string realKey = null;
+            //首先判断查询的Key是否在KeyName中对应的Name，如果是，则转换成相应的Key
+            string foundKey = (from kn in keyNames
+                               where kn.Name == key
+                               select kn.Key).FirstOrDefault();
+            if (foundKey != null)
+            {
+                realKey = foundKey;
+            }
+            else if (typeof(TargetClass).GetProperty(key) != null)
+            {
+                realKey = key;
+            }
+            else
+            {
+                throw new Exception("KeyNames中不存在Name:" + key + "请检查你的代码！");
+            }
+            string paramName = "@value" + Guid.NewGuid().ToString("N");
+            string sql = "(1<>1 ";
+            if (value.Length == 0) //长度为0，则认为搜索NULL值
+            {
+                sql += "OR " + realKey + " IS NULL ";
+            }
+            Type propertyType = typeof(TargetClass).GetProperty(realKey).PropertyType;
+            if (propertyType == typeof(string)) {
+                sql += "OR " + realKey + " LIKE '%'+" + paramName + "+'%'";
+            }
+            else if(value.Length != 0)//不为字符串，则不允许长度为0
+            {
+                sql += "OR " + realKey + " = " + paramName;
+            }
+            sql += ")";
+            Condition condition = new Condition();
+            condition.Sql = sql;
+            condition.Parameters.Add(new SqlParameter(paramName, value));
+            return condition;
+        }
+
+        public void AddCondition(string key,string value)
+        {
+            this.condition.Add(this.MakeCondition(key,value));
+        }
+
+        public void AddCondition(string sql, params SqlParameter[] parameters)
+        {
+            this.condition.Add(new Condition()
+            {
+                Sql = sql,
+                Parameters = new List<SqlParameter>(parameters)
+            });
+        }
+
+        public void ClearCondition()
+        {
+            this.condition.Clear();
+        }
+
+        public void AddStaticCondition(string key, string value)
+        {
+            this.staticCondition.Add(this.MakeCondition(key, value));
+        }
+
+        public void AddStaticCondition(string sql,params SqlParameter[] parameters)
+        {
+            this.staticCondition.Add(new Condition()
+            {
+                Sql = sql,
+                Parameters = new List<SqlParameter>(parameters)
+            });
+        }
+
+        public void ClearStaticCondition()
+        {
+            this.staticCondition.Clear();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -179,7 +257,7 @@ namespace WMS.UI
             worksheet[0, 1] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-                WMSEntities wmsEntities = new WMSEntities();
+
                 TargetClass[] results = null;
                 string sqlSelect = "SELECT * FROM " + this.dbTableName;
                 string sqlCondition = " WHERE 1=1 ";
@@ -195,56 +273,65 @@ namespace WMS.UI
                     sqlCondition += "AND WarehouseID = @warehouseID ";
                     parameters.Add(new SqlParameter("warehouseID", warehouseID));
                 }
-                if (key != null && value != null) //查询条件不为null则增加查询条件
+
+                foreach(Condition cond in this.condition)
                 {
-                    sqlCondition += "AND " + key + " = @value ";
-                    parameters.Add(new SqlParameter("value", value));
+                    sqlCondition += " AND " + cond.Sql;
+                    parameters.AddRange(cond.Parameters);
                 }
 
-                //查询总数量
-                try
+                foreach (Condition cond in this.staticCondition)
                 {
-                    string sql = "SELECT COUNT(*) FROM " + dbTableName + sqlCondition;
-                    int count = wmsEntities.Database.SqlQuery<int>(sql, (from p in parameters select ((ICloneable)p).Clone()).ToArray()).First();
-                    int page = this.CurPage;
-                    this.RecordCount = count;
-                    if(this.CurPage != page)
+                    sqlCondition += " AND " + cond.Sql;
+                    parameters.AddRange(cond.Parameters);
+                }
+                using (WMSEntities wmsEntities = new WMSEntities()) {
+                    //查询总数量
+                    try
                     {
-                        this.Search();
+                        string sql = "SELECT COUNT(*) FROM " + dbTableName + sqlCondition;
+                        int count = wmsEntities.Database.SqlQuery<int>(sql, (from p in parameters select ((ICloneable)p).Clone()).ToArray()).First();
+                        int page = this.CurPage;
+                        this.RecordCount = count;
+                        if (this.CurPage != page)
+                        {
+                            this.Search();
+                            return;
+                        }
+                    }
+                    catch (EntityCommandExecutionException)
+                    {
+                        MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                }
-                catch (EntityCommandExecutionException)
-                {
-                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-                //添加分页条件
-                sqlCondition += " ORDER BY ID DESC"; //倒序排序
-                sqlCondition += " OFFSET @offsetRows ROWS FETCH NEXT @pageSize ROWS ONLY";
-                parameters.Add(new SqlParameter("@offsetRows", this.curPage * Utilities.PAGE_SIZE));
-                parameters.Add(new SqlParameter("@pageSize", Utilities.PAGE_SIZE));
+                    //添加分页条件
+                    sqlCondition += " ORDER BY ID DESC"; //倒序排序
+                    sqlCondition += " OFFSET @offsetRows ROWS FETCH NEXT @pageSize ROWS ONLY";
+                    parameters.Add(new SqlParameter("@offsetRows", this.curPage * Utilities.PAGE_SIZE));
+                    parameters.Add(new SqlParameter("@pageSize", Utilities.PAGE_SIZE));
 
-                try
-                {
-                    string sql = sqlSelect + sqlCondition;
-                    results = wmsEntities.Database.SqlQuery<TargetClass>(sql, parameters.ToArray()).ToArray();
-                }
-                catch (EntityCommandExecutionException)
-                {
-                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    try
+                    {
+                        string sql = sqlSelect + sqlCondition;
+                        results = wmsEntities.Database.SqlQuery<TargetClass>(sql, parameters.ToArray()).ToArray();
+                    }
+                    catch (EntityCommandExecutionException)
+                    {
+                        MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    wmsEntities.Database.Connection.Close();
                 }
                 this.reoGrid.Invoke(new Action(() =>
                 {
