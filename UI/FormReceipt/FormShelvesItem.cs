@@ -74,9 +74,12 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             int id = ids[0];
+            Console.WriteLine("AAAAAAA:::::" + (from s in this.wmsEntities.PutawayTicketItemView
+                               where s.ID == id
+                               select s).ToString());
             PutawayTicketItemView putawayTicketItemView = (from s in this.wmsEntities.PutawayTicketItemView
                                                            where s.ID == id
-                                                           select s).FirstOrDefault();
+                                                           select s).Single();
             if (putawayTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应上架单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);

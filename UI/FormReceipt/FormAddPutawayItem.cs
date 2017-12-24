@@ -90,7 +90,7 @@ namespace WMS.UI.FormReceipt
                 worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
             }
-            worksheet.ColumnHeaders[columnNames.Length].Text = "是否上架";
+            worksheet.ColumnHeaders[ReceiptMetaData.itemsKeyName.Length].Text = "是否上架";
             worksheet.Columns = ReceiptMetaData.itemsKeyName.Length+1;
         }
 
