@@ -74,8 +74,8 @@ namespace WMS.UI
         {
             InitComponents();
             WMSEntities wmsEntities = new WMSEntities();
-            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-            Utilities.CopyPropertiesToTextBoxes(receiptTicket, this);
+            ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == receiptTicketID select rt).Single();
+            Utilities.CopyPropertiesToTextBoxes(receiptTicketView, this);
             Search();
         }
 
@@ -214,6 +214,16 @@ namespace WMS.UI
         }
 
         private void reoGridControlReceiptItems_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxNo_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxSupplierName_TextChanged(object sender, EventArgs e)
         {
 
         }

@@ -10,6 +10,7 @@ using unvell.ReoGrid.CellTypes;
 using System.Windows.Forms;
 using System.Threading;
 using WMS.DataAccess;
+using System.Data.SqlClient;
 
 namespace WMS.UI.FormReceipt
 {
@@ -43,7 +44,10 @@ namespace WMS.UI.FormReceipt
             {
                 var wmsEntities = new WMSEntities();
                 ReceiptTicketItemView[] receiptTicketItemViews = null;
-                receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(String.Format("SELECT * FROM ReceiptTicketItemView WHERE ReceiptTicketID = {0}", this.receiptTicketID)).ToArray();
+                receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(
+                    "SELECT * FROM ReceiptTicketItemView " +
+                    "WHERE ReceiptTicketID = @receiptTicketID", 
+                    new SqlParameter("receiptTicketID", this.receiptTicketID)).ToArray();
                 this.countRow = receiptTicketItemViews.Length;
                 this.reoGridControlUser.Invoke(new Action(() =>
                 {
@@ -77,17 +81,17 @@ namespace WMS.UI.FormReceipt
         private void InitComponents()
         {
             //初始化
-            string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName select kn.Name).ToArray();
+            string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName where kn.Visible == true select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
             }
-            worksheet.ColumnHeaders[columnNames.Length].Text = "是否收货";
-            worksheet.Columns = columnNames.Length+1;
+            worksheet.ColumnHeaders[columnNames.Length].Text = "是否上架";
+            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length+1;
         }
 
         private void FormAddPutawayItem_Load(object sender, EventArgs e)
@@ -146,8 +150,8 @@ namespace WMS.UI.FormReceipt
                         putawayTicketItem.ReceiptTicketItemID = i.ID;
                         putawayTicketItem.PutawayTicketID = this.putawayTicketID;
                         putawayTicketItem.State = "待上架";
-                        putawayTicketItem.DisplacementPositionNo = "No";
-                        putawayTicketItem.TargetStorageLocation = "Location";
+                        //putawayTicketItem.DisplacementPositionNo = "No";
+                        //putawayTicketItem.TargetStorageLocation = "Location";
                         
                         wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
                         i.State = "已收货";

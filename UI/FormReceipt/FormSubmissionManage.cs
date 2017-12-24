@@ -303,5 +303,10 @@ namespace WMS.UI
                 this.textBoxSelect.Enabled = true;
             }
         }
+
+        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

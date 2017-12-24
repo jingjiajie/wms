@@ -85,6 +85,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="零件ID", Key="ComponentID",Visible=false,Editable=false,Save=true},
             new KeyName(){Name="零件编号", Key="ComponentNo", Visible = true, Editable = true, Save = false},
             new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false},
+            new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true},
             new KeyName(){Name="包装名称", Key="PackageName",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="期待包装数量", Key="ExpectedPackageAmount",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="期待数量", Key="ExpectedAmount",Visible=true,Editable=true,Save=true},
@@ -99,7 +100,6 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="物权属性", Key="RealRightProperty",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="箱号", Key="BoxNo",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false},
-            new KeyName(){Name="是否送检", Key="State", Visible=true, Editable=false,Save=true},
         };
 
         public static KeyName[] submissionTicketItemKeyName =

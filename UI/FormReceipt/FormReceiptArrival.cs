@@ -592,5 +592,39 @@ namespace WMS.UI
                 this.textBoxSelect.Enabled = true;
             }
         }
+
+        private void toolStripButton3_Click_1(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("该收货单不存在");
+                    return;
+                }
+                else
+                {
+                    FormReceiptItem formReceiptItem = new FormReceiptItem(receiptTicketID);
+                    formReceiptItem.SetCallBack(new Action(() =>
+                    {
+                        this.Search(null, null);
+                    }));
+                    formReceiptItem.Show();
+                }
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
     }
 }

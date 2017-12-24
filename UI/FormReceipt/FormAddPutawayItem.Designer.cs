@@ -33,7 +33,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonPutaway = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
@@ -74,17 +73,6 @@
             this.toolStripButton1.Size = new System.Drawing.Size(24, 35);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
-            // buttonReceiptCancel
-            // 
-            this.buttonReceiptCancel.AutoSize = false;
-            this.buttonReceiptCancel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
-            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
-            this.buttonReceiptCancel.Size = new System.Drawing.Size(70, 25);
-            this.buttonReceiptCancel.Text = "取消收货";
-            this.buttonReceiptCancel.Click += new System.EventHandler(this.buttonReceiptCancel_Click);
-            // 
             // buttonPutaway
             // 
             this.buttonPutaway.AutoSize = false;
@@ -101,7 +89,6 @@
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buttonPutaway,
-            this.buttonReceiptCancel,
             this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
@@ -157,7 +144,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
         private System.Windows.Forms.ToolStripButton buttonPutaway;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private unvell.ReoGrid.ReoGridControl reoGridControlUser;
