@@ -137,18 +137,26 @@ namespace WMS.UI
                 throw new Exception("KeyNames中不存在Name:" + key + "请检查你的代码！");
             }
             string paramName = "@value" + Guid.NewGuid().ToString("N");
+            Type propertyType = typeof(TargetClass).GetProperty(realKey).PropertyType;
             string sql = "(1<>1 ";
             if (value.Length == 0) //长度为0，则认为搜索NULL值
             {
                 sql += "OR " + realKey + " IS NULL ";
+                if (propertyType == typeof(string))
+                {
+                    sql += "OR " + realKey + " = ''";
+                }
             }
-            Type propertyType = typeof(TargetClass).GetProperty(realKey).PropertyType;
-            if (propertyType == typeof(string)) {
-                sql += "OR " + realKey + " LIKE '%'+" + paramName + "+'%'";
-            }
-            else if(value.Length != 0)//不为字符串，则不允许长度为0
+            else //value.length != 0
             {
-                sql += "OR " + realKey + " = " + paramName;
+                if (propertyType == typeof(string))
+                {
+                    sql += "OR " + realKey + " LIKE '%'+" + paramName + "+'%'";
+                }
+                else
+                {
+                    sql += "OR " + realKey + " = " + paramName;
+                }
             }
             sql += ")";
             Condition condition = new Condition();
@@ -218,7 +226,7 @@ namespace WMS.UI
                 return;
             }
             this.CurPage = targetPage - 1;
-            this.Search();
+            this.Search(true);
         }
 
         private void buttonNextPage_Click(object sender, EventArgs e)
@@ -229,7 +237,7 @@ namespace WMS.UI
                 return;
             }
             this.CurPage++;
-            this.Search();
+            this.Search(true);
         }
 
         private void buttonPreviousPage_Click(object sender, EventArgs e)
@@ -240,7 +248,7 @@ namespace WMS.UI
                 return;
             }
             this.CurPage--;
-            this.Search();
+            this.Search(true);
         }
 
         private void textBoxPage_KeyPress(object sender, KeyPressEventArgs e)
@@ -251,13 +259,16 @@ namespace WMS.UI
             }
         }
 
-        public void Search(int selectID = -1)
+        public void Search(bool savePage = false, int selectID = -1)
         {
+            if(savePage == false)
+            {
+                this.CurPage = 0;
+            }
             var worksheet = this.reoGrid.Worksheets[0];
             worksheet[0, 1] = "加载中...";
             new Thread(new ThreadStart(() =>
             {
-
                 TargetClass[] results = null;
                 string sqlSelect = "SELECT * FROM " + this.dbTableName;
                 string sqlCondition = " WHERE 1=1 ";
@@ -319,7 +330,7 @@ namespace WMS.UI
                     try
                     {
                         string sql = sqlSelect + sqlCondition;
-                        results = wmsEntities.Database.SqlQuery<TargetClass>(sql, parameters.ToArray()).ToArray();
+                        results = wmsEntities.Database.SqlQuery<TargetClass>(sql, (from p in parameters select ((ICloneable)p).Clone()).ToArray()).ToArray();
                     }
                     catch (EntityCommandExecutionException)
                     {
@@ -336,7 +347,7 @@ namespace WMS.UI
                 this.reoGrid.Invoke(new Action(() =>
                 {
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    worksheet.Rows = results.Length;
+                    worksheet.Rows = (results.Length < 1 ? 1 : results.Length);
                     if (results.Length == 0)
                     {
                         worksheet[0, 1] = "没有查询到符合条件的记录";
@@ -351,6 +362,7 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j].ToString();
                         }
                     }
+                    Utilities.SelectLineByID(this.reoGrid,selectID);
                 }));
             })).Start();
         }
