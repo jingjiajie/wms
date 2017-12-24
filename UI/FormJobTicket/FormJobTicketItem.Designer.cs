@@ -39,12 +39,12 @@
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonUnfinish = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.buttonFinish = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -152,6 +152,7 @@
             this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15.11111F));
             this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.11111F));
             this.tableLayoutPanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelProperties.Font = new System.Drawing.Font("宋体", 9F);
             this.tableLayoutPanelProperties.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelProperties.Name = "tableLayoutPanelProperties";
             this.tableLayoutPanelProperties.RowCount = 6;
@@ -186,6 +187,7 @@
             this.tableLayoutPanel3.Controls.Add(this.buttonFinish, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Font = new System.Drawing.Font("宋体", 9F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
@@ -196,15 +198,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(337, 188);
             this.tableLayoutPanel3.TabIndex = 4;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.reoGridControlMain);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 203);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(999, 398);
-            this.panel2.TabIndex = 1;
             // 
             // buttonAdd
             // 
@@ -283,6 +276,15 @@
             this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonDelete.UseVisualStyleBackColor = false;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.reoGridControlMain);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 203);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(999, 398);
+            this.panel2.TabIndex = 1;
             // 
             // FormJobTicketItem
             // 

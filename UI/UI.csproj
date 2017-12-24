@@ -680,5 +680,8 @@
   <ItemGroup>
     <None Include="icon\cancle.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\find.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

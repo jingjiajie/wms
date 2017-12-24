@@ -84,7 +84,7 @@
             this.buttonDelete.BackColor = System.Drawing.Color.White;
             this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Font = new System.Drawing.Font("黑体", 10F);
+            this.buttonDelete.Font = new System.Drawing.Font("宋体", 9F);
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonDelete.Location = new System.Drawing.Point(684, 9);
@@ -102,7 +102,7 @@
             this.buttonfinish.BackColor = System.Drawing.Color.White;
             this.buttonfinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonfinish.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonfinish.Font = new System.Drawing.Font("黑体", 10F);
+            this.buttonfinish.Font = new System.Drawing.Font("宋体", 9F);
             this.buttonfinish.Image = ((System.Drawing.Image)(resources.GetObject("buttonfinish.Image")));
             this.buttonfinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonfinish.Location = new System.Drawing.Point(582, 55);
@@ -136,7 +136,7 @@
             this.buttonAdd.BackColor = System.Drawing.Color.White;
             this.buttonAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAdd.Font = new System.Drawing.Font("黑体", 10F);
+            this.buttonAdd.Font = new System.Drawing.Font("宋体", 9F);
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonAdd.Location = new System.Drawing.Point(582, 10);

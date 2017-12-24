@@ -107,6 +107,7 @@
             this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
             this.tableLayoutPanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelProperties.Font = new System.Drawing.Font("宋体", 9F);
             this.tableLayoutPanelProperties.Location = new System.Drawing.Point(4, 4);
             this.tableLayoutPanelProperties.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanelProperties.Name = "tableLayoutPanelProperties";
@@ -141,6 +142,7 @@
             this.tableLayoutPanel3.Controls.Add(this.buttonAlter, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Font = new System.Drawing.Font("宋体", 9F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
