@@ -102,9 +102,23 @@ namespace WMS.UI.FormBase
             //若修改，则查询原对象。若添加，则新建对象。
             if (this.mode == FormMode.ALTER)
             {
-                warehouse = (from s in this.wmsEntities.Warehouse
-                           where s.ID == this.warehouseID
-                             select s).Single();
+                try
+                {
+                    warehouse = (from s in this.wmsEntities.Warehouse
+                                 where s.ID == this.warehouseID
+                                 select s).Single();
+                }
+                catch
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (warehouse == null)
+                {
+                    MessageBox.Show("项目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
             }
             else if (mode == FormMode.ADD)
             {

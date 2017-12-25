@@ -50,7 +50,7 @@ namespace WMS.UI.FormBase
             this.Search();
         }
 
-        private void Search()
+        private void Search(int selectedID = -1)
         {
             string key = null;
             string value = null;
@@ -69,40 +69,61 @@ namespace WMS.UI.FormBase
             new Thread(new ThreadStart(() =>
             {
                 var wmsEntities = new WMSEntities();
-
-                Project[] Projects = null;
-                if (key == null || value == null) //查询条件为null则查询全部内容
+                ProjectView[] projectViews = null;
+                string sql = "SELECT * FROM ProjectView WHERE 1=1 ";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                if (key != null && value != null) //查询条件不为null则增加查询条件
                 {
-                    Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>("SELECT * FROM Project").ToArray();
+                    sql += "AND " + key + " = @value ";
+                    parameters.Add(new SqlParameter("value", value));
                 }
-                else
+                sql += " ORDER BY ID DESC"; //倒序排序
+                try
                 {
-                    if (Utilities.IsQuotateType(typeof(Project).GetProperty(key).PropertyType)) //不是数字则加上单引号
-                    {
-                        value = "'" + value + "'";
-                    }
-                    try
-                    {
-                        Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>(String.Format("SELECT * FROM Project WHERE {0} = {1}", key, value)).ToArray();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
+                    projectViews = wmsEntities.Database.SqlQuery<ProjectView>(sql, parameters.ToArray()).ToArray();
                 }
+                catch (EntityCommandExecutionException)
+                {
+                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                //if (key == null || value == null) //查询条件为null则查询全部内容
+                //{
+                //    Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>("SELECT * FROM Project").ToArray();
+                //}
+                //else
+                //{
+                //    if (Utilities.IsQuotateType(typeof(Project).GetProperty(key).PropertyType)) //不是数字则加上单引号
+                //    {
+                //        value = "'" + value + "'";
+                //    }
+                //    try
+                //    {
+                //        Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>(String.Format("SELECT * FROM Project WHERE {0} = {1}", key, value)).ToArray();
+                //    }
+                //    catch
+                //    {
+                //        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //        return;
+                //    }
+                //}
                 this.reoGridControlProject.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (Projects.Length == 0)
+                    if (projectViews.Length == 0)
                     {
-                        worksheet[1, 1] = "没有查询到符合条件的记录";
+                        worksheet[0, 1] = "没有查询到符合条件的记录";
                     }
-                    for (int i = 0; i < Projects.Length; i++)
+                    for (int i = 0; i < projectViews.Length; i++)
                     {
-                        DataAccess.Project curProject = Projects[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curProject, (from kn in BaseProjectMetaData.KeyNames select kn.Key).ToArray());
+                        ProjectView curprojectViews = projectViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curprojectViews, (from kn in BaseProjectMetaData.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
@@ -110,6 +131,10 @@ namespace WMS.UI.FormBase
                     }
                 }));
             })).Start();
+            if (selectedID != -1)
+            {
+                Utilities.SelectLineByID(this.reoGridControlProject, selectedID);
+            }
         }
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
@@ -122,7 +147,14 @@ namespace WMS.UI.FormBase
             var formBaseProjectModify = new FormBaseProjectModify();
             formBaseProjectModify.SetMode(FormMode.ADD);
 
-            formBaseProjectModify.SetAddFinishedCallback(this.Search);
+            formBaseProjectModify.SetAddFinishedCallback((addedID) =>
+            {
+                this.Search(addedID);
+                var worksheet = this.reoGridControlProject.Worksheets[0];
+
+                worksheet.SelectionRange = new RangePosition("A1:A1");
+            });
+            //formBaseProjectModify.SetAddFinishedCallback(this.Search);
             formBaseProjectModify.Show();
         }
 
@@ -138,7 +170,11 @@ namespace WMS.UI.FormBase
                 }
                 int projectID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formBaseProjectModify = new FormBaseProjectModify(projectID);
-                formBaseProjectModify.SetModifyFinishedCallback(this.Search);
+                formBaseProjectModify.SetModifyFinishedCallback((addedID) =>
+                {
+                    this.Search(addedID);
+                });
+                //formBaseProjectModify.SetModifyFinishedCallback(this.Search);
                 formBaseProjectModify.Show();
             }
             catch
@@ -176,13 +212,49 @@ namespace WMS.UI.FormBase
             this.labelStatus.Text = "正在删除...";
             new Thread(new ThreadStart(() =>
             {
-                foreach (int id in deleteIDs)
+                try
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Project WHERE ID = @projectID", new SqlParameter("projectID", id));
+                    foreach (int id in deleteIDs)
+                    {
+                        this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Project WHERE ID = @projectID", new SqlParameter("projectID", id));
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                    MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }));
             })).Start();
+        }
+
+        private void toolStripTextBoxSelect_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 13)
+            {
+                this.Search();
+            }
+        }
+
+        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                this.toolStripTextBoxSelect.Text = "";
+                this.toolStripTextBoxSelect.Enabled = false;
+                this.toolStripTextBoxSelect.BackColor = Color.LightGray;
+
+            }
+            else
+            {
+                this.toolStripTextBoxSelect.Enabled = true;
+                this.toolStripTextBoxSelect.BackColor = Color.White;
+            }
         }
     }
 }
