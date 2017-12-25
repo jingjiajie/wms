@@ -72,7 +72,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
-                Warehouse warehouse = (from wh in wmsEntities.Warehouse where ID == this.warehouseID select wh).FirstOrDefault();
+                Warehouse warehouse = (from wh in wmsEntities.Warehouse where wh.ID == this.warehouseID select wh).FirstOrDefault();
                 if (warehouse == null)
                 {
                     Console.Write("this warehouse is null");
@@ -93,6 +93,10 @@ namespace WMS.UI.FormReceipt
                     TextBox textBoxProjectName = (TextBox)this.Controls.Find("textBoxProjectName", true)[0];
                     textBoxProjectName.Text = project.Name;
                     textBoxProjectName.Enabled = false;
+                    /*
+                    TextBox textBoxWarehouseName = (TextBox)this.Controls.Find("textBoxWarehouseName", true)[0];
+                    textBoxWarehouseName.Text = warehouse.Name;
+                    textBoxWarehouseName.Enabled = false;*/
                 }
                 this.Controls.Find("textBoxState", true)[0].Text = "待送检";
                 this.Controls.Find("textBoxState", true)[0].Enabled = false;

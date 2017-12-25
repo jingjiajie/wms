@@ -56,7 +56,7 @@ namespace WMS.UI.FormReceipt
                 worksheet.ColumnHeaders[i].Text = columnNames[i];
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
             }
-            worksheet.ColumnHeaders[columnNames.Length].Text = "是否收货";
+            worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
             worksheet.Columns = columnNames.Length + 1;
         }
 

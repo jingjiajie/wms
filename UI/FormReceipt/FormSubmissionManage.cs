@@ -341,5 +341,80 @@ namespace WMS.UI
         {
 
         }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确认删除?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                Search(null, null);
+                return;
+            }
+            var worksheet = this.reoGridControl1.Worksheets[0];
+            WMSEntities wmsEntities = new WMSEntities();
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new EntityCommandExecutionException();
+                }
+                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+                if (submissionTicket == null)
+                {
+                    MessageBox.Show("此送检单已被删除");
+                    this.Search(null, null);
+                    return;
+                }
+                else
+                {
+                    new Thread(() =>
+                    {
+                        try
+                        {
+                            SubmissionTicketItem[] submissionTicketItems = (from sti in wmsEntities.SubmissionTicketItem where sti.SubmissionTicketID == submissionTicketID select sti).ToArray();
+
+                            foreach (SubmissionTicketItem sti in submissionTicketItems)
+                            {
+                                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
+                                if (receiptTicketItem != null)
+                                {
+                                    if (receiptTicketItem.State != "已收货")
+                                    {
+                                        receiptTicketItem.State = "待送检";
+                                    }
+                                }
+                                //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待送检' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", sti.ReceiptTicketItemID));
+                            }
+                            wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ID = @submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID));
+                            wmsEntities.SaveChanges();
+                            int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem WHERE State <> '待送检' AND ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", submissionTicket.ReceiptTicketID)).FirstOrDefault();
+                            if (count == 0)
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '待检' WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", submissionTicket.ReceiptTicketID));
+                            }
+                            else
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分送检中' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", submissionTicket.ReceiptTicketID));
+                            }
+                        }
+                        catch
+                        {
+                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }).Start();
+                }
+            }
+            catch (EntityCommandExecutionException)
+            {
+                MessageBox.Show("请选择收货单");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+            Search(null, null);
+        }
     }
 }

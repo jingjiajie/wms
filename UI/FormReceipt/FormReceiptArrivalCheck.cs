@@ -71,6 +71,7 @@ namespace WMS.UI.FormReceipt
             WMSEntities wmsEntities = new WMSEntities();
             //this.Controls.Clear();
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.submissionTicketKeyName);
+            this.RefreshTextBoxes();
             this.reoGridControlPutaway.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
 
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];

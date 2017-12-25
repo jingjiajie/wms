@@ -28,6 +28,9 @@ namespace WMS.UI
         private int projectID;
         private int warehouseID;
         private int userID;
+
+        private Action ToSubmission = null;
+        private Action ToPutaway = null;
         //private int receiptTicketID;
         //Dictionary<string, string> receiptNameKeys = new Dictionary<string, string>() { { "ID", "ID" }, { "仓库ID", "Warehouse" }, { "序号", "SerialNumber" }, { "单据类型名称", "TypeName" }, { "单据号", "TicketNo" }, { "送货单号（SRM)", "DeliverTicketNo" }, { "凭证来源", "VoucherSource" }, { "凭证号", "VoucherNo" }, { "凭证行号", "VoucherLineNo" }, { "凭证年", "VoucherYear" }, { "关联凭证号", "ReletedVoucherNo" }, { "关联凭证行号", "ReletedVoucherLineNo" }, { "关联凭证年", "ReletedVoucherYear" }, { "抬头文本", "HeadingText" }, { "过账日期", "PostCountDate" }, { "内向交货单号", "InwardDeliverTicketNo" }, { "内向交货行号", "InwardDeliverLineNo" }, { "外向交货单号", "OutwardDeliverTicketNo" }, { "外向交货行号", "OutwardDeliverLineNo" }, { "采购订单号", "PurchaseTicketNo" }, { "采购订单行号", "PurchaseTicketLineNo" }, { "订单日期", "OrderDate" }, { "收货库位", "ReceiptStorageLocation" }, { "托盘号", "BoardNo" }, { "物料ID", "ComponentID" }, { "物料代码", "ComponentNo" }, { "收货包装", "ReceiptPackage" }, { "期待数量", "ExpectedAmount" }, { "收货数量", "ReceiptCount" }, { "库存状态", "StockState" }, { "存货日期", "InventoryDate" }, { "收货单号", "ReceiptTacketNo" }, { "厂商批号", "ManufactureNo" }, { "生产日期", "ManufactureDate" }, { "失效日期", "ExpiryDate" }, { "项目信息", "ProjectInfo" }, { "项目阶段信息", "ProjectPhaseInfo" }, { "物权属性", "RealRightProperty" }, { "供应商ID", "SupplierID" }, { "供应商", "Supplier" }, { "作业人员", "AssignmentPerson" }, { "是否过账", "PostedCount" }, { "箱号", "BoxNo" }, { "创建时间", "CreateTime" }, { "创建者", "Creater" }, { "最后修改人", "LastUpdatePerson" }, { "最后修改时间", "LastUpdateTime" }, { "移动类型", "MoveType" }, { "单据来源", "Source" } };
         public FormReceiptArrival()
@@ -41,6 +44,26 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+        }
+        /// <summary>
+        /// form = 0 Submission ; form = 1 Putaway
+        /// </summary>
+        /// <param name="form"></param>
+        /// <param name="action"></param>
+        public void SetActionTo(int form, Action action)
+        {
+            if (form == 0)
+            {
+                this.ToSubmission = action;
+            }
+            else if (form == 1)
+            {
+                this.ToPutaway = action;
+            }
+            else
+            {
+                throw new Exception("没有这个窗口，0是送检，1是上架");
+            }
         }
 
         private void InitComponents()
@@ -294,7 +317,7 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    throw new EntityException();
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
@@ -313,7 +336,7 @@ namespace WMS.UI
                 });
                 formAddSubmissionTicket.Show();
             }
-            catch(EntityCommandExecutionException)
+            catch(EntityException)
             {
                 MessageBox.Show("请选择一项进行送检", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -410,15 +433,26 @@ namespace WMS.UI
                 }
                 WMSEntities wmsEntities = new WMSEntities();
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
+                
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 if (receiptTicket.State != "已收货")
                 {
                     MessageBox.Show("该收货单未收货，请先收货!");
                     return;
                 }
+                FormPutawayNew formPutawayNew = new FormPutawayNew(receiptTicket.ID, this.userID, FormMode.ADD);
+                formPutawayNew.SetCallBack(new Action(() =>
+                {
+                    this.Search(null, null);
+                }));
+                formPutawayNew.Show();
+                /*
                 FormPutaway formPutaway = new FormPutaway(receiptTicketID, this.warehouseID, this.projectID, this.userID);
                 formPutaway.Show();
+                */
+
                 /*
                 if (receiptTicket.State == "收货")
                 {
@@ -459,13 +493,29 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
-                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("找不到此收货单");
+                    return;
+                }
+                else
+                {
+                    FormReceiptSubmissionNew formReceiptSubmissionNew = new FormReceiptSubmissionNew(receiptTicketID, this.userID, FormMode.ADD);
+                    formReceiptSubmissionNew.SetCallBack(new Action(() =>
+                    {
+                        this.Search(null, null);
+                    }));
+                    formReceiptSubmissionNew.Show();
+                }
+                /*
                 FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, this.userID);
                 formReceiptArrivalCheck.SetNextCallBack(new Action(() =>
                 {
                     this.Search(null, null);
                 }));
                 formReceiptArrivalCheck.Show();
+                */
             }
             catch(EntityCommandExecutionException)
             {
@@ -678,6 +728,16 @@ namespace WMS.UI
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void ButtonToSubmission_Click(object sender, EventArgs e)
+        {
+            ToSubmission();
+        }
+
+        private void ButtonToPutaway_Click(object sender, EventArgs e)
+        {
+            ToPutaway();
         }
     }
 }

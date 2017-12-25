@@ -84,7 +84,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=false,Save=true},
             new KeyName(){Name="零件ID", Key="ComponentID",Visible=false,Editable=false,Save=true},
             new KeyName(){Name="零件编号", Key="ComponentNo", Visible = true, Editable = true, Save = false},
-            new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false},
+            new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = false, Save = false},
             new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true},
             new KeyName(){Name="包装名称", Key="PackageName",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="期待包装数量", Key="ExpectedPackageAmount",Visible=true,Editable=true,Save=true},
@@ -99,7 +99,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="物权属性", Key="RealRightProperty",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="箱号", Key="BoxNo",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false},
+            //new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false},
         };
 
         public static KeyName[] submissionTicketItemKeyName =
@@ -121,15 +121,15 @@ namespace WMS.UI.FormReceipt
         public static KeyName[] putawayTicketKeyName =
         {
             new KeyName{Name = "ID", Key = "ID", Visible = false, Editable = false, Save = true},
-            new KeyName{Name = "单据号", Key = "No", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "上架单编号", Key = "No", Visible = true, Editable = false, Save = true},
             new KeyName{Name = "单据类型", Key = "Type", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "收货单ID", Key = "ReceiptTicketID", Visible = false, Editable = false, Save = true},
             new KeyName{Name = "收货单编号", Key = "ReceiptTicketNo", Visible = true, Editable = false, Save = false},
-            new KeyName{Name = "状态", Key = "State", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "状态", Key = "State", Visible = true, Editable = false, Save = true},
             new KeyName{Name = "计划移位数量", Key = "ScheduledDisplacementAmount", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "实际移位数量", Key = "DisplacementAmount", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "分配数量", Key = "DistributeAmount", Visible = true, Editable = true, Save = true},
-            new KeyName{Name = "打印次数", Key = "PrintTimes", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "打印次数", Key = "PrintTimes", Visible = true, Editable = false, Save = true},
             new KeyName{Name = "作业组名称", Key = "JobGroupName", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "创建用户ID", Key = "CreateUserID", Visible = false, Editable = false, Save = true},
             new KeyName{Name = "创建用户用户名", Key = "CreateUserUsername", Visible = true, Editable = false, Save = false},
@@ -142,10 +142,10 @@ namespace WMS.UI.FormReceipt
         public static KeyName[] putawayTicketItemKeyName =
         {
             new KeyName{Name = "ID", Key = "ID", Visible = false, Editable = false, Save = true},
-            new KeyName{Name = "上架单ID", Key = "PutawayTicketID", Visible = false, Editable = true, Save = true},
-            new KeyName{Name = "收货单条目ID", Key = "ReceiptTicketItemID", Visible = false, Editable = true, Save = true},
-            //new KeyName{Name = "零件编号", Key = "ComponentNo", Visible = true, Editable = false, Save = false},
-            //new KeyName{Name = "零件名称", Key = "ComponentName",Visible = true ,Editable = false, Save = false},
+            new KeyName{Name = "上架单ID", Key = "PutawayTicketID", Visible = false, Editable = false, Save = true},
+            new KeyName{Name = "收货单条目ID", Key = "ReceiptTicketItemID", Visible = false, Editable = false, Save = true},
+            new KeyName{Name = "零件编号", Key = "ComponentNo", Visible = true, Editable = false, Save = false},
+            new KeyName{Name = "零件名称", Key = "ComponentName",Visible = true ,Editable = false, Save = false},
             new KeyName{Name = "移位库位编码", Key = "DisplacementPositionNo", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "目标库位", Key = "TargetStorageLocation", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "托盘号", Key = "BoardNo", Visible = true, Editable = true, Save = true},
