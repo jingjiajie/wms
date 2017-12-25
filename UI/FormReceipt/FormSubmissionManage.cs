@@ -21,6 +21,9 @@ namespace WMS.UI
         private int warehouseID;
         private int userID;
 
+        private string key;
+        private string value;
+
         public FormSubmissionManage()
         {
             InitializeComponent();
@@ -32,12 +35,30 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.key = null;
+            this.value = null;
+        }
+
+        public FormSubmissionManage(int projectID, int warehouseID, int userID, string key, string value)
+        {
+            InitializeComponent();
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
+            this.key = key;
+            this.value = value;
         }
 
         private void FormSubmissionManage_Load(object sender, EventArgs e)
         {
             InitComponents();
-            Search(null, null);
+            if (key != null)
+            {
+                string name = (from n in ReceiptMetaData.submissionTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
+                this.comboBoxSelect.SelectedItem = name;
+            }
+            this.textBoxSelect.Text = value;
+            Search(key, value);
         }
 
         private void InitComponents()
