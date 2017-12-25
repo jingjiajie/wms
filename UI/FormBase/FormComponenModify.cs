@@ -40,6 +40,8 @@ namespace WMS.UI
             }
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenMetaData.KeyNames);
+            TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+            textboxsuppliername.ReadOnly = true;
 
             if (this.mode == FormMode.ALTER)
             {

@@ -55,6 +55,11 @@ namespace WMS.UI
 
         private void FormBaseComponent_Load(object sender, EventArgs e)
         {
+            if(supplierID !=0)
+            { this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+                this.toolStripButtonAlter.Enabled  = false;
+            }
             InitComponents();
             this.Search();
         }
