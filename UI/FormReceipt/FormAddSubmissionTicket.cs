@@ -114,9 +114,16 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.LastUpdateTime = DateTime.Now;
                     new Thread(()=> 
                     {
-                        this.wmsEntities.SaveChanges();
-                        MessageBox.Show("修改成功");
-                        
+                        try
+                        {
+                            this.wmsEntities.SaveChanges();
+                            MessageBox.Show("修改成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            return;
+                        }
                     }).Start();
                     CallBack();
                     this.Close();
@@ -140,11 +147,19 @@ namespace WMS.UI.FormReceipt
                 }
                 new Thread(() =>
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '送检中' WHERE ID = @receiptTicket", new SqlParameter("receiptTicket", receiptTicketID));
-                    wmsEntities.SaveChanges();
-                    submissionTicket.No = Utilities.GenerateNo("J", submissionTicket.ID);
-                    wmsEntities.SaveChanges();
-                    MessageBox.Show("成功");
+                    try
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '送检中' WHERE ID = @receiptTicket", new SqlParameter("receiptTicket", receiptTicketID));
+                        wmsEntities.SaveChanges();
+                        submissionTicket.No = Utilities.GenerateNo("J", submissionTicket.ID);
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                 }).Start();
             }
             CallBack();

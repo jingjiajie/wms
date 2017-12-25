@@ -56,6 +56,10 @@ namespace WMS.UI
                 {
                     textBox.Enabled = false;
                 }
+                else if (this.formMode == FormMode.ADD)
+                {
+                    textBox.Enabled = curKeyName.Editable;
+                }
                 //Console.WriteLine("{0}  {1}", label.Text, textBox.Name);
 
                 this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
@@ -107,10 +111,18 @@ namespace WMS.UI
                 string errorInfo;
                 if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == true)
                 {
-                    wmsEntities.SaveChanges();
-                    MessageBox.Show("Successful");
-                    CallBack();
-                    this.Close();
+                    try
+                    {
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("Successful");
+                        CallBack();
+                        this.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else
                 {
@@ -125,13 +137,22 @@ namespace WMS.UI
                 string errorInfo;
                 if(Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == true)
                 {
-                    receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
-                    receiptTicketItem.ID = 0;
-                    receiptTicketItem.ComponentID = this.componentID;
-                    wmsEntities.ReceiptTicketItem.Add(receiptTicketItem);
-                    wmsEntities.SaveChanges();
-                    MessageBox.Show("Successful");
-                    CallBack();
+                    try
+                    {
+                        receiptTicketItem.State = "待送检";
+                        receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
+                        receiptTicketItem.ID = 0;
+                        receiptTicketItem.ComponentID = this.componentID;
+                        wmsEntities.ReceiptTicketItem.Add(receiptTicketItem);
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("Successful");
+                        CallBack();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                     this.Close();
                 }
                 else

@@ -97,15 +97,30 @@ namespace WMS.UI.FormReceipt
                             rti.State = "收货";
 
                             wmsEntities.PutawayTicketItem.Add(ReceiptUtilities.ReceiptTicketItemToPutawayTicketItem(rti, putawayTicket1.ID));
-                            wmsEntities.SaveChanges();
-
+                            try
+                            {
+                                wmsEntities.SaveChanges();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                                return;
+                            }
                         }
 
                     }
                     else
                     {
-                        this.wmsEntities.SaveChanges();
-                    }
+                        try
+                        {
+                            this.wmsEntities.SaveChanges();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            return;
+                        }
+                   }
                 }).Start();
             }
 

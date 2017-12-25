@@ -74,19 +74,21 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             int id = ids[0];
+            /*
             Console.WriteLine("AAAAAAA:::::" + (from s in this.wmsEntities.PutawayTicketItemView
                                where s.ID == id
                                select s).ToString());
-            PutawayTicketItemView putawayTicketItemView = (from s in this.wmsEntities.PutawayTicketItemView
-                                                           where s.ID == id
-                                                           select s).Single();
-            if (putawayTicketItemView == null)
+                               */
+            PutawayTicketItemView putawayTicketItem = (from s in this.wmsEntities.PutawayTicketItemView
+                                                   where s.ID == id
+                                                   select s).FirstOrDefault();
+            if (putawayTicketItem == null)
             {
                 MessageBox.Show("系统错误，未找到相应上架单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            this.putawayTicketItemID = int.Parse(putawayTicketItemView.ID.ToString());
-            Utilities.CopyPropertiesToTextBoxes(putawayTicketItemView, this);
+            this.putawayTicketItemID = int.Parse(putawayTicketItem.ID.ToString());
+            Utilities.CopyPropertiesToTextBoxes(putawayTicketItem, this);
             //Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
         }
 
@@ -105,16 +107,16 @@ namespace WMS.UI.FormReceipt
         private void InitComponents()
         {
             //初始化
-            string[] columnNames = (from kn in ReceiptMetaData.putawayTicketItemKeyName select kn.Name).ToArray();
+            //string[] columnNames = (from kn in ReceiptMetaData.putawayTicketItemKeyName select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlPutaway.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.putawayTicketItemKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.putawayTicketItemKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.putawayTicketItemKeyName[i].Visible;
             }
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.putawayTicketItemKeyName.Length;
         }
 
         private void Search()
@@ -126,9 +128,15 @@ namespace WMS.UI.FormReceipt
                 var wmsEntities = new WMSEntities();
                 //ReceiptTicketView[] receiptTicketViews = null;
                 PutawayTicketItemView[] putawayTicketItemView = null;
-
-                putawayTicketItemView = wmsEntities.Database.SqlQuery<PutawayTicketItemView>(String.Format("SELECT * FROM PutawayTicketItemView WHERE PutawayTicketID={0}", putawayTicketID)).ToArray();
-
+                try
+                {
+                    putawayTicketItemView = wmsEntities.Database.SqlQuery<PutawayTicketItemView>(String.Format("SELECT * FROM PutawayTicketItemView WHERE PutawayTicketID={0}", putawayTicketID)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.reoGridControlPutaway.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -150,7 +158,7 @@ namespace WMS.UI.FormReceipt
                         n++;
                     }
                 }));
-                this.Invoke(new Action(this.RefreshTextBoxes));
+                this.Invoke(new Action(() => { this.RefreshTextBoxes(); }));
             })).Start();
 
         }
@@ -162,7 +170,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
@@ -182,19 +190,27 @@ namespace WMS.UI.FormReceipt
                     {
                         new Thread(() =>
                         {
+
                             wmsEntities.SaveChanges();
                             this.Invoke(new Action(() =>
                             {
                                 Search();
                             }));
                             MessageBox.Show("成功");
+
+
                         }).Start();
                     }
                 }
             }
-            catch
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -206,7 +222,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
@@ -233,9 +249,14 @@ namespace WMS.UI.FormReceipt
                     }).Start();
                 }
             }
-            catch
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -247,7 +268,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
@@ -260,7 +281,7 @@ namespace WMS.UI.FormReceipt
                     if (count == 0)
                     {
                         wmsEntities.Database.ExecuteSqlCommand("UPDATE PutawayTicket SET State = '已上架' " +
-                            "WHERE ID = @putawayTicketID", 
+                            "WHERE ID = @putawayTicketID",
                             new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
                     }
                     else
@@ -282,9 +303,14 @@ namespace WMS.UI.FormReceipt
                     }).Start();
                 }
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -296,12 +322,12 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
                 int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM PutawayTicketItem " +
-                    "WHERE PutawayTicketID = @putawayTicketID AND State <> '待上架'", 
+                    "WHERE PutawayTicketID = @putawayTicketID AND State <> '待上架'",
                     new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
                 if (putawayTicketItem != null)
                 {
@@ -314,10 +340,10 @@ namespace WMS.UI.FormReceipt
                     {
                         putawayTicketItem.State = "待上架";
                         wmsEntities.Database.ExecuteSqlCommand(
-                            "DELETE FROM StockInfo WHERE ReceiptTicketItemID=@receiptTicketItem", 
+                            "DELETE FROM StockInfo WHERE ReceiptTicketItemID=@receiptTicketItem",
                             new SqlParameter("receiptTicketItem", putawayTicketItem.ReceiptTicketItemID));
-                       // StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.PutawayTicketItemID == putawayTicketItem.ID select si).FirstOrDefault();
-                        
+                        // StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.PutawayTicketItemID == putawayTicketItem.ID select si).FirstOrDefault();
+
                     }
                     if (count == 0)
                     {
@@ -345,9 +371,14 @@ namespace WMS.UI.FormReceipt
                     }).Start();
                 }
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }

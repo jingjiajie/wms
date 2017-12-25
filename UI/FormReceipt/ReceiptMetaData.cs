@@ -141,9 +141,11 @@ namespace WMS.UI.FormReceipt
 
         public static KeyName[] putawayTicketItemKeyName =
         {
-            new KeyName{Name = "ID", Key = "ID", Visible = true, Editable = false, Save = true},
-            new KeyName{Name = "上架单ID", Key = "PutawayTicketID", Visible = true, Editable = true, Save = true},
-            new KeyName{Name = "收货单条目ID", Key = "ReceiptTicketItemID", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "ID", Key = "ID", Visible = false, Editable = false, Save = true},
+            new KeyName{Name = "上架单ID", Key = "PutawayTicketID", Visible = false, Editable = true, Save = true},
+            new KeyName{Name = "收货单条目ID", Key = "ReceiptTicketItemID", Visible = false, Editable = true, Save = true},
+            //new KeyName{Name = "零件编号", Key = "ComponentNo", Visible = true, Editable = false, Save = false},
+            //new KeyName{Name = "零件名称", Key = "ComponentName",Visible = true ,Editable = false, Save = false},
             new KeyName{Name = "移位库位编码", Key = "DisplacementPositionNo", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "目标库位", Key = "TargetStorageLocation", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "托盘号", Key = "BoardNo", Visible = true, Editable = true, Save = true},

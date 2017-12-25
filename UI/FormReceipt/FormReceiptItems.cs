@@ -57,17 +57,17 @@ namespace WMS.UI
         private void InitComponents()
         {
             //初始化
-            string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName select kn.Name).ToArray();
+            //string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlReceiptItems.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
             }
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length;
         }
 
         private void FormReceiptArrivalItems_Load(object sender, EventArgs e)
@@ -87,7 +87,15 @@ namespace WMS.UI
             {
                 var wmsEntities = new WMSEntities();
                 ReceiptTicketItemView[] receiptTicketItemViews = null;
-                receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(String.Format("SELECT * FROM ReceiptTicketItemView WHERE ReceiptTicketID = {0}", this.receiptTicketID)).ToArray();
+                try
+                {
+                    receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(String.Format("SELECT * FROM ReceiptTicketItemView WHERE ReceiptTicketID = {0}", this.receiptTicketID)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.reoGridControlReceiptItems.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -133,7 +141,7 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formReceiptItemsModify = new FormReceiptItemsModify(FormMode.ALTER, receiptItemID, receiptTicketID);
@@ -143,9 +151,14 @@ namespace WMS.UI
                 });
                 formReceiptItemsModify.Show();
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -184,7 +197,7 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).Single();
@@ -201,9 +214,14 @@ namespace WMS.UI
                     MessageBox.Show("成功");
                 }
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项送检", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }
