@@ -38,13 +38,13 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
             this.buttonGenerateJobTicket = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAdd = new System.Windows.Forms.ToolStripButton();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +73,8 @@
             // toolStripTop
             // 
             this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelSelect,
@@ -148,6 +150,12 @@
             this.buttonGenerateJobTicket.Text = "生成作业单";
             this.buttonGenerateJobTicket.Click += new System.EventHandler(this.buttonGenerateJobTicket_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.AutoSize = false;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
+            // 
             // buttonAdd
             // 
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
@@ -199,12 +207,6 @@
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(84, 20);
             this.labelStatus.Text = "发货单管理";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.AutoSize = false;
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
             // 
             // FormShipmentTicket
             // 

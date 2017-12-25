@@ -342,5 +342,53 @@ namespace WMS.UI
                 return;
             })).Start();
         }
+
+
+        private void buttonAdd_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAdd_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+
+
+        private void buttonDelete_MouseEnter(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonDelete_MouseLeave(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+        private void buttonModify_MouseEnter(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonModify_MouseLeave(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
     }
 }
