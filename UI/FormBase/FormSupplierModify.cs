@@ -54,9 +54,25 @@ namespace WMS.UI
             }
             if (this.mode == FormMode.ALTER)
             {
-                SupplierView SupplierView = (from s in this.wmsEntities.SupplierView
-                                       where s.ID == this.supplierID
-                                        select s).Single();
+                SupplierView SupplierView = new SupplierView();
+                try
+                {
+                    SupplierView = (from s in this.wmsEntities.SupplierView
+                                                 where s.ID == this.supplierID
+                                                 select s).Single();
+                    
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (SupplierView == null)
+                {
+                    MessageBox.Show("修改失败，发货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
                 Utilities.CopyPropertiesToTextBoxes(SupplierView, this);
             }
        
@@ -82,32 +98,55 @@ namespace WMS.UI
                     }
                     catch
                     {
-                        MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                         this.Close();
                         return;
                     }
+                    if (supplier == null)
+                    {
+                        MessageBox.Show("修改失败，发货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        return;
+                    }
                 }
+
+
                 else if (mode == FormMode.ADD)
                 {
                     supplier = new Supplier();
                     this.wmsEntities.Supplier.Add(supplier);
                 }
+
+
+
+
                 //开始数据库操作
                 if (Utilities.CopyTextBoxTextsToProperties(this, supplier, SupplierMetaData.KeyNames, out string errorMessage) == false)
                 {
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                wmsEntities.SaveChanges();
+                try
+                {
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 //调用回调函数
                 if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
                 {
                     this.modifyFinishedCallback();
+                    MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
                 {
                     this.addFinishedCallback();
+                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 }
 
                 this.Close();

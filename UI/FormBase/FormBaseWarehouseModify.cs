@@ -15,8 +15,8 @@ namespace WMS.UI.FormBase
     {
         private int warehouseID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
-        private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
+        private Action<int> modifyFinishedCallback = null;
+        private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
         public FormBaseWarehouseModify(int warehouseID = -1)
@@ -45,19 +45,29 @@ namespace WMS.UI.FormBase
             }
             if (this.mode == FormMode.ALTER)
             {
-                Warehouse Warehouse = (from s in this.wmsEntities.Warehouse
-                                   where s.ID == this.warehouseID
-                                       select s).Single();
-                Utilities.CopyPropertiesToTextBoxes(Warehouse, this);
+                try
+                {
+
+                    Warehouse Warehouse = (from s in this.wmsEntities.Warehouse
+                                           where s.ID == this.warehouseID
+                                           select s).Single();
+                    Utilities.CopyPropertiesToTextBoxes(Warehouse, this);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
             }
         }
 
 
-        public void SetModifyFinishedCallback(Action callback)
+        public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
         }
-        public void SetAddFinishedCallback(Action callback)
+        public void SetAddFinishedCallback(Action<int> callback)
         {
             this.addFinishedCallback = callback;
         }
@@ -81,14 +91,34 @@ namespace WMS.UI.FormBase
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
+            var textBoxName = this.Controls.Find("textBoxName", true)[0];
+            if (textBoxName.Text == string.Empty)
+            {
+                MessageBox.Show("仓库名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             Warehouse warehouse = null;
 
             //若修改，则查询原对象。若添加，则新建对象。
             if (this.mode == FormMode.ALTER)
             {
-                warehouse = (from s in this.wmsEntities.Warehouse
-                           where s.ID == this.warehouseID
-                             select s).Single();
+                try
+                {
+                    warehouse = (from s in this.wmsEntities.Warehouse
+                                 where s.ID == this.warehouseID
+                                 select s).Single();
+                }
+                catch
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (warehouse == null)
+                {
+                    MessageBox.Show("项目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
             }
             else if (mode == FormMode.ADD)
             {
@@ -101,17 +131,38 @@ namespace WMS.UI.FormBase
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            wmsEntities.SaveChanges();
+         try
+            {
+                wmsEntities.SaveChanges();
+            }
+            catch (Exception)
+            {
+                if (this.mode == FormMode.ALTER)
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else if (mode == FormMode.ADD)
+                {
+                    MessageBox.Show("添加失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+            }
             //调用回调函数
+
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                this.modifyFinishedCallback();
+                this.modifyFinishedCallback(warehouse.ID);
+                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
             else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
-                this.addFinishedCallback();
+                this.addFinishedCallback(warehouse.ID);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
             }
-            this.Close();
         }
 
         private void buttonModify_MouseEnter(object sender, EventArgs e)

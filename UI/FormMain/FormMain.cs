@@ -270,6 +270,30 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
+                l.SetActionTo(0, new Action<string, string>((string key, string value) =>
+                {
+                    this.panelRight.Controls.Clear();
+                    panelRight.Visible = true;
+                    FormSubmissionManage s = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
+                    s.TopLevel = false;
+                    s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    s.FormBorderStyle = FormBorderStyle.None;
+                    this.panelRight.Controls.Add(s);
+                    s.Show();
+                    Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                }));
+                l.SetActionTo(1, new Action<string, string>((key, value) =>
+                {
+                    this.panelRight.Controls.Clear();
+                    FormReceiptShelves s = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
+                    s.TopLevel = false;
+                    s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    s.FormBorderStyle = FormBorderStyle.None;
+                    //s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    this.panelRight.Controls.Add(s);
+                    s.Show();
+                    Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                }));
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

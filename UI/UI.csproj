@@ -85,6 +85,12 @@
     <Compile Include="FormReceipt\FormPutawayModify.Designer.cs">
       <DependentUpon>FormPutawayModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormPutawayNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormPutawayNew.Designer.cs">
+      <DependentUpon>FormPutawayNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormPutwayTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +209,12 @@
     </Compile>
     <Compile Include="FormReceipt\FormReceiptItem.Designer.cs">
       <DependentUpon>FormReceiptItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptSubmissionNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceiptSubmissionNew.Designer.cs">
+      <DependentUpon>FormReceiptSubmissionNew.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\FormSearch.cs">
       <SubType>Form</SubType>
@@ -454,6 +466,9 @@
     <EmbeddedResource Include="FormReceipt\FormPutawayModify.resx">
       <DependentUpon>FormPutawayModify.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormPutawayNew.resx">
+      <DependentUpon>FormPutawayNew.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutwayTicketModify.resx">
       <DependentUpon>FormPutwayTicketModify.cs</DependentUpon>
     </EmbeddedResource>
@@ -504,6 +519,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptItem.resx">
       <DependentUpon>FormReceiptItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormReceiptSubmissionNew.resx">
+      <DependentUpon>FormReceiptSubmissionNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSearch.resx">
       <DependentUpon>FormSearch.cs</DependentUpon>

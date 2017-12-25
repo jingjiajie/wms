@@ -44,10 +44,18 @@ namespace WMS.UI.FormReceipt
             {
                 var wmsEntities = new WMSEntities();
                 ReceiptTicketItemView[] receiptTicketItemViews = null;
-                receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(
-                    "SELECT * FROM ReceiptTicketItemView " +
-                    "WHERE ReceiptTicketID = @receiptTicketID", 
-                    new SqlParameter("receiptTicketID", this.receiptTicketID)).ToArray();
+                try
+                {
+                    receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(
+                        "SELECT * FROM ReceiptTicketItemView " +
+                        "WHERE ReceiptTicketID = @receiptTicketID",
+                        new SqlParameter("receiptTicketID", this.receiptTicketID)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.countRow = receiptTicketItemViews.Length;
                 this.reoGridControlUser.Invoke(new Action(() =>
                 {
@@ -90,7 +98,7 @@ namespace WMS.UI.FormReceipt
                 worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
             }
-            worksheet.ColumnHeaders[columnNames.Length].Text = "是否上架";
+            worksheet.ColumnHeaders[ReceiptMetaData.itemsKeyName.Length].Text = "是否上架";
             worksheet.Columns = ReceiptMetaData.itemsKeyName.Length+1;
         }
 
@@ -159,7 +167,15 @@ namespace WMS.UI.FormReceipt
                 }
                 new Thread(() =>
                 {
-                    wmsEntities.SaveChanges();
+                    try
+                    {
+                        wmsEntities.SaveChanges();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                     this.Invoke(new Action(() =>
                     {
                         this.Search();
@@ -280,7 +296,15 @@ namespace WMS.UI.FormReceipt
                 }
                 new Thread(() =>
                 {
-                    wmsEntities.SaveChanges();
+                    try
+                    {
+                        wmsEntities.SaveChanges();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                     this.Invoke(new Action(() =>
                     {
                         this.Search();

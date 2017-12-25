@@ -55,6 +55,11 @@ namespace WMS.UI
 
         private void FormBaseComponent_Load(object sender, EventArgs e)
         {
+            if(supplierID !=0)
+            { this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+                this.toolStripButtonAlter.Enabled  = false;
+            }
             InitComponents();
             this.Search();
         }
@@ -164,9 +169,6 @@ namespace WMS.UI
                         return;
                     }
                 }
-
-
-
 
                 this.reoGridControlComponen.Invoke(new Action(() =>
                 {
@@ -301,10 +303,12 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Text = "";
                 this.textBoxSearchValue.Enabled = false;
+                this.textBoxSearchValue.BackColor = Color.LightGray;
             }
             else
             {
                 this.textBoxSearchValue.Enabled = true;
+                this.textBoxSearchValue.BackColor = Color.White;
             }
         }
 

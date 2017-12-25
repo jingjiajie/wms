@@ -40,7 +40,7 @@ namespace WMS.UI.FormReceipt
             InitComponents();
             InitPanel();
             WMSEntities wmsEntities = new WMSEntities();
-            
+
             Search();
         }
 
@@ -75,8 +75,8 @@ namespace WMS.UI.FormReceipt
             }
             int id = ids[0];
             SubmissionTicketItemView submissionTicketItemView = (from s in this.wmsEntities.SubmissionTicketItemView
-                                                             where s.ID == id
-                                                             select s).FirstOrDefault();
+                                                                 where s.ID == id
+                                                                 select s).FirstOrDefault();
             if (submissionTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应送检单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -102,16 +102,16 @@ namespace WMS.UI.FormReceipt
         private void InitComponents()
         {
             //初始化
-            string[] columnNames = (from kn in ReceiptMetaData.submissionTicketItemKeyName select kn.Name).ToArray();
+            //string[] columnNames = (from kn in ReceiptMetaData.submissionTicketItemKeyName select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlSubmissionItems.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.submissionTicketItemKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.submissionTicketItemKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.submissionTicketItemKeyName[i].Visible;
             }
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.submissionTicketItemKeyName.Length;
         }
 
         private void Search()
@@ -123,9 +123,15 @@ namespace WMS.UI.FormReceipt
                 var wmsEntities = new WMSEntities();
                 //ReceiptTicketView[] receiptTicketViews = null;
                 SubmissionTicketItemView[] submissionTicketItemView = null;
-                
-                submissionTicketItemView = wmsEntities.Database.SqlQuery<SubmissionTicketItemView>(String.Format("SELECT * FROM SubmissionTicketItemView WHERE SubmissionTicketID={0}", submissionTicketID)).ToArray();
-                               
+                try
+                {
+                    submissionTicketItemView = wmsEntities.Database.SqlQuery<SubmissionTicketItemView>("SELECT * FROM SubmissionTicketItemView WHERE SubmissionTicketID=@submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.reoGridControlSubmissionItems.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -160,7 +166,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int submissionTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 //SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).Single();
@@ -223,7 +229,7 @@ namespace WMS.UI.FormReceipt
                         }
                     }
                 }).Start();
-                
+
                 if (MessageBox.Show("是否同时收货？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     new Thread(() =>
@@ -263,12 +269,17 @@ namespace WMS.UI.FormReceipt
                 }
                 CallBack();
 
-           }
-           catch
-           {
+            }
+            catch (EntityCommandExecutionException)
+            {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-           }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
             this.Search();
             this.RefreshTextBoxes();
         }
@@ -281,7 +292,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int submissionTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ID == submissionTicketItemID select sti).FirstOrDefault();
@@ -332,9 +343,14 @@ namespace WMS.UI.FormReceipt
                 //wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicket SET State='部分合格' WHERE ID={0}", submissionTicketID));
                 //wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ReceiptTicket SET State='部分合格' WHERE ID={0}", submissionTicketID));
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search();
@@ -381,15 +397,20 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int submissionTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE SubmissionTicketItem SET State='作废' WHERE ID={0}", submissionTicketItemID));
-                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ReceiptTicket SET State='部分送检' WHERE ID={0}", submissionTicketID));
+                wmsEntities.Database.ExecuteSqlCommand("UPDATE SubmissionTicketItem SET State='作废' WHERE ID=@submissionTicketItemID", new SqlParameter("submissionTicketItemID", submissionTicketItemID));
+                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='部分送检' WHERE ID=@submissionTicketItemID",new SqlParameter("submissionTicketItemID", submissionTicketID));
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search();

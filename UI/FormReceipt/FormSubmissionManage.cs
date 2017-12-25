@@ -21,6 +21,9 @@ namespace WMS.UI
         private int warehouseID;
         private int userID;
 
+        private string key;
+        private string value;
+
         public FormSubmissionManage()
         {
             InitializeComponent();
@@ -32,12 +35,30 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.key = null;
+            this.value = null;
+        }
+
+        public FormSubmissionManage(int projectID, int warehouseID, int userID, string key, string value)
+        {
+            InitializeComponent();
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
+            this.key = key;
+            this.value = value;
         }
 
         private void FormSubmissionManage_Load(object sender, EventArgs e)
         {
             InitComponents();
-            Search(null, null);
+            if (key != null)
+            {
+                string name = (from n in ReceiptMetaData.submissionTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
+                this.comboBoxSelect.SelectedItem = name;
+            }
+            this.textBoxSelect.Text = value;
+            Search(key, value);
         }
 
         private void InitComponents()
@@ -70,7 +91,15 @@ namespace WMS.UI
                 SubmissionTicketView[] submissionTicketView = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    submissionTicketView = wmsEntities.Database.SqlQuery<SubmissionTicketView>("SELECT * FROM SubmissionTicketView WHERE ReceiptTicketWarehouse = @warehouseID AND ReceiptTicketProjectID = @projectID ORDER BY ID DESC", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID) }).ToArray();
+                    try
+                    {
+                        submissionTicketView = wmsEntities.Database.SqlQuery<SubmissionTicketView>("SELECT * FROM SubmissionTicketView WHERE ReceiptTicketWarehouse = @warehouseID AND ReceiptTicketProjectID = @projectID ORDER BY ID DESC", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID) }).ToArray();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else
                 {
@@ -83,9 +112,14 @@ namespace WMS.UI
                     {
                         submissionTicketView = wmsEntities.Database.SqlQuery<SubmissionTicketView>(String.Format("SELECT * FROM SubmissionTicketView WHERE {0} = @key AND ReceiptTicketWarehouse = @warehouseID AND ReceiptTicketProjectID = @projectID ORDER BY ID DESC", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
                     }
-                    catch
+                    catch (EntityException)
                     {
                         MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -166,7 +200,7 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).Single();
@@ -195,9 +229,14 @@ namespace WMS.UI
                     }
                 }
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search(null, null);
@@ -211,7 +250,7 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).Single();
@@ -223,9 +262,14 @@ namespace WMS.UI
                     wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='拒收' WHERE ReceiptTicketID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
                 }
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search(null, null);
@@ -239,7 +283,7 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 FormSubmissionItem formSubmissionItem = new FormSubmissionItem(submissionTicketID);
@@ -249,9 +293,14 @@ namespace WMS.UI
                 }));
                 formSubmissionItem.Show();
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search(null, null);
@@ -265,7 +314,7 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(submissionTicketID, this.userID, FormMode.ALTER);
@@ -282,9 +331,14 @@ namespace WMS.UI
                 formReceiptArrivalCheck.Show();
                 */
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search(null, null);
@@ -307,6 +361,81 @@ namespace WMS.UI
         private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确认删除?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                Search(null, null);
+                return;
+            }
+            var worksheet = this.reoGridControl1.Worksheets[0];
+            WMSEntities wmsEntities = new WMSEntities();
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new EntityCommandExecutionException();
+                }
+                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+                if (submissionTicket == null)
+                {
+                    MessageBox.Show("此送检单已被删除");
+                    this.Search(null, null);
+                    return;
+                }
+                else
+                {
+                    new Thread(() =>
+                    {
+                        try
+                        {
+                            SubmissionTicketItem[] submissionTicketItems = (from sti in wmsEntities.SubmissionTicketItem where sti.SubmissionTicketID == submissionTicketID select sti).ToArray();
+
+                            foreach (SubmissionTicketItem sti in submissionTicketItems)
+                            {
+                                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
+                                if (receiptTicketItem != null)
+                                {
+                                    if (receiptTicketItem.State != "已收货")
+                                    {
+                                        receiptTicketItem.State = "待送检";
+                                    }
+                                }
+                                //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待送检' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", sti.ReceiptTicketItemID));
+                            }
+                            wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ID = @submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID));
+                            wmsEntities.SaveChanges();
+                            int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem WHERE State <> '待送检' AND ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", submissionTicket.ReceiptTicketID)).FirstOrDefault();
+                            if (count == 0)
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '待检' WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", submissionTicket.ReceiptTicketID));
+                            }
+                            else
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分送检中' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", submissionTicket.ReceiptTicketID));
+                            }
+                        }
+                        catch
+                        {
+                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }).Start();
+                }
+            }
+            catch (EntityCommandExecutionException)
+            {
+                MessageBox.Show("请选择收货单");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+            Search(null, null);
         }
     }
 }

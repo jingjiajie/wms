@@ -104,16 +104,16 @@ namespace WMS.UI.FormReceipt
         private void InitComponents()
         {
             //初始化
-            string[] columnNames = (from kn in ReceiptMetaData.putawayTicketKeyName select kn.Name).ToArray();
+            //string[] columnNames = (from kn in ReceiptMetaData.putawayTicketKeyName select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlPutaway.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.putawayTicketKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.putawayTicketKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.putawayTicketKeyName[i].Visible;
             }
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.putawayTicketKeyName.Length;
         }
 
         private void Search()
@@ -125,9 +125,15 @@ namespace WMS.UI.FormReceipt
                 var wmsEntities = new WMSEntities();
                 //ReceiptTicketView[] receiptTicketViews = null;
                 PutawayTicketView[] putawayTicketView = null;
-
-                putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE ReceiptTicketID={0}", receiptTicketID)).ToArray();
-
+                try
+                {
+                    putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE ReceiptTicketID={0}", receiptTicketID)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.reoGridControlPutaway.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -182,12 +188,20 @@ namespace WMS.UI.FormReceipt
                 putawayTicket.State = "待上架";
                 new Thread(()=>
                 {
-                    wmsEntities.PutawayTicket.Add(putawayTicket);
-                    wmsEntities.SaveChanges();
-                    putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
-                    wmsEntities.SaveChanges();
-                    this.Invoke(new Action(() => Search()));
-                    MessageBox.Show("成功");
+                    try
+                    {
+                        wmsEntities.PutawayTicket.Add(putawayTicket);
+                        wmsEntities.SaveChanges();
+                        putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
+                        wmsEntities.SaveChanges();
+                        this.Invoke(new Action(() => Search()));
+                        MessageBox.Show("成功");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                 }).Start();
                 
             }
@@ -207,6 +221,8 @@ namespace WMS.UI.FormReceipt
                 string errorInfo;
                 if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo) == false)
                 {
+                    putawayTicket.LastUpdateTime = DateTime.Now;
+                    putawayTicket.LastUpdateUserID = this.userID;
                     MessageBox.Show(errorInfo);
                     Search();
                     return;
@@ -215,12 +231,19 @@ namespace WMS.UI.FormReceipt
                 {
                     new Thread(() =>
                     {
-                        wmsEntities.SaveChanges();
-                        Search();
-                        MessageBox.Show("成功");
+                        try
+                        {
+                            wmsEntities.SaveChanges();
+                            Search();
+                            MessageBox.Show("成功");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            return;
+                        }
                     }).Start();
                 }
-                
             }
             catch
             {

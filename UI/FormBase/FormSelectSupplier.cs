@@ -63,29 +63,39 @@ namespace WMS.UI.FormBase
             new Thread(new ThreadStart(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                SupplierView[] supplierViews = (from s in wmsEntities.SupplierView
-                                                  where s.Name.Contains(supplierName)
-                                                  orderby s.Name ascending
-                                                  select s).ToArray();
-                this.Invoke(new Action(() =>
+                try
                 {
-                    var worksheet = this.reoGridControlMain.Worksheets[0];
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    for (int i = 0; i < supplierViews.Length; i++)
+                   
+                    SupplierView[] supplierViews = (from s in wmsEntities.SupplierView
+                                                    where s.Name.Contains(supplierName)
+                                                    orderby s.Name ascending
+                                                    select s).ToArray();
+                    this.Invoke(new Action(() =>
                     {
-                        SupplierView curSupplierView = supplierViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curSupplierView, (from kn in SupplierMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
+                        var worksheet = this.reoGridControlMain.Worksheets[0];
+                        worksheet.DeleteRangeData(RangePosition.EntireRange);
+                        for (int i = 0; i < supplierViews.Length; i++)
                         {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                            SupplierView curSupplierView = supplierViews[i];
+                            object[] columns = Utilities.GetValuesByPropertieNames(curSupplierView, (from kn in SupplierMetaData.KeyNames select kn.Key).ToArray());
+                            for (int j = 0; j < worksheet.Columns; j++)
+                            {
+                                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                            }
                         }
-                    }
-                    if (supplierViews.Length == 0)
-                    {
-                        worksheet[0, 2] = "没有查询到符合条件的记录";
-                    }
-                    this.labelStatus.Text = "搜索完成";
-                }));
+                        if (supplierViews.Length == 0)
+                        {
+                            worksheet[0, 2] = "没有查询到符合条件的记录";
+                        }
+                        this.labelStatus.Text = "搜索完成";
+                    }));
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
             })).Start();
         }
 

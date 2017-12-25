@@ -15,9 +15,10 @@ namespace WMS.UI
 {
     public partial class FormReceiptItems : Form
     {
-        private int receiptTicketItemsID;
+        private int receiptTicketItemID;
         private FormMode formMode;
         private int receiptTicketID;
+        private int componentID;
         Action callBack = null;
         const string WAIT_CHECK = "待检";
         const string CHECK = "送检中";
@@ -57,27 +58,109 @@ namespace WMS.UI
         private void InitComponents()
         {
             //初始化
-            string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName select kn.Name).ToArray();
+            //string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlReceiptItems.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < columnNames.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = columnNames[i];
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
             }
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
-            worksheet.Columns = columnNames.Length;
+            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length;
         }
 
         private void FormReceiptArrivalItems_Load(object sender, EventArgs e)
         {
             InitComponents();
-            WMSEntities wmsEntities = new WMSEntities();
-            ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == receiptTicketID select rt).Single();
-            Utilities.CopyPropertiesToTextBoxes(receiptTicketView, this);
+            InitPanel();
+            TextBox textBoxComponentNo = (TextBox)this.Controls.Find("textBoxComponentNo", true)[0];
+            textBoxComponentNo.Click += TextBoxComponentNo_Click;
+            //WMSEntities wmsEntities = new WMSEntities();
+            //ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == receiptTicketID select rt).FirstOrDefault();
+            //Utilities.CopyPropertiesToTextBoxes(receiptTicketView, this);
             Search();
         }
+
+        private void TextBoxComponentNo_Click(object sender, EventArgs e)
+        {
+            FormSearch formSearch = new FormSearch();
+            formSearch.SetSelectFinishCallback(new Action<int>((id) => 
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                this.componentID = id;
+                WMS.DataAccess.Component component = (from c in wmsEntities.Component where c.ID == id select c).FirstOrDefault();
+                if (component == null)
+                {
+                    MessageBox.Show("没有找到该零件");
+                }
+                else
+                {
+                    this.Controls.Find("textBoxComponentName", true)[0].Text = component.Name;
+                    this.Controls.Find("textBoxComponentNo", true)[0].Text = component.No;
+                }
+            }));
+            formSearch.Show();
+        }
+
+        private void InitPanel()
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            //this.Controls.Clear();
+            Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.itemsKeyName);
+            //this.RefreshTextBoxes();
+            this.reoGridControlReceiptItems.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
+
+            //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            //textBoxComponentName.Click += textBoxComponentName_Click;
+            //textBoxComponentName.ReadOnly = true;
+            //textBoxComponentName.BackColor = Color.White;
+        }
+
+        private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        {
+            this.RefreshTextBoxes();
+        }
+
+        private void RefreshTextBoxes()
+        {
+            this.ClearTextBoxes();
+            var worksheet = this.reoGridControlReceiptItems.Worksheets[0];
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlReceiptItems);
+            if (ids.Length == 0)
+            {
+                this.receiptTicketItemID = -1;
+                return;
+            }
+            int id = ids[0];
+            WMSEntities wmsEntities = new WMSEntities();
+            ReceiptTicketItemView receiptTicketItemView =
+                        (from s in wmsEntities.ReceiptTicketItemView
+                         where s.ID == id
+                         select s).FirstOrDefault();
+            if (receiptTicketItemView == null)
+            {
+                MessageBox.Show("系统错误，未找到相应收货单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            this.receiptTicketItemID = int.Parse(receiptTicketItemView.ID.ToString());
+            Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
+            //Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
+        }
+
+        private void ClearTextBoxes()
+        {
+            foreach (Control control in this.tableLayoutPanelProperties.Controls)
+            {
+                if (control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    textBox.Text = "";
+                }
+            }
+        }
+
 
         private void Search()
         {
@@ -87,7 +170,15 @@ namespace WMS.UI
             {
                 var wmsEntities = new WMSEntities();
                 ReceiptTicketItemView[] receiptTicketItemViews = null;
-                receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(String.Format("SELECT * FROM ReceiptTicketItemView WHERE ReceiptTicketID = {0}", this.receiptTicketID)).ToArray();
+                try
+                {
+                    receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(String.Format("SELECT * FROM ReceiptTicketItemView WHERE ReceiptTicketID = {0}", this.receiptTicketID)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.reoGridControlReceiptItems.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -103,7 +194,7 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j];
                         }
                         //worksheet[i, worksheet.Columns-1] = new CheckBox();
-                        
+                        this.RefreshTextBoxes();
                     }
                 }));
 
@@ -118,34 +209,79 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormReceiptItemsModify formReceiptItemsModify = new FormReceiptItemsModify(FormMode.ADD, receiptTicketItemsID, receiptTicketID);
-            formReceiptItemsModify.SetCallBack(() =>
+            WMSEntities wmsEntities = new WMSEntities();
+            ReceiptTicketItem receiptTicketItem = new ReceiptTicketItem();
+            string errorInfo;
+            if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem,ReceiptMetaData.itemsKeyName, out errorInfo) == false)
             {
-                Search();
-            });
-            formReceiptItemsModify.Show();
+                MessageBox.Show(errorInfo);
+            }
+            else
+            {
+                wmsEntities.ReceiptTicketItem.Add(receiptTicketItem);
+                new Thread(() =>
+                {
+                    try
+                    {
+                        receiptTicketItem.ComponentID = this.componentID;
+                        receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
+                        receiptTicketItem.State = "待送检";
+                        wmsEntities.SaveChanges();
+                        this.Search();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
+                }).Start();
+            }
         }
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
+            WMSEntities wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControlReceiptItems.Worksheets[0];
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formReceiptItemsModify = new FormReceiptItemsModify(FormMode.ALTER, receiptItemID, receiptTicketID);
-                formReceiptItemsModify.SetCallBack(() =>
+                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).FirstOrDefault();
+                string errorInfo;
+                if(Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == false)
                 {
-                    this.Search();
-                });
-                formReceiptItemsModify.Show();
+                    MessageBox.Show(errorInfo);
+                    return;
+                }
+                else
+                {
+                    new Thread(() =>
+                    {
+                        try
+                        {
+                            receiptTicketItem.ComponentID = this.componentID;
+                            wmsEntities.SaveChanges();
+                            this.Search();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }).Start();
+                }
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -184,7 +320,7 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).Single();
@@ -201,9 +337,43 @@ namespace WMS.UI
                     MessageBox.Show("成功");
                 }
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项送检", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            var worksheet = this.reoGridControlReceiptItems.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new EntityCommandExecutionException();
+                }
+                int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                new Thread(() => 
+                {
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicketItem WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", receiptItemID));
+                    this.Search();
+                }).Start();
+            }
+            catch (EntityCommandExecutionException)
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
         }
@@ -227,5 +397,12 @@ namespace WMS.UI
         {
 
         }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        
     }
 }

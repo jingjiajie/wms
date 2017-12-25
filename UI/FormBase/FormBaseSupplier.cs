@@ -33,6 +33,11 @@ namespace WMS.UI
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
+            if (id!=0)
+            {
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+            }
             InitSupplier();
             this.Search();
 
@@ -124,8 +129,20 @@ namespace WMS.UI
                         parameters.Add(new SqlParameter("value", value));
                     }
                     sql += " ORDER BY ID DESC"; //倒序排序
-                    SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
-
+                    try
+                    {
+                        SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
+                    }
+                    catch (EntityCommandExecutionException)
+                    {
+                        MessageBox.Show("查询失败，请检查输入条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                 }
 
 
@@ -253,11 +270,19 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                foreach (int id in deleteIDs)
+                try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
+                    foreach (int id in deleteIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
+                    }
+                    wmsEntities.SaveChanges();
                 }
-                wmsEntities.SaveChanges();
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 this.Invoke(new Action(this.Search));
             })).Start();
 
@@ -282,6 +307,16 @@ namespace WMS.UI
             {
                 this.toolStripTextBoxSelect.Enabled = true;
             }
+        }
+
+        private void toolStripTextBoxSelect_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if (e.KeyChar == 13)
+            {
+                this.Search();
+            }
+
         }
     }
 
