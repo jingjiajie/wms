@@ -315,22 +315,32 @@ namespace WMS.UI
 
         private void buttonEnter_MouseEnter(object sender, EventArgs e)
         {
-            buttonEnter.BackgroundImage = WMS.UI.Properties.Resources.botton1__2_;
+            buttonEnter.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
         }
 
         private void buttonEnter_MouseLeave(object sender, EventArgs e)
         {
-            buttonEnter.BackgroundImage = WMS.UI.Properties.Resources.botton2__2_;
+            buttonEnter.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonEnter_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonEnter.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
         private void buttonClosing_MouseEnter(object sender, EventArgs e)
         {
-            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.botton1__3_;
+            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
         }
 
         private void buttonClosing_MouseLeave(object sender, EventArgs e)
         {
-            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.botton2__3_;
+            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonClosing_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -342,6 +352,7 @@ namespace WMS.UI
         {
             
         }
+
     }
 }
 

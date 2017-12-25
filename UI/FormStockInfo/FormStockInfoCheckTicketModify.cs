@@ -51,7 +51,9 @@ namespace WMS.UI
 
                 this.buttonDelete.Visible = false;
                 this.buttonfinish.Visible = false;
-                this.Size = new Size(500, 200);
+                this.Size = new Size(500, 300);
+                this.MinimizeBox = false;
+                this.MaximizeBox = false;
                
 
             }
@@ -344,6 +346,83 @@ namespace WMS.UI
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonOK_MouseEnter(object sender, EventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonOK_MouseLeave(object sender, EventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonOK_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonCancel_MouseEnter(object sender, EventArgs e)
+        {
+            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonCancel_MouseLeave(object sender, EventArgs e)
+        {
+            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonCancel_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+        private void buttonAdd_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAdd_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+
+
+        private void buttonDelete_MouseEnter(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonDelete_MouseLeave(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+        private void buttonfinish_MouseEnter(object sender, EventArgs e)
+        {
+            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonfinish_MouseLeave(object sender, EventArgs e)
+        {
+            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonfinish_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
         }
     }
     

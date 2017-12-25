@@ -147,5 +147,20 @@ namespace WMS.UI
                 this.groupBox1.Text = "添加供应商信息";
             }
         }
+
+        private void buttonModify_MouseEnter(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonModify_MouseLeave(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
     }
 }
