@@ -43,10 +43,21 @@ namespace WMS.UI
 
             if (this.mode == FormMode.ALTER)
             {
-                ComponentView componenView = (from s in this.wmsEntities.ComponentView
-                                              where s.ID == this.componenID
-                                       select s).Single();
-                Utilities.CopyPropertiesToTextBoxes(componenView, this);
+               
+                try
+                {
+                    ComponentView componenView = (from s in this.wmsEntities.ComponentView
+                                                  where s.ID == this.componenID
+                                                  select s).Single();
+                    Utilities.CopyPropertiesToTextBoxes(componenView, this);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
             }
 
             this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
@@ -54,7 +65,7 @@ namespace WMS.UI
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
            
-                var formSelectSupplier = new FormBase.FormSelectSupplier();
+            var formSelectSupplier = new FormBase.FormSelectSupplier();
             formSelectSupplier.SetSelectFinishCallback((selectedID) =>
             {
                 WMSEntities wmsEntities = new WMSEntities();

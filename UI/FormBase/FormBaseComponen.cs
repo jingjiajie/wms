@@ -301,10 +301,12 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Text = "";
                 this.textBoxSearchValue.Enabled = false;
+                this.textBoxSearchValue.BackColor = Color.LightGray;
             }
             else
             {
                 this.textBoxSearchValue.Enabled = true;
+                this.textBoxSearchValue.BackColor = Color.White;
             }
         }
 
