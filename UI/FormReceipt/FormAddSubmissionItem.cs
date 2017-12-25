@@ -153,13 +153,21 @@ namespace WMS.UI.FormReceipt
                 }
                 new Thread(() =>
                 {
-                    wmsEntities.SaveChanges();
-                    int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem WHERE State <> '送检中' AND ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
-                    if (count == 0)
+                    try
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '送检中' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", this.receiptTicketID));
+                        wmsEntities.SaveChanges();
+                        int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem WHERE State <> '送检中' AND ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
+                        if (count == 0)
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '送检中' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", this.receiptTicketID));
+                        }
+                        wmsEntities.SaveChanges();
                     }
-                    wmsEntities.SaveChanges();
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                     this.Invoke(new Action(() =>
                     {
                         this.Search();

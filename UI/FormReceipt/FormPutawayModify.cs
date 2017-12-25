@@ -85,12 +85,20 @@ namespace WMS.UI.FormReceipt
                 //wmsEntities.PutawayTicket.Add(putawayTicket);
                 new Thread(() =>
                 {
-                    wmsEntities.SaveChanges();
-                    MessageBox.Show("成功");
-                    this.Invoke(new Action(() =>
+                    try
                     {
-                        CallBack();
-                    }));
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        this.Invoke(new Action(() =>
+                        {
+                            CallBack();
+                        }));
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                 }).Start();
             }
             else

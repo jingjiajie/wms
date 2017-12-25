@@ -78,7 +78,15 @@ namespace WMS.UI.FormReceipt
                 PutawayTicketView[] putawayTicketView = null;
                 if (key == null || value == null)        //搜索所有
                 {
-                    putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>("SELECT * FROM PutawayTicketView WHERE WarehouseID = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID)}).ToArray();
+                    try
+                    {
+                        putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>("SELECT * FROM PutawayTicketView WHERE WarehouseID = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID) }).ToArray();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
                 else
                 {
@@ -91,9 +99,14 @@ namespace WMS.UI.FormReceipt
                     {
                         putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = @key AND WarehouseID = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
                     }
-                    catch
+                    catch(EntityException)
                     {
                         MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                         return;
                     }
                 }
@@ -146,7 +159,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
@@ -156,12 +169,16 @@ namespace WMS.UI.FormReceipt
                 }));
                 formShelvesItem.Show();
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }           
         }
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
@@ -208,7 +225,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    throw new EntityCommandExecutionException();
                 }
                 int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
@@ -219,9 +236,14 @@ namespace WMS.UI.FormReceipt
                 }));
                 formPutawayModify.Show();
             }
-            catch
+            catch(EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search(null, null);
@@ -244,9 +266,14 @@ namespace WMS.UI.FormReceipt
                     {
                         wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", putawayTicketID));
                     }
-                    catch
+                    catch(EntityException)
                     {
                         MessageBox.Show("该上架单已被删除!");
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
                     }
                 }
             }

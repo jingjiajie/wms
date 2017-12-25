@@ -893,15 +893,12 @@
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="PutawayTicketID" />
-            <PropertyRef Name="ReceiptTicketItemID" />
-            <PropertyRef Name="DisplacementPositionNo" />
-            <PropertyRef Name="TargetStorageLocation" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="PutawayTicketID" Type="int" Nullable="false" />
-          <Property Name="ReceiptTicketItemID" Type="int" Nullable="false" />
-          <Property Name="DisplacementPositionNo" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="TargetStorageLocation" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ReceiptTicketItemID" Type="int" />
+          <Property Name="DisplacementPositionNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="TargetStorageLocation" Type="nvarchar" MaxLength="64" />
           <Property Name="BoardNo" Type="nvarchar" MaxLength="64" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledMoveCount" Type="decimal" Precision="18" Scale="0" />
@@ -5220,15 +5217,12 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="PutawayTicketID" />
-            <PropertyRef Name="ReceiptTicketItemID" />
-            <PropertyRef Name="DisplacementPositionNo" />
-            <PropertyRef Name="TargetStorageLocation" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="PutawayTicketID" Type="Int32" Nullable="false" />
-          <Property Name="ReceiptTicketItemID" Type="Int32" Nullable="false" />
-          <Property Name="DisplacementPositionNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TargetStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ReceiptTicketItemID" Type="Int32" />
+          <Property Name="DisplacementPositionNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TargetStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="BoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledMoveCount" Type="Decimal" Precision="18" Scale="0" />

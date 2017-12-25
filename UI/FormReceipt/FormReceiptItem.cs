@@ -66,10 +66,18 @@ namespace WMS.UI.FormReceipt
             {
                 var wmsEntities = new WMSEntities();
                 ReceiptTicketItemView[] receiptTicketItemViews = null;
-                receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(
-                    "SELECT * FROM ReceiptTicketItemView " +
-                    "WHERE ReceiptTicketID = @receiptTicketID",
-                    new SqlParameter("receiptTicketID", this.receiptTicketID)).ToArray();
+                try
+                {
+                    receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(
+                        "SELECT * FROM ReceiptTicketItemView " +
+                        "WHERE ReceiptTicketID = @receiptTicketID",
+                        new SqlParameter("receiptTicketID", this.receiptTicketID)).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.countRow = receiptTicketItemViews.Length;
                 this.reoGridControlUser.Invoke(new Action(() =>
                 {
@@ -151,27 +159,35 @@ namespace WMS.UI.FormReceipt
                 }
                 new Thread(() =>
                 {
-                    wmsEntities.SaveChanges();
-                    int count1 = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem " +
-                        "WHERE ReceiptTicketID = @receiptTicketID AND State <> '已收货'",
-                        new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
-                    if (count1 == 0)
+                    try
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '已收货' " +
-                            "WHERE ID = @receiptTicketID",
-                            new SqlParameter("receiptTicketID", this.receiptTicketID));
+                        wmsEntities.SaveChanges();
+                        int count1 = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem " +
+                            "WHERE ReceiptTicketID = @receiptTicketID AND State <> '已收货'",
+                            new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
+                        if (count1 == 0)
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '已收货' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", this.receiptTicketID));
+                        }
+                        else
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分收货' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", this.receiptTicketID));
+                        }
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search();
+                        }));
+                        MessageBox.Show("添加成功");
                     }
-                    else
+                    catch
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分收货' " +
-                            "WHERE ID = @receiptTicketID",
-                            new SqlParameter("receiptTicketID", this.receiptTicketID));
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
                     }
-                    this.Invoke(new Action(() =>
-                    {
-                        this.Search();
-                    }));
-                    MessageBox.Show("添加成功");
                     CallBack();
                 }).Start();
             }
@@ -228,39 +244,47 @@ namespace WMS.UI.FormReceipt
                 }
                 new Thread(() =>
                 {
-                    wmsEntities.SaveChanges();
-                    int count1 = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem " +
-                        "WHERE ReceiptTicketID = @receiptTicketID AND State = '已收货'",
-                        new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
-                    int count2 = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem " +
-                        "WHERE ReceiptTicketID = @receiptTicketID AND State <> '拒收'",
-                        new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
-                    if (count1 == 0)
+                    try
                     {
-                        if (count2 == 0)
+                        wmsEntities.SaveChanges();
+                        int count1 = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem " +
+                            "WHERE ReceiptTicketID = @receiptTicketID AND State = '已收货'",
+                            new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
+                        int count2 = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicketItem " +
+                            "WHERE ReceiptTicketID = @receiptTicketID AND State <> '拒收'",
+                            new SqlParameter("receiptTicketID", this.receiptTicketID)).FirstOrDefault();
+                        if (count1 == 0)
                         {
-                            wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '拒收' " +
-                            "WHERE ID = @receiptTicketID",
-                            new SqlParameter("receiptTicketID", this.receiptTicketID));
+                            if (count2 == 0)
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '拒收' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", this.receiptTicketID));
+                            }
+                            else
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分拒收' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", this.receiptTicketID));
+                            }
                         }
                         else
                         {
-                            wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分拒收' " +
-                            "WHERE ID = @receiptTicketID",
-                            new SqlParameter("receiptTicketID", this.receiptTicketID));
+                            wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分收货' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", this.receiptTicketID));
                         }
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search();
+                        }));
+                        MessageBox.Show("添加成功");
                     }
-                    else
+                    catch
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State = '部分收货' " +
-                            "WHERE ID = @receiptTicketID",
-                            new SqlParameter("receiptTicketID", this.receiptTicketID));
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
                     }
-                    this.Invoke(new Action(() =>
-                    {
-                        this.Search();
-                    }));
-                    MessageBox.Show("添加成功");
                     CallBack();
                 }).Start();
             }
