@@ -41,7 +41,7 @@ namespace WMS.UI.FormBase
             new KeyName(){Key="Password",Name="密码",Visible=false, Editable=true,Save=true},
             //new KeyName(){Key="Authority",Name="权限",Editable=true},
             new KeyName(){Key="AuthorityName",Name="角色"},
-            new KeyName(){Key="SupplierName",Name="供应商名",Editable=false,Save=false},
+            new KeyName(){Key="SupplierName",Name="供应商名",Editable=false  ,Save=false},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

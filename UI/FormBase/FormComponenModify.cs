@@ -40,13 +40,27 @@ namespace WMS.UI
             }
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenMetaData.KeyNames);
+            TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+            textboxsuppliername.ReadOnly = true;
 
             if (this.mode == FormMode.ALTER)
             {
                 ComponentView componenView = (from s in this.wmsEntities.ComponentView
                                               where s.ID == this.componenID
-                                       select s).Single();
+                                              select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(componenView, this);
+
+                //if (this.userID != 0 && this.userID != -1)
+                //{
+                //    string supplierName = (from s in wmsEntities.SupplierView
+                //                           where s.ID == userID
+                //                           select s.Name).FirstOrDefault();
+
+                //    TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+
+                //    textboxsuppliername.Text = supplierName;
+                //}
+
             }
 
             this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
