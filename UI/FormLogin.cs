@@ -292,7 +292,7 @@ namespace WMS.UI
                 return;
             }
             finally
-            {
+            { 
                 this.possibleUserMutex.ReleaseMutex();
             }
         }
