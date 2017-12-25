@@ -893,15 +893,12 @@
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="PutawayTicketID" />
-            <PropertyRef Name="ReceiptTicketItemID" />
-            <PropertyRef Name="DisplacementPositionNo" />
-            <PropertyRef Name="TargetStorageLocation" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="PutawayTicketID" Type="int" Nullable="false" />
-          <Property Name="ReceiptTicketItemID" Type="int" Nullable="false" />
-          <Property Name="DisplacementPositionNo" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="TargetStorageLocation" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ReceiptTicketItemID" Type="int" />
+          <Property Name="DisplacementPositionNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="TargetStorageLocation" Type="nvarchar" MaxLength="64" />
           <Property Name="BoardNo" Type="nvarchar" MaxLength="64" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledMoveCount" Type="decimal" Precision="18" Scale="0" />
@@ -5401,15 +5398,18 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="PutawayTicketID" />
-            <PropertyRef Name="ReceiptTicketItemID" />
-            <PropertyRef Name="DisplacementPositionNo" />
-            <PropertyRef Name="TargetStorageLocation" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="PutawayTicketID" Type="Int32" Nullable="false" />
+<<<<<<< HEAD
           <Property Name="ReceiptTicketItemID" Type="Int32" Nullable="false" />
           <Property Name="DisplacementPositionNo" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="TargetStorageLocation" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
+=======
+          <Property Name="ReceiptTicketItemID" Type="Int32" />
+          <Property Name="DisplacementPositionNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="TargetStorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+>>>>>>> af11af89815b99b9438fba65b9aaf14d88486d0a
           <Property Name="BoardNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledMoveCount" Type="Decimal" Precision="18" Scale="0" />
@@ -7063,7 +7063,11 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+<<<<<<< HEAD
       </Schema>
+=======
+        </Schema>
+>>>>>>> af11af89815b99b9438fba65b9aaf14d88486d0a
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -7794,6 +7798,14 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+<<<<<<< HEAD
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobTicketItemView">
+            <EntityTypeMapping TypeName="WMSModel.JobTicketItemView">
+              <MappingFragment StoreEntitySet="JobTicketItemView">
+=======
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7965,6 +7977,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="PutawayTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.PutawayTicketItemView">
               <MappingFragment StoreEntitySet="PutawayTicketItemView">
+>>>>>>> af11af89815b99b9438fba65b9aaf14d88486d0a
                 <ScalarProperty Name="ComponentInventoryRequirement10Day" ColumnName="ComponentInventoryRequirement10Day" />
                 <ScalarProperty Name="ComponentInventoryRequirement5Day" ColumnName="ComponentInventoryRequirement5Day" />
                 <ScalarProperty Name="ComponentInventoryRequirement3Day" ColumnName="ComponentInventoryRequirement3Day" />
@@ -7982,6 +7995,174 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ComponentWorkPosition" ColumnName="ComponentWorkPosition" />
                 <ScalarProperty Name="ComponentFactroy" ColumnName="ComponentFactroy" />
                 <ScalarProperty Name="ComponentContainerNo" ColumnName="ComponentContainerNo" />
+<<<<<<< HEAD
+                <ScalarProperty Name="ComponentSupplierID" ColumnName="ComponentSupplierID" />
+                <ScalarProperty Name="ComponentWarehouseID" ColumnName="ComponentWarehouseID" />
+                <ScalarProperty Name="ComponentProjectID" ColumnName="ComponentProjectID" />
+                <ScalarProperty Name="SupplierRecipientName" ColumnName="SupplierRecipientName" />
+                <ScalarProperty Name="SupplierZipCode" ColumnName="SupplierZipCode" />
+                <ScalarProperty Name="SupplierBankNo" ColumnName="SupplierBankNo" />
+                <ScalarProperty Name="SupplierBankAccount" ColumnName="SupplierBankAccount" />
+                <ScalarProperty Name="SupplierBankName" ColumnName="SupplierBankName" />
+                <ScalarProperty Name="SupplierSupplierTel" ColumnName="SupplierSupplierTel" />
+                <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
+                <ScalarProperty Name="SupplierTaxpayerNumber" ColumnName="SupplierTaxpayerNumber" />
+                <ScalarProperty Name="SupplierFullName" ColumnName="SupplierFullName" />
+                <ScalarProperty Name="SupplierBalanceDate" ColumnName="SupplierBalanceDate" />
+                <ScalarProperty Name="SupplierInvoiceDate" ColumnName="SupplierInvoiceDate" />
+                <ScalarProperty Name="SupplierEndDate" ColumnName="SupplierEndDate" />
+                <ScalarProperty Name="SupplierStartDate" ColumnName="SupplierStartDate" />
+                <ScalarProperty Name="SupplierContractNo" ColumnName="SupplierContractNo" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="ReceiptTicketItemBoxNo" ColumnName="ReceiptTicketItemBoxNo" />
+                <ScalarProperty Name="ReceiptTicketItemRealRightProperty" ColumnName="ReceiptTicketItemRealRightProperty" />
+                <ScalarProperty Name="ReceiptTicketItemExpiryDate" ColumnName="ReceiptTicketItemExpiryDate" />
+                <ScalarProperty Name="ReceiptTicketItemManufactureDate" ColumnName="ReceiptTicketItemManufactureDate" />
+                <ScalarProperty Name="ReceiptTicketItemInventoryDate" ColumnName="ReceiptTicketItemInventoryDate" />
+                <ScalarProperty Name="ReceiptTicketItemManufactureNo" ColumnName="ReceiptTicketItemManufactureNo" />
+                <ScalarProperty Name="ReceiptTicketItemDisqualifiedAmount" ColumnName="ReceiptTicketItemDisqualifiedAmount" />
+                <ScalarProperty Name="ReceiptTicketItemShortageAmount" ColumnName="ReceiptTicketItemShortageAmount" />
+                <ScalarProperty Name="ReceiptTicketItemWrongComponentAmount" ColumnName="ReceiptTicketItemWrongComponentAmount" />
+                <ScalarProperty Name="ReceiptTicketItemReceiviptAmount" ColumnName="ReceiptTicketItemReceiviptAmount" />
+                <ScalarProperty Name="ReceiptTicketItemExpectedAmount" ColumnName="ReceiptTicketItemExpectedAmount" />
+                <ScalarProperty Name="ReceiptTicketItemExpectedPackageAmount" ColumnName="ReceiptTicketItemExpectedPackageAmount" />
+                <ScalarProperty Name="ReceiptTicketItemPackageName" ColumnName="ReceiptTicketItemPackageName" />
+                <ScalarProperty Name="ReceiptTicketItemComponentID" ColumnName="ReceiptTicketItemComponentID" />
+                <ScalarProperty Name="ReceiptTicketItemReceiptTicketID" ColumnName="ReceiptTicketItemReceiptTicketID" />
+                <ScalarProperty Name="HappenTime" ColumnName="HappenTime" />
+                <ScalarProperty Name="ActualJobPerson" ColumnName="ActualJobPerson" />
+                <ScalarProperty Name="HaveBackedCount" ColumnName="HaveBackedCount" />
+                <ScalarProperty Name="MoveCount" ColumnName="MoveCount" />
+                <ScalarProperty Name="ScheduledMoveCount" ColumnName="ScheduledMoveCount" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="MoveInStorageLocation" ColumnName="MoveInStorageLocation" />
+                <ScalarProperty Name="SourceBoardNo" ColumnName="SourceBoardNo" />
+                <ScalarProperty Name="MoveOutStorageLocation" ColumnName="MoveOutStorageLocation" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="No" ColumnName="No" />
+                <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
+                <ScalarProperty Name="JobTicketID" ColumnName="JobTicketID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="JobTicketLastUpdateTime" ColumnName="JobTicketLastUpdateTime" />
+                <ScalarProperty Name="JobTicketLastUpdateUserID" ColumnName="JobTicketLastUpdateUserID" />
+                <ScalarProperty Name="JobTicketCreateTime" ColumnName="JobTicketCreateTime" />
+                <ScalarProperty Name="JobTicketCreateUserID" ColumnName="JobTicketCreateUserID" />
+                <ScalarProperty Name="JobTicketPersonInCharge" ColumnName="JobTicketPersonInCharge" />
+                <ScalarProperty Name="JobTicketAssignmentArea" ColumnName="JobTicketAssignmentArea" />
+                <ScalarProperty Name="JobTicketPrintedTimes" ColumnName="JobTicketPrintedTimes" />
+                <ScalarProperty Name="JobTicketState" ColumnName="JobTicketState" />
+                <ScalarProperty Name="JobTicketRealAmount" ColumnName="JobTicketRealAmount" />
+                <ScalarProperty Name="JobTicketScheduledAmount" ColumnName="JobTicketScheduledAmount" />
+                <ScalarProperty Name="JobTicketJobGroupName" ColumnName="JobTicketJobGroupName" />
+                <ScalarProperty Name="JobTicketJobType" ColumnName="JobTicketJobType" />
+                <ScalarProperty Name="JobTicketJobTicketNo" ColumnName="JobTicketJobTicketNo" />
+                <ScalarProperty Name="JobTicketShipmentTicketID" ColumnName="JobTicketShipmentTicketID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobTicketView">
+            <EntityTypeMapping TypeName="WMSModel.JobTicketView">
+              <MappingFragment StoreEntitySet="JobTicketView">
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="LastUpdateUserSupplierID" ColumnName="LastUpdateUserSupplierID" />
+                <ScalarProperty Name="LastUpdateUserAuthorityName" ColumnName="LastUpdateUserAuthorityName" />
+                <ScalarProperty Name="LastUpdateUserAuthority" ColumnName="LastUpdateUserAuthority" />
+                <ScalarProperty Name="LastUpdateUserPassword" ColumnName="LastUpdateUserPassword" />
+                <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
+                <ScalarProperty Name="CreateUserSupplierID" ColumnName="CreateUserSupplierID" />
+                <ScalarProperty Name="CreateUserAuthorityName" ColumnName="CreateUserAuthorityName" />
+                <ScalarProperty Name="CreateUserAuthority" ColumnName="CreateUserAuthority" />
+                <ScalarProperty Name="CreateUserPassword" ColumnName="CreateUserPassword" />
+                <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ShipmentTicketBoardPrintedTimes" ColumnName="ShipmentTicketBoardPrintedTimes" />
+                <ScalarProperty Name="ShipmentTicketShipmentPlaceNo" ColumnName="ShipmentTicketShipmentPlaceNo" />
+                <ScalarProperty Name="ShipmentTicketEmergency" ColumnName="ShipmentTicketEmergency" />
+                <ScalarProperty Name="ShipmentTicketDeliveryPoint" ColumnName="ShipmentTicketDeliveryPoint" />
+                <ScalarProperty Name="ShipmentTicketOuterPhysicalDistributionPath" ColumnName="ShipmentTicketOuterPhysicalDistributionPath" />
+                <ScalarProperty Name="ShipmentTicketDeliveryTicketNo" ColumnName="ShipmentTicketDeliveryTicketNo" />
+                <ScalarProperty Name="ShipmentTicketWaitingToBeDone" ColumnName="ShipmentTicketWaitingToBeDone" />
+                <ScalarProperty Name="ShipmentTicketPrintTimes" ColumnName="ShipmentTicketPrintTimes" />
+                <ScalarProperty Name="ShipmentTicketLastUpdateTime" ColumnName="ShipmentTicketLastUpdateTime" />
+                <ScalarProperty Name="ShipmentTicketLastUpdateUserID" ColumnName="ShipmentTicketLastUpdateUserID" />
+                <ScalarProperty Name="ShipmentTicketCreateTime" ColumnName="ShipmentTicketCreateTime" />
+                <ScalarProperty Name="ShipmentTicketCreateUserID" ColumnName="ShipmentTicketCreateUserID" />
+                <ScalarProperty Name="ShipmentTicketCloseReason" ColumnName="ShipmentTicketCloseReason" />
+                <ScalarProperty Name="ShipmentTicketDescription" ColumnName="ShipmentTicketDescription" />
+                <ScalarProperty Name="ShipmentTicketDeliveryPath" ColumnName="ShipmentTicketDeliveryPath" />
+                <ScalarProperty Name="ShipmentTicketContactAddress" ColumnName="ShipmentTicketContactAddress" />
+                <ScalarProperty Name="ShipmentTicketReceivingPersonName" ColumnName="ShipmentTicketReceivingPersonName" />
+                <ScalarProperty Name="ShipmentTicketProductionLine" ColumnName="ShipmentTicketProductionLine" />
+                <ScalarProperty Name="ShipmentTicketSortType" ColumnName="ShipmentTicketSortType" />
+                <ScalarProperty Name="ShipmentTicketReverseTicketNo" ColumnName="ShipmentTicketReverseTicketNo" />
+                <ScalarProperty Name="ShipmentTicketStation" ColumnName="ShipmentTicketStation" />
+                <ScalarProperty Name="ShipmentTicketExceedStorageAmount" ColumnName="ShipmentTicketExceedStorageAmount" />
+                <ScalarProperty Name="ShipmentTicketShipmentAmount" ColumnName="ShipmentTicketShipmentAmount" />
+                <ScalarProperty Name="ShipmentTicketPickingAmount" ColumnName="ShipmentTicketPickingAmount" />
+                <ScalarProperty Name="ShipmentTicketAllocatedAmount" ColumnName="ShipmentTicketAllocatedAmount" />
+                <ScalarProperty Name="ShipmentTicketScheduledAmount" ColumnName="ShipmentTicketScheduledAmount" />
+                <ScalarProperty Name="ShipmentTicketState" ColumnName="ShipmentTicketState" />
+                <ScalarProperty Name="ShipmentTicketRequireArriveDate" ColumnName="ShipmentTicketRequireArriveDate" />
+                <ScalarProperty Name="ShipmentTicketTicketNum" ColumnName="ShipmentTicketTicketNum" />
+                <ScalarProperty Name="ShipmentTicketDate" ColumnName="ShipmentTicketDate" />
+                <ScalarProperty Name="ShipmentTicketRelatedTicketNo" ColumnName="ShipmentTicketRelatedTicketNo" />
+                <ScalarProperty Name="ShipmentTicketSegmentationChainCount" ColumnName="ShipmentTicketSegmentationChainCount" />
+                <ScalarProperty Name="ShipmentTicketSource" ColumnName="ShipmentTicketSource" />
+                <ScalarProperty Name="ShipmentTicketTypeNo" ColumnName="ShipmentTicketTypeNo" />
+                <ScalarProperty Name="ShipmentTicketType" ColumnName="ShipmentTicketType" />
+                <ScalarProperty Name="ShipmentTicketNo" ColumnName="ShipmentTicketNo" />
+                <ScalarProperty Name="ShipmentTicketWarehouseID" ColumnName="ShipmentTicketWarehouseID" />
+                <ScalarProperty Name="ShipmentTicketProjectID" ColumnName="ShipmentTicketProjectID" />
+                <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
+                <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="PersonInCharge" ColumnName="PersonInCharge" />
+                <ScalarProperty Name="AssignmentArea" ColumnName="AssignmentArea" />
+                <ScalarProperty Name="PrintedTimes" ColumnName="PrintedTimes" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="RealAmount" ColumnName="RealAmount" />
+                <ScalarProperty Name="ScheduledAmount" ColumnName="ScheduledAmount" />
+                <ScalarProperty Name="JobGroupName" ColumnName="JobGroupName" />
+                <ScalarProperty Name="JobType" ColumnName="JobType" />
+                <ScalarProperty Name="JobTicketNo" ColumnName="JobTicketNo" />
+                <ScalarProperty Name="ShipmentTicketID" ColumnName="ShipmentTicketID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectView">
+            <EntityTypeMapping TypeName="WMSModel.ProjectView">
+              <MappingFragment StoreEntitySet="ProjectView">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PutawayTicketItemView">
+            <EntityTypeMapping TypeName="WMSModel.PutawayTicketItemView">
+              <MappingFragment StoreEntitySet="PutawayTicketItemView">
+                <ScalarProperty Name="ComponentInventoryRequirement10Day" ColumnName="ComponentInventoryRequirement10Day" />
+                <ScalarProperty Name="ComponentInventoryRequirement5Day" ColumnName="ComponentInventoryRequirement5Day" />
+                <ScalarProperty Name="ComponentInventoryRequirement3Day" ColumnName="ComponentInventoryRequirement3Day" />
+                <ScalarProperty Name="ComponentInventoryRequirement1Day" ColumnName="ComponentInventoryRequirement1Day" />
+                <ScalarProperty Name="ComponentCharge2" ColumnName="ComponentCharge2" />
+                <ScalarProperty Name="ComponentCharge1" ColumnName="ComponentCharge1" />
+                <ScalarProperty Name="ComponentSingleCarUsageAmount" ColumnName="ComponentSingleCarUsageAmount" />
+                <ScalarProperty Name="ComponentGroupPrincipal" ColumnName="ComponentGroupPrincipal" />
+                <ScalarProperty Name="ComponentCategory" ColumnName="ComponentCategory" />
+                <ScalarProperty Name="ComponentSize" ColumnName="ComponentSize" />
+                <ScalarProperty Name="ComponentType" ColumnName="ComponentType" />
+                <ScalarProperty Name="ComponentSupplierType" ColumnName="ComponentSupplierType" />
+                <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
+                <ScalarProperty Name="ComponentNo" ColumnName="ComponentNo" />
+                <ScalarProperty Name="ComponentWorkPosition" ColumnName="ComponentWorkPosition" />
+                <ScalarProperty Name="ComponentFactroy" ColumnName="ComponentFactroy" />
+                <ScalarProperty Name="ComponentContainerNo" ColumnName="ComponentContainerNo" />
+=======
+>>>>>>> af11af89815b99b9438fba65b9aaf14d88486d0a
                 <ScalarProperty Name="SupplierRecipientName" ColumnName="SupplierRecipientName" />
                 <ScalarProperty Name="SupplierZipCode" ColumnName="SupplierZipCode" />
                 <ScalarProperty Name="SupplierBankNo" ColumnName="SupplierBankNo" />

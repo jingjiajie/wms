@@ -16,7 +16,7 @@ namespace WMS.DataAccess
     {
         public int ID { get; set; }
         public int PutawayTicketID { get; set; }
-        public int ReceiptTicketItemID { get; set; }
+        public Nullable<int> ReceiptTicketItemID { get; set; }
         public string DisplacementPositionNo { get; set; }
         public string TargetStorageLocation { get; set; }
         public string BoardNo { get; set; }

@@ -74,21 +74,18 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             int id = ids[0];
-            /*
-            Console.WriteLine("AAAAAAA:::::" + (from s in this.wmsEntities.PutawayTicketItemView
-                               where s.ID == id
-                               select s).ToString());
-                               */
-            PutawayTicketItemView putawayTicketItem = (from s in this.wmsEntities.PutawayTicketItemView
-                                                   where s.ID == id
-                                                   select s).FirstOrDefault();
-            if (putawayTicketItem == null)
+            WMSEntities wmsEntities = new WMSEntities();
+            PutawayTicketItemView putawayTicketItemView =
+                        (from s in wmsEntities.PutawayTicketItemView
+                        where s.ID == id
+                        select s).FirstOrDefault();
+            if (putawayTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应上架单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            this.putawayTicketItemID = int.Parse(putawayTicketItem.ID.ToString());
-            Utilities.CopyPropertiesToTextBoxes(putawayTicketItem, this);
+            this.putawayTicketItemID = int.Parse(putawayTicketItemView.ID.ToString());
+            Utilities.CopyPropertiesToTextBoxes(putawayTicketItemView, this);
             //Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
         }
 
