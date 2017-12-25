@@ -33,6 +33,11 @@ namespace WMS.UI
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
+            if (id!=0)
+            {
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonDelete.Enabled = false;
+            }
             InitSupplier();
             this.Search();
 
@@ -302,6 +307,16 @@ namespace WMS.UI
             {
                 this.toolStripTextBoxSelect.Enabled = true;
             }
+        }
+
+        private void toolStripTextBoxSelect_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if (e.KeyChar == 13)
+            {
+                this.Search();
+            }
+
         }
     }
 
