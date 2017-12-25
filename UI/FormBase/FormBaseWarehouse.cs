@@ -114,15 +114,7 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j];
                         }
                     }
-                    //for (int i = 0; i < warehouseViews.Length; i++)
-                    //{
-                    //    DataAccess.Warehouse curProject = warehouseViews[i];
-                    //    object[] columns = Utilities.GetValuesByPropertieNames(curProject, (from kn in FormBase.BaseWarehouseMetaData.KeyNames select kn.Key).ToArray());
-                    //    for (int j = 0; j < worksheet.Columns; j++)
-                    //    {
-                    //        worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                    //    }
-                    //}
+
                 }));
             })).Start();
             if (selectedID != -1)
@@ -140,6 +132,9 @@ namespace WMS.UI
             a1.SetAddFinishedCallback((addedID) =>
             {
                 this.Search(addedID);
+                var worksheet = this.reoGridControlWarehouse.Worksheets[0];
+
+                worksheet.SelectionRange = new RangePosition("A1:A1");
             });
             a1.Show();
         }

@@ -170,9 +170,6 @@ namespace WMS.UI
                     }
                 }
 
-
-
-
                 this.reoGridControlComponen.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
