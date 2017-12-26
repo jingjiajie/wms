@@ -317,7 +317,8 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityException();
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
@@ -336,11 +337,7 @@ namespace WMS.UI
                 });
                 formAddSubmissionTicket.Show();
             }
-            catch(EntityException)
-            {
-                MessageBox.Show("请选择一项进行送检", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -355,7 +352,8 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 WMSEntities wmsEntities = new WMSEntities();
@@ -381,10 +379,6 @@ namespace WMS.UI
                     }
                 }
             }
-            catch(EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择收货单");
-            }
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -400,7 +394,8 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
@@ -410,11 +405,7 @@ namespace WMS.UI
                 });
                 formReceiptTicketIems.Show();
             }
-            catch(EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -429,7 +420,8 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
                 WMSEntities wmsEntities = new WMSEntities();
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
@@ -468,11 +460,7 @@ namespace WMS.UI
                 formPutwayTicketModify.Show();
                 */
             }
-            catch(EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -749,7 +737,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    string key = "receiptTicketNo";
+                    string key = "ReceiptTicketNo";
                     string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
                     string value = receiptTicket.No;
                     ToSubmission(key, value);
@@ -786,7 +774,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    string key = "receiptTicketNo";
+                    string key = "ReceiptTicketNo";
                     string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
                     string value = receiptTicket.No;
                     ToPutaway(key, value);

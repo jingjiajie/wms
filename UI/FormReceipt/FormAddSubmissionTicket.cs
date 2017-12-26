@@ -72,6 +72,7 @@ namespace WMS.UI.FormReceipt
                 else
                 {
                     Utilities.CopyPropertiesToTextBoxes(submissionTicket, this);
+                    Utilities.CopyPropertiesToComboBoxes(submissionTicket, this);
                 }
             }
             
@@ -93,6 +94,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
+                Utilities.CopyComboBoxsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName);
                 if (this.formMode == FormMode.ADD)
                 {
                     ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
@@ -124,8 +126,8 @@ namespace WMS.UI.FormReceipt
                             MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                             return;
                         }
+                        CallBack();
                     }).Start();
-                    CallBack();
                     this.Close();
                     return;
                 }
@@ -139,11 +141,34 @@ namespace WMS.UI.FormReceipt
             {
                 foreach(ReceiptTicketItem rti in receiptTicketItem)
                 {
-                    rti.State = "送检中";
-                    SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
-                    submissionTicketItem.ReceiptTicketItemID = rti.ID;
-                    submissionTicketItem.State = "待检";
-                    submissionTicket.SubmissionTicketItem.Add(submissionTicketItem);
+                    SubmissionTicketItem submissionTicketItem1 = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == rti.ID select sti).FirstOrDefault();
+                    if (rti.State == "送检中" && submissionTicketItem1 != null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                        if (stockInfo == null)
+                        {
+                            MessageBox.Show("找不到对应的库存信息");
+                        }
+                        else
+                        {
+                            if (stockInfo.ReceiptAreaAmount != null)
+                            {
+                                int amountReceiptArea;
+                                amountReceiptArea = (int)stockInfo.ReceiptAreaAmount;
+                                stockInfo.ReceiptAreaAmount = 0;
+                                stockInfo.SubmissionAreaAmount = amountReceiptArea;
+                            }
+                        }
+                        rti.State = "送检中";
+                        SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
+                        submissionTicketItem.ReceiptTicketItemID = rti.ID;
+                        submissionTicketItem.State = "待检";
+                        submissionTicket.SubmissionTicketItem.Add(submissionTicketItem);
+                    }
                 }
                 new Thread(() =>
                 {

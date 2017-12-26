@@ -65,7 +65,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="送检单单号", Key="No",Visible=true,Editable=false},
             new KeyName(){Name="收货单单号", Key="ReceiptTicketNo", Visible = true, Editable = false, Save = false},
             new KeyName(){Name="状态", Key="State",Visible=true,Editable=false},
-            new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=true},
+            new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=true, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("有", 1), new ComboBoxItem("无", 0)} },
             new KeyName(){Name="送检员", Key="DeliverSubmissionPerson",Visible=true,Editable=true},
             new KeyName(){Name="质检接收", Key="ReceivePerson",Visible=true,Editable=true},
             new KeyName(){Name="质检员", Key="SubmissionPerson",Visible=true,Editable=true},

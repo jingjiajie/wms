@@ -91,6 +91,12 @@
     <Compile Include="FormLoadingf.Designer.cs">
       <DependentUpon>FormLoadingf.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.Designer.cs">
+      <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormAddPutawayItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -492,6 +498,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLoadingf.resx">
       <DependentUpon>FormLoadingf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.resx">
+      <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormAddPutawayItem.resx">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>

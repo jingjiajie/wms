@@ -279,8 +279,8 @@ namespace WMS.UI.FormReceipt
                     else
                     {
                         putawayTicketItem.State = "已上架";
-                        StockInfo stockInfo = ReceiptUtilities.PutawayTicketItemToStockInfo(putawayTicketItem);
-                        wmsEntities.StockInfo.Add(stockInfo);
+                        //StockInfo stockInfo = ReceiptUtilities.PutawayTicketItemToStockInfo(putawayTicketItem);
+                        //wmsEntities.StockInfo.Add(stockInfo);
                         wmsEntities.SaveChanges();
                         int count = wmsEntities.Database.SqlQuery<int>(
                         "SELECT COUNT(*) FROM PutawayTicketItem " +
@@ -300,6 +300,24 @@ namespace WMS.UI.FormReceipt
                                 "UPDATE PutawayTicket SET State = '部分上架' " +
                                 "WHERE ID = @putawayTicketID",
                                 new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                        }
+                        StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == putawayTicketItem.ReceiptTicketItemID select si).FirstOrDefault();
+                        if (stockInfo != null)
+                        {
+                            if (stockInfo.ReceiptAreaAmount != null)
+                            {
+                                int amount = (int)stockInfo.ReceiptAreaAmount;
+                                if (stockInfo.OverflowAreaAmount != null)
+                                {
+                                    stockInfo.OverflowAreaAmount += amount;
+                                }
+                                else
+                                {
+                                    stockInfo.OverflowAreaAmount = amount;
+                                }
+                                stockInfo.ReceiptAreaAmount = 0;
+                            }
+
                         }
                         wmsEntities.SaveChanges();
                         this.Invoke(new Action(() =>
@@ -349,9 +367,7 @@ namespace WMS.UI.FormReceipt
                             "SELECT COUNT(*) FROM PutawayTicketItem " +
                         "WHERE PutawayTicketID = @putawayTicketID AND State <> '待上架'",
                         new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
-                        wmsEntities.Database.ExecuteSqlCommand(
-                            "DELETE FROM StockInfo WHERE ReceiptTicketItemID=@receiptTicketItem",
-                            new SqlParameter("receiptTicketItem", putawayTicketItem.ReceiptTicketItemID));
+                        
 
                         if (count == 0)
                         {
@@ -366,6 +382,23 @@ namespace WMS.UI.FormReceipt
                                  "UPDATE PutawayTicket SET State = '部分上架' " +
                                  "WHERE ID = @putawayTicketID",
                                  new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                        }
+                    }
+                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == putawayTicketItem.ReceiptTicketItemID select si).FirstOrDefault();
+                    if (stockInfo != null)
+                    {
+                        if (stockInfo.OverflowAreaAmount != null)
+                        {
+                            int amount = (int)stockInfo.OverflowAreaAmount;
+                            if (stockInfo.ReceiptAreaAmount != null)
+                            {
+                                stockInfo.ReceiptAreaAmount += amount;
+                            }
+                            else
+                            {
+                                stockInfo.ReceiptAreaAmount = amount;
+                            }
+                            stockInfo.OverflowAreaAmount = 0;
                         }
                     }
                     wmsEntities.SaveChanges();

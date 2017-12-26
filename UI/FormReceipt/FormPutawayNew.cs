@@ -231,6 +231,8 @@ namespace WMS.UI.FormReceipt
                             wmsEntities.SaveChanges();
                             foreach (ReceiptTicketItem rti in receiptTicketItems)
                             {
+                                
+
                                 PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
                                 putawayTicketItem.ReceiptTicketItemID = rti.ID;
                                 putawayTicketItem.State = "待上架";

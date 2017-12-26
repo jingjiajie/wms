@@ -56,6 +56,8 @@ namespace WMS.UI
             {
                 string name = (from n in ReceiptMetaData.submissionTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
                 this.comboBoxSelect.SelectedItem = name;
+                this.comboBoxSelect.SelectedIndex = this.comboBoxSelect.Items.IndexOf(name);
+                
             }
             this.textBoxSelect.Text = value;
             Search(key, value);
@@ -123,7 +125,7 @@ namespace WMS.UI
                         return;
                     }
                 }
-                
+
                 this.reoGridControl1.Invoke(new Action(() =>
                 {
                     this.toolStripStatusLabel2.Text = "搜索完成";
@@ -141,7 +143,7 @@ namespace WMS.UI
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             if (columns[j] == null)
-                            {  
+                            {
                                 worksheet[n, j] = columns[j];
                             }
                             else
@@ -203,6 +205,119 @@ namespace WMS.UI
                     throw new EntityCommandExecutionException();
                 }
                 int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+                if (submissionTicket == null)
+                {
+                    MessageBox.Show("找不到该送检单");
+                    return;
+                }
+                SubmissionTicketItem[] submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.SubmissionTicketID == submissionTicketID select sti).ToArray();
+                foreach (SubmissionTicketItem sti in submissionTicketItem)
+                {
+                    sti.State = "合格";
+                    ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
+                    if (receiptTicketItem != null)
+                    {
+                        receiptTicketItem.State = "过检";
+                    }
+                }
+                submissionTicket.State = "合格";
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
+                new Thread(() =>
+                {
+                    wmsEntities.SaveChanges();
+                    if (receiptTicket != null)
+                    {
+                        int count = wmsEntities.Database.SqlQuery<int>(
+                        "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                        "WHERE State <> '过检' AND ReceiptTicketID = @receiptTicketID",
+                        new SqlParameter("receiptTicketID", receiptTicket.ID)).FirstOrDefault();
+                        if (count == 0)
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                "UPDATE ReceiptTicket SET State = '过检' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicket.ID));
+                        }
+                        else
+                        {
+                            int count2 = wmsEntities.Database.SqlQuery<int>(
+                                "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                                "WHERE State = '已收货' AND ReceiptTicketID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicket.ID)).FirstOrDefault();
+                            if (count2 == 0)
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand(
+                                    "UPDATE ReceiptTicket SET State = '部分过检' " +
+                                    "WHERE ID = @receiptTicketID",
+                                    new SqlParameter("receiptTicketID", receiptTicket.ID));
+                            }
+                        }
+                        if (MessageBox.Show("是否同时收货?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            foreach (SubmissionTicketItem sti in submissionTicketItem)
+                            {
+                            //sti.State = "合格";
+                                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
+                                if (receiptTicketItem != null)
+                                {
+                                    receiptTicketItem.State = "已收货";
+                                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                                    //StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                                    if (stockInfo != null)
+                                    {
+                                        if (stockInfo.SubmissionAreaAmount != null)
+                                        {
+                                            int amount = (int)stockInfo.SubmissionAreaAmount;
+                                            stockInfo.ReceiptAreaAmount += amount;
+                                            stockInfo.SubmissionAreaAmount = 0;
+                                        }
+                                    }
+                                }
+                            }
+                            wmsEntities.SaveChanges();
+                            int count2 = wmsEntities.Database.SqlQuery<int>(
+                                "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                                "WHERE State <> '已收货' AND ReceiptTicketID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicket.ID)).FirstOrDefault();
+                            if (count2 == 0)
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand(
+                                    "UPDATE ReceiptTicket SET State = '已收货' " +
+                                    "WHERE ID = @receiptTicketID",
+                                    new SqlParameter("receiptTicketID", receiptTicket.ID));
+                            }
+                            else
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand(
+                                    "UPDATE ReceiptTicket SET State = '部分收货' " +
+                                    "WHERE ID = @receiptTicketID",
+                                    new SqlParameter("receiptTicketID", receiptTicket.ID));
+                            }
+                        }
+                    }
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Search(null, null);
+                    }));
+                }).Start();
+            }
+            catch
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+
+            /*
+            WMSEntities wmsEntities = new WMSEntities();
+            var worksheet = this.reoGridControl1.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new EntityCommandExecutionException();
+                }
+                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).Single();
                 if (submissionTicket.State == "合格")
                 {
@@ -225,6 +340,7 @@ namespace WMS.UI
                                 wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='已收货' WHERE ID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
                                 wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='已收货' WHERE ReceiptTicketID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
                             }
+                            
                         }
                     }
                 }
@@ -240,12 +356,141 @@ namespace WMS.UI
                 return;
             }
             this.Search(null, null);
+            */
         }
 
         private void buttonNoPass_Click(object sender, EventArgs e)
         {
             WMSEntities wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControl1.Worksheets[0];
+
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new EntityCommandExecutionException();
+                }
+                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+                if (submissionTicket == null)
+                {
+                    MessageBox.Show("找不到该送检单");
+                    return;
+                }
+                SubmissionTicketItem[] submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.SubmissionTicketID == submissionTicketID select sti).ToArray();
+                foreach (SubmissionTicketItem sti in submissionTicketItem)
+                {
+                    sti.State = "不合格";
+                    ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
+                    if (receiptTicketItem != null)
+                    {
+                        receiptTicketItem.State = "未过检";
+                    }
+                }
+                submissionTicket.State = "不合格";
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
+                new Thread(() =>
+                {
+                    wmsEntities.SaveChanges();
+                    if (receiptTicket != null)
+                    {
+                        int count = wmsEntities.Database.SqlQuery<int>(
+                        "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                        "WHERE State <> '未过检' AND ReceiptTicketID = @receiptTicketID",
+                        new SqlParameter("receiptTicketID", receiptTicket.ID)).FirstOrDefault();
+                        if (count == 0)
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                "UPDATE ReceiptTicket SET State = '未过检' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicket.ID));
+                        }
+                        else
+                        {
+                            int count2 = wmsEntities.Database.SqlQuery<int>(
+                                "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                                "WHERE State = '已收货' AND ReceiptTicketID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicket.ID)).FirstOrDefault();
+                            if (count2 == 0)
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand(
+                                    "UPDATE ReceiptTicket SET State = '部分过检' " +
+                                    "WHERE ID = @receiptTicketID",
+                                    new SqlParameter("receiptTicketID", receiptTicket.ID));
+                            }
+                        }
+                        if (MessageBox.Show("是否同时拒收?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            
+                            foreach (SubmissionTicketItem sti in submissionTicketItem)
+                            {
+                                //sti.State = "合格";
+                                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
+                                if (receiptTicketItem != null)
+                                {
+                                    receiptTicketItem.State = "拒收";
+                                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                                    //StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                                    if (stockInfo != null)
+                                    {
+                                        if (stockInfo.SubmissionAreaAmount != null)
+                                        {
+                                            int amount = (int)stockInfo.SubmissionAreaAmount;
+                                            stockInfo.ReceiptAreaAmount += amount;
+                                            stockInfo.SubmissionAreaAmount = 0;
+                                        }
+                                    }
+                                }
+
+                            }
+                            wmsEntities.SaveChanges();
+                            int count2 = wmsEntities.Database.SqlQuery<int>(
+                                "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                                "WHERE State <> '拒收' AND ReceiptTicketID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicket.ID)).FirstOrDefault();
+                            if (count2 == 0)
+                            {
+                                wmsEntities.Database.ExecuteSqlCommand(
+                                    "UPDATE ReceiptTicket SET State = '拒收' " +
+                                    "WHERE ID = @receiptTicketID",
+                                    new SqlParameter("receiptTicketID", receiptTicket.ID));
+                            }
+                            else
+                            {
+                                int count3 = wmsEntities.Database.SqlQuery<int>(
+                                "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                                "WHERE State = '已收货' AND ReceiptTicketID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicket.ID)).FirstOrDefault();
+                                if (count3 != 0)
+                                {
+                                    wmsEntities.Database.ExecuteSqlCommand(
+                                    "UPDATE ReceiptTicket SET State = '部分收货' " +
+                                    "WHERE ID = @receiptTicketID",
+                                    new SqlParameter("receiptTicketID", receiptTicket.ID));
+                                }
+                                /*
+                                wmsEntities.Database.ExecuteSqlCommand(
+                                    "UPDATE ReceiptTicket SET State = '部分收货' " +
+                                    "WHERE ID = @receiptTicketID",
+                                    new SqlParameter("receiptTicketID", receiptTicket.ID));
+                                    */
+                            }
+                        }
+                    }
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Search(null, null);
+                    }));
+                }).Start();
+            }
+            catch
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            /*
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -262,7 +507,7 @@ namespace WMS.UI
                     wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='拒收' WHERE ReceiptTicketID=@receiptTicket", new SqlParameter("receiptTicket", submissionTicket.ReceiptTicketID));
                 }
             }
-            catch(EntityCommandExecutionException)
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -273,6 +518,7 @@ namespace WMS.UI
                 return;
             }
             this.Search(null, null);
+            */
         }
 
         private void buttonItem_Click(object sender, EventArgs e)
@@ -293,7 +539,7 @@ namespace WMS.UI
                 }));
                 formSubmissionItem.Show();
             }
-            catch(EntityCommandExecutionException)
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -331,7 +577,7 @@ namespace WMS.UI
                 formReceiptArrivalCheck.Show();
                 */
             }
-            catch(EntityCommandExecutionException)
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
