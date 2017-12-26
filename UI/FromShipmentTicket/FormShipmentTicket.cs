@@ -304,5 +304,38 @@ namespace WMS.UI
                 this.Search();
             }
         }
+
+        private void toolStripButtonToJobTicket_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行操作","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int id = ids[0];
+            new Thread(()=>
+            {
+                try
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    ShipmentTicket shipmentTicket = (from s in wmsEntities.ShipmentTicket
+                                                     where s.ID == id
+                                                     select s).FirstOrDefault();
+                    if (shipmentTicket == null)
+                    {
+                        MessageBox.Show("发货单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.toJobTicketCallback(shipmentTicket.No);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }).Start();
+
+        }
     }
 }

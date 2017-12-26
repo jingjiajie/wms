@@ -330,6 +330,7 @@ namespace WMS.UI
                         formJobTicket.FormBorderStyle = FormBorderStyle.None;//没有标题栏
                         this.panelRight.Controls.Add(formJobTicket);
                         formJobTicket.Show();
+                        this.SetTreeViewSelectedNodeByText("作业单管理");
                     }));
                 });
                 formShipmentTicket.TopLevel = false;
@@ -421,6 +422,37 @@ namespace WMS.UI
             {
                 e.Cancel = true;
             }
+        }
+
+        private void SetTreeViewSelectedNodeByText(string text)
+        {
+            TreeNode node = this.FindTreeNodeByText(this.treeViewLeft.Nodes,text);
+            if(node == null)
+            {
+                throw new Exception("树形框中不包含节点：" + text);
+            }
+            this.treeViewLeft.SelectedNode = node;
+        }
+
+        private TreeNode FindTreeNodeByText(TreeNodeCollection nodes,string text)
+        {
+            if(nodes.Count == 0)
+            {
+                return null;
+            }
+            foreach (TreeNode curNode in nodes)
+            {
+                if(curNode.Text == text)
+                {
+                    return curNode;
+                }
+                TreeNode foundNode = FindTreeNodeByText(curNode.Nodes,text);
+                if(foundNode != null)
+                {
+                    return foundNode;
+                }
+            }
+            return null;
         }
     }
 }
