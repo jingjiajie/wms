@@ -33,7 +33,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
+            this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripTextBoxSelect = new System.Windows.Forms.ToolStripTextBox();
@@ -43,7 +43,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -51,6 +51,7 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -95,43 +96,46 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1094, 459);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
-            // reoGridControlUser
+            // toolStripTop
             // 
-            this.reoGridControlUser.BackColor = System.Drawing.Color.White;
-            this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(3, 33);
-            this.reoGridControlUser.Name = "reoGridControlUser";
-            this.reoGridControlUser.Readonly = true;
-            this.reoGridControlUser.RowHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Script = null;
-            this.reoGridControlUser.SheetTabContextMenuStrip = null;
-            this.reoGridControlUser.SheetTabNewButtonVisible = true;
-            this.reoGridControlUser.SheetTabVisible = true;
-            this.reoGridControlUser.SheetTabWidth = 60;
-            this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1088, 398);
-            this.reoGridControlUser.TabIndex = 5;
-            this.reoGridControlUser.Text = "reoGridControl1";
+            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabelSelect,
+            this.toolStripComboBoxSelect,
+            this.toolStripTextBoxSelect,
+            this.toolStripButtonSelect,
+            this.toolStripSeparator1,
+            this.toolStripButtonItem,
+            this.toolStripSeparator3,
+            this.toolStripButtonAlter,
+            this.toolStripButtonDelete});
+            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
+            this.toolStripTop.Name = "toolStripTop";
+            this.toolStripTop.Size = new System.Drawing.Size(1094, 30);
+            this.toolStripTop.TabIndex = 6;
+            this.toolStripTop.Text = "toolStrip1";
             // 
             // toolStripLabelSelect
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 27);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // toolStripComboBoxSelect
             // 
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(150, 28);
+            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(150, 30);
             this.toolStripComboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelect_SelectedIndexChanged_1);
             // 
             // toolStripTextBoxSelect
             // 
             this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(200, 28);
+            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(200, 30);
             // 
             // toolStripButtonSelect
             // 
@@ -154,7 +158,7 @@
             this.toolStripButtonItem.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonItem.Name = "toolStripButtonItem";
-            this.toolStripButtonItem.Size = new System.Drawing.Size(93, 25);
+            this.toolStripButtonItem.Size = new System.Drawing.Size(93, 27);
             this.toolStripButtonItem.Text = "查看详细";
             this.toolStripButtonItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.toolStripButtonItem.Click += new System.EventHandler(this.toolStripButtonItem_Click);
@@ -170,7 +174,7 @@
             this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(63, 25);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(63, 27);
             this.toolStripButtonAlter.Text = "修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -179,30 +183,29 @@
             this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 25);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 27);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
-            // toolStripTop
+            // reoGridControlUser
             // 
-            this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabelSelect,
-            this.toolStripComboBoxSelect,
-            this.toolStripTextBoxSelect,
-            this.toolStripButtonSelect,
-            this.toolStripSeparator1,
-            this.toolStripButtonItem,
-            this.toolStripSeparator3,
-            this.toolStripButtonAlter,
-            this.toolStripButtonDelete});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
-            this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1094, 30);
-            this.toolStripTop.TabIndex = 6;
-            this.toolStripTop.Text = "toolStrip1";
+            this.reoGridControlUser.BackColor = System.Drawing.Color.White;
+            this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Location = new System.Drawing.Point(3, 33);
+            this.reoGridControlUser.Name = "reoGridControlUser";
+            this.reoGridControlUser.Readonly = true;
+            this.reoGridControlUser.RowHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Script = null;
+            this.reoGridControlUser.SheetTabContextMenuStrip = null;
+            this.reoGridControlUser.SheetTabNewButtonVisible = true;
+            this.reoGridControlUser.SheetTabVisible = true;
+            this.reoGridControlUser.SheetTabWidth = 60;
+            this.reoGridControlUser.ShowScrollEndSpacing = true;
+            this.reoGridControlUser.Size = new System.Drawing.Size(1088, 398);
+            this.reoGridControlUser.TabIndex = 5;
+            this.reoGridControlUser.Text = "reoGridControl1";
             // 
             // FormReceiptShelves
             // 

@@ -71,6 +71,8 @@
             // toolStripTop
             // 
             this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -84,21 +86,19 @@
             // 
             // ButtonReceipt
             // 
-            this.ButtonReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.ButtonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("ButtonReceipt.Image")));
             this.ButtonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonReceipt.Name = "ButtonReceipt";
-            this.ButtonReceipt.Size = new System.Drawing.Size(43, 22);
+            this.ButtonReceipt.Size = new System.Drawing.Size(63, 22);
             this.ButtonReceipt.Text = "收货";
             this.ButtonReceipt.Click += new System.EventHandler(this.ButtonReceipt_Click);
             // 
             // buttonNoReceipt
             // 
-            this.buttonNoReceipt.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.buttonNoReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonNoReceipt.Image")));
             this.buttonNoReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonNoReceipt.Name = "buttonNoReceipt";
-            this.buttonNoReceipt.Size = new System.Drawing.Size(43, 22);
+            this.buttonNoReceipt.Size = new System.Drawing.Size(63, 22);
             this.buttonNoReceipt.Text = "拒收";
             this.buttonNoReceipt.Click += new System.EventHandler(this.buttonNoReceipt_Click);
             // 
@@ -132,7 +132,7 @@
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlUser, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
@@ -147,8 +147,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(836, 559);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormReceiptItem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormReceiptItem";
             this.Load += new System.EventHandler(this.FormReceiptItem_Load);
             this.statusStrip1.ResumeLayout(false);

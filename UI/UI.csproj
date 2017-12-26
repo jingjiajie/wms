@@ -716,5 +716,11 @@
   <ItemGroup>
     <None Include="icon\psd\bottonB2-q.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB4-q.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB4-s.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -203,6 +203,26 @@ namespace WMS.UI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap bottonB4_q {
+            get {
+                object obj = ResourceManager.GetObject("bottonB4-q", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap bottonB4_s {
+            get {
+                object obj = ResourceManager.GetObject("bottonB4-s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap bottonW_q {
             get {
                 object obj = ResourceManager.GetObject("bottonW-q", resourceCulture);
