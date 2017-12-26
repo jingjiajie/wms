@@ -126,29 +126,6 @@ namespace WMS.UI
             return node;
         }
 
-
-        private void treeViewLeft_BeforeSelect(object sender, TreeViewCancelEventArgs e)
-        {
-            if (e.Node != null)
-            {
-                if (e.Node.ForeColor == SystemColors.Control)
-                {
-                    e.Cancel = true;  //不让选中禁用节点
-                }
-            }
-        }
-        private void treeViewLeft_BeforeCheck(object sender, TreeViewCancelEventArgs e)
-        {
-            if (e.Node != null)
-            {
-                if (e.Node.ForeColor == SystemColors.Control)
-                {
-                    e.Cancel = true; //不让选中禁用节点
-
-                }
-            }
-        }
-
         protected override CreateParams CreateParams
         {
             get
@@ -431,7 +408,9 @@ namespace WMS.UI
             {
                 throw new Exception("树形框中不包含节点：" + text);
             }
+            this.treeViewLeft.AfterSelect -= this.treeViewLeft_AfterSelect;
             this.treeViewLeft.SelectedNode = node;
+            this.treeViewLeft.AfterSelect += this.treeViewLeft_AfterSelect;
         }
 
         private TreeNode FindTreeNodeByText(TreeNodeCollection nodes,string text)

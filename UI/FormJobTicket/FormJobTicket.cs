@@ -20,6 +20,13 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
 
+        private Action<string> toPutOutStorageTicketCallback = null;
+
+        public void SetToPutOutStorageTicketCallback(Action<string> callback)
+        {
+            this.toPutOutStorageTicketCallback = callback;
+        }
+
         public FormJobTicket(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
@@ -214,6 +221,18 @@ namespace WMS.UI
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (ids.Length != 1)
             {
+                MessageBox.Show("请选择一项进行操作", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int jobTicketID = ids[0];
+
+            FormPutOutStorageTicketNew form = new FormPutOutStorageTicketNew(jobTicketID, this.userID, this.projectID, this.warehouseID);
+            form.SetToPutOutStorageTicketCallback(this.toPutOutStorageTicketCallback);
+            form.Show();
+            /*
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if (ids.Length != 1)
+            {
                 MessageBox.Show("请选择一项进行操作","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -265,7 +284,7 @@ namespace WMS.UI
                 }
                 this.Invoke(new Action(this.Search));
                 MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
+            })).Start();*/
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
