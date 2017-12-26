@@ -9,7 +9,6 @@ using System.Threading;
 
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
-using WMS.UI.FormDelivery;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
 
@@ -275,6 +274,7 @@ namespace WMS.UI
                     FormSubmissionManage s = new FormSubmissionManage();
                     s.TopLevel = false;
                     s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    this.panelRight.Controls.Clear();//Çå¿Õ
                     this.panelRight.Controls.Add(s);
                     s.Show();
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
