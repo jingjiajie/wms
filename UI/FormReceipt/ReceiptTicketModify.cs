@@ -235,8 +235,15 @@ namespace WMS.UI.FormReceipt
 
         private void button1_Click(object sender, EventArgs e)
         {
+            TextBox textBox = this.Controls.Find("textBoxSupplierName", true)[0] as TextBox;
+            if (textBox.Text == "")
+            {
+                MessageBox.Show("请选择供货商!");
+                return;
+            }
             if (this.formMode == FormMode.ALTER)
             {
+
                 ReceiptTicket receiptTicket = (from rt in this.wmsEntities.ReceiptTicket where rt.ID == this.ID select rt).Single();
                 string errorInfo;
                 if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicket, ReceiptMetaData.receiptNameKeys, out errorInfo) == false)

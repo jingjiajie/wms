@@ -28,12 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.OK = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.OK = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
@@ -101,6 +106,7 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(825, 196);
             this.tableLayoutPanel2.TabIndex = 13;
             // 
+
             // OK
             // 
             this.OK.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
@@ -120,6 +126,7 @@
             this.OK.MouseEnter += new System.EventHandler(this.OK_MouseEnter);
             this.OK.MouseLeave += new System.EventHandler(this.OK_MouseLeave);
             // 
+
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -139,6 +146,17 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(825, 65);
             this.tableLayoutPanel3.TabIndex = 14;
+            // 
+            // OK
+            // 
+            this.OK.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OK.Location = new System.Drawing.Point(497, 3);
+            this.OK.Name = "OK";
+            this.OK.Size = new System.Drawing.Size(241, 58);
+            this.OK.TabIndex = 0;
+            this.OK.Text = "OK";
+            this.OK.UseVisualStyleBackColor = true;
+            this.OK.Click += new System.EventHandler(this.OK_Click);
             // 
             // FormReceiptSubmissionNew
             // 

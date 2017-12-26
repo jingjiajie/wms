@@ -355,7 +355,9 @@ namespace WMS.UI
             treeNode12,
             treeNode14,
             treeNode16});
+
             this.treeViewLeft.SelectedImageIndex = 0;
+
             this.treeViewLeft.Size = new System.Drawing.Size(296, 634);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);

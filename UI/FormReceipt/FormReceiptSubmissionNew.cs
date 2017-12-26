@@ -228,6 +228,7 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.WarehouseID = receiptTicket.Warehouse;
                     submissionTicket.State = "待检";
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
+                    
                     new Thread(() =>
                     {
                         try
@@ -238,11 +239,26 @@ namespace WMS.UI.FormReceipt
                             foreach(ReceiptTicketItem rti in receiptTicketItems)
                             {
                                 SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
-                                submissionTicketItem.ReceiptTicketItemID = rti.ID;
-                                submissionTicketItem.State = "待检";
-                                rti.State = "送检中";
-                                submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
-                                wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
+                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                if (stockInfo == null)
+                                {
+                                    MessageBox.Show("找不到对应的库存信息");
+                                }
+                                else
+                                {
+                                    if (stockInfo.ReceiptAreaAmount != null)
+                                    {
+                                        int amountReceiptArea;
+                                        amountReceiptArea = (int)stockInfo.ReceiptAreaAmount;
+                                        stockInfo.ReceiptAreaAmount = 0;
+                                        stockInfo.SubmissionAreaAmount = amountReceiptArea;
+                                    }
+                                    submissionTicketItem.ReceiptTicketItemID = rti.ID;
+                                    submissionTicketItem.State = "待检";
+                                    rti.State = "送检中";
+                                    submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
+                                    wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
+                                }
                             }
                             wmsEntities.SaveChanges();
                             int count = wmsEntities.Database.SqlQuery<int>(
