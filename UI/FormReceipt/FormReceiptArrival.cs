@@ -749,7 +749,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    string key = "receiptTicketNo";
+                    string key = "ReceiptTicketNo";
                     string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
                     string value = receiptTicket.No;
                     ToSubmission(key, value);
@@ -786,7 +786,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    string key = "receiptTicketNo";
+                    string key = "ReceiptTicketNo";
                     string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
                     string value = receiptTicket.No;
                     ToPutaway(key, value);
