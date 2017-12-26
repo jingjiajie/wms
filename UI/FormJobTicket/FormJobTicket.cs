@@ -23,6 +23,7 @@ namespace WMS.UI
         public FormJobTicket(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
+            InitComponents();
             this.userID = userID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
@@ -40,14 +41,11 @@ namespace WMS.UI
 
         private void FormJobTicket_Load(object sender, EventArgs e)
         {
-            InitComponents();
             this.Search();
         }
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             string[] visibleColumnNames = (from kn in JobTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
@@ -68,6 +66,26 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = JobTicketViewMetaData.KeyNames[i].Visible;
             }
             worksheet.Columns = JobTicketViewMetaData.KeyNames.Length; //限制表的长度
+        }
+
+        public void SetSearchCondition(string key,string value)
+        {
+            string name = (from kn in JobTicketViewMetaData.KeyNames
+                           where kn.Key == key
+                           select kn.Name).FirstOrDefault();
+            if(name == null)
+            {
+                return;
+            }
+            for (int i = 0; i < this.comboBoxSearchCondition.Items.Count; i++) 
+            {
+                var item = comboBoxSearchCondition.Items[i];
+                if (item.ToString() == name)
+                {
+                    this.comboBoxSearchCondition.SelectedIndex = i;
+                }
+            }
+            this.textBoxSearchValue.Text = value;
         }
 
         private void Search()

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Threading;
+using unvell.ReoGrid;
 
 namespace WMS.UI
 {
@@ -15,11 +16,24 @@ namespace WMS.UI
     {
         private PagerWidget<ShipmentTicketItemView> pagerWidget = null;
         private int shipmentTicketID = -1;
+        private int userID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
 
-        public FormJobTicketNew(int shipmentTicketID)
+        private Action<string> toJobTicketCallback = null;
+
+        public void SetToJobTicketCallback(Action<string> callback)
+        {
+            this.toJobTicketCallback = callback;
+        }
+
+        public FormJobTicketNew(int shipmentTicketID,int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
             this.shipmentTicketID = shipmentTicketID;
+            this.userID = userID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         private void FormJobTicketNew_Load(object sender, EventArgs e)
@@ -27,12 +41,16 @@ namespace WMS.UI
             this.InitComponents();
             Utilities.CreateEditPanel(this.tableLayoutEditPanel, JobTicketViewMetaData.KeyNames);
             ShipmentTicket shipmentTicket = null;
+            User user = null;
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 shipmentTicket = (from s in wmsEntities.ShipmentTicket
                                   where s.ID == shipmentTicketID
                                   select s).FirstOrDefault();
+                user = (from u in wmsEntities.User
+                        where u.ID == this.userID
+                        select u).FirstOrDefault();
             }
             catch
             {
@@ -46,6 +64,13 @@ namespace WMS.UI
                 this.Close();
                 return;
             }
+            if(user == null)
+            {
+                MessageBox.Show("登录失效，操作失败","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            this.Controls.Find("textBoxCreateUserUsername",true)[0].Text = user.Username;
+            this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
+            this.Controls.Find("textBoxShipmentTicketNo",true)[0].Text = shipmentTicket.No;
             this.Search();
         }
 
@@ -84,6 +109,11 @@ namespace WMS.UI
                     return;
                 }
                 shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_WAITING_PUTOUT;
+                newJobTicket.ShipmentTicketID = shipmentTicket.ID;
+                newJobTicket.ProjectID = this.projectID;
+                newJobTicket.WarehouseID = this.warehouseID;
+                newJobTicket.CreateUserID = this.userID;
+                newJobTicket.CreateTime = DateTime.Now;
 
                 foreach (var shipmentTicketItem in shipmentTicket.ShipmentTicketItem)
                 {
@@ -95,7 +125,23 @@ namespace WMS.UI
                     newJobTicket.JobTicketItem.Add(jobTicketItem);
                 }
                 wmsEntities.SaveChanges();
-                MessageBox.Show("生成作业单成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                newJobTicket.JobTicketNo = Utilities.GenerateNo("Z", newJobTicket.ID);
+                wmsEntities.SaveChanges();
+                if(MessageBox.Show("生成作业单成功，是否查看作业单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    if(this.toJobTicketCallback == null)
+                    {
+                        throw new Exception("ToJobTicketCallback不允许为空！");
+                    }
+                    this.toJobTicketCallback(shipmentTicket.No);
+                }
+                if (!this.IsDisposed)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Close();
+                    }));
+                }
             }).Start();
         }
     }

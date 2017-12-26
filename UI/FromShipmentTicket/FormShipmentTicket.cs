@@ -21,6 +21,13 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
 
+        private Action<string> toJobTicketCallback = null;
+
+        public void SetToJobTicketCallback(Action<string> callback)
+        {
+            this.toJobTicketCallback = callback;
+        }
+
         public FormShipmentTicket(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
@@ -248,22 +255,9 @@ namespace WMS.UI
             }
             int shipmentTicketID = ids[0];
 
-            FormJobTicketNew form = new FormJobTicketNew(shipmentTicketID);
+            FormJobTicketNew form = new FormJobTicketNew(shipmentTicketID,this.userID,this.projectID,this.warehouseID);
+            form.SetToJobTicketCallback(this.toJobTicketCallback);
             form.Show();
-
-            //JobTicket jobTicket = new JobTicket();
-            //jobTicket.JobTicketNo = "";
-            //jobTicket.ProjectID = this.projectID;
-            //jobTicket.WarehouseID = this.warehouseID;
-            //jobTicket.JobType = "发货";
-            //jobTicket.ShipmentTicketID = shipmentTicket.ID;
-            //jobTicket.ScheduledAmount = shipmentTicket.ScheduledAmount;
-            //jobTicket.State = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
-            //jobTicket.PrintedTimes = 0;
-            //jobTicket.CreateUserID = this.userID;
-            //jobTicket.CreateTime = DateTime.Now;
-            //jobTicket.LastUpdateUserID = this.userID;
-            //jobTicket.LastUpdateTime = DateTime.Now;
         }
 
         private int[] GetSelectedIDs()
