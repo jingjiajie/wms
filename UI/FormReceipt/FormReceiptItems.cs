@@ -429,7 +429,7 @@ namespace WMS.UI
 
         private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
 
@@ -446,7 +446,7 @@ namespace WMS.UI
 
         private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
         private void buttonModify_MouseEnter(object sender, EventArgs e)
@@ -461,7 +461,7 @@ namespace WMS.UI
 
         private void buttonModify_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
     }

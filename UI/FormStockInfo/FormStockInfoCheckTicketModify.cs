@@ -412,12 +412,12 @@ namespace WMS.UI
 
         private void buttonfinish_MouseEnter(object sender, EventArgs e)
         {
-            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
         }
 
         private void buttonfinish_MouseLeave(object sender, EventArgs e)
         {
-            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
         }
 
         private void buttonfinish_MouseDown(object sender, MouseEventArgs e)

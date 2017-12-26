@@ -388,5 +388,69 @@ namespace WMS.UI.FormReceipt
                 return;
             }
         }
+
+        private void buttonDelete_MouseEnter(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonDelete_MouseLeave(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonModify_MouseEnter(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonModify_MouseLeave(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
+        private void buttonFInished_MouseEnter(object sender, EventArgs e)
+        {
+            buttonFInished.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonFinish_MouseLeave(object sender, EventArgs e)
+        {
+            buttonFInished.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonFInished_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonFInished.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonCancel_MouseEnter(object sender, EventArgs e)
+        {
+            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_s;
+        }
+
+        private void buttonCancel_MouseLeave(object sender, EventArgs e)
+        {
+            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_q;
+        }
+
+        private void buttonCancel_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+
+
     }
 }

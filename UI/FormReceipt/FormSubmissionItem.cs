@@ -416,5 +416,53 @@ namespace WMS.UI.FormReceipt
             this.Search();
             this.RefreshTextBoxes();
         }
+
+        private void buttonItemPass_MouseEnter(object sender, EventArgs e)
+        {
+            buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonItemPass_MouseLeave(object sender, EventArgs e)
+        {
+            buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonItemPass_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
+
+        private void buttonItemNoPass_MouseEnter(object sender, EventArgs e)
+        {
+            buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonItemNoPass_MouseLeave(object sender, EventArgs e)
+        {
+            buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonItemNoPass_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonModify_MouseEnter(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonModify_MouseLeave(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
     }
 }

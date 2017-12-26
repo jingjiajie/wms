@@ -283,5 +283,22 @@ namespace WMS.UI.FormReceipt
 
             }
         }
+
+
+        private void OK_MouseEnter(object sender, EventArgs e)
+        {
+            OK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void OK_MouseLeave(object sender, EventArgs e)
+        {
+            OK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void OK_MouseDown(object sender, MouseEventArgs e)
+        {
+            OK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
     }
 }
