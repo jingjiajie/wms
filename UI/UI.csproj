@@ -85,6 +85,12 @@
     <Compile Include="FormLoading3.Designer.cs">
       <DependentUpon>FormLoading3.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLoadingf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoadingf.Designer.cs">
+      <DependentUpon>FormLoadingf.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormAddPutawayItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -483,6 +489,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLoading3.resx">
       <DependentUpon>FormLoading3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoadingf.resx">
+      <DependentUpon>FormLoadingf.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormAddPutawayItem.resx">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
