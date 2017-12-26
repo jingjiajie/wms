@@ -39,12 +39,12 @@
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.buttonFinish = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonUnfinish = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -199,15 +199,6 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(337, 188);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.reoGridControlMain);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 203);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1034, 398);
-            this.panel2.TabIndex = 1;
-            // 
             // buttonAdd
             // 
             this.buttonAdd.BackColor = System.Drawing.Color.White;
@@ -293,7 +284,7 @@
             // buttonUnfinish
             // 
             this.buttonUnfinish.BackColor = System.Drawing.Color.White;
-            this.buttonUnfinish.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonUnfinish.BackgroundImage")));
+            this.buttonUnfinish.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB4_q;
             this.buttonUnfinish.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonUnfinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonUnfinish.FlatAppearance.BorderSize = 0;
@@ -308,6 +299,15 @@
             this.buttonUnfinish.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonUnfinish_MouseDown);
             this.buttonUnfinish.MouseEnter += new System.EventHandler(this.buttonUnfinish_MouseEnter);
             this.buttonUnfinish.MouseLeave += new System.EventHandler(this.buttonUnfinish_MouseLeave);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.reoGridControlMain);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 203);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1034, 398);
+            this.panel2.TabIndex = 1;
             // 
             // FormJobTicketItem
             // 

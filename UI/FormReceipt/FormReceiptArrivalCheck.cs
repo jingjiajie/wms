@@ -378,5 +378,10 @@ namespace WMS.UI.FormReceipt
                 return;
             }
         }
+
+        private void buttonAdd_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
