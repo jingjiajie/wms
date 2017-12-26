@@ -187,5 +187,20 @@ namespace WMS.UI.FormReceipt
             }
             CallBack();
         }
+
+        private void buttonOK_MouseEnter(object sender, EventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonOK_MouseLeave(object sender, EventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonOK_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
     }
 }

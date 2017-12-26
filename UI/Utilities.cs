@@ -11,7 +11,7 @@ namespace WMS.UI
 {
     class Utilities
     {
-        public const int PAGE_SIZE = 5;
+        public const int PAGE_SIZE = 50;
 
         public const int WM_SETREDRAW = 0xB;
 
@@ -20,7 +20,7 @@ namespace WMS.UI
 
         public static object[] GetValuesByPropertieNames<T>(T obj, string[] keys)
         {
-            Type objType = obj.GetType();
+            Type objType = typeof(T);
             object[] values = new object[keys.Length];
             for (int i = 0; i < values.Length; i++)
             {
@@ -28,7 +28,7 @@ namespace WMS.UI
                 PropertyInfo propertyInfo = objType.GetProperty(key);
                 if (propertyInfo == null)
                 {
-                    throw new Exception("你给的类型里没有" + key + "这个属性！检查检查你的代码吧。");
+                    throw new Exception("你给的类型"+objType.Name+"里没有" + key + "这个属性！检查检查你的代码吧。");
                 }
                 values[i] = propertyInfo.GetValue(obj, null);
             }

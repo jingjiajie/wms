@@ -105,7 +105,7 @@
             // 
             // buttonClosing
             // 
-            this.buttonClosing.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.buttonClosing.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB4_q;
             this.buttonClosing.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonClosing.FlatAppearance.BorderSize = 0;
             this.buttonClosing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

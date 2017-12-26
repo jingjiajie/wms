@@ -157,7 +157,10 @@
             // buttonDelete
             // 
             this.buttonDelete.BackColor = System.Drawing.Color.White;
+            this.buttonDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDelete.BackgroundImage")));
+            this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonDelete.FlatAppearance.BorderSize = 0;
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -169,11 +172,17 @@
             this.buttonDelete.Text = "删除项目";
             this.buttonDelete.UseVisualStyleBackColor = false;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            this.buttonDelete.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonDelete_MouseDown);
+            this.buttonDelete.MouseEnter += new System.EventHandler(this.buttonDelete_MouseEnter);
+            this.buttonDelete.MouseLeave += new System.EventHandler(this.buttonDelete_MouseLeave);
             // 
             // buttonAlter
             // 
             this.buttonAlter.BackColor = System.Drawing.Color.White;
+            this.buttonAlter.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAlter.BackgroundImage")));
+            this.buttonAlter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonAlter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAlter.FlatAppearance.BorderSize = 0;
             this.buttonAlter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
             this.buttonAlter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -185,11 +194,17 @@
             this.buttonAlter.Text = "修改项目";
             this.buttonAlter.UseVisualStyleBackColor = false;
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
+            this.buttonAlter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAlter_MouseDown);
+            this.buttonAlter.MouseEnter += new System.EventHandler(this.buttonAlter_MouseEnter);
+            this.buttonAlter.MouseLeave += new System.EventHandler(this.buttonAlter_MouseLeave);
             // 
             // buttonAdd
             // 
             this.buttonAdd.BackColor = System.Drawing.Color.White;
+            this.buttonAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAdd.BackgroundImage")));
+            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAdd.FlatAppearance.BorderSize = 0;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -201,6 +216,9 @@
             this.buttonAdd.Text = "添加项目";
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            this.buttonAdd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAdd_MouseDown);
+            this.buttonAdd.MouseEnter += new System.EventHandler(this.buttonAdd_MouseEnter);
+            this.buttonAdd.MouseLeave += new System.EventHandler(this.buttonAdd_MouseLeave);
             // 
             // panel2
             // 
@@ -267,6 +285,8 @@
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("黑体", 10F);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormShipmentTicketItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "查看发货单条目";

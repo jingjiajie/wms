@@ -105,7 +105,7 @@
             // buttonfinish
             // 
             this.buttonfinish.BackColor = System.Drawing.Color.White;
-            this.buttonfinish.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonfinish.BackgroundImage")));
+            this.buttonfinish.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
             this.buttonfinish.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonfinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonfinish.FlatAppearance.BorderSize = 0;
@@ -180,7 +180,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.buttonCancel.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB4_q;
             this.buttonCancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonCancel.FlatAppearance.BorderSize = 0;
@@ -274,6 +274,8 @@
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormStockInfoCheckTicketModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "添加盘点单";

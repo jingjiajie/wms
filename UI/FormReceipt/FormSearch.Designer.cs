@@ -49,7 +49,7 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 39);
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 28);
             this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
@@ -60,7 +60,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 93;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(743, 513);
+            this.reoGridControlMain.Size = new System.Drawing.Size(743, 524);
             this.reoGridControlMain.TabIndex = 14;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -92,8 +92,10 @@
             // toolStrip1
             // 
             this.toolStrip1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.toolStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 10F);
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.toolStrip1.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.comboBoxSearchCondition,
             this.textBoxSearchContition,
@@ -102,7 +104,7 @@
             this.buttonSelect});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(743, 39);
+            this.toolStrip1.Size = new System.Drawing.Size(743, 28);
             this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -130,7 +132,7 @@
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(80, 36);
+            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
@@ -139,7 +141,7 @@
             this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
             this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(114, 36);
+            this.buttonSelect.Size = new System.Drawing.Size(93, 25);
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
@@ -151,7 +153,9 @@
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormSearch";
             this.Text = "FormSearch";
             this.Load += new System.EventHandler(this.FormSearch_Load);

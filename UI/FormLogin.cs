@@ -330,12 +330,12 @@ namespace WMS.UI
 
         private void buttonClosing_MouseEnter(object sender, EventArgs e)
         {
-            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_s;
         }
 
         private void buttonClosing_MouseLeave(object sender, EventArgs e)
         {
-            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+            buttonClosing.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_q;
         }
 
         private void buttonClosing_MouseDown(object sender, MouseEventArgs e)

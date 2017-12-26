@@ -37,8 +37,8 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.textBoxSupplierName = new System.Windows.Forms.ToolStripTextBox();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
-            this.buttonSelect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonSelect = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -116,7 +116,7 @@
             // textBoxSupplierName
             // 
             this.textBoxSupplierName.Name = "textBoxSupplierName";
-            this.textBoxSupplierName.Size = new System.Drawing.Size(135, 39);
+            this.textBoxSupplierName.Size = new System.Drawing.Size(135, 28);
             this.textBoxSupplierName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSupplierName_KeyPress);
             this.textBoxSupplierName.Click += new System.EventHandler(this.textBoxSupplierName_Click);
             // 
@@ -129,20 +129,20 @@
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
-            // buttonSelect
-            // 
-            this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
-            this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(114, 36);
-            this.buttonSelect.Text = "确认选择";
-            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.AutoSize = false;
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
+            // 
+            // buttonSelect
+            // 
+            this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
+            this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSelect.Name = "buttonSelect";
+            this.buttonSelect.Size = new System.Drawing.Size(93, 25);
+            this.buttonSelect.Text = "确认选择";
+            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
             // FormSelectSupplier
             // 
@@ -153,6 +153,8 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormSelectSupplier";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "选择供应商";

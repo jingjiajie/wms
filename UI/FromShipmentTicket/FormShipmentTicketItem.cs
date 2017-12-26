@@ -427,5 +427,52 @@ namespace WMS.UI
             MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
+
+        private void buttonAdd_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAdd_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
+
+        private void buttonDelete_MouseEnter(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonDelete_MouseLeave(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAlter_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAlter_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAlter_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
     }
 }

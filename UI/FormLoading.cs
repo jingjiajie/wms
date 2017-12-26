@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WMS.UI.FormDelivery
+namespace WMS.UI
 {
-    public partial class FormDeliveryOutput : Form
+    public partial class FormLoading : Form
     {
-        public FormDeliveryOutput()
+        public FormLoading()
         {
             InitializeComponent();
         }

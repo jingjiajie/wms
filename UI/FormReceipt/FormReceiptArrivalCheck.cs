@@ -378,5 +378,52 @@ namespace WMS.UI.FormReceipt
                 return;
             }
         }
+
+        private void buttonAdd_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAdd_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
+
+        private void buttonAddItem_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAddItem.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAddItem_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAddItem.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAddItem_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAddItem.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonModify_MouseEnter(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonModify_MouseLeave(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
     }
 }
