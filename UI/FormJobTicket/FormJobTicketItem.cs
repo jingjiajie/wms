@@ -431,5 +431,84 @@ namespace WMS.UI
                 MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();
         }
+
+        private void buttonAdd_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAdd_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+
+
+        private void buttonDelete_MouseEnter(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonDelete_MouseLeave(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+        private void buttonModify_MouseEnter(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonModify_MouseLeave(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+        private void buttonFinish_MouseEnter(object sender, EventArgs e)
+        {
+            buttonFinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonFinish_MouseLeave(object sender, EventArgs e)
+        {
+            buttonFinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonFinish_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonFinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonUnfinish_MouseEnter(object sender, EventArgs e)
+        {
+            buttonUnfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonUnfinish_MouseLeave(object sender, EventArgs e)
+        {
+            buttonUnfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonUnfinish_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonUnfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+        }
+
+
     }
 }

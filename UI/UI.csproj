@@ -692,5 +692,29 @@
   <ItemGroup>
     <None Include="icon\find.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB2-s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB1-q.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB1-s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB3-q.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB3-s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonW-q.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonW-s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon\psd\bottonB2-q.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

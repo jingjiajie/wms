@@ -22,6 +22,8 @@ namespace WMS.UI.FormReceipt
         private int userID;
         private int warehouseID;
         private int projectID;
+        private string key;
+        private string value;
 
         public FormReceiptShelves()
         {
@@ -34,6 +36,8 @@ namespace WMS.UI.FormReceipt
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.value = null;
+            this.key = null;
         }
 
         public FormReceiptShelves(FormMode formMode, int receiptTicketID)
@@ -43,10 +47,26 @@ namespace WMS.UI.FormReceipt
             this.receiptTicketID = receiptTicketID;
         }
 
+        public FormReceiptShelves(int projectID, int warehouseID, int userID, string key, string value)
+        {
+            InitializeComponent();
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
+            this.key = key;
+            this.value = value;
+        }
+
         private void FormReceiptShelves_Load(object sender, EventArgs e)
         {
             InitComponents();
-            Search(null, null);
+            if (key != null)
+            {
+                string name = (from n in ReceiptMetaData.putawayTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
+                this.toolStripComboBoxSelect.SelectedItem = name;
+                this.toolStripTextBoxSelect.Text = value;
+            }
+            Search(key, value);
         }
 
         private void InitComponents()

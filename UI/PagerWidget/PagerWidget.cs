@@ -114,7 +114,7 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].Text = this.keyNames[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = this.keyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoViewMetaData.KeyNames.Length; //限制表的长度
+            worksheet.Columns = this.keyNames.Length; //限制表的长度
         }
 
         private Condition MakeCondition(string key, string value)

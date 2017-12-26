@@ -164,5 +164,20 @@ namespace WMS.UI.FormBase
                 this.Close();
             }
         }
+
+        private void buttonModify_MouseEnter(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonModify_MouseLeave(object sender, EventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonModify_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
     }
 }

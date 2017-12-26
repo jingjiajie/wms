@@ -269,36 +269,47 @@ namespace WMS.UI.FormReceipt
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
-                int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM PutawayTicketItem WHERE PutawayTicketID = @putawayTicketID AND State <> '已上架'", new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
-                if (putawayTicketItem != null)
+                new Thread(() => 
                 {
-                    putawayTicketItem.State = "已上架";
-                    StockInfo stockInfo = ReceiptUtilities.PutawayTicketItemToStockInfo(putawayTicketItem);
-                    wmsEntities.StockInfo.Add(stockInfo);
-                    if (count == 0)
+                    if (putawayTicketItem == null)
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("UPDATE PutawayTicket SET State = '已上架' " +
-                            "WHERE ID = @putawayTicketID",
-                            new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                        MessageBox.Show("此上架单条目不存在");
+                        return;
                     }
                     else
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("UPDATE PutawayTicket SET State = '部分上架' " +
-                            "WHERE ID = @putawayTicketID",
-                            new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
-                    }
-                    new Thread(() =>
-                    {
+                        putawayTicketItem.State = "已上架";
+                        StockInfo stockInfo = ReceiptUtilities.PutawayTicketItemToStockInfo(putawayTicketItem);
+                        wmsEntities.StockInfo.Add(stockInfo);
                         wmsEntities.SaveChanges();
-                        MessageBox.Show("成功");
+                        int count = wmsEntities.Database.SqlQuery<int>(
+                        "SELECT COUNT(*) FROM PutawayTicketItem " +
+                        "WHERE PutawayTicketID = @putawayTicketID AND State <> '已上架'",
+                        new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
+
+                        if (count == 0)
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                "UPDATE PutawayTicket SET State = '已上架' " +
+                                "WHERE ID = @putawayTicketID",
+                                new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                        }
+                        else
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                "UPDATE PutawayTicket SET State = '部分上架' " +
+                                "WHERE ID = @putawayTicketID",
+                                new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                        }
+                        wmsEntities.SaveChanges();
                         this.Invoke(new Action(() =>
                         {
                             this.Search();
                             CallBack();
 
                         }));
-                    }).Start();
-                }
+                    }
+                }).Start();
             }
             catch(EntityCommandExecutionException)
             {
@@ -323,50 +334,48 @@ namespace WMS.UI.FormReceipt
                 }
                 int putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
-                int count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM PutawayTicketItem " +
-                    "WHERE PutawayTicketID = @putawayTicketID AND State <> '待上架'",
-                    new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
-                if (putawayTicketItem != null)
+                new Thread(() =>
                 {
-                    if (putawayTicketItem.State != "已上架")
+                    if (putawayTicketItem == null)
                     {
-                        MessageBox.Show("该上架单项目未上架");
-                        this.Search();
+                        MessageBox.Show("找不到该上架单，可能已被删除");
+                        return;
                     }
                     else
                     {
                         putawayTicketItem.State = "待上架";
+                        wmsEntities.SaveChanges();
+                        int count = wmsEntities.Database.SqlQuery<int>(
+                            "SELECT COUNT(*) FROM PutawayTicketItem " +
+                        "WHERE PutawayTicketID = @putawayTicketID AND State <> '待上架'",
+                        new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
                         wmsEntities.Database.ExecuteSqlCommand(
                             "DELETE FROM StockInfo WHERE ReceiptTicketItemID=@receiptTicketItem",
                             new SqlParameter("receiptTicketItem", putawayTicketItem.ReceiptTicketItemID));
-                        // StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.PutawayTicketItemID == putawayTicketItem.ID select si).FirstOrDefault();
 
-                    }
-                    if (count == 0)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand(
-                            "UPDATE PutawayTicket SET State = '待上架' " +
-                            "WHERE ID = @putawayTicketID",
-                            new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
-                    }
-                    else
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand(
-                             "UPDATE PutawayTicket SET State = '部分上架' " +
-                             "WHERE ID = @putawayTicketID",
-                             new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
-                    }
-                    new Thread(() =>
-                    {
-                        wmsEntities.SaveChanges();
-                        MessageBox.Show("成功");
-                        this.Invoke(new Action(() =>
+                        if (count == 0)
                         {
-                            this.Search();
-                            CallBack();
-                        }));
-                    }).Start();
-                }
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                "UPDATE PutawayTicket SET State = '待上架' " +
+                                "WHERE ID = @putawayTicketID",
+                                new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                        }
+                        else
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                 "UPDATE PutawayTicket SET State = '部分上架' " +
+                                 "WHERE ID = @putawayTicketID",
+                                 new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
+                        }
+                    }
+                    wmsEntities.SaveChanges();
+                    //MessageBox.Show("成功");
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Search();
+                        CallBack();
+                    }));
+                }).Start();
             }
             catch(EntityCommandExecutionException)
             {

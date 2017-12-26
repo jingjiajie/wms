@@ -182,6 +182,11 @@ namespace WMS.UI.FormReceipt
         {
             WMSEntities wmsEntities = new WMSEntities();
             List<int> ids = SelectReceiptTicketItem();
+            if (ids.Count == 0)
+            {
+                MessageBox.Show("请选择您要上架的零件");
+                return;
+            }
             List<ReceiptTicketItem> receiptTicketItems = new List<ReceiptTicketItem>();
             foreach (int id in ids)
             {
