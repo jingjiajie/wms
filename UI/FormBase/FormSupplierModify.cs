@@ -82,6 +82,64 @@ namespace WMS.UI
         private void buttonModify_Click(object sender, EventArgs e)
         {
             TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName",true)[0];
+            TextBox StartDate = (TextBox)this.Controls.Find("textBoxStartDate", true)[0];
+            TextBox EndDate = (TextBox)this.Controls.Find("textBoxEndDate", true)[0];
+            TextBox InvoiceDate = (TextBox)this.Controls.Find("textBoxInvoiceDate", true)[0];
+            TextBox BalanceDate = (TextBox)this.Controls.Find("textBoxBalanceDate", true)[0];
+            if (StartDate.Text != String.Empty)
+            {
+                try
+                {
+                    DateTime.Parse(StartDate.Text);
+
+                }
+                catch
+                {
+                    MessageBox.Show("起始有效日期格式错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            if (EndDate.Text != string.Empty)
+            {
+                try
+                {
+                    DateTime.Parse(EndDate.Text);
+
+                }
+                catch
+                {
+                    MessageBox.Show("结束有效日期格式错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            if (InvoiceDate.Text != string.Empty)
+            {
+                try
+                {
+                    DateTime.Parse(InvoiceDate.Text);
+
+                }
+                catch
+                {
+                    MessageBox.Show("开票日期格式错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            if (BalanceDate.Text != string.Empty)
+            {
+                try
+                {
+                    DateTime.Parse(BalanceDate.Text);
+
+                }
+                catch
+                {
+                    MessageBox.Show("结算日期格式错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+
             if (textBoxSupplierName.Text != String.Empty)
             {
 
@@ -118,8 +176,8 @@ namespace WMS.UI
                     this.wmsEntities.Supplier.Add(supplier);
                 }
 
-
-
+               
+              
 
                 //开始数据库操作
                 if (Utilities.CopyTextBoxTextsToProperties(this, supplier, SupplierMetaData.KeyNames, out string errorMessage) == false)
