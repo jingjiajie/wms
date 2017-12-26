@@ -79,23 +79,23 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(691, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(691, 36);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(84, 20);
+            this.labelStatus.Size = new System.Drawing.Size(134, 31);
             this.labelStatus.Text = "查看出库单";
             // 
             // tableLayoutPanel1
@@ -148,7 +148,7 @@
             this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
             this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
             this.tableLayoutPanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelProperties.Font = new System.Drawing.Font("宋体", 9F);
+            this.tableLayoutPanelProperties.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanelProperties.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelProperties.Name = "tableLayoutPanelProperties";
             this.tableLayoutPanelProperties.RowCount = 3;
@@ -180,7 +180,7 @@
             this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 3);
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Font = new System.Drawing.Font("宋体", 9F);
+            this.tableLayoutPanel3.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
@@ -266,7 +266,7 @@
             // 
             // FormPutOutStorageTicketItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(691, 529);
             this.Controls.Add(this.statusStrip1);

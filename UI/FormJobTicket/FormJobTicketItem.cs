@@ -351,6 +351,11 @@ namespace WMS.UI
                 return;
             }
             int id = ids[0];
+            if(this.curStockInfoID == -1)
+            {
+                MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             new Thread(() =>
             {
                 WMSEntities wmsEntities1 = new WMSEntities();
@@ -385,6 +390,7 @@ namespace WMS.UI
                     {
                         try
                         {
+                            jobTicketItem.StockInfoID = this.curStockInfoID;
                             wmsEntities1.SaveChanges();
                         }
                         catch

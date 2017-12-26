@@ -44,6 +44,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.buttonToPutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,8 +55,8 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 39);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -63,9 +64,9 @@
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 80;
+            this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(833, 375);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1250, 610);
             this.reoGridControlMain.TabIndex = 6;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -83,12 +84,14 @@
             this.toolStripSeparator1,
             this.buttonOpen,
             this.buttonGeneratePutOutStorageTicket,
+            this.buttonToPutOutStorageTicket,
             this.toolStripSeparator2,
             this.buttonAlter,
             this.buttonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(833, 28);
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(1250, 39);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -96,7 +99,7 @@
             // 
             this.labelSelect.Name = "labelSelect";
             this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(84, 25);
+            this.labelSelect.Size = new System.Drawing.Size(134, 36);
             this.labelSelect.Text = "查询条件：";
             // 
             // comboBoxSearchCondition
@@ -104,7 +107,7 @@
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(128, 28);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 39);
             this.comboBoxSearchCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxSearchCondition_SelectedIndexChanged);
             // 
             // textBoxSearchValue
@@ -112,7 +115,7 @@
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Enabled = false;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(194, 28);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
             this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
             // buttonSearch
@@ -120,7 +123,7 @@
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
+            this.buttonSearch.Size = new System.Drawing.Size(86, 36);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
@@ -135,7 +138,7 @@
             this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
             this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(108, 25);
+            this.buttonOpen.Size = new System.Drawing.Size(158, 36);
             this.buttonOpen.Text = "查看作业单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
@@ -144,7 +147,7 @@
             this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
             this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
-            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(108, 25);
+            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(158, 36);
             this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
             this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
             // 
@@ -159,7 +162,7 @@
             this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
             this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(63, 25);
+            this.buttonAlter.Size = new System.Drawing.Size(86, 35);
             this.buttonAlter.Text = "修改";
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
@@ -179,34 +182,42 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 403);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 649);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(833, 25);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1250, 36);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(69, 20);
+            this.labelStatus.Size = new System.Drawing.Size(110, 31);
             this.labelStatus.Text = "库存管理";
+            // 
+            // buttonToPutOutStorageTicket
+            // 
+            this.buttonToPutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonToPutOutStorageTicket.Image")));
+            this.buttonToPutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonToPutOutStorageTicket.Name = "buttonToPutOutStorageTicket";
+            this.buttonToPutOutStorageTicket.Size = new System.Drawing.Size(158, 36);
+            this.buttonToPutOutStorageTicket.Text = "查看出库单";
+            this.buttonToPutOutStorageTicket.Click += new System.EventHandler(this.buttonToPutOutStorageTicket_Click);
             // 
             // FormJobTicket
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(833, 428);
+            this.ClientSize = new System.Drawing.Size(1250, 685);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
             this.Controls.Add(this.statusStrip1);
-            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormJobTicket";
             this.Text = "FormJobTicket";
             this.Load += new System.EventHandler(this.FormJobTicket_Load);
@@ -236,5 +247,6 @@
         private System.Windows.Forms.ToolStripButton buttonGeneratePutOutStorageTicket;
         private System.Windows.Forms.ToolStripButton buttonOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton buttonToPutOutStorageTicket;
     }
 }

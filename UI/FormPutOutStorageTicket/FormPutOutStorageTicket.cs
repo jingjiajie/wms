@@ -25,6 +25,7 @@ namespace WMS.UI
         public FormPutOutStorageTicket(int userID, int projectID, int warehouseID)
         {
             InitializeComponent();
+            InitComponents();
             this.userID = userID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
@@ -32,7 +33,6 @@ namespace WMS.UI
 
         private void FormPutOutStorageTicket_Load(object sender, EventArgs e)
         {
-            InitComponents();
             this.Search();
         }
 
@@ -48,8 +48,6 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             string[] visibleColumnNames = (from kn in PutOutStorageTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
@@ -70,6 +68,26 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = PutOutStorageTicketViewMetaData.KeyNames[i].Visible;
             }
             worksheet.Columns = PutOutStorageTicketViewMetaData.KeyNames.Length; //限制表的长度
+        }
+
+        public void SetSearchCondition(string key, string value)
+        {
+            string name = (from kn in PutOutStorageTicketViewMetaData.KeyNames
+                           where kn.Key == key
+                           select kn.Name).FirstOrDefault();
+            if (name == null)
+            {
+                return;
+            }
+            for (int i = 0; i < this.comboBoxSearchCondition.Items.Count; i++)
+            {
+                var item = comboBoxSearchCondition.Items[i];
+                if (item.ToString() == name)
+                {
+                    this.comboBoxSearchCondition.SelectedIndex = i;
+                }
+            }
+            this.textBoxSearchValue.Text = value;
         }
 
         private void Search()
