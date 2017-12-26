@@ -48,6 +48,7 @@ namespace WMS.UI.FormReceipt
                     continue;
                 }
                 Label label = new Label();
+                label.AutoSize = true;
                 label.Text = curKeyName.Name;
                 this.tableLayoutPanelTextBoxes.Controls.Add(label);
 
@@ -251,7 +252,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.ProjectID = this.projectID;
                     receiptTicket.Warehouse = this.warehouseID;
                     wmsEntities.SaveChanges();
-                    MessageBox.Show("Successful!");
+                    //MessageBox.Show("Successful!");
                 }
             }
             else
@@ -266,6 +267,7 @@ namespace WMS.UI.FormReceipt
                 //wmsEntities.ReceiptTicket.Add(receiptTicket);
                 else
                 {
+                    receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.Warehouse = this.warehouseID;
                     receiptTicket.ProjectID = this.projectID;
                     receiptTicket.CreateUserID = this.userID;
@@ -276,7 +278,7 @@ namespace WMS.UI.FormReceipt
                     wmsEntities.SaveChanges();
                     receiptTicket.No = Utilities.GenerateNo("H", receiptTicket.ID);
                     wmsEntities.SaveChanges();
-                    MessageBox.Show("Successful!");
+                    //MessageBox.Show("Successful!");
                 }
             }
             modifyFinishedCallback();

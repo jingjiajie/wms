@@ -66,16 +66,16 @@ namespace WMS.UI.FormReceipt
             this.labelStatus.Text = "正在搜索...";
             new Thread(new ThreadStart(() =>
             {
-                WMS.DataAccess.Component[] component = null;
+                WMS.DataAccess.ComponentView[] componentView = null;
                 if (key == "零件编号")
                 {
-                    component = (from s in this.wmsEntities.Component
+                    componentView = (from s in this.wmsEntities.ComponentView
                                       where s.No == value
                                       select s).ToArray();
                 }
                 else if (key == "零件名称")
                 {
-                    component = (from s in this.wmsEntities.Component
+                    componentView = (from s in this.wmsEntities.ComponentView
                                       where s.Name.Contains(value)
                                       select s).ToArray();
                 }
@@ -88,16 +88,16 @@ namespace WMS.UI.FormReceipt
                 {
                     var worksheet = this.reoGridControlMain.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    for (int i = 0; i < component.Length; i++)
+                    for (int i = 0; i < componentView.Length; i++)
                     {
-                        WMS.DataAccess.Component curComponent = component[i];
+                        WMS.DataAccess.ComponentView curComponent = componentView[i];
                         object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in ReceiptMetaData.componentKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
-                    if (component.Length == 0)
+                    if (componentView.Length == 0)
                     {
                         worksheet[0, 2] = "没有查询到符合条件的记录";
                     }

@@ -172,7 +172,7 @@ namespace WMS.UI
                 ReceiptTicketItemView[] receiptTicketItemViews = null;
                 try
                 {
-                    receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>(String.Format("SELECT * FROM ReceiptTicketItemView WHERE ReceiptTicketID = {0}", this.receiptTicketID)).ToArray();
+                    receiptTicketItemViews = wmsEntities.Database.SqlQuery<ReceiptTicketItemView>("SELECT * FROM ReceiptTicketItemView WHERE ReceiptTicketID = @receiptTicketID ORDER BY ID DESC", new SqlParameter("receiptTicketID" ,this.receiptTicketID)).ToArray();
                 }
                 catch
                 {
@@ -191,12 +191,27 @@ namespace WMS.UI
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ReceiptMetaData.itemsKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[i, j] = columns[j];
+                            if (columns[j] == null)
+                            {
+                                worksheet[i, j] = columns[j];
+                            }
+                            else
+                            {
+                                worksheet[i, j] = columns[j].ToString();
+                            }
                         }
                         //worksheet[i, worksheet.Columns-1] = new CheckBox();
                         this.RefreshTextBoxes();
                     }
                 }));
+                if (receiptTicketItemViews.Length == 0)
+                {
+                    int m = ReceiptUtilities.GetFirstColumnIndex(ReceiptMetaData.receiptNameKeys);
+
+                    //this.reoGridControl1.Worksheets[0][6, 8] = "32323";
+                    this.reoGridControlReceiptItems.Worksheets[0][0, m] = "无查询结果";
+                }
+
 
             })).Start();
 
