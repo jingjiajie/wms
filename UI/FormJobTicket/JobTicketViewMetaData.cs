@@ -23,9 +23,9 @@ namespace WMS.UI
             new KeyName(){Key="AssignmentArea",Name="作业指派区"},
             new KeyName(){Key="PersonInCharge",Name="责任人"},
             new KeyName(){Key="CreateUserUsername",Name="创建用户",Editable=false,Save=false},
-            new KeyName(){Key="CreateTime",Name="创建时间"},
+            new KeyName(){Key="CreateTime",Name="创建时间",Editable=false,Save=false},
             new KeyName(){Key="LastUpdateUserUsername",Name="最后修改用户",Editable=false,Save=false},
-            new KeyName(){Key="LastUpdateTime",Name="最后修改时间"}
+            new KeyName(){Key="LastUpdateTime",Name="最后修改时间",Editable=false,Save=false}
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

@@ -114,7 +114,7 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].Text = this.keyNames[i].Name;
                 worksheet.ColumnHeaders[i].IsVisible = this.keyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoViewMetaData.KeyNames.Length; //限制表的长度
+            worksheet.Columns = this.keyNames.Length; //限制表的长度
         }
 
         private Condition MakeCondition(string key, string value)
@@ -347,7 +347,7 @@ namespace WMS.UI
                 this.reoGrid.Invoke(new Action(() =>
                 {
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    worksheet.Rows = (results.Length < 1 ? 1 : results.Length);
+                    worksheet.Rows = (results.Length < 10 ? 10 : results.Length);
                     if (results.Length == 0)
                     {
                         worksheet[0, 1] = "没有查询到符合条件的记录";
@@ -356,7 +356,7 @@ namespace WMS.UI
                     {
                         TargetClass cur = results[i];
                         object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in keyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
+                        for (int j = 0; j < columns.Length; j++)
                         {
                             if (columns[j] == null) continue;
                             worksheet[i, j] = columns[j].ToString();

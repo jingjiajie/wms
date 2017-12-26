@@ -9,7 +9,6 @@ using System.Threading;
 
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
-using WMS.UI.FormDelivery;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
 
@@ -277,6 +276,7 @@ namespace WMS.UI
                     FormSubmissionManage s = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
                     s.TopLevel = false;
                     s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    this.panelRight.Controls.Clear();//清空
                     s.FormBorderStyle = FormBorderStyle.None;
                     this.panelRight.Controls.Add(s);
                     s.Show();
@@ -316,12 +316,27 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormShipmentTicket l = new FormShipmentTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
-                l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                this.panelRight.Controls.Add(l);
-                l.Show();
+                FormShipmentTicket formShipmentTicket = new FormShipmentTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                formShipmentTicket.SetToJobTicketCallback((string shipmentTicketNo)=>
+                {
+                    if (this.IsDisposed) return;
+                    this.Invoke(new Action(()=>
+                    {
+                        this.panelRight.Controls.Clear();//清空
+                        FormJobTicket formJobTicket = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
+                        formJobTicket.SetSearchCondition("ShipmentTicketNo", shipmentTicketNo);
+                        formJobTicket.TopLevel = false;
+                        formJobTicket.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                        formJobTicket.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                        this.panelRight.Controls.Add(formJobTicket);
+                        formJobTicket.Show();
+                    }));
+                });
+                formShipmentTicket.TopLevel = false;
+                formShipmentTicket.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                formShipmentTicket.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(formShipmentTicket);
+                formShipmentTicket.Show();
             }
             if (treeViewLeft.SelectedNode.Text == "作业单管理")
             {

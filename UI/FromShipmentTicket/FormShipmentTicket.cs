@@ -21,6 +21,13 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
 
+        private Action<string> toJobTicketCallback = null;
+
+        public void SetToJobTicketCallback(Action<string> callback)
+        {
+            this.toJobTicketCallback = callback;
+        }
+
         public FormShipmentTicket(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
@@ -247,64 +254,10 @@ namespace WMS.UI
                 return;
             }
             int shipmentTicketID = ids[0];
-            ShipmentTicket shipmentTicket = null;
-            try
-            {
-                shipmentTicket = (from s in this.wmsEntities.ShipmentTicket
-                                  where s.ID == shipmentTicketID
-                                  select s).FirstOrDefault();
-            }
-            catch
-            {
-                MessageBox.Show("无法连接到服务器，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if(shipmentTicket == null)
-            {
-                MessageBox.Show("发货单信息不存在，请刷新显示", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_WAITING_PUTOUT; //更新发货单状态
 
-            JobTicket jobTicket = new JobTicket();
-            jobTicket.JobTicketNo = "";
-            jobTicket.ProjectID = this.projectID;
-            jobTicket.WarehouseID = this.warehouseID;
-            jobTicket.JobType = "发货";
-            jobTicket.ShipmentTicketID = shipmentTicket.ID;
-            jobTicket.ScheduledAmount = shipmentTicket.ScheduledAmount;
-            jobTicket.State = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
-            jobTicket.PrintedTimes = 0;
-            jobTicket.CreateUserID = this.userID;
-            jobTicket.CreateTime = DateTime.Now;
-            jobTicket.LastUpdateUserID = this.userID;
-            jobTicket.LastUpdateTime = DateTime.Now;
-
-            wmsEntities.JobTicket.Add(jobTicket);
-
-            foreach (var shipmentTicketItem in shipmentTicket.ShipmentTicketItem)
-            {
-                var jobTicketItem = new JobTicketItem();
-                jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
-                jobTicketItem.No = "";
-                jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
-
-                jobTicket.JobTicketItem.Add(jobTicketItem);
-            }
-
-            try
-            {
-                wmsEntities.SaveChanges();
-                jobTicket.JobTicketNo = Utilities.GenerateNo("Z", jobTicket.ID);
-                wmsEntities.SaveChanges();
-            }
-            catch
-            {
-                MessageBox.Show("无法连接到服务器，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            this.Search();
-            MessageBox.Show("生成作业单成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            FormJobTicketNew form = new FormJobTicketNew(shipmentTicketID,this.userID,this.projectID,this.warehouseID);
+            form.SetToJobTicketCallback(this.toJobTicketCallback);
+            form.Show();
         }
 
         private int[] GetSelectedIDs()
