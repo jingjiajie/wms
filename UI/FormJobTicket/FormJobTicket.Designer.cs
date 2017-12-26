@@ -34,16 +34,16 @@
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
+            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonOpen = new System.Windows.Forms.ToolStripButton();
+            this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonAlter = new System.Windows.Forms.ToolStripButton();
+            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
-            this.buttonOpen = new System.Windows.Forms.ToolStripButton();
-            this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
-            this.buttonAlter = new System.Windows.Forms.ToolStripButton();
-            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -72,6 +72,8 @@
             // toolStripTop
             // 
             this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelSelect,
@@ -113,11 +115,63 @@
             this.textBoxSearchValue.Size = new System.Drawing.Size(194, 28);
             this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
+            // buttonSearch
+            // 
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
+            this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.AutoSize = false;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
+            // 
+            // buttonOpen
+            // 
+            this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
+            this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonOpen.Name = "buttonOpen";
+            this.buttonOpen.Size = new System.Drawing.Size(108, 25);
+            this.buttonOpen.Text = "查看作业单";
+            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
+            // 
+            // buttonGeneratePutOutStorageTicket
+            // 
+            this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
+            this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
+            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(108, 25);
+            this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
+            this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.AutoSize = false;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
+            // 
+            // buttonAlter
+            // 
+            this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
+            this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAlter.Name = "buttonAlter";
+            this.buttonAlter.Size = new System.Drawing.Size(63, 25);
+            this.buttonAlter.Text = "修改";
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.AutoSize = false;
+            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
+            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(60, 25);
+            this.buttonDelete.Text = "删除";
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // statusStrip1
             // 
@@ -144,58 +198,6 @@
             this.labelStatus.Size = new System.Drawing.Size(69, 20);
             this.labelStatus.Text = "库存管理";
             // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.AutoSize = false;
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
-            // 
-            // buttonSearch
-            // 
-            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
-            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
-            this.buttonSearch.Text = "查询";
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
-            // 
-            // buttonOpen
-            // 
-            this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
-            this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(108, 25);
-            this.buttonOpen.Text = "查看作业单";
-            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
-            // 
-            // buttonGeneratePutOutStorageTicket
-            // 
-            this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
-            this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
-            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(108, 25);
-            this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
-            this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
-            // 
-            // buttonAlter
-            // 
-            this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
-            this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(63, 25);
-            this.buttonAlter.Text = "修改";
-            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.AutoSize = false;
-            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
-            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(60, 25);
-            this.buttonDelete.Text = "删除";
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-            // 
             // FormJobTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -204,7 +206,7 @@
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
             this.Controls.Add(this.statusStrip1);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormJobTicket";
             this.Text = "FormJobTicket";
             this.Load += new System.EventHandler(this.FormJobTicket_Load);
