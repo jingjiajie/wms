@@ -105,7 +105,7 @@
             // buttonfinish
             // 
             this.buttonfinish.BackColor = System.Drawing.Color.White;
-            this.buttonfinish.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonfinish.BackgroundImage")));
+            this.buttonfinish.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
             this.buttonfinish.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonfinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonfinish.FlatAppearance.BorderSize = 0;

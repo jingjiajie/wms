@@ -36,14 +36,16 @@
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonOpen = new System.Windows.Forms.ToolStripButton();
             this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
+            this.buttonOpen = new System.Windows.Forms.ToolStripButton();
+            this.buttonToPutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -65,7 +67,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 80;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(833, 375);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1082, 375);
             this.reoGridControlMain.TabIndex = 6;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -82,13 +84,15 @@
             this.buttonSearch,
             this.toolStripSeparator1,
             this.buttonOpen,
-            this.buttonGeneratePutOutStorageTicket,
             this.toolStripSeparator2,
             this.buttonAlter,
-            this.buttonDelete});
+            this.buttonDelete,
+            this.toolStripSeparator3,
+            this.buttonGeneratePutOutStorageTicket,
+            this.buttonToPutOutStorageTicket});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(833, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(1082, 28);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -130,6 +134,15 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
+            // buttonGeneratePutOutStorageTicket
+            // 
+            this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
+            this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
+            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(108, 25);
+            this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
+            this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
+            // 
             // buttonOpen
             // 
             this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
@@ -139,14 +152,14 @@
             this.buttonOpen.Text = "查看作业单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
-            // buttonGeneratePutOutStorageTicket
+            // buttonToPutOutStorageTicket
             // 
-            this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
-            this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
-            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(108, 25);
-            this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
-            this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
+            this.buttonToPutOutStorageTicket.Image = global::WMS.UI.Properties.Resources.find;
+            this.buttonToPutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonToPutOutStorageTicket.Name = "buttonToPutOutStorageTicket";
+            this.buttonToPutOutStorageTicket.Size = new System.Drawing.Size(108, 25);
+            this.buttonToPutOutStorageTicket.Text = "查看出库单";
+            this.buttonToPutOutStorageTicket.Click += new System.EventHandler(this.buttonToPutOutStorageTicket_Click);
             // 
             // toolStripSeparator2
             // 
@@ -182,7 +195,7 @@
             this.statusStrip1.Location = new System.Drawing.Point(0, 403);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(833, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1082, 25);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -198,11 +211,17 @@
             this.labelStatus.Size = new System.Drawing.Size(69, 20);
             this.labelStatus.Text = "库存管理";
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
+            // 
             // FormJobTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(833, 428);
+            this.ClientSize = new System.Drawing.Size(1082, 428);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
             this.Controls.Add(this.statusStrip1);
@@ -236,5 +255,7 @@
         private System.Windows.Forms.ToolStripButton buttonGeneratePutOutStorageTicket;
         private System.Windows.Forms.ToolStripButton buttonOpen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton buttonToPutOutStorageTicket;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

@@ -126,29 +126,6 @@ namespace WMS.UI
             return node;
         }
 
-
-        private void treeViewLeft_BeforeSelect(object sender, TreeViewCancelEventArgs e)
-        {
-            if (e.Node != null)
-            {
-                if (e.Node.ForeColor == SystemColors.Control)
-                {
-                    e.Cancel = true;  //不让选中禁用节点
-                }
-            }
-        }
-        private void treeViewLeft_BeforeCheck(object sender, TreeViewCancelEventArgs e)
-        {
-            if (e.Node != null)
-            {
-                if (e.Node.ForeColor == SystemColors.Control)
-                {
-                    e.Cancel = true; //不让选中禁用节点
-
-                }
-            }
-        }
-
         protected override CreateParams CreateParams
         {
             get
@@ -208,7 +185,6 @@ namespace WMS.UI
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 0, 0);
             if (treeViewLeft.SelectedNode.Text == "用户管理")
             {
                 this.panelRight.Controls.Clear();//清空
@@ -317,21 +293,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 FormShipmentTicket formShipmentTicket = new FormShipmentTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
-                formShipmentTicket.SetToJobTicketCallback((string shipmentTicketNo)=>
-                {
-                    if (this.IsDisposed) return;
-                    this.Invoke(new Action(()=>
-                    {
-                        this.panelRight.Controls.Clear();//清空
-                        FormJobTicket formJobTicket = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-                        formJobTicket.SetSearchCondition("ShipmentTicketNo", shipmentTicketNo);
-                        formJobTicket.TopLevel = false;
-                        formJobTicket.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-                        formJobTicket.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                        this.panelRight.Controls.Add(formJobTicket);
-                        formJobTicket.Show();
-                    }));
-                });
+                formShipmentTicket.SetToJobTicketCallback(this.ToJobTicketCallback);
                 formShipmentTicket.TopLevel = false;
                 formShipmentTicket.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 formShipmentTicket.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -343,6 +305,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 FormJobTicket l = new FormJobTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                l.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -393,7 +356,41 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formSubmissionManage);
                 formSubmissionManage.Show();
             }
-            Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+        }
+
+        private void ToJobTicketCallback(string shipmentTicketNo)
+        {
+            if (this.IsDisposed) return;
+            this.Invoke(new Action(() =>
+            {
+                FormJobTicket formJobTicket = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
+                formJobTicket.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
+                formJobTicket.SetSearchCondition("ShipmentTicketNo", shipmentTicketNo);
+                this.LoadSubWindow(formJobTicket);
+                this.SetTreeViewSelectedNodeByText("作业单管理");
+            }));
+        }
+
+        private void ToPutOutStorageTicketCallback(string jobTicketNo)
+        {
+            if (this.IsDisposed) return;
+            this.Invoke(new Action(() =>
+            {
+                FormPutOutStorageTicket formPutOutStorageTicket = new FormPutOutStorageTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
+                formPutOutStorageTicket.SetSearchCondition("JobTicketJobTicketNo", jobTicketNo);
+                this.LoadSubWindow(formPutOutStorageTicket);
+                this.SetTreeViewSelectedNodeByText("出库单管理");
+            }));
+        }
+
+        private void LoadSubWindow(Form form)
+        {
+            form.TopLevel = false;
+            form.Dock = DockStyle.Fill;//窗口大小
+            form.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+            this.panelRight.Controls.Clear();//清空
+            this.panelRight.Controls.Add(form);
+            form.Show();
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -421,6 +418,39 @@ namespace WMS.UI
             {
                 e.Cancel = true;
             }
+        }
+
+        private void SetTreeViewSelectedNodeByText(string text)
+        {
+            TreeNode node = this.FindTreeNodeByText(this.treeViewLeft.Nodes,text);
+            if(node == null)
+            {
+                throw new Exception("树形框中不包含节点：" + text);
+            }
+            this.treeViewLeft.AfterSelect -= this.treeViewLeft_AfterSelect;
+            this.treeViewLeft.SelectedNode = node;
+            this.treeViewLeft.AfterSelect += this.treeViewLeft_AfterSelect;
+        }
+
+        private TreeNode FindTreeNodeByText(TreeNodeCollection nodes,string text)
+        {
+            if(nodes.Count == 0)
+            {
+                return null;
+            }
+            foreach (TreeNode curNode in nodes)
+            {
+                if(curNode.Text == text)
+                {
+                    return curNode;
+                }
+                TreeNode foundNode = FindTreeNodeByText(curNode.Nodes,text);
+                if(foundNode != null)
+                {
+                    return foundNode;
+                }
+            }
+            return null;
         }
     }
 }

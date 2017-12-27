@@ -61,6 +61,42 @@
     <Compile Include="FormJobTicket\FormJobTicketNew.Designer.cs">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoading.Designer.cs">
+      <DependentUpon>FormLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLoading1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoading1.Designer.cs">
+      <DependentUpon>FormLoading1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLoading2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoading2.Designer.cs">
+      <DependentUpon>FormLoading2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLoading3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoading3.Designer.cs">
+      <DependentUpon>FormLoading3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLoadingf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoadingf.Designer.cs">
+      <DependentUpon>FormLoadingf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.Designer.cs">
+      <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormAddPutawayItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -447,6 +483,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketNew.resx">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoading.resx">
+      <DependentUpon>FormLoading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoading1.resx">
+      <DependentUpon>FormLoading1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoading2.resx">
+      <DependentUpon>FormLoading2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoading3.resx">
+      <DependentUpon>FormLoading3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoadingf.resx">
+      <DependentUpon>FormLoadingf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.resx">
+      <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormAddPutawayItem.resx">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>

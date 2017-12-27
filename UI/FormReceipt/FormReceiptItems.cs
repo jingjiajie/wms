@@ -145,6 +145,10 @@ namespace WMS.UI
                 return;
             }
             this.receiptTicketItemID = int.Parse(receiptTicketItemView.ID.ToString());
+            if (receiptTicketItemView.ComponentID != null)
+            {
+                this.componentID = (int)receiptTicketItemView.ComponentID;
+            }
             Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
             //Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
         }
@@ -242,6 +246,28 @@ namespace WMS.UI
                         receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
                         receiptTicketItem.State = "待送检";
                         wmsEntities.SaveChanges();
+
+                        ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+                        if (receiptTicket == null)
+                        {
+                            MessageBox.Show("改收货单不存在");
+                            return;
+                        }
+                        StockInfo stockInfo = new StockInfo();
+                        stockInfo.ProjectID = receiptTicket.ProjectID;
+                        stockInfo.WarehouseID = receiptTicket.Warehouse;
+                        stockInfo.ReceiptTicketItemID = receiptTicketItem.ID;
+                        stockInfo.OverflowAreaAmount = 0;
+                        stockInfo.ShipmentAreaAmount = 0;
+                        stockInfo.SubmissionAreaAmount = 0;
+                        stockInfo.ReceiptAreaAmount = 0;
+                        if (receiptTicketItem.ReceiviptAmount != null)
+                        {
+                            stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
+                        }
+                        wmsEntities.StockInfo.Add(stockInfo);
+
+                        wmsEntities.SaveChanges();
                         this.Search();
                     }
                     catch
@@ -278,7 +304,17 @@ namespace WMS.UI
                         try
                         {
                             receiptTicketItem.ComponentID = this.componentID;
+                            StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                            if (stockInfo == null)
+                            {
+                                //MessageBox.Show("该库存信息已被删除");
+                            }
+                            else
+                            {
+                                stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
+                            }
                             wmsEntities.SaveChanges();
+                            
                             this.Search();
                         }
                         catch
@@ -429,7 +465,7 @@ namespace WMS.UI
 
         private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
 
@@ -446,7 +482,7 @@ namespace WMS.UI
 
         private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
         private void buttonModify_MouseEnter(object sender, EventArgs e)
@@ -461,7 +497,7 @@ namespace WMS.UI
 
         private void buttonModify_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
     }

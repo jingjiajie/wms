@@ -99,6 +99,7 @@ namespace WMS.UI.FormReceipt
                     return;
                 }
                 Utilities.CopyPropertiesToTextBoxes(submissionTicketView, this);
+                Utilities.CopyPropertiesToComboBoxes(submissionTicketView, this);
             }
         }
 
@@ -192,6 +193,7 @@ namespace WMS.UI.FormReceipt
             {
                 MessageBox.Show("请选择送检的零件");
                 return;
+                
             }
             List<ReceiptTicketItem> receiptTicketItems = new List<ReceiptTicketItem>();
             foreach(int id in ids)
@@ -213,6 +215,7 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
+                    Utilities.CopyComboBoxsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName);
                     ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                     if (receiptTicket == null)
                     {
@@ -228,6 +231,7 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.WarehouseID = receiptTicket.Warehouse;
                     submissionTicket.State = "待检";
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
+                    
                     new Thread(() =>
                     {
                         try
@@ -238,11 +242,26 @@ namespace WMS.UI.FormReceipt
                             foreach(ReceiptTicketItem rti in receiptTicketItems)
                             {
                                 SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
-                                submissionTicketItem.ReceiptTicketItemID = rti.ID;
-                                submissionTicketItem.State = "待检";
-                                rti.State = "送检中";
-                                submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
-                                wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
+                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                if (stockInfo == null)
+                                {
+                                    MessageBox.Show("找不到对应的库存信息");
+                                }
+                                else
+                                {
+                                    if (stockInfo.ReceiptAreaAmount != null)
+                                    {
+                                        int amountReceiptArea;
+                                        amountReceiptArea = (int)stockInfo.ReceiptAreaAmount;
+                                        stockInfo.ReceiptAreaAmount = 0;
+                                        stockInfo.SubmissionAreaAmount = amountReceiptArea;
+                                    }
+                                    submissionTicketItem.ReceiptTicketItemID = rti.ID;
+                                    submissionTicketItem.State = "待检";
+                                    rti.State = "送检中";
+                                    submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
+                                    wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
+                                }
                             }
                             wmsEntities.SaveChanges();
                             int count = wmsEntities.Database.SqlQuery<int>(
@@ -268,7 +287,7 @@ namespace WMS.UI.FormReceipt
                                 this.Search();
                                 CallBack();
                             }));
-                            //MessageBox.Show("成功");
+                            MessageBox.Show("收货单条目送检成功");
                         }
                         catch
                         {
@@ -280,8 +299,25 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
-
+                
             }
         }
+
+
+        private void OK_MouseEnter(object sender, EventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void OK_MouseLeave(object sender, EventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void OK_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
     }
 }

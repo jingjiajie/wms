@@ -64,6 +64,7 @@ namespace WMS.UI.FormReceipt
             {
                 string name = (from n in ReceiptMetaData.putawayTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
                 this.toolStripComboBoxSelect.SelectedItem = name;
+                this.toolStripComboBoxSelect.SelectedIndex = this.toolStripComboBoxSelect.Items.IndexOf(name);
                 this.toolStripTextBoxSelect.Text = value;
             }
             Search(key, value);
