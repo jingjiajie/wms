@@ -116,7 +116,7 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDatexianshi.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDateDisplay.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -129,12 +129,12 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTicksModifyMetaDatexianshi.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTicksModifyMetaDateDisplay.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDateDisplay.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDateDisplay.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoCheckTicksModifyMetaDatexianshi.KeyNames.Length;//限制表的长度
+            worksheet.Columns = StockInfoCheckTicksModifyMetaDateDisplay.KeyNames.Length;//限制表的长度
            
         }
 
@@ -286,12 +286,14 @@ namespace WMS.UI
                     for (int i = 0; i < stockInfoViews.Length; i++)
                     {
                         WMS.DataAccess.StockInfoCheckTicketItemView curStockInfoView = stockInfoViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDatexianshi.KeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDateDisplay.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+                    if(this.mode ==FormMode.CHECK )
+                    this.labelStatus.Text = "搜索完成";
                 }));
 
             })).Start();

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WMS.UI
 {
-    class StockInfoCheckTicketViewMetaDataxianshi
+    class StockInfoCheckTicketViewMetaDataDisplay
     {
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false ,Editable=false },
