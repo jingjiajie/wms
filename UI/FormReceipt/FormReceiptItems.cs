@@ -413,8 +413,17 @@ namespace WMS.UI
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 new Thread(() => 
                 {
-                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicketItem WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", receiptItemID));
-                    this.Search();
+                    try
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ReceiptTicketItemID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", receiptItemID));
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicketItem WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", receiptItemID));
+                    }
+                    catch
+                    {
+                        MessageBox.Show("该收货单零件已送检或收货，无法删除");
+                        
+                    }
+                        this.Search();
                 }).Start();
             }
             catch (EntityCommandExecutionException)

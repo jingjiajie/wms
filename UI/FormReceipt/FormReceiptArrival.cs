@@ -50,7 +50,7 @@ namespace WMS.UI
         /// </summary>
         /// <param name="form"></param>
         /// <param name="action"></param>
-        public void SetActionTo(int form, Action<string ,string> action)
+        public void SetActionTo(int form, Action<string, string> action)
         {
             if (form == 0)
             {
@@ -117,9 +117,9 @@ namespace WMS.UI
                     //}
                     try
                     {
-                     //   Console.Write(value);
+                        //   Console.Write(value);
                         string sql = "SELECT * FROM ReceiptTicketView WHERE " + key + " = @key AND Warehouse = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC";
-                      //  Console.WriteLine(sql);
+                        //  Console.WriteLine(sql);
                         receiptTicketViews = wmsEntities.Database.SqlQuery<ReceiptTicketView>(sql, new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
 
                         //receiptTicketViews = (from rtv in wmsEntities.ReceiptTicketView where rtv.State == )
@@ -154,7 +154,7 @@ namespace WMS.UI
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             if (columns[j] == null)
-                            { 
+                            {
                                 worksheet[n, j] = columns[j];
                             }
                             else
@@ -230,7 +230,7 @@ namespace WMS.UI
                 try
                 {
                     WMSEntities wmsEntities = new WMSEntities();
-                    count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicket WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID)).FirstOrDefault();   
+                    count = wmsEntities.Database.SqlQuery<int>("SELECT COUNT(*) FROM ReceiptTicket WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID)).FirstOrDefault();
                 }
                 catch
                 {
@@ -293,8 +293,14 @@ namespace WMS.UI
                 {
                     foreach (int id in deleteIDs)
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", id));
-
+                        try
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", id));
+                        }
+                        catch
+                        {
+                            MessageBox.Show("该收货单已收货或送检，无法删除");
+                        }
                         //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='作废' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
                         //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='作废' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
                     }
@@ -337,7 +343,7 @@ namespace WMS.UI
                 });
                 formAddSubmissionTicket.Show();
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -405,7 +411,7 @@ namespace WMS.UI
                 });
                 formReceiptTicketIems.Show();
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -425,9 +431,9 @@ namespace WMS.UI
                 }
                 WMSEntities wmsEntities = new WMSEntities();
                 int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                
+
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
-                
+
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 if (receiptTicket.State != "已收货")
                 {
@@ -460,7 +466,7 @@ namespace WMS.UI
                 formPutwayTicketModify.Show();
                 */
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -505,7 +511,7 @@ namespace WMS.UI
                 formReceiptArrivalCheck.Show();
                 */
             }
-            catch(EntityCommandExecutionException)
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -549,7 +555,7 @@ namespace WMS.UI
                     {
                         if (MessageBox.Show("该收货单中没有添加条目，是否继续收货", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                         {
-                            return;                            
+                            return;
                         }
                     }
                     receiptTicket.State = "已收货";
@@ -568,7 +574,7 @@ namespace WMS.UI
                     }).Start();
                 }
             }
-            catch(EntityCommandExecutionException)
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -625,7 +631,7 @@ namespace WMS.UI
                             receiptTicket.State = "送检中";
                         }
                         wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '取消收货' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID));
-                        
+
                     }
                     new Thread(() =>
                     {
@@ -639,7 +645,7 @@ namespace WMS.UI
                     }).Start();
                 }
             }
-            catch(EntityCommandExecutionException)
+            catch (EntityCommandExecutionException)
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
