@@ -67,6 +67,14 @@ namespace WMS.UI.FormReceipt
                                                        where s.ID == this.ID
                                                        select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(receiptTicketView, this);
+                if (receiptTicketView.SupplierID != null)
+                {
+                    this.supplierID = (int)receiptTicketView.SupplierID;
+                }
+                else
+                {
+                    MessageBox.Show("请重新选择供应商");
+                }
                 this.Controls.Find("textBoxState", true)[0].Enabled = false;
                 //TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserUserID", true)[0];
                 //textBoxLastUpdateUserID.Text = this.userID.ToString();
@@ -258,6 +266,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.ProjectID = this.projectID;
                     receiptTicket.Warehouse = this.warehouseID;
+                    receiptTicket.SupplierID = this.supplierID;
                     wmsEntities.SaveChanges();
                     //MessageBox.Show("Successful!");
                 }
