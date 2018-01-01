@@ -48,8 +48,6 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             string[] visibleColumnNames = (from kn in StockInfoViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
