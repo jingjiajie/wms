@@ -17,54 +17,81 @@ namespace WMS.UI
 {
     public partial class FormBaseSupplier : Form
     {
+        private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
         private int authority_supplier = Convert.ToInt32(Authority.BASE_SUPPLIER);
         private int authority_supplierself = Convert.ToInt32(Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY);
+        private PagerWidget<SupplierView > pagerWidget = null;
+       
+        private int projectID = -1;
+        private int warehouseID = -1;
 
 
         private int id=-1;
        
-        public FormBaseSupplier(int authority,int id)
+        public FormBaseSupplier(int authority,int supplierid)
         {
             InitializeComponent();
             this.authority = authority;
-            this.id = id;
+            this.id = supplierid;
         } 
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
-            if (id!=0)
+            if (id != 0)
             {
+                
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
-            }
-            InitSupplier();
-            this.Search();
 
+                InitSupplier();
+                //List<SqlParameter> parameters = new List<SqlParameter>();
+                //string sql = "SELECT * FROM SupplierView WHERE 1=1";
+                //sql += "AND ID = @ID ";
+                //parameters.Add(new SqlParameter("ID", id ));
+                this.pagerWidget.AddCondition("ID",Convert.ToString(id));
+                this.pagerWidget.Search();
+            }
+            if (id == 0)
+            {
+                
+
+                InitSupplier();
+
+                this.pagerWidget.Search();
+            }
+
+
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
         }
 
         private void InitSupplier ()
         {
+          
+            this.wmsEntities.Database.Connection.Open();
+
             string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
+            //初始化查询框
             this.toolStripComboBoxSelect.Items.Add("无");
             this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
+            this.toolStripComboBoxSelect.SelectedIndex = 1;
 
+            //初始化分页控件
+            this.pagerWidget = new PagerWidget<SupplierView>(this.reoGridControlUser, SupplierMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.panelPager.Controls.Add(pagerWidget);
+            pagerWidget.Show();
 
-            //初始化表格
-            var worksheet = this.reoGridControlUser.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = SupplierMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = SupplierMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = SupplierMetaData.KeyNames.Length;//限制表的长度
-           
         }
 
 
@@ -81,7 +108,7 @@ namespace WMS.UI
 
             a1.SetAddFinishedCallback(() =>
             {
-                this.Search();
+                this.pagerWidget.Search();
                 var worksheet = this.reoGridControlUser.Worksheets[0];
                 
                 worksheet.SelectionRange = new RangePosition("A1:A1");
@@ -94,7 +121,12 @@ namespace WMS.UI
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
 
-            this.Search();
+            this.pagerWidget.ClearCondition();
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            }
+            this.pagerWidget.Search();
         }
 
         private void Search()
@@ -209,7 +241,7 @@ namespace WMS.UI
 
 
 
-         
+
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
@@ -224,7 +256,7 @@ namespace WMS.UI
                 var a1= new FormSupplierModify(supplierID);
                 a1.SetModifyFinishedCallback(() =>
                 {
-                    this.Search();
+                    this.pagerWidget.Search();
                 });
                 a1.Show();
             }
@@ -283,7 +315,11 @@ namespace WMS.UI
                     MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(() =>
+                {
+                    this.pagerWidget.Search();
+                }));
+                
             })).Start();
 
 
@@ -314,8 +350,18 @@ namespace WMS.UI
 
             if (e.KeyChar == 13)
             {
-                this.Search();
+                this.pagerWidget.Search();
             }
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
+        {
 
         }
     }
