@@ -33,7 +33,7 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in ComponenMetaData.componenkeyNames
+            string[] visibleColumnNames = (from kn in ComponenViewMetaData.componenkeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -54,7 +54,7 @@ namespace WMS.UI
             //worksheet.Columns = ComponenMetaData.componenkeyNames.Length;//限制表的长度
 
             //初始化分页控件
-            this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlComponen, ComponenMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlComponen, ComponenViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
         }
@@ -87,7 +87,7 @@ namespace WMS.UI
 
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                key = (from kn in ComponenMetaData.componenkeyNames
+                key = (from kn in ComponenViewMetaData.componenkeyNames
                        where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
                        select kn.Key).First();
                 value = this.textBoxSearchValue.Text;
@@ -189,7 +189,7 @@ namespace WMS.UI
                     {
 
                         ComponentView curComponentView = componentViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenMetaData.componenkeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenViewMetaData.componenkeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j];
