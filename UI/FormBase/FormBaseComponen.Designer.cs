@@ -43,9 +43,12 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripLabel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlComponen = new unvell.ReoGrid.ReoGridControl();
+            this.panelPager = new System.Windows.Forms.Panel();
             this.toolStripTop.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripTop
@@ -172,13 +175,28 @@
             this.labelStatus.Size = new System.Drawing.Size(56, 22);
             this.labelStatus.Text = "零件信息";
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.Controls.Add(this.reoGridControlComponen, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panelPager, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 28);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.891F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.109005F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(887, 422);
+            this.tableLayoutPanel2.TabIndex = 6;
+            // 
             // reoGridControlComponen
             // 
             this.reoGridControlComponen.BackColor = System.Drawing.Color.White;
             this.reoGridControlComponen.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlComponen.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlComponen.Location = new System.Drawing.Point(0, 28);
+            this.reoGridControlComponen.Location = new System.Drawing.Point(2, 2);
             this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlComponen.Name = "reoGridControlComponen";
             this.reoGridControlComponen.RowHeaderContextMenuStrip = null;
@@ -188,20 +206,27 @@
             this.reoGridControlComponen.SheetTabVisible = true;
             this.reoGridControlComponen.SheetTabWidth = 60;
             this.reoGridControlComponen.ShowScrollEndSpacing = true;
-            this.reoGridControlComponen.Size = new System.Drawing.Size(887, 422);
-            this.reoGridControlComponen.TabIndex = 3;
+            this.reoGridControlComponen.Size = new System.Drawing.Size(883, 388);
+            this.reoGridControlComponen.TabIndex = 4;
             this.reoGridControlComponen.Text = "reoGridControl1";
-            this.reoGridControlComponen.Click += new System.EventHandler(this.reoGridControlUser_Click);
+            // 
+            // panelPager
+            // 
+            this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPager.Location = new System.Drawing.Point(3, 395);
+            this.panelPager.Name = "panelPager";
+            this.panelPager.Size = new System.Drawing.Size(881, 24);
+            this.panelPager.TabIndex = 5;
             // 
             // FormBaseComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(887, 475);
-            this.Controls.Add(this.reoGridControlComponen);
+            this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormBaseComponent";
             this.Text = "零件信息";
             this.Load += new System.EventHandler(this.FormBaseComponent_Load);
@@ -209,6 +234,7 @@
             this.toolStripTop.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -228,7 +254,9 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripLabel labelStatus;
-        private unvell.ReoGrid.ReoGridControl reoGridControlComponen;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private unvell.ReoGrid.ReoGridControl reoGridControlComponen;
+        private System.Windows.Forms.Panel panelPager;
     }
 }
