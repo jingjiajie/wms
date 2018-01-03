@@ -17,79 +17,21 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public Nullable<int> StockInfoID { get; set; }
         public int PutOutStorageTicketID { get; set; }
-        public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> ExceedStockAmount { get; set; }
-        public Nullable<int> PutOutStorageTicketJobTicketID { get; set; }
         public string PutOutStorageTicketNo { get; set; }
-        public string PutOutStorageTicketTruckLoadingTicketNo { get; set; }
-        public string PutOutStorageTicketSourse { get; set; }
-        public string PutOutStorageTicketWorkFlow { get; set; }
-        public string PutOutStorageTicketState { get; set; }
-        public string PutOutStorageTicketCarNum { get; set; }
-        public string PutOutStorageTicketDriver { get; set; }
-        public string PutOutStorageTicketSerialNo { get; set; }
-        public string PutOutStorageTicketOriginalTicketType { get; set; }
-        public string PutOutStorageTicketPullTicketNo { get; set; }
-        public string PutOutStorageTicketCrossingNo { get; set; }
-        public string PutOutStorageTicketReceiverNo { get; set; }
-        public string PutOutStorageTicketSortTypeNo { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketTruckLoadingTime { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketDeliverTime { get; set; }
-        public Nullable<int> PutOutStorageTicketCreateUserID { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketCreateTime { get; set; }
-        public Nullable<int> PutOutStorageTicketLastUpdateUserID { get; set; }
-        public Nullable<System.DateTime> PutOutStorageTicketLastUpdateTime { get; set; }
         public Nullable<int> ReceiptTicketItemReceiptTicketID { get; set; }
         public Nullable<int> ReceiptTicketItemComponentID { get; set; }
-        public string ReceiptTicketItemPackageName { get; set; }
-        public Nullable<decimal> ReceiptTicketItemExpectedPackageAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemExpectedAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemReceiviptAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemWrongComponentAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemShortageAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemDisqualifiedAmount { get; set; }
-        public string ReceiptTicketItemManufactureNo { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemInventoryDate { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemManufactureDate { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemExpiryDate { get; set; }
-        public string ReceiptTicketItemRealRightProperty { get; set; }
-        public string ReceiptTicketItemBoxNo { get; set; }
-        public string SupplierName { get; set; }
-        public string SupplierContractNo { get; set; }
-        public Nullable<System.DateTime> SupplierStartDate { get; set; }
-        public Nullable<System.DateTime> SupplierEndDate { get; set; }
-        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
-        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
-        public string SupplierFullName { get; set; }
-        public string SupplierTaxpayerNumber { get; set; }
-        public string SupplierAddress { get; set; }
-        public string SupplierTel { get; set; }
-        public string SupplierBankName { get; set; }
-        public string SupplierBankAccount { get; set; }
-        public string SupplierBankNo { get; set; }
-        public string SupplierZipCode { get; set; }
-        public string SupplierRecipientName { get; set; }
-        public Nullable<int> ComponentProjectID { get; set; }
-        public Nullable<int> ComponentWarehouseID { get; set; }
-        public Nullable<int> ComponentSupplierID { get; set; }
-        public string ComponentContainerNo { get; set; }
-        public string ComponentFactroy { get; set; }
-        public string ComponentWorkPosition { get; set; }
-        public string ComponentNo { get; set; }
-        public string ComponentName { get; set; }
-        public string ComponentSupplierType { get; set; }
-        public string ComponentType { get; set; }
-        public string ComponentSize { get; set; }
-        public string ComponentCategory { get; set; }
-        public string ComponentGroupPrincipal { get; set; }
-        public Nullable<decimal> ComponentSingleCarUsageAmount { get; set; }
-        public Nullable<decimal> ComponentCharge1 { get; set; }
-        public Nullable<decimal> ComponentCharge2 { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement1Day { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
+        public Nullable<decimal> ScheduledAmount { get; set; }
+        public Nullable<decimal> RealAmount { get; set; }
+        public string State { get; set; }
+        public string ComponentNo { get; set; }
+        public Nullable<int> ComponentProjectID { get; set; }
+        public string ComponentNumber { get; set; }
+        public string ComponentName { get; set; }
+        public Nullable<int> ComponentWarehouseID { get; set; }
+        public string SupplierNumber { get; set; }
+        public string SupplierName { get; set; }
     }
 }

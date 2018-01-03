@@ -30,12 +30,9 @@ namespace WMS.DataAccess
         public string ReceiptStorageLocation { get; set; }
         public string BoardNo { get; set; }
         public string ReceiptPackage { get; set; }
-        public Nullable<decimal> ExpectedAmount { get; set; }
         public Nullable<decimal> ReceiptCount { get; set; }
         public string MoveType { get; set; }
         public string Source { get; set; }
-        public string AssignmentPerson { get; set; }
-        public Nullable<int> PostedCount { get; set; }
         public string BoxNo { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
@@ -64,20 +61,11 @@ namespace WMS.DataAccess
         public Nullable<int> SupplierID { get; set; }
         public string State { get; set; }
         public int ProjectID { get; set; }
+        public Nullable<int> PersonID { get; set; }
+        public string Number { get; set; }
+        public string StorageArea { get; set; }
+        public string StorageLocation { get; set; }
+        public string SupplierNumber { get; set; }
         public string SupplierName { get; set; }
-        public string SupplierContractNo { get; set; }
-        public Nullable<System.DateTime> SupplierStartDate { get; set; }
-        public Nullable<System.DateTime> SupplierEndDate { get; set; }
-        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
-        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
-        public string SupplierFullName { get; set; }
-        public string SupplierTaxpayerNumber { get; set; }
-        public string SupplierAddress { get; set; }
-        public string SupplierSupplierTel { get; set; }
-        public string SupplierBankName { get; set; }
-        public string SupplierBankAccount { get; set; }
-        public string SupplierBankNo { get; set; }
-        public string SupplierZipCode { get; set; }
-        public string SupplierRecipientName { get; set; }
     }
 }

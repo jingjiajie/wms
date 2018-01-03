@@ -136,92 +136,112 @@ namespace WMS.UI
                     continue;
                 }
                 TextBox curTextBox = (TextBox)foundControls[0];
-                string chineseName = p.Name;
-                var searchedName = (from kn in keyNames where kn.Key == p.Name select kn.Name).ToArray();
-                if (searchedName.Length > 0)
+                if(CopyTextToProperty(curTextBox.Text,p.Name, targetObject, keyNames, out errorMessage) == false)
                 {
-                    chineseName = searchedName.First();
-                }
-
-                Type originType = p.PropertyType;
-                //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
-                if (curTextBox.Text.Length == 0 && originType != typeof(string))
-                {
-                    if (IsNullableType(originType))
-                    {
-                        p.SetValue(targetObject, null, null);
-                        continue;
-                    }
-                    else
-                    {
-                        errorMessage = chineseName + " 不允许为空！";
-                        return false;
-                    }
-                }
-                //根据源类型不同，将编辑框中的文本转换成合适的类型
-                if (originType == typeof(String))
-                {
-                    if(curTextBox.Text.Length > 64)
-                    {
-                        errorMessage = chineseName + " 长度不允许超过64个字";
-                        return false;
-                    }
-                    p.SetValue(targetObject, curTextBox.Text, null);
-                }
-                else if (originType == typeof(int?) || originType == typeof(int))
-                {
-                    try
-                    {
-                        p.SetValue(targetObject, int.Parse(curTextBox.Text), null);
-                    }
-                    catch
-                    {
-                        errorMessage = chineseName + " 只接受整数值";
-                        return false;
-                    }
-                }
-                else if (originType == typeof(decimal) || originType == typeof(decimal?))
-                {
-                    try
-                    {
-                        decimal value = decimal.Parse(curTextBox.Text);
-                        if(value > 1e17M || value < -1e17M)
-                        {
-                            errorMessage = chineseName + " 数值过大，请重新输入";
-                            return false;
-                        }
-                        p.SetValue(targetObject, value, null);
-                    }
-                    catch
-                    {
-                        errorMessage = chineseName + " 只接受数值类型";
-                        return false;
-                    }
-                }
-                else if (originType == typeof(DateTime?) || originType == typeof(DateTime))
-                {
-                    try
-                    {
-                        DateTime dt = DateTime.Parse(curTextBox.Text);
-                        if (dt < new DateTime(1753, 1, 1) || dt > new DateTime(9999, 12, 31, 23, 59, 59))
-                        {
-                            errorMessage = chineseName + " 请填写合适的日期";
-                            return false;
-                        }
-                        p.SetValue(targetObject, dt, null);
-                    }
-                    catch
-                    {
-                        errorMessage = chineseName + " 只接受日期字符串(年-月-日)";
-                        return false;
-                    }
-                }
-                else
-                {
-                    errorMessage = "内部错误：未知源类型 " + originType;
                     return false;
                 }
             }
+            errorMessage = null;
+            return true;
+        }
+
+
+        private static bool CopyTextToProperty<T>(string text, string propertyName, T targetObject, KeyName[] keyNames, out string errorMessage)
+        {
+            Type objType = typeof(T);
+            PropertyInfo p = objType.GetProperty(propertyName);
+            if (p == null)
+            {
+                throw new Exception("你的对象" + objType.Name + "里没有" + propertyName + "这个属性！检查一下你的代码吧！");
+            }
+
+            string chineseName = p.Name;
+            var searchedName = (from kn in keyNames where kn.Key == p.Name select kn.Name).ToArray();
+            if (searchedName.Length > 0)
+            {
+                chineseName = searchedName.First();
+            }
+
+            Type originType = p.PropertyType;
+            //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
+            if (text.Length == 0 && originType != typeof(string))
+            {
+                if (IsNullableType(originType))
+                {
+                    p.SetValue(targetObject, null, null);
+                    errorMessage = null;
+                    return true;
+                }
+                else
+                {
+                    errorMessage = chineseName + " 不允许为空！";
+                    return false;
+                }
+            }
+            //根据源类型不同，将编辑框中的文本转换成合适的类型
+            if (originType == typeof(String))
+            {
+                if (text.Length > 64)
+                {
+                    errorMessage = chineseName + " 长度不允许超过64个字";
+                    return false;
+                }
+                p.SetValue(targetObject, text, null);
+            }
+            else if (originType == typeof(int?) || originType == typeof(int))
+            {
+                try
+                {
+                    p.SetValue(targetObject, int.Parse(text), null);
+                }
+                catch
+                {
+                    errorMessage = chineseName + " 只接受整数值";
+                    return false;
+                }
+            }
+            else if (originType == typeof(decimal) || originType == typeof(decimal?))
+            {
+                try
+                {
+                    decimal value = decimal.Parse(text);
+                    if (value > 1e17M || value < -1e17M)
+                    {
+                        errorMessage = chineseName + " 数值过大，请重新输入";
+                        return false;
+                    }
+                    p.SetValue(targetObject, value, null);
+                }
+                catch
+                {
+                    errorMessage = chineseName + " 只接受数值类型";
+                    return false;
+                }
+            }
+            else if (originType == typeof(DateTime?) || originType == typeof(DateTime))
+            {
+                try
+                {
+                    DateTime dt = DateTime.Parse(text);
+                    if (dt < new DateTime(1753, 1, 1) || dt > new DateTime(9999, 12, 31, 23, 59, 59))
+                    {
+                        errorMessage = chineseName + " 请填写合适的日期";
+                        return false;
+                    }
+                    p.SetValue(targetObject, dt, null);
+                }
+                catch
+                {
+                    errorMessage = chineseName + " 只接受日期字符串 年-月-日 (时:分:秒 可选)";
+                    return false;
+                }
+            }
+            else
+            {
+                errorMessage = "内部错误：未知源类型 " + originType;
+                return false;
+            }
+
             errorMessage = null;
             return true;
         }
@@ -328,5 +348,71 @@ namespace WMS.UI
             }
         }
 
+        public static void InitReoGridImport(ReoGridControl reoGridControl,KeyName[] keyNames)
+        {
+            //初始化表格
+            var worksheet = reoGridControl.Worksheets[0];
+            for (int i = 0; i < keyNames.Length; i++)
+            {
+                worksheet.ColumnHeaders[i].Text = keyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = keyNames[i].ImportVisible;
+            }
+            worksheet.Columns = keyNames.Length; //限制表的长度
+        }
+
+        public static T[] MakeObjectByReoGridImport<T>(ReoGridControl reoGridControl,KeyName[] keyNames,out string errorMessage) where T:new()
+        {
+            var worksheet = reoGridControl.Worksheets[0];
+            List<T> result = new List<T>();
+            string[] propertyNames = (from kn in keyNames
+                                    select kn.Key).ToArray();
+            //遍历行
+            for (int line = 0; line < worksheet.Rows; line++)
+            {
+                //如果是空行，则跳过
+                if (IsEmptyLine(reoGridControl, line))
+                {
+                    continue;
+                }
+
+                T newObj = new T();
+                result.Add(newObj);
+                //遍历列
+                for (int col = 0; col < keyNames.Length; col++)
+                {
+                    //如果字段对导入不可见，或者可见但不导入，则跳过
+                    if (keyNames[col].ImportVisible == false || keyNames[col].Import == false)
+                    {
+                        continue;
+                    }
+                    //如果单元格为null，则跳过
+                    if(worksheet.GetCell(line,col) == null)
+                    {
+                        continue;
+                    }
+                    if (CopyTextToProperty(worksheet[line, col].ToString(), propertyNames[col], newObj, keyNames, out errorMessage) == false)
+                    {
+                        errorMessage = string.Format("行{0}，列{1}：{2}", line, col, errorMessage);
+                        return null;
+                    }
+                }
+            }
+            errorMessage = null;
+            return result.ToArray();
+        }
+
+        private static bool IsEmptyLine(ReoGridControl reoGridControl,int line)
+        {
+            var worksheet = reoGridControl.Worksheets[0];
+            for(int col = 0; col < worksheet.Columns; col++)
+            {
+                //只要有单元格有字，就判定不为空行。如果所有单元格都是null或者没有字，判定为空行。
+                if(worksheet.GetCell(line,col) != null && worksheet.GetCell(line, col).Data.ToString().Length != 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

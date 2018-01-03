@@ -17,7 +17,6 @@ namespace WMS.DataAccess
         public Warehouse()
         {
             this.Component = new HashSet<Component>();
-            this.JobTicket = new HashSet<JobTicket>();
             this.PutawayTicket = new HashSet<PutawayTicket>();
             this.PutOutStorageTicket = new HashSet<PutOutStorageTicket>();
             this.ReceiptTicket = new HashSet<ReceiptTicket>();
@@ -31,7 +30,6 @@ namespace WMS.DataAccess
         public string Name { get; set; }
     
         public virtual ICollection<Component> Component { get; set; }
-        public virtual ICollection<JobTicket> JobTicket { get; set; }
         public virtual ICollection<PutawayTicket> PutawayTicket { get; set; }
         public virtual ICollection<PutOutStorageTicket> PutOutStorageTicket { get; set; }
         public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }

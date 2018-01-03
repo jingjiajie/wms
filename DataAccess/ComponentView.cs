@@ -16,8 +16,8 @@ namespace WMS.DataAccess
     {
         public int ID { get; set; }
         public Nullable<int> ProjectID { get; set; }
-        public int WarehouseID { get; set; }
-        public int SupplierID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> SupplierID { get; set; }
         public string ContainerNo { get; set; }
         public string Factroy { get; set; }
         public string WorkPosition { get; set; }
@@ -38,19 +38,34 @@ namespace WMS.DataAccess
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public string SupplierName { get; set; }
-        public string SupplierContractNo { get; set; }
-        public Nullable<System.DateTime> SupplierStartDate { get; set; }
-        public Nullable<System.DateTime> SupplierEndDate { get; set; }
-        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
-        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
-        public string SupplierFullName { get; set; }
-        public string SupplierTaxpayerNumber { get; set; }
-        public string SupplierAddress { get; set; }
-        public string SupplierTel { get; set; }
-        public string SupplierBankName { get; set; }
-        public string SupplierBankAccount { get; set; }
-        public string SupplierBankNo { get; set; }
-        public string SupplierZipCode { get; set; }
-        public string SupplierRecipientName { get; set; }
+        public string SupplierNumber { get; set; }
+        public string Number { get; set; }
+        public string PhotoIndex { get; set; }
+        public string SingleBoxPhotoIndex { get; set; }
+        public string SingleBoxPackagingBoxType { get; set; }
+        public Nullable<decimal> SingleBoxLength { get; set; }
+        public Nullable<decimal> SingleBoxWidth { get; set; }
+        public Nullable<decimal> SingleBoxHeight { get; set; }
+        public Nullable<decimal> SingleBoxSNP { get; set; }
+        public Nullable<decimal> SingleBoxRatedMinimumBoxCount { get; set; }
+        public Nullable<decimal> SingleBoxWeight { get; set; }
+        public Nullable<decimal> SingleBoxLayerCount { get; set; }
+        public Nullable<decimal> SingleBoxStorageCount { get; set; }
+        public Nullable<decimal> SingleBoxTheoreticalLayerCount { get; set; }
+        public Nullable<decimal> SingleBoxTheoreticalStorageHeight { get; set; }
+        public Nullable<decimal> SingleBoxThroreticalStorageCount { get; set; }
+        public string OuterPackingPhotoIndex { get; set; }
+        public string OuterPackingBoxType { get; set; }
+        public Nullable<decimal> OuterPackingLength { get; set; }
+        public Nullable<decimal> OuterPackingWidth { get; set; }
+        public Nullable<decimal> OuterPackingHeight { get; set; }
+        public string OuterPackingSNP { get; set; }
+        public string OuterPackingComment { get; set; }
+        public Nullable<decimal> OuterPackingRequiredLayers { get; set; }
+        public string ShipmentInfoBoxType { get; set; }
+        public Nullable<decimal> ShipmentInfoBoxLength { get; set; }
+        public Nullable<decimal> ShipmentInfoBoxWidth { get; set; }
+        public Nullable<decimal> ShipmentInfoBoxHeight { get; set; }
+        public Nullable<decimal> ShipmentInfoUnitAmount { get; set; }
     }
 }

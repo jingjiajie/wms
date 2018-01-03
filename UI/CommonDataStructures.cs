@@ -13,6 +13,8 @@ namespace WMS.UI
         public bool Visible = true;
         public ComboBoxItem[] ComboBoxItems = null;
         public bool Editable = true;
+        public bool ImportVisible = true;
+        public bool Import = true;
         public bool Save = true;
     }
 

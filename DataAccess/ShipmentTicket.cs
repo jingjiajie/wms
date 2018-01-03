@@ -23,32 +23,18 @@ namespace WMS.DataAccess
         public int WarehouseID { get; set; }
         public string No { get; set; }
         public string Type { get; set; }
-        public string TypeNo { get; set; }
         public string Source { get; set; }
-        public Nullable<decimal> SegmentationChainCount { get; set; }
-        public string RelatedTicketNo { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<int> TicketNum { get; set; }
         public Nullable<System.DateTime> RequireArriveDate { get; set; }
         public string State { get; set; }
-        public Nullable<decimal> ScheduledAmount { get; set; }
-        public Nullable<decimal> AllocatedAmount { get; set; }
-        public Nullable<decimal> PickingAmount { get; set; }
-        public Nullable<decimal> ShipmentAmount { get; set; }
-        public Nullable<decimal> ExceedStorageAmount { get; set; }
         public string Station { get; set; }
-        public string ReverseTicketNo { get; set; }
-        public string SortType { get; set; }
-        public string ProductionLine { get; set; }
         public string ReceivingPersonName { get; set; }
         public string ContactAddress { get; set; }
         public string DeliveryPath { get; set; }
         public string Description { get; set; }
-        public string CloseReason { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public Nullable<int> PrintTimes { get; set; }
-        public Nullable<int> WaitingToBeDone { get; set; }
         public string DeliveryTicketNo { get; set; }
         public string OuterPhysicalDistributionPath { get; set; }
         public string DeliveryPoint { get; set; }
@@ -58,6 +44,9 @@ namespace WMS.DataAccess
         public int ProjectID { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
+        public string Number { get; set; }
+        public string ReturnTicketNo { get; set; }
+        public Nullable<System.DateTime> ReturnTicketDate { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Warehouse Warehouse { get; set; }

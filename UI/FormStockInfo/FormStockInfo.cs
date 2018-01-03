@@ -61,7 +61,6 @@ namespace WMS.UI
             this.pagerWidget = new PagerWidget<StockInfoView>(this.reoGridControlMain, StockInfoViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
-
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)

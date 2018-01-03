@@ -34,16 +34,16 @@
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
+            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
+            this.buttonAlter = new System.Windows.Forms.ToolStripButton();
+            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelPager = new System.Windows.Forms.Panel();
-            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
-            this.buttonAdd = new System.Windows.Forms.ToolStripButton();
-            this.buttonAlter = new System.Windows.Forms.ToolStripButton();
-            this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -116,11 +116,50 @@
             this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
             this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
+            // buttonSearch
+            // 
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(86, 36);
+            this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.AutoSize = false;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
+            // 
+            // buttonAdd
+            // 
+            this.buttonAdd.AutoSize = false;
+            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
+            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
+            this.buttonAdd.Text = "添加";
+            this.buttonAdd.Visible = false;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
+            // buttonAlter
+            // 
+            this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
+            this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonAlter.Name = "buttonAlter";
+            this.buttonAlter.Size = new System.Drawing.Size(86, 36);
+            this.buttonAlter.Text = "修改";
+            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
+            // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
+            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(86, 36);
+            this.buttonDelete.Text = "删除";
+            this.buttonDelete.Visible = false;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // statusStrip1
             // 
@@ -156,7 +195,7 @@
             this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panelPager, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 28);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 39);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -175,45 +214,6 @@
             this.panelPager.Name = "panelPager";
             this.panelPager.Size = new System.Drawing.Size(1102, 61);
             this.panelPager.TabIndex = 5;
-            // 
-            // buttonSearch
-            // 
-            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
-            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(86, 36);
-            this.buttonSearch.Text = "查询";
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
-            // 
-            // buttonAdd
-            // 
-            this.buttonAdd.AutoSize = false;
-            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
-            this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(60, 25);
-            this.buttonAdd.Text = "添加";
-            this.buttonAdd.Visible = false;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-            // 
-            // buttonAlter
-            // 
-            this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
-            this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(86, 36);
-            this.buttonAlter.Text = "修改";
-            this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
-            this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(86, 36);
-            this.buttonDelete.Text = "删除";
-            this.buttonDelete.Visible = false;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // FormStockInfo
             // 

@@ -42,13 +42,11 @@ namespace WMS.DataAccess
         public string ReceiptStorageLocation { get; set; }
         public string BoardNo { get; set; }
         public string ReceiptPackage { get; set; }
-        public Nullable<decimal> ExpectedAmount { get; set; }
         public Nullable<decimal> ReceiptCount { get; set; }
         public string State { get; set; }
         public string No { get; set; }
         public Nullable<int> SupplierID { get; set; }
-        public string AssignmentPerson { get; set; }
-        public Nullable<int> PostedCount { get; set; }
+        public Nullable<int> PersonID { get; set; }
         public string BoxNo { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
@@ -57,6 +55,9 @@ namespace WMS.DataAccess
         public int ProjectID { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<int> CreateUserID { get; set; }
+        public string Number { get; set; }
+        public string StorageArea { get; set; }
+        public string StorageLocation { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }
