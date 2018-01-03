@@ -31,95 +31,20 @@ namespace WMS.DataAccess
         public string InnerShipmentPath { get; set; }
         public Nullable<decimal> LookBoardCount { get; set; }
         public string Unit { get; set; }
-        public Nullable<int> ShipmentTicketProjectID { get; set; }
-        public Nullable<int> ShipmentTicketWarehouseID { get; set; }
-        public string ShipmentTicketNo { get; set; }
-        public string ShipmentTicketType { get; set; }
-        public string ShipmentTicketTypeNo { get; set; }
-        public string ShipmentTicketSource { get; set; }
-        public Nullable<decimal> ShipmentTicketSegmentationChainCount { get; set; }
-        public string ShipmentTicketRelatedTicketNo { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketDate { get; set; }
-        public Nullable<int> ShipmentTicketTicketNum { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketRequireArriveDate { get; set; }
-        public string ShipmentTicketState { get; set; }
-        public Nullable<decimal> ShipmentTicketScheduledAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketAllocatedAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketPickingAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketShipmentAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketExceedStorageAmount { get; set; }
-        public string ShipmentTicketStation { get; set; }
-        public string ShipmentTicketReverseTicketNo { get; set; }
-        public string ShipmentTicketSortType { get; set; }
-        public string ShipmentTicketProductionLine { get; set; }
-        public string ShipmentTicketReceivingPersonName { get; set; }
-        public string ShipmentTicketContactAddress { get; set; }
-        public string ShipmentTicketDeliveryPath { get; set; }
-        public string ShipmentTicketDescription { get; set; }
-        public string ShipmentTicketCloseReason { get; set; }
-        public Nullable<int> ShipmentTicketCreateUserID { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketCreateTime { get; set; }
-        public Nullable<int> ShipmentTicketLastUpdateUserID { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketLastUpdateTime { get; set; }
-        public Nullable<int> ShipmentTicketPrintTimes { get; set; }
-        public Nullable<int> ShipmentTicketWaitingToBeDone { get; set; }
-        public string ShipmentTicketDeliveryTicketNo { get; set; }
-        public string ShipmentTicketOuterPhysicalDistributionPath { get; set; }
-        public string ShipmentTicketDeliveryPoint { get; set; }
-        public Nullable<int> ShipmentTicketEmergency { get; set; }
-        public string ShipmentTicketShipmentPlaceNo { get; set; }
-        public Nullable<int> ShipmentTicketBoardPrintedTimes { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public Nullable<int> ReceiptTicketItemReceiptTicketID { get; set; }
         public Nullable<int> ReceiptTicketItemComponentID { get; set; }
-        public string ReceiptTicketItemPackageName { get; set; }
-        public Nullable<decimal> ReceiptTicketItemExpectedPackageAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemExpectedAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemReceiviptAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemWrongComponentAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemShortageAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemDisqualifiedAmount { get; set; }
-        public string ReceiptTicketItemManufactureNo { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemInventoryDate { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemManufactureDate { get; set; }
-        public Nullable<System.DateTime> ReceiptTicketItemExpiryDate { get; set; }
-        public string ReceiptTicketItemRealRightProperty { get; set; }
-        public string ReceiptTicketItemBoxNo { get; set; }
         public string SupplierName { get; set; }
-        public string SupplierContractNo { get; set; }
-        public Nullable<System.DateTime> SupplierStartDate { get; set; }
-        public Nullable<System.DateTime> SupplierEndDate { get; set; }
-        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
-        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
-        public string SupplierFullName { get; set; }
-        public string SupplierTaxpayerNumber { get; set; }
-        public string SupplierAddress { get; set; }
-        public string SupplierTel { get; set; }
-        public string SupplierBankName { get; set; }
-        public string SupplierBankAccount { get; set; }
-        public string SupplierBankNo { get; set; }
-        public string SupplierZipCode { get; set; }
-        public string SupplierRecipientName { get; set; }
         public Nullable<int> ComponentProjectID { get; set; }
         public Nullable<int> ComponentWarehouseID { get; set; }
-        public Nullable<int> ComponentSupplierID { get; set; }
-        public string ComponentContainerNo { get; set; }
-        public string ComponentFactroy { get; set; }
-        public string ComponentWorkPosition { get; set; }
         public string ComponentNo { get; set; }
         public string ComponentName { get; set; }
-        public string ComponentSupplierType { get; set; }
-        public string ComponentType { get; set; }
-        public string ComponentSize { get; set; }
-        public string ComponentCategory { get; set; }
-        public string ComponentGroupPrincipal { get; set; }
-        public Nullable<decimal> ComponentSingleCarUsageAmount { get; set; }
-        public Nullable<decimal> ComponentCharge1 { get; set; }
-        public Nullable<decimal> ComponentCharge2 { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement1Day { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement3Day { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement5Day { get; set; }
-        public Nullable<decimal> ComponentInventoryRequirement10Day { get; set; }
+        public Nullable<decimal> ReturnAmount { get; set; }
+        public string ReturnReason { get; set; }
+        public string ShipmentTicketNumber { get; set; }
+        public string ShipmentTicketNo { get; set; }
+        public string ComponentNumber { get; set; }
+        public string SupplierNumber { get; set; }
     }
 }

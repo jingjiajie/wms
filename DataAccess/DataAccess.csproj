@@ -50,24 +50,6 @@
     <Compile Include="Component.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ComponentOuterPackingSize.cs">
-      <DependentUpon>WMSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentOuterPackingSizeView.cs">
-      <DependentUpon>WMSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentShipmentInfo.cs">
-      <DependentUpon>WMSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentShipmentInfoView.cs">
-      <DependentUpon>WMSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentSingleBoxTranPackingInfo.cs">
-      <DependentUpon>WMSModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ComponentSingleBoxTranPackingInfoView.cs">
-      <DependentUpon>WMSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ComponentView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
@@ -81,6 +63,12 @@
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="JobTicketView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Person.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PersonView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Project.cs">

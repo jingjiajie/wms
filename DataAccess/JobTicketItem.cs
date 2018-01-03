@@ -17,17 +17,14 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public int JobTicketID { get; set; }
         public Nullable<int> StockInfoID { get; set; }
-        public string No { get; set; }
-        public string Type { get; set; }
-        public string MoveOutStorageLocation { get; set; }
-        public string SourceBoardNo { get; set; }
-        public string MoveInStorageLocation { get; set; }
         public string State { get; set; }
-        public Nullable<decimal> ScheduledMoveCount { get; set; }
-        public Nullable<decimal> MoveCount { get; set; }
-        public Nullable<decimal> HaveBackedCount { get; set; }
-        public string ActualJobPerson { get; set; }
+        public Nullable<int> PersonID { get; set; }
         public Nullable<System.DateTime> HappenTime { get; set; }
+        public Nullable<decimal> ScheduledAmount { get; set; }
+        public Nullable<decimal> RealAmount { get; set; }
+        public string Unit { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
     
         public virtual JobTicket JobTicket { get; set; }
     }

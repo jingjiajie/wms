@@ -12,16 +12,9 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class ComponentShipmentInfo
+    public partial class Person
     {
         public int ID { get; set; }
-        public int ComponentID { get; set; }
-        public string BoxType { get; set; }
-        public Nullable<decimal> BoxLength { get; set; }
-        public Nullable<decimal> BoxWidth { get; set; }
-        public Nullable<decimal> BoxHeight { get; set; }
-        public Nullable<decimal> UnitAmount { get; set; }
-    
-        public virtual Component Component { get; set; }
+        public string Name { get; set; }
     }
 }

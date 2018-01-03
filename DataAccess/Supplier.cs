@@ -27,8 +27,8 @@ namespace WMS.DataAccess
         public string ContractNo { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
-        public Nullable<System.DateTime> InvoiceDate { get; set; }
-        public Nullable<System.DateTime> BalanceDate { get; set; }
+        public Nullable<decimal> InvoiceDelayMonth { get; set; }
+        public Nullable<decimal> BalanceDelayMonth { get; set; }
         public string FullName { get; set; }
         public string TaxpayerNumber { get; set; }
         public string Address { get; set; }
@@ -38,6 +38,9 @@ namespace WMS.DataAccess
         public string BankNo { get; set; }
         public string ZipCode { get; set; }
         public string RecipientName { get; set; }
+        public string Number { get; set; }
+        public string ContractState { get; set; }
+        public Nullable<int> IsHistory { get; set; }
     
         public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }

@@ -17,11 +17,12 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public Nullable<int> ReceiptTicketItemID { get; set; }
         public Nullable<decimal> ReceiptAreaAmount { get; set; }
-        public Nullable<decimal> SubmissionAreaAmount { get; set; }
+        public Nullable<decimal> SubmissionAmount { get; set; }
         public Nullable<decimal> OverflowAreaAmount { get; set; }
         public Nullable<decimal> ShipmentAreaAmount { get; set; }
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
+        public Nullable<decimal> RejectAreaAmount { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Warehouse Warehouse { get; set; }

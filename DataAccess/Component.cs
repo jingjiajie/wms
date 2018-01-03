@@ -14,13 +14,6 @@ namespace WMS.DataAccess
     
     public partial class Component
     {
-        public Component()
-        {
-            this.ComponentShipmentInfo = new HashSet<ComponentShipmentInfo>();
-            this.ComponentOuterPackingSize = new HashSet<ComponentOuterPackingSize>();
-            this.ComponentSingleBoxTranPackingInfo = new HashSet<ComponentSingleBoxTranPackingInfo>();
-        }
-    
         public int ID { get; set; }
         public string ContainerNo { get; set; }
         public string Factroy { get; set; }
@@ -42,10 +35,35 @@ namespace WMS.DataAccess
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> SupplierID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
+        public string Number { get; set; }
+        public string PhotoIndex { get; set; }
+        public string SingleBoxPhotoIndex { get; set; }
+        public string SingleBoxPackagingBoxType { get; set; }
+        public Nullable<decimal> SingleBoxLength { get; set; }
+        public Nullable<decimal> SingleBoxWidth { get; set; }
+        public Nullable<decimal> SingleBoxHeight { get; set; }
+        public Nullable<decimal> SingleBoxSNP { get; set; }
+        public Nullable<decimal> SingleBoxRatedMinimumBoxCount { get; set; }
+        public Nullable<decimal> SingleBoxWeight { get; set; }
+        public Nullable<decimal> SingleBoxLayerCount { get; set; }
+        public Nullable<decimal> SingleBoxStorageCount { get; set; }
+        public Nullable<decimal> SingleBoxTheoreticalLayerCount { get; set; }
+        public Nullable<decimal> SingleBoxTheoreticalStorageHeight { get; set; }
+        public Nullable<decimal> SingleBoxThroreticalStorageCount { get; set; }
+        public string OuterPackingPhotoIndex { get; set; }
+        public string OuterPackingBoxType { get; set; }
+        public Nullable<decimal> OuterPackingLength { get; set; }
+        public Nullable<decimal> OuterPackingWidth { get; set; }
+        public Nullable<decimal> OuterPackingHeight { get; set; }
+        public string OuterPackingSNP { get; set; }
+        public string OuterPackingComment { get; set; }
+        public Nullable<decimal> OuterPackingRequiredLayers { get; set; }
+        public string ShipmentInfoBoxType { get; set; }
+        public Nullable<decimal> ShipmentInfoBoxLength { get; set; }
+        public Nullable<decimal> ShipmentInfoBoxWidth { get; set; }
+        public Nullable<decimal> ShipmentInfoBoxHeight { get; set; }
+        public Nullable<decimal> ShipmentInfoUnitAmount { get; set; }
     
-        public virtual ICollection<ComponentShipmentInfo> ComponentShipmentInfo { get; set; }
-        public virtual ICollection<ComponentOuterPackingSize> ComponentOuterPackingSize { get; set; }
-        public virtual ICollection<ComponentSingleBoxTranPackingInfo> ComponentSingleBoxTranPackingInfo { get; set; }
         public virtual Project Project { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Warehouse Warehouse { get; set; }

@@ -23,14 +23,10 @@ namespace WMS.DataAccess
         public string No { get; set; }
         public string TruckLoadingTicketNo { get; set; }
         public string Sourse { get; set; }
-        public string WorkFlow { get; set; }
         public string State { get; set; }
         public string CarNum { get; set; }
         public string Driver { get; set; }
-        public string SerialNo { get; set; }
         public string OriginalTicketType { get; set; }
-        public string PullTicketNo { get; set; }
-        public string CrossingNo { get; set; }
         public string ReceiverNo { get; set; }
         public string SortTypeNo { get; set; }
         public Nullable<System.DateTime> TruckLoadingTime { get; set; }

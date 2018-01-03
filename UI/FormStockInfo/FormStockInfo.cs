@@ -48,8 +48,6 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             string[] visibleColumnNames = (from kn in StockInfoViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
@@ -63,7 +61,6 @@ namespace WMS.UI
             this.pagerWidget = new PagerWidget<StockInfoView>(this.reoGridControlMain, StockInfoViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
-
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)

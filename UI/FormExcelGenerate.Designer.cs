@@ -64,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(710, 218);
+            this.ClientSize = new System.Drawing.Size(746, 232);
             this.Controls.Add(this.buttonGenerate);
             this.Controls.Add(this.buttonSelectFile);
             this.Controls.Add(this.textBoxFilePath);

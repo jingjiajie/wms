@@ -31,6 +31,8 @@ namespace WMS.DataAccess
         public string InnerShipmentPath { get; set; }
         public Nullable<decimal> LookBoardCount { get; set; }
         public string Unit { get; set; }
+        public Nullable<decimal> ReturnAmount { get; set; }
+        public string ReturnReason { get; set; }
     
         public virtual ShipmentTicket ShipmentTicket { get; set; }
     }

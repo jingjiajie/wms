@@ -24,12 +24,10 @@ namespace WMS.DataAccess
         public string JobTicketNo { get; set; }
         public string JobType { get; set; }
         public string JobGroupName { get; set; }
-        public Nullable<decimal> ScheduledAmount { get; set; }
-        public Nullable<decimal> RealAmount { get; set; }
         public string State { get; set; }
         public Nullable<int> PrintedTimes { get; set; }
         public string AssignmentArea { get; set; }
-        public string PersonInCharge { get; set; }
+        public Nullable<int> PersonID { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
@@ -38,7 +36,5 @@ namespace WMS.DataAccess
         public Nullable<int> WarehouseID { get; set; }
     
         public virtual ICollection<JobTicketItem> JobTicketItem { get; set; }
-        public virtual Project Project { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
     }
 }

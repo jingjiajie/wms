@@ -26,11 +26,9 @@ namespace WMS.DataAccess
         }
     
         public DbSet<Component> Component { get; set; }
-        public DbSet<ComponentOuterPackingSize> ComponentOuterPackingSize { get; set; }
-        public DbSet<ComponentShipmentInfo> ComponentShipmentInfo { get; set; }
-        public DbSet<ComponentSingleBoxTranPackingInfo> ComponentSingleBoxTranPackingInfo { get; set; }
         public DbSet<JobTicket> JobTicket { get; set; }
         public DbSet<JobTicketItem> JobTicketItem { get; set; }
+        public DbSet<Person> Person { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<PutawayTicket> PutawayTicket { get; set; }
         public DbSet<PutawayTicketItem> PutawayTicketItem { get; set; }
@@ -49,12 +47,10 @@ namespace WMS.DataAccess
         public DbSet<SupplierAnnualInfo> SupplierAnnualInfo { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Warehouse> Warehouse { get; set; }
-        public DbSet<ComponentOuterPackingSizeView> ComponentOuterPackingSizeView { get; set; }
-        public DbSet<ComponentShipmentInfoView> ComponentShipmentInfoView { get; set; }
-        public DbSet<ComponentSingleBoxTranPackingInfoView> ComponentSingleBoxTranPackingInfoView { get; set; }
         public DbSet<ComponentView> ComponentView { get; set; }
         public DbSet<JobTicketItemView> JobTicketItemView { get; set; }
         public DbSet<JobTicketView> JobTicketView { get; set; }
+        public DbSet<PersonView> PersonView { get; set; }
         public DbSet<ProjectView> ProjectView { get; set; }
         public DbSet<PutawayTicketItemView> PutawayTicketItemView { get; set; }
         public DbSet<PutawayTicketView> PutawayTicketView { get; set; }

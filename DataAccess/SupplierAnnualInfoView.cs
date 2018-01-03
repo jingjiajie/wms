@@ -71,8 +71,6 @@ namespace WMS.DataAccess
         public string SupplierContractNo { get; set; }
         public Nullable<System.DateTime> SupplierStartDate { get; set; }
         public Nullable<System.DateTime> SupplierEndDate { get; set; }
-        public Nullable<System.DateTime> SupplierInvoiceDate { get; set; }
-        public Nullable<System.DateTime> SupplierBalanceDate { get; set; }
         public string SupplierFullName { get; set; }
         public string SupplierTaxpayerNumber { get; set; }
         public string SupplierAddress { get; set; }

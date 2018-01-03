@@ -19,54 +19,14 @@ namespace WMS.DataAccess
         public string JobTicketNo { get; set; }
         public string JobType { get; set; }
         public string JobGroupName { get; set; }
-        public Nullable<decimal> ScheduledAmount { get; set; }
-        public Nullable<decimal> RealAmount { get; set; }
         public string State { get; set; }
         public Nullable<int> PrintedTimes { get; set; }
         public string AssignmentArea { get; set; }
-        public string PersonInCharge { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
-        public Nullable<int> ShipmentTicketProjectID { get; set; }
-        public Nullable<int> ShipmentTicketWarehouseID { get; set; }
         public string ShipmentTicketNo { get; set; }
-        public string ShipmentTicketType { get; set; }
-        public string ShipmentTicketTypeNo { get; set; }
-        public string ShipmentTicketSource { get; set; }
-        public Nullable<decimal> ShipmentTicketSegmentationChainCount { get; set; }
-        public string ShipmentTicketRelatedTicketNo { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketDate { get; set; }
-        public Nullable<int> ShipmentTicketTicketNum { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketRequireArriveDate { get; set; }
-        public string ShipmentTicketState { get; set; }
-        public Nullable<decimal> ShipmentTicketScheduledAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketAllocatedAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketPickingAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketShipmentAmount { get; set; }
-        public Nullable<decimal> ShipmentTicketExceedStorageAmount { get; set; }
-        public string ShipmentTicketStation { get; set; }
-        public string ShipmentTicketReverseTicketNo { get; set; }
-        public string ShipmentTicketSortType { get; set; }
-        public string ShipmentTicketProductionLine { get; set; }
-        public string ShipmentTicketReceivingPersonName { get; set; }
-        public string ShipmentTicketContactAddress { get; set; }
-        public string ShipmentTicketDeliveryPath { get; set; }
-        public string ShipmentTicketDescription { get; set; }
-        public string ShipmentTicketCloseReason { get; set; }
-        public Nullable<int> ShipmentTicketCreateUserID { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketCreateTime { get; set; }
-        public Nullable<int> ShipmentTicketLastUpdateUserID { get; set; }
-        public Nullable<System.DateTime> ShipmentTicketLastUpdateTime { get; set; }
-        public Nullable<int> ShipmentTicketPrintTimes { get; set; }
-        public Nullable<int> ShipmentTicketWaitingToBeDone { get; set; }
-        public string ShipmentTicketDeliveryTicketNo { get; set; }
-        public string ShipmentTicketOuterPhysicalDistributionPath { get; set; }
-        public string ShipmentTicketDeliveryPoint { get; set; }
-        public Nullable<int> ShipmentTicketEmergency { get; set; }
-        public string ShipmentTicketShipmentPlaceNo { get; set; }
-        public Nullable<int> ShipmentTicketBoardPrintedTimes { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public string CreateUserUsername { get; set; }
@@ -81,5 +41,7 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> PersonID { get; set; }
+        public string ShipmentTicketNumber { get; set; }
     }
 }

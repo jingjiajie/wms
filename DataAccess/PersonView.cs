@@ -12,15 +12,9 @@ namespace WMS.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class UserView
+    public partial class PersonView
     {
         public int ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public int Authority { get; set; }
-        public string AuthorityName { get; set; }
-        public Nullable<int> SupplierID { get; set; }
-        public string SupplierName { get; set; }
-        public string SupplierNumber { get; set; }
+        public string Name { get; set; }
     }
 }

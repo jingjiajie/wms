@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WMS.UI.FormBase
+namespace WMS.UI
 {
     class UserMetaData
     {
@@ -36,12 +36,12 @@ namespace WMS.UI.FormBase
                 | (int)Authority.SUBMISSION_TICKET_SUPPLIER_SELFONLY;
 
         private static KeyName[] keyNames = {
-            new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
+            new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false,ImportVisible=false},
             new KeyName(){Key="Username",Name="用户名",Editable=true},
             new KeyName(){Key="Password",Name="密码",Visible=false, Editable=true,Save=true},
             //new KeyName(){Key="Authority",Name="权限",Editable=true},
             new KeyName(){Key="AuthorityName",Name="角色"},
-            new KeyName(){Key="SupplierName",Name="供应商名",Editable=false  ,Save=false},
+            new KeyName(){Key="SupplierName",Name="供应商名",Editable=false  ,Save=false,ImportVisible=false},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

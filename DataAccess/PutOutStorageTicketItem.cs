@@ -17,8 +17,10 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public Nullable<int> StockInfoID { get; set; }
         public int PutOutStorageTicketID { get; set; }
-        public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> ExceedStockAmount { get; set; }
+        public Nullable<decimal> ScheduledAmount { get; set; }
+        public Nullable<decimal> RealAmount { get; set; }
+        public string State { get; set; }
     
         public virtual PutOutStorageTicket PutOutStorageTicket { get; set; }
     }
