@@ -49,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\ComponentShipmentInfoMetaData.cs" />
+    <Compile Include="FormBase\ComponentOuterPackingSizeMetaData.cs" />
+    <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoMetaData.cs" />
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
