@@ -119,7 +119,6 @@ namespace WMS.UI
                 {
                     var jobTicketItem = new JobTicketItem();
                     jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
-                    jobTicketItem.No = "";
                     jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
 
                     newJobTicket.JobTicketItem.Add(jobTicketItem);

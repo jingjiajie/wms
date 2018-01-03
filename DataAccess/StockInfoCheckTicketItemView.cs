@@ -22,9 +22,9 @@ namespace WMS.DataAccess
         public Nullable<decimal> RealShipmentAreaAmount { get; set; }
         public string SupplierName { get; set; }
         public Nullable<int> StockInfoCheckTicketID { get; set; }
-        public string No { get; set; }
-        public string Name { get; set; }
-        public string Number { get; set; }
-        public string Expr1 { get; set; }
+        public string ComponentNo { get; set; }
+        public string ComponentName { get; set; }
+        public string ComponentNumber { get; set; }
+        public string SupplierNumber { get; set; }
     }
 }
