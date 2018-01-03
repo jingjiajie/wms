@@ -44,6 +44,7 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
+            this.panelPager = new System.Windows.Forms.Panel();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -66,7 +67,7 @@
             this.toolStripButtonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(990, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(702, 28);
             this.toolStripTop.TabIndex = 1;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -139,7 +140,7 @@
             this.toolStrip1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.toolStrip1.Location = new System.Drawing.Point(13, 523);
+            this.toolStrip1.Location = new System.Drawing.Point(-41, 508);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(111, 25);
             this.toolStrip1.TabIndex = 3;
@@ -151,10 +152,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 526);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 351);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(990, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(702, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -174,14 +175,17 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.panelPager, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlUser, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 28);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(990, 498);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(702, 323);
             this.tableLayoutPanel1.TabIndex = 5;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint_1);
             // 
             // reoGridControlUser
             // 
@@ -199,15 +203,25 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 60;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(986, 494);
-            this.reoGridControlUser.TabIndex = 3;
+            this.reoGridControlUser.Size = new System.Drawing.Size(698, 280);
+            this.reoGridControlUser.TabIndex = 7;
             this.reoGridControlUser.Text = "reoGridControl1";
+            // 
+            // panelPager
+            // 
+            this.panelPager.BackColor = System.Drawing.SystemColors.Control;
+            this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPager.Location = new System.Drawing.Point(0, 284);
+            this.panelPager.Margin = new System.Windows.Forms.Padding(0);
+            this.panelPager.Name = "panelPager";
+            this.panelPager.Size = new System.Drawing.Size(702, 39);
+            this.panelPager.TabIndex = 8;
             // 
             // FormBaseSupplier
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(990, 548);
+            this.ClientSize = new System.Drawing.Size(702, 373);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
@@ -243,5 +257,6 @@
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private unvell.ReoGrid.ReoGridControl reoGridControlUser;
+        private System.Windows.Forms.Panel panelPager;
     }
 }
