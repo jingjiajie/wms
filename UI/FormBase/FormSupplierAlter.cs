@@ -58,8 +58,7 @@ namespace WMS.UI.FormSupplier
             objsupplier.ContractNo = textBox4.Text;
             objsupplier.StartDate = Convert.ToDateTime(textBox5.Text);
             objsupplier.EndDate = Convert.ToDateTime(textBox6.Text);
-            objsupplier.InvoiceDate = Convert.ToDateTime(textBox7.Text);
-            objsupplier.BalanceDate = Convert.ToDateTime(textBox8.Text);
+       
             objsupplier.FullName = textBox9.Text;
             objsupplier.TaxpayerNumber = textBox10.Text;
             objsupplier.Address = textBox11.Text;
