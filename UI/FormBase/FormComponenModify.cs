@@ -39,7 +39,7 @@ namespace WMS.UI
                 throw new Exception("未设置源零件信息");
             }
 
-            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenMetaData.KeyNames);
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.KeyNames);
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
             textboxsuppliername.ReadOnly = true;
 
@@ -158,14 +158,14 @@ namespace WMS.UI
             componen.SupplierID = this.supplierID;
 
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenMetaData.componenkeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.componenkeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else
             {
-                Utilities.CopyComboBoxsToProperties(this, componen, ComponenMetaData.KeyNames);
+                Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.KeyNames);
             }
             wmsEntities.SaveChanges();
             //调用回调函数
