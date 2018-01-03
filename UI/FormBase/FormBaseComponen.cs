@@ -21,6 +21,8 @@ namespace WMS.UI
         int supplierID = -1;
         int projectID = -1;
         int warehouseID = -1;
+        private PagerWidget<ComponentView> pagerWidget = null;
+
         public FormBaseComponent(int authority, int supplierID, int projectID, int warehouseID)
         {
             InitializeComponent();
@@ -42,15 +44,19 @@ namespace WMS.UI
 
 
             //初始化表格
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = ComponenMetaData.componenkeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ComponenMetaData.componenkeyNames[i].Visible;
-            }
-            worksheet.Columns = ComponenMetaData.componenkeyNames.Length;//限制表的长度
-            //Console.WriteLine("表格行数：" + ComponenMetaData.componenkeyNames.Length);
+            //var worksheet = this.reoGridControlComponen.Worksheets[0];
+            //worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            //for (int i = 0; i < ComponenMetaData.componenkeyNames.Length; i++)
+            //{
+            //    worksheet.ColumnHeaders[i].Text = ComponenMetaData.componenkeyNames[i].Name;
+            //    worksheet.ColumnHeaders[i].IsVisible = ComponenMetaData.componenkeyNames[i].Visible;
+            //}
+            //worksheet.Columns = ComponenMetaData.componenkeyNames.Length;//限制表的长度
+
+            //初始化分页控件
+            this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlComponen, ComponenMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.panelPager.Controls.Add(pagerWidget);
+            pagerWidget.Show();
         }
 
         private void FormBaseComponent_Load(object sender, EventArgs e)
@@ -61,7 +67,7 @@ namespace WMS.UI
                 this.toolStripButtonAlter.Enabled  = false;
             }
             InitComponents();
-            this.Search();
+            this.pagerWidget.Search();
         }
 
         private void reoGridControlUser_Click(object sender, EventArgs e)
