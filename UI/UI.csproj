@@ -183,18 +183,6 @@
     <Compile Include="FormBase\FormBaseSupplier.designer.cs">
       <DependentUpon>FormBaseSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAdd.Designer.cs">
-      <DependentUpon>FormBaseSupplierAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAlter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseSupplierAlter.Designer.cs">
-      <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormBase\FormBaseWarehouseModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,19 +201,7 @@
     <Compile Include="FormBase\FormSupplierModify.Designer.cs">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormSupplierAdd.designer.cs">
-      <DependentUpon>FormSupplierAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormSupplierAlter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormSupplierAlter.designer.cs">
-      <DependentUpon>FormSupplierAlter.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\ComponenViewMetaData.cs" />
+    <Compile Include="FormBase\ComponenMetaData.cs" />
     <Compile Include="FormBase\FormUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -559,12 +535,6 @@
     <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierAdd.resx">
-      <DependentUpon>FormSupplierAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierAlter.resx">
-      <DependentUpon>FormSupplierAlter.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormUser.resx">
       <DependentUpon>FormUser.cs</DependentUpon>
     </EmbeddedResource>
@@ -600,9 +570,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseSupplierAlter.resx">
-      <DependentUpon>FormBaseSupplierAlter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptArrivalCheck.resx">
       <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>

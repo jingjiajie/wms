@@ -38,7 +38,7 @@ namespace WMS.UI
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
-            if (id != 0)
+            if ((this.authority & authority_supplier) != authority_supplier)
             {
                 
                 this.toolStripButtonAdd.Enabled = false;
@@ -51,8 +51,9 @@ namespace WMS.UI
                 //parameters.Add(new SqlParameter("ID", id ));
                 this.pagerWidget.AddCondition("ID",Convert.ToString(id));
                 this.pagerWidget.Search();
+
             }
-            if (id == 0)
+            if ((this.authority & authority_supplier) == authority_supplier)
             {
                 
 
@@ -85,7 +86,7 @@ namespace WMS.UI
             //初始化查询框
             this.toolStripComboBoxSelect.Items.Add("无");
             this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 1;
+            this.toolStripComboBoxSelect.SelectedIndex = 0;
 
             //初始化分页控件
             this.pagerWidget = new PagerWidget<SupplierView>(this.reoGridControlUser, SupplierMetaData.KeyNames, this.projectID, this.warehouseID);
@@ -126,6 +127,16 @@ namespace WMS.UI
             {
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
             }
+
+            if ((this.authority & authority_supplier) != authority_supplier)
+            {
+            this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+                this.pagerWidget.Search();
+            }
+            if ((this.authority & authority_supplier) == authority_supplier)
+            {
+            }
+
             this.pagerWidget.Search();
         }
 
@@ -326,10 +337,7 @@ namespace WMS.UI
         }
         
 
-        private void reoGridControlUser_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -337,7 +345,7 @@ namespace WMS.UI
             {
                 this.toolStripTextBoxSelect.Text = "";
                 this.toolStripTextBoxSelect.Enabled = false;
-                this.Search();
+                //this.Search();
             }
             else
             {
@@ -355,15 +363,9 @@ namespace WMS.UI
 
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
+        
 
-        }
-
-        private void tableLayoutPanel1_Paint_1(object sender, PaintEventArgs e)
-        {
-
-        }
+       
     }
 
 }

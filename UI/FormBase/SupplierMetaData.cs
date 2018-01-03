@@ -15,8 +15,8 @@ namespace WMS.UI
             new KeyName(){Key="ContractNo",Name="合同编码",Visible = true, Editable = true},
             new KeyName(){Key="StartDate",Name="起始有效日期",Visible = true, Editable = true},
             new KeyName(){Key="EndDate",Name="结束有效日期",Visible = true, Editable = true},
-            new KeyName(){Key="InvoiceDate",Name="开票日期",Visible = true, Editable = true},
-            new KeyName(){Key="BalanceDate",Name="结算日期",Visible = true, Editable = true},
+            new KeyName(){Key="InvoiceDelayMonth",Name="开票延迟月",Visible = true, Editable = true},
+            new KeyName(){Key="BalanceDelayMonth",Name="结算延迟月",Visible = true, Editable = true},
             new KeyName(){Key="FullName",Name="供货商全称",Visible = true, Editable = true},
             new KeyName(){Key="TaxpayerNumber",Name="纳税人识别号",Visible = true, Editable = true},
             new KeyName(){Key="Address",Name="地址",Visible = true, Editable = true},
@@ -26,6 +26,9 @@ namespace WMS.UI
             new KeyName(){Key="BankNo",Name="开户行行号",Visible = true, Editable = true},
             new KeyName(){Key="ZipCode",Name="邮编",Visible = true, Editable = true},
             new KeyName(){Key="RecipientName",Name="收件人",Visible = true, Editable = true},
+            new KeyName(){Key="Number",Name="序号",Visible = true, Editable = true},
+            new KeyName(){Key="ContractState",Name="合同状态",Visible = true, Editable = true},
+            new KeyName(){Key="IsHistory",Name="历史信息",Visible = true, Editable = true},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
