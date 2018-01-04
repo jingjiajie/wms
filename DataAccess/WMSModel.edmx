@@ -58,6 +58,7 @@
           <Property Name="ShipmentInfoBoxWidth" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IsHistory" Type="int" />
         </EntityType>
         <EntityType Name="JobTicket">
           <Key>
@@ -539,6 +540,7 @@
           <Property Name="ShipmentInfoBoxWidth" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IsHistory" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.JobTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1718,7 +1720,8 @@
 [ComponentView].[ShipmentInfoBoxLength] AS [ShipmentInfoBoxLength], 
 [ComponentView].[ShipmentInfoBoxWidth] AS [ShipmentInfoBoxWidth], 
 [ComponentView].[ShipmentInfoBoxHeight] AS [ShipmentInfoBoxHeight], 
-[ComponentView].[ShipmentInfoUnitAmount] AS [ShipmentInfoUnitAmount]
+[ComponentView].[ShipmentInfoUnitAmount] AS [ShipmentInfoUnitAmount], 
+[ComponentView].[IsHistory] AS [IsHistory]
 FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="JobTicketItemView" EntityType="Self.JobTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2685,6 +2688,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ShipmentInfoBoxWidth" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsHistory" Type="Int32" />
           <NavigationProperty Name="Project" Relationship="WMSModel.FK__Component__Proje__3A4CA8FD" FromRole="Component" ToRole="Project" />
           <NavigationProperty Name="Supplier" Relationship="WMSModel.FK__Component__Suppl__3B40CD36" FromRole="Component" ToRole="Supplier" />
           <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK__Component__Wareh__3C34F16F" FromRole="Component" ToRole="Warehouse" />
@@ -3220,6 +3224,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ShipmentInfoBoxWidth" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsHistory" Type="Int32" />
         </EntityType>
         <EntityType Name="JobTicketItemView">
           <Key>
@@ -4289,6 +4294,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="Component">
             <EntityTypeMapping TypeName="WMSModel.Component">
               <MappingFragment StoreEntitySet="Component">
+                <ScalarProperty Name="IsHistory" ColumnName="IsHistory" />
                 <ScalarProperty Name="ShipmentInfoUnitAmount" ColumnName="ShipmentInfoUnitAmount" />
                 <ScalarProperty Name="ShipmentInfoBoxHeight" ColumnName="ShipmentInfoBoxHeight" />
                 <ScalarProperty Name="ShipmentInfoBoxWidth" ColumnName="ShipmentInfoBoxWidth" />
@@ -4786,6 +4792,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ComponentView">
             <EntityTypeMapping TypeName="WMSModel.ComponentView">
               <MappingFragment StoreEntitySet="ComponentView">
+                <ScalarProperty Name="IsHistory" ColumnName="IsHistory" />
                 <ScalarProperty Name="ShipmentInfoUnitAmount" ColumnName="ShipmentInfoUnitAmount" />
                 <ScalarProperty Name="ShipmentInfoBoxHeight" ColumnName="ShipmentInfoBoxHeight" />
                 <ScalarProperty Name="ShipmentInfoBoxWidth" ColumnName="ShipmentInfoBoxWidth" />

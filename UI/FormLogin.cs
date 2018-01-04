@@ -64,10 +64,8 @@ namespace WMS.UI
 
         public FormLogin()
         {
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);  //  禁止擦除背景. 
-            SetStyle(ControlStyles.DoubleBuffer, true);  //  双缓冲 
             InitializeComponent();
+            Console.WriteLine(Utilities.GenerateTicketNo("F",10));
         }
 
         private void FormLogin_Load(object sender, EventArgs e)

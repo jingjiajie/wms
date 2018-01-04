@@ -63,6 +63,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> ShipmentInfoBoxWidth { get; set; }
         public Nullable<decimal> ShipmentInfoBoxHeight { get; set; }
         public Nullable<decimal> ShipmentInfoUnitAmount { get; set; }
+        public Nullable<int> IsHistory { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Supplier Supplier { get; set; }
