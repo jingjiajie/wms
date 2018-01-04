@@ -136,7 +136,8 @@ namespace WMS.UI
                                                                               select s.No).ToArray());
                         if(maxRankOfToday == -1)
                         {
-                            MessageBox.Show("单号生成失败！请添加完成后手动修改单号");
+                            MessageBox.Show("单号生成失败！请手动填写单号");
+                            return;
                         }
                         shipmentTicket.No = Utilities.GenerateTicketNo("F", maxRankOfToday + 1);
                     }
@@ -145,11 +146,22 @@ namespace WMS.UI
                         DateTime now = DateTime.Now;
                         DateTime thisMonth = new DateTime(now.Year, now.Month, 1);
                         DateTime nextMonth = new DateTime(now.Year, now.Month + 1, 1);
-                        int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.ShipmentTicket
-                                                                              where s.CreateTime >= thisMonth && s.CreateTime < nextMonth //TODO 同步一下EF，然后在这里搜索供应商ID
-                                                                              select s.No).ToArray());
+                        Supplier supplier = (from s in wmsEntities.Supplier
+                                             where s.ID == shipmentTicket.SupplierID
+                                             select s).FirstOrDefault();
+                        if(supplier == null)
+                        {
+                            MessageBox.Show("编号生成失败（供应商信息不存在）！请手动填写编号");
+                            return;
+                        }
+                        int maxRankOfMonth = Utilities.GetMaxTicketRankOfSupplierAndMonth((from s in wmsEntities.ShipmentTicket
+                                                                                           where s.CreateTime >= thisMonth &&
+                                                                                                 s.CreateTime < nextMonth &&
+                                                                                                 s.SupplierID == shipmentTicket.SupplierID
+                                                                                           select s.No).ToArray());
+                        shipmentTicket.Number = Utilities.GenerateTicketNumber(supplier.Number, maxRankOfMonth + 1);
+                        wmsEntities.SaveChanges();
                     }
-                    wmsEntities.SaveChanges();
                 }
                 catch
                 {
