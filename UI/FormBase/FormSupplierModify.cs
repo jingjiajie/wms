@@ -18,11 +18,13 @@ namespace WMS.UI
         private Action<int> modifyFinishedCallback = null;
         private Action<int>  addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
+        private int contract_change;
 
-        public FormSupplierModify(int supplierID = -1)
+        public FormSupplierModify(int supplierID = -1,int contract_change=1)
         {
             InitializeComponent(); 
             this.supplierID = supplierID;
+            this.contract_change = contract_change;
         }
 
         private void FormSupplierModify_Load(object sender, EventArgs e)
@@ -54,7 +56,13 @@ namespace WMS.UI
             }
             if (this.mode == FormMode.ALTER)
             {
+                if(this.contract_change ==0)
+                { 
+                    TextBox textBoxContractState = (TextBox)this.Controls.Find("textBoxContractState", true)[0];
+                    textBoxContractState.Enabled = false;
+                }
                 SupplierView SupplierView = new SupplierView();
+
                 try
                 {
                     SupplierView = (from s in this.wmsEntities.SupplierView

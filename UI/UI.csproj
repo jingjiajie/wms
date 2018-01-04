@@ -56,12 +56,25 @@
     <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormSupplierAnnualInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierAnnualInfo.Designer.cs">
+      <DependentUpon>FormSupplierAnnualInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSupplierModify.Designer.cs">
+      <DependentUpon>FormSupplierModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\StandardImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBase\StandardImportForm.Designer.cs">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\SupplierAnnualInfoMetaData.cs" />
     <Compile Include="FormJobTicket\FormJobTicketNew.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,12 +172,6 @@
     </Compile>
     <Compile Include="FormBase\FormComponenModify.Designer.cs">
       <DependentUpon>FormComponenModify.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormSupplierModify.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormSupplierModify.Designer.cs">
-      <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormUser.cs">
       <SubType>Form</SubType>
@@ -427,6 +434,12 @@
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSupplierAnnualInfo.resx">
+      <DependentUpon>FormSupplierAnnualInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
+      <DependentUpon>FormSupplierModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\StandardImportForm.resx">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -477,9 +490,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormComponenModify.resx">
       <DependentUpon>FormComponenModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
-      <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormUser.resx">
       <DependentUpon>FormUser.cs</DependentUpon>
