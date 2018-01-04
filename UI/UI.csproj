@@ -56,11 +56,11 @@
     <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormUserImport.cs">
+    <Compile Include="FormBase\StandardImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormUserImport.Designer.cs">
-      <DependentUpon>FormUserImport.cs</DependentUpon>
+    <Compile Include="FormBase\StandardImportForm.Designer.cs">
+      <DependentUpon>StandardImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormJobTicket\FormJobTicketNew.cs">
       <SubType>Form</SubType>
@@ -463,8 +463,8 @@
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormUserImport.resx">
-      <DependentUpon>FormUserImport.cs</DependentUpon>
+    <EmbeddedResource Include="FormBase\StandardImportForm.resx">
+      <DependentUpon>StandardImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketNew.resx">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>

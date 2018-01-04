@@ -131,13 +131,7 @@ namespace WMS.UI.FormBase
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormUserModify();
-            form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback((addedID) =>
-            {
-                this.Search(addedID);
-            });
-            form.Show();
+
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -228,6 +222,16 @@ namespace WMS.UI.FormBase
             {
                 this.Search();
             }
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            StandardImportForm<User> formUserImport = new StandardImportForm<User>(UserMetaData.KeyNames,(results,unimportedColumns)=>
+            {
+                MessageBox.Show("即将导入"+results.Length+"个学生。未导入列数为："+unimportedColumns.Count);
+                return false;
+            });
+            formUserImport.Show();
         }
     }
 }

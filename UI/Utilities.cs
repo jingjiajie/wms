@@ -155,14 +155,19 @@ namespace WMS.UI
                 throw new Exception("你的对象" + objType.Name + "里没有" + propertyName + "这个属性！检查一下你的代码吧！");
             }
 
-            string chineseName = p.Name;
-            var searchedName = (from kn in keyNames where kn.Key == p.Name select kn.Name).ToArray();
-            if (searchedName.Length > 0)
+            KeyName keyName = (from kn in keyNames where kn.Key == p.Name select kn).FirstOrDefault();
+            if(keyName == null)
             {
-                chineseName = searchedName.First();
+                throw new Exception(objType.Name + "的KeyNames中不存在" + p.Name + "，请检查你的代码！");
             }
+            string chineseName = keyName.Name;
 
             Type originType = p.PropertyType;
+            if(text.Length == 0 && keyName.NotNull == true)
+            {
+                errorMessage = chineseName + " 不允许为空！";
+                return false;
+            }
             //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
             if (text.Length == 0 && originType != typeof(string))
             {
@@ -385,14 +390,20 @@ namespace WMS.UI
                     {
                         continue;
                     }
-                    //如果单元格为null，则跳过
-                    if(worksheet.GetCell(line,col) == null)
+                    Cell curCell = worksheet.GetCell(line, col);
+                    string cellString; //单元格字符串
+                    //如果单元格为null，则认为是零长字符串，否则取单元格数据
+                    if(curCell == null || curCell.Data == null)
                     {
-                        continue;
+                        cellString="";
                     }
-                    if (CopyTextToProperty(worksheet[line, col].ToString(), propertyNames[col], newObj, keyNames, out errorMessage) == false)
+                    else
                     {
-                        errorMessage = string.Format("行{0}，列{1}：{2}", line, col, errorMessage);
+                        cellString = curCell.Data.ToString();
+                    }
+                    if (CopyTextToProperty(cellString, propertyNames[col], newObj, keyNames, out errorMessage) == false)
+                    {
+                        errorMessage = string.Format("行{0}：{1}", line + 1, errorMessage);
                         return null;
                     }
                 }
@@ -407,7 +418,9 @@ namespace WMS.UI
             for(int col = 0; col < worksheet.Columns; col++)
             {
                 //只要有单元格有字，就判定不为空行。如果所有单元格都是null或者没有字，判定为空行。
-                if(worksheet.GetCell(line,col) != null && worksheet.GetCell(line, col).Data.ToString().Length != 0)
+                if (worksheet.GetCell(line, col) != null &&
+                    worksheet.GetCell(line, col).Data != null &&
+                    worksheet.GetCell(line, col).Data.ToString().Length != 0)
                 {
                     return false;
                 }
