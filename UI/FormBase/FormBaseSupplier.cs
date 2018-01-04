@@ -22,9 +22,12 @@ namespace WMS.UI
         private int authority_supplier = Convert.ToInt32(Authority.BASE_SUPPLIER);
         private int authority_supplierself = Convert.ToInt32(Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY);
         private PagerWidget<SupplierView > pagerWidget = null;
+        private Supplier supplier = null;
+        private int contractst;
        
         private int projectID = -1;
         private int warehouseID = -1;
+        private int contract_change = 1;
 
 
         private int id=-1;
@@ -38,11 +41,22 @@ namespace WMS.UI
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
+            
             if ((this.authority & authority_supplier) != authority_supplier)
             {
-                
+                this.contract_change = 0;
+                Supplier supplier = (from u in this.wmsEntities.Supplier
+                                     where u.ID == id
+                                     select u).Single();
+                this.supplier = supplier;
+                this.contractst = Convert.ToInt32(supplier.ContractState);
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
+                this.buttonCheck.Enabled = false;
+                if (this.contractst ==0)
+                {
+                    this.toolStripButtonAlter.Enabled = false;
+                }
 
                 InitSupplier();
                 //List<SqlParameter> parameters = new List<SqlParameter>();
@@ -105,6 +119,7 @@ namespace WMS.UI
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             var a1  = new FormSupplierModify();
+            
             a1.SetMode(FormMode.ADD);
 
             a1.SetAddFinishedCallback((AddID ) =>
@@ -264,7 +279,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int supplierID  = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var a1= new FormSupplierModify(supplierID);
+                var a1= new FormSupplierModify(supplierID, this.contract_change);
                 a1.SetModifyFinishedCallback((AlterID) =>
                 {
                     this.pagerWidget.Search(false ,AlterID );
@@ -363,9 +378,30 @@ namespace WMS.UI
 
         }
 
-        
+        private void buttonCheck_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormSupplierAnnualInfo(1);
+            a1.Show();
+            //var worksheet = this.reoGridControlUser.Worksheets[0];
+            //try
+            //{
+            //    if (worksheet.SelectionRange.Rows != 1)
+            //    {
+            //        throw new Exception();
+            //    }
+            //    int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
 
-       
+            //    var a1 = new FormSupplierAnnualInfo(supplierID);
+            //    a1.Show();
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+
+        }
     }
+    
 
 }

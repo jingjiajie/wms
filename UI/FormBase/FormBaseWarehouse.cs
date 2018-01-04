@@ -15,6 +15,7 @@ namespace WMS.UI
 {
     public partial class FormBaseWarehouse : Form
     {
+        private PagerWidget<WarehouseView> pagerWidget = null;
         private WMSEntities wmsEntities = new WMSEntities();
         public FormBaseWarehouse()
         {
@@ -33,110 +34,111 @@ namespace WMS.UI
             this.toolStripComboBoxSelect.SelectedIndex = 0;
 
 
-            //初始化表格
-            var worksheet = this.reoGridControlWarehouse.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < FormBase.BaseWarehouseMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = FormBase.BaseWarehouseMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = FormBase.BaseWarehouseMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = FormBase.BaseWarehouseMetaData.KeyNames.Length;//限制表的长度
+            ////初始化表格
+            //var worksheet = this.reoGridControlWarehouse.Worksheets[0];
+            //worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            //for (int i = 0; i < FormBase.BaseWarehouseMetaData.KeyNames.Length; i++)
+            //{
+            //    worksheet.ColumnHeaders[i].Text = FormBase.BaseWarehouseMetaData.KeyNames[i].Name;
+            //    worksheet.ColumnHeaders[i].IsVisible = FormBase.BaseWarehouseMetaData.KeyNames[i].Visible;
+            //}
+            //worksheet.Columns = FormBase.BaseWarehouseMetaData.KeyNames.Length;//限制表的长度
+
+            //初始化分页控件
+            this.pagerWidget = new PagerWidget<WarehouseView>(this.reoGridControlWarehouse, FormBase.BaseWarehouseMetaData.KeyNames);
+            this.panelPager.Controls.Add(pagerWidget);
+            pagerWidget.Show();
         }
 
 
         private void base_Warehouse_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.Search();
+            this.pagerWidget.Search();
         }
 
-        private void Search(int selectedID = -1)
-        {
-            string key = null;
-            string value = null;
+        //private void Search(int selectedID = -1)
+        //{
+        //    string key = null;
+        //    string value = null;
 
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                key = (from kn in FormBase.BaseWarehouseMetaData.KeyNames
-                       where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.toolStripTextBoxSelect.Text;
-            }
+        //    if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+        //    {
+        //        key = (from kn in FormBase.BaseWarehouseMetaData.KeyNames
+        //               where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+        //               select kn.Key).First();
+        //        value = this.toolStripTextBoxSelect.Text;
+        //    }
 
-            this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlWarehouse.Worksheets[0];
-            worksheet[0, 1] = "加载中...";
+        //    this.labelStatus.Text = "正在搜索中...";
+        //    var worksheet = this.reoGridControlWarehouse.Worksheets[0];
+        //    worksheet[0, 1] = "加载中...";
 
-            new Thread(new ThreadStart(() =>
-            {
-                var wmsEntities = new WMSEntities();
-                WarehouseView[] warehouseViews = null;
-                string sql = "SELECT * FROM WarehouseView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
+        //    new Thread(new ThreadStart(() =>
+        //    {
+        //        var wmsEntities = new WMSEntities();
+        //        WarehouseView[] warehouseViews = null;
+        //        string sql = "SELECT * FROM WarehouseView WHERE 1=1 ";
+        //        List<SqlParameter> parameters = new List<SqlParameter>();
 
-                    if (key != null && value != null) //查询条件不为null则增加查询条件
-                    {
-                        sql += "AND " + key + " = @value ";
-                        parameters.Add(new SqlParameter("value", value));
-                    }
-                    sql += " ORDER BY ID DESC"; //倒序排序
-                    try
-                    {
-                    warehouseViews = wmsEntities.Database.SqlQuery<WarehouseView>(sql, parameters.ToArray()).ToArray();
-                    }
-                    catch (EntityCommandExecutionException)
-                    {
-                        MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+        //            if (key != null && value != null) //查询条件不为null则增加查询条件
+        //            {
+        //                sql += "AND " + key + " = @value ";
+        //                parameters.Add(new SqlParameter("value", value));
+        //            }
+        //            sql += " ORDER BY ID DESC"; //倒序排序
+        //            try
+        //            {
+        //            warehouseViews = wmsEntities.Database.SqlQuery<WarehouseView>(sql, parameters.ToArray()).ToArray();
+        //            }
+        //            catch (EntityCommandExecutionException)
+        //            {
+        //                MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                return;
+        //            }
+        //            catch (Exception)
+        //            {
+        //                MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //                return;
+        //            }
 
-                this.reoGridControlWarehouse.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (warehouseViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < warehouseViews.Length; i++)
-                    {
+        //        this.reoGridControlWarehouse.Invoke(new Action(() =>
+        //        {
+        //            this.labelStatus.Text = "搜索完成";
+        //            worksheet.DeleteRangeData(RangePosition.EntireRange);
+        //            if (warehouseViews.Length == 0)
+        //            {
+        //                worksheet[0, 1] = "没有查询到符合条件的记录";
+        //            }
+        //            for (int i = 0; i < warehouseViews.Length; i++)
+        //            {
 
-                        WarehouseView curWarehouseView = warehouseViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curWarehouseView, (from kn in FormBase.BaseWarehouseMetaData.keyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j];
-                        }
-                    }
+        //                WarehouseView curWarehouseView = warehouseViews[i];
+        //                object[] columns = Utilities.GetValuesByPropertieNames(curWarehouseView, (from kn in FormBase.BaseWarehouseMetaData.keyNames select kn.Key).ToArray());
+        //                for (int j = 0; j < worksheet.Columns; j++)
+        //                {
+        //                    worksheet[i, j] = columns[j];
+        //                }
+        //            }
 
-                }));
-            })).Start();
-            if (selectedID != -1)
-            {
-                Utilities.SelectLineByID(this.reoGridControlWarehouse, selectedID);
-            }
-        }
+        //        }));
+        //    })).Start();
+        //    if (selectedID != -1)
+        //    {
+        //        Utilities.SelectLineByID(this.reoGridControlWarehouse, selectedID);
+        //    }
+        //}
 
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var a1 = new FormBase.FormBaseWarehouseModify();
-            a1.SetMode(FormMode.ADD);
-
-            a1.SetAddFinishedCallback((addedID) =>
+            var form = new FormBase.FormBaseWarehouseModify();
+            form.SetMode(FormMode.ADD);
+            form.SetAddFinishedCallback((addedID) =>
             {
-                this.Search(addedID);
-                var worksheet = this.reoGridControlWarehouse.Worksheets[0];
-
-                worksheet.SelectionRange = new RangePosition("A1:A1");
+                this.pagerWidget.Search(false,addedID);
             });
-            a1.Show();
+            form.Show();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -182,7 +184,7 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(() =>
                 {
-                    this.Search();
+                    this.pagerWidget.Search();
                     MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             })).Start();
@@ -201,7 +203,7 @@ namespace WMS.UI
                 var a1 = new FormBase.FormBaseWarehouseModify(warehouseID);
                 a1.SetModifyFinishedCallback((addedID) =>
                 {
-                    this.Search(addedID);
+                    this.pagerWidget.Search(false,addedID);
                 });
                 a1.Show();
             }
@@ -214,14 +216,19 @@ namespace WMS.UI
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
-            this.Search();
+            this.pagerWidget.ClearCondition();
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            }
+            this.pagerWidget.Search();
         }
 
         private void toolStripTextBoxSelect_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
             {
-                this.Search();
+                this.toolStripButtonSelect.PerformClick();
             }
         }
 
