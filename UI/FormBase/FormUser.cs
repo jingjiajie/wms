@@ -226,11 +226,22 @@ namespace WMS.UI.FormBase
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            StandardImportForm<User> formUserImport = new StandardImportForm<User>(UserMetaData.KeyNames,(results,unimportedColumns)=>
-            {
-                MessageBox.Show("即将导入"+results.Length+"个学生。未导入列数为："+unimportedColumns.Count);
-                return false;
-            });
+            //创建导入窗口
+            StandardImportForm<User> formUserImport =
+                new StandardImportForm<User>
+                (
+                    UserMetaData.KeyNames, //参数1：KeyName
+                    (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
+                    {
+                        return true;
+                    },
+                    () => //参数3：导入完成回调函数
+                    {
+                        this.Search();
+                    }
+                );
+
+            //显示导入窗口
             formUserImport.Show();
         }
     }

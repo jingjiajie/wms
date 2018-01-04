@@ -146,7 +146,7 @@ namespace WMS.UI
         }
 
 
-        private static bool CopyTextToProperty<T>(string text, string propertyName, T targetObject, KeyName[] keyNames, out string errorMessage)
+        public static bool CopyTextToProperty<T>(string text, string propertyName, T targetObject, KeyName[] keyNames, out string errorMessage)
         {
             Type objType = typeof(T);
             PropertyInfo p = objType.GetProperty(propertyName);
@@ -353,79 +353,5 @@ namespace WMS.UI
             }
         }
 
-        public static void InitReoGridImport(ReoGridControl reoGridControl,KeyName[] keyNames)
-        {
-            //初始化表格
-            var worksheet = reoGridControl.Worksheets[0];
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = keyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = keyNames[i].ImportVisible;
-            }
-            worksheet.Columns = keyNames.Length; //限制表的长度
-        }
-
-        public static T[] MakeObjectByReoGridImport<T>(ReoGridControl reoGridControl,KeyName[] keyNames,out string errorMessage) where T:new()
-        {
-            var worksheet = reoGridControl.Worksheets[0];
-            List<T> result = new List<T>();
-            string[] propertyNames = (from kn in keyNames
-                                    select kn.Key).ToArray();
-            //遍历行
-            for (int line = 0; line < worksheet.Rows; line++)
-            {
-                //如果是空行，则跳过
-                if (IsEmptyLine(reoGridControl, line))
-                {
-                    continue;
-                }
-
-                T newObj = new T();
-                result.Add(newObj);
-                //遍历列
-                for (int col = 0; col < keyNames.Length; col++)
-                {
-                    //如果字段对导入不可见，或者可见但不导入，则跳过
-                    if (keyNames[col].ImportVisible == false || keyNames[col].Import == false)
-                    {
-                        continue;
-                    }
-                    Cell curCell = worksheet.GetCell(line, col);
-                    string cellString; //单元格字符串
-                    //如果单元格为null，则认为是零长字符串，否则取单元格数据
-                    if(curCell == null || curCell.Data == null)
-                    {
-                        cellString="";
-                    }
-                    else
-                    {
-                        cellString = curCell.Data.ToString();
-                    }
-                    if (CopyTextToProperty(cellString, propertyNames[col], newObj, keyNames, out errorMessage) == false)
-                    {
-                        errorMessage = string.Format("行{0}：{1}", line + 1, errorMessage);
-                        return null;
-                    }
-                }
-            }
-            errorMessage = null;
-            return result.ToArray();
-        }
-
-        private static bool IsEmptyLine(ReoGridControl reoGridControl,int line)
-        {
-            var worksheet = reoGridControl.Worksheets[0];
-            for(int col = 0; col < worksheet.Columns; col++)
-            {
-                //只要有单元格有字，就判定不为空行。如果所有单元格都是null或者没有字，判定为空行。
-                if (worksheet.GetCell(line, col) != null &&
-                    worksheet.GetCell(line, col).Data != null &&
-                    worksheet.GetCell(line, col).Data.ToString().Length != 0)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }
