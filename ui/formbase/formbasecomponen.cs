@@ -80,7 +80,7 @@ namespace WMS.UI
             this.pagerWidget.ClearCondition();
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                //this.pagerWidget.AddCondition("IsHistory","0");
+                //this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
             this.pagerWidget.Search();
@@ -90,7 +90,7 @@ namespace WMS.UI
             this.pagerWidget.ClearCondition();
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                //this.pagerWidget.AddCondition("IsHistory", "1");
+                this.pagerWidget.AddCondition("IsHistory", "1");
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
             this.pagerWidget.Search();
@@ -339,6 +339,25 @@ namespace WMS.UI
 
         }
 
-
+        private void toolStripButtonComponentSingleBoxTranPackingInfo_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var form = new ComponentSingleBoxTranPackingInfoModify(componenID);
+                form.SetMode(FormMode.CHECK);
+                form.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+        }
     }
     }

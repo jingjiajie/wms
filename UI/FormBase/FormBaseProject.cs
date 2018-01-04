@@ -160,8 +160,6 @@ namespace WMS.UI.FormBase
             {
                 this.pagerWidget.Search(false, addedID);
                 var worksheet = this.reoGridControlProject.Worksheets[0];
-
-                worksheet.SelectionRange = new RangePosition("A1:A1");
             });
             //formBaseProjectModify.SetAddFinishedCallback(this.Search);
             formBaseProjectModify.Show();
