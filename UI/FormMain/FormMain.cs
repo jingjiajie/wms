@@ -20,7 +20,10 @@ namespace WMS.UI
         private Project project = null;
         private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
-
+        private int supplierid;
+        
+        
+        
         private Action formClosedCallback;
 
         public FormMain(int userID)
@@ -30,6 +33,25 @@ namespace WMS.UI
                          where u.ID == userID
                          select u).Single();
             this.user = user;
+            this.supplierid = Convert.ToInt32(user.SupplierID);
+            if (this.supplierid != 0)
+            {
+                Supplier Supplier = (from u in this.wmsEntities.Supplier
+                                     where u.ID == supplierid
+                                     select u).Single();
+                if (Convert.ToString(Supplier.EndDate) != string.Empty)
+                {
+                    if (Supplier.EndDate < DateTime.Now)
+                    {
+                        MessageBox.Show("合同已经到截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+
+                }
+
+            }
+
         }
 
         public void SetFormClosedCallback(Action callback)
@@ -181,6 +203,7 @@ namespace WMS.UI
                     this.project = allProjects[0];
                 }));
             }).Start();
+            
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
