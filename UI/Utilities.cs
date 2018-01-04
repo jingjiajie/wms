@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using unvell.ReoGrid;
+using System.Drawing;
 
 namespace WMS.UI
 {
@@ -291,6 +292,44 @@ namespace WMS.UI
                 if (curKeyName.ComboBoxItems == null)
                 {
                     TextBox textBox = new TextBox();
+                    textBox.Font = new Font("微软雅黑", 10);
+
+                    //如果设置了占位符，则想办法给它模拟出一个占位符来。windows居然不支持，呵呵
+                    if (curKeyName.EditPlaceHolder != null)
+                    {
+                        //加一个label覆盖在上面，看着跟真的placeholder似的
+                        Label labelLayer = new Label();
+                        labelLayer.Text = curKeyName.EditPlaceHolder;
+                        labelLayer.ForeColor = Color.Gray;
+                        labelLayer.Font = textBox.Font;
+                        labelLayer.AutoSize = true;
+                        labelLayer.Click += (obj, e) =>
+                        {
+                            textBox.Focus();
+                        };
+                        textBox.Controls.Add(labelLayer);
+
+                        //防止第一次显示的时候有字也显示占位符的囧境
+                        textBox.TextChanged += (obj,e)=>{
+                            if(textBox.Text.Length != 0)
+                            {
+                                labelLayer.Hide();
+                            }
+                        };
+
+                        textBox.Enter += (obj, e) =>
+                        {
+                            labelLayer.Hide();
+                        };
+                        textBox.Leave += (obj, e) =>
+                        {
+                            if (string.IsNullOrWhiteSpace(textBox.Text))
+                            {
+                                textBox.Text = "";
+                                labelLayer.Show();
+                            }
+                        };
+                    }
                     textBox.Name = "textBox" + curKeyName.Key;
                     if (curKeyName.Editable == false)
                     {
@@ -354,6 +393,11 @@ namespace WMS.UI
             return prefix + id.ToString().PadLeft(5, '0');
         }
 
+        public static string GenerateTicketNumber(string supplierNumber,int rankOfMonth)
+        {
+            return string.Format("{0}-{1:00}-{2}",supplierNumber,DateTime.Now.Month,rankOfMonth);
+        }
+
         public static string GenerateTicketNo(string prefix, int rankOfDay/*当天第几张*/)
         {
             DateTime now = DateTime.Now;
@@ -361,7 +405,7 @@ namespace WMS.UI
         }
 
         /// <summary>
-        /// 计算单据是当天第几张
+        /// 计算当日单据第几张中的最大数
         /// </summary>
         /// <param name="AllNoOfDay">当天所有的单号（必须是“[前缀][日期时间]-[第几张]“格式）</param>
         /// <returns>返回单据第几张中的最大数</returns>
@@ -375,6 +419,27 @@ namespace WMS.UI
                 if(segments.Length != 2 || int.TryParse(segments[1],out ranks[i]) == false)
                 {
                     Console.WriteLine("输入单号不合法：" + allNoOfDay[i]);
+                    ranks[i] = 0;
+                }
+            }
+            return ranks.Max();
+        }
+
+        /// <summary>
+        /// 计算当月单据第几张中的最大数
+        /// </summary>
+        /// <param name="AllNoOfMonth">当月同一供应商所有单子的Number（必须是“[供应商]-[月份]-[当月第几张]“格式）</param>
+        /// <returns>返回当月单据第几张中的最大数</returns>
+        public static int GetMaxTicketRankOfSupplierAndMonth(string[] allNumberOfSupplierAndMonth)
+        {
+            if (allNumberOfSupplierAndMonth.Length == 0) return 0;
+            int[] ranks = new int[allNumberOfSupplierAndMonth.Length];
+            for (int i = 0; i < allNumberOfSupplierAndMonth.Length; i++)
+            {
+                string[] segments = allNumberOfSupplierAndMonth[i].Split('-');
+                if (segments.Length != 3 || int.TryParse(segments[2], out ranks[i]) == false)
+                {
+                    Console.WriteLine("输入Number不合法：" + allNumberOfSupplierAndMonth[i]);
                     ranks[i] = 0;
                 }
             }

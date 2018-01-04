@@ -127,17 +127,27 @@ namespace WMS.UI
             {
                 try
                 {
-                    if(mode == FormMode.ADD)
+                    if(string.IsNullOrWhiteSpace(shipmentTicket.No))
                     {
-                        DateTime nowDate = DateTime.Now.Date;
+                        DateTime today = DateTime.Now.Date;
+                        DateTime tomorrow = today.AddDays(1);
                         int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.ShipmentTicket
-                                                                           where s.CreateTime == nowDate
-                                                                           select s.No).ToArray());
+                                                                              where s.CreateTime >= today && s.CreateTime < tomorrow
+                                                                              select s.No).ToArray());
                         if(maxRankOfToday == -1)
                         {
                             MessageBox.Show("单号生成失败！请添加完成后手动修改单号");
                         }
                         shipmentTicket.No = Utilities.GenerateTicketNo("F", maxRankOfToday + 1);
+                    }
+                    if (string.IsNullOrWhiteSpace(shipmentTicket.Number))
+                    {
+                        DateTime now = DateTime.Now;
+                        DateTime thisMonth = new DateTime(now.Year, now.Month, 1);
+                        DateTime nextMonth = new DateTime(now.Year, now.Month + 1, 1);
+                        int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.ShipmentTicket
+                                                                              where s.CreateTime >= thisMonth && s.CreateTime < nextMonth //TODO 同步一下EF，然后在这里搜索供应商ID
+                                                                              select s.No).ToArray());
                     }
                     wmsEntities.SaveChanges();
                 }

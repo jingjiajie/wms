@@ -11,9 +11,10 @@ namespace WMS.UI
         public string Key;
         public string Name;
         public bool Visible = true;
-        public ComboBoxItem[] ComboBoxItems = null;
         public bool NotNull = false;
         public bool Editable = true;
+        public ComboBoxItem[] ComboBoxItems = null;
+        public string EditPlaceHolder = null;
         public bool Save = true;
         public bool ImportVisible = true;
         public bool Import = true;
