@@ -75,134 +75,150 @@ namespace WMS.UI
 
         }
 
-        private void toolStripButtonSelect_Click(object sender, EventArgs e)
+        private void buttonSearch_Click(object sender, EventArgs e)
         {
-            this.Search();
-        }
-
-    private void Search(int selectedID = -1)
-        {
-            string key = null;
-            string value = null;
-
+            this.pagerWidget.ClearCondition();
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                key = (from kn in ComponenViewMetaData.componenkeyNames
-                       where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.textBoxSearchValue.Text;
+                //this.pagerWidget.AddCondition("IsHistory", "0");
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
-            
-            this.labelStatus.Text = "正在搜索中...";
-
-
-            new Thread(new ThreadStart(() =>
-            {
-                var wmsEntities = new WMSEntities();
-                ComponentView[] componentViews = null;
-                string sql = "SELECT * FROM ComponentView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-
-                if ((this.authority & authority_self) == authority_self)
-                {
-
-                    if (this.projectID != -1)
-                    {
-                        sql += "AND ProjectID = @projectID ";
-                        parameters.Add(new SqlParameter("projectID", this.projectID));
-                    }
-                    if (warehouseID != -1)
-                    {
-                        sql += "AND WarehouseID = @warehouseID ";
-                        parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
-                    }
-                    if (key != null && value != null) //查询条件不为null则增加查询条件
-                    {
-                        sql += "AND " + key + " = @value ";
-                        parameters.Add(new SqlParameter("value", value));
-                    }
-                    sql += " ORDER BY ID DESC"; //倒序排序
-                    try
-                    {
-                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
-                    }
-                    catch (EntityCommandExecutionException)
-                    {
-                        MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                }
-                if ((this.authority & authority_self) == 0)
-                {
-
-                    sql += "AND SupplierID = @supplierID ";
-                    parameters.Add(new SqlParameter("supplierID", this.supplierID));
-
-                    if (this.projectID != -1)
-                    {
-                        sql += "AND ProjectID = @projectID ";
-                        parameters.Add(new SqlParameter("projectID", this.projectID));
-                    }
-                    if (warehouseID != -1)
-                    {
-                        sql += "AND WarehouseID = @warehouseID ";
-                        parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
-                    }
-                    if (key != null && value != null) //查询条件不为null则增加查询条件
-                    {
-                        sql += "AND " + key + " = @value ";
-                        parameters.Add(new SqlParameter("value", value));
-                    }
-                    sql += " ORDER BY ID DESC"; //倒序排序
-                    try
-                    {
-                        componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
-                    }
-                    catch (EntityCommandExecutionException)
-                    {
-                        MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-
-                this.reoGridControlComponen.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    var worksheet = this.reoGridControlComponen.Worksheets[0];
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (componentViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < componentViews.Length; i++)
-                    {
-
-                        ComponentView curComponentView = componentViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenViewMetaData.componenkeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j];
-                        }
-                    }
-                    if (selectedID != -1)
-                    {
-                        Utilities.SelectLineByID(this.reoGridControlComponen, selectedID);
-                    }
-                }));
-
-            })).Start();
+            this.pagerWidget.Search();
         }
+        private void buttonHistorySearch_Click(object sender, EventArgs e)
+        {
+            this.pagerWidget.ClearCondition();
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition("IsHistory", "1");
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+            }
+            this.pagerWidget.Search();
+        }
+
+        //private void Search(int selectedID = -1)
+        //    {
+        //        string key = null;
+        //        string value = null;
+
+        //        if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+        //        {
+        //            key = (from kn in ComponenViewMetaData.componenkeyNames
+        //                   where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+        //                   select kn.Key).First();
+        //            value = this.textBoxSearchValue.Text;
+        //        }
+
+        //        this.labelStatus.Text = "正在搜索中...";
+
+
+        //        new Thread(new ThreadStart(() =>
+        //        {
+        //            var wmsEntities = new WMSEntities();
+        //            ComponentView[] componentViews = null;
+        //            string sql = "SELECT * FROM ComponentView WHERE 1=1 ";
+        //            List<SqlParameter> parameters = new List<SqlParameter>();
+
+        //            if ((this.authority & authority_self) == authority_self)
+        //            {
+
+        //                if (this.projectID != -1)
+        //                {
+        //                    sql += "AND ProjectID = @projectID ";
+        //                    parameters.Add(new SqlParameter("projectID", this.projectID));
+        //                }
+        //                if (warehouseID != -1)
+        //                {
+        //                    sql += "AND WarehouseID = @warehouseID ";
+        //                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
+        //                }
+        //                if (key != null && value != null) //查询条件不为null则增加查询条件
+        //                {
+        //                    sql += "AND " + key + " = @value ";
+        //                    parameters.Add(new SqlParameter("value", value));
+        //                }
+        //                sql += " ORDER BY ID DESC"; //倒序排序
+        //                try
+        //                {
+        //                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
+        //                }
+        //                catch (EntityCommandExecutionException)
+        //                {
+        //                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                    return;
+        //                }
+        //                catch (Exception)
+        //                {
+        //                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //                    return;
+        //                }
+
+        //            }
+        //            if ((this.authority & authority_self) == 0)
+        //            {
+
+        //                sql += "AND SupplierID = @supplierID ";
+        //                parameters.Add(new SqlParameter("supplierID", this.supplierID));
+
+        //                if (this.projectID != -1)
+        //                {
+        //                    sql += "AND ProjectID = @projectID ";
+        //                    parameters.Add(new SqlParameter("projectID", this.projectID));
+        //                }
+        //                if (warehouseID != -1)
+        //                {
+        //                    sql += "AND WarehouseID = @warehouseID ";
+        //                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
+        //                }
+        //                if (key != null && value != null) //查询条件不为null则增加查询条件
+        //                {
+        //                    sql += "AND " + key + " = @value ";
+        //                    parameters.Add(new SqlParameter("value", value));
+        //                }
+        //                sql += " ORDER BY ID DESC"; //倒序排序
+        //                try
+        //                {
+        //                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
+        //                }
+        //                catch (EntityCommandExecutionException)
+        //                {
+        //                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                    return;
+        //                }
+        //                catch (Exception)
+        //                {
+        //                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //                    return;
+        //                }
+        //            }
+
+        //            this.reoGridControlComponen.Invoke(new Action(() =>
+        //            {
+        //                this.labelStatus.Text = "搜索完成";
+        //                var worksheet = this.reoGridControlComponen.Worksheets[0];
+        //                worksheet.DeleteRangeData(RangePosition.EntireRange);
+        //                if (componentViews.Length == 0)
+        //                {
+        //                    worksheet[0, 1] = "没有查询到符合条件的记录";
+        //                }
+        //                for (int i = 0; i < componentViews.Length; i++)
+        //                {
+
+        //                    ComponentView curComponentView = componentViews[i];
+        //                    object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenViewMetaData.componenkeyNames select kn.Key).ToArray());
+        //                    for (int j = 0; j < worksheet.Columns; j++)
+        //                    {
+        //                        worksheet[i, j] = columns[j];
+        //                    }
+        //                }
+        //                if (selectedID != -1)
+        //                {
+        //                    Utilities.SelectLineByID(this.reoGridControlComponen, selectedID);
+        //                }
+        //            }));
+
+        //        })).Start();
+        //    }
 
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -211,7 +227,7 @@ namespace WMS.UI
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback((addedID) =>
             {
-                this.Search(addedID);
+                this.pagerWidget.Search(false,addedID);
             });
             form.Show();
 
@@ -231,7 +247,7 @@ namespace WMS.UI
                 var formComponenModify = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID, componenID);
                 formComponenModify.SetModifyFinishedCallback((addedID) =>
                 {
-                    this.Search(addedID);
+                    this.pagerWidget.Search(false,addedID);
                 });
                 formComponenModify.Show();
             }
@@ -287,7 +303,7 @@ namespace WMS.UI
                     this.wmsEntities.SaveChanges();
                     this.Invoke(new Action(() =>
                     {
-                        this.Search();
+                        this.pagerWidget.Search();
                         MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }));
                 })).Start();
@@ -299,7 +315,7 @@ namespace WMS.UI
         {
             if (e.KeyChar == 13)
             {
-                this.Search();
+                this.pagerWidget.Search();
             }
         }
 
@@ -321,6 +337,27 @@ namespace WMS.UI
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void toolStripButtonComponentSingleBoxTranPackingInfo_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var form = new ComponentSingleBoxTranPackingInfoModify(componenID);
+                form.SetMode(FormMode.CHECK);
+                form.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
     }
