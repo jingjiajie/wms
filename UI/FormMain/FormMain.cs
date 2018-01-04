@@ -21,7 +21,7 @@ namespace WMS.UI
         private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
         private int supplierid;
-        private DateTime supplierdate ;
+        
         
         
         private Action formClosedCallback;
