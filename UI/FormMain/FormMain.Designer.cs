@@ -227,7 +227,7 @@ namespace WMS.UI
             this.comboBoxWarehouse.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
             this.comboBoxWarehouse.Location = new System.Drawing.Point(225, 2);
-            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
             this.comboBoxWarehouse.Size = new System.Drawing.Size(121, 27);
             this.comboBoxWarehouse.TabIndex = 0;
@@ -280,7 +280,7 @@ namespace WMS.UI
             this.panelFill.Controls.Add(this.tableLayoutPanel1);
             this.panelFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFill.Location = new System.Drawing.Point(0, 112);
-            this.panelFill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelFill.Margin = new System.Windows.Forms.Padding(2);
             this.panelFill.Name = "panelFill";
             this.panelFill.Size = new System.Drawing.Size(572, 319);
             this.panelFill.TabIndex = 1;
@@ -389,7 +389,7 @@ namespace WMS.UI
             this.ClientSize = new System.Drawing.Size(572, 431);
             this.Controls.Add(this.panelFill);
             this.Controls.Add(this.panelTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMain";
             this.Text = "安途丰达WMS物流管理系统";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
