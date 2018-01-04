@@ -154,18 +154,6 @@
     </Compile>
     <Compile Include="FormBase\BaseProjectMetaData.cs" />
     <Compile Include="FormBase\BaseWarehouseMetaData.cs" />
-    <Compile Include="FormBase\FormBaseComponenAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseComponenAdd.Designer.cs">
-      <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormBaseComponenAlter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseComponenAlter.Designer.cs">
-      <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormBase\FormBaseProject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -510,12 +498,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketModify.resx">
       <DependentUpon>FormJobTicketModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponenAdd.resx">
-      <DependentUpon>FormBaseComponenAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponenAlter.resx">
-      <DependentUpon>FormBaseComponenAlter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseProject.resx">
       <DependentUpon>FormBaseProject.cs</DependentUpon>

@@ -121,7 +121,7 @@
     <value>127, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStripButtonSelect.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="buttonSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABpSURBVDhPvY4BCsAgDAP7/1f5M0c7LFnaiLCxg6AmodW+
@@ -183,6 +183,30 @@
         3v01rrthg/7qKTx8iOD9+0kRfw+TWUjOmoWkGFIE0JDB8+dli/9HOCtXIjVnji6BNC2HWQnLcR2XAnPp
         UhjskvaqVfAOHkRsWZUVIFlwtmyBxy/k4Nkz3stBZQUIFMlHeKIids7w7dvKC/iPfwyJxFcYDOb7zu/p
         WAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="toolStripButton3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABpSURBVDhPvY4BCsAgDAP7/1f5M0c7LFnaiLCxg6AmodW+
+        ZoIQ5Rem4+f9TJRfWKUyACTBEpaVX8BvYlH5D7hwoiQM3jLGyDtnoCAeXHo9ALXJgi5Ycjp/Keg2dMie
+        DAjZYzMD4rT3K2YXKe+5y+W/DQ8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButton2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABpSURBVDhPvY4BCsAgDAP7/1f5M0c7LFnaiLCxg6AmodW+
+        ZoIQ5Rem4+f9TJRfWKUyACTBEpaVX8BvYlH5D7hwoiQM3jLGyDtnoCAeXHo9ALXJgi5Ycjp/Keg2dMie
+        DAjZYzMD4rT3K2YXKe+5y+W/DQ8AAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="toolStripButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABpSURBVDhPvY4BCsAgDAP7/1f5M0c7LFnaiLCxg6AmodW+
+        ZoIQ5Rem4+f9TJRfWKUyACTBEpaVX8BvYlH5D7hwoiQM3jLGyDtnoCAeXHo9ALXJgi5Ycjp/Keg2dMie
+        DAjZYzMD4rT3K2YXKe+5y+W/DQ8AAAAASUVORK5CYII=
 </value>
   </data>
   <metadata name="printDocument1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
