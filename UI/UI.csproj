@@ -50,6 +50,12 @@
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
     <Compile Include="FormBase\ComponenViewMetaData.cs" />
+    <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
+      <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -424,6 +430,9 @@
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
     <Compile Include="Utilities.cs" />
+    <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
+      <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>

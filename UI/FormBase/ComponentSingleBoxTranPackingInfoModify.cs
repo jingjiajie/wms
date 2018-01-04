@@ -11,11 +11,9 @@ using System.Reflection;
 
 namespace WMS.UI
 {
-    public partial class FormComponenModify : Form
+    public partial class ComponentSingleBoxTranPackingInfoModify : Form
     {
-        private int projectID = -1;
-        private int warehouseID = -1;
-        private int userID = -1;
+
         private int componenID = -1;
         private int supplierID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
@@ -23,37 +21,30 @@ namespace WMS.UI
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormComponenModify(int projectID, int warehouseID, int userID, int componenID = -1)
+        public ComponentSingleBoxTranPackingInfoModify(int componenID = -1)
         {
             InitializeComponent();
-            this.warehouseID = warehouseID;
-            this.userID = userID;
-            this.projectID = projectID;
             this.componenID = componenID;
         }
         
-        private void FormComponenModify_Load(object sender, EventArgs e)
+        private void ComponentSingleBoxTranPackingInfoModify_Load(object sender, EventArgs e)
         {
             if (this.mode == FormMode.ALTER && this.componenID == -1)
             {
                 throw new Exception("未设置源零件信息");
             }
 
-            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.KeyNames);
-            TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
-            TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
-            textboxsuppliername.ReadOnly = true;
-            textboxsuppliernumber.ReadOnly = true;
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.KeyNames2);
 
-            if (this.mode == FormMode.ALTER)
+            if (this.mode == FormMode.ALTER|| this.mode == FormMode.CHECK)
             {
                
                 try
                 {
-                    ComponentView componenView = (from s in this.wmsEntities.ComponentView
+                    DataAccess.Component componen = (from s in this.wmsEntities.Component
                                                   where s.ID == this.componenID
                                                   select s).Single();
-                    Utilities.CopyPropertiesToTextBoxes(componenView, this);
+                    Utilities.CopyPropertiesToTextBoxes(componen, this);
                 }
                 catch (Exception)
                 {
@@ -63,61 +54,17 @@ namespace WMS.UI
                 }
 
             }
-
-            this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
-        }
-        private void textBoxSupplierName_Click(object sender, EventArgs e)
-        {
-           
-            var formSelectSupplier = new FormBase.FormSelectSupplier();
-            formSelectSupplier.SetSelectFinishCallback((selectedID) =>
+            if (this.mode == FormMode.CHECK)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                var supplierName = (from s in wmsEntities.SupplierView
-                                       where s.ID == selectedID
-                                       select s).FirstOrDefault();
-                if (supplierName.Name == null)
-                {
-                    MessageBox.Show("选择供应商失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                this.supplierID = selectedID;
-                this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName.Name;
-                this.Controls.Find("textBoxSupplierNumber", true)[0].Text = supplierName.Number;
-            });
-            formSelectSupplier.Show();
-            
-        }
+                this.buttonOK.Visible = false;
+            }
 
+        }
+       
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
-            var textBoxNo = this.Controls.Find("textBoxNo", true)[0];
-            var textBoxName = this.Controls.Find("textBoxName", true)[0];
-            if (textBoxNo.Text == string.Empty)
-            {
-                MessageBox.Show("零件代号不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (textBoxName.Text == string.Empty)
-            {
-                MessageBox.Show("零件名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (textBoxSupplierName.Text == string.Empty)
-            {
-                MessageBox.Show("请选择供应商！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
-
-
-            //if (this.supplierID == -1)
-            //{
-            //    MessageBox.Show("请输入正确的供应商名称！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
             DataAccess.Component componen = null;
             if (this.mode == FormMode.ALTER)
             {
@@ -142,17 +89,6 @@ namespace WMS.UI
                         componen.IsHistory = 0;
                     }
 
-                        string supplierName = textBoxSupplierName.Text;
-                    try
-                    {
-                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
-
-                        this.supplierID = supplierID.ID;
-                    }
-                    catch
-                    {
-
-                    }
                 }
                 catch
                 {
@@ -171,19 +107,16 @@ namespace WMS.UI
                 this.wmsEntities.Component.Add(componen);
             }
 
-            componen.ProjectID = this.projectID;
-            componen.WarehouseID = this.warehouseID;
-            componen.SupplierID = this.supplierID;
 
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.componenkeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.ComponentOuterPackingSizekeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else
             {
-                Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.KeyNames);
+                Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.KeyNames2);
             }
             wmsEntities.SaveChanges();
             //调用回调函数
@@ -226,6 +159,13 @@ namespace WMS.UI
                 this.groupBox1.Text = "添加零件信息";
                 this.buttonOK.Text = "添加零件信息";
             }
+            else if (mode == FormMode.CHECK)
+            {
+                this.Text = "零件单箱运输包装信息";
+                this.groupBox1.Text = "零件单箱运输包装信息";
+                this.buttonOK.Text = "零件单箱运输包装信息";
+            }
+            
         }
 
         private void buttonOK_MouseEnter(object sender, EventArgs e)
