@@ -75,7 +75,7 @@ namespace WMS.UI
 
         }
 
-        private void toolStripButtonSelect_Click(object sender, EventArgs e)
+        private void buttonSearch_Click(object sender, EventArgs e)
         {
             this.Search();
         }
