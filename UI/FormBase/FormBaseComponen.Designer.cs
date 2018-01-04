@@ -49,6 +49,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlComponen = new unvell.ReoGrid.ReoGridControl();
             this.panelPager = new System.Windows.Forms.Panel();
+            this.buttonHistorySearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -65,6 +66,7 @@
             this.toolStripComboBoxSelect,
             this.textBoxSearchValue,
             this.buttonSearch,
+            this.buttonHistorySearch,
             this.toolStripSeparator1,
             this.toolStripButtonAdd,
             this.toolStripButtonAlter,
@@ -156,7 +158,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(116, 25);
+            this.toolStripButton2.Size = new System.Drawing.Size(116, 24);
             this.toolStripButton2.Text = "零件外包装信息";
             // 
             // toolStripButton1
@@ -248,6 +250,15 @@
             this.panelPager.Size = new System.Drawing.Size(881, 24);
             this.panelPager.TabIndex = 5;
             // 
+            // buttonHistorySearch
+            // 
+            this.buttonHistorySearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonHistorySearch.Image")));
+            this.buttonHistorySearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonHistorySearch.Name = "buttonHistorySearch";
+            this.buttonHistorySearch.Size = new System.Drawing.Size(104, 25);
+            this.buttonHistorySearch.Text = "历史信息查询";
+            this.buttonHistorySearch.Click += new System.EventHandler(this.buttonHistorySearch_Click);
+            // 
             // FormBaseComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -291,5 +302,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton buttonHistorySearch;
     }
 }
