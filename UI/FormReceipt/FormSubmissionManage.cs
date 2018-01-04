@@ -265,13 +265,13 @@ namespace WMS.UI
                                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
                                     //StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
                                     if (stockInfo != null)
-                                    {
+                                    {/*TODO
                                         if (stockInfo.SubmissionAreaAmount != null)
                                         {
                                             int amount = (int)stockInfo.SubmissionAreaAmount;
                                             stockInfo.ReceiptAreaAmount += amount;
                                             stockInfo.SubmissionAreaAmount = 0;
-                                        }
+                                        }*/
                                     }
                                 }
                             }
@@ -432,13 +432,13 @@ namespace WMS.UI
                                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
                                     //StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
                                     if (stockInfo != null)
-                                    {
+                                    {/*TODO
                                         if (stockInfo.SubmissionAreaAmount != null)
                                         {
                                             int amount = (int)stockInfo.SubmissionAreaAmount;
                                             stockInfo.ReceiptAreaAmount += amount;
                                             stockInfo.SubmissionAreaAmount = 0;
-                                        }
+                                        }*/
                                     }
                                 }
 

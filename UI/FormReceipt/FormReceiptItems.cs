@@ -259,7 +259,7 @@ namespace WMS.UI
                         stockInfo.ReceiptTicketItemID = receiptTicketItem.ID;
                         stockInfo.OverflowAreaAmount = 0;
                         stockInfo.ShipmentAreaAmount = 0;
-                        stockInfo.SubmissionAreaAmount = 0;
+                        //TODO stockInfo.SubmissionAreaAmount = 0;
                         stockInfo.ReceiptAreaAmount = 0;
                         if (receiptTicketItem.ReceiviptAmount != null)
                         {

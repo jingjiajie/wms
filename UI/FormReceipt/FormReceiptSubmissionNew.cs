@@ -248,14 +248,14 @@ namespace WMS.UI.FormReceipt
                                     MessageBox.Show("找不到对应的库存信息");
                                 }
                                 else
-                                {
+                                {/*TODO
                                     if (stockInfo.ReceiptAreaAmount != null)
                                     {
                                         int amountReceiptArea;
                                         amountReceiptArea = (int)stockInfo.ReceiptAreaAmount;
                                         stockInfo.ReceiptAreaAmount = 0;
                                         stockInfo.SubmissionAreaAmount = amountReceiptArea;
-                                    }
+                                    }*/
                                     submissionTicketItem.ReceiptTicketItemID = rti.ID;
                                     submissionTicketItem.State = "待检";
                                     rti.State = "送检中";

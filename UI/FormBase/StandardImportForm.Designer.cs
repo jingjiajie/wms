@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class FormUserImport
+    partial class StandardImportForm<TargetClass>
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUserImport));
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.buttonImport = new System.Windows.Forms.ToolStripButton();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
@@ -46,13 +45,13 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1255, 38);
+            this.toolStripTop.Size = new System.Drawing.Size(1254, 38);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
             // buttonImport
             // 
-            this.buttonImport.Image = ((System.Drawing.Image)(resources.GetObject("buttonImport.Image")));
+            this.buttonImport.Image = global::WMS.UI.Properties.Resources.add_b;
             this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(134, 35);
@@ -75,20 +74,21 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1255, 697);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1254, 659);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
-            // FormUserImport
+            // StandardImportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1255, 735);
+            this.ClientSize = new System.Drawing.Size(1254, 697);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
-            this.Name = "FormUserImport";
+            this.Name = "StandardImportForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "导入用户信息";
-            this.Load += new System.EventHandler(this.FormUserImport_Load);
+            this.Load += new System.EventHandler(this.StandardImportForm_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);

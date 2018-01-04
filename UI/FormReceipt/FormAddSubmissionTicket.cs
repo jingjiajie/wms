@@ -160,7 +160,7 @@ namespace WMS.UI.FormReceipt
                                 int amountReceiptArea;
                                 amountReceiptArea = (int)stockInfo.ReceiptAreaAmount;
                                 stockInfo.ReceiptAreaAmount = 0;
-                                stockInfo.SubmissionAreaAmount = amountReceiptArea;
+                                //TODO stockInfo.SubmissionAreaAmount = amountReceiptArea;
                             }
                         }
                         rti.State = "送检中";

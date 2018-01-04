@@ -131,13 +131,7 @@ namespace WMS.UI.FormBase
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormUserModify();
-            form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback((addedID) =>
-            {
-                this.Search(addedID);
-            });
-            form.Show();
+
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -228,6 +222,27 @@ namespace WMS.UI.FormBase
             {
                 this.Search();
             }
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            //创建导入窗口
+            StandardImportForm<User> formUserImport =
+                new StandardImportForm<User>
+                (
+                    UserMetaData.KeyNames, //参数1：KeyName
+                    (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
+                    {
+                        return true;
+                    },
+                    () => //参数3：导入完成回调函数
+                    {
+                        this.Search();
+                    }
+                );
+
+            //显示导入窗口
+            formUserImport.Show();
         }
     }
 }

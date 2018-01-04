@@ -56,11 +56,11 @@
     <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormUserImport.cs">
+    <Compile Include="FormBase\StandardImportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormUserImport.Designer.cs">
-      <DependentUpon>FormUserImport.cs</DependentUpon>
+    <Compile Include="FormBase\StandardImportForm.Designer.cs">
+      <DependentUpon>StandardImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormJobTicket\FormJobTicketNew.cs">
       <SubType>Form</SubType>
@@ -73,30 +73,6 @@
     </Compile>
     <Compile Include="FormLoading.Designer.cs">
       <DependentUpon>FormLoading.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormLoading1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormLoading1.Designer.cs">
-      <DependentUpon>FormLoading1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormLoading2.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormLoading2.Designer.cs">
-      <DependentUpon>FormLoading2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormLoading3.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormLoading3.Designer.cs">
-      <DependentUpon>FormLoading3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormLoadingf.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormLoadingf.Designer.cs">
-      <DependentUpon>FormLoadingf.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.cs">
       <SubType>Form</SubType>
@@ -451,26 +427,14 @@
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormUserImport.resx">
-      <DependentUpon>FormUserImport.cs</DependentUpon>
+    <EmbeddedResource Include="FormBase\StandardImportForm.resx">
+      <DependentUpon>StandardImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketNew.resx">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLoading.resx">
       <DependentUpon>FormLoading.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormLoading1.resx">
-      <DependentUpon>FormLoading1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormLoading2.resx">
-      <DependentUpon>FormLoading2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormLoading3.resx">
-      <DependentUpon>FormLoading3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormLoadingf.resx">
-      <DependentUpon>FormLoadingf.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.resx">
       <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>

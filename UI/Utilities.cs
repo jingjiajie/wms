@@ -146,7 +146,7 @@ namespace WMS.UI
         }
 
 
-        private static bool CopyTextToProperty<T>(string text, string propertyName, T targetObject, KeyName[] keyNames, out string errorMessage)
+        public static bool CopyTextToProperty<T>(string text, string propertyName, T targetObject, KeyName[] keyNames, out string errorMessage)
         {
             Type objType = typeof(T);
             PropertyInfo p = objType.GetProperty(propertyName);
@@ -155,14 +155,19 @@ namespace WMS.UI
                 throw new Exception("你的对象" + objType.Name + "里没有" + propertyName + "这个属性！检查一下你的代码吧！");
             }
 
-            string chineseName = p.Name;
-            var searchedName = (from kn in keyNames where kn.Key == p.Name select kn.Name).ToArray();
-            if (searchedName.Length > 0)
+            KeyName keyName = (from kn in keyNames where kn.Key == p.Name select kn).FirstOrDefault();
+            if(keyName == null)
             {
-                chineseName = searchedName.First();
+                throw new Exception(objType.Name + "的KeyNames中不存在" + p.Name + "，请检查你的代码！");
             }
+            string chineseName = keyName.Name;
 
             Type originType = p.PropertyType;
+            if(text.Length == 0 && keyName.NotNull == true)
+            {
+                errorMessage = chineseName + " 不允许为空！";
+                return false;
+            }
             //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
             if (text.Length == 0 && originType != typeof(string))
             {
@@ -348,71 +353,5 @@ namespace WMS.UI
             }
         }
 
-        public static void InitReoGridImport(ReoGridControl reoGridControl,KeyName[] keyNames)
-        {
-            //初始化表格
-            var worksheet = reoGridControl.Worksheets[0];
-            for (int i = 0; i < keyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = keyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = keyNames[i].ImportVisible;
-            }
-            worksheet.Columns = keyNames.Length; //限制表的长度
-        }
-
-        public static T[] MakeObjectByReoGridImport<T>(ReoGridControl reoGridControl,KeyName[] keyNames,out string errorMessage) where T:new()
-        {
-            var worksheet = reoGridControl.Worksheets[0];
-            List<T> result = new List<T>();
-            string[] propertyNames = (from kn in keyNames
-                                    select kn.Key).ToArray();
-            //遍历行
-            for (int line = 0; line < worksheet.Rows; line++)
-            {
-                //如果是空行，则跳过
-                if (IsEmptyLine(reoGridControl, line))
-                {
-                    continue;
-                }
-
-                T newObj = new T();
-                result.Add(newObj);
-                //遍历列
-                for (int col = 0; col < keyNames.Length; col++)
-                {
-                    //如果字段对导入不可见，或者可见但不导入，则跳过
-                    if (keyNames[col].ImportVisible == false || keyNames[col].Import == false)
-                    {
-                        continue;
-                    }
-                    //如果单元格为null，则跳过
-                    if(worksheet.GetCell(line,col) == null)
-                    {
-                        continue;
-                    }
-                    if (CopyTextToProperty(worksheet[line, col].ToString(), propertyNames[col], newObj, keyNames, out errorMessage) == false)
-                    {
-                        errorMessage = string.Format("行{0}，列{1}：{2}", line, col, errorMessage);
-                        return null;
-                    }
-                }
-            }
-            errorMessage = null;
-            return result.ToArray();
-        }
-
-        private static bool IsEmptyLine(ReoGridControl reoGridControl,int line)
-        {
-            var worksheet = reoGridControl.Worksheets[0];
-            for(int col = 0; col < worksheet.Columns; col++)
-            {
-                //只要有单元格有字，就判定不为空行。如果所有单元格都是null或者没有字，判定为空行。
-                if(worksheet.GetCell(line,col) != null && worksheet.GetCell(line, col).Data.ToString().Length != 0)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }

@@ -12,10 +12,11 @@ namespace WMS.UI
         public string Name;
         public bool Visible = true;
         public ComboBoxItem[] ComboBoxItems = null;
+        public bool NotNull = false;
         public bool Editable = true;
+        public bool Save = true;
         public bool ImportVisible = true;
         public bool Import = true;
-        public bool Save = true;
     }
 
     public enum FormMode
