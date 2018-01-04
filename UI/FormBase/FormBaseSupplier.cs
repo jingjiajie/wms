@@ -107,12 +107,12 @@ namespace WMS.UI
             var a1  = new FormSupplierModify();
             a1.SetMode(FormMode.ADD);
 
-            a1.SetAddFinishedCallback(() =>
+            a1.SetAddFinishedCallback((AddID ) =>
             {
-                this.pagerWidget.Search();
-                var worksheet = this.reoGridControlUser.Worksheets[0];
+                this.pagerWidget.Search(false ,AddID );
+                //var worksheet = this.reoGridControlUser.Worksheets[0];
                 
-                worksheet.SelectionRange = new RangePosition("A1:A1");
+                //worksheet.SelectionRange = new RangePosition("A1:A1");
             });
             a1.Show();  
         }
@@ -265,9 +265,9 @@ namespace WMS.UI
                 }
                 int supplierID  = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var a1= new FormSupplierModify(supplierID);
-                a1.SetModifyFinishedCallback(() =>
+                a1.SetModifyFinishedCallback((AlterID) =>
                 {
-                    this.pagerWidget.Search();
+                    this.pagerWidget.Search(false ,AlterID );
                 });
                 a1.Show();
             }

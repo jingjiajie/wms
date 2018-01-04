@@ -26,7 +26,7 @@ namespace WMS.UI
             new KeyName(){Key="BankNo",Name="开户行行号",Visible = true, Editable = true},
             new KeyName(){Key="ZipCode",Name="邮编",Visible = true, Editable = true},
             new KeyName(){Key="RecipientName",Name="收件人",Visible = true, Editable = true},
-            new KeyName(){Key="Number",Name="序号",Visible = true, Editable = true},
+            new KeyName(){Key="Number",Name="编号",Visible = true, Editable = true},
             new KeyName(){Key="ContractState",Name="合同状态",Visible = true, Editable = true},
             new KeyName(){Key="IsHistory",Name="历史信息",Visible = true, Editable = true},
         };

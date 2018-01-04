@@ -15,8 +15,8 @@ namespace WMS.UI
     {
         private int supplierID = -1; 
         private WMSEntities wmsEntities = new WMSEntities();
-        private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
+        private Action<int> modifyFinishedCallback = null;
+        private Action<int>  addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
         public FormSupplierModify(int supplierID = -1)
@@ -171,12 +171,12 @@ namespace WMS.UI
                 //调用回调函数
                 if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
                 {
-                    this.modifyFinishedCallback();
+                    this.modifyFinishedCallback(supplier.ID );
                     MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
                 {
-                    this.addFinishedCallback();
+                    this.addFinishedCallback(supplier.ID );
                     MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
@@ -192,11 +192,11 @@ namespace WMS.UI
 
         }
 
-        public void SetModifyFinishedCallback(Action callback)
+        public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
         }
-        public void SetAddFinishedCallback(Action callback)
+        public void SetAddFinishedCallback(Action<int> callback)
         {
             this.addFinishedCallback = callback;
         }

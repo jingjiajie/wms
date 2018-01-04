@@ -41,7 +41,9 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.KeyNames);
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+            TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
             textboxsuppliername.ReadOnly = true;
+            textboxsuppliernumber.ReadOnly = true;
 
             if (this.mode == FormMode.ALTER)
             {
@@ -71,16 +73,17 @@ namespace WMS.UI
             formSelectSupplier.SetSelectFinishCallback((selectedID) =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                string supplierName = (from s in wmsEntities.SupplierView
+                var supplierName = (from s in wmsEntities.SupplierView
                                        where s.ID == selectedID
-                                       select s.Name).FirstOrDefault();
-                if (supplierName == null)
+                                       select s).FirstOrDefault();
+                if (supplierName.Name == null)
                 {
                     MessageBox.Show("选择供应商失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 this.supplierID = selectedID;
-                this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName;
+                this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName.Name;
+                this.Controls.Find("textBoxSupplierNumber", true)[0].Text = supplierName.Number;
             });
             formSelectSupplier.Show();
             
@@ -89,7 +92,6 @@ namespace WMS.UI
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-
             var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
             var textBoxNo = this.Controls.Find("textBoxNo", true)[0];
             var textBoxName = this.Controls.Find("textBoxName", true)[0];
@@ -121,9 +123,21 @@ namespace WMS.UI
             {
                 try
                 {
-                    componen = (from s in this.wmsEntities.Component
-                                where s.ID == this.componenID
-                                select s).Single();
+                    //询问是否保留历史信息
+                    if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    {
+                        componen = (from s in this.wmsEntities.Component
+                                    where s.ID == this.componenID
+                                    select s).Single();
+                    }
+                    else
+                    {
+                        
+                        componen = (from s in this.wmsEntities.Component
+                                    where s.ID == this.componenID
+                                    select s).Single();
+                        
+                    }                    
                     string supplierName = textBoxSupplierName.Text;
                     try
                     {

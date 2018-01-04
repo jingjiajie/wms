@@ -33,11 +33,14 @@
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButtonSelect = new System.Windows.Forms.ToolStripButton();
+            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -46,6 +49,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlComponen = new unvell.ReoGrid.ReoGridControl();
             this.panelPager = new System.Windows.Forms.Panel();
+            this.buttonHistorySearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -61,11 +65,15 @@
             this.toolStripLabelSelect,
             this.toolStripComboBoxSelect,
             this.textBoxSearchValue,
-            this.toolStripButtonSelect,
+            this.buttonSearch,
+            this.buttonHistorySearch,
             this.toolStripSeparator1,
             this.toolStripButtonAdd,
             this.toolStripButtonAlter,
-            this.toolStripButtonDelete});
+            this.toolStripButtonDelete,
+            this.toolStripButton3,
+            this.toolStripButton2,
+            this.toolStripButton1});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(887, 28);
@@ -95,14 +103,14 @@
             this.textBoxSearchValue.Size = new System.Drawing.Size(151, 28);
             this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
-            // toolStripButtonSelect
+            // buttonSearch
             // 
-            this.toolStripButtonSelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelect.Image")));
-            this.toolStripButtonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSelect.Name = "toolStripButtonSelect";
-            this.toolStripButtonSelect.Size = new System.Drawing.Size(56, 25);
-            this.toolStripButtonSelect.Text = "查询";
-            this.toolStripButtonSelect.Click += new System.EventHandler(this.toolStripButtonSelect_Click);
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonSearch.Name = "buttonSearch";
+            this.buttonSearch.Size = new System.Drawing.Size(56, 25);
+            this.buttonSearch.Text = "查询";
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // toolStripSeparator1
             // 
@@ -136,6 +144,30 @@
             this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 25);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(128, 25);
+            this.toolStripButton3.Text = "零件单箱包装信息";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(116, 24);
+            this.toolStripButton2.Text = "零件外包装信息";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(128, 24);
+            this.toolStripButton1.Text = "零件出货包装信息";
             // 
             // tableLayoutPanel1
             // 
@@ -218,6 +250,15 @@
             this.panelPager.Size = new System.Drawing.Size(881, 24);
             this.panelPager.TabIndex = 5;
             // 
+            // buttonHistorySearch
+            // 
+            this.buttonHistorySearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonHistorySearch.Image")));
+            this.buttonHistorySearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonHistorySearch.Name = "buttonHistorySearch";
+            this.buttonHistorySearch.Size = new System.Drawing.Size(104, 25);
+            this.buttonHistorySearch.Text = "历史信息查询";
+            this.buttonHistorySearch.Click += new System.EventHandler(this.buttonHistorySearch_Click);
+            // 
             // FormBaseComponent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -245,7 +286,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabelSelect;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelect;
         private System.Windows.Forms.ToolStripTextBox textBoxSearchValue;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSelect;
+        private System.Windows.Forms.ToolStripButton buttonSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
@@ -258,5 +299,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private unvell.ReoGrid.ReoGridControl reoGridControlComponen;
         private System.Windows.Forms.Panel panelPager;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton buttonHistorySearch;
     }
 }
