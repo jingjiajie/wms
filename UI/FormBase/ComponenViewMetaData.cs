@@ -32,7 +32,7 @@ namespace WMS.UI
             new KeyName(){Key="InventoryRequirement10Day",Name="10天库存要求",Visible = true, Editable = true},
             new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = true, Editable = true,Save=false},
             new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = true,Save=false},
-            //new KeyName(){Name = "历史信息", Key = "IsHistory" , Visible = false, Editable = false,Save=false},
+            new KeyName(){Name = "历史信息", Key = "IsHistory" , Visible = false, Editable = false,Save=false},
 
         };
         public static KeyName[] KeyNames { get => componenkeyNames; set => componenkeyNames = value; }

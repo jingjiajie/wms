@@ -15,6 +15,7 @@ namespace WMS.UI.FormBase
 {
     public partial class FormBaseProject : Form
     {
+        private PagerWidget<ProjectView> pagerWidget = null;
         private WMSEntities wmsEntities = new WMSEntities();
         public FormBaseProject()
         {
@@ -33,113 +34,121 @@ namespace WMS.UI.FormBase
             this.toolStripComboBoxSelect.SelectedIndex = 0;
 
 
-            //初始化表格
-            var worksheet = this.reoGridControlProject.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < BaseProjectMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = BaseProjectMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = BaseProjectMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = BaseProjectMetaData.KeyNames.Length;//限制表的长度
+            ////初始化表格
+            //var worksheet = this.reoGridControlProject.Worksheets[0];
+            //worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            //for (int i = 0; i < BaseProjectMetaData.KeyNames.Length; i++)
+            //{
+            //    worksheet.ColumnHeaders[i].Text = BaseProjectMetaData.KeyNames[i].Name;
+            //    worksheet.ColumnHeaders[i].IsVisible = BaseProjectMetaData.KeyNames[i].Visible;
+            //}
+            //worksheet.Columns = BaseProjectMetaData.KeyNames.Length;//限制表的长度
+            this.pagerWidget = new PagerWidget<ProjectView>(this.reoGridControlProject, BaseProjectMetaData.KeyNames);
+            this.panelPager.Controls.Add(pagerWidget);
+            pagerWidget.Show();
         }
 
         private void FormBaseProject_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.Search();
+            this.pagerWidget.Search();
         }
 
-        private void Search(int selectedID = -1)
-        {
-            string key = null;
-            string value = null;
+        //private void Search(int selectedID = -1)
+        //{
+        //    string key = null;
+        //    string value = null;
 
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                key = (from kn in BaseProjectMetaData.KeyNames
-                       where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.toolStripTextBoxSelect.Text;
-            }
+        //    if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+        //    {
+        //        key = (from kn in BaseProjectMetaData.KeyNames
+        //               where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+        //               select kn.Key).First();
+        //        value = this.toolStripTextBoxSelect.Text;
+        //    }
 
-            this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlProject.Worksheets[0];
-            worksheet[0, 0] = "加载中...";
-            new Thread(new ThreadStart(() =>
-            {
-                var wmsEntities = new WMSEntities();
-                ProjectView[] projectViews = null;
-                string sql = "SELECT * FROM ProjectView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-                if (key != null && value != null) //查询条件不为null则增加查询条件
-                {
-                    sql += "AND " + key + " = @value ";
-                    parameters.Add(new SqlParameter("value", value));
-                }
-                sql += " ORDER BY ID DESC"; //倒序排序
-                try
-                {
-                    projectViews = wmsEntities.Database.SqlQuery<ProjectView>(sql, parameters.ToArray()).ToArray();
-                }
-                catch (EntityCommandExecutionException)
-                {
-                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                //if (key == null || value == null) //查询条件为null则查询全部内容
-                //{
-                //    Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>("SELECT * FROM Project").ToArray();
-                //}
-                //else
-                //{
-                //    if (Utilities.IsQuotateType(typeof(Project).GetProperty(key).PropertyType)) //不是数字则加上单引号
-                //    {
-                //        value = "'" + value + "'";
-                //    }
-                //    try
-                //    {
-                //        Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>(String.Format("SELECT * FROM Project WHERE {0} = {1}", key, value)).ToArray();
-                //    }
-                //    catch
-                //    {
-                //        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                //        return;
-                //    }
-                //}
-                this.reoGridControlProject.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (projectViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < projectViews.Length; i++)
-                    {
-                        ProjectView curprojectViews = projectViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curprojectViews, (from kn in BaseProjectMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
-                    }
-                }));
-            })).Start();
-            if (selectedID != -1)
-            {
-                Utilities.SelectLineByID(this.reoGridControlProject, selectedID);
-            }
-        }
+        //    this.labelStatus.Text = "正在搜索中...";
+        //    var worksheet = this.reoGridControlProject.Worksheets[0];
+        //    worksheet[0, 0] = "加载中...";
+        //    new Thread(new ThreadStart(() =>
+        //    {
+        //        var wmsEntities = new WMSEntities();
+        //        ProjectView[] projectViews = null;
+        //        string sql = "SELECT * FROM ProjectView WHERE 1=1 ";
+        //        List<SqlParameter> parameters = new List<SqlParameter>();
+        //        if (key != null && value != null) //查询条件不为null则增加查询条件
+        //        {
+        //            sql += "AND " + key + " = @value ";
+        //            parameters.Add(new SqlParameter("value", value));
+        //        }
+        //        sql += " ORDER BY ID DESC"; //倒序排序
+        //        try
+        //        {
+        //            projectViews = wmsEntities.Database.SqlQuery<ProjectView>(sql, parameters.ToArray()).ToArray();
+        //        }
+        //        catch (EntityCommandExecutionException)
+        //        {
+        //            MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            return;
+        //        }
+        //        catch (Exception)
+        //        {
+        //            MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //            return;
+        //        }
+        //        //if (key == null || value == null) //查询条件为null则查询全部内容
+        //        //{
+        //        //    Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>("SELECT * FROM Project").ToArray();
+        //        //}
+        //        //else
+        //        //{
+        //        //    if (Utilities.IsQuotateType(typeof(Project).GetProperty(key).PropertyType)) //不是数字则加上单引号
+        //        //    {
+        //        //        value = "'" + value + "'";
+        //        //    }
+        //        //    try
+        //        //    {
+        //        //        Projects = wmsEntities.Database.SqlQuery<DataAccess.Project>(String.Format("SELECT * FROM Project WHERE {0} = {1}", key, value)).ToArray();
+        //        //    }
+        //        //    catch
+        //        //    {
+        //        //        MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        //        return;
+        //        //    }
+        //        //}
+        //        this.reoGridControlProject.Invoke(new Action(() =>
+        //        {
+        //            this.labelStatus.Text = "搜索完成";
+        //            worksheet.DeleteRangeData(RangePosition.EntireRange);
+        //            if (projectViews.Length == 0)
+        //            {
+        //                worksheet[0, 1] = "没有查询到符合条件的记录";
+        //            }
+        //            for (int i = 0; i < projectViews.Length; i++)
+        //            {
+        //                ProjectView curprojectViews = projectViews[i];
+        //                object[] columns = Utilities.GetValuesByPropertieNames(curprojectViews, (from kn in BaseProjectMetaData.KeyNames select kn.Key).ToArray());
+        //                for (int j = 0; j < worksheet.Columns; j++)
+        //                {
+        //                    worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+        //                }
+        //            }
+        //        }));
+        //    })).Start();
+        //    if (selectedID != -1)
+        //    {
+        //        Utilities.SelectLineByID(this.reoGridControlProject, selectedID);
+        //    }
+        //}
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
-            this.Search();
+            this.pagerWidget.ClearCondition();
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            }
+            this.pagerWidget.Search();
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -149,7 +158,7 @@ namespace WMS.UI.FormBase
 
             formBaseProjectModify.SetAddFinishedCallback((addedID) =>
             {
-                this.Search(addedID);
+                this.pagerWidget.Search(false, addedID);
                 var worksheet = this.reoGridControlProject.Worksheets[0];
 
                 worksheet.SelectionRange = new RangePosition("A1:A1");
@@ -172,7 +181,7 @@ namespace WMS.UI.FormBase
                 var formBaseProjectModify = new FormBaseProjectModify(projectID);
                 formBaseProjectModify.SetModifyFinishedCallback((addedID) =>
                 {
-                    this.Search(addedID);
+                    this.pagerWidget.Search(false, addedID);
                 });
                 //formBaseProjectModify.SetModifyFinishedCallback(this.Search);
                 formBaseProjectModify.Show();
@@ -227,7 +236,7 @@ namespace WMS.UI.FormBase
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(() =>
                 {
-                    this.Search();
+                    this.pagerWidget.Search();
                     MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             })).Start();
@@ -237,7 +246,7 @@ namespace WMS.UI.FormBase
         {
             if (e.KeyChar == 13)
             {
-                this.Search();
+                this.toolStripButtonSelect.PerformClick();
             }
         }
 

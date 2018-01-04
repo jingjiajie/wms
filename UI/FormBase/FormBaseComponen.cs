@@ -80,7 +80,7 @@ namespace WMS.UI
             this.pagerWidget.ClearCondition();
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                this.pagerWidget.AddCondition("IsHistory","0");
+                //this.pagerWidget.AddCondition("IsHistory","0");
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
             this.pagerWidget.Search();
@@ -90,7 +90,7 @@ namespace WMS.UI
             this.pagerWidget.ClearCondition();
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                this.pagerWidget.AddCondition("IsHistory", "1");
+                //this.pagerWidget.AddCondition("IsHistory", "1");
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
             this.pagerWidget.Search();
