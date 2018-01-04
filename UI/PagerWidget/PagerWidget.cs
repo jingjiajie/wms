@@ -359,6 +359,7 @@ namespace WMS.UI
                         for (int j = 0; j < columns.Length; j++)
                         {
                             if (columns[j] == null) continue;
+                            worksheet.Cells[i, j].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
                             worksheet[i, j] = columns[j].ToString();
                         }
                     }

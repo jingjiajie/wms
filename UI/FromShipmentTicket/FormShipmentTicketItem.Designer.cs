@@ -66,7 +66,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 507);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 496);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // panel1
@@ -142,7 +142,7 @@
             this.tableLayoutPanel3.Controls.Add(this.buttonAlter, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Font = new System.Drawing.Font("宋体", 9F);
+            this.tableLayoutPanel3.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
@@ -227,7 +227,7 @@
             this.panel2.Location = new System.Drawing.Point(4, 234);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(896, 269);
+            this.panel2.Size = new System.Drawing.Size(896, 258);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlMain
@@ -247,7 +247,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(896, 269);
+            this.reoGridControlMain.Size = new System.Drawing.Size(896, 258);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -257,28 +257,28 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 507);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 496);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 17, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(904, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(904, 36);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(84, 20);
+            this.labelStatus.Size = new System.Drawing.Size(134, 31);
             this.labelStatus.Text = "查看发货单";
             // 
             // FormShipmentTicketItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 532);
             this.Controls.Add(this.tableLayoutPanel1);

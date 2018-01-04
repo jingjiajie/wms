@@ -286,6 +286,7 @@ namespace WMS.UI
                 Label label = new Label();
                 label.Text = curKeyName.Name;
                 label.Dock = DockStyle.Fill;
+                label.Font = new Font("微软雅黑", 10);
                 tableLayoutPanel.Controls.Add(label);
 
                 //如果是编辑框形式
@@ -336,6 +337,11 @@ namespace WMS.UI
                         textBox.ReadOnly = true;
                     }
                     textBox.Dock = DockStyle.Fill;
+                    textBox.MouseEnter += (obj, e) =>
+                    {
+                        textBox.Focus();
+                        textBox.SelectAll();
+                    };
                     tableLayoutPanel.Controls.Add(textBox);
                 }
                 else //否则是下拉列表形式
@@ -393,15 +399,14 @@ namespace WMS.UI
             return prefix + id.ToString().PadLeft(5, '0');
         }
 
-        public static string GenerateTicketNumber(string supplierNumber,int rankOfMonth)
+        public static string GenerateTicketNumber(string supplierNumber, DateTime createTime, int rankOfMonth)
         {
-            return string.Format("{0}-{1:00}-{2}",supplierNumber,DateTime.Now.Month,rankOfMonth);
+            return string.Format("{0}-{1:00}-{2}",supplierNumber,createTime.Month,rankOfMonth);
         }
 
-        public static string GenerateTicketNo(string prefix, int rankOfDay/*当天第几张*/)
+        public static string GenerateTicketNo(string prefix,DateTime createTime, int rankOfDay/*当天第几张*/)
         {
-            DateTime now = DateTime.Now;
-            return string.Format("{0}{1:0000}{2:00}{3:00}{4:00}{5:00}-{6}", prefix, now.Year, now.Month, now.Day, now.Hour, now.Minute, rankOfDay);
+            return string.Format("{0}{1:0000}{2:00}{3:00}{4:00}{5:00}-{6}", prefix, createTime.Year, createTime.Month, createTime.Day, createTime.Hour, createTime.Minute, rankOfDay);
         }
 
         /// <summary>
@@ -415,6 +420,11 @@ namespace WMS.UI
             int[] ranks = new int[allNoOfDay.Length];
             for(int i = 0; i < allNoOfDay.Length; i++)
             {
+                if(allNoOfDay[i] == null)
+                {
+                    ranks[i] = 0;
+                    continue;
+                }
                 string[] segments = allNoOfDay[i].Split('-');
                 if(segments.Length != 2 || int.TryParse(segments[1],out ranks[i]) == false)
                 {
@@ -436,6 +446,11 @@ namespace WMS.UI
             int[] ranks = new int[allNumberOfSupplierAndMonth.Length];
             for (int i = 0; i < allNumberOfSupplierAndMonth.Length; i++)
             {
+                if (allNumberOfSupplierAndMonth[i] == null)
+                {
+                    ranks[i] = 0;
+                    continue;
+                }
                 string[] segments = allNumberOfSupplierAndMonth[i].Split('-');
                 if (segments.Length != 3 || int.TryParse(segments[2], out ranks[i]) == false)
                 {

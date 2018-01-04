@@ -16,6 +16,7 @@ namespace WMS.UI
 {
     public partial class FormShipmentTicket : Form
     {
+        PagerWidget<ShipmentTicketView> pagerWidget = null;
         WMSEntities wmsEntities = new WMSEntities();
         int userID = -1;
         int projectID = -1;
@@ -65,91 +66,19 @@ namespace WMS.UI
             this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
             this.comboBoxSearchCondition.SelectedIndex = 0;
 
-
-            //初始化表格
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-
-            for (int i = 0; i < ShipmentTicketViewMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = ShipmentTicketViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ShipmentTicketViewMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = ShipmentTicketViewMetaData.KeyNames.Length; //限制表的长度
+            this.pagerWidget = new PagerWidget<ShipmentTicketView>(this.reoGridControlMain, ShipmentTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.panelPagerWidget.Controls.Add(pagerWidget);
+            this.pagerWidget.Show();
         }
 
         private void Search()
         {
-            string key = null;
-            string value = null;
-
-            if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            this.pagerWidget.ClearCondition();
+            if(this.comboBoxSearchCondition.SelectedIndex != 0)
             {
-                key = (from kn in ShipmentTicketViewMetaData.KeyNames
-                       where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.textBoxSearchValue.Text;
+                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(),this.textBoxSearchValue.Text);
             }
-
-            this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet[0, 0] = "加载中...";
-            
-            new Thread(new ThreadStart(() =>
-            {
-                ShipmentTicketView[] shipmentTicketViews = null;
-                string sql = "SELECT * FROM ShipmentTicketView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-                
-                if(this.projectID != -1)
-                {
-                    sql += "AND ProjectID = @projectID ";
-                    parameters.Add(new SqlParameter("projectID",this.projectID));
-                }
-                if(warehouseID != -1)
-                {
-                    sql += "AND WarehouseID = @warehouseID ";
-                    parameters.Add(new SqlParameter("warehouseID",this.warehouseID));
-                }
-                if (key != null && value != null) //查询条件不为null则增加查询条件
-                {
-                    sql += "AND " + key + " = @value ";
-                    parameters.Add(new SqlParameter("value", value));
-                }
-                sql += " ORDER BY ID DESC";
-                try
-                {
-                    shipmentTicketViews = wmsEntities.Database.SqlQuery<ShipmentTicketView>(sql, parameters.ToArray()).ToArray();
-                }
-                catch(EntityCommandExecutionException)
-                {
-                    MessageBox.Show("查询失败，请检查输入条件","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                this.reoGridControlMain.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (shipmentTicketViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < shipmentTicketViews.Length; i++)
-                    {
-                        var curShipmentTicketViews = shipmentTicketViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curShipmentTicketViews, (from kn in ShipmentTicketViewMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
-                    }
-                }));
-            })).Start();
+            this.pagerWidget.Search();
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)

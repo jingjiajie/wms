@@ -65,7 +65,6 @@ namespace WMS.UI
         public FormLogin()
         {
             InitializeComponent();
-            Console.WriteLine(Utilities.GenerateTicketNo("F",10));
         }
 
         private void FormLogin_Load(object sender, EventArgs e)

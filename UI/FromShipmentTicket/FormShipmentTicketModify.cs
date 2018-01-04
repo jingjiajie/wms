@@ -93,9 +93,9 @@ namespace WMS.UI
                     MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if(shipmentTicket == null)
+                if (shipmentTicket == null)
                 {
-                    MessageBox.Show("修改失败，发货单不存在","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("修改失败，发货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 shipmentTicket.LastUpdateUserID = this.userID;
@@ -123,66 +123,77 @@ namespace WMS.UI
                 Utilities.CopyComboBoxsToProperties(this, shipmentTicket, ShipmentTicketViewMetaData.KeyNames);
             }
 
-            new Thread(()=>
+            new Thread(() =>
             {
+                //生成单号和编号
                 try
                 {
-                    if(string.IsNullOrWhiteSpace(shipmentTicket.No))
+                    if (string.IsNullOrWhiteSpace(shipmentTicket.No))
                     {
-                        DateTime today = DateTime.Now.Date;
-                        DateTime tomorrow = today.AddDays(1);
+                        if (shipmentTicket.CreateTime.HasValue == false)
+                        {
+                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                            return;
+                        }
+                        DateTime createDay = new DateTime(shipmentTicket.CreateTime.Value.Year, shipmentTicket.CreateTime.Value.Month, shipmentTicket.CreateTime.Value.Day);
+                        DateTime nextDay = createDay.AddDays(1);
                         int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.ShipmentTicket
-                                                                              where s.CreateTime >= today && s.CreateTime < tomorrow
+                                                                              where s.CreateTime >= createDay && s.CreateTime < nextDay
                                                                               select s.No).ToArray());
-                        if(maxRankOfToday == -1)
+                        if (maxRankOfToday == -1)
                         {
                             MessageBox.Show("单号生成失败！请手动填写单号");
                             return;
                         }
-                        shipmentTicket.No = Utilities.GenerateTicketNo("F", maxRankOfToday + 1);
+                        shipmentTicket.No = Utilities.GenerateTicketNo("F", shipmentTicket.CreateTime.Value, maxRankOfToday + 1);
                     }
                     if (string.IsNullOrWhiteSpace(shipmentTicket.Number))
                     {
-                        DateTime now = DateTime.Now;
-                        DateTime thisMonth = new DateTime(now.Year, now.Month, 1);
-                        DateTime nextMonth = new DateTime(now.Year, now.Month + 1, 1);
+                        if (shipmentTicket.CreateTime.HasValue == false)
+                        {
+                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                            return;
+                        }
                         Supplier supplier = (from s in wmsEntities.Supplier
                                              where s.ID == shipmentTicket.SupplierID
                                              select s).FirstOrDefault();
-                        if(supplier == null)
+                        if (supplier == null)
                         {
                             MessageBox.Show("编号生成失败（供应商信息不存在）！请手动填写编号");
                             return;
                         }
-                        int maxRankOfMonth = Utilities.GetMaxTicketRankOfSupplierAndMonth((from s in wmsEntities.ShipmentTicket
-                                                                                           where s.CreateTime >= thisMonth &&
-                                                                                                 s.CreateTime < nextMonth &&
-                                                                                                 s.SupplierID == shipmentTicket.SupplierID
-                                                                                           select s.No).ToArray());
-                        shipmentTicket.Number = Utilities.GenerateTicketNumber(supplier.Number, maxRankOfMonth + 1);
-                        wmsEntities.SaveChanges();
+                        DateTime createMonth = new DateTime(shipmentTicket.CreateTime.Value.Year, shipmentTicket.CreateTime.Value.Month, 1);
+                        DateTime nextMonth = createMonth.AddMonths(1);
+                        var tmp = (from s in wmsEntities.ShipmentTicket
+                                   where s.CreateTime >= createMonth &&
+                                         s.CreateTime < nextMonth &&
+                                         s.SupplierID == shipmentTicket.SupplierID
+                                   select s.Number).ToArray();
+                        int maxRankOfMonth = Utilities.GetMaxTicketRankOfSupplierAndMonth(tmp);
+                        shipmentTicket.Number = Utilities.GenerateTicketNumber(supplier.Number, shipmentTicket.CreateTime.Value, maxRankOfMonth + 1);
                     }
+                    wmsEntities.SaveChanges();
                 }
                 catch
                 {
                     MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                this.Invoke(new Action(()=>
-                {
+                this.Invoke(new Action(() =>
+                    {
                     //调用回调函数
                     if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
-                    {
-                        this.modifyFinishedCallback();
-                        MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
-                    {
-                        this.addFinishedCallback();
-                        MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    this.Close();
-                }));
+                        {
+                            this.modifyFinishedCallback();
+                            MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+                        {
+                            this.addFinishedCallback();
+                            MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        this.Close();
+                    }));
             }).Start();
         }
 
