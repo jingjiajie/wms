@@ -127,8 +127,18 @@ namespace WMS.UI
             {
                 try
                 {
-                    wmsEntities.SaveChanges();
-                    shipmentTicket.No = Utilities.GenerateNo("F", shipmentTicket.ID);
+                    if(mode == FormMode.ADD)
+                    {
+                        DateTime nowDate = DateTime.Now.Date;
+                        int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.ShipmentTicket
+                                                                           where s.CreateTime == nowDate
+                                                                           select s.No).ToArray());
+                        if(maxRankOfToday == -1)
+                        {
+                            MessageBox.Show("单号生成失败！请添加完成后手动修改单号");
+                        }
+                        shipmentTicket.No = Utilities.GenerateTicketNo("F", maxRankOfToday + 1);
+                    }
                     wmsEntities.SaveChanges();
                 }
                 catch
