@@ -312,11 +312,6 @@ namespace WMS.UI
             }
         }
 
-        public static string GenerateNo(string prefix, int id)
-        {
-            return prefix + id.ToString().PadLeft(5, '0');
-        }
-
         public static int[] GetSelectedIDs(ReoGridControl reoGridControl)
         {
             List<int> ids = new List<int>();
@@ -352,6 +347,38 @@ namespace WMS.UI
                 }
             }
         }
+        
+        [Obsolete] //已废弃
+        public static string GenerateNo(string prefix, int id)
+        {
+            return prefix + id.ToString().PadLeft(5, '0');
+        }
 
+        public static string GenerateTicketNo(string prefix, int rankOfDay/*当天第几张*/)
+        {
+            DateTime now = DateTime.Now;
+            return string.Format("{0}{1:0000}{2:00}{3:00}{4:00}{5:00}-{6}", prefix, now.Year, now.Month, now.Day, now.Hour, now.Minute, rankOfDay);
+        }
+
+        /// <summary>
+        /// 计算单据是当天第几张
+        /// </summary>
+        /// <param name="AllNoOfDay">当天所有的单号（必须是“[前缀][日期时间]-[第几张]“格式）</param>
+        /// <returns>返回单据第几张中的最大数</returns>
+        public static int GetMaxTicketRankOfDay(string[] allNoOfDay)
+        {
+            if (allNoOfDay.Length == 0) return 0;
+            int[] ranks = new int[allNoOfDay.Length];
+            for(int i = 0; i < allNoOfDay.Length; i++)
+            {
+                string[] segments = allNoOfDay[i].Split('-');
+                if(segments.Length != 2 || int.TryParse(segments[1],out ranks[i]) == false)
+                {
+                    Console.WriteLine("输入单号不合法：" + allNoOfDay[i]);
+                    ranks[i] = 0;
+                }
+            }
+            return ranks.Max();
+        }
     }
 }
