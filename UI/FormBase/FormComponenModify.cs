@@ -23,27 +23,33 @@ namespace WMS.UI
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormComponenModify(int projectID, int warehouseID, int userID, int componenID = -1)
+        public FormComponenModify(int projectID, int warehouseID, int supplierID, int userID, int componenID = -1)
         {
             InitializeComponent();
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.projectID = projectID;
+            this.supplierID = supplierID;
             this.componenID = componenID;
         }
         
         private void FormComponenModify_Load(object sender, EventArgs e)
-        {
+        { 
             if (this.mode == FormMode.ALTER && this.componenID == -1)
             {
                 throw new Exception("未设置源零件信息");
             }
 
-            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.KeyNames);
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.componenkeyNames);
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
             TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
+            TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
+            TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
             textboxsuppliername.ReadOnly = true;
             textboxsuppliernumber.ReadOnly = true;
+            textboxLastUpdateUserUsername.ReadOnly = true;
+            textboxCreateUserUsername.ReadOnly = true;
+
 
             if (this.mode == FormMode.ALTER)
             {
@@ -69,7 +75,7 @@ namespace WMS.UI
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
            
-            var formSelectSupplier = new FormBase.FormSelectSupplier();
+            var formSelectSupplier = new FormSelectSupplier();
             formSelectSupplier.SetSelectFinishCallback((selectedID) =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
@@ -119,6 +125,7 @@ namespace WMS.UI
             //    return;
             //}
             DataAccess.Component componen = null;
+            DataAccess.Component historycomponen = null;
             if (this.mode == FormMode.ALTER)
             {
                 try
@@ -126,26 +133,30 @@ namespace WMS.UI
                     //询问是否保留历史信息
                     if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        DataAccess.Component historycomponen = null;
-                        historycomponen = (from s in this.wmsEntities.Component
+                        
+                        componen = (from s in this.wmsEntities.Component
                                     where s.ID == this.componenID
                                     select s).Single();
+
+                        //新建零件保留历史信息
+
+                        historycomponen = new DataAccess.Component();
+                        this.wmsEntities.Component.Add(historycomponen);
+                        historycomponen = componen;
                         historycomponen.IsHistory = 1;
-                        componen = new DataAccess.Component();
-                        this.wmsEntities.Component.Add(componen);
                     }
                     else
                     {
                         componen = (from s in this.wmsEntities.Component
                                     where s.ID == this.componenID
                                     select s).Single();
-                        componen.IsHistory = 0;
+
                     }
 
                         string supplierName = textBoxSupplierName.Text;
                     try
                     {
-                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
+                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName&& s.IsHistory == 0 select s).Single();
 
                         this.supplierID = supplierID.ID;
                     }
@@ -169,11 +180,15 @@ namespace WMS.UI
             {
                 componen = new DataAccess.Component();
                 this.wmsEntities.Component.Add(componen);
-            }
+                componen.CreateUserID = this.userID;
+                componen.CreateTime = DateTime.Now;
 
+            }
+            componen.LastUpdateUserID = this.userID;
             componen.ProjectID = this.projectID;
             componen.WarehouseID = this.warehouseID;
             componen.SupplierID = this.supplierID;
+            componen.LastUpdateTime = DateTime.Now;
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.componenkeyNames, out string errorMessage) == false)
@@ -185,7 +200,9 @@ namespace WMS.UI
             {
                 Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.KeyNames);
             }
+            componen.IsHistory = 0;
             wmsEntities.SaveChanges();
+
             //调用回调函数
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {

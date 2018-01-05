@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace WMS.UI
 {
-    public partial class ComponentSingleBoxTranPackingInfoModify : Form
+    public partial class ComponentShipmentInfoModify : Form
     {
 
         private int componenID = -1;
@@ -21,20 +21,20 @@ namespace WMS.UI
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public ComponentSingleBoxTranPackingInfoModify(int componenID = -1)
+        public ComponentShipmentInfoModify(int componenID = -1)
         {
             InitializeComponent();
             this.componenID = componenID;
         }
         
-        private void ComponentSingleBoxTranPackingInfoModify_Load(object sender, EventArgs e)
+        private void ComponentShipmentInfoModify_Load(object sender, EventArgs e)
         {
             if (this.mode == FormMode.ALTER && this.componenID == -1)
             {
                 throw new Exception("未设置源零件信息");
             }
 
-            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.KeyNames2);
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.ComponentShipmentInfokeyNames);
 
             if (this.mode == FormMode.ALTER|| this.mode == FormMode.CHECK)
             {
@@ -61,6 +61,7 @@ namespace WMS.UI
         {
 
             DataAccess.Component componen = null;
+            DataAccess.Component historycomponen = null;
             if (this.mode == FormMode.ALTER)
             {
                 try
@@ -74,7 +75,7 @@ namespace WMS.UI
                         componen.IsHistory = 0;
 
                         //新建零件保留历史信息
-                        DataAccess.Component historycomponen = null;
+
                         historycomponen = new DataAccess.Component();
                         this.wmsEntities.Component.Add(historycomponen);
                         historycomponen = componen;
@@ -103,14 +104,24 @@ namespace WMS.UI
 
 
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.ComponentSingleBoxTranPackingInfokeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.ComponentShipmentInfokeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else
             {
-                Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.KeyNames2);
+                Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.ComponentShipmentInfokeyNames);
+            }
+
+            if (Utilities.CopyTextBoxTextsToProperties(this, historycomponen, ComponenViewMetaData.ComponentShipmentInfokeyNames, out string errorMessage1) == false)
+            {
+                MessageBox.Show(errorMessage1, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                Utilities.CopyComboBoxsToProperties(this, historycomponen, ComponenViewMetaData.ComponentShipmentInfokeyNames);
             }
             wmsEntities.SaveChanges();
             //调用回调函数
@@ -138,15 +149,15 @@ namespace WMS.UI
             this.mode = mode;
             if(mode == FormMode.ALTER)
             {
-                this.Text = "修改零件单箱运输包装信息";
-                this.groupBox1.Text = "修改零件单箱运输包装信息";
-                this.buttonOK.Text = "修改零件单箱运输包装信息";
+                this.Text = "修改零件出货信息";
+                this.groupBox1.Text = "修改零件出货信息";
+                this.buttonOK.Text = "修改零件出货信息";
             }
             else if (mode == FormMode.CHECK)
             {
-                this.Text = "零件单箱运输包装信息";
-                this.groupBox1.Text = "零件单箱运输包装信息";
-                this.buttonOK.Text = "零件单箱运输包装信息";
+                this.Text = "零件出货信息";
+                this.groupBox1.Text = "零件出货信息";
+                this.buttonOK.Text = "零件出货信息";
             }
             
         }

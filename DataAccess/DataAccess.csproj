@@ -159,10 +159,10 @@
     <Compile Include="Supplier.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="SupplierAnnualInfo.cs">
+    <Compile Include="SupplierStorageInfo.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="SupplierAnnualInfoView.cs">
+    <Compile Include="SupplierStorageInfoView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SupplierView.cs">

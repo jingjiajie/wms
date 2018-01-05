@@ -18,15 +18,17 @@ namespace WMS.DataAccess
         {
             this.Component = new HashSet<Component>();
             this.ReceiptTicket = new HashSet<ReceiptTicket>();
-            this.SupplierAnnualInfo = new HashSet<SupplierAnnualInfo>();
+            this.SupplierStorageInfo = new HashSet<SupplierStorageInfo>();
+            this.SupplierStorageInfo1 = new HashSet<SupplierStorageInfo>();
+            this.Supplier1 = new HashSet<Supplier>();
             this.User = new HashSet<User>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
         public string ContractNo { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<System.DateTime> StartingTime { get; set; }
+        public Nullable<System.DateTime> EndingTime { get; set; }
         public Nullable<decimal> InvoiceDelayMonth { get; set; }
         public Nullable<decimal> BalanceDelayMonth { get; set; }
         public string FullName { get; set; }
@@ -41,10 +43,21 @@ namespace WMS.DataAccess
         public string Number { get; set; }
         public string ContractState { get; set; }
         public Nullable<int> IsHistory { get; set; }
+        public Nullable<int> NewestSupplierID { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> LastUpdateTime { get; set; }
+        public Nullable<decimal> NetArea { get; set; }
+        public Nullable<decimal> FixedStorageCost { get; set; }
+        public Nullable<decimal> ContractStorageArea { get; set; }
     
         public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
-        public virtual ICollection<SupplierAnnualInfo> SupplierAnnualInfo { get; set; }
+        public virtual ICollection<SupplierStorageInfo> SupplierStorageInfo { get; set; }
+        public virtual ICollection<SupplierStorageInfo> SupplierStorageInfo1 { get; set; }
+        public virtual ICollection<Supplier> Supplier1 { get; set; }
+        public virtual Supplier Supplier2 { get; set; }
         public virtual ICollection<User> User { get; set; }
     }
 }

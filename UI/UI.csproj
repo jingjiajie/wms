@@ -49,6 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\ComponentOuterPackingSizeModify.Designer.cs">
+      <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\ComponentShipmentInfoModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\ComponentShipmentInfoModify.Designer.cs">
+      <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\ComponenViewMetaData.cs" />
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
       <SubType>Form</SubType>
@@ -56,23 +68,23 @@
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponent.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseComponent.Designer.cs">
-      <DependentUpon>FormBaseComponent.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAnnualInfo.cs">
+    <Compile Include="FormBase\SupplierStorageInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAnnualInfo.Designer.cs">
-      <DependentUpon>FormSupplierAnnualInfo.cs</DependentUpon>
+    <Compile Include="FormBase\SupplierStorageInfo.Designer.cs">
+      <DependentUpon>SupplierStorageInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\SupplierStorageInfoModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\SupplierStorageInfoModify.Designer.cs">
+      <DependentUpon>SupplierStorageInfoModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormSupplierModify.cs">
       <SubType>Form</SubType>
@@ -86,7 +98,7 @@
     <Compile Include="FormBase\StandardImportForm.Designer.cs">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplierAnnualInfoMetaData.cs" />
+    <Compile Include="FormBase\SupplierStorageInfoMetaData.cs" />
     <Compile Include="FormJobTicket\FormJobTicketNew.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,12 +329,6 @@
     <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.Designer.cs">
-      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormExcelGenerate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -334,6 +340,12 @@
     </Compile>
     <Compile Include="FormMain\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseComponent.Designer.cs">
+      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormBaseUser.cs">
       <SubType>Form</SubType>
@@ -437,17 +449,23 @@
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
     <Compile Include="Utilities.cs" />
+    <EmbeddedResource Include="FormBase\ComponentOuterPackingSizeModify.resx">
+      <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\ComponentShipmentInfoModify.resx">
+      <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
-      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierAnnualInfo.resx">
-      <DependentUpon>FormSupplierAnnualInfo.cs</DependentUpon>
+    <EmbeddedResource Include="FormBase\SupplierStorageInfo.resx">
+      <DependentUpon>SupplierStorageInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\SupplierStorageInfoModify.resx">
+      <DependentUpon>SupplierStorageInfoModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
@@ -557,14 +575,14 @@
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouseAdd.resx">
-      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormExcelGenerate.resx">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
+      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseUser.resx">
       <DependentUpon>FormBaseUser.cs</DependentUpon>

@@ -39,9 +39,9 @@ namespace WMS.UI
                 Supplier Supplier = (from u in this.wmsEntities.Supplier
                                      where u.ID == supplierid
                                      select u).Single();
-                if (Convert.ToString(Supplier.EndDate) != string.Empty)
+                if (Convert.ToString(Supplier.EndingTime) != string.Empty)
                 {
-                    if (Supplier.EndDate < DateTime.Now)
+                    if (Supplier.EndingTime < DateTime.Now)
                     {
                         MessageBox.Show("合同已经到截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
@@ -234,7 +234,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseComponent l = new FormBaseComponent(user.Authority, Convert.ToInt32(this.user.SupplierID), this.project.ID, this.warehouse.ID);//实例化子窗口
+                FormBaseComponent l = new FormBaseComponent(user.Authority, Convert.ToInt32(this.user.SupplierID), this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

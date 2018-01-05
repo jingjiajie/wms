@@ -18,10 +18,12 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
         private int userID = -1;
-        private WMSEntities wmsEntities = new WMSEntities();
+        private int curSupplierID = -1;
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
+
+        private TextBox textBoxSupplierName = null;
 
         public FormShipmentTicketModify(int projectID,int warehouseID, int userID,int shipmentTicketID = -1)
         {
@@ -40,14 +42,18 @@ namespace WMS.UI
             }
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ShipmentTicketViewMetaData.KeyNames);
+            this.textBoxSupplierName = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+            textBoxSupplierName.BackColor = Color.White;
+            textBoxSupplierName.MouseClick += textBoxSupplierName_MouseClick;
 
+            WMSEntities wmsEntities = new WMSEntities();
             if (this.mode == FormMode.ALTER)
             {
                 this.Text = "修改发货单信息";
                 ShipmentTicketView shipmentTicketView = null;
                 try
                 {
-                    shipmentTicketView = (from s in this.wmsEntities.ShipmentTicketView
+                    shipmentTicketView = (from s in wmsEntities.ShipmentTicketView
                                                              where s.ID == this.shipmentTicketID
                                                              select s).FirstOrDefault();
                 }
@@ -68,6 +74,10 @@ namespace WMS.UI
                 }
                 Utilities.CopyPropertiesToTextBoxes(shipmentTicketView, this);
                 Utilities.CopyPropertiesToComboBoxes(shipmentTicketView, this);
+                if (shipmentTicketView.SupplierID.HasValue)
+                {
+                    this.curSupplierID = shipmentTicketView.SupplierID.Value;
+                }
             }
             else if(this.mode == FormMode.ADD)
             {
@@ -75,16 +85,45 @@ namespace WMS.UI
             }
         }
 
+        private void textBoxSupplierName_MouseClick(object sender, EventArgs e)
+        {
+            FormSelectSupplier form = new FormSelectSupplier();
+            form.SetSelectFinishCallback((supplierID)=>
+            {
+                if (this.IsDisposed) return;
+                WMSEntities wmsEntities = new WMSEntities();
+                try
+                {
+                    SupplierView supplierView = (from s in wmsEntities.SupplierView
+                                                 where s.ID == supplierID
+                                                 select s).FirstOrDefault();
+                    if(supplierView == null)
+                    {
+                        MessageBox.Show("供应商不存在，请重新选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.curSupplierID = supplierID;
+                    this.textBoxSupplierName.Text = supplierView.Name;
+                }
+                catch
+                {
+                    MessageBox.Show("加载供应商信息失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            });
+            form.Show();
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
             ShipmentTicket shipmentTicket = null;
-
+            WMSEntities wmsEntities = new WMSEntities();
             //若修改，则查询原对象。若添加，则新建一个对象。
             if (this.mode == FormMode.ALTER)
             {
                 try
                 {
-                    shipmentTicket = (from s in this.wmsEntities.ShipmentTicket
+                    shipmentTicket = (from s in wmsEntities.ShipmentTicket
                                       where s.ID == this.shipmentTicketID
                                       select s).FirstOrDefault();
                 }
@@ -106,11 +145,17 @@ namespace WMS.UI
                 shipmentTicket = new ShipmentTicket();
                 shipmentTicket.CreateTime = DateTime.Now;
                 shipmentTicket.CreateUserID = this.userID;
-                this.wmsEntities.ShipmentTicket.Add(shipmentTicket);
+                wmsEntities.ShipmentTicket.Add(shipmentTicket);
             }
 
             shipmentTicket.ProjectID = this.projectID;
             shipmentTicket.WarehouseID = this.warehouseID;
+            if(this.curSupplierID == -1)
+            {
+                MessageBox.Show("请选择供应商！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            shipmentTicket.SupplierID = this.curSupplierID;
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicket, ShipmentTicketViewMetaData.KeyNames, out string errorMessage) == false)
@@ -151,7 +196,7 @@ namespace WMS.UI
                     {
                         if (shipmentTicket.CreateTime.HasValue == false)
                         {
-                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写编号");
                             return;
                         }
                         Supplier supplier = (from s in wmsEntities.Supplier

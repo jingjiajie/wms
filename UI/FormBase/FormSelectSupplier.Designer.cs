@@ -1,4 +1,4 @@
-﻿namespace WMS.UI.FormBase
+﻿namespace WMS.UI
 {
     partial class FormSelectSupplier
     {

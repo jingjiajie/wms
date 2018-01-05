@@ -64,7 +64,7 @@ namespace WMS.UI
                 //sql += "AND ID = @ID ";
                 //parameters.Add(new SqlParameter("ID", id ));
                 this.pagerWidget.AddCondition("ID",Convert.ToString(id));
-                this.pagerWidget.AddCondition("历史信息", "0");
+                this.pagerWidget.AddCondition("是否历史信息", "0");
                 this.pagerWidget.Search();
 
             }
@@ -73,7 +73,7 @@ namespace WMS.UI
                 
 
                 InitSupplier();
-                this.pagerWidget.AddCondition("历史信息", "0");
+                this.pagerWidget.AddCondition("是否历史信息", "0");
                 this.pagerWidget.Search();
             }
 
@@ -139,7 +139,7 @@ namespace WMS.UI
         {
 
             this.pagerWidget.ClearCondition();
-            this.pagerWidget.AddCondition("历史信息", "0");
+            this.pagerWidget.AddCondition("是否历史信息", "1");
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
@@ -385,26 +385,48 @@ namespace WMS.UI
 
         private void buttonCheck_Click(object sender, EventArgs e)
         {
-            var a1 = new FormSupplierAnnualInfo(1);
-            a1.Show();
-            //var worksheet = this.reoGridControlUser.Worksheets[0];
-            //try
-            //{
-            //    if (worksheet.SelectionRange.Rows != 1)
-            //    {
-            //        throw new Exception();
-            //    }
-            //    int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+            //var a1 = new FormSupplierAnnualInfo(1);
+            //a1.Show();
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
 
-            //    var a1 = new FormSupplierAnnualInfo(supplierID);
-            //    a1.Show();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
+                var a1 = new SupplierStorageInfo(supplierID);
+                a1.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("是否历史信息", "0");
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            }
+
+            if ((this.authority & authority_supplier) != authority_supplier)
+            {
+                this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+
+                this.pagerWidget.Search();
+            }
+            if ((this.authority & authority_supplier) == authority_supplier)
+            {
+
+                this.pagerWidget.Search();
+            }
         }
     }
     
