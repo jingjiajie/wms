@@ -40,21 +40,15 @@ namespace WMS.UI
             }
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.componenkeyNames);
-            //Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.ComponentSingleBoxTranPackingInfokeyNames);
-            //Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.ComponentShipmentInfokeyNames);
-            //Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.ComponentOuterPackingSizekeyNames);
-
-
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
             TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
-            //TextBox textboxComponentSingleBoxTranPackingInfor = (TextBox)this.Controls.Find("textBoxComponentSingleBoxTranPackingInfo", true)[0];
-            //TextBox textboxComponentOuterPackingSize = (TextBox)this.Controls.Find("textBoxComponentOuterPackingSize", true)[0];
-            //TextBox textboxComponentShipmentInfo = (TextBox)this.Controls.Find("textBoxComponentShipmentInfo", true)[0];
+            TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
+            TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
             textboxsuppliername.ReadOnly = true;
             textboxsuppliernumber.ReadOnly = true;
-            //textboxComponentSingleBoxTranPackingInfor.ReadOnly = true;
-            //textboxComponentOuterPackingSize.ReadOnly = true;
-            //textboxComponentShipmentInfo.ReadOnly = true;
+            textboxLastUpdateUserUsername.ReadOnly = true;
+            textboxCreateUserUsername.ReadOnly = true;
+
 
             if (this.mode == FormMode.ALTER)
             {
@@ -161,7 +155,7 @@ namespace WMS.UI
                         string supplierName = textBoxSupplierName.Text;
                     try
                     {
-                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName select s).Single();
+                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName&& s.IsHistory == 0 select s).Single();
 
                         this.supplierID = supplierID.ID;
                     }
@@ -185,12 +179,15 @@ namespace WMS.UI
             {
                 componen = new DataAccess.Component();
                 this.wmsEntities.Component.Add(componen);
-                
-            }
+                componen.CreateUserID = this.userID;
+                componen.CreateTime = DateTime.Now;
 
+            }
+            componen.LastUpdateUserID = this.userID;
             componen.ProjectID = this.projectID;
             componen.WarehouseID = this.warehouseID;
             componen.SupplierID = this.supplierID;
+            componen.LastUpdateTime = DateTime.Now;
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.componenkeyNames, out string errorMessage) == false)
