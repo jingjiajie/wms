@@ -16,15 +16,15 @@ namespace WMS.UI
 {
     public partial class FormSupplierAnnualInfo : Form
     {
-        private int id;
+        private int supplierid;
         private int projectID = -1;
         private int warehouseID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private PagerWidget<SupplierAnnualInfoView > pagerWidget = null;
-        public FormSupplierAnnualInfo(int supplierid)
+        public FormSupplierAnnualInfo(int supplierid=-1)
         {
             InitializeComponent();
-            this.id = supplierid;
+            this.supplierid = supplierid;
         }
 
       
@@ -61,6 +61,35 @@ namespace WMS.UI
         private void FormSupplierAnnualInfo_Load(object sender, EventArgs e)
         {
           InitializeComponent1();
+          this.pagerWidget.Search();
+        }
+
+        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            {
+                this.toolStripTextBoxSelect.Text = "";
+                this.toolStripTextBoxSelect.Enabled = false;
+                
+            }
+            else
+            {
+                this.toolStripTextBoxSelect.Enabled = true;
+            }
+        }
+
+        private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        {
+            var a1 = new FormSupplierAnnualInfoModify(this.supplierid );
+
+            //a1.SetMode(FormMode.ADD);
+
+            //a1.SetAddFinishedCallback((AddID) =>
+            //{
+            //    this.pagerWidget.Search(false, AddID);
+                
+            //});
+            a1.Show();
         }
     }
 }
