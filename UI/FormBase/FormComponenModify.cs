@@ -98,9 +98,20 @@ namespace WMS.UI
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
             var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
             var textBoxNo = this.Controls.Find("textBoxNo", true)[0];
             var textBoxName = this.Controls.Find("textBoxName", true)[0];
+
+            //询问是否保留历史信息
+            if (this.mode == FormMode.ALTER)
+            {
+
+
+                MsgBoxResult = MessageBox.Show("是否要保留历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+
+                MessageBoxDefaultButton.Button2);
+            }
             if (textBoxNo.Text == string.Empty)
             {
                 MessageBox.Show("零件代号不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -111,10 +122,26 @@ namespace WMS.UI
                 MessageBox.Show("零件名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+
             if (textBoxSupplierName.Text == string.Empty)
             {
                 MessageBox.Show("请选择供应商！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+            else
+            {
+                string supplierName = textBoxSupplierName.Text;
+                try
+                {
+                    Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName && s.IsHistory == 0 select s).Single();
+
+                    this.supplierID = supplierID.ID;
+                }
+                catch
+                {
+
+                }
             }
 
 
@@ -125,45 +152,14 @@ namespace WMS.UI
             //    return;
             //}
             DataAccess.Component componen = null;
-            DataAccess.Component historycomponen = null;
             if (this.mode == FormMode.ALTER)
             {
+
                 try
                 {
-                    //询问是否保留历史信息
-                    if (MessageBox.Show("是否保留历史信息？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        
-                        componen = (from s in this.wmsEntities.Component
-                                    where s.ID == this.componenID
-                                    select s).Single();
-
-                        //新建零件保留历史信息
-
-                        historycomponen = new DataAccess.Component();
-                        this.wmsEntities.Component.Add(historycomponen);
-                        historycomponen = componen;
-                        historycomponen.IsHistory = 1;
-                    }
-                    else
-                    {
-                        componen = (from s in this.wmsEntities.Component
-                                    where s.ID == this.componenID
-                                    select s).Single();
-
-                    }
-
-                        string supplierName = textBoxSupplierName.Text;
-                    try
-                    {
-                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName&& s.IsHistory == 0 select s).Single();
-
-                        this.supplierID = supplierID.ID;
-                    }
-                    catch
-                    {
-
-                    }
+                    componen = (from s in this.wmsEntities.Component
+                                       where s.ID == this.componenID
+                                       select s).Single();
                 }
                 catch
                 {
@@ -172,9 +168,48 @@ namespace WMS.UI
                 }
                 if (componen == null)
                 {
-                    MessageBox.Show("库存信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("历史零件信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+
+                if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
+                {
+                    componen.IsHistory = 1;
+                    //componen.NewestComponentID = this.componenID;
+
+                    //新建零件保留历史信息
+                    this.wmsEntities.Component.Add(componen);
+                    wmsEntities.SaveChanges();
+                    try
+                    {
+                        wmsEntities.SaveChanges();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+                    try
+                    {
+                        componen = (from s in this.wmsEntities.Component
+                                    where s.ID == this.componenID
+                                    select s).Single();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (componen == null)
+                    {
+                        MessageBox.Show("零件信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
             }
             else if (mode == FormMode.ADD)
             {
