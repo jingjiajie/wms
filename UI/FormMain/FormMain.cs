@@ -234,7 +234,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseComponent l = new FormBaseComponent(user.Authority, Convert.ToInt32(this.user.SupplierID), this.project.ID, this.warehouse.ID);//实例化子窗口
+                FormBaseComponent l = new FormBaseComponent(user.Authority, Convert.ToInt32(this.user.SupplierID), this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
