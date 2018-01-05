@@ -385,25 +385,25 @@ namespace WMS.UI
 
         private void buttonCheck_Click(object sender, EventArgs e)
         {
-            var a1 = new FormSupplierAnnualInfo(1);
-            a1.Show();
-            //var worksheet = this.reoGridControlUser.Worksheets[0];
-            //try
-            //{
-            //    if (worksheet.SelectionRange.Rows != 1)
-            //    {
-            //        throw new Exception();
-            //    }
-            //    int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+            //var a1 = new FormSupplierAnnualInfo(1);
+            //a1.Show();
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
 
-            //    var a1 = new FormSupplierAnnualInfo(supplierID);
-            //    a1.Show();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
+                var a1 = new FormSupplierAnnualInfo(supplierID);
+                a1.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
         }
     }

@@ -159,8 +159,8 @@
             this.toolStripButtonComponentSingleBoxTranPackingInfo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonComponentSingleBoxTranPackingInfo.Image")));
             this.toolStripButtonComponentSingleBoxTranPackingInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonComponentSingleBoxTranPackingInfo.Name = "toolStripButtonComponentSingleBoxTranPackingInfo";
-            this.toolStripButtonComponentSingleBoxTranPackingInfo.Size = new System.Drawing.Size(128, 25);
-            this.toolStripButtonComponentSingleBoxTranPackingInfo.Text = "零件单箱包装信息";
+            this.toolStripButtonComponentSingleBoxTranPackingInfo.Size = new System.Drawing.Size(157, 25);
+            this.toolStripButtonComponentSingleBoxTranPackingInfo.Text = "查看/修改单箱包装信息";
             this.toolStripButtonComponentSingleBoxTranPackingInfo.Click += new System.EventHandler(this.toolStripButtonComponentSingleBoxTranPackingInfo_Click);
             // 
             // toolStripButton2
@@ -168,16 +168,16 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(116, 24);
-            this.toolStripButton2.Text = "零件外包装信息";
+            this.toolStripButton2.Size = new System.Drawing.Size(169, 24);
+            this.toolStripButton2.Text = "查看/修改零件外包装信息";
             // 
             // toolStripButton1
             // 
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(128, 24);
-            this.toolStripButton1.Text = "零件出货包装信息";
+            this.toolStripButton1.Size = new System.Drawing.Size(157, 24);
+            this.toolStripButton1.Text = "查看/修改出货包装信息";
             // 
             // tableLayoutPanel1
             // 
