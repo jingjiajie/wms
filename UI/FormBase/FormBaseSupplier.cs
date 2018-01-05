@@ -64,6 +64,7 @@ namespace WMS.UI
                 //sql += "AND ID = @ID ";
                 //parameters.Add(new SqlParameter("ID", id ));
                 this.pagerWidget.AddCondition("ID",Convert.ToString(id));
+                this.pagerWidget.AddCondition("历史信息", "0");
                 this.pagerWidget.Search();
 
             }
@@ -72,7 +73,7 @@ namespace WMS.UI
                 
 
                 InitSupplier();
-
+                this.pagerWidget.AddCondition("历史信息", "0");
                 this.pagerWidget.Search();
             }
 
@@ -138,6 +139,7 @@ namespace WMS.UI
         {
 
             this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("历史信息", "0");
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
@@ -146,13 +148,16 @@ namespace WMS.UI
             if ((this.authority & authority_supplier) != authority_supplier)
             {
             this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+           
                 this.pagerWidget.Search();
             }
             if ((this.authority & authority_supplier) == authority_supplier)
             {
+                
+                this.pagerWidget.Search();
             }
 
-            this.pagerWidget.Search();
+            
         }
 
         private void Search()
