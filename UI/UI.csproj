@@ -49,18 +49,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\ComponentOuterPackingSizeModify.Designer.cs">
+      <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\ComponenViewMetaData.cs" />
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormBaseComponent.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseComponent.Designer.cs">
-      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
@@ -323,12 +323,6 @@
     <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.Designer.cs">
-      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormExcelGenerate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -340,6 +334,12 @@
     </Compile>
     <Compile Include="FormMain\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseComponent.Designer.cs">
+      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormBaseUser.cs">
       <SubType>Form</SubType>
@@ -443,11 +443,11 @@
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
     <Compile Include="Utilities.cs" />
+    <EmbeddedResource Include="FormBase\ComponentOuterPackingSizeModify.resx">
+      <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
-      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
@@ -566,14 +566,14 @@
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouseAdd.resx">
-      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormExcelGenerate.resx">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
+      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseUser.resx">
       <DependentUpon>FormBaseUser.cs</DependentUpon>

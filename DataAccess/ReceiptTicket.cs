@@ -58,6 +58,7 @@ namespace WMS.DataAccess
         public string Number { get; set; }
         public string StorageArea { get; set; }
         public string StorageLocation { get; set; }
+        public Nullable<int> PostedCount { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }
