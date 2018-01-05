@@ -222,7 +222,7 @@ namespace WMS.UI.FormReceipt
                         MessageBox.Show("收货单不存在");
                         return;
                     }
-                    submissionTicket.CreateTime = DateTime.Now.ToString();
+                    submissionTicket.CreateTime = DateTime.Now;
                     submissionTicket.ReceiptTicketID = this.receiptTicketID;
                     submissionTicket.CreateUserID = this.userID;
                     submissionTicket.LastUpdateTime = DateTime.Now;
@@ -237,7 +237,8 @@ namespace WMS.UI.FormReceipt
                         try
                         { 
                             wmsEntities.SaveChanges();
-                            submissionTicket.No = Utilities.GenerateNo("J", submissionTicket.ID);
+                            //submissionTicket.No = Utilities.GenerateTicketNo()
+                            
                             wmsEntities.SaveChanges();
                             foreach(ReceiptTicketItem rti in receiptTicketItems)
                             {

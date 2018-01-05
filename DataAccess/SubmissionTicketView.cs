@@ -24,7 +24,7 @@ namespace WMS.DataAccess
         public string SubmissionPerson { get; set; }
         public string Result { get; set; }
         public Nullable<int> CreateUserID { get; set; }
-        public string CreateTime { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public string SupplierName { get; set; }
@@ -47,5 +47,6 @@ namespace WMS.DataAccess
         public Nullable<int> ReceiptTicketSupplierID { get; set; }
         public string ReceiptTicketNumber { get; set; }
         public string SupplierNumber { get; set; }
+        public Nullable<System.DateTime> Expr1 { get; set; }
     }
 }

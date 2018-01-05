@@ -180,6 +180,7 @@ namespace WMS.UI
                             MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
                             return;
                         }
+
                         DateTime createDay = new DateTime(shipmentTicket.CreateTime.Value.Year, shipmentTicket.CreateTime.Value.Month, shipmentTicket.CreateTime.Value.Day);
                         DateTime nextDay = createDay.AddDays(1);
                         int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.ShipmentTicket

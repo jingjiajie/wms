@@ -21,7 +21,7 @@ namespace WMS.DataAccess
     
         public int ID { get; set; }
         public Nullable<int> ReceiptTicketID { get; set; }
-        public string CreateTime { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
         public string No { get; set; }
         public Nullable<int> HasSelfInspectionReport { get; set; }
         public string DeliverSubmissionPerson { get; set; }
