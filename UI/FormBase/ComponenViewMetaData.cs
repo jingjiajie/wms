@@ -30,8 +30,11 @@ namespace WMS.UI
             new KeyName(){Key="InventoryRequirement3Day",Name="3天库存要求",Visible = true, Editable = true},
             new KeyName(){Key="InventoryRequirement5Day",Name="5天库存要求",Visible = true, Editable = true},
             new KeyName(){Key="InventoryRequirement10Day",Name="10天库存要求",Visible = true, Editable = true},
-            //new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = true, Editable = true,Save=false},
-            //new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = true,Save=false},
+            new KeyName(){Name = "创建用户", Key = "CreateUserUsername" , Visible = true, Editable = true,Save=false},
+            new KeyName(){Name = "创建时间", Key = "CreateTime" , Visible = true, Editable = false,Save=false},
+            new KeyName(){Name = "最后修改用户", Key = "LastUpdateUserUsername" , Visible = true, Editable = true,Save=false},
+            new KeyName(){Name = "最后修改时间", Key = "LastUpdateTime" , Visible = true, Editable = false,Save=false},
+            //new KeyName(){Name = "最新零件信息ID", Key = "NewestComponentID" , Visible = true, Editable = true,Save=true},
             new KeyName(){Name = "历史信息", Key = "IsHistory" , Visible = true, Editable = true,Save=true},
 
         };
