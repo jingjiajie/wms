@@ -10,7 +10,7 @@ using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
 
-namespace WMS.UI.FormBase
+namespace WMS.UI
 {
     public partial class FormSelectSupplier : Form
     {
