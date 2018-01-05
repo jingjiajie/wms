@@ -54,7 +54,7 @@ namespace WMS.UI
             //worksheet.Columns = ComponenMetaData.componenkeyNames.Length;//限制表的长度
 
             //初始化分页控件
-            this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlComponen, ComponenViewMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlComponen, ComponenViewMetaData.componenkeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
         }
@@ -350,7 +350,11 @@ namespace WMS.UI
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var form = new ComponentSingleBoxTranPackingInfoModify(componenID);
-                form.SetMode(FormMode.CHECK);
+                form.SetMode(FormMode.ALTER );
+                form.SetModifyFinishedCallback((addedID) =>
+                {
+                    this.pagerWidget.Search(false, addedID);
+                });
                 form.Show();
             }
             catch

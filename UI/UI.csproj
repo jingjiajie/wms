@@ -49,6 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\ComponentOuterPackingSizeModify.Designer.cs">
+      <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\ComponenViewMetaData.cs" />
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
       <SubType>Form</SubType>
@@ -311,12 +317,6 @@
     <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseWarehouseAdd.Designer.cs">
-      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormExcelGenerate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -437,6 +437,9 @@
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
     <Compile Include="Utilities.cs" />
+    <EmbeddedResource Include="FormBase\ComponentOuterPackingSizeModify.resx">
+      <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
     </EmbeddedResource>
@@ -553,9 +556,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouseAdd.resx">
-      <DependentUpon>FormBaseWarehouseAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormExcelGenerate.resx">
       <DependentUpon>FormExcelGenerate.cs</DependentUpon>
