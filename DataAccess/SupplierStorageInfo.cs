@@ -21,7 +21,9 @@ namespace WMS.DataAccess
         public Nullable<decimal> AreaIncrement { get; set; }
         public Nullable<decimal> StorageDays { get; set; }
         public Nullable<decimal> StorageFee { get; set; }
+        public Nullable<int> ExecuteSupplierID { get; set; }
     
         public virtual Supplier Supplier { get; set; }
+        public virtual Supplier Supplier1 { get; set; }
     }
 }
