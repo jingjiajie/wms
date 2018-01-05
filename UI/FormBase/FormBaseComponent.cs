@@ -114,7 +114,6 @@ namespace WMS.UI
 
                 this.pagerWidget.Search();
             }
-            this.pagerWidget.Search();
         }
 
 
@@ -133,22 +132,21 @@ namespace WMS.UI
 
                 if (this.toolStripComboBoxSelect.SelectedIndex != 0)
                 {
-                    this.pagerWidget.AddCondition("最新零件信息ID", Convert.ToString(componenID));
+                    //this.pagerWidget.AddCondition("最新零件信息ID", Convert.ToString(componenID));
                     this.pagerWidget.AddCondition("IsHistory", "1");
                     this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
                 }
                 if ((this.authority & authority_self) != authority_self)
                 {
                     this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
-
+                    this.pagerWidget.AddCondition("IsHistory", "1");
                     this.pagerWidget.Search();
                 }
                 if ((this.authority & authority_self) == authority_self)
                 {
-
+                    this.pagerWidget.AddCondition("IsHistory", "1");
                     this.pagerWidget.Search();
                 }
-                this.pagerWidget.Search();
 
             }
             catch
@@ -412,7 +410,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentSingleBoxTranPackingInfoModify(componenID);
+                var form = new ComponentSingleBoxTranPackingInfoModify(this.userID,componenID);
                 form.SetMode(FormMode.ALTER );
                 form.SetModifyFinishedCallback((addedID) =>
                 {
@@ -437,7 +435,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentOuterPackingSizeModify(componenID);
+                var form = new ComponentOuterPackingSizeModify(this.userID,componenID);
                 form.SetMode(FormMode.ALTER);
                 form.SetModifyFinishedCallback((addedID) =>
                 {
@@ -462,7 +460,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentShipmentInfoModify(componenID);
+                var form = new ComponentShipmentInfoModify(this.userID,componenID);
                 form.SetMode(FormMode.ALTER);
                 form.SetModifyFinishedCallback((addedID) =>
                 {

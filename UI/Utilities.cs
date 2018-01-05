@@ -297,6 +297,17 @@ namespace WMS.UI
                     TextBox textBox = new TextBox();
                     textBox.Font = new Font("微软雅黑", 10);
 
+                    //设置了默认值，就自动把默认值填在编辑框里
+                    if(curKeyName.DefaultValueFunc != null)
+                    {
+                        textBox.TextChanged += (obj, e) =>
+                        {
+                            textBox.ForeColor = Color.Black;
+                        };
+                        textBox.Text = curKeyName.DefaultValueFunc();
+                        textBox.ForeColor = Color.DarkGray;
+                    }
+
                     //如果设置了占位符，则想办法给它模拟出一个占位符来。windows居然不支持，呵呵
                     if (curKeyName.EditPlaceHolder != null)
                     {
