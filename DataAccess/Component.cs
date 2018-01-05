@@ -14,6 +14,11 @@ namespace WMS.DataAccess
     
     public partial class Component
     {
+        public Component()
+        {
+            this.Component1 = new HashSet<Component>();
+        }
+    
         public int ID { get; set; }
         public string ContainerNo { get; set; }
         public string Factroy { get; set; }
@@ -64,7 +69,14 @@ namespace WMS.DataAccess
         public Nullable<decimal> ShipmentInfoBoxHeight { get; set; }
         public Nullable<decimal> ShipmentInfoUnitAmount { get; set; }
         public Nullable<int> IsHistory { get; set; }
+        public Nullable<int> CreateUserID { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> LastUpdateUserID { get; set; }
+        public Nullable<System.DateTime> LastUpdateTime { get; set; }
+        public Nullable<int> NewestComponentID { get; set; }
     
+        public virtual ICollection<Component> Component1 { get; set; }
+        public virtual Component Component2 { get; set; }
         public virtual Project Project { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Warehouse Warehouse { get; set; }

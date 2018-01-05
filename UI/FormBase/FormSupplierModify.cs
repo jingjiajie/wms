@@ -19,6 +19,7 @@ namespace WMS.UI
         private Action<int>  addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
         private int contract_change;
+      
 
         public FormSupplierModify(int supplierID = -1,int contract_change=1)
         {
@@ -89,10 +90,19 @@ namespace WMS.UI
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
-            TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName",true)[0];
+            DialogResult MsgBoxResult= DialogResult.No;//设置对话框的返回值
+            TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName", true)[0];
             TextBox StartDate = (TextBox)this.Controls.Find("textBoxStartDate", true)[0];
             TextBox EndDate = (TextBox)this.Controls.Find("textBoxEndDate", true)[0];
-            
+            if (this.mode == FormMode.ALTER)
+            {
+                
+
+                MsgBoxResult = MessageBox.Show("是否要保留历史信息","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+
+                MessageBoxDefaultButton.Button2);
+            }
+
             if (StartDate.Text != String.Empty)
             {
                 try
@@ -126,6 +136,7 @@ namespace WMS.UI
             {
 
                 Supplier supplier = null;
+                Supplier supplier_history = null;
 
                 //若修改，则查询原对象。若添加，则新建对象。
                 if (this.mode == FormMode.ALTER)
@@ -149,6 +160,65 @@ namespace WMS.UI
                         this.Close();
                         return;
                     }
+                    
+
+                    //开始数据库操作
+                    if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
+                    {
+                       
+                        supplier.IsHistory = 1;
+                        this.wmsEntities.Supplier.Add(supplier);
+                        try
+                        {
+                            wmsEntities.SaveChanges();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        //继续查找
+                        try
+                        {
+                            supplier = (from s in this.wmsEntities.Supplier
+                                        where s.ID == this.supplierID
+                                        select s).Single();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            this.Close();
+                            return;
+                        }
+                        if (supplier == null)
+                        {
+                            MessageBox.Show("修改失败，发货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            this.Close();
+                            return;
+                        }
+
+                    }
+                  
+
+                    if (Utilities.CopyTextBoxTextsToProperties(this, supplier, SupplierMetaData.KeyNames, out string errorMessage) == false)
+                    {
+                        MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    try
+                    {
+                       
+                        wmsEntities.SaveChanges();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
                 }
 
 
@@ -156,26 +226,49 @@ namespace WMS.UI
                 {
                     supplier = new Supplier();
                     this.wmsEntities.Supplier.Add(supplier);
+                    //开始数据库操作
+                    if (Utilities.CopyTextBoxTextsToProperties(this, supplier, SupplierMetaData.KeyNames, out string errorMessage) == false)
+                    {
+                        MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    try
+                    {
+                        
+                            supplier.IsHistory = 0;
+                        
+                        wmsEntities.SaveChanges();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                 }
 
                
               
 
-                //开始数据库操作
-                if (Utilities.CopyTextBoxTextsToProperties(this, supplier, SupplierMetaData.KeyNames, out string errorMessage) == false)
-                {
-                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                try
-                {
-                    wmsEntities.SaveChanges();
-                }
-                catch
-                {
-                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                ////开始数据库操作
+                //if (Utilities.CopyTextBoxTextsToProperties(this, supplier, SupplierMetaData.KeyNames, out string errorMessage) == false)
+                //{
+                //    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
+                //try
+                //{
+                //    if (mode == FormMode.ADD)
+                //    {
+                //        supplier.IsHistory = 0;
+                //    }
+                //    wmsEntities.SaveChanges();
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    return;
+                //}
                 //调用回调函数
                 if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
                 {

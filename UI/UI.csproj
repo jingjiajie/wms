@@ -329,11 +329,11 @@
     <Compile Include="FormMain\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponen.cs">
+    <Compile Include="FormBase\FormBaseComponent.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseComponen.Designer.cs">
-      <DependentUpon>FormBaseComponen.cs</DependentUpon>
+    <Compile Include="FormBase\FormBaseComponent.Designer.cs">
+      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormBaseUser.cs">
       <SubType>Form</SubType>
@@ -563,8 +563,8 @@
     <EmbeddedResource Include="FormMain\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseComponen.resx">
-      <DependentUpon>FormBaseComponen.cs</DependentUpon>
+    <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
+      <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseUser.resx">
       <DependentUpon>FormBaseUser.cs</DependentUpon>
