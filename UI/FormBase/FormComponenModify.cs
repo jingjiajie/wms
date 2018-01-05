@@ -74,7 +74,7 @@ namespace WMS.UI
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
            
-            var formSelectSupplier = new FormBase.FormSelectSupplier();
+            var formSelectSupplier = new FormSelectSupplier();
             formSelectSupplier.SetSelectFinishCallback((selectedID) =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
