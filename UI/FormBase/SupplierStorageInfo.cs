@@ -21,6 +21,7 @@ namespace WMS.UI
         private int warehouseID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private PagerWidget<SupplierStorageInfoView> pagerWidget = null;
+
         public SupplierStorageInfo(int supplierid=-1)
         {
             InitializeComponent();
@@ -90,6 +91,48 @@ namespace WMS.UI
 
             });
             a1.Show();
+        }
+
+
+
+
+
+
+
+        private void toolStripButtonSelect_Click(object sender, EventArgs e)
+        {
+            this.pagerWidget.ClearCondition();
+            
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            }
+             this.pagerWidget.Search();
+           
+        }
+
+        private void toolStripButtonAlter_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int SupplierStorageInfoID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                var a1 = new SupplierStorageInfoModify (this.supplierid ,SupplierStorageInfoID);
+                a1.SetModifyFinishedCallback((AlterID) =>
+                {
+                    this.pagerWidget.Search(false, AlterID);
+                });
+                a1.Show();
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
 }

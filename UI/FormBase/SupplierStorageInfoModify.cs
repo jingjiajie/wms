@@ -13,14 +13,16 @@ namespace WMS.UI
     public partial class SupplierStorageInfoModify : Form
     {
         private int supplierID = -1;
+        private int SupplierStorageInfoID = -1;
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
         private DataAccess.WMSEntities wmsEntities = new DataAccess.WMSEntities();
-        public SupplierStorageInfoModify(int supplierid)
+        public SupplierStorageInfoModify(int supplierid,int SupplierStorageInfoid=-1)
         {
             InitializeComponent();
             this.supplierID = supplierid;
+            this.SupplierStorageInfoID = SupplierStorageInfoid;
         }
 
         private void FormSupplierAnnualInfoModify_Load(object sender, EventArgs e)
@@ -49,29 +51,30 @@ namespace WMS.UI
                     textBox.Enabled = false;
                 }
                 this.tableLayoutPanel1.Controls.Add(textBox);
-                WMS.DataAccess.SupplierStorageInfo supplierstorgrinfo = new DataAccess.SupplierStorageInfo();
-                //if (this.mode == FormMode.ALTER)
-                //{
-                //    try
-                //    {
-                //        supplierstorgrinfo = (from s in wmsEntities.SupplierStorageInfoView 
-                //                    where s.ID  == this.ID 
-                //                    select s).Single();
-                //    }
-                //    catch
-                //    {
-                //        MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                WMS.DataAccess.SupplierStorageInfoView supplierstorgrinfoView = new DataAccess.SupplierStorageInfoView();
+                if (this.mode == FormMode.ALTER)
+                {
+                    try
+                    {
+                        supplierstorgrinfoView = (from s in wmsEntities.SupplierStorageInfoView
+                                              where s.ID == this.SupplierStorageInfoID 
+                                              select s).Single();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                //        this.Close();
-                //        return;
-                //    }
-                //    if (supplier == null)
-                //    {
-                //        MessageBox.Show("修改失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //        this.Close();
-                //        return;
-                //    }
-                //}
+                        this.Close();
+                        return;
+                    }
+                    if (supplierstorgrinfoView == null)
+                    {
+                        MessageBox.Show("修改失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        return;
+                    }
+                    Utilities.CopyPropertiesToTextBoxes(supplierstorgrinfoView , this);
+                }
             }
         }
         public void SetMode(FormMode mode)
@@ -104,15 +107,54 @@ namespace WMS.UI
         {
             DataAccess.SupplierStorageInfo supp = null ;
 
-            if (mode==FormMode.ALTER) { }
+            if (mode == FormMode.ALTER)
+            {
+
+
+                try
+                {
+                    supp = (from s in this.wmsEntities.SupplierStorageInfo
+                            where s.ID == this.SupplierStorageInfoID 
+                                select s).Single();
+                }
+                catch
+                {
+                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    this.Close();
+                    return;
+                }
+                if (supp == null)
+                {
+                    MessageBox.Show("修改失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+                if (Utilities.CopyTextBoxTextsToProperties(this, supp, SupplierStorageInfoMetaData .KeyNames, out string errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                try
+                {
+
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             else if (mode == FormMode.ADD)
             {
-                
-                supp = new DataAccess.SupplierStorageInfo() ;
-                this.wmsEntities.SupplierStorageInfo .Add(supp );
+
+                supp = new DataAccess.SupplierStorageInfo();
+                this.wmsEntities.SupplierStorageInfo.Add(supp);
                 //开始数据库操作
-                if (Utilities.CopyTextBoxTextsToProperties(this, supp , SupplierStorageInfoMetaData .KeyNames, out string errorMessage) == false)
+                if (Utilities.CopyTextBoxTextsToProperties(this, supp, SupplierStorageInfoMetaData.KeyNames, out string errorMessage) == false)
                 {
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -127,6 +169,9 @@ namespace WMS.UI
                     MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+
+
                 if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
                 {
                     this.modifyFinishedCallback(supp.ID);
@@ -138,6 +183,8 @@ namespace WMS.UI
                     MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
+
+                this.Close();
 
 
 
