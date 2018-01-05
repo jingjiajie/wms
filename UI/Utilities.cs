@@ -296,15 +296,13 @@ namespace WMS.UI
                     TextBox textBox = new TextBox();
                     textBox.Font = new Font("微软雅黑", 10);
 
-                    //设置了默认值，就自动把默认值填在编辑框里
+                    //设置了默认值，就添加事件，更改文字后文字变成黑色。默认值在后面统一填入
                     if(curKeyName.DefaultValueFunc != null)
                     {
                         textBox.TextChanged += (obj, e) =>
                         {
                             textBox.ForeColor = Color.Black;
                         };
-                        textBox.Text = curKeyName.DefaultValueFunc();
-                        textBox.ForeColor = Color.DarkGray;
                     }
 
                     //如果设置了占位符，则想办法给它模拟出一个占位符来。windows居然不支持，呵呵
@@ -367,6 +365,7 @@ namespace WMS.UI
                     tableLayoutPanel.Controls.Add(comboBox);
                 }
             }
+            FillTextBoxDefaultValues(tableLayoutPanel, keyNames);
         }
 
         public static int[] GetSelectedIDs(ReoGridControl reoGridControl)
@@ -471,6 +470,21 @@ namespace WMS.UI
                 }
             }
             return ranks.Max();
+        }
+
+        public static void FillTextBoxDefaultValues(TableLayoutPanel editPanel,KeyName[] keyNames,string prefix = "textBox")
+        {
+            KeyName[] keyNameHasDefaultValueFunc = (from kn in keyNames
+                                                    where kn.DefaultValueFunc != null
+                                                    select kn).ToArray();
+            foreach (KeyName curKeyName in keyNameHasDefaultValueFunc)
+            {
+                Control[] foundControls = editPanel.Controls.Find(prefix + curKeyName.Key, true);
+                if (foundControls.Length == 0) continue;
+                TextBox textBox = (TextBox)foundControls[0];
+                textBox.Text = curKeyName.DefaultValueFunc();
+                textBox.ForeColor = Color.DarkGray;
+            }
         }
     }
 }

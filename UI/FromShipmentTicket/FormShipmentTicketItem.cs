@@ -146,16 +146,7 @@ namespace WMS.UI
             {
                 this.curStockInfoID = -1;
                 //为编辑框填写默认值
-                KeyName[] keyNameHasDefaultValueFunc = (from kn in ShipmentTicketItemViewMetaData.KeyNames
-                                                        where kn.DefaultValueFunc != null
-                                                        select kn).ToArray();
-                foreach (KeyName curKeyName in keyNameHasDefaultValueFunc)
-                {
-                    string defaultValue = curKeyName.DefaultValueFunc();
-                    TextBox textBox = (TextBox)this.Controls.Find("textBox" + curKeyName.Key, true)[0];
-                    textBox.Text = defaultValue;
-                    textBox.ForeColor = Color.DarkGray;
-                }
+                Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, ShipmentTicketItemViewMetaData.KeyNames);
                 return;
             }
             int id = ids[0];
