@@ -14,14 +14,14 @@ using unvell.ReoGrid.DataFormat;
 
 namespace WMS.UI
 {
-    public partial class FormSupplierAnnualInfo : Form
+    public partial class SupplierStorageInfo : Form
     {
         private int supplierid;
         private int projectID = -1;
         private int warehouseID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
-        private PagerWidget<SupplierAnnualInfoView > pagerWidget = null;
-        public FormSupplierAnnualInfo(int supplierid=-1)
+        private PagerWidget<SupplierStorageInfo> pagerWidget = null;
+        public SupplierStorageInfo(int supplierid=-1)
         {
             InitializeComponent();
             this.supplierid = supplierid;
@@ -42,7 +42,7 @@ namespace WMS.UI
 
             this.wmsEntities.Database.Connection.Open();
 
-            string[] visibleColumnNames = (from kn in SupplierAnnualInfoMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in SupplierStorageInfoMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -52,7 +52,7 @@ namespace WMS.UI
             this.toolStripComboBoxSelect.SelectedIndex = 0;
 
             //初始化分页控件
-            this.pagerWidget = new PagerWidget<SupplierAnnualInfoView>(this.reoGridControlUser, SupplierAnnualInfoMetaData.KeyNames, this.projectID, this.warehouseID);
+            //this.pagerWidget = new PagerWidget<SupplierStorageInfoView>(this.reoGridControlUser, SupplierStorageInfoMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
 
@@ -80,7 +80,7 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var a1 = new FormSupplierAnnualInfoModify(this.supplierid );
+            var a1 = new SupplierStorageInfoModify(this.supplierid );
 
             //a1.SetMode(FormMode.ADD);
 

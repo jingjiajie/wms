@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace WMS.UI
 {
-    public partial class FormSupplierAnnualInfoModify : Form
+    public partial class SupplierStorageInfoModify : Form
     {
         private int supplierID = -1;
-        public FormSupplierAnnualInfoModify(int supplierid)
+        public SupplierStorageInfoModify(int supplierid)
         {
             InitializeComponent();
             this.supplierID = supplierid;
@@ -21,9 +21,9 @@ namespace WMS.UI
         private void FormSupplierAnnualInfoModify_Load(object sender, EventArgs e)
         {
             this.tableLayoutPanel1.Controls.Clear();
-            for (int i = 0; i < SupplierAnnualInfoMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < SupplierStorageInfoMetaData.KeyNames.Length; i++)
             {
-                KeyName curKeyName = SupplierAnnualInfoMetaData.KeyNames[i];
+                KeyName curKeyName = SupplierStorageInfoMetaData.KeyNames[i];
                 if (curKeyName.Visible == false && curKeyName.Editable == false)
                 {
                     continue;

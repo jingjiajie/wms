@@ -68,17 +68,17 @@
     <Compile Include="FormBase\FormSelectSupplier.Designer.cs">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAnnualInfo.cs">
+    <Compile Include="FormBase\SupplierStorageInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAnnualInfo.Designer.cs">
-      <DependentUpon>FormSupplierAnnualInfo.cs</DependentUpon>
+    <Compile Include="FormBase\SupplierStorageInfo.Designer.cs">
+      <DependentUpon>SupplierStorageInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAnnualInfoModify.cs">
+    <Compile Include="FormBase\SupplierStorageInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormSupplierAnnualInfoModify.Designer.cs">
-      <DependentUpon>FormSupplierAnnualInfoModify.cs</DependentUpon>
+    <Compile Include="FormBase\SupplierStorageInfoModify.Designer.cs">
+      <DependentUpon>SupplierStorageInfoModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormSupplierModify.cs">
       <SubType>Form</SubType>
@@ -92,7 +92,7 @@
     <Compile Include="FormBase\StandardImportForm.Designer.cs">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\SupplierAnnualInfoMetaData.cs" />
+    <Compile Include="FormBase\SupplierStorageInfoMetaData.cs" />
     <Compile Include="FormJobTicket\FormJobTicketNew.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -452,11 +452,11 @@
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierAnnualInfo.resx">
-      <DependentUpon>FormSupplierAnnualInfo.cs</DependentUpon>
+    <EmbeddedResource Include="FormBase\SupplierStorageInfo.resx">
+      <DependentUpon>SupplierStorageInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormSupplierAnnualInfoModify.resx">
-      <DependentUpon>FormSupplierAnnualInfoModify.cs</DependentUpon>
+    <EmbeddedResource Include="FormBase\SupplierStorageInfoModify.resx">
+      <DependentUpon>SupplierStorageInfoModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>

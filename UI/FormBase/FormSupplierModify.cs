@@ -55,9 +55,11 @@ namespace WMS.UI
                 }
                 this.tableLayoutPanel1.Controls.Add(textBox);
             }
+            
             if (this.mode == FormMode.ALTER)
             {
-                if(this.contract_change ==0)
+
+                if (this.contract_change ==0)
                 { 
                     TextBox textBoxContractState = (TextBox)this.Controls.Find("textBoxContractState", true)[0];
                     textBoxContractState.Enabled = false;
@@ -94,6 +96,7 @@ namespace WMS.UI
             TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName", true)[0];
             TextBox StartDate = (TextBox)this.Controls.Find("textBoxStartDate", true)[0];
             TextBox EndDate = (TextBox)this.Controls.Find("textBoxEndDate", true)[0];
+            TextBox textBoxName = (TextBox)this.Controls.Find("textBoxName", true)[0];
             if (this.mode == FormMode.ALTER)
             {
                 
@@ -136,7 +139,7 @@ namespace WMS.UI
             {
 
                 Supplier supplier = null;
-                Supplier supplier_history = null;
+                
 
                 //若修改，则查询原对象。若添加，则新建对象。
                 if (this.mode == FormMode.ALTER)
@@ -156,13 +159,24 @@ namespace WMS.UI
                     }
                     if (supplier == null)
                     {
-                        MessageBox.Show("修改失败，发货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("修改失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         this.Close();
                         return;
                     }
-                    
+
 
                     //开始数据库操作
+                    //将原供应商存为历史信息
+                    var sameNameUsers = (from u in wmsEntities.Supplier
+                                         where u.Name == textBoxName.Text
+                                            && u.ID != supplier.ID
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("修改供应商名失败，已存在同名供应商：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
                     {
                        
@@ -178,6 +192,7 @@ namespace WMS.UI
                             return;
                         }
 
+                        
                         //继续查找
                         try
                         {
@@ -200,13 +215,15 @@ namespace WMS.UI
                         }
 
                     }
-                  
+                    
+
 
                     if (Utilities.CopyTextBoxTextsToProperties(this, supplier, SupplierMetaData.KeyNames, out string errorMessage) == false)
                     {
                         MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                   
                     try
                     {
                        
@@ -224,6 +241,14 @@ namespace WMS.UI
 
                 else if (mode == FormMode.ADD)
                 {
+                    var sameNameUsers = (from u in wmsEntities.Supplier 
+                                         where u.Name == textBoxName.Text
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("添加供应商失败，已存在同名供应商：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     supplier = new Supplier();
                     this.wmsEntities.Supplier.Add(supplier);
                     //开始数据库操作
@@ -235,9 +260,9 @@ namespace WMS.UI
                     try
                     {
                         
-                            supplier.IsHistory = 0;
+                    supplier.IsHistory = 0;
                         
-                        wmsEntities.SaveChanges();
+                    wmsEntities.SaveChanges();
                     }
                     catch
                     {

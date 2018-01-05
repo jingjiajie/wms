@@ -39,9 +39,9 @@ namespace WMS.UI
                 Supplier Supplier = (from u in this.wmsEntities.Supplier
                                      where u.ID == supplierid
                                      select u).Single();
-                if (Convert.ToString(Supplier.EndDate) != string.Empty)
+                if (Convert.ToString(Supplier.EndingTime) != string.Empty)
                 {
-                    if (Supplier.EndDate < DateTime.Now)
+                    if (Supplier.EndingTime < DateTime.Now)
                     {
                         MessageBox.Show("合同已经到截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;

@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class FormSupplierAnnualInfoModify
+    partial class SupplierStorageInfoModify
     {
         /// <summary>
         /// Required designer variable.
