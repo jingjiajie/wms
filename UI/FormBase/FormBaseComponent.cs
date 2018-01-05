@@ -120,13 +120,43 @@ namespace WMS.UI
 
         private void buttonHistorySearch_Click(object sender, EventArgs e)
         {
-            this.pagerWidget.ClearCondition();
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            try
             {
-                this.pagerWidget.AddCondition("历史信息", "1");
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+
+                this.pagerWidget.ClearCondition();
+
+                if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+                {
+                    this.pagerWidget.AddCondition("最新零件信息ID", Convert.ToString(componenID));
+                    this.pagerWidget.AddCondition("历史信息", "1");
+                    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+                }
+                if ((this.authority & authority_self) != authority_self)
+                {
+                    this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
+
+                    this.pagerWidget.Search();
+                }
+                if ((this.authority & authority_self) == authority_self)
+                {
+
+                    this.pagerWidget.Search();
+                }
+                this.pagerWidget.Search();
+
             }
-            this.pagerWidget.Search();
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
         }
 
         //private void Search(int selectedID = -1)
