@@ -23,12 +23,13 @@ namespace WMS.UI
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormComponenModify(int projectID, int warehouseID, int userID, int componenID = -1)
+        public FormComponenModify(int projectID, int warehouseID, int supplierID, int userID, int componenID = -1)
         {
             InitializeComponent();
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.projectID = projectID;
+            this.supplierID = supplierID;
             this.componenID = componenID;
         }
         

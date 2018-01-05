@@ -21,18 +21,20 @@ namespace WMS.UI
         int supplierID = -1;
         int projectID = -1;
         int warehouseID = -1;
+        int userID = -1;
         private Supplier supplier = null;
         private int contractst;   //合同状态
         private int contract_change = 1;
         private PagerWidget<ComponentView> pagerWidget = null;
 
-        public FormBaseComponent(int authority, int supplierID, int projectID, int warehouseID)
+        public FormBaseComponent(int authority, int supplierID, int projectID, int warehouseID, int userID)
         {
             InitializeComponent();
             this.authority = authority;
             this.supplierID = supplierID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+            this.userID = userID;
         }
         private void InitComponents()
         {
@@ -57,9 +59,7 @@ namespace WMS.UI
                 this.toolStripButtonDelete.Enabled = false;
                 this.toolStripButtonAlter.Enabled  = false;
             }
-            InitComponents();
 
-            this.pagerWidget.Search();
             if ((this.authority & authority_self) != authority_self)
             {
                 this.contract_change = 0;
@@ -78,14 +78,14 @@ namespace WMS.UI
                 InitComponents();
 
                 this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
-                this.pagerWidget.AddCondition("历史信息", "0");
+                this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.Search();
 
             }
             if ((this.authority & authority_self) == authority_self)
             {
                 InitComponents();
-                this.pagerWidget.AddCondition("历史信息", "0");
+                this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.Search();
             }
         }
@@ -100,7 +100,7 @@ namespace WMS.UI
             this.pagerWidget.ClearCondition();
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                this.pagerWidget.AddCondition("历史信息", "0");
+                this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
             if ((this.authority & authority_self) != authority_self)
@@ -120,13 +120,43 @@ namespace WMS.UI
 
         private void buttonHistorySearch_Click(object sender, EventArgs e)
         {
-            this.pagerWidget.ClearCondition();
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            try
             {
-                this.pagerWidget.AddCondition("历史信息", "1");
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+
+                this.pagerWidget.ClearCondition();
+
+                if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+                {
+                    this.pagerWidget.AddCondition("最新零件信息ID", Convert.ToString(componenID));
+                    this.pagerWidget.AddCondition("IsHistory", "1");
+                    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+                }
+                if ((this.authority & authority_self) != authority_self)
+                {
+                    this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
+
+                    this.pagerWidget.Search();
+                }
+                if ((this.authority & authority_self) == authority_self)
+                {
+
+                    this.pagerWidget.Search();
+                }
+                this.pagerWidget.Search();
+
             }
-            this.pagerWidget.Search();
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
         }
 
         //private void Search(int selectedID = -1)
@@ -256,7 +286,7 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID);
+            var form = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID, this.userID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback((addedID) =>
             {
@@ -277,7 +307,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formComponenModify = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID, componenID);
+                var formComponenModify = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID, this.userID, componenID);
                 formComponenModify.SetModifyFinishedCallback((addedID) =>
                 {
                     this.pagerWidget.Search(false,addedID);

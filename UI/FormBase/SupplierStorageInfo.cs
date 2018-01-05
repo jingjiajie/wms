@@ -82,13 +82,13 @@ namespace WMS.UI
         {
             var a1 = new SupplierStorageInfoModify(this.supplierid );
 
-            //a1.SetMode(FormMode.ADD);
+            a1.SetMode(FormMode.ADD);
 
-            //a1.SetAddFinishedCallback((AddID) =>
-            //{
-            //    this.pagerWidget.Search(false, AddID);
-                
-            //});
+            a1.SetAddFinishedCallback((AddID) =>
+            {
+                this.pagerWidget.Search(false, AddID);
+
+            });
             a1.Show();
         }
     }
