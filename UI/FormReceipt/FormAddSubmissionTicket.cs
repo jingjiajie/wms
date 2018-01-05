@@ -104,7 +104,7 @@ namespace WMS.UI.FormReceipt
                         submissionTicket.WarehouseID = receiptTicket.Warehouse;
                         submissionTicket.ReceiptTicketID = receiptTicket.ID;
                     }
-                    submissionTicket.CreateTime = DateTime.Now.ToString();
+                    submissionTicket.CreateTime = DateTime.Now;
                     submissionTicket.CreateUserID = this.userID;
                     submissionTicket.LastUpdateTime = DateTime.Now;
                     submissionTicket.LastUpdateUserID = this.userID;

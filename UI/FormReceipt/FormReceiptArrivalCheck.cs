@@ -281,7 +281,7 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.CreateUserID = this.userID;
                     submissionTicket.LastUpdateUserID = this.userID;
                     submissionTicket.LastUpdateTime = DateTime.Now;
-                    submissionTicket.CreateTime = DateTime.Now.ToString();
+                    submissionTicket.CreateTime = DateTime.Now;
                     submissionTicket.State = "待检";
                     submissionTicket.ReceiptTicketID = receiptTicketID;
                     wmsEntities.SubmissionTicket.Add(submissionTicket);

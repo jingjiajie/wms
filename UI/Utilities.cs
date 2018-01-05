@@ -287,6 +287,7 @@ namespace WMS.UI
                 label.Text = curKeyName.Name;
                 label.Dock = DockStyle.Fill;
                 label.Font = new Font("微软雅黑", 10);
+                label.AutoSize = true;
 
                 tableLayoutPanel.Controls.Add(label);
 

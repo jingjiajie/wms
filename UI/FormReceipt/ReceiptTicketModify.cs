@@ -292,7 +292,57 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.SupplierID = this.supplierID;
                     wmsEntities.ReceiptTicket.Add(receiptTicket);
                     wmsEntities.SaveChanges();
-                    receiptTicket.No = Utilities.GenerateNo("H", receiptTicket.ID);
+
+                    ////////////////////////////
+                    if (string.IsNullOrWhiteSpace(receiptTicket.No))
+                    {
+                        if (receiptTicket.CreateTime.HasValue == false)
+                        {
+                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                            return;
+                        }
+
+                        DateTime createDay = new DateTime(receiptTicket.CreateTime.Value.Year, receiptTicket.CreateTime.Value.Month, receiptTicket.CreateTime.Value.Day);
+                        DateTime nextDay = createDay.AddDays(1);
+                        int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.ReceiptTicket
+                                                                              where s.CreateTime >= createDay && s.CreateTime < nextDay
+                                                                              select s.No).ToArray());
+                        if (maxRankOfToday == -1)
+                        {
+                            MessageBox.Show("单号生成失败！请手动填写单号");
+                            return;
+                        }
+                        receiptTicket.No = Utilities.GenerateTicketNo("S", receiptTicket.CreateTime.Value, maxRankOfToday + 1);
+                    }
+                    if (string.IsNullOrWhiteSpace(receiptTicket.Number))
+                    {
+                        if (receiptTicket.CreateTime.HasValue == false)
+                        {
+                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写编号");
+                            return;
+                        }
+                        Supplier supplier = (from s in wmsEntities.Supplier
+                                             where s.ID == receiptTicket.SupplierID
+                                             select s).FirstOrDefault();
+                        if (supplier == null)
+                        {
+                            MessageBox.Show("编号生成失败（供应商信息不存在）！请手动填写编号");
+                            return;
+                        }
+                        DateTime createMonth = new DateTime(receiptTicket.CreateTime.Value.Year, receiptTicket.CreateTime.Value.Month, 1);
+                        DateTime nextMonth = createMonth.AddMonths(1);
+                        var tmp = (from s in wmsEntities.ReceiptTicket
+                                   where s.CreateTime >= createMonth &&
+                                         s.CreateTime < nextMonth &&
+                                         s.SupplierID == receiptTicket.SupplierID
+                                   select s.Number).ToArray();
+                        int maxRankOfMonth = Utilities.GetMaxTicketRankOfSupplierAndMonth(tmp);
+                        receiptTicket.Number = Utilities.GenerateTicketNumber(supplier.Number, receiptTicket.CreateTime.Value, maxRankOfMonth + 1);
+                    }
+
+                    ///////////////////////////////////////////////////////////////
+
+                    //receiptTicket.No = Utilities.GenerateNo("H", receiptTicket.ID);
                     wmsEntities.SaveChanges();
                     //MessageBox.Show("Successful!");
                 }
