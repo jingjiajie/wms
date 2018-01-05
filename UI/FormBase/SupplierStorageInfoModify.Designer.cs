@@ -54,6 +54,7 @@
             this.buttonModify.TabIndex = 30;
             this.buttonModify.Text = "修改供应商信息";
             this.buttonModify.UseVisualStyleBackColor = true;
+            this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
             // 
             // tableLayoutPanel3
             // 
@@ -103,9 +104,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 4);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -126,13 +125,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "修改供应商信息";
             // 
-            // FormSupplierAnnualInfoModify
+            // SupplierStorageInfoModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(997, 362);
             this.Controls.Add(this.groupBox1);
-            this.Name = "FormSupplierAnnualInfoModify";
+            this.Name = "SupplierStorageInfoModify";
             this.Text = "FormSupplierAnnualInfoModify";
             this.Load += new System.EventHandler(this.FormSupplierAnnualInfoModify_Load);
             this.tableLayoutPanel3.ResumeLayout(false);

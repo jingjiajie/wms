@@ -68,7 +68,7 @@ namespace WMS.UI
 
                 try
                 {
-                    SupplierView = (from s in this.wmsEntities.SupplierView
+                    SupplierView = (from s in this.wmsEntities.SupplierView 
                                                  where s.ID == this.supplierID
                                                  select s).Single();
                     
