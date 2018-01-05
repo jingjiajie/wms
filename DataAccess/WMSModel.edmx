@@ -431,6 +431,7 @@
           <Property Name="AreaIncrement" Type="decimal" Precision="18" Scale="0" />
           <Property Name="StorageDays" Type="decimal" Precision="18" Scale="0" />
           <Property Name="StorageFee" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExecuteSupplierID" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1491,6 +1492,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__SupplierS__Execu__30592A6F">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="SupplierStorageInfo" Type="Self.SupplierStorageInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierStorageInfo">
+              <PropertyRef Name="ExecuteSupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SupplierS__Suppl__2D7CBDC4">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1570,6 +1583,18 @@
             </Principal>
             <Dependent Role="ShipmentTicketItem">
               <PropertyRef Name="ShipmentTicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="Supplier1" Type="Self.Supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Supplier1">
+              <PropertyRef Name="NewestSupplierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2356,6 +2381,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="SubmissionTicket" EntitySet="SubmissionTicket" />
           </AssociationSet>
+          <AssociationSet Name="FK__SupplierS__Execu__30592A6F" Association="Self.FK__SupplierS__Execu__30592A6F">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierStorageInfo" EntitySet="SupplierStorageInfo" />
+          </AssociationSet>
           <AssociationSet Name="FK__SupplierS__Suppl__2D7CBDC4" Association="Self.FK__SupplierS__Suppl__2D7CBDC4">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierStorageInfo" EntitySet="SupplierStorageInfo" />
@@ -2379,6 +2408,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <AssociationSet Name="FK_ShipmentTicketItem_ShipmentTicket" Association="Self.FK_ShipmentTicketItem_ShipmentTicket">
             <End Role="ShipmentTicket" EntitySet="ShipmentTicket" />
             <End Role="ShipmentTicketItem" EntitySet="ShipmentTicketItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Supplier" Association="Self.FK_Supplier_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Supplier1" EntitySet="Supplier" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Supplier" Association="Self.FK_User_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
@@ -2542,9 +2575,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="SubmissionTicket" EntitySet="SubmissionTicket" />
           </AssociationSet>
+          <AssociationSet Name="FK__SupplierS__Execu__30592A6F" Association="WMSModel.FK__SupplierS__Execu__30592A6F">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierStorageInfo" EntitySet="SupplierStorageInfo" />
+          </AssociationSet>
           <AssociationSet Name="FK__SupplierS__Suppl__2D7CBDC4" Association="WMSModel.FK__SupplierS__Suppl__2D7CBDC4">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierStorageInfo" EntitySet="SupplierStorageInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Supplier" Association="WMSModel.FK_Supplier_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Supplier1" EntitySet="Supplier" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Supplier" Association="WMSModel.FK_User_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
@@ -3011,7 +3052,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ContractStorageArea" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Component" Relationship="WMSModel.FK__Component__Suppl__3B40CD36" FromRole="Supplier" ToRole="Component" />
           <NavigationProperty Name="ReceiptTicket" Relationship="WMSModel.FK_ReceiptTicket_Supplier" FromRole="Supplier" ToRole="ReceiptTicket" />
-          <NavigationProperty Name="SupplierStorageInfo" Relationship="WMSModel.FK__SupplierS__Suppl__2D7CBDC4" FromRole="Supplier" ToRole="SupplierStorageInfo" />
+          <NavigationProperty Name="SupplierStorageInfo" Relationship="WMSModel.FK__SupplierS__Execu__30592A6F" FromRole="Supplier" ToRole="SupplierStorageInfo" />
+          <NavigationProperty Name="SupplierStorageInfo1" Relationship="WMSModel.FK__SupplierS__Suppl__2D7CBDC4" FromRole="Supplier" ToRole="SupplierStorageInfo" />
+          <NavigationProperty Name="Supplier1" Relationship="WMSModel.FK_Supplier_Supplier" FromRole="Supplier" ToRole="Supplier1" />
+          <NavigationProperty Name="Supplier2" Relationship="WMSModel.FK_Supplier_Supplier" FromRole="Supplier1" ToRole="Supplier" />
           <NavigationProperty Name="User" Relationship="WMSModel.FK_User_Supplier" FromRole="Supplier" ToRole="User" />
         </EntityType>
         <EntityType Name="SupplierStorageInfo">
@@ -3025,7 +3069,9 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="AreaIncrement" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="StorageDays" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="StorageFee" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="Supplier" Relationship="WMSModel.FK__SupplierS__Suppl__2D7CBDC4" FromRole="SupplierStorageInfo" ToRole="Supplier" />
+          <Property Name="ExecuteSupplierID" Type="Int32" />
+          <NavigationProperty Name="Supplier" Relationship="WMSModel.FK__SupplierS__Execu__30592A6F" FromRole="SupplierStorageInfo" ToRole="Supplier" />
+          <NavigationProperty Name="Supplier1" Relationship="WMSModel.FK__SupplierS__Suppl__2D7CBDC4" FromRole="SupplierStorageInfo" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -4119,6 +4165,18 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__SupplierS__Execu__30592A6F">
+          <End Type="WMSModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="WMSModel.SupplierStorageInfo" Role="SupplierStorageInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierStorageInfo">
+              <PropertyRef Name="ExecuteSupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SupplierS__Suppl__2D7CBDC4">
           <End Type="WMSModel.Supplier" Role="Supplier" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -4130,6 +4188,18 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Principal>
             <Dependent Role="SupplierStorageInfo">
               <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Supplier_Supplier">
+          <End Type="WMSModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="WMSModel.Supplier" Role="Supplier1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Supplier1">
+              <PropertyRef Name="NewestSupplierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4147,7 +4217,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -4590,6 +4660,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="SupplierStorageInfo">
             <EntityTypeMapping TypeName="WMSModel.SupplierStorageInfo">
               <MappingFragment StoreEntitySet="SupplierStorageInfo">
+                <ScalarProperty Name="ExecuteSupplierID" ColumnName="ExecuteSupplierID" />
                 <ScalarProperty Name="StorageFee" ColumnName="StorageFee" />
                 <ScalarProperty Name="StorageDays" ColumnName="StorageDays" />
                 <ScalarProperty Name="AreaIncrement" ColumnName="AreaIncrement" />
