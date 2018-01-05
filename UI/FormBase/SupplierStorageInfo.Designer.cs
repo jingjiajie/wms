@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class FormSupplierAnnualInfo
+    partial class SupplierStorageInfo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSupplierAnnualInfo));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SupplierStorageInfo));
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripTextBoxSelect = new System.Windows.Forms.ToolStripTextBox();

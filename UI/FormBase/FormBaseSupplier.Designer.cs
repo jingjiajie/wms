@@ -46,6 +46,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelPager = new System.Windows.Forms.Panel();
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -61,6 +62,7 @@
             this.toolStripLabelSelect,
             this.toolStripComboBoxSelect,
             this.toolStripTextBoxSelect,
+            this.toolStripButton1,
             this.toolStripButtonSelect,
             this.toolStripSeparator1,
             this.toolStripButtonAdd,
@@ -100,8 +102,9 @@
             this.toolStripButtonSelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelect.Image")));
             this.toolStripButtonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSelect.Name = "toolStripButtonSelect";
-            this.toolStripButtonSelect.Size = new System.Drawing.Size(60, 25);
-            this.toolStripButtonSelect.Text = "查询";
+            this.toolStripButtonSelect.Size = new System.Drawing.Size(100, 25);
+            this.toolStripButtonSelect.Text = "查询历史信息";
+            this.toolStripButtonSelect.ToolTipText = "查询历史";
             this.toolStripButtonSelect.Click += new System.EventHandler(this.toolStripButtonSelect_Click);
             // 
             // toolStripSeparator1
@@ -228,6 +231,16 @@
             this.reoGridControlUser.TabIndex = 7;
             this.reoGridControlUser.Text = "reoGridControl1";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.AutoSize = false;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(60, 25);
+            this.toolStripButton1.Text = "查询";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // FormBaseSupplier
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -270,5 +283,6 @@
         private unvell.ReoGrid.ReoGridControl reoGridControlUser;
         private System.Windows.Forms.Panel panelPager;
         private System.Windows.Forms.ToolStripButton buttonCheck;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

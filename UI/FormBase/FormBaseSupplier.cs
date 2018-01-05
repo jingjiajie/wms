@@ -139,7 +139,7 @@ namespace WMS.UI
         {
 
             this.pagerWidget.ClearCondition();
-            this.pagerWidget.AddCondition("历史信息", "0");
+            this.pagerWidget.AddCondition("历史信息", "1");
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
@@ -396,7 +396,7 @@ namespace WMS.UI
                 }
                 int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
 
-                var a1 = new FormSupplierAnnualInfo(supplierID);
+                var a1 = new SupplierStorageInfo(supplierID);
                 a1.Show();
             }
             catch
@@ -405,6 +405,28 @@ namespace WMS.UI
                 return;
             }
 
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("历史信息", "0");
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            }
+
+            if ((this.authority & authority_supplier) != authority_supplier)
+            {
+                this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+
+                this.pagerWidget.Search();
+            }
+            if ((this.authority & authority_supplier) == authority_supplier)
+            {
+
+                this.pagerWidget.Search();
+            }
         }
     }
     
