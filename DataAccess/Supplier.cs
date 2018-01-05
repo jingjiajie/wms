@@ -19,6 +19,8 @@ namespace WMS.DataAccess
             this.Component = new HashSet<Component>();
             this.ReceiptTicket = new HashSet<ReceiptTicket>();
             this.SupplierStorageInfo = new HashSet<SupplierStorageInfo>();
+            this.SupplierStorageInfo1 = new HashSet<SupplierStorageInfo>();
+            this.Supplier1 = new HashSet<Supplier>();
             this.User = new HashSet<User>();
         }
     
@@ -53,6 +55,9 @@ namespace WMS.DataAccess
         public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
         public virtual ICollection<SupplierStorageInfo> SupplierStorageInfo { get; set; }
+        public virtual ICollection<SupplierStorageInfo> SupplierStorageInfo1 { get; set; }
+        public virtual ICollection<Supplier> Supplier1 { get; set; }
+        public virtual Supplier Supplier2 { get; set; }
         public virtual ICollection<User> User { get; set; }
     }
 }

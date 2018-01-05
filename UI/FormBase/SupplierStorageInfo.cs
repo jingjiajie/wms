@@ -20,7 +20,7 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
-        private PagerWidget<SupplierStorageInfo> pagerWidget = null;
+        private PagerWidget<SupplierStorageInfoView> pagerWidget = null;
         public SupplierStorageInfo(int supplierid=-1)
         {
             InitializeComponent();
@@ -52,7 +52,7 @@ namespace WMS.UI
             this.toolStripComboBoxSelect.SelectedIndex = 0;
 
             //初始化分页控件
-            //this.pagerWidget = new PagerWidget<SupplierStorageInfoView>(this.reoGridControlUser, SupplierStorageInfoMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.pagerWidget = new PagerWidget<SupplierStorageInfoView>(this.reoGridControlUser, SupplierStorageInfoMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
 
