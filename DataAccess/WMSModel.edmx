@@ -59,6 +59,11 @@
           <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="IsHistory" Type="int" />
+          <Property Name="CreateUserID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="LastUpdateUserID" Type="int" />
+          <Property Name="LastUpdateTime" Type="datetime" />
+          <Property Name="NewestComponentID" Type="int" />
         </EntityType>
         <EntityType Name="JobTicket">
           <Key>
@@ -227,6 +232,7 @@
           <Property Name="Number" Type="nvarchar" MaxLength="64" />
           <Property Name="StorageArea" Type="nvarchar" MaxLength="64" />
           <Property Name="StorageLocation" Type="nvarchar" MaxLength="64" />
+          <Property Name="PostedCount" Type="int" />
         </EntityType>
         <EntityType Name="ReceiptTicketItem">
           <Key>
@@ -542,6 +548,13 @@
           <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="IsHistory" Type="int" />
+          <Property Name="NewestComponentID" Type="int" />
+          <Property Name="CreateUserID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="LastUpdateUserID" Type="int" />
+          <Property Name="LastUpdateTime" Type="datetime" />
+          <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
+          <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.JobTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -876,6 +889,8 @@
           <Property Name="StorageLocation" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
+          <Property Name="PostedCount" Type="int" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1257,6 +1272,18 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Component__Newes__28B808A7">
+          <End Role="Component" Type="Self.Component" Multiplicity="0..1" />
+          <End Role="Component1" Type="Self.Component" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Component1">
+              <PropertyRef Name="NewestComponentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Component__Proje__3A4CA8FD">
           <End Role="Project" Type="Self.Project" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1723,7 +1750,14 @@
 [ComponentView].[ShipmentInfoBoxWidth] AS [ShipmentInfoBoxWidth], 
 [ComponentView].[ShipmentInfoBoxHeight] AS [ShipmentInfoBoxHeight], 
 [ComponentView].[ShipmentInfoUnitAmount] AS [ShipmentInfoUnitAmount], 
-[ComponentView].[IsHistory] AS [IsHistory]
+[ComponentView].[IsHistory] AS [IsHistory], 
+[ComponentView].[NewestComponentID] AS [NewestComponentID], 
+[ComponentView].[CreateUserID] AS [CreateUserID], 
+[ComponentView].[CreateTime] AS [CreateTime], 
+[ComponentView].[LastUpdateUserID] AS [LastUpdateUserID], 
+[ComponentView].[LastUpdateTime] AS [LastUpdateTime], 
+[ComponentView].[LastUpdateUserUsername] AS [LastUpdateUserUsername], 
+[ComponentView].[CreateUserUsername] AS [CreateUserUsername]
 FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="JobTicketItemView" EntityType="Self.JobTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2022,7 +2056,9 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[StorageArea] AS [StorageArea], 
 [ReceiptTicketView].[StorageLocation] AS [StorageLocation], 
 [ReceiptTicketView].[SupplierNumber] AS [SupplierNumber], 
-[ReceiptTicketView].[SupplierName] AS [SupplierName]
+[ReceiptTicketView].[SupplierName] AS [SupplierName], 
+[ReceiptTicketView].[PostedCount] AS [PostedCount], 
+[ReceiptTicketView].[PersonName] AS [PersonName]
 FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketItemView" EntityType="Self.ShipmentTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2363,6 +2399,10 @@ FROM [dbo].[UserView] AS [UserView]</DefiningQuery>
 [WarehouseView].[Name] AS [Name]
 FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__Component__Newes__28B808A7" Association="Self.FK__Component__Newes__28B808A7">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="Component1" EntitySet="Component" />
+          </AssociationSet>
           <AssociationSet Name="FK__Component__Proje__3A4CA8FD" Association="Self.FK__Component__Proje__3A4CA8FD">
             <End Role="Project" EntitySet="Project" />
             <End Role="Component" EntitySet="Component" />
@@ -2525,6 +2565,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySet Name="SupplierView" EntityType="WMSModel.SupplierView" />
           <EntitySet Name="UserView" EntityType="WMSModel.UserView" />
           <EntitySet Name="WarehouseView" EntityType="WMSModel.WarehouseView" />
+          <AssociationSet Name="FK__Component__Newes__28B808A7" Association="WMSModel.FK__Component__Newes__28B808A7">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="Component1" EntitySet="Component" />
+          </AssociationSet>
           <AssociationSet Name="FK__Component__Proje__3A4CA8FD" Association="WMSModel.FK__Component__Proje__3A4CA8FD">
             <End Role="Project" EntitySet="Project" />
             <End Role="Component" EntitySet="Component" />
@@ -2692,6 +2736,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IsHistory" Type="Int32" />
+          <Property Name="CreateUserID" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateUserID" Type="Int32" />
+          <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="NewestComponentID" Type="Int32" />
+          <NavigationProperty Name="Component1" Relationship="WMSModel.FK__Component__Newes__28B808A7" FromRole="Component" ToRole="Component1" />
+          <NavigationProperty Name="Component2" Relationship="WMSModel.FK__Component__Newes__28B808A7" FromRole="Component1" ToRole="Component" />
           <NavigationProperty Name="Project" Relationship="WMSModel.FK__Component__Proje__3A4CA8FD" FromRole="Component" ToRole="Project" />
           <NavigationProperty Name="Supplier" Relationship="WMSModel.FK__Component__Suppl__3B40CD36" FromRole="Component" ToRole="Supplier" />
           <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK__Component__Wareh__3C34F16F" FromRole="Component" ToRole="Warehouse" />
@@ -2881,6 +2932,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Number" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="StorageArea" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="StorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PostedCount" Type="Int32" />
           <NavigationProperty Name="Project" Relationship="WMSModel.FK_ReceiptTicket_Project" FromRole="ReceiptTicket" ToRole="Project" />
           <NavigationProperty Name="ReceiptTicketItem" Relationship="WMSModel.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicket" ToRole="ReceiptTicketItem" />
           <NavigationProperty Name="Supplier" Relationship="WMSModel.FK_ReceiptTicket_Supplier" FromRole="ReceiptTicket" ToRole="Supplier" />
@@ -3229,6 +3281,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="IsHistory" Type="Int32" />
+          <Property Name="NewestComponentID" Type="Int32" />
+          <Property Name="CreateUserID" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateUserID" Type="Int32" />
+          <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JobTicketItemView">
           <Key>
@@ -3543,6 +3602,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="StorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PostedCount" Type="Int32" />
+          <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ShipmentTicketItemView">
           <Key>
@@ -3902,6 +3963,18 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK__Component__Newes__28B808A7">
+          <End Type="WMSModel.Component" Role="Component" Multiplicity="0..1" />
+          <End Type="WMSModel.Component" Role="Component1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Component1">
+              <PropertyRef Name="NewestComponentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Component__Proje__3A4CA8FD">
           <End Type="WMSModel.Project" Role="Project" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -4299,6 +4372,11 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="Component">
             <EntityTypeMapping TypeName="WMSModel.Component">
               <MappingFragment StoreEntitySet="Component">
+                <ScalarProperty Name="NewestComponentID" ColumnName="NewestComponentID" />
+                <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
+                <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
                 <ScalarProperty Name="IsHistory" ColumnName="IsHistory" />
                 <ScalarProperty Name="ShipmentInfoUnitAmount" ColumnName="ShipmentInfoUnitAmount" />
                 <ScalarProperty Name="ShipmentInfoBoxHeight" ColumnName="ShipmentInfoBoxHeight" />
@@ -4487,6 +4565,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicket">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicket">
               <MappingFragment StoreEntitySet="ReceiptTicket">
+                <ScalarProperty Name="PostedCount" ColumnName="PostedCount" />
                 <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
                 <ScalarProperty Name="StorageArea" ColumnName="StorageArea" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
@@ -4798,6 +4877,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ComponentView">
             <EntityTypeMapping TypeName="WMSModel.ComponentView">
               <MappingFragment StoreEntitySet="ComponentView">
+                <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
+                <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
+                <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
+                <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="NewestComponentID" ColumnName="NewestComponentID" />
                 <ScalarProperty Name="IsHistory" ColumnName="IsHistory" />
                 <ScalarProperty Name="ShipmentInfoUnitAmount" ColumnName="ShipmentInfoUnitAmount" />
                 <ScalarProperty Name="ShipmentInfoBoxHeight" ColumnName="ShipmentInfoBoxHeight" />
@@ -5118,6 +5204,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicketView">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicketView">
               <MappingFragment StoreEntitySet="ReceiptTicketView">
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="PostedCount" ColumnName="PostedCount" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="SupplierNumber" ColumnName="SupplierNumber" />
                 <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
