@@ -250,7 +250,7 @@ namespace WMS.UI
                         ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                         if (receiptTicket == null)
                         {
-                            MessageBox.Show("改收货单不存在");
+                            MessageBox.Show("该收货单不存在");
                             return;
                         }
                         StockInfo stockInfo = new StockInfo();
@@ -259,8 +259,11 @@ namespace WMS.UI
                         stockInfo.ReceiptTicketItemID = receiptTicketItem.ID;
                         stockInfo.OverflowAreaAmount = 0;
                         stockInfo.ShipmentAreaAmount = 0;
-                        //TODO stockInfo.SubmissionAreaAmount = 0;
+                        stockInfo.SubmissionAmount = 0;
+                        stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount == null ? 0 : receiptTicketItem.DisqualifiedAmount;
+                        stockInfo.SubmissionAmount = 0;
                         stockInfo.ReceiptAreaAmount = 0;
+
                         if (receiptTicketItem.ReceiviptAmount != null)
                         {
                             stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
@@ -290,7 +293,11 @@ namespace WMS.UI
                     throw new EntityCommandExecutionException();
                 }
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                int oldRejectAreaAmount;
+                int oldReceiptAreaAmount;
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).FirstOrDefault();
+                oldReceiptAreaAmount = receiptTicketItem.ReceiviptAmount == null ? 0 : (int)receiptTicketItem.ReceiviptAmount;
+                oldRejectAreaAmount = receiptTicketItem.DisqualifiedAmount == null ? 0 : (int)receiptTicketItem.DisqualifiedAmount;
                 string errorInfo;
                 if(Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == false)
                 {
@@ -311,7 +318,16 @@ namespace WMS.UI
                             }
                             else
                             {
-                                stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
+                                if (receiptTicketItem.State == "待送检")
+                                {
+                                    stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
+                                    stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
+                                }
+                                else
+                                {
+                                    receiptTicketItem.ReceiviptAmount = oldReceiptAreaAmount;
+                                    receiptTicketItem.DisqualifiedAmount = oldRejectAreaAmount;
+                                }
                             }
                             wmsEntities.SaveChanges();
                             
