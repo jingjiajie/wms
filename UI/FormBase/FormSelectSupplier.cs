@@ -10,7 +10,7 @@ using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
 
-namespace WMS.UI.FormBase
+namespace WMS.UI
 {
     public partial class FormSelectSupplier : Form
     {
@@ -67,7 +67,7 @@ namespace WMS.UI.FormBase
                 {
                    
                     SupplierView[] supplierViews = (from s in wmsEntities.SupplierView
-                                                    where s.Name.Contains(supplierName)
+                                                    where s.Name.Contains(supplierName)&&s.IsHistory ==0
                                                     orderby s.Name ascending
                                                     select s).ToArray();
                     this.Invoke(new Action(() =>

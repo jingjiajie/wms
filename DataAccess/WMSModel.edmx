@@ -944,6 +944,7 @@
           <Property Name="ReturnTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ReturnTicketDate" Type="datetime" />
           <Property Name="SupplierID" Type="int" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.StockInfoCheckTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2079,7 +2080,8 @@ FROM [dbo].[ShipmentTicketItemView] AS [ShipmentTicketItemView]</DefiningQuery>
 [ShipmentTicketView].[Number] AS [Number], 
 [ShipmentTicketView].[ReturnTicketNo] AS [ReturnTicketNo], 
 [ShipmentTicketView].[ReturnTicketDate] AS [ReturnTicketDate], 
-[ShipmentTicketView].[SupplierID] AS [SupplierID]
+[ShipmentTicketView].[SupplierID] AS [SupplierID], 
+[ShipmentTicketView].[SupplierName] AS [SupplierName]
 FROM [dbo].[ShipmentTicketView] AS [ShipmentTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StockInfoCheckTicketItemView" EntityType="Self.StockInfoCheckTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -3567,6 +3569,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReturnTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReturnTicketDate" Type="DateTime" Precision="3" />
           <Property Name="SupplierID" Type="Int32" />
+          <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicketItemView">
           <Key>
@@ -5120,6 +5123,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ShipmentTicketView">
             <EntityTypeMapping TypeName="WMSModel.ShipmentTicketView">
               <MappingFragment StoreEntitySet="ShipmentTicketView">
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="ReturnTicketDate" ColumnName="ReturnTicketDate" />
                 <ScalarProperty Name="ReturnTicketNo" ColumnName="ReturnTicketNo" />

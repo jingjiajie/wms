@@ -49,17 +49,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
-    <Compile Include="FormBase\ComponentShipmentInfoModify.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\ComponentShipmentInfoModify.Designer.cs">
-      <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBase\ComponentOuterPackingSizeModify.Designer.cs">
       <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\ComponentShipmentInfoModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\ComponentShipmentInfoModify.Designer.cs">
+      <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\ComponenViewMetaData.cs" />
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
@@ -449,11 +449,11 @@
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
     <Compile Include="Utilities.cs" />
-    <EmbeddedResource Include="FormBase\ComponentShipmentInfoModify.resx">
-      <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\ComponentOuterPackingSizeModify.resx">
       <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\ComponentShipmentInfoModify.resx">
+      <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
