@@ -67,7 +67,7 @@ namespace WMS.UI.FormBase
                 {
                    
                     SupplierView[] supplierViews = (from s in wmsEntities.SupplierView
-                                                    where s.Name.Contains(supplierName)
+                                                    where s.Name.Contains(supplierName)&&s.IsHistory ==0
                                                     orderby s.Name ascending
                                                     select s).ToArray();
                     this.Invoke(new Action(() =>
