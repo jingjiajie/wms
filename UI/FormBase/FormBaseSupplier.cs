@@ -394,8 +394,6 @@ namespace WMS.UI
                         }
 
                         }
-
-
                     
                 }
                 catch
@@ -403,6 +401,59 @@ namespace WMS.UI
                     MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+
+
+                try
+                {
+                    foreach (int id in deleteIDs)
+                    {
+
+                        var supplierstorgeid = (from kn in wmsEntities.SupplierStorageInfo 
+                                                  where kn.SupplierID  == id
+                                                  select kn.ID).ToArray();
+                        if (supplierstorgeid.Length > 0)
+                        {
+                            try
+                            {
+                                foreach (int supplierstorgeid1 in supplierstorgeid)
+                                {
+                                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SupplierStorageInfo WHERE ID = @supplierID", new SqlParameter("supplierID", supplierstorgeid1));
+
+                                     
+                                }
+                                wmsEntities.SaveChanges();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 try
                 {
