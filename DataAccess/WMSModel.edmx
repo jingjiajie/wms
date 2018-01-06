@@ -305,7 +305,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShipmentTicketID" Type="int" Nullable="false" />
           <Property Name="StockInfoID" Type="int" />
-          <Property Name="PickingAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ScheduledJobAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="datetime" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
@@ -895,7 +895,6 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="ShipmentTicketID" Type="int" Nullable="false" />
           <Property Name="StockInfoID" Type="int" />
-          <Property Name="PickingAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="datetime" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
@@ -924,6 +923,7 @@
           <Property Name="ConfirmPersonID" Type="int" />
           <Property Name="JobPersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="ConfirmPersonName" Type="nvarchar" MaxLength="64" />
+          <Property Name="ScheduledJobAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2067,7 +2067,6 @@ FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
 [ShipmentTicketItemView].[ID] AS [ID], 
 [ShipmentTicketItemView].[ShipmentTicketID] AS [ShipmentTicketID], 
 [ShipmentTicketItemView].[StockInfoID] AS [StockInfoID], 
-[ShipmentTicketItemView].[PickingAmount] AS [PickingAmount], 
 [ShipmentTicketItemView].[ShipmentAmount] AS [ShipmentAmount], 
 [ShipmentTicketItemView].[OnlineTime] AS [OnlineTime], 
 [ShipmentTicketItemView].[State] AS [State], 
@@ -2095,7 +2094,8 @@ FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
 [ShipmentTicketItemView].[JobPersonID] AS [JobPersonID], 
 [ShipmentTicketItemView].[ConfirmPersonID] AS [ConfirmPersonID], 
 [ShipmentTicketItemView].[JobPersonName] AS [JobPersonName], 
-[ShipmentTicketItemView].[ConfirmPersonName] AS [ConfirmPersonName]
+[ShipmentTicketItemView].[ConfirmPersonName] AS [ConfirmPersonName], 
+[ShipmentTicketItemView].[ScheduledJobAmount] AS [ScheduledJobAmount]
 FROM [dbo].[ShipmentTicketItemView] AS [ShipmentTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketView" EntityType="Self.ShipmentTicketView" store:Type="Views" store:Schema="dbo">
@@ -2826,7 +2826,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ShipmentTicketID" Type="Int32" Nullable="false" />
           <Property Name="StockInfoID" Type="Int32" />
-          <Property Name="PickingAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ScheduledJobAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="DateTime" Precision="3" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3422,7 +3422,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="ShipmentTicketID" Type="Int32" Nullable="false" />
           <Property Name="StockInfoID" Type="Int32" />
-          <Property Name="PickingAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="DateTime" Precision="3" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3451,6 +3450,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ConfirmPersonID" Type="Int32" />
           <Property Name="JobPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ConfirmPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduledJobAmount" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="ShipmentTicketView">
           <Key>
@@ -4159,7 +4159,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Component" EntityType="Self.Component" />
           <EntitySet Name="JobTicket" EntityType="Self.JobTicket" />
           <EntitySet Name="JobTicketItem" EntityType="Self.JobTicketItem" />
@@ -4334,7 +4334,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="WMSEntities">
           <EntitySetMapping Name="Component">
             <EntityTypeMapping TypeName="WMSModel.Component">
               <MappingFragment StoreEntitySet="Component">
@@ -4646,7 +4646,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ShipmentTicketID" ColumnName="ShipmentTicketID" />
                 <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
-                <ScalarProperty Name="PickingAmount" ColumnName="PickingAmount" />
+                <ScalarProperty Name="ScheduledJobAmount" ColumnName="ScheduledJobAmount" />
                 <ScalarProperty Name="ShipmentAmount" ColumnName="ShipmentAmount" />
                 <ScalarProperty Name="OnlineTime" ColumnName="OnlineTime" />
                 <ScalarProperty Name="State" ColumnName="State" />
@@ -5227,7 +5227,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ShipmentTicketID" ColumnName="ShipmentTicketID" />
                 <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
-                <ScalarProperty Name="PickingAmount" ColumnName="PickingAmount" />
                 <ScalarProperty Name="ShipmentAmount" ColumnName="ShipmentAmount" />
                 <ScalarProperty Name="OnlineTime" ColumnName="OnlineTime" />
                 <ScalarProperty Name="State" ColumnName="State" />
@@ -5256,6 +5255,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ConfirmPersonID" ColumnName="ConfirmPersonID" />
                 <ScalarProperty Name="JobPersonName" ColumnName="JobPersonName" />
                 <ScalarProperty Name="ConfirmPersonName" ColumnName="ConfirmPersonName" />
+                <ScalarProperty Name="ScheduledJobAmount" ColumnName="ScheduledJobAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
