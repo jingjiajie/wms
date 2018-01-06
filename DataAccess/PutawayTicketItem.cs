@@ -23,9 +23,10 @@ namespace WMS.DataAccess
         public Nullable<decimal> DistrabuteCount { get; set; }
         public Nullable<decimal> MoveCount { get; set; }
         public string State { get; set; }
-        public string OperatePerson { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
         public string OperateTime { get; set; }
         public Nullable<int> ReceiptTicketItemID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
     
         public virtual PutawayTicket PutawayTicket { get; set; }
     }

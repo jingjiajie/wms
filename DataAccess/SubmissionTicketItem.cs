@@ -17,13 +17,15 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public int SubmissionTicketID { get; set; }
         public string LineItem { get; set; }
-        public string ArriveAmount { get; set; }
+        public Nullable<decimal> ArriveAmount { get; set; }
         public string Unit { get; set; }
         public Nullable<decimal> SubmissionAmount { get; set; }
         public Nullable<decimal> ReturnAmount { get; set; }
         public string Comment { get; set; }
         public string State { get; set; }
         public Nullable<int> ReceiptTicketItemID { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
     
         public virtual ReceiptTicketItem ReceiptTicketItem { get; set; }
         public virtual SubmissionTicket SubmissionTicket { get; set; }

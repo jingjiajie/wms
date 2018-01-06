@@ -66,7 +66,6 @@
             this.reoGridControlUser.Location = new System.Drawing.Point(4, 5);
             this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.reoGridControlUser.Name = "reoGridControlUser";
-            this.reoGridControlUser.Readonly = true;
             this.reoGridControlUser.RowHeaderContextMenuStrip = null;
             this.reoGridControlUser.Script = null;
             this.reoGridControlUser.SheetTabContextMenuStrip = null;
@@ -136,6 +135,7 @@
             this.buttonOK.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OK_MouseDown);
             this.buttonOK.MouseEnter += new System.EventHandler(this.OK_MouseEnter);
             this.buttonOK.MouseLeave += new System.EventHandler(this.OK_MouseLeave);
+            this.buttonOK.MouseMove += new System.Windows.Forms.MouseEventHandler(this.buttonOK_MouseMove);
             // 
             // FormReceiptSubmissionNew
             // 
