@@ -62,7 +62,9 @@ namespace WMS.UI
         private void FormSupplierAnnualInfo_Load(object sender, EventArgs e)
         {
           InitializeComponent1();
-          this.pagerWidget.Search();
+            this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("供应商ID", Convert .ToString ( this.supplierid) );
+            this.pagerWidget.Search();
         }
 
         private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -102,7 +104,7 @@ namespace WMS.UI
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
             this.pagerWidget.ClearCondition();
-            
+            this.pagerWidget.AddCondition("供应商ID", Convert.ToString(this.supplierid));
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
@@ -116,16 +118,20 @@ namespace WMS.UI
             var worksheet = this.reoGridControlUser.Worksheets[0];
             try
             {
+
                 if (worksheet.SelectionRange.Rows != 1)
                 {
                     throw new Exception();
                 }
                 int SupplierStorageInfoID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var a1 = new SupplierStorageInfoModify (this.supplierid ,SupplierStorageInfoID);
+                a1.SetMode(FormMode.ALTER);
                 a1.SetModifyFinishedCallback((AlterID) =>
                 {
                     this.pagerWidget.Search(false, AlterID);
                 });
+
+
                 a1.Show();
             }
             catch
@@ -133,6 +139,56 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
+            new Thread(new ThreadStart(() =>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                try
+                {
+                    foreach (int id in deleteIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SupplierStorageInfo WHERE ID = @SupplierStorageInfoID", new SqlParameter("SupplierStorageInfoID", id));
+                    }
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                this.Invoke(new Action(() =>
+                {
+                    this.pagerWidget.Search();
+                }));
+
+            })).Start();
         }
     }
 }
