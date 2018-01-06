@@ -166,17 +166,21 @@ namespace WMS.UI
                 stockInfoCheck = new WMS.DataAccess.StockInfoCheckTicket();
                 this.wmsEntities.StockInfoCheckTicket.Add(stockInfoCheck);
                 stockInfoCheck.CreateUserID = userID;
+                stockInfoCheck.CheckDate = Convert.ToDateTime(DateTime.Now.ToLongDateString( ));
+                stockInfoCheck.CreateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
+                stockInfoCheck .LastUpdateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
             }
+
             stockInfoCheck.WarehouseID = warehouseID;
             stockInfoCheck.ProjectID  = projectID;
             
             stockInfoCheck.LastUpdateUserID = Convert.ToString( userID);
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
-            {
-                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
+            //{
+            //    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
             wmsEntities.SaveChanges();
             //调用回调函数
           
