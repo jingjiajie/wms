@@ -137,8 +137,15 @@ namespace WMS.UI
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
-
             this.pagerWidget.ClearCondition();
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+            if (worksheet.SelectionRange.Rows == 1)
+            {
+                this.pagerWidget.AddCondition("NewestSupplierID", Convert.ToString(supplierID));
+            }
+            
+            
             this.pagerWidget.AddCondition("是否历史信息", "1");
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {

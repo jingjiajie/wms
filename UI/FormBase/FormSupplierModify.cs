@@ -169,7 +169,7 @@ namespace WMS.UI
                     //将原供应商存为历史信息
                     var sameNameUsers = (from u in wmsEntities.Supplier
                                          where u.Name == textBoxName.Text
-                                            && u.ID != supplier.ID
+                                            && u.ID != supplier.ID&&u.IsHistory ==0
                                          select u).ToArray();
                     if (sameNameUsers.Length > 0)
                     {
@@ -179,11 +179,15 @@ namespace WMS.UI
 
                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
                     {
+
+
                        
-                        supplier.IsHistory = 1;
                         this.wmsEntities.Supplier.Add(supplier);
                         try
                         {
+                            supplier.ID = -1;
+                            supplier.IsHistory = 1;
+                            supplier.NewestSupplierID =this.supplierID ;
                             wmsEntities.SaveChanges();
                         }
                         catch
