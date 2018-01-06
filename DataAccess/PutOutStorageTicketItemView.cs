@@ -33,5 +33,7 @@ namespace WMS.DataAccess
         public Nullable<int> ComponentWarehouseID { get; set; }
         public string SupplierNumber { get; set; }
         public string SupplierName { get; set; }
+        public string JobPersonName { get; set; }
+        public string ConfirmPersonName { get; set; }
     }
 }

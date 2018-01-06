@@ -17,12 +17,8 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public int ShipmentTicketID { get; set; }
         public Nullable<int> StockInfoID { get; set; }
-        public Nullable<decimal> ExpectedShipmentAmount { get; set; }
-        public Nullable<decimal> AssignedAmount { get; set; }
         public Nullable<decimal> PickingAmount { get; set; }
-        public Nullable<decimal> ShipmentInAdvanceAmount { get; set; }
         public Nullable<decimal> ShipmentAmount { get; set; }
-        public Nullable<decimal> ExceedStockAmount { get; set; }
         public Nullable<System.DateTime> OnlineTime { get; set; }
         public string State { get; set; }
         public string Description { get; set; }
@@ -33,6 +29,8 @@ namespace WMS.DataAccess
         public string Unit { get; set; }
         public Nullable<decimal> ReturnAmount { get; set; }
         public string ReturnReason { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
     
         public virtual ShipmentTicket ShipmentTicket { get; set; }
     }

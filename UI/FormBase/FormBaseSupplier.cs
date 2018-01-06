@@ -24,6 +24,7 @@ namespace WMS.UI
         private PagerWidget<SupplierView > pagerWidget = null;
         private Supplier supplier = null;
         private int contractst;
+        private int check_history = 0;
        
         private int projectID = -1;
         private int warehouseID = -1;
@@ -137,8 +138,32 @@ namespace WMS.UI
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
+            if(check_history ==1)
+            {
+                MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             this.pagerWidget.ClearCondition();
+
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    throw new Exception();
+                }
+                int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                this.pagerWidget.AddCondition("NewestSupplierID", Convert.ToString(supplierID));
+
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }      
+            
+            
             this.pagerWidget.AddCondition("是否历史信息", "1");
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
@@ -148,12 +173,13 @@ namespace WMS.UI
             if ((this.authority & authority_supplier) != authority_supplier)
             {
             this.pagerWidget.AddCondition("ID", Convert.ToString(id));
-           
+
+                this.check_history = 1;
                 this.pagerWidget.Search();
             }
             if ((this.authority & authority_supplier) == authority_supplier)
             {
-                
+                this.check_history = 1;
                 this.pagerWidget.Search();
             }
 
@@ -396,7 +422,7 @@ namespace WMS.UI
                 }
                 int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
 
-                var a1 = new SupplierStorageInfo(supplierID);
+                var a1 = new SupplierStorageInfo(supplierID,this.check_history );
                 a1.Show();
             }
             catch
@@ -419,12 +445,12 @@ namespace WMS.UI
             if ((this.authority & authority_supplier) != authority_supplier)
             {
                 this.pagerWidget.AddCondition("ID", Convert.ToString(id));
-
+                this.check_history = 0;
                 this.pagerWidget.Search();
             }
             if ((this.authority & authority_supplier) == authority_supplier)
             {
-
+                this.check_history = 0;
                 this.pagerWidget.Search();
             }
         }

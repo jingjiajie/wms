@@ -94,8 +94,7 @@ namespace WMS.UI
         {
             DialogResult MsgBoxResult= DialogResult.No;//设置对话框的返回值
             TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName", true)[0];
-            TextBox StartDate = (TextBox)this.Controls.Find("textBoxStartDate", true)[0];
-            TextBox EndDate = (TextBox)this.Controls.Find("textBoxEndDate", true)[0];
+         
             TextBox textBoxName = (TextBox)this.Controls.Find("textBoxName", true)[0];
             if (this.mode == FormMode.ALTER)
             {
@@ -106,32 +105,7 @@ namespace WMS.UI
                 MessageBoxDefaultButton.Button2);
             }
 
-            if (StartDate.Text != String.Empty)
-            {
-                try
-                {
-                    DateTime.Parse(StartDate.Text);
-
-                }
-                catch
-                {
-                    MessageBox.Show("起始有效日期格式错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-            if (EndDate.Text != string.Empty)
-            {
-                try
-                {
-                    DateTime.Parse(EndDate.Text);
-
-                }
-                catch
-                {
-                    MessageBox.Show("结束有效日期格式错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
+            
            
 
 
@@ -169,7 +143,7 @@ namespace WMS.UI
                     //将原供应商存为历史信息
                     var sameNameUsers = (from u in wmsEntities.Supplier
                                          where u.Name == textBoxName.Text
-                                            && u.ID != supplier.ID
+                                            && u.ID != supplier.ID&&u.IsHistory ==0
                                          select u).ToArray();
                     if (sameNameUsers.Length > 0)
                     {
@@ -179,11 +153,15 @@ namespace WMS.UI
 
                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
                     {
+
+
                        
-                        supplier.IsHistory = 1;
                         this.wmsEntities.Supplier.Add(supplier);
                         try
                         {
+                            supplier.ID = -1;
+                            supplier.IsHistory = 1;
+                            supplier.NewestSupplierID =this.supplierID ;
                             wmsEntities.SaveChanges();
                         }
                         catch
@@ -192,7 +170,33 @@ namespace WMS.UI
                             return;
                         }
 
-                        
+                        var supplierstorge = (from u in wmsEntities.SupplierStorageInfo 
+                                             where u.SupplierID  == this.supplierID 
+                                             select u).ToArray();
+
+                        if (supplierstorge.Length > 0)
+                        {
+
+                            for (int i = 0; i < supplierstorge.Length; i++)
+                            {
+                                try
+                                {
+                                    supplierstorge[i].ExecuteSupplierID = supplier.ID ;
+                                    wmsEntities.SaveChanges();
+                                }
+                                catch
+                                {
+                                    continue;
+                                }
+                            }
+
+                       }
+
+
+
+
+
+
                         //继续查找
                         try
                         {
@@ -226,8 +230,9 @@ namespace WMS.UI
                    
                     try
                     {
-                       
+                        supplier.IsHistory = 0;
                         wmsEntities.SaveChanges();
+
                     }
                     catch
                     {

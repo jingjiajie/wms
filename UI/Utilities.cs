@@ -129,7 +129,7 @@ namespace WMS.UI
                 PropertyInfo p = objType.GetProperty(curKeyName.Key);
                 if (p == null)
                 {
-                    throw new Exception("你的对象里没有" + curKeyName.Key + "这个属性！检查一下你的代码吧！");
+                    throw new Exception("你的类型"+objType.Name+"里没有" + curKeyName.Key + "这个属性！检查一下你的代码吧！");
                 }
                 Control[] foundControls = form.Controls.Find(textBoxNamePrefix + p.Name, true);
                 if (foundControls.Length == 0)
@@ -164,13 +164,13 @@ namespace WMS.UI
             string chineseName = keyName.Name;
 
             Type originType = p.PropertyType;
-            if(text.Length == 0 && keyName.NotNull == true)
+            if(string.IsNullOrWhiteSpace(text) && keyName.NotNull == true)
             {
                 errorMessage = chineseName + " 不允许为空！";
                 return false;
             }
             //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
-            if (text.Length == 0 && originType != typeof(string))
+            if (string.IsNullOrWhiteSpace(text) && originType != typeof(string))
             {
                 if (IsNullableType(originType))
                 {
@@ -185,7 +185,7 @@ namespace WMS.UI
                 }
             }
             //根据源类型不同，将编辑框中的文本转换成合适的类型
-            if (originType == typeof(String))
+            if (originType == typeof(string))
             {
                 if (text.Length > 64)
                 {
@@ -486,6 +486,19 @@ namespace WMS.UI
                 textBox.Text = curKeyName.DefaultValueFunc();
                 textBox.ForeColor = Color.DarkGray;
             }
+        }
+
+        public static void InitReoGrid(ReoGridControl reoGrid,KeyName[] keyNames,WorksheetSelectionMode selectionMode = WorksheetSelectionMode.Row)
+        {
+            //初始化表格
+            var worksheet = reoGrid.Worksheets[0];
+            worksheet.SelectionMode = selectionMode;
+            for (int i = 0; i < keyNames.Length; i++)
+            {
+                worksheet.ColumnHeaders[i].Text = keyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = keyNames[i].Visible;
+            }
+            worksheet.Columns = keyNames.Length; //限制表的长度
         }
     }
 }

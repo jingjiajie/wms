@@ -219,7 +219,7 @@
             // 
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(110, 31);
-            this.labelStatus.Text = "库存管理";
+            this.labelStatus.Text = "作业管理";
             // 
             // tableLayoutPanel1
             // 

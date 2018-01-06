@@ -20,6 +20,7 @@ namespace WMS.UI
             new KeyName(){Key="SortTypeNo",Name="排序类型编码",Editable=true},
             new KeyName(){Key="TruckLoadingTime",Name="装车时间",Editable=true},
             new KeyName(){Key="DeliverTime",Name="发运时间",Editable=true},
+            new KeyName(){Key="PersonName",Name="责任人",Save=false},
             new KeyName(){Key="CreateUserUsername",Name="创建用户",Editable=false,Save=false},
             new KeyName(){Key="CreateTime",Name="创建时间",Editable=false,Save=false},
             new KeyName(){Key="LastUpdateUserUsername",Name="最后修改用户",Editable=false,Save=false},

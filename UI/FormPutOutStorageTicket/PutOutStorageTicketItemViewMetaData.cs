@@ -23,7 +23,9 @@ namespace WMS.UI
                 new ComboBoxItem("装车"),
                 new ComboBoxItem("发运中"),
                 new ComboBoxItem("发运成功"),
-            } }
+            } },
+            new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false},
+            new KeyName(){Key="ConfirmPersonName",Name="确认人",Save=false},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
