@@ -82,15 +82,15 @@ namespace WMS.UI
             this.mode = mode;
             if (mode == FormMode.ALTER)
             {
-                this.Text = "修改供应商信息";
-                this.buttonModify.Text = "修改供应商信息";
-                this.groupBox1.Text = "修改供应商信息";
+                this.Text = "修改供应商存货信息";
+                this.buttonModify.Text = "修改供应商存货信息";
+                this.groupBox1.Text = "修改供应商存货信息";
             }
             else if (mode == FormMode.ADD)
             {
-                this.Text = "添加供应商信息";
-                this.buttonModify.Text = "添加供应商信息";
-                this.groupBox1.Text = "添加供应商信息";
+                this.Text = "添加供应商存货信息";
+                this.buttonModify.Text = "添加供应商存货信息";
+                this.groupBox1.Text = "添加供应商存货信息";
             }
         }
 
