@@ -487,5 +487,18 @@ namespace WMS.UI
                 textBox.ForeColor = Color.DarkGray;
             }
         }
+
+        public static void InitReoGrid(ReoGridControl reoGrid,KeyName[] keyNames,WorksheetSelectionMode selectionMode = WorksheetSelectionMode.Row)
+        {
+            //初始化表格
+            var worksheet = reoGrid.Worksheets[0];
+            worksheet.SelectionMode = selectionMode;
+            for (int i = 0; i < keyNames.Length; i++)
+            {
+                worksheet.ColumnHeaders[i].Text = keyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = keyNames[i].Visible;
+            }
+            worksheet.Columns = keyNames.Length; //限制表的长度
+        }
     }
 }

@@ -47,8 +47,8 @@ namespace WMS.UI
             new KeyName(){Key="OuterPhysicalDistributionPath",Name="外物流路线"},
             new KeyName(){Key="DeliveryPoint",Name="出库目的地"},
             new KeyName(){Key="Emergency",Name="是否紧急",ComboBoxItems=new ComboBoxItem[]{
-                new ComboBoxItem("否"),
-                new ComboBoxItem("是"),
+                new ComboBoxItem("否",0),
+                new ComboBoxItem("是",1),
             } },
             new KeyName(){Key="ShipmentPlaceNo",Name="发货地编码"},
             //new KeyName(){Key="PrintTimes",Name="打印次数"},

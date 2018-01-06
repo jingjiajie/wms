@@ -100,21 +100,7 @@ namespace WMS.UI
             this.WarehouseID = defaultWarehouseID;
             this.keyNames = keyNames;
 
-            InitReoGrid();
-        }
-
-
-        private void InitReoGrid()
-        {
-            //初始化表格
-            var worksheet = this.reoGrid.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < this.keyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = this.keyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = this.keyNames[i].Visible;
-            }
-            worksheet.Columns = this.keyNames.Length; //限制表的长度
+            Utilities.InitReoGrid(this.reoGrid,this.keyNames);
         }
 
         private Condition MakeCondition(string key, string value)

@@ -14,7 +14,6 @@ namespace WMS.UI
 {
     public partial class FormJobTicketNew : Form
     {
-        private PagerWidget<ShipmentTicketItemView> pagerWidget = null;
         private int shipmentTicketID = -1;
         private int userID = -1;
         private int projectID = -1;
@@ -39,6 +38,22 @@ namespace WMS.UI
         private void FormJobTicketNew_Load(object sender, EventArgs e)
         {
             this.InitComponents();
+        }
+
+        private void InitComponents()
+        {
+            Utilities.InitReoGrid(this.reoGridControlMain, ShipmentTicketItemViewMetaData.KeyNames,WorksheetSelectionMode.Cell);
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            int[] editableColumns = new int[] { 1, 2 };
+            worksheet.InsertColumns(1, 2);
+            worksheet.ColumnHeaders[1].Text = "选择";
+            worksheet.ColumnHeaders[1].DefaultCellBody = typeof(unvell.ReoGrid.CellTypes.CheckBoxCell);
+            worksheet.ColumnHeaders[2].Text = "计划翻包数量";
+            worksheet.BeforeCellEdit += (s, e) =>
+            {
+                e.IsCancelled = !editableColumns.Contains(e.Cell.Column);
+            };
+
             Utilities.CreateEditPanel(this.tableLayoutEditPanel, JobTicketViewMetaData.KeyNames);
             ShipmentTicket shipmentTicket = null;
             User user = null;
@@ -64,27 +79,19 @@ namespace WMS.UI
                 this.Close();
                 return;
             }
-            if(user == null)
+            if (user == null)
             {
-                MessageBox.Show("登录失效，操作失败","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("登录失效，操作失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            this.Controls.Find("textBoxCreateUserUsername",true)[0].Text = user.Username;
+            this.Controls.Find("textBoxCreateUserUsername", true)[0].Text = user.Username;
             this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
-            this.Controls.Find("textBoxShipmentTicketNo",true)[0].Text = shipmentTicket.No;
+            this.Controls.Find("textBoxShipmentTicketNo", true)[0].Text = shipmentTicket.No;
             this.Search();
-        }
-
-        private void InitComponents()
-        {
-            this.pagerWidget = new PagerWidget<ShipmentTicketItemView>(this.reoGridControlMain, ShipmentTicketItemViewMetaData.KeyNames);
-            this.panelPagerWidget.Controls.Add(this.pagerWidget);
-            this.pagerWidget.Show();
         }
 
         private void Search()
         {
-            this.pagerWidget.AddStaticCondition("ShipmentTicketID",this.shipmentTicketID.ToString());
-            this.pagerWidget.Search();
+            
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

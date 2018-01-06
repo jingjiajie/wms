@@ -1166,6 +1166,7 @@
           <Property Name="SupplierNetArea" Type="decimal" Precision="18" Scale="0" />
           <Property Name="SupplierFixedStorageCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="SupplierContractStorageArea" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ExecuteSupplierID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SupplierView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2310,7 +2311,8 @@ FROM [dbo].[SubmissionTicketView] AS [SubmissionTicketView]</DefiningQuery>
 [SupplierStorageInfoView].[SupplierName] AS [SupplierName], 
 [SupplierStorageInfoView].[SupplierNetArea] AS [SupplierNetArea], 
 [SupplierStorageInfoView].[SupplierFixedStorageCost] AS [SupplierFixedStorageCost], 
-[SupplierStorageInfoView].[SupplierContractStorageArea] AS [SupplierContractStorageArea]
+[SupplierStorageInfoView].[SupplierContractStorageArea] AS [SupplierContractStorageArea], 
+[SupplierStorageInfoView].[ExecuteSupplierID] AS [ExecuteSupplierID]
 FROM [dbo].[SupplierStorageInfoView] AS [SupplierStorageInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SupplierView" EntityType="Self.SupplierView" store:Type="Views" store:Schema="dbo">
@@ -3846,6 +3848,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplierNetArea" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="SupplierFixedStorageCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="SupplierContractStorageArea" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ExecuteSupplierID" Type="Int32" />
         </EntityType>
         <EntityType Name="SupplierView">
           <Key>
@@ -4327,7 +4330,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -5474,6 +5477,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="SupplierStorageInfoView">
             <EntityTypeMapping TypeName="WMSModel.SupplierStorageInfoView">
               <MappingFragment StoreEntitySet="SupplierStorageInfoView">
+                <ScalarProperty Name="ExecuteSupplierID" ColumnName="ExecuteSupplierID" />
                 <ScalarProperty Name="SupplierContractStorageArea" ColumnName="SupplierContractStorageArea" />
                 <ScalarProperty Name="SupplierFixedStorageCost" ColumnName="SupplierFixedStorageCost" />
                 <ScalarProperty Name="SupplierNetArea" ColumnName="SupplierNetArea" />

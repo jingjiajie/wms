@@ -26,5 +26,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> SupplierNetArea { get; set; }
         public Nullable<decimal> SupplierFixedStorageCost { get; set; }
         public Nullable<decimal> SupplierContractStorageArea { get; set; }
+        public Nullable<int> ExecuteSupplierID { get; set; }
     }
 }

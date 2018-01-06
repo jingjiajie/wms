@@ -32,7 +32,6 @@
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutEditPanel = new System.Windows.Forms.TableLayoutPanel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -47,17 +46,17 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(3, 3);
+            this.reoGridControlMain.Location = new System.Drawing.Point(4, 5);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.reoGridControlMain.Name = "reoGridControlMain";
-            this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
             this.reoGridControlMain.Script = null;
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 60;
+            this.reoGridControlMain.SheetTabWidth = 90;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1043, 283);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1566, 513);
             this.reoGridControlMain.TabIndex = 12;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -67,19 +66,18 @@
             this.tableLayoutPanelMain.ColumnCount = 1;
             this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelMain.Controls.Add(this.reoGridControlMain, 0, 0);
-            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel3, 0, 3);
-            this.tableLayoutPanelMain.Controls.Add(this.panelPagerWidget, 0, 1);
-            this.tableLayoutPanelMain.Controls.Add(this.groupBox1, 0, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.tableLayoutPanel3, 0, 2);
+            this.tableLayoutPanelMain.Controls.Add(this.groupBox1, 0, 1);
             this.tableLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelMain.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanelMain.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
-            this.tableLayoutPanelMain.RowCount = 4;
+            this.tableLayoutPanelMain.RowCount = 3;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 171F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 67F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(1049, 565);
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 274F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(1574, 904);
             this.tableLayoutPanelMain.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -93,13 +91,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel3.Controls.Add(this.buttonOK, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(2, 500);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 800);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1045, 63);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 101F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1568, 101);
             this.tableLayoutPanel3.TabIndex = 14;
             // 
             // buttonOK
@@ -110,10 +107,9 @@
             this.buttonOK.FlatAppearance.BorderSize = 0;
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOK.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonOK.Location = new System.Drawing.Point(418, 2);
-            this.buttonOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonOK.Location = new System.Drawing.Point(626, 3);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(209, 59);
+            this.buttonOK.Size = new System.Drawing.Size(313, 95);
             this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "创建作业单";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -122,27 +118,15 @@
             this.buttonOK.MouseEnter += new System.EventHandler(this.buttonOK_MouseEnter);
             this.buttonOK.MouseLeave += new System.EventHandler(this.buttonOK_MouseLeave);
             // 
-            // panelPagerWidget
-            // 
-            this.panelPagerWidget.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(0, 289);
-            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(0);
-            this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(1049, 38);
-            this.panelPagerWidget.TabIndex = 15;
-            // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.groupBox1.Controls.Add(this.tableLayoutEditPanel);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("黑体", 10F);
-            this.groupBox1.Location = new System.Drawing.Point(2, 329);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(3, 526);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(1045, 167);
+            this.groupBox1.Size = new System.Drawing.Size(1568, 268);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "作业单信息";
@@ -161,24 +145,22 @@
             this.tableLayoutEditPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14F));
             this.tableLayoutEditPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutEditPanel.Font = new System.Drawing.Font("黑体", 10F);
-            this.tableLayoutEditPanel.Location = new System.Drawing.Point(2, 22);
-            this.tableLayoutEditPanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutEditPanel.Location = new System.Drawing.Point(3, 34);
             this.tableLayoutEditPanel.Name = "tableLayoutEditPanel";
             this.tableLayoutEditPanel.RowCount = 4;
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutEditPanel.Size = new System.Drawing.Size(1041, 143);
+            this.tableLayoutEditPanel.Size = new System.Drawing.Size(1562, 231);
             this.tableLayoutEditPanel.TabIndex = 13;
             // 
             // FormJobTicketNew
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 565);
+            this.ClientSize = new System.Drawing.Size(1574, 904);
             this.Controls.Add(this.tableLayoutPanelMain);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormJobTicketNew";
@@ -200,7 +182,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonOK;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.Panel panelPagerWidget;
         private System.Windows.Forms.GroupBox groupBox1;
     }
 }
