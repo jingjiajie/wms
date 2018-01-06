@@ -112,8 +112,16 @@ namespace WMS.UI
             }
             for (int i = 0; i < shipmentTicketItemViews.Length; i++)
             {
-                worksheet[i, 1] = new CheckBoxCell(false); //显示复选框
                 ShipmentTicketItemView cur = shipmentTicketItemViews[i];
+                if (cur.ShipmentAmount == cur.ScheduledJobAmount)
+                {
+                    worksheet.Cells[i, 1].Style.BackColor = Color.LightGray;
+                    worksheet.Cells[i, 1].IsReadOnly = true;
+                }
+                else
+                {
+                    worksheet[i, 1] = new CheckBoxCell(false); //显示复选框
+                }
                 //计划翻包数量
                 worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
                 worksheet[i, 2] = cur.ShipmentAmount - cur.ScheduledJobAmount; //计划翻包数量默认等于发货数量-已经计划翻包过的数量
@@ -172,9 +180,7 @@ namespace WMS.UI
                         return;
                     }
                     var jobTicketItem = new JobTicketItem();
-                    jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
-                    jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
-                    if (Utilities.CopyTextToProperty((string)worksheet[i, 2], "ScheduledAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out errorMessage) == false)
+                    if (Utilities.CopyTextToProperty(worksheet[i,2]?.ToString(), "ScheduledAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out errorMessage) == false)
                     {
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
@@ -184,6 +190,9 @@ namespace WMS.UI
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, "计划翻包数量总和不可以超过发货数量！"), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
+                    jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
+                    shipmentTicketItem.ScheduledJobAmount += jobTicketItem.ScheduledAmount;
                     newJobTicket.JobTicketItem.Add(jobTicketItem);
                 }
                 if(newJobTicket.JobTicketItem.Count == 0)

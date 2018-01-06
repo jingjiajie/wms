@@ -164,83 +164,57 @@ namespace WMS.UI
 
         private void buttonFinish_Click(object sender, EventArgs e)
         {
-            const string STRING_FINISHED = "已完成";
-            int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if(selectedIDs.Length == 0)
-            {
-                MessageBox.Show("请选择您要操作的条目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            new Thread(new ThreadStart(()=>
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
-                {
-                    //将状态置为已完成
-                    foreach (int id in selectedIDs)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
-                    }
-                    wmsEntities.SaveChanges();
-                }
-                catch
-                {
-                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                
-                //如果作业单中所有条目都完成，询问是否将作业单标记为完成
-                int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, STRING_FINISHED)).Single();
-                if (unfinishedJobTicketItemCount == 0)
-                {
-                    if (MessageBox.Show("检测到所有的作业任务都已经完成，是否将作业单状态更新为完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        try
-                        {
-                            wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.jobTicketID));
-                            wmsEntities.SaveChanges();
-                        }
-                        catch
-                        {
-                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                    }
-                    this.jobTicketStateChangedCallback?.Invoke();
-                }
-                this.Invoke(new Action(()=> this.Search()));
-                MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
-        }
+            ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState",true)[0];
+            comboBoxState.SelectedIndex = 1;
+            this.buttonModify.PerformClick();
 
-        private void buttonUnfinish_Click(object sender, EventArgs e)
-        {
-            const string STRING_UNFINISHED = "未完成";
-            int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if (selectedIDs.Length == 0)
-            {
-                MessageBox.Show("请选择您要操作的条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            new Thread(new ThreadStart(() =>
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
-                {
-                    foreach (int id in selectedIDs)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
-                    }
-                    wmsEntities.SaveChanges();
-                }
-                catch
-                {
-                    MessageBox.Show("操作失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.Invoke(new Action(() => this.Search()));
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
+            //const string STRING_FINISHED = "已完成";
+            //int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            //if(selectedIDs.Length == 0)
+            //{
+            //    MessageBox.Show("请选择您要操作的条目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //new Thread(new ThreadStart(()=>
+            //{
+            //    WMSEntities wmsEntities = new WMSEntities();
+            //    try
+            //    {
+            //        //将状态置为已完成
+            //        foreach (int id in selectedIDs)
+            //        {
+            //            wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount WHERE ID = {1};", STRING_FINISHED, id));
+            //        }
+            //        wmsEntities.SaveChanges();
+            //    }
+            //    catch
+            //    {
+            //    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        return;
+            //    }
+                
+            //    //如果作业单中所有条目都完成，询问是否将作业单标记为完成
+            //    int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, STRING_FINISHED)).Single();
+            //    if (unfinishedJobTicketItemCount == 0)
+            //    {
+            //        if (MessageBox.Show("检测到所有的作业任务都已经完成，是否将作业单状态更新为全部完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //        {
+            //            try
+            //            {
+            //                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", "全部完成", this.jobTicketID));
+            //                wmsEntities.SaveChanges();
+            //            }
+            //            catch
+            //            {
+            //                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                return;
+            //            }
+            //        }
+            //        this.jobTicketStateChangedCallback?.Invoke();
+            //    }
+            //    this.Invoke(new Action(()=> this.Search()));
+            //    MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //})).Start();
         }
 
         private void ClearTextBoxes()
@@ -262,6 +236,7 @@ namespace WMS.UI
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (ids.Length == 0)
             {
+                Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, JobTicketItemViewMetaData.KeyNames);
                 this.curStockInfoID = -1;
                 return;
             }
@@ -299,47 +274,6 @@ namespace WMS.UI
         private void worksheet_SelectionRangeChanged(object sender, EventArgs e)
         {
             RefreshTextBoxes();
-        }
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            if (this.curStockInfoID == -1)
-            {
-                MessageBox.Show("未选择零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            JobTicketItem newItem = new JobTicketItem();
-            if (Utilities.CopyTextBoxTextsToProperties(this, newItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
-            {
-                MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if(Utilities.CopyComboBoxsToProperties(this,newItem, JobTicketItemViewMetaData.KeyNames) == false)
-            {
-                MessageBox.Show("内部错误：拷贝单选框数据失败","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            newItem.JobTicketID = this.jobTicketID;
-            newItem.StockInfoID = this.curStockInfoID;
-            new Thread(()=>
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                wmsEntities.JobTicketItem.Add(newItem);
-                try
-                {
-                    wmsEntities.SaveChanges();
-                }
-                catch
-                {
-                    MessageBox.Show("添加失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.Invoke(new Action(()=>
-                {
-                    this.Search(newItem.ID);
-                }));
-                MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }).Start();
         }
 
         private void buttonModify_Click(object sender, EventArgs e)
@@ -398,6 +332,7 @@ namespace WMS.UI
                             MessageBox.Show("修改失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
+                        this.UpdateJobTicketStateSync();
                         this.Invoke(new Action(() => this.Search()));
                         MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }).Start();
@@ -438,38 +373,6 @@ namespace WMS.UI
             }).Start();
         }
 
-        private void buttonAdd_MouseEnter(object sender, EventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
-        }
-
-        private void buttonAdd_MouseLeave(object sender, EventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
-        }
-
-        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
-
-
-
-        private void buttonDelete_MouseEnter(object sender, EventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
-        }
-
-        private void buttonDelete_MouseLeave(object sender, EventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
-        }
-
-        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
-
         private void buttonModify_MouseEnter(object sender, EventArgs e)
         {
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
@@ -501,21 +404,73 @@ namespace WMS.UI
             buttonFinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
-        private void buttonUnfinish_MouseEnter(object sender, EventArgs e)
+        private void buttonFinishAll_Click(object sender, EventArgs e)
         {
-            buttonUnfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_s;
+            new Thread(new ThreadStart(() =>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                try
+                {
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount WHERE JobTicketID = {1} AND State<>'{2}';", JobTicketItemViewMetaData.STRING_STATE_FINISHED, this.jobTicketID,JobTicketItemViewMetaData.STRING_STATE_FINISHED));
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", JobTicketViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID));
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                this.jobTicketStateChangedCallback?.Invoke();
+                this.Invoke(new Action(() => this.Search()));
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
         }
 
-        private void buttonUnfinish_MouseLeave(object sender, EventArgs e)
+        private void UpdateJobTicketStateSync()
         {
-            buttonUnfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_q;
+            WMSEntities wmsEntities = new WMSEntities();
+            //如果作业单中所有条目都完成，询问是否将作业单标记为完成
+            int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_FINISHED)).Single();
+            string jobTicketState = null;
+            if (unfinishedJobTicketItemCount == 0)
+            {
+                jobTicketState = JobTicketViewMetaData.STRING_STATE_ALL_FINISHED;
+            }
+            else
+            {
+                jobTicketState = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
+            }
+
+            try
+            {
+                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", jobTicketState, this.jobTicketID));
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("更新作业单状态失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (this.IsDisposed) return;
+            this.Invoke(new Action(() =>
+            {
+                this.jobTicketStateChangedCallback?.Invoke();
+            }));
         }
 
-        private void buttonUnfinish_MouseDown(object sender, MouseEventArgs e)
+        private void buttonFinishAll_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonUnfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonFinishAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
+        private void buttonFinishAll_MouseEnter(object sender, EventArgs e)
+        {
+            buttonFinishAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
 
+        private void buttonFinishAll_MouseLeave(object sender, EventArgs e)
+        {
+            buttonFinishAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
     }
 }

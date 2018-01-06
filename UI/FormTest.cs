@@ -18,7 +18,9 @@ namespace WMS.UI
 
         private void FormTest_Load(object sender, EventArgs e)
         {
-
+            this.reoGridControlMain.Load(@"C:\Users\jonas\Desktop\a.xlsx");
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet.InsertRows(6, 10);
         }
 
         private void reoGridControlMain_LostFocus(object sender, EventArgs e)

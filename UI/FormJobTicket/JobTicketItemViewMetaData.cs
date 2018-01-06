@@ -23,10 +23,10 @@ namespace WMS.UI
                          } },
             new KeyName(){Key="ScheduledAmount",Name="计划翻包数量",NotNull=true},
             new KeyName(){Key="RealAmount",Name="实际翻包数量"},
-            new KeyName(){Key="Unit",Name="翻包单位"},
-            new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false},
-            new KeyName(){Key="ConfirmPersonName",Name="确认人",Save=false},
-            new KeyName(){Key="HappenTime",Name="发生时间"},
+            new KeyName(){Key="Unit",Name="翻包单位",DefaultValueFunc=(()=>"个")},
+            new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false,EditPlaceHolder="点击选择人员"},
+            new KeyName(){Key="ConfirmPersonName",Name="确认人",Save=false,EditPlaceHolder="点击选择人员"},
+            new KeyName(){Key="HappenTime",Name="发生时间",DefaultValueFunc=(()=>DateTime.Now.ToString())},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

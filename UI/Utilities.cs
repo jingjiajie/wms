@@ -64,6 +64,7 @@ namespace WMS.UI
                 }
                 ComboBox curComboBox = (ComboBox)foundControls[0];
                 object value = p.GetValue(sourceObject, null);
+                if (value == null) continue;
                 foreach (object item in curComboBox.Items)
                 {
                     if (item.ToString() == value.ToString())

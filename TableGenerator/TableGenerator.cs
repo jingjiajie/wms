@@ -198,6 +198,11 @@ namespace WMS.TableGenerate
                     var repeatCommand = command as EGCMDCommand.REPEAT;
                     int countLines = repeatCommand.Rows;
                     int countColumns = repeatCommand.Columns;
+                    //if (curPatternCell.IsMergedCell)
+                    //{
+                    //    countLines += curPatternCell.GetRowspan() - 1;
+                    //    countColumns += curPatternCell.GetColspan() - 1;
+                    //}
                     string varName = repeatCommand.VarName;
                     object[] range; //循环范围
                     try
@@ -262,7 +267,6 @@ namespace WMS.TableGenerate
                     catch
                     {
                         curResultCell.Data += "#UNKNOWN COLOR";
-                        throw;
                     }
                 }
             }

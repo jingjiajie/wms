@@ -23,7 +23,7 @@ namespace WMS.UI
             new KeyName(){Key="Type",Name="出库类型",ComboBoxItems = new ComboBoxItem[]{
                 new ComboBoxItem("正常出库"),
                 new ComboBoxItem("售后出库"),
-                new ComboBoxItem("自检不良"),
+                new ComboBoxItem("返厂出库"),
                 new ComboBoxItem("其他"),
             } },
             new KeyName(){Key="Date",Name="订单日期"},
