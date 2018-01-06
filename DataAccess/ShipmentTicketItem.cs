@@ -33,6 +33,8 @@ namespace WMS.DataAccess
         public string Unit { get; set; }
         public Nullable<decimal> ReturnAmount { get; set; }
         public string ReturnReason { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
     
         public virtual ShipmentTicket ShipmentTicket { get; set; }
     }

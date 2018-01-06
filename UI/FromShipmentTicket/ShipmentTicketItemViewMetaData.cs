@@ -26,7 +26,9 @@ namespace WMS.UI
             new KeyName(){Key="TargetPlace",Name="落点地址"},
             //new KeyName(){Key="InnerShipmentPath",Name="内物流路线"},
             new KeyName(){Key="LookBoardCount",Name="看板数量"},
-            new KeyName(){Key="Unit",Name="基本单位"}
+            new KeyName(){Key="Unit",Name="基本单位"},
+            new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false},
+            new KeyName(){Key="ConfirmPersonName",Name="确认人",Save=false},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

@@ -36,6 +36,8 @@ namespace WMS.DataAccess
         public string BoxNo { get; set; }
         public string State { get; set; }
         public Nullable<int> ReceiptTicketID { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
     
         public virtual ReceiptTicket ReceiptTicket { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }

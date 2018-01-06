@@ -46,5 +46,9 @@ namespace WMS.DataAccess
         public string ShipmentTicketNo { get; set; }
         public string ComponentNumber { get; set; }
         public string SupplierNumber { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
+        public string JobPersonName { get; set; }
+        public string ConfirmPersonName { get; set; }
     }
 }

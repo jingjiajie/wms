@@ -19,7 +19,7 @@ namespace WMS.DataAccess
         public string LineItem { get; set; }
         public string State { get; set; }
         public Nullable<int> ReceiptTicketItemID { get; set; }
-        public string ArriveAmount { get; set; }
+        public Nullable<decimal> ArriveAmount { get; set; }
         public string Unit { get; set; }
         public Nullable<decimal> SubmissionAmount { get; set; }
         public Nullable<decimal> ReturnAmount { get; set; }
@@ -52,5 +52,9 @@ namespace WMS.DataAccess
         public string ReceiptTicketNumber { get; set; }
         public string SupplierNumber { get; set; }
         public string ComponentComponent { get; set; }
+        public Nullable<int> JobPersonID { get; set; }
+        public Nullable<int> ConfirmPersonID { get; set; }
+        public string JobPersonName { get; set; }
+        public string ConfirmPersonName { get; set; }
     }
 }

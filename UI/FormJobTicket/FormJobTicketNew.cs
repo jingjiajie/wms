@@ -123,8 +123,16 @@ namespace WMS.UI
 
                     newJobTicket.JobTicketItem.Add(jobTicketItem);
                 }
-                wmsEntities.SaveChanges();
-                newJobTicket.JobTicketNo = Utilities.GenerateNo("Z", newJobTicket.ID);
+
+                if (string.IsNullOrWhiteSpace(newJobTicket.JobTicketNo))
+                {
+                    DateTime createDay = new DateTime(shipmentTicket.CreateTime.Value.Year, shipmentTicket.CreateTime.Value.Month, shipmentTicket.CreateTime.Value.Day);
+                    DateTime nextDay = createDay.AddDays(1);
+                    int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from j in wmsEntities.JobTicket
+                                                                          where j.CreateTime >= createDay && j.CreateTime < nextDay
+                                                                          select j.JobTicketNo).ToArray());
+                    newJobTicket.JobTicketNo = Utilities.GenerateTicketNo("Z", newJobTicket.CreateTime.Value, maxRankOfToday + 1);
+                }
                 wmsEntities.SaveChanges();
                 if(MessageBox.Show("生成作业单成功，是否查看作业单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {

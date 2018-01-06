@@ -129,7 +129,7 @@ namespace WMS.UI
                 PropertyInfo p = objType.GetProperty(curKeyName.Key);
                 if (p == null)
                 {
-                    throw new Exception("你的对象里没有" + curKeyName.Key + "这个属性！检查一下你的代码吧！");
+                    throw new Exception("你的类型"+objType.Name+"里没有" + curKeyName.Key + "这个属性！检查一下你的代码吧！");
                 }
                 Control[] foundControls = form.Controls.Find(textBoxNamePrefix + p.Name, true);
                 if (foundControls.Length == 0)
