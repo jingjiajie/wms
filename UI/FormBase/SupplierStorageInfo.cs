@@ -19,13 +19,15 @@ namespace WMS.UI
         private int supplierid;
         private int projectID = -1;
         private int warehouseID = -1;
+        private int check_history = 0;
         private WMSEntities wmsEntities = new WMSEntities();
         private PagerWidget<SupplierStorageInfoView> pagerWidget = null;
 
-        public SupplierStorageInfo(int supplierid=-1)
+        public SupplierStorageInfo(int supplierid=-1,int check_history=0)
         {
             InitializeComponent();
             this.supplierid = supplierid;
+            this.check_history = check_history;
         }
 
       
@@ -63,8 +65,17 @@ namespace WMS.UI
         {
           InitializeComponent1();
             this.pagerWidget.ClearCondition();
-            this.pagerWidget.AddCondition("供应商ID", Convert .ToString ( this.supplierid) );
-            this.pagerWidget.Search();
+            if (this.check_history == 1)
+            {
+                this.pagerWidget.AddCondition("实际执行供应商合同ID", Convert.ToString(this.supplierid));
+                this.pagerWidget.Search();
+
+            }
+            else
+            {
+                this.pagerWidget.AddCondition("供应商ID", Convert.ToString(this.supplierid));
+                this.pagerWidget.Search();
+            }
         }
 
         private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
