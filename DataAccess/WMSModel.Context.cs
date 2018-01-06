@@ -37,7 +37,6 @@ namespace WMS.DataAccess
         public DbSet<ReceiptTicket> ReceiptTicket { get; set; }
         public DbSet<ReceiptTicketItem> ReceiptTicketItem { get; set; }
         public DbSet<ShipmentTicket> ShipmentTicket { get; set; }
-        public DbSet<ShipmentTicketItem> ShipmentTicketItem { get; set; }
         public DbSet<StockInfo> StockInfo { get; set; }
         public DbSet<StockInfoCheckTicket> StockInfoCheckTicket { get; set; }
         public DbSet<StockInfoCheckTicketItem> StockInfoCheckTicketItem { get; set; }
@@ -69,5 +68,6 @@ namespace WMS.DataAccess
         public DbSet<SupplierView> SupplierView { get; set; }
         public DbSet<UserView> UserView { get; set; }
         public DbSet<WarehouseView> WarehouseView { get; set; }
+        public DbSet<ShipmentTicketItem> ShipmentTicketItem { get; set; }
     }
 }

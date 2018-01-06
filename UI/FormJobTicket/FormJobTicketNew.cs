@@ -114,8 +114,9 @@ namespace WMS.UI
             {
                 worksheet[i, 1] = new CheckBoxCell(false); //显示复选框
                 ShipmentTicketItemView cur = shipmentTicketItemViews[i];
+                //计划翻包数量
                 worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
-                worksheet[i, 2] = cur.ShipmentAmount;
+                worksheet[i, 2] = cur.ShipmentAmount - cur.ScheduledJobAmount; //计划翻包数量默认等于发货数量-已经计划翻包过的数量
                 object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in ShipmentTicketItemViewMetaData.KeyNames select kn.Key).ToArray());
                 int offsetColumn = 0;
                 for (int j = 0; j < columns.Length; j++)
@@ -176,6 +177,11 @@ namespace WMS.UI
                     if (Utilities.CopyTextToProperty((string)worksheet[i, 2], "ScheduledAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out errorMessage) == false)
                     {
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if(jobTicketItem.ScheduledAmount + shipmentTicketItem.ScheduledJobAmount > shipmentTicketItem.ShipmentAmount)
+                    {
+                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, "计划翻包数量总和不可以超过发货数量！"), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     newJobTicket.JobTicketItem.Add(jobTicketItem);

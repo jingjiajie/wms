@@ -17,7 +17,7 @@ namespace WMS.DataAccess
         public int ID { get; set; }
         public int ShipmentTicketID { get; set; }
         public Nullable<int> StockInfoID { get; set; }
-        public Nullable<decimal> PickingAmount { get; set; }
+        public Nullable<decimal> ScheduledJobAmount { get; set; }
         public Nullable<decimal> ShipmentAmount { get; set; }
         public Nullable<System.DateTime> OnlineTime { get; set; }
         public string State { get; set; }

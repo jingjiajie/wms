@@ -317,8 +317,12 @@ namespace WMS.UI
                         labelLayer.AutoSize = true;
                         labelLayer.Click += (obj, e) =>
                         {
-                            textBox.Focus();
+                            //调用编辑框的点击事件
+                            MethodInfo onClickMethod = typeof(TextBox).GetMethod("OnClick", BindingFlags.NonPublic | BindingFlags.Instance);
+                            onClickMethod.Invoke(textBox, new object[] { EventArgs.Empty });
+                            return;
                         };
+
                         textBox.Controls.Add(labelLayer);
 
                         //防止第一次显示的时候有字也显示占位符的囧境
@@ -328,10 +332,11 @@ namespace WMS.UI
                                 labelLayer.Hide();
                             }
                         };
-
-                        textBox.Enter += (obj, e) =>
+                        
+                        textBox.Click += (obj, e) =>
                         {
                             labelLayer.Hide();
+                            textBox.SelectAll();
                         };
                         textBox.Leave += (obj, e) =>
                         {
@@ -348,11 +353,11 @@ namespace WMS.UI
                         textBox.ReadOnly = true;
                     }
                     textBox.Dock = DockStyle.Fill;
-                    textBox.MouseEnter += (obj, e) =>
-                    {
-                        textBox.Focus();
-                        textBox.SelectAll();
-                    };
+                    //textBox.MouseEnter += (obj, e) =>
+                    //{
+                    //    textBox.Focus();
+                    //    textBox.SelectAll();
+                    //};
                     tableLayoutPanel.Controls.Add(textBox);
                 }
                 else //否则是下拉列表形式
