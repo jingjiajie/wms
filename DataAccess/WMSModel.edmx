@@ -305,12 +305,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShipmentTicketID" Type="int" Nullable="false" />
           <Property Name="StockInfoID" Type="int" />
-          <Property Name="ExpectedShipmentAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="AssignedAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PickingAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInAdvanceAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ExceedStockAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="datetime" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
           <Property Name="Description" Type="nvarchar" MaxLength="64" />
@@ -556,6 +552,12 @@
           <Property Name="SupplierNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="JobPersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="ConfirmPersonName" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonID" Type="int" />
+          <Property Name="ScheduledAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RealAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="64" />
+          <Property Name="JobPersonID" Type="int" />
+          <Property Name="ConfirmPersonID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.JobTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -893,12 +895,8 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="ShipmentTicketID" Type="int" Nullable="false" />
           <Property Name="StockInfoID" Type="int" />
-          <Property Name="ExpectedShipmentAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="AssignedAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PickingAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInAdvanceAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ExceedStockAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="datetime" />
           <Property Name="State" Type="nvarchar" MaxLength="64" />
           <Property Name="Description" Type="nvarchar" MaxLength="64" />
@@ -1760,7 +1758,13 @@ FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
 [JobTicketItemView].[ComponentWarehouseID] AS [ComponentWarehouseID], 
 [JobTicketItemView].[SupplierNumber] AS [SupplierNumber], 
 [JobTicketItemView].[JobPersonName] AS [JobPersonName], 
-[JobTicketItemView].[ConfirmPersonName] AS [ConfirmPersonName]
+[JobTicketItemView].[ConfirmPersonName] AS [ConfirmPersonName], 
+[JobTicketItemView].[PersonID] AS [PersonID], 
+[JobTicketItemView].[ScheduledAmount] AS [ScheduledAmount], 
+[JobTicketItemView].[RealAmount] AS [RealAmount], 
+[JobTicketItemView].[Unit] AS [Unit], 
+[JobTicketItemView].[JobPersonID] AS [JobPersonID], 
+[JobTicketItemView].[ConfirmPersonID] AS [ConfirmPersonID]
 FROM [dbo].[JobTicketItemView] AS [JobTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="JobTicketView" EntityType="Self.JobTicketView" store:Type="Views" store:Schema="dbo">
@@ -2063,12 +2067,8 @@ FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
 [ShipmentTicketItemView].[ID] AS [ID], 
 [ShipmentTicketItemView].[ShipmentTicketID] AS [ShipmentTicketID], 
 [ShipmentTicketItemView].[StockInfoID] AS [StockInfoID], 
-[ShipmentTicketItemView].[ExpectedShipmentAmount] AS [ExpectedShipmentAmount], 
-[ShipmentTicketItemView].[AssignedAmount] AS [AssignedAmount], 
 [ShipmentTicketItemView].[PickingAmount] AS [PickingAmount], 
-[ShipmentTicketItemView].[ShipmentInAdvanceAmount] AS [ShipmentInAdvanceAmount], 
 [ShipmentTicketItemView].[ShipmentAmount] AS [ShipmentAmount], 
-[ShipmentTicketItemView].[ExceedStockAmount] AS [ExceedStockAmount], 
 [ShipmentTicketItemView].[OnlineTime] AS [OnlineTime], 
 [ShipmentTicketItemView].[State] AS [State], 
 [ShipmentTicketItemView].[Description] AS [Description], 
@@ -2995,12 +2995,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ShipmentTicketID" Type="Int32" Nullable="false" />
           <Property Name="StockInfoID" Type="Int32" />
-          <Property Name="ExpectedShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="AssignedAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PickingAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInAdvanceAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ExceedStockAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="DateTime" Precision="3" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3272,6 +3268,12 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplierNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="JobPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ConfirmPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonID" Type="Int32" />
+          <Property Name="ScheduledAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RealAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="JobPersonID" Type="Int32" />
+          <Property Name="ConfirmPersonID" Type="Int32" />
         </EntityType>
         <EntityType Name="JobTicketView">
           <Key>
@@ -3589,12 +3591,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="ShipmentTicketID" Type="Int32" Nullable="false" />
           <Property Name="StockInfoID" Type="Int32" />
-          <Property Name="ExpectedShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="AssignedAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PickingAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInAdvanceAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ShipmentAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ExceedStockAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="OnlineTime" Type="DateTime" Precision="3" />
           <Property Name="State" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -4656,12 +4654,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="OnlineTime" ColumnName="OnlineTime" />
-                <ScalarProperty Name="ExceedStockAmount" ColumnName="ExceedStockAmount" />
                 <ScalarProperty Name="ShipmentAmount" ColumnName="ShipmentAmount" />
-                <ScalarProperty Name="ShipmentInAdvanceAmount" ColumnName="ShipmentInAdvanceAmount" />
                 <ScalarProperty Name="PickingAmount" ColumnName="PickingAmount" />
-                <ScalarProperty Name="AssignedAmount" ColumnName="AssignedAmount" />
-                <ScalarProperty Name="ExpectedShipmentAmount" ColumnName="ExpectedShipmentAmount" />
                 <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
                 <ScalarProperty Name="ShipmentTicketID" ColumnName="ShipmentTicketID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -4887,6 +4881,12 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="JobTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.JobTicketItemView">
               <MappingFragment StoreEntitySet="JobTicketItemView">
+                <ScalarProperty Name="ConfirmPersonID" ColumnName="ConfirmPersonID" />
+                <ScalarProperty Name="JobPersonID" ColumnName="JobPersonID" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="RealAmount" ColumnName="RealAmount" />
+                <ScalarProperty Name="ScheduledAmount" ColumnName="ScheduledAmount" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="ConfirmPersonName" ColumnName="ConfirmPersonName" />
                 <ScalarProperty Name="JobPersonName" ColumnName="JobPersonName" />
                 <ScalarProperty Name="SupplierNumber" ColumnName="SupplierNumber" />
@@ -5250,12 +5250,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="OnlineTime" ColumnName="OnlineTime" />
-                <ScalarProperty Name="ExceedStockAmount" ColumnName="ExceedStockAmount" />
                 <ScalarProperty Name="ShipmentAmount" ColumnName="ShipmentAmount" />
-                <ScalarProperty Name="ShipmentInAdvanceAmount" ColumnName="ShipmentInAdvanceAmount" />
                 <ScalarProperty Name="PickingAmount" ColumnName="PickingAmount" />
-                <ScalarProperty Name="AssignedAmount" ColumnName="AssignedAmount" />
-                <ScalarProperty Name="ExpectedShipmentAmount" ColumnName="ExpectedShipmentAmount" />
                 <ScalarProperty Name="StockInfoID" ColumnName="StockInfoID" />
                 <ScalarProperty Name="ShipmentTicketID" ColumnName="ShipmentTicketID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
