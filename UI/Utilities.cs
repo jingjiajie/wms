@@ -317,6 +317,7 @@ namespace WMS.UI
                         labelLayer.AutoSize = true;
                         labelLayer.Click += (obj, e) =>
                         {
+                            textBox.Focus();
                             //调用编辑框的点击事件
                             MethodInfo onClickMethod = typeof(TextBox).GetMethod("OnClick", BindingFlags.NonPublic | BindingFlags.Instance);
                             onClickMethod.Invoke(textBox, new object[] { EventArgs.Empty });

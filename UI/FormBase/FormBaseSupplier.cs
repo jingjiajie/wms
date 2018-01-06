@@ -143,6 +143,10 @@ namespace WMS.UI
                 MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            this.buttonCheck.Enabled = false;
+            this.toolStripButtonAdd.Enabled = false;
+            this.toolStripButtonAlter.Enabled = false;
+            this.toolStripButton1.Text = "全部信息";
 
             this.pagerWidget.ClearCondition();
 
@@ -435,6 +439,13 @@ namespace WMS.UI
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
+            if(this.toolStripButton1.Text =="全部信息")
+            {
+                this.toolStripButton1.Text = "查询";
+                this.toolStripButtonAdd .Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.buttonCheck.Enabled = true;
+            }
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("是否历史信息", "0");
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)

@@ -108,7 +108,7 @@ namespace WMS.UI
 
             if (shipmentTicketItemViews.Length == 0)
             {
-                worksheet[0, 2] = "没有查询到符合条件的记录";
+                worksheet[0, 1] = "没有查询到符合条件的记录";
             }
             for (int i = 0; i < shipmentTicketItemViews.Length; i++)
             {

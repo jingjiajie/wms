@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using unvell.ReoGrid;
+using unvell.ReoGrid.Events;
 using System.Threading;
 using WMS.DataAccess;
 using System.Data.SqlClient;
@@ -63,13 +64,13 @@ namespace WMS.UI.FormReceipt
             //string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            //worksheet.SelectionMode = WorksheetSelectionMode.Cell;
             int n = 0;
             for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length + 1; i++)
             {
                 if (i == this.checkBoxColumn)
                 {
-                    worksheet.ColumnHeaders[i].Text = "是否送检";
+                    worksheet.ColumnHeaders[i].Text = "送检数量";
                 }
                 else
                 {
@@ -80,7 +81,23 @@ namespace WMS.UI.FormReceipt
             }
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
             worksheet.Columns = ReceiptMetaData.itemsKeyName.Length + 1;
+            worksheet.CellMouseEnter += ClickOnCell;
         }
+
+        private void ClickOnCell(object sender, CellMouseEventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            var position = e.CellPosition;
+            if ((position.Col != this.checkBoxColumn && position.Row < countRow) || position.Row >= countRow)
+            {
+                worksheet.CreateAndGetCell(position).IsReadOnly = true;
+            }
+            else
+            {
+                
+            }
+        }
+
 
         private void InitPanel()
         {
@@ -116,6 +133,7 @@ namespace WMS.UI.FormReceipt
                 this.reoGridControlUser.Invoke(new Action(() =>
                 {
                     //this.labelStatus.Text = "搜索完成";
+                    //this.reoGridControlUser.Readonly = false;
                     var worksheet = this.reoGridControlUser.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
                     //int n = 0;
@@ -123,18 +141,21 @@ namespace WMS.UI.FormReceipt
                     {
                         ReceiptTicketItemView curReceiptTicketItemView = receiptTicketItemViews[i];
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ReceiptMetaData.itemsKeyName select kn.Key).ToArray());
-                        
+
                         int m = 0;
                         for (int j = 0; j < worksheet.Columns - 1; j++)
                         {
                             if (j == this.checkBoxColumn)
                             {
-                                CheckBoxCell checkboxCell;
-                                worksheet[i, m] = new object[] { checkboxCell = new CheckBoxCell() };
+                                //CheckBoxCell checkboxCell;
+                                //TextBox textbox = new TextBox();
+                                //DataGridViewTextBoxCell;
+                                //worksheet[i, m]
                                 m += 2;
                             }
                             else
                             {
+                                //worksheet.CreateAndGetCell(i, m).IsReadOnly = true;
                                 worksheet[i, m] = columns[j];
                                 m++;
                             }
@@ -145,13 +166,15 @@ namespace WMS.UI.FormReceipt
             })).Start();
         }
 
+
         public void SetCallBack(Action action)
         {
             this.CallBack = action;
         }
 
-        private List<int> SelectReceiptTicketItem()
+        private SortedDictionary<int, int> SelectReceiptTicketItem()
         {
+            /*
             //List<ReceiptTicketItem> receiptTicketItems = new List<ReceiptTicketItem>();
             WMSEntities wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControlUser.Worksheets[0];
@@ -181,27 +204,76 @@ namespace WMS.UI.FormReceipt
                         }
                     }
                 }
+            }*/
+            List<int> ids = new List<int>();
+            SortedDictionary<int, int> idsAndSubmissionAmount = new SortedDictionary<int, int>();
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            int submissionAmount;
+            for (int i = 0; i < this.countRow; i++)
+            {
+                int id;
+                string strSubmissionAmount = worksheet[i, this.checkBoxColumn].ToString();
+                
+                if (strSubmissionAmount == null)
+                {
+                    strSubmissionAmount = "0";
+                }
+                else
+                {
+                    if (int.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
+                    {
+                        idsAndSubmissionAmount.Add(id, submissionAmount);
+                    }
+                    else
+                    {
+                        MessageBox.Show("送检数量必须为数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return null;
+                    }
+                }
+                /*
+                if (result == true)
+                {
+                    int id;
+                    if (int.TryParse(worksheet[i, 0].ToString(), out id) == false)
+                    {
+                        MessageBox.Show(worksheet[i, 0].ToString() + "加入失败");
+                    }
+                    else
+                    {
+                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
+                        if (receiptTicketItem.State == "已收货" || receiptTicketItem.State == "送检中")
+                        {
+                            MessageBox.Show(receiptTicketItem.ID + " " + receiptTicketItem.State);
+                            continue;
+                        }
+                        else
+                        {
+                            ids.Add(receiptTicketItem.ID);
+                        }
+                    }*/
             }
-                return ids;
+
+            return idsAndSubmissionAmount;
         }
 
         private void OK_Click(object sender, EventArgs e)
         {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            worksheet.FocusPos = new CellPosition(0, 0);
             WMSEntities wmsEntities = new WMSEntities();
-            List<int> ids = SelectReceiptTicketItem();
-            if (ids.Count == 0)
+
+            SortedDictionary<int, int> idsAndSubmissionAmount = SelectReceiptTicketItem();
+            if (idsAndSubmissionAmount == null)
             {
-                MessageBox.Show("请选择送检的零件");
                 return;
-                
             }
-            List<ReceiptTicketItem> receiptTicketItems = new List<ReceiptTicketItem>();
-            foreach(int id in ids)
+            Dictionary<ReceiptTicketItem, int> receiptTicketItemsAndSubmissionAmount = new Dictionary<ReceiptTicketItem, int>();
+            foreach (KeyValuePair<int, int> kv in idsAndSubmissionAmount)
             {
-                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
+                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == kv.Key select rti).FirstOrDefault();
                 if (receiptTicketItem != null)
                 {
-                    receiptTicketItems.Add(receiptTicketItem);
+                    receiptTicketItemsAndSubmissionAmount.Add(receiptTicketItem, kv.Value);
                 }
             }
             if (this.formMode == FormMode.ADD)
@@ -231,49 +303,53 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.WarehouseID = receiptTicket.Warehouse;
                     submissionTicket.State = "待检";
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
-                    
+
                     new Thread(() =>
                     {
                         try
-                        { 
+                        {
                             wmsEntities.SaveChanges();
                             //submissionTicket.No = Utilities.GenerateTicketNo()
-                            
+
                             wmsEntities.SaveChanges();
-                            foreach(ReceiptTicketItem rti in receiptTicketItems)
+                            foreach (KeyValuePair<ReceiptTicketItem, int> vp in receiptTicketItemsAndSubmissionAmount)
                             {
                                 SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
-                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == vp.Key.ID select si).FirstOrDefault();
                                 if (stockInfo == null)
                                 {
                                     MessageBox.Show("找不到对应的库存信息");
                                 }
                                 else
-                                {/*TODO
+                                {
+
                                     if (stockInfo.ReceiptAreaAmount != null)
                                     {
-                                        int amountReceiptArea;
-                                        amountReceiptArea = (int)stockInfo.ReceiptAreaAmount;
-                                        stockInfo.ReceiptAreaAmount = 0;
-                                        stockInfo.SubmissionAreaAmount = amountReceiptArea;
-                                    }*/
-                                    submissionTicketItem.ReceiptTicketItemID = rti.ID;
+                                        submissionTicketItem.ArriveAmount = stockInfo.ReceiptAreaAmount;
+                                    }
+                                    stockInfo.SubmissionAmount = vp.Value;
+                                    stockInfo.ReceiptAreaAmount -= vp.Value;
+                                    submissionTicketItem.ArriveAmount = vp.Key.ReceiviptAmount;
+                                    submissionTicketItem.ReceiptTicketItemID = vp.Key.ID;
                                     submissionTicketItem.State = "待检";
-                                    rti.State = "送检中";
+                                    vp.Key.State = "送检中";
+                                    submissionTicketItem.SubmissionAmount = vp.Value;
                                     submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
                                     wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
+                                    receiptTicket.State = "送检中";
                                 }
                             }
                             wmsEntities.SaveChanges();
+                            /*
                             int count = wmsEntities.Database.SqlQuery<int>(
                                 "SELECT COUNT(*) FROM ReceiptTicketItem " +
-                                "WHERE ReceiptTicketID = @receiptTicketID AND State <> '送检中'", 
+                                "WHERE ReceiptTicketID = @receiptTicketID AND State <> '送检中'",
                                 new SqlParameter("receiptTicketID", receiptTicketID)).FirstOrDefault();
                             if (count == 0)
                             {
                                 wmsEntities.Database.ExecuteSqlCommand(
                                     "UPDATE ReceiptTicket SET State='送检中' " +
-                                    "WHERE ID = @receiptTicketID", 
+                                    "WHERE ID = @receiptTicketID",
                                     new SqlParameter("receiptTicketID", receiptTicketID));
                             }
                             else
@@ -283,6 +359,7 @@ namespace WMS.UI.FormReceipt
                                     "WHERE ID = @receiptTicketID",
                                     new SqlParameter("receiptTicketID", receiptTicketID));
                             }
+                            */
                             this.Invoke(new Action(() =>
                             {
                                 this.Search();
@@ -300,7 +377,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
-                
+
             }
         }
 
@@ -320,5 +397,20 @@ namespace WMS.UI.FormReceipt
             buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
+        private void buttonOK_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.buttonOK.Focus();
+            this.reoGridControlUser.Worksheets[0].FocusPos = new CellPosition(0, 0);
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            worksheet.EndEdit(new EndEditReason());
+            //worksheet.CreateAndGetCell(worksheet.GetEditingCell()).EndEdit();
+            /*
+            for (int i = 0; i < this.countRow; i++)
+            {
+                worksheet.Cells[i, this.checkBoxColumn].EndEdit();
+            }
+            */
+            //worksheet.EditingCell.EndEdit();
+        }
     }
 }
