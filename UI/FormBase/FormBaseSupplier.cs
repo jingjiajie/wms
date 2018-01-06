@@ -363,6 +363,47 @@ namespace WMS.UI
             new Thread(new ThreadStart(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
+                
+
+
+                try
+                {
+                    foreach (int id in deleteIDs)
+                    {
+
+                        var  supplier_historyid = (from kn in wmsEntities .Supplier  
+                                                       where kn.NewestSupplierID  ==id 
+                                                       select kn.ID ).ToArray();
+                        if (supplier_historyid.Length > 0)
+                        {
+                            try
+                            {
+                                foreach (int NewestSupplierid in supplier_historyid)
+                                {
+                                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", NewestSupplierid));
+
+
+                                }
+                                wmsEntities.SaveChanges();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+
+                        }
+
+
+                    
+                }
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 try
                 {
                     foreach (int id in deleteIDs)
@@ -376,6 +417,8 @@ namespace WMS.UI
                     MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+
                 this.Invoke(new Action(() =>
                 {
                     this.pagerWidget.Search();
