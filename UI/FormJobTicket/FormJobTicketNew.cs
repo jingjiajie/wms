@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Threading;
 using unvell.ReoGrid;
+using unvell.ReoGrid.CellTypes;
 
 namespace WMS.UI
 {
@@ -20,6 +21,8 @@ namespace WMS.UI
         private int warehouseID = -1;
 
         private Action<string> toJobTicketCallback = null;
+        private int[] editableColumns = new int[] { 1, 2 };
+        private int validRows = 0;
 
         public void SetToJobTicketCallback(Action<string> callback)
         {
@@ -37,6 +40,8 @@ namespace WMS.UI
 
         private void FormJobTicketNew_Load(object sender, EventArgs e)
         {
+            this.Size = new Size(950, 500);
+            this.CenterToScreen();
             this.InitComponents();
         }
 
@@ -44,15 +49,14 @@ namespace WMS.UI
         {
             Utilities.InitReoGrid(this.reoGridControlMain, ShipmentTicketItemViewMetaData.KeyNames,WorksheetSelectionMode.Cell);
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            int[] editableColumns = new int[] { 1, 2 };
             worksheet.InsertColumns(1, 2);
             worksheet.ColumnHeaders[1].Text = "选择";
-            worksheet.ColumnHeaders[1].DefaultCellBody = typeof(unvell.ReoGrid.CellTypes.CheckBoxCell);
             worksheet.ColumnHeaders[2].Text = "计划翻包数量";
             worksheet.BeforeCellEdit += (s, e) =>
             {
-                e.IsCancelled = !editableColumns.Contains(e.Cell.Column);
+                e.IsCancelled = !(editableColumns.Contains(e.Cell.Column) && e.Cell.Row < validRows);
             };
+            worksheet.ColumnHeaders[2].Style.BackColor = Color.AliceBlue;
 
             Utilities.CreateEditPanel(this.tableLayoutEditPanel, JobTicketViewMetaData.KeyNames);
             ShipmentTicket shipmentTicket = null;
@@ -91,15 +95,46 @@ namespace WMS.UI
 
         private void Search()
         {
-            
+            WMSEntities wmsEntities = new WMSEntities();
+            ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView
+                                                                where s.ShipmentTicketID == this.shipmentTicketID
+                                                                select s).ToArray();
+            validRows = shipmentTicketItemViews.Length;
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet.DeleteRangeData(RangePosition.EntireRange);
+            worksheet.Rows = (shipmentTicketItemViews.Length < 10 ? 10 : shipmentTicketItemViews.Length);
+            //给第二列加上边框
+            worksheet.SetRangeBorders(0, 2, worksheet.Rows, 1, BorderPositions.All, RangeBorderStyle.SilverSolid);
+
+            if (shipmentTicketItemViews.Length == 0)
+            {
+                worksheet[0, 2] = "没有查询到符合条件的记录";
+            }
+            for (int i = 0; i < shipmentTicketItemViews.Length; i++)
+            {
+                worksheet[i, 1] = new CheckBoxCell(false); //显示复选框
+                ShipmentTicketItemView cur = shipmentTicketItemViews[i];
+                worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
+                worksheet[i, 2] = cur.ShipmentAmount;
+                object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in ShipmentTicketItemViewMetaData.KeyNames select kn.Key).ToArray());
+                int offsetColumn = 0;
+                for (int j = 0; j < columns.Length; j++)
+                {
+                    while (this.editableColumns.Contains(j + offsetColumn)) offsetColumn++;
+                    if (columns[j] == null) continue;
+                    worksheet.Cells[i, offsetColumn + j].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
+                    worksheet[i, offsetColumn + j] = columns[j].ToString();
+                }
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
             JobTicket newJobTicket = new JobTicket();
-            if(Utilities.CopyTextBoxTextsToProperties(this, newJobTicket, JobTicketViewMetaData.KeyNames, out string errorMesage) == false)
+            string errorMessage = null;
+            if(Utilities.CopyTextBoxTextsToProperties(this, newJobTicket, JobTicketViewMetaData.KeyNames, out errorMessage) == false)
             {
-                MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             new Thread(()=>
@@ -122,13 +157,33 @@ namespace WMS.UI
                 newJobTicket.CreateUserID = this.userID;
                 newJobTicket.CreateTime = DateTime.Now;
 
-                foreach (var shipmentTicketItem in shipmentTicket.ShipmentTicketItem)
+                var worksheet = this.reoGridControlMain.Worksheets[0];
+                for (int i=0;i<worksheet.Rows;i++)
                 {
+                    if ((worksheet[i, 1] as bool? ?? false) == false) continue;
+                    int shipmentTicketItemID = int.Parse(worksheet[i, 0].ToString());
+                    ShipmentTicketItem shipmentTicketItem = (from s in wmsEntities.ShipmentTicketItem
+                                                             where s.ID == shipmentTicketItemID
+                                                             select s).FirstOrDefault();
+                    if(shipmentTicketItem == null)
+                    {
+                        MessageBox.Show("发货单条目不存在，请重新查询","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     var jobTicketItem = new JobTicketItem();
                     jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
                     jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
-
+                    if (Utilities.CopyTextToProperty((string)worksheet[i, 2], "ScheduledAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out errorMessage) == false)
+                    {
+                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     newJobTicket.JobTicketItem.Add(jobTicketItem);
+                }
+                if(newJobTicket.JobTicketItem.Count == 0)
+                {
+                    MessageBox.Show("至少选择一项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
                 if (string.IsNullOrWhiteSpace(newJobTicket.JobTicketNo))

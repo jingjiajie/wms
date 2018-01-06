@@ -21,7 +21,7 @@ namespace WMS.UI
                              new ComboBoxItem(STRING_STATE_UNFINISHED),
                              new ComboBoxItem( STRING_STATE_FINISHED),
                          } },
-            new KeyName(){Key="ScheduledAmount",Name="计划翻包数量"},
+            new KeyName(){Key="ScheduledAmount",Name="计划翻包数量",NotNull=true},
             new KeyName(){Key="RealAmount",Name="实际翻包数量"},
             new KeyName(){Key="Unit",Name="翻包单位"},
             new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false},

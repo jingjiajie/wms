@@ -164,13 +164,13 @@ namespace WMS.UI
             string chineseName = keyName.Name;
 
             Type originType = p.PropertyType;
-            if(text.Length == 0 && keyName.NotNull == true)
+            if(string.IsNullOrWhiteSpace(text) && keyName.NotNull == true)
             {
                 errorMessage = chineseName + " 不允许为空！";
                 return false;
             }
             //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
-            if (text.Length == 0 && originType != typeof(string))
+            if (string.IsNullOrWhiteSpace(text) && originType != typeof(string))
             {
                 if (IsNullableType(originType))
                 {
@@ -185,7 +185,7 @@ namespace WMS.UI
                 }
             }
             //根据源类型不同，将编辑框中的文本转换成合适的类型
-            if (originType == typeof(String))
+            if (originType == typeof(string))
             {
                 if (text.Length > 64)
                 {
