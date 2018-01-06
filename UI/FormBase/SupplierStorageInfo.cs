@@ -65,13 +65,14 @@ namespace WMS.UI
         {
           InitializeComponent1();
             this.pagerWidget.ClearCondition();
-            if (this.check_history == 1)
-            {
-                this.pagerWidget.AddCondition("实际执行供应商合同ID", Convert.ToString(this.supplierid));
-                this.pagerWidget.Search();
+            //if (this.check_history == 1)
+            //{
+              
+            //    //    this.pagerWidget.AddCondition("实际执行供应商合同ID", Convert.ToString(this.supplierid));
+            ////    this.pagerWidget.Search();
 
-            }
-            else
+            //}
+            //else
             {
                 this.pagerWidget.AddCondition("供应商ID", Convert.ToString(this.supplierid));
                 this.pagerWidget.Search();
