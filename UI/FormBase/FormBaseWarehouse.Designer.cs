@@ -66,7 +66,7 @@
             this.toolStripButtonDelete});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(750, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(1000, 28);
             this.toolStripTop.TabIndex = 4;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -74,7 +74,7 @@
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(68, 25);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // toolStripComboBoxSelect
@@ -82,13 +82,13 @@
             this.toolStripComboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(114, 28);
+            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(151, 28);
             this.toolStripComboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelect_SelectedIndexChanged);
             // 
             // toolStripTextBoxSelect
             // 
             this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(151, 28);
+            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(200, 28);
             this.toolStripTextBoxSelect.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxSelect_KeyPress);
             // 
             // toolStripButtonSelect
@@ -96,7 +96,7 @@
             this.toolStripButtonSelect.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSelect.Image")));
             this.toolStripButtonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSelect.Name = "toolStripButtonSelect";
-            this.toolStripButtonSelect.Size = new System.Drawing.Size(56, 25);
+            this.toolStripButtonSelect.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonSelect.Text = "查询";
             this.toolStripButtonSelect.Click += new System.EventHandler(this.toolStripButtonSelect_Click);
             // 
@@ -111,7 +111,7 @@
             this.toolStripButtonAdd.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAdd.Image")));
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 25);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
@@ -120,7 +120,7 @@
             this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(56, 25);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonAlter.Text = "修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -129,7 +129,7 @@
             this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 25);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
@@ -140,37 +140,38 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 432);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 546);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(750, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1000, 25);
             this.toolStrip1.TabIndex = 8;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(43, 22);
             this.toolStripStatusLabel1.Text = "状态:";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 22);
+            this.labelStatus.Size = new System.Drawing.Size(69, 22);
             this.labelStatus.Text = "仓库信息";
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlWarehouse, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panelPager, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 28);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 92.23602F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 7.763975F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(750, 404);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1000, 518);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // reoGridControlWarehouse
@@ -179,37 +180,38 @@
             this.reoGridControlWarehouse.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlWarehouse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlWarehouse.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlWarehouse.Location = new System.Drawing.Point(2, 2);
-            this.reoGridControlWarehouse.Margin = new System.Windows.Forms.Padding(2);
+            this.reoGridControlWarehouse.Location = new System.Drawing.Point(3, 2);
+            this.reoGridControlWarehouse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reoGridControlWarehouse.Name = "reoGridControlWarehouse";
             this.reoGridControlWarehouse.RowHeaderContextMenuStrip = null;
             this.reoGridControlWarehouse.Script = null;
             this.reoGridControlWarehouse.SheetTabContextMenuStrip = null;
             this.reoGridControlWarehouse.SheetTabNewButtonVisible = true;
             this.reoGridControlWarehouse.SheetTabVisible = true;
-            this.reoGridControlWarehouse.SheetTabWidth = 60;
+            this.reoGridControlWarehouse.SheetTabWidth = 80;
             this.reoGridControlWarehouse.ShowScrollEndSpacing = true;
-            this.reoGridControlWarehouse.Size = new System.Drawing.Size(746, 368);
+            this.reoGridControlWarehouse.Size = new System.Drawing.Size(994, 476);
             this.reoGridControlWarehouse.TabIndex = 10;
             this.reoGridControlWarehouse.Text = "reoGridControl1";
             // 
             // panelPager
             // 
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(3, 375);
+            this.panelPager.Location = new System.Drawing.Point(4, 484);
+            this.panelPager.Margin = new System.Windows.Forms.Padding(4);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(744, 26);
+            this.panelPager.Size = new System.Drawing.Size(992, 30);
             this.panelPager.TabIndex = 11;
             // 
             // FormBaseWarehouse
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(750, 457);
+            this.ClientSize = new System.Drawing.Size(1000, 571);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormBaseWarehouse";
             this.Text = "仓库信息";
             this.Load += new System.EventHandler(this.base_Warehouse_Load);
