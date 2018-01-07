@@ -331,6 +331,8 @@ namespace WMS.UI.FormReceipt
                                     stockInfo.ReceiptAreaAmount -= vp.Value;
                                     submissionTicketItem.ArriveAmount = vp.Key.ReceiviptAmount;
                                     submissionTicketItem.ReceiptTicketItemID = vp.Key.ID;
+                                    //submissionTicketItem.RejectAmount = 0;
+                                    //submissionTicketItem.ReturnAmount = 0;
                                     submissionTicketItem.State = "待检";
                                     vp.Key.State = "送检中";
                                     submissionTicketItem.SubmissionAmount = vp.Value;

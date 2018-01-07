@@ -101,6 +101,14 @@
           <Property Name="JobPersonID" Type="int" />
           <Property Name="ConfirmPersonID" Type="int" />
         </EntityType>
+        <EntityType Name="PackageUnit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+        </EntityType>
         <EntityType Name="Person">
           <Key>
             <PropertyRef Name="ID" />
@@ -396,6 +404,7 @@
           <Property Name="ReceiptTicketItemID" Type="int" />
           <Property Name="JobPersonID" Type="int" />
           <Property Name="ConfirmPersonID" Type="int" />
+          <Property Name="RejectAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -595,6 +604,18 @@
           <Property Name="PersonID" Type="int" />
           <Property Name="ShipmentTicketNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“wms.dbo.PackageUnitView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="PackageUnitView">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="UnitAmount" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PersonView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1103,6 +1124,7 @@
           <Property Name="ConfirmPersonID" Type="int" />
           <Property Name="JobPersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="ConfirmPersonName" Type="nvarchar" MaxLength="64" />
+          <Property Name="RejectAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1172,7 +1194,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="64" />
           <Property Name="ContractNo" Type="nvarchar" MaxLength="64" />
           <Property Name="FullName" Type="nvarchar" MaxLength="64" />
@@ -1199,6 +1221,8 @@
           <Property Name="NetArea" Type="decimal" Precision="18" Scale="0" />
           <Property Name="FixedStorageCost" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ContractStorageArea" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.UserView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1656,6 +1680,7 @@
           <EntitySet Name="Component" EntityType="Self.Component" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobTicket" EntityType="Self.JobTicket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JobTicketItem" EntityType="Self.JobTicketItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PackageUnit" EntityType="Self.PackageUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PutawayTicket" EntityType="Self.PutawayTicket" Schema="dbo" store:Type="Tables" />
@@ -1800,6 +1825,13 @@ FROM [dbo].[JobTicketItemView] AS [JobTicketItemView]</DefiningQuery>
 [JobTicketView].[ShipmentTicketNumber] AS [ShipmentTicketNumber], 
 [JobTicketView].[PersonName] AS [PersonName]
 FROM [dbo].[JobTicketView] AS [JobTicketView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PackageUnitView" EntityType="Self.PackageUnitView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[PackageUnitView].[ID] AS [ID], 
+[PackageUnitView].[Name] AS [Name], 
+[PackageUnitView].[UnitAmount] AS [UnitAmount]
+FROM [dbo].[PackageUnitView] AS [PackageUnitView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PersonView" EntityType="Self.PersonView" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2256,7 +2288,8 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[JobPersonID] AS [JobPersonID], 
 [SubmissionTicketItemView].[ConfirmPersonID] AS [ConfirmPersonID], 
 [SubmissionTicketItemView].[JobPersonName] AS [JobPersonName], 
-[SubmissionTicketItemView].[ConfirmPersonName] AS [ConfirmPersonName]
+[SubmissionTicketItemView].[ConfirmPersonName] AS [ConfirmPersonName], 
+[SubmissionTicketItemView].[RejectAmount] AS [RejectAmount]
 FROM [dbo].[SubmissionTicketItemView] AS [SubmissionTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketView" EntityType="Self.SubmissionTicketView" store:Type="Views" store:Schema="dbo">
@@ -2343,7 +2376,9 @@ FROM [dbo].[SupplierStorageInfoView] AS [SupplierStorageInfoView]</DefiningQuery
 [SupplierView].[LastUpdateTime] AS [LastUpdateTime], 
 [SupplierView].[NetArea] AS [NetArea], 
 [SupplierView].[FixedStorageCost] AS [FixedStorageCost], 
-[SupplierView].[ContractStorageArea] AS [ContractStorageArea]
+[SupplierView].[ContractStorageArea] AS [ContractStorageArea], 
+[SupplierView].[CreateUserUsername] AS [CreateUserUsername], 
+[SupplierView].[LastUpdateUserUsername] AS [LastUpdateUserUsername]
 FROM [dbo].[SupplierView] AS [SupplierView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserView" EntityType="Self.UserView" store:Type="Views" store:Schema="dbo">
@@ -2596,6 +2631,14 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="JobPersonID" Type="Int32" />
           <Property Name="ConfirmPersonID" Type="Int32" />
           <NavigationProperty Name="JobTicket" Relationship="Self.FK__JobTicket__JobTi__5D60DB10" FromRole="JobTicketItem" ToRole="JobTicket" />
+        </EntityType>
+        <EntityType Name="PackageUnit">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="Person">
           <Key>
@@ -2927,6 +2970,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemID" Type="Int32" />
           <Property Name="JobPersonID" Type="Int32" />
           <Property Name="ConfirmPersonID" Type="Int32" />
+          <Property Name="RejectAmount" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="ReceiptTicketItem" Relationship="Self.FK__Submissio__Recei__0EF836A4" FromRole="SubmissionTicketItem" ToRole="ReceiptTicketItem" />
           <NavigationProperty Name="SubmissionTicket" Relationship="Self.FK__Submissio__Submi__4D94879B" FromRole="SubmissionTicketItem" ToRole="SubmissionTicket" />
         </EntityType>
@@ -3140,6 +3184,16 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="PersonID" Type="Int32" />
           <Property Name="ShipmentTicketNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PackageUnitView">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="UnitAmount" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="PersonView">
           <Key>
@@ -3620,6 +3674,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ConfirmPersonID" Type="Int32" />
           <Property Name="JobPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ConfirmPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RejectAmount" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="SubmissionTicketView">
           <Key>
@@ -3683,7 +3738,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ContractNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="FullName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3710,6 +3765,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="NetArea" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="FixedStorageCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ContractStorageArea" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserView">
           <Key>
@@ -4159,10 +4216,11 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WMSEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Component" EntityType="Self.Component" />
           <EntitySet Name="JobTicket" EntityType="Self.JobTicket" />
           <EntitySet Name="JobTicketItem" EntityType="Self.JobTicketItem" />
+          <EntitySet Name="PackageUnit" EntityType="Self.PackageUnit" />
           <EntitySet Name="Person" EntityType="Self.Person" />
           <EntitySet Name="Project" EntityType="Self.Project" />
           <EntitySet Name="PutawayTicket" EntityType="Self.PutawayTicket" />
@@ -4185,6 +4243,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySet Name="ComponentView" EntityType="Self.ComponentView" />
           <EntitySet Name="JobTicketItemView" EntityType="Self.JobTicketItemView" />
           <EntitySet Name="JobTicketView" EntityType="Self.JobTicketView" />
+          <EntitySet Name="PackageUnitView" EntityType="Self.PackageUnitView" />
           <EntitySet Name="PersonView" EntityType="Self.PersonView" />
           <EntitySet Name="ProjectView" EntityType="Self.ProjectView" />
           <EntitySet Name="PutawayTicketItemView" EntityType="Self.PutawayTicketItemView" />
@@ -4334,7 +4393,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="WMSEntities">
+        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Component">
             <EntityTypeMapping TypeName="WMSModel.Component">
               <MappingFragment StoreEntitySet="Component">
@@ -4431,6 +4490,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="JobPersonID" ColumnName="JobPersonID" />
                 <ScalarProperty Name="ConfirmPersonID" ColumnName="ConfirmPersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackageUnit">
+            <EntityTypeMapping TypeName="WMSModel.PackageUnit">
+              <MappingFragment StoreEntitySet="PackageUnit">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4742,6 +4810,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemID" ColumnName="ReceiptTicketItemID" />
                 <ScalarProperty Name="JobPersonID" ColumnName="JobPersonID" />
                 <ScalarProperty Name="ConfirmPersonID" ColumnName="ConfirmPersonID" />
+                <ScalarProperty Name="RejectAmount" ColumnName="RejectAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4941,6 +5010,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="ShipmentTicketNumber" ColumnName="ShipmentTicketNumber" />
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackageUnitView">
+            <EntityTypeMapping TypeName="WMSModel.PackageUnitView">
+              <MappingFragment StoreEntitySet="PackageUnitView">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5427,6 +5505,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ConfirmPersonID" ColumnName="ConfirmPersonID" />
                 <ScalarProperty Name="JobPersonName" ColumnName="JobPersonName" />
                 <ScalarProperty Name="ConfirmPersonName" ColumnName="ConfirmPersonName" />
+                <ScalarProperty Name="RejectAmount" ColumnName="RejectAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5520,6 +5599,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="NetArea" ColumnName="NetArea" />
                 <ScalarProperty Name="FixedStorageCost" ColumnName="FixedStorageCost" />
                 <ScalarProperty Name="ContractStorageArea" ColumnName="ContractStorageArea" />
+                <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
+                <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
