@@ -41,5 +41,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> NetArea { get; set; }
         public Nullable<decimal> FixedStorageCost { get; set; }
         public Nullable<decimal> ContractStorageArea { get; set; }
+        public string CreateUserUsername { get; set; }
+        public string LastUpdateUserUsername { get; set; }
     }
 }
