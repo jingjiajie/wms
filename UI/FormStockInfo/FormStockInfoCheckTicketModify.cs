@@ -174,7 +174,7 @@ namespace WMS.UI
             stockInfoCheck.WarehouseID = warehouseID;
             stockInfoCheck.ProjectID  = projectID;
             
-            stockInfoCheck.LastUpdateUserID = Convert.ToString( userID);
+            stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
             //开始数据库操作
             //if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
             //{
