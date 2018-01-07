@@ -39,7 +39,7 @@ namespace WMS.UI
         {
             this.wmsEntities.Database.Connection.Open();
 
-            string[] visibleColumnNames = (from kn in StockInfoCheckTicketViewMetaDataDisplay.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -49,7 +49,7 @@ namespace WMS.UI
             this.comboBoxSearchCondition.SelectedIndex = 0;
 
             //初始化分页控件
-            this.pagerWidget = new PagerWidget<StockInfoCheckTicketView >(this.reoGridControlMain , StockInfoCheckTicketViewMetaDataDisplay.KeyNames, this.projectID, this.warehouseID);
+            this.pagerWidget = new PagerWidget<StockInfoCheckTicketView >(this.reoGridControlMain , StockInfoCheckTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.paperpanel.Controls.Add(pagerWidget);
             pagerWidget.Show();
         }
