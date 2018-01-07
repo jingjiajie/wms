@@ -59,7 +59,7 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(4, 3);
+            this.reoGridControlMain.Location = new System.Drawing.Point(4, 63);
             this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
@@ -70,7 +70,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1615, 544);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1615, 523);
             this.reoGridControlMain.TabIndex = 6;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -79,6 +79,7 @@
             this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
             this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.labelSelect,
@@ -96,7 +97,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1623, 39);
+            this.toolStripTop.Size = new System.Drawing.Size(1623, 60);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -104,7 +105,7 @@
             // 
             this.labelSelect.Name = "labelSelect";
             this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(134, 36);
+            this.labelSelect.Size = new System.Drawing.Size(134, 27);
             this.labelSelect.Text = "查询条件：";
             // 
             // comboBoxSearchCondition
@@ -112,7 +113,7 @@
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 39);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 30);
             this.comboBoxSearchCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxSearchCondition_SelectedIndexChanged);
             // 
             // textBoxSearchValue
@@ -120,7 +121,7 @@
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Enabled = false;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 30);
             this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
             // buttonSearch
@@ -128,7 +129,7 @@
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(86, 36);
+            this.buttonSearch.Size = new System.Drawing.Size(86, 57);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
@@ -143,7 +144,7 @@
             this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
             this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(158, 36);
+            this.buttonOpen.Size = new System.Drawing.Size(158, 27);
             this.buttonOpen.Text = "查看作业单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
@@ -158,7 +159,7 @@
             this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
             this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(86, 36);
+            this.buttonAlter.Size = new System.Drawing.Size(86, 27);
             this.buttonAlter.Text = "修改";
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
@@ -183,7 +184,7 @@
             this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
             this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
-            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(158, 36);
+            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(158, 27);
             this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
             this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
             // 
@@ -192,7 +193,7 @@
             this.buttonToPutOutStorageTicket.Image = global::WMS.UI.Properties.Resources.find;
             this.buttonToPutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonToPutOutStorageTicket.Name = "buttonToPutOutStorageTicket";
-            this.buttonToPutOutStorageTicket.Size = new System.Drawing.Size(158, 36);
+            this.buttonToPutOutStorageTicket.Size = new System.Drawing.Size(158, 27);
             this.buttonToPutOutStorageTicket.Text = "查看出库单";
             this.buttonToPutOutStorageTicket.Click += new System.EventHandler(this.buttonToPutOutStorageTicket_Click);
             // 
@@ -225,22 +226,23 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 39);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1623, 610);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1623, 649);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // panelPagerWidget
             // 
             this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(3, 553);
+            this.panelPagerWidget.Location = new System.Drawing.Point(3, 592);
             this.panelPagerWidget.Name = "panelPagerWidget";
             this.panelPagerWidget.Size = new System.Drawing.Size(1617, 54);
             this.panelPagerWidget.TabIndex = 7;
@@ -251,7 +253,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1623, 685);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.toolStripTop);
             this.Controls.Add(this.statusStrip1);
             this.Name = "FormJobTicket";
             this.Text = "FormJobTicket";
@@ -261,6 +262,7 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

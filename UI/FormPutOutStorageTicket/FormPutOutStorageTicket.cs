@@ -17,6 +17,7 @@ namespace WMS.UI
     public partial class FormPutOutStorageTicket : Form
     {
         WMSEntities wmsEntities = new WMSEntities();
+        private PagerWidget<PutOutStorageTicketView> pagerWidget = null;
 
         int userID = -1;
         int projectID = -1;
@@ -29,6 +30,10 @@ namespace WMS.UI
             this.userID = userID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+
+            this.pagerWidget = new PagerWidget<PutOutStorageTicketView>(this.reoGridControlMain, PutOutStorageTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.panelPagerWidget.Controls.Add(this.pagerWidget);
+            this.pagerWidget.Show();
         }
 
         private void FormPutOutStorageTicket_Load(object sender, EventArgs e)
@@ -56,18 +61,6 @@ namespace WMS.UI
             this.comboBoxSearchCondition.Items.Add("无");
             this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
             this.comboBoxSearchCondition.SelectedIndex = 0;
-
-
-            //初始化表格
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-
-            for (int i = 0; i < PutOutStorageTicketViewMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = PutOutStorageTicketViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = PutOutStorageTicketViewMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = PutOutStorageTicketViewMetaData.KeyNames.Length; //限制表的长度
         }
 
         public void SetSearchCondition(string key, string value)
@@ -90,77 +83,14 @@ namespace WMS.UI
             this.textBoxSearchValue.Text = value;
         }
 
-        private void Search()
+        private void Search(bool savePage = false, int selectID = -1)
         {
-            string key = null;
-            string value = null;
-
-            if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            this.pagerWidget.ClearCondition();
+            if(this.comboBoxSearchCondition.SelectedIndex != 0)
             {
-                key = (from kn in PutOutStorageTicketViewMetaData.KeyNames
-                       where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.textBoxSearchValue.Text;
+                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
-
-            this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet[0, 0] = "加载中...";
-            new Thread(new ThreadStart(() =>
-            {
-                PutOutStorageTicketView[] putOutStorageTicketViews = null;
-                string sql = "SELECT * FROM PutOutStorageTicketView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-
-                if (this.projectID != -1)
-                {
-                    sql += "AND ShipmentTicketProjectID = @projectID ";
-                    parameters.Add(new SqlParameter("projectID", this.projectID));
-                }
-                if (warehouseID != -1)
-                {
-                    sql += "AND ShipmentTicketWarehouseID = @warehouseID ";
-                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
-                }
-                if (key != null && value != null) //查询条件不为null则增加查询条件
-                {
-                    sql += "AND " + key + " = @value ";
-                    parameters.Add(new SqlParameter("value", value));
-                }
-                sql += " ORDER BY ID DESC";
-                try
-                {
-                    putOutStorageTicketViews = wmsEntities.Database.SqlQuery<PutOutStorageTicketView>(sql, parameters.ToArray()).ToArray();
-                }
-                catch (EntityCommandExecutionException)
-                {
-                    MessageBox.Show("查询失败，请检查输入条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                this.reoGridControlMain.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (putOutStorageTicketViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < putOutStorageTicketViews.Length; i++)
-                    {
-                        var curPutOutStorageTicketViews = putOutStorageTicketViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curPutOutStorageTicketViews, (from kn in PutOutStorageTicketViewMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
-                    }
-                }));
-            })).Start();
+            this.pagerWidget.Search(savePage, selectID);
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -230,7 +160,10 @@ namespace WMS.UI
                     MessageBox.Show("删除失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(()=>
+                {
+                    this.Search(true);
+                }));
                 MessageBox.Show("删除成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
         }

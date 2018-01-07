@@ -65,6 +65,12 @@
     <Compile Include="JobTicketView.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="PackageUnit.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PackageUnitView.cs">
+      <DependentUpon>WMSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Person.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
