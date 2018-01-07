@@ -69,6 +69,7 @@ namespace WMS.UI
                     MakeTreeNode("零件管理"),
                     MakeTreeNode("仓库管理"),
                     MakeTreeNode("项目管理"),
+                    MakeTreeNode("人员管理"),
                     }),
                 MakeTreeNode("收货管理",new TreeNode[]{
                     MakeTreeNode("到货管理"),
@@ -257,6 +258,17 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 FormBase.FormBaseProject l = new FormBase.FormBaseProject();//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "人员管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormBase.FormBasePerson l = new FormBase.FormBasePerson();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

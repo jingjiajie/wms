@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\BasePersonMetaData.cs" />
     <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +68,18 @@
     </Compile>
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBasePerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBasePerson.Designer.cs">
+      <DependentUpon>FormBasePerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBasePersonModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBasePersonModify.Designer.cs">
+      <DependentUpon>FormBasePersonModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
@@ -463,6 +476,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBasePerson.resx">
+      <DependentUpon>FormBasePerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBasePersonModify.resx">
+      <DependentUpon>FormBasePersonModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
