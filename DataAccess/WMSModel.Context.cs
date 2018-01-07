@@ -28,6 +28,7 @@ namespace WMS.DataAccess
         public DbSet<Component> Component { get; set; }
         public DbSet<JobTicket> JobTicket { get; set; }
         public DbSet<JobTicketItem> JobTicketItem { get; set; }
+        public DbSet<PackageUnit> PackageUnit { get; set; }
         public DbSet<Person> Person { get; set; }
         public DbSet<Project> Project { get; set; }
         public DbSet<PutawayTicket> PutawayTicket { get; set; }
@@ -50,6 +51,7 @@ namespace WMS.DataAccess
         public DbSet<ComponentView> ComponentView { get; set; }
         public DbSet<JobTicketItemView> JobTicketItemView { get; set; }
         public DbSet<JobTicketView> JobTicketView { get; set; }
+        public DbSet<PackageUnitView> PackageUnitView { get; set; }
         public DbSet<PersonView> PersonView { get; set; }
         public DbSet<ProjectView> ProjectView { get; set; }
         public DbSet<PutawayTicketItemView> PutawayTicketItemView { get; set; }
