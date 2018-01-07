@@ -38,8 +38,11 @@ namespace WMS.UI
             new KeyName(){Key="NewestSupplierID",Name="最新供应商信息ID",Visible = true   , Editable = true  },
             new KeyName(){Key="CreateUserID",Name="创建用户ID",Visible = false , Editable = false },
             new KeyName(){Key="CreateTime",Name="创建时间",Visible = true  , Editable = false },
-            new KeyName(){Key="LastUpdateUserID",Name="最后修改用户ID",Visible = false , Editable = false },
-            new KeyName(){Key="LastUpdateTime",Name="最后修改时间",Visible = true  , Editable = false },
+            new KeyName(){Key="LastUpdateUserID",Name="最后更新用户ID",Visible = false , Editable = false  },
+            new KeyName(){Key="LastUpdateTime",Name="最后更新时间",Visible = true  , Editable = false  },
+            new KeyName(){Key="CreateUserUsername",Name="创建用户",Visible = true  , Editable = false,Save =false },
+            new KeyName(){Key="LastUpdateUserUsername",Name="最后更新用户",Visible = true  , Editable = false,Save =false } ,
+            
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

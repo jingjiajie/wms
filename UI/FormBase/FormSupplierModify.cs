@@ -41,7 +41,11 @@ namespace WMS.UI
             for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = SupplierMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
+                if (curKeyName.Visible == false && curKeyName.Editable == false) 
+                {
+                    continue;
+                }
+                if (curKeyName.Visible == true  && curKeyName.Editable == false)
                 {
                     continue;
                 }
@@ -164,6 +168,8 @@ namespace WMS.UI
                             supplier.ID = -1;
                             supplier.IsHistory = 1;
                             supplier.NewestSupplierID =this.supplierID ;
+                            supplier.LastUpdateUserID = this.userid;
+                            supplier.LastUpdateTime = DateTime.Now;
                             wmsEntities.SaveChanges();
                         }
                         catch
@@ -233,6 +239,8 @@ namespace WMS.UI
                     try
                     {
                         supplier.IsHistory = 0;
+                        supplier.LastUpdateUserID = this.userid;
+                        supplier.LastUpdateTime = DateTime.Now;
                         wmsEntities.SaveChanges();
 
                     }
