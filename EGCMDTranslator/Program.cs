@@ -19,7 +19,7 @@ namespace EGCMD
             var tree = parser.stat();
             var walker = new ParseTreeWalker();
             List<EGCMDCommand> commandList = new List<EGCMDCommand>();
-            walker.Walk(new EGCMDTranslateListener(commandList), tree);
+            walker.Walk(new EGCMDCompileListener(commandList), tree);
             foreach(var command in commandList)
             {
                 Console.WriteLine("识别到的命令："+command.ToString());

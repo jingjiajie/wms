@@ -1,16 +1,13 @@
 ﻿using System.Data;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using FCSlib;
-using EGCMD;
 using System.Linq;
 using unvell.ReoGrid;
+using System.Drawing;
 
-
-namespace WMS.TableGenerate
+namespace EGCMD
 {
-    public class TableGenerator
+    public class ExcelGenerator
     {
         class TablePosition
         {
@@ -36,8 +33,6 @@ namespace WMS.TableGenerate
         private Jint.Engine jsEngine = EGCMDJsEngine.GetJsEngine(); //JavaScript引擎
         private EGCMDTranslator egcmdTranslator = new EGCMDTranslator(); //EGCMD翻译器
 
-        private DataSet dataSource = null; //数据源
-
         private Worksheet patternTable = null; //模式表
         private CellState[,] stateMatrix = null; //状态矩阵
 
@@ -45,25 +40,25 @@ namespace WMS.TableGenerate
         private Dictionary<int,int> lengthLineResult = new Dictionary<int, int>(); //目标表各行已有元素的数量
         private Dictionary<int,int> lengthColumnResult = new Dictionary<int, int>(); //目标表各列已有元素的数量
 
-        public Worksheet PatternTable { get => patternTable; set => patternTable = value; }
-        public DataSet DataSource { get => dataSource; set => this.UpdateDataSource(value); }
-        public Worksheet ResultTable { get => resultTable; set => resultTable = value; }
+        public void SetPatternTable(Worksheet patternTable)
+        {
+            this.patternTable = patternTable;
+        }
 
-        public TableGenerator()
+        public ExcelGenerator()
         {
         }
 
-        public TableGenerator(Worksheet patternTable, DataSet dataSource = null):this()
+        public ExcelGenerator(Worksheet patternTable):this()
         {
-            this.PatternTable = patternTable;
-            if(dataSource != null) this.DataSource = dataSource;
+            this.patternTable = patternTable;
         }
 
-        public string TryGenerateTable(out Worksheet resultTable)
+        public string TryGenerate(out Worksheet resultTable)
         {
             try
             {
-                resultTable = this.GenerateTable();
+                resultTable = this.Generate();
                 return null;
             }catch(Exception e)
             {
@@ -72,9 +67,9 @@ namespace WMS.TableGenerate
             }
         }
 
-        public Worksheet GenerateTable()
+        public Worksheet Generate()
         {
-            if(this.PatternTable == null)
+            if(this.patternTable == null)
             {
                 throw new GenerateError("Pattern table not setted");
             }
@@ -83,10 +78,10 @@ namespace WMS.TableGenerate
             this.stateMatrix = new CellState[patternLines, patternColumns]; //初始化状态矩阵
 
             var workbook = new ReoGridControl();
-            this.ResultTable = workbook.Worksheets[0]; //初始化目标表
-            this.ResultTable.ColumnCount = this.PatternTable.ColumnCount;
-            this.ResultTable.RowCount = this.PatternTable.RowCount;
-            workbook.Worksheets.Remove(this.ResultTable);
+            this.resultTable = workbook.Worksheets[0]; //初始化目标表
+            this.resultTable.ColumnCount = this.patternTable.ColumnCount;
+            this.resultTable.RowCount = this.patternTable.RowCount;
+            workbook.Worksheets.Remove(this.resultTable);
             this.lengthColumnResult.Clear(); //目标表各行长度
             this.lengthLineResult.Clear(); //目标表各列长度
             for(int i = 0; i < patternLines; i++) //顺序解析模式表单元格
@@ -97,16 +92,12 @@ namespace WMS.TableGenerate
                 }
             }
 
-            return this.ResultTable; //返回目标表
+            return this.resultTable; //返回目标表
         }
 
-        private void UpdateDataSource(DataSet ds) //更新数据源（将DataSet转换为js对象）
+        public void AddData<T>(string name,T obj) //添加数据对象
         {
-            this.dataSource = ds;
-            foreach(var item in this.DataSetToDictionary(ds))
-            {
-                this.jsEngine.SetValue(item.Key, item.Value);
-            }
+            this.jsEngine.SetValue(name, obj);
         }
 
         private void ParseCell(int line,int column)
@@ -128,7 +119,7 @@ namespace WMS.TableGenerate
                     gotNextCell = true;
                     ResultMoveToNextCellByColumn(column);
                     //首先把样式赋值给resultCell
-                    ResultSetCurCellByColumn(column, PatternTable.GetCell(line, column));
+                    ResultSetCurCellByColumn(column, this.patternTable.GetCell(line, column));
                     var resultCell = ResultGetCurCellByColumn(column);
                     resultCell.Data = "";
                     if (resultCell.IsMergedCell)
@@ -175,7 +166,7 @@ namespace WMS.TableGenerate
                 return;
             }
 
-            List<EGCMDCommand> commandList = egcmdTranslator.Translate(curPatternCell.Data.ToString());
+            List<EGCMDCommand> commandList = egcmdTranslator.Compile(curPatternCell.Data.ToString());
             foreach (EGCMDCommand command in commandList)
             {
                 if (command is EGCMDCommand.WRITE)
@@ -287,7 +278,7 @@ namespace WMS.TableGenerate
                 this.lengthColumnResult.Add(column, 0);
             }
             this.lengthColumnResult[column] += step;
-            if(ResultTable.RowCount < this.lengthColumnResult[column])
+            if(this.resultTable.RowCount < this.lengthColumnResult[column])
             {
                 resultTable.RowCount *= 2;
             }
@@ -295,7 +286,7 @@ namespace WMS.TableGenerate
 
         private Cell ResultGetCurCellByColumn(int column)
         {
-            return this.ResultTable.Cells[this.lengthColumnResult[column] - 1, column];
+            return this.resultTable.Cells[this.lengthColumnResult[column] - 1, column];
         }
 
         private void ResultSetCurCellByColumn(int column, Cell cell)
@@ -313,7 +304,7 @@ namespace WMS.TableGenerate
             resultCurCell.TraceFormulaPrecedents = cell.TraceFormulaPrecedents;
             if (cell.IsMergedCell)
             {
-                this.ResultTable.MergeRange(resultCurCell.Row, resultCurCell.Column, cell.GetRowspan(), cell.GetColspan());
+                this.resultTable.MergeRange(resultCurCell.Row, resultCurCell.Column, cell.GetRowspan(), cell.GetColspan());
             }
             var cellBorderStyle = patternTable.GetRangeBorders(cell.Row, cell.Column, 1, 1, BorderPositions.All, false);
 
@@ -341,7 +332,7 @@ namespace WMS.TableGenerate
 
         private Cell PatternGetCell(int line,int column)
         {
-            var cell = this.PatternTable.GetCell(line, column);
+            var cell = this.patternTable.GetCell(line, column);
             if (cell == null)
             {
                 return null;

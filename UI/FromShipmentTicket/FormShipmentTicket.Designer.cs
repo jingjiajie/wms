@@ -30,6 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShipmentTicket));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
@@ -44,14 +49,10 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonGenerateJobTicket = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonToJobTicket = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panelPagerWidget = new System.Windows.Forms.Panel();
-            this.toolStripTop.SuspendLayout();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // reoGridControlMain
@@ -75,6 +76,55 @@
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.labelStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 815);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1818, 36);
+            this.statusStrip1.TabIndex = 10;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
+            this.toolStripStatusLabel1.Text = "状态：";
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(134, 31);
+            this.labelStatus.Text = "发货单管理";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 39);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1818, 776);
+            this.tableLayoutPanel1.TabIndex = 11;
+            // 
+            // panelPagerWidget
+            // 
+            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPagerWidget.Location = new System.Drawing.Point(3, 719);
+            this.panelPagerWidget.Name = "panelPagerWidget";
+            this.panelPagerWidget.Size = new System.Drawing.Size(1812, 54);
+            this.panelPagerWidget.TabIndex = 10;
+            // 
             // toolStripTop
             // 
             this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
@@ -88,6 +138,7 @@
             this.buttonSearch,
             this.toolStripSeparator3,
             this.buttonOpen,
+            this.buttonPreview,
             this.toolStripSeparator2,
             this.buttonAdd,
             this.buttonAlter,
@@ -206,54 +257,14 @@
             this.toolStripButtonToJobTicket.Text = "查看作业单";
             this.toolStripButtonToJobTicket.Click += new System.EventHandler(this.toolStripButtonToJobTicket_Click);
             // 
-            // statusStrip1
+            // buttonPreview
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 815);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1818, 36);
-            this.statusStrip1.TabIndex = 10;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
-            this.toolStripStatusLabel1.Text = "状态：";
-            // 
-            // labelStatus
-            // 
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(134, 31);
-            this.labelStatus.Text = "发货单管理";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 39);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1818, 776);
-            this.tableLayoutPanel1.TabIndex = 11;
-            // 
-            // panelPagerWidget
-            // 
-            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(3, 719);
-            this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(1812, 54);
-            this.panelPagerWidget.TabIndex = 10;
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(144, 36);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
             // FormShipmentTicket
             // 
@@ -267,11 +278,11 @@
             this.Name = "FormShipmentTicket";
             this.Text = "FormShipmentTicket";
             this.Load += new System.EventHandler(this.FormShipmentTicket_Load);
-            this.toolStripTop.ResumeLayout(false);
-            this.toolStripTop.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.toolStripTop.ResumeLayout(false);
+            this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -299,5 +310,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelPagerWidget;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }
