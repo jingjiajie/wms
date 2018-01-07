@@ -15,7 +15,9 @@ namespace WMS.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormExcelGenerate());
+            //Application.Run(new FormExcelGenerate());
+            Application.Run(new FormLogin ());
+
         }
     }
 }

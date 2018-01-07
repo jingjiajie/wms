@@ -25,6 +25,7 @@ namespace WMS.UI
         private Supplier supplier = null;
         private int contractst;
         private int check_history = 0;
+        private int userid = -1;
        
         private int projectID = -1;
         private int warehouseID = -1;
@@ -33,11 +34,12 @@ namespace WMS.UI
 
         private int id=-1;
        
-        public FormBaseSupplier(int authority,int supplierid)
+        public FormBaseSupplier(int authority,int supplierid,int userid)
         {
             InitializeComponent();
             this.authority = authority;
             this.id = supplierid;
+            this.userid = userid;
         } 
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
@@ -120,7 +122,7 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var a1  = new FormSupplierModify();
+            var a1  = new FormSupplierModify(-1,-1,this.userid );
             
             a1.SetMode(FormMode.ADD);
 
@@ -314,7 +316,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int supplierID  = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var a1= new FormSupplierModify(supplierID, this.contract_change);
+                var a1= new FormSupplierModify(supplierID, this.contract_change,this.userid );
                 a1.SetModifyFinishedCallback((AlterID) =>
                 {
                     this.pagerWidget.Search(false ,AlterID );

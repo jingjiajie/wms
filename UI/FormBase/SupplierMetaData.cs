@@ -18,6 +18,12 @@ namespace WMS.UI
             new KeyName(){Key="InvoiceDelayMonth",Name="开票延迟月",Visible = true, Editable = true},
             new KeyName(){Key="BalanceDelayMonth",Name="结算延迟月",Visible = true, Editable = true},
             new KeyName(){Key="FullName",Name="供货商全称",Visible = true, Editable = true},
+
+            new KeyName(){Key="NetArea",Name="净面积",Visible = true, Editable = true},
+            new KeyName(){Key="FixedStorageCost",Name="仓储固定费用",Visible = true, Editable = true},
+            new KeyName(){Key="ContractStorageArea",Name="合同面积",Visible = true, Editable = true},
+            
+
             new KeyName(){Key="TaxpayerNumber",Name="纳税人识别号",Visible = true, Editable = true},
             new KeyName(){Key="Address",Name="地址",Visible = true, Editable = true},
             new KeyName(){Key="Tel",Name="电话",Visible = true, Editable = true},
@@ -31,9 +37,9 @@ namespace WMS.UI
             new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = true, Editable = true},
             new KeyName(){Key="NewestSupplierID",Name="最新供应商信息ID",Visible = true   , Editable = true  },
             new KeyName(){Key="CreateUserID",Name="创建用户ID",Visible = false , Editable = false },
-            new KeyName(){Key="CreateTime",Name="创建时间",Visible = false , Editable = false },
+            new KeyName(){Key="CreateTime",Name="创建时间",Visible = true  , Editable = false },
             new KeyName(){Key="LastUpdateUserID",Name="最后修改用户ID",Visible = false , Editable = false },
-            new KeyName(){Key="LastUpdateTime",Name="最后修改时间",Visible = false , Editable = false },
+            new KeyName(){Key="LastUpdateTime",Name="最后修改时间",Visible = true  , Editable = false },
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
