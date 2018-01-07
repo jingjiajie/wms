@@ -472,7 +472,14 @@ namespace WMS.UI
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var form = new ComponentSingleBoxTranPackingInfoModify(this.userID,componenID);
-                form.SetMode(FormMode.ALTER );
+                if (check_history == 1)
+                {
+                    form.SetMode(FormMode.CHECK);
+                }
+                else
+                {
+                    form.SetMode(FormMode.ALTER);
+                }
                 form.SetModifyFinishedCallback((addedID) =>
                 {
                     this.pagerWidget.Search(false, addedID);
@@ -497,7 +504,14 @@ namespace WMS.UI
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var form = new ComponentOuterPackingSizeModify(this.userID,componenID);
-                form.SetMode(FormMode.ALTER);
+                if (check_history == 1)
+                {
+                    form.SetMode(FormMode.CHECK);
+                }
+                else
+                {
+                    form.SetMode(FormMode.ALTER);
+                }
                 form.SetModifyFinishedCallback((addedID) =>
                 {
                     this.pagerWidget.Search(false, addedID);
@@ -522,7 +536,15 @@ namespace WMS.UI
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var form = new ComponentShipmentInfoModify(this.userID,componenID);
-                form.SetMode(FormMode.ALTER);
+
+                if (check_history == 1)
+                {
+                    form.SetMode(FormMode.CHECK);
+                }
+                else
+                {
+                    form.SetMode(FormMode.ALTER);
+                }
                 form.SetModifyFinishedCallback((addedID) =>
                 {
                     this.pagerWidget.Search(false, addedID);

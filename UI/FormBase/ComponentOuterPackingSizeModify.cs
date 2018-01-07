@@ -56,6 +56,11 @@ namespace WMS.UI
                 }
 
             }
+            if (this.mode == FormMode.CHECK)
+            {
+                this.buttonOK.Visible = false;
+
+            }
         }
        
 
@@ -97,14 +102,16 @@ namespace WMS.UI
 
                 if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
                 {
-                    componen.IsHistory = 1;
-                    //componen.NewestComponentID = this.componenID;
-
                     //新建零件保留历史信息
                     this.wmsEntities.Component.Add(componen);
-                    wmsEntities.SaveChanges();
+
                     try
                     {
+                        componen.ID = -1;
+                        componen.IsHistory = 1;
+                        componen.NewestComponentID = this.componenID;
+                        componen.LastUpdateUserID = this.userID;
+                        componen.LastUpdateTime = DateTime.Now;
                         wmsEntities.SaveChanges();
                     }
                     catch
