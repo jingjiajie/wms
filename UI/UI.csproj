@@ -329,11 +329,11 @@
     <Compile Include="FormStockInfo\FormStockInfo.Designer.cs">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormExcelGenerate.cs">
+    <Compile Include="StandardFormPreviewExcel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormExcelGenerate.Designer.cs">
-      <DependentUpon>FormExcelGenerate.cs</DependentUpon>
+    <Compile Include="StandardFormPreviewExcel.Designer.cs">
+      <DependentUpon>StandardFormPreviewExcel.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain\FormMain.cs">
       <SubType>Form</SubType>
@@ -581,8 +581,8 @@
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormExcelGenerate.resx">
-      <DependentUpon>FormExcelGenerate.cs</DependentUpon>
+    <EmbeddedResource Include="StandardFormPreviewExcel.resx">
+      <DependentUpon>StandardFormPreviewExcel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -624,6 +624,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicket.resx">
       <DependentUpon>FormShipmentTicket.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FromShipmentTicket\FormShipmentTicketItem.resx">
       <DependentUpon>FormShipmentTicketItem.cs</DependentUpon>
@@ -667,15 +668,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\patternShipmentTicket.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{3bd69308-acc7-43a0-ac20-f95673d02f89}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TableGenerator\TableGenerator.csproj">
-      <Project>{3e282656-7645-442d-94b1-fce2214e2c08}</Project>
-      <Name>TableGenerator</Name>
+    <ProjectReference Include="..\EGCMDTranslator\EGCMD.csproj">
+      <Project>{dc602b46-dc15-42b2-9136-19ed6876ab1f}</Project>
+      <Name>EGCMD</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

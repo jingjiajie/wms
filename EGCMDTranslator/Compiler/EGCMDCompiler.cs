@@ -9,7 +9,7 @@ namespace EGCMD
 {
     public class EGCMDTranslator
     {
-        public List<EGCMDCommand> Translate(string command)
+        public List<EGCMDCommand> Compile(string command)
         {
             var antlrInputStream = new AntlrInputStream(command);
             var lexer = new EGCMDLexer(antlrInputStream);
@@ -18,7 +18,7 @@ namespace EGCMD
             var tree = parser.stat();
             var walker = new ParseTreeWalker();
             List<EGCMDCommand> commandList = new List<EGCMDCommand>();
-            walker.Walk(new EGCMDTranslateListener(commandList), tree);
+            walker.Walk(new EGCMDCompileListener(commandList), tree);
             return commandList;
         }
     }

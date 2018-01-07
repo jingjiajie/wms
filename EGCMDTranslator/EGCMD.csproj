@@ -5,13 +5,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DC602B46-DC15-42B2-9136-19ED6876AB1F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>EGCMD</RootNamespace>
     <AssemblyName>EGCMD</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,28 +33,44 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr4.Runtime.Standard">
       <HintPath>..\Antlr4.Runtime.Standard.dll</HintPath>
     </Reference>
+    <Reference Include="Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Jint.2.11.58\lib\net40\Jint.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\unvell.ReoGrid.dll.2.1.0.0\lib\20\unvell.ReoGrid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EGCMDBaseListener.cs" />
-    <Compile Include="EGCMDCommand.cs" />
-    <Compile Include="EGCMDLexer.cs" />
-    <Compile Include="EGCMDListener.cs" />
-    <Compile Include="EGCMDParser.cs" />
-    <Compile Include="EGCMDTranslateListener.cs" />
-    <Compile Include="EGCMDTranslator.cs" />
+    <Compile Include="Compiler\EGCMDBaseListener.cs" />
+    <Compile Include="Compiler\EGCMDCommand.cs" />
+    <Compile Include="Compiler\EGCMDLexer.cs" />
+    <Compile Include="Compiler\EGCMDListener.cs" />
+    <Compile Include="Compiler\EGCMDParser.cs" />
+    <Compile Include="Compiler\EGCMDCompileListener.cs" />
+    <Compile Include="Compiler\EGCMDCompiler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runner\EGCMDJsEngine.cs" />
+    <Compile Include="Runner\Exceptions.cs" />
+    <Compile Include="Runner\ExcelGenerator.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
