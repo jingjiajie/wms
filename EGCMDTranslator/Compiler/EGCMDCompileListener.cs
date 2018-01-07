@@ -6,12 +6,12 @@ using Antlr4.Runtime.Misc;
 
 namespace EGCMD
 {
-    class EGCMDTranslateListener : EGCMDBaseListener
+    class EGCMDCompileListener : EGCMDBaseListener
     {
         List<EGCMDCommand> commandList;
         public List<EGCMDCommand> CommandList { get => commandList; set => commandList = value; }
 
-        public EGCMDTranslateListener(List<EGCMDCommand> commandList)
+        public EGCMDCompileListener(List<EGCMDCommand> commandList)
         {
             this.CommandList = commandList;
         }

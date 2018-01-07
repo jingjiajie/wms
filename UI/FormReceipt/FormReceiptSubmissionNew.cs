@@ -212,8 +212,9 @@ namespace WMS.UI.FormReceipt
             for (int i = 0; i < this.countRow; i++)
             {
                 int id;
-                string strSubmissionAmount = worksheet[i, this.checkBoxColumn].ToString();
-                
+                string strSubmissionAmount = worksheet[i, this.checkBoxColumn] == null ? null : worksheet[i, this.checkBoxColumn].ToString();
+
+
                 if (strSubmissionAmount == null)
                 {
                     strSubmissionAmount = "0";

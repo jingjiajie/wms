@@ -56,7 +56,6 @@ namespace WMS.UI
             {
                 e.IsCancelled = !(editableColumns.Contains(e.Cell.Column) && e.Cell.Row < validRows);
             };
-            worksheet.ColumnHeaders[2].Style.BackColor = Color.AliceBlue;
 
             Utilities.CreateEditPanel(this.tableLayoutEditPanel, JobTicketViewMetaData.KeyNames);
             ShipmentTicket shipmentTicket = null;
@@ -103,8 +102,8 @@ namespace WMS.UI
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.DeleteRangeData(RangePosition.EntireRange);
             worksheet.Rows = (shipmentTicketItemViews.Length < 10 ? 10 : shipmentTicketItemViews.Length);
-            //给第二列加上边框
-            worksheet.SetRangeBorders(0, 2, worksheet.Rows, 1, BorderPositions.All, RangeBorderStyle.SilverSolid);
+            //给第二列上颜色，加上边框
+            worksheet.SetRangeBorders(0, 2, validRows, 1, BorderPositions.All, RangeBorderStyle.SilverSolid);
 
             if (shipmentTicketItemViews.Length == 0)
             {
@@ -122,6 +121,8 @@ namespace WMS.UI
                 {
                     worksheet[i, 1] = new CheckBoxCell(false); //显示复选框
                 }
+                //上颜色
+                worksheet.Cells[i, 2].Style.BackColor = Color.AliceBlue;
                 //计划翻包数量
                 worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
                 worksheet[i, 2] = cur.ShipmentAmount - cur.ScheduledJobAmount; //计划翻包数量默认等于发货数量-已经计划翻包过的数量

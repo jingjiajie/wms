@@ -19,6 +19,7 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
         int userID = -1;
+        private PagerWidget<StockInfoCheckTicketView > pagerWidget = null;
         public FormStockInfoCheckTicket(int projectID, int warehouseID,int userID)
         {
             this.projectID = projectID;
@@ -30,7 +31,9 @@ namespace WMS.UI
         private void FormStockInfoCheckTicket_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.Search();
+            
+            
+            this.pagerWidget.Search();
         }
         private void InitComponents()
         {
@@ -40,21 +43,15 @@ namespace WMS.UI
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
+            //初始化查询框
             this.comboBoxSearchCondition.Items.Add("无");
             this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
             this.comboBoxSearchCondition.SelectedIndex = 0;
 
-
-            //初始化表格
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTicketViewMetaDataDisplay.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicketViewMetaDataDisplay.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicketViewMetaDataDisplay.KeyNames[i].Visible;
-            }
-            worksheet.Columns = StockInfoCheckTicketViewMetaDataDisplay.KeyNames.Length; //限制表的长度
+            //初始化分页控件
+            this.pagerWidget = new PagerWidget<StockInfoCheckTicketView >(this.reoGridControlMain , StockInfoCheckTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.paperpanel.Controls.Add(pagerWidget);
+            pagerWidget.Show();
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)
@@ -64,72 +61,14 @@ namespace WMS.UI
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            this.Search();
-        }
-
-        private void Search()
-        {
-            string key = null;
-            string value = null;
-
             if (this.comboBoxSearchCondition.SelectedIndex != 0)
             {
-                key = (from kn in StockInfoCheckTicketViewMetaDataDisplay.KeyNames
-                       where kn.Name == this.comboBoxSearchCondition.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.textBoxSearchValue.Text;
+                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
-
-            this.labelStatus.Text = "正在搜索中...";
-            //var worksheet = this.reoGridControlMain.Worksheets[0];
-            //worksheet[0, 0] = "加载中...";
-            new Thread(new ThreadStart(() =>
-            {
-                StockInfoCheckTicketView[] stockCheckViews = null;
-                var wmsEntities = new WMSEntities();
-                string sql = "SELECT * FROM StockInfoCheckTicketView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-           
-                if (this.projectID != -1)
-                {
-                    sql += "AND ProjectID = @projectID ";
-                    parameters.Add(new SqlParameter("projectID", this.projectID));
-                }
-                if (warehouseID != -1)
-                {
-                    sql += "AND WarehouseID = @warehouseID ";
-                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
-                }
-                if (key != null && value != null) //查询条件不为null则增加查询条件
-                {
-                    sql += "AND " + key + " = @value ";
-                    parameters.Add(new SqlParameter("value", value));
-                }
-                sql += " ORDER BY ID DESC"; //倒序排序
-                stockCheckViews = wmsEntities.Database.SqlQuery<StockInfoCheckTicketView>(sql, parameters.ToArray()).ToArray();
-
-
-                this.reoGridControlMain.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    var worksheet = this.reoGridControlMain.Worksheets[0];
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (stockCheckViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < stockCheckViews.Length; i++)
-                    {
-                        StockInfoCheckTicketView curStockInfoCheckTicketView = stockCheckViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoCheckTicketView, (from kn in StockInfoCheckTicketViewMetaDataDisplay.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
-                    }
-                }));
-            })).Start();
+            this.pagerWidget.Search();
         }
+
+        
 
        
 
@@ -137,7 +76,11 @@ namespace WMS.UI
         {
             if (e.KeyChar == 13)
             {
-                this.Search();
+                if (this.comboBoxSearchCondition.SelectedIndex != 0)
+                {
+                    this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+                }
+                this.pagerWidget.Search();
             }
         }
 
@@ -147,7 +90,7 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Text = "";
                 this.textBoxSearchValue.Enabled = false;
-                this.Search();
+               
             }
             else
             {
@@ -162,7 +105,8 @@ namespace WMS.UI
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
-                this.Search();
+               
+                this.pagerWidget.Search();
                 //var worksheet = this.reoGridControlMain.Worksheets[0];
                 //var range = worksheet.SelectionRange;
                 //worksheet.SelectionRange = new RangePosition("A1:A1");
@@ -199,7 +143,7 @@ namespace WMS.UI
                 a1 .SetMode(FormMode.ALTER);
                 a1.SetModifyFinishedCallback(() =>
                 {
-                    this.Search();
+                    this.pagerWidget.Search();
                 });
                 a1.Show();
             }
@@ -245,13 +189,16 @@ namespace WMS.UI
                     this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicket WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
                 }
                 this.wmsEntities.SaveChanges();
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(() =>
+                {
+                    this.pagerWidget.Search();
+                }));
             })).Start();
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            this.Search();
+            this.pagerWidget.Search();
         }
 
         private void button_additeam_Click(object sender, EventArgs e)
