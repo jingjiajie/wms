@@ -19,6 +19,7 @@ namespace WMS.UI
         private int authority;
         private int authority_self = (int)Authority.BASE_COMPONENT;
         int supplierID = -1;
+        private int check_history = 0;
         int projectID = -1;
         int warehouseID = -1;
         int userID = -1;
@@ -97,21 +98,30 @@ namespace WMS.UI
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
+
+            if (this.buttonSearch.Text == "全部信息")
+            {
+                this.buttonSearch.Text = "查询";
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+            }
+
             this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("IsHistory", "0");
+
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
             }
             if ((this.authority & authority_self) != authority_self)
             {
                 this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
-
+                this.check_history = 0;
                 this.pagerWidget.Search();
             }
             if ((this.authority & authority_self) == authority_self)
             {
-
+                this.check_history = 0;
                 this.pagerWidget.Search();
             }
         }
@@ -119,6 +129,17 @@ namespace WMS.UI
 
         private void buttonHistorySearch_Click(object sender, EventArgs e)
         {
+            if (check_history == 1)
+            {
+                MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.toolStripButtonAdd.Enabled = false;
+            this.toolStripButtonAlter.Enabled = false;
+            this.buttonSearch.Text = "全部信息";
+
+            this.pagerWidget.ClearCondition();
+
             var worksheet = this.reoGridControlComponen.Worksheets[0];
             try
             {
@@ -127,33 +148,36 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-
-                this.pagerWidget.ClearCondition();
-
-                if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-                {
-                    //this.pagerWidget.AddCondition("最新零件信息ID", Convert.ToString(componenID));
-                    this.pagerWidget.AddCondition("IsHistory", "1");
-                    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-                }
-                if ((this.authority & authority_self) != authority_self)
-                {
-                    this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
-                    this.pagerWidget.AddCondition("IsHistory", "1");
-                    this.pagerWidget.Search();
-                }
-                if ((this.authority & authority_self) == authority_self)
-                {
-                    this.pagerWidget.AddCondition("IsHistory", "1");
-                    this.pagerWidget.Search();
-                }
-
+                this.pagerWidget.AddCondition("NewestComponentID", Convert.ToString(componenID));
             }
+
             catch
             {
                 MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            this.pagerWidget.AddCondition("IsHistory", "1");
+
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+            }
+            if ((this.authority & authority_self) != authority_self)
+            {
+                this.pagerWidget.AddCondition("SupplierID", Convert.ToString(supplierID));
+                this.check_history = 1;
+                this.pagerWidget.Search();
+            }
+            if ((this.authority & authority_self) == authority_self)
+            {
+                this.check_history = 1;
+                this.pagerWidget.Search();
+            }
+
+
+
 
         }
 
@@ -349,18 +373,55 @@ namespace WMS.UI
 
                 new Thread(new ThreadStart(() =>
                 {
-                try
-                {
-                    foreach (int id in deleteIDs)
+                    try
                     {
-                        this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
+                        foreach (int id in deleteIDs)
+                        {
+
+                            var componen_historyid = (from kn in wmsEntities.Component
+                                                      where kn.NewestComponentID == id
+                                                      select kn.ID).ToArray();
+                            if (componen_historyid.Length > 0)
+                            {
+                                try
+                                {
+                                    foreach (int NewestComponentid in componen_historyid)
+                                    {
+                                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componentID", new SqlParameter("componentID", NewestComponentid));
+
+
+                                    }
+                                    wmsEntities.SaveChanges();
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+
+                        }
+
                     }
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                    catch
+                    {
+                        MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    try
+                    {
+                        foreach (int id in deleteIDs)
+                        {
+                            this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                     this.wmsEntities.SaveChanges();
                     this.Invoke(new Action(() =>
                     {
