@@ -389,7 +389,6 @@
     <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaDataDisplay.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDateDisplay.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDate.cs" />
