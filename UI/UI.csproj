@@ -311,6 +311,12 @@
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.Designer.cs">
       <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketModifyOnly.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -579,6 +585,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.resx">
+      <DependentUpon>FormStockInfoCheckTicketModifyOnly.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StandardFormPreviewExcel.resx">
       <DependentUpon>StandardFormPreviewExcel.cs</DependentUpon>
