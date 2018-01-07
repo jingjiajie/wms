@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockInfoCheckTicket));
-            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
@@ -44,31 +43,13 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
+            this.paperpanel = new System.Windows.Forms.Panel();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // reoGridControlMain
-            // 
-            this.reoGridControlMain.BackColor = System.Drawing.Color.White;
-            this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 28);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.reoGridControlMain.Name = "reoGridControlMain";
-            this.reoGridControlMain.Readonly = true;
-            this.reoGridControlMain.RowHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Script = null;
-            this.reoGridControlMain.SheetTabContextMenuStrip = null;
-            this.reoGridControlMain.SheetTabNewButtonVisible = true;
-            this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 80;
-            this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1099, 441);
-            this.reoGridControlMain.TabIndex = 3;
-            this.reoGridControlMain.Text = "reoGridControl1";
-            this.reoGridControlMain.Click += new System.EventHandler(this.reoGridControlMain_Click);
             // 
             // toolStripTop
             // 
@@ -199,13 +180,55 @@
             this.labelStatus.Size = new System.Drawing.Size(69, 20);
             this.labelStatus.Text = "库存管理";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.paperpanel, 0, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 31);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1099, 410);
+            this.tableLayoutPanel1.TabIndex = 5;
+            // 
+            // reoGridControlMain
+            // 
+            this.reoGridControlMain.BackColor = System.Drawing.Color.White;
+            this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Location = new System.Drawing.Point(3, 2);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reoGridControlMain.Name = "reoGridControlMain";
+            this.reoGridControlMain.Readonly = true;
+            this.reoGridControlMain.RowHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Script = null;
+            this.reoGridControlMain.SheetTabContextMenuStrip = null;
+            this.reoGridControlMain.SheetTabNewButtonVisible = true;
+            this.reoGridControlMain.SheetTabVisible = true;
+            this.reoGridControlMain.SheetTabWidth = 80;
+            this.reoGridControlMain.ShowScrollEndSpacing = true;
+            this.reoGridControlMain.Size = new System.Drawing.Size(1093, 365);
+            this.reoGridControlMain.TabIndex = 4;
+            this.reoGridControlMain.Text = "reoGridControl1";
+            // 
+            // paperpanel
+            // 
+            this.paperpanel.Location = new System.Drawing.Point(3, 372);
+            this.paperpanel.Name = "paperpanel";
+            this.paperpanel.Size = new System.Drawing.Size(1093, 35);
+            this.paperpanel.TabIndex = 5;
+            // 
             // FormStockInfoCheckTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1099, 469);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormStockInfoCheckTicket";
@@ -215,14 +238,13 @@
             this.toolStripTop.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripLabel labelSelect;
         private System.Windows.Forms.ToolStripComboBox comboBoxSearchCondition;
@@ -237,5 +259,8 @@
         private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.ToolStripButton button_additeam;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private unvell.ReoGrid.ReoGridControl reoGridControlMain;
+        private System.Windows.Forms.Panel paperpanel;
     }
 }
