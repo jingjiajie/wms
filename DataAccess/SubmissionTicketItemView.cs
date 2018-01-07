@@ -56,5 +56,6 @@ namespace WMS.DataAccess
         public Nullable<int> ConfirmPersonID { get; set; }
         public string JobPersonName { get; set; }
         public string ConfirmPersonName { get; set; }
+        public Nullable<decimal> RejectAmount { get; set; }
     }
 }
