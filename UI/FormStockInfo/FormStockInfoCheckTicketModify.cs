@@ -40,6 +40,7 @@ namespace WMS.UI
         private void FormStockCheckModify_Load(object sender, EventArgs e)
         {
 
+            
             if (this.mode == FormMode.ALTER && this.stockInfoCheckID == -1)
             {
                 throw new Exception("未设置源库存信息");
@@ -48,7 +49,7 @@ namespace WMS.UI
             {
                 this.reoGridControlMain .Visible = false;
                 this.buttonAdd.Visible = false;
-
+                 
                 this.buttonDelete.Visible = false;
                 this.buttonfinish.Visible = false;
                 this.Size = new Size(500, 300);
@@ -108,6 +109,8 @@ namespace WMS.UI
             //    Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
             //}
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
 
             this.InitComponents();
             this.Search();
@@ -132,6 +135,42 @@ namespace WMS.UI
             worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
            
         }
+
+
+        private void textBoxComponentName_Click(object sender, EventArgs e)
+
+
+        {
+            var FormSelectStockInfo = new FormSelectStockInfo();
+            FormSelectStockInfo.SetSelectFinishCallback((selectedID) =>
+            {
+                
+                var supplierName = (from s in wmsEntities.SupplierView
+                                    where s.ID == selectedID
+                                    select s).FirstOrDefault();
+                if (supplierName.Name == null)
+                {
+                    MessageBox.Show("选择供应商失败，供应商不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //this.supplierID = selectedID;
+                selectedID = 1;
+                this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName.Name;
+                this.Controls.Find("textBoxSupplierNumber", true)[0].Text = supplierName.Number;
+            });
+            FormSelectStockInfo.Show();
+
+
+
+
+
+
+        }
+
+
+
+
+
 
 
 

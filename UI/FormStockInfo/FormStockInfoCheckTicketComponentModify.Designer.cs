@@ -199,7 +199,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(650, 76);
             this.tableLayoutPanel2.TabIndex = 10;
-            this.tableLayoutPanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel2_Paint);
+      
             // 
             // FormStockInfoCheckTicketComponentModify
             // 
