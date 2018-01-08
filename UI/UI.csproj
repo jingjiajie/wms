@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
     <Compile Include="FormBase\BasePersonMetaData.cs" />
+    <Compile Include="FormBase\BasePackageUnitMetaData.cs" />
     <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
       <SubType>Form</SubType>
     </Compile>

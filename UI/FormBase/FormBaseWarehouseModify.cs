@@ -13,51 +13,87 @@ namespace WMS.UI.FormBase
 {
     public partial class FormBaseWarehouseModify : Form
     {
-        private int warehouseID = -1;
+        private int setitem = -1;
+        private int modifyID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormBaseWarehouseModify(int warehouseID = -1)
+        public FormBaseWarehouseModify(int setitem, int modifyID = -1)
         {
             InitializeComponent();
-            this.warehouseID = warehouseID;
+            this.modifyID = modifyID;
+            this.setitem = setitem;
         }
 
         private void FormBaseWarehouseModify_Load(object sender, EventArgs e)
         {
-            if (this.mode == FormMode.ALTER && this.warehouseID == -1)
+            if (this.mode == FormMode.ALTER && this.modifyID == -1)
             {
                 throw new Exception("未设置源库存信息");
             }
             this.tableLayoutPanel1.Controls.Clear();
-            for (int i = 1; i < BaseWarehouseMetaData.KeyNames.Length; i++)
+            if (this.setitem == 0)
             {
-                KeyName curKeyName = BaseWarehouseMetaData.KeyNames[i];
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanel1.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                this.tableLayoutPanel1.Controls.Add(textBox);
-            }
-            if (this.mode == FormMode.ALTER)
-            {
-                try
+                for (int i = 1; i < BaseWarehouseMetaData.KeyNames.Length; i++)
                 {
+                    KeyName curKeyName = BaseWarehouseMetaData.KeyNames[i];
+                    Label label = new Label();
+                    label.Text = curKeyName.Name;
+                    this.tableLayoutPanel1.Controls.Add(label);
 
-                    Warehouse Warehouse = (from s in this.wmsEntities.Warehouse
-                                           where s.ID == this.warehouseID
-                                           select s).Single();
-                    Utilities.CopyPropertiesToTextBoxes(Warehouse, this);
+                    TextBox textBox = new TextBox();
+                    textBox.Name = "textBox" + curKeyName.Key;
+                    this.tableLayoutPanel1.Controls.Add(textBox);
                 }
-                catch (Exception)
+                if (this.mode == FormMode.ALTER)
                 {
-                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                    return;
+                    try
+                    {
+
+                        Warehouse Warehouse = (from s in this.wmsEntities.Warehouse
+                                               where s.ID == this.modifyID
+                                               select s).Single();
+                        Utilities.CopyPropertiesToTextBoxes(Warehouse, this);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        return;
+                    }
+                }
+            }
+            if (setitem == 1)
+            {
+                for (int i = 1; i < BasePackageUnitMetaData.KeyNames.Length; i++)
+                {
+                    KeyName curKeyName = BasePackageUnitMetaData.KeyNames[i];
+                    Label label = new Label();
+                    label.Text = curKeyName.Name;
+                    this.tableLayoutPanel1.Controls.Add(label);
+
+                    TextBox textBox = new TextBox();
+                    textBox.Name = "textBox" + curKeyName.Key;
+                    this.tableLayoutPanel1.Controls.Add(textBox);
+                }
+                if (this.mode == FormMode.ALTER)
+                {
+                    try
+                    {
+                        PackageUnit PackageUnit = (from s in this.wmsEntities.PackageUnit
+                                           where s.ID == this.modifyID
+                                           select s).Single();
+                        Utilities.CopyPropertiesToTextBoxes(PackageUnit, this);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        return;
+                    }
+
                 }
             }
         }
@@ -75,17 +111,35 @@ namespace WMS.UI.FormBase
         public void SetMode(FormMode mode)
         {
             this.mode = mode;
-            if (mode == FormMode.ALTER)
+            if (setitem == 0)
             {
-                this.Text = "修改仓库信息";
-                this.buttonModify.Text = "修改仓库信息";
-                this.groupBox1.Text = "修改仓库信息";
+                if (mode == FormMode.ALTER)
+                {
+                    this.Text = "修改仓库信息";
+                    this.buttonModify.Text = "修改仓库信息";
+                    this.groupBoxMain.Text = "修改仓库信息";
+                }
+                else if (mode == FormMode.ADD)
+                {
+                    this.Text = "添加仓库信息";
+                    this.buttonModify.Text = "添加仓库信息";
+                    this.groupBoxMain.Text = "添加仓库信息";
+                }
             }
-            else if (mode == FormMode.ADD)
+            if (setitem == 1)
             {
-                this.Text = "添加仓库信息";
-                this.buttonModify.Text = "添加仓库信息";
-                this.groupBox1.Text = "添加仓库信息";
+                if (mode == FormMode.ALTER)
+                {
+                    this.Text = "修改包装信息信息";
+                    this.buttonModify.Text = "修改包装信息信息";
+                    this.groupBoxMain.Text = "修改包装信息信息";
+                }
+                else if (mode == FormMode.ADD)
+                {
+                    this.Text = "添加包装信息信息";
+                    this.buttonModify.Text = "添加包装信息信息";
+                    this.groupBoxMain.Text = "添加包装信息信息";
+                }
             }
         }
 
@@ -94,74 +148,146 @@ namespace WMS.UI.FormBase
             var textBoxName = this.Controls.Find("textBoxName", true)[0];
             if (textBoxName.Text == string.Empty)
             {
-                MessageBox.Show("仓库名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Warehouse warehouse = null;
+            if (setitem == 0)
+            {
+                Warehouse warehouse = null;
 
-            //若修改，则查询原对象。若添加，则新建对象。
-            if (this.mode == FormMode.ALTER)
-            {
-                try
-                {
-                    warehouse = (from s in this.wmsEntities.Warehouse
-                                 where s.ID == this.warehouseID
-                                 select s).Single();
-                }
-                catch
-                {
-                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (warehouse == null)
-                {
-                    MessageBox.Show("项目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                
-            }
-            else if (mode == FormMode.ADD)
-            {
-                warehouse = new Warehouse();
-                this.wmsEntities.Warehouse.Add(warehouse);
-            }
-            //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, warehouse, BaseWarehouseMetaData.KeyNames, out string errorMessage) == false)
-            {
-                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-         try
-            {
-                wmsEntities.SaveChanges();
-            }
-            catch (Exception)
-            {
+                //若修改，则查询原对象。若添加，则新建对象。
                 if (this.mode == FormMode.ALTER)
                 {
-                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    try
+                    {
+                        warehouse = (from s in this.wmsEntities.Warehouse
+                                     where s.ID == this.modifyID
+                                     select s).Single();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (warehouse == null)
+                    {
+                        MessageBox.Show("仓库不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
                 }
                 else if (mode == FormMode.ADD)
                 {
-                    MessageBox.Show("添加失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    warehouse = new Warehouse();
+                    this.wmsEntities.Warehouse.Add(warehouse);
+                }
+                //开始数据库操作
+                if (Utilities.CopyTextBoxTextsToProperties(this, warehouse, BaseWarehouseMetaData.KeyNames, out string errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
-            }
-            //调用回调函数
+                try
+                {
+                    wmsEntities.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    if (this.mode == FormMode.ALTER)
+                    {
+                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    else if (mode == FormMode.ADD)
+                    {
+                        MessageBox.Show("添加失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-            if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
-            {
-                this.modifyFinishedCallback(warehouse.ID);
-                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                }
+                //调用回调函数
+
+                if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
+                {
+                    this.modifyFinishedCallback(warehouse.ID);
+                    MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+                {
+                    this.addFinishedCallback(warehouse.ID);
+                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+
             }
-            else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+            if (setitem == 1)
             {
-                this.addFinishedCallback(warehouse.ID);
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Close();
+                PackageUnit packageUnit = null;
+
+                //若修改，则查询原对象。若添加，则新建对象。
+                if (this.mode == FormMode.ALTER)
+                {
+                    try
+                    {
+                        packageUnit = (from s in this.wmsEntities.PackageUnit
+                                   where s.ID == this.modifyID
+                                   select s).Single();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (packageUnit == null)
+                    {
+                        MessageBox.Show("包装信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                }
+                else if (mode == FormMode.ADD)
+                {
+                    packageUnit = new PackageUnit();
+                    this.wmsEntities.PackageUnit.Add(packageUnit);
+                }
+                //开始数据库操作
+                if (Utilities.CopyTextBoxTextsToProperties(this, packageUnit, BasePackageUnitMetaData.KeyNames, out string errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                try
+                {
+                    wmsEntities.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    if (this.mode == FormMode.ALTER)
+                    {
+                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    else if (mode == FormMode.ADD)
+                    {
+                        MessageBox.Show("添加失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                }
+                //调用回调函数
+                if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
+                {
+                    this.modifyFinishedCallback(packageUnit.ID);
+                    MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+                {
+                    this.addFinishedCallback(packageUnit.ID);
+                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
             }
         }
 

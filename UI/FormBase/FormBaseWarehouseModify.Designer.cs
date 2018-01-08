@@ -28,7 +28,7 @@ namespace WMS.UI.FormBase
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxMain = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,26 +37,26 @@ namespace WMS.UI.FormBase
             this.textBoxWarehouseID = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonModify = new System.Windows.Forms.Button();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxMain.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // groupBoxMain
             // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.groupBox1.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.groupBox1.Size = new System.Drawing.Size(482, 203);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "ÐÞ¸Ä²Ö¿âÐÅÏ¢";
+            this.groupBoxMain.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBoxMain.Controls.Add(this.tableLayoutPanel2);
+            this.groupBoxMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBoxMain.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.groupBoxMain.Location = new System.Drawing.Point(0, 0);
+            this.groupBoxMain.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBoxMain.Name = "groupBoxMain";
+            this.groupBoxMain.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.groupBoxMain.Size = new System.Drawing.Size(482, 203);
+            this.groupBoxMain.TabIndex = 2;
+            this.groupBoxMain.TabStop = false;
+            this.groupBoxMain.Text = "ÐÞ¸Ä²Ö¿âÐÅÏ¢";
             // 
             // tableLayoutPanel2
             // 
@@ -66,12 +66,12 @@ namespace WMS.UI.FormBase
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 20);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 24);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.61263F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70.38737F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(526, 131);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(472, 173);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
             // tableLayoutPanel1
@@ -93,8 +93,8 @@ namespace WMS.UI.FormBase
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(520, 30);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 39);
             this.tableLayoutPanel1.TabIndex = 30;
             // 
             // label1
@@ -106,7 +106,7 @@ namespace WMS.UI.FormBase
             this.label1.Location = new System.Drawing.Point(5, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 30);
+            this.label1.Size = new System.Drawing.Size(82, 39);
             this.label1.TabIndex = 0;
             this.label1.Text = "²Ö¿âÃû³Æ";
             // 
@@ -117,7 +117,7 @@ namespace WMS.UI.FormBase
             this.textBoxName.Location = new System.Drawing.Point(97, 6);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(148, 23);
+            this.textBoxName.Size = new System.Drawing.Size(129, 25);
             this.textBoxName.TabIndex = 1;
             // 
             // label2
@@ -128,7 +128,7 @@ namespace WMS.UI.FormBase
             this.label2.Location = new System.Drawing.Point(236, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(96, 30);
+            this.label2.Size = new System.Drawing.Size(82, 39);
             this.label2.TabIndex = 2;
             this.label2.Text = "²Ö¿âID";
             // 
@@ -139,7 +139,7 @@ namespace WMS.UI.FormBase
             this.textBoxWarehouseID.Location = new System.Drawing.Point(328, 6);
             this.textBoxWarehouseID.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.textBoxWarehouseID.Name = "textBoxWarehouseID";
-            this.textBoxWarehouseID.Size = new System.Drawing.Size(148, 23);
+            this.textBoxWarehouseID.Size = new System.Drawing.Size(131, 25);
             this.textBoxWarehouseID.TabIndex = 2;
             // 
             // tableLayoutPanel3
@@ -151,14 +151,14 @@ namespace WMS.UI.FormBase
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.29415F));
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 42);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 55);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 73F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(520, 85);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(466, 114);
             this.tableLayoutPanel3.TabIndex = 31;
             // 
             // buttonModify
@@ -170,10 +170,10 @@ namespace WMS.UI.FormBase
             this.buttonModify.FlatAppearance.BorderSize = 0;
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModify.Font = new System.Drawing.Font("ºÚÌå", 10F);
-            this.buttonModify.Location = new System.Drawing.Point(155, 13);
+            this.buttonModify.Location = new System.Drawing.Point(121, 24);
             this.buttonModify.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(210, 61);
+            this.buttonModify.Size = new System.Drawing.Size(212, 65);
             this.buttonModify.TabIndex = 30;
             this.buttonModify.Text = "ÐÞ¸Ä²Ö¿âÐÅÏ¢";
             this.buttonModify.UseVisualStyleBackColor = true;
@@ -184,10 +184,10 @@ namespace WMS.UI.FormBase
             // 
             // FormBaseWarehouseModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 203);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBoxMain);
             this.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
@@ -197,7 +197,7 @@ namespace WMS.UI.FormBase
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ÐÞ¸Ä²Ö¿âÐÅÏ¢";
             this.Load += new System.EventHandler(this.FormBaseWarehouseModify_Load);
-            this.groupBox1.ResumeLayout(false);
+            this.groupBoxMain.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -208,7 +208,7 @@ namespace WMS.UI.FormBase
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxMain;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
