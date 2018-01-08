@@ -145,6 +145,7 @@ namespace WMS.UI
                 MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             this.buttonCheck.Enabled = false;
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
@@ -157,7 +158,11 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
+                    
+
                     throw new Exception();
+                    
+
                 }
                 int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 this.pagerWidget.AddCondition("NewestSupplierID", Convert.ToString(supplierID));
@@ -165,7 +170,11 @@ namespace WMS.UI
             }
             catch
             {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.toolStripButton1.Text = "查询";
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.buttonCheck.Enabled = true;
                 return;
             }      
             
