@@ -145,6 +145,7 @@ namespace WMS.UI
                 MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             this.buttonCheck.Enabled = false;
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
@@ -157,7 +158,11 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
+                    
+
                     throw new Exception();
+                    
+
                 }
                 int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 this.pagerWidget.AddCondition("NewestSupplierID", Convert.ToString(supplierID));
@@ -165,7 +170,11 @@ namespace WMS.UI
             }
             catch
             {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.toolStripButton1.Text = "查询";
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.buttonCheck.Enabled = true;
                 return;
             }      
             
@@ -362,10 +371,57 @@ namespace WMS.UI
                 return;
             }
             this.labelStatus.Text = "正在删除...";
+
+
             new Thread(new ThreadStart(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                
+
+
+                try
+                {
+                    foreach (int id in deleteIDs)
+                    {
+
+                        var supplierstorgeid = (from kn in wmsEntities.SupplierStorageInfo
+                                                where kn.SupplierID == id
+                                                select kn.ID).ToArray();
+                        if (supplierstorgeid.Length > 0)
+                        {
+                            try
+                            {
+                                foreach (int supplierstorgeid1 in supplierstorgeid)
+                                {
+                                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SupplierStorageInfo WHERE ID = @supplierID", new SqlParameter("supplierID", supplierstorgeid1));
+
+
+                                }
+                                wmsEntities.SaveChanges();
+                            }
+                            catch
+                            {
+                                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+
+
+
+
+
+
+
+
 
 
                 try
@@ -406,42 +462,7 @@ namespace WMS.UI
 
 
 
-                try
-                {
-                    foreach (int id in deleteIDs)
-                    {
-
-                        var supplierstorgeid = (from kn in wmsEntities.SupplierStorageInfo 
-                                                  where kn.SupplierID  == id
-                                                  select kn.ID).ToArray();
-                        if (supplierstorgeid.Length > 0)
-                        {
-                            try
-                            {
-                                foreach (int supplierstorgeid1 in supplierstorgeid)
-                                {
-                                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SupplierStorageInfo WHERE ID = @supplierID", new SqlParameter("supplierID", supplierstorgeid1));
-
-                                     
-                                }
-                                wmsEntities.SaveChanges();
-                            }
-                            catch
-                            {
-                                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-
-                    }
-
-                }
-                catch
-                {
-                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
+               
 
 
 
@@ -560,6 +581,27 @@ namespace WMS.UI
                 this.check_history = 0;
                 this.pagerWidget.Search();
             }
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            //创建导入窗口
+            StandardImportForm<Supplier > formImport =
+                new StandardImportForm<Supplier>
+                (
+                    SupplierMetaData.KeyNames, //参数1：KeyName
+                    (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
+                    {
+                        return true;
+                    },
+                    () => //参数3：导入完成回调函数
+                    {
+                        this.pagerWidget.Search();
+                    }
+                );
+
+            //显示导入窗口
+            formImport.Show();
         }
     }
     

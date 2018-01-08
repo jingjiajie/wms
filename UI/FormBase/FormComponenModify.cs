@@ -175,14 +175,16 @@ namespace WMS.UI
 
                 if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
                 {
-                    componen.IsHistory = 1;
-                    //componen.NewestComponentID = this.componenID;
-
                     //新建零件保留历史信息
                     this.wmsEntities.Component.Add(componen);
-                    wmsEntities.SaveChanges();
+
                     try
                     {
+                        componen.ID = -1;
+                        componen.IsHistory = 1;
+                        componen.NewestComponentID = this.componenID;
+                        componen.LastUpdateUserID = this.userID;
+                        componen.LastUpdateTime = DateTime.Now;
                         wmsEntities.SaveChanges();
                     }
                     catch
@@ -220,10 +222,11 @@ namespace WMS.UI
 
             }
             componen.LastUpdateUserID = this.userID;
+            componen.LastUpdateTime = DateTime.Now;
             componen.ProjectID = this.projectID;
             componen.WarehouseID = this.warehouseID;
             componen.SupplierID = this.supplierID;
-            componen.LastUpdateTime = DateTime.Now;
+
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, componen, ComponenViewMetaData.componenkeyNames, out string errorMessage) == false)

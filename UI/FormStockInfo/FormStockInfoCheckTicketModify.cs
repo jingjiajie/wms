@@ -80,7 +80,7 @@ namespace WMS.UI
             for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
             {
                 KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
-                
+
                 if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
                 {
                     continue;
@@ -91,7 +91,7 @@ namespace WMS.UI
 
                 TextBox textBox = new TextBox();
                 textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false||this.mode==FormMode.CHECK)
+                if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
                 {
                     textBox.Enabled = false;
                 }
@@ -120,11 +120,7 @@ namespace WMS.UI
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
-            //this.toolStripComboBoxSelect1.Items.Add("无");
-            //this.toolStripComboBoxSelect1.Items.AddRange(visibleColumnNames);
-            //this.toolStripComboBoxSelect1.SelectedIndex = 0;
-
+           
            
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];

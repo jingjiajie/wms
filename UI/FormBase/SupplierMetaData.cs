@@ -9,8 +9,8 @@ namespace WMS.UI
     {
 
        private static KeyName[]  keyNames = {
-            new KeyName(){Key="ID",Name="ID",Visible = false, Editable = false },
-            new KeyName(){Key="Name",Name="供货商名称",Visible = true, Editable = true},
+            new KeyName(){Key="ID",Name="ID",Visible = false, Editable = false ,ImportVisible=false},
+            new KeyName(){Key="Name",Name="供货商名称",Visible = true, Editable = true,NotNull =true  },
             
             new KeyName(){Key="ContractNo",Name="合同编码",Visible = true, Editable = true},
             new KeyName(){Key="StartingTime",Name="合同生效时间",Visible = true, Editable = true},
@@ -34,14 +34,14 @@ namespace WMS.UI
             new KeyName(){Key="RecipientName",Name="收件人",Visible = true, Editable = true},
             new KeyName(){Key="Number",Name="编号",Visible = true, Editable = true},
             new KeyName(){Key="ContractState",Name="合同状态",Visible = true, Editable = true},
-            new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = true, Editable = true},
-            new KeyName(){Key="NewestSupplierID",Name="最新供应商信息ID",Visible = true   , Editable = true  },
-            new KeyName(){Key="CreateUserID",Name="创建用户ID",Visible = false , Editable = false },
+            new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = false , Editable = false ,ImportVisible=true ,NotNull =true },
+            new KeyName(){Key="NewestSupplierID",Name="最新供应商信息ID",Visible = false    , Editable = false ,ImportVisible=false  },
+            new KeyName(){Key="CreateUserID",Name="创建用户ID",Visible = false , Editable = false,ImportVisible=false },
             new KeyName(){Key="CreateTime",Name="创建时间",Visible = true  , Editable = false },
-            new KeyName(){Key="LastUpdateUserID",Name="最后更新用户ID",Visible = false , Editable = false  },
+            new KeyName(){Key="LastUpdateUserID",Name="最后更新用户ID",Visible = false , Editable = false ,ImportVisible=false },
             new KeyName(){Key="LastUpdateTime",Name="最后更新时间",Visible = true  , Editable = false  },
-            new KeyName(){Key="CreateUserUsername",Name="创建用户",Visible = true  , Editable = false,Save =false },
-            new KeyName(){Key="LastUpdateUserUsername",Name="最后更新用户",Visible = true  , Editable = false,Save =false } ,
+            new KeyName(){Key="CreateUserUsername",Name="创建用户",Visible = true  , Editable = false,Save =false ,ImportVisible=false},
+            new KeyName(){Key="LastUpdateUserUsername",Name="最后更新用户",Visible = true  , Editable = false,Save =false ,ImportVisible=false} ,
             
         };
 

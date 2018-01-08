@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="FormBase\BasePersonMetaData.cs" />
     <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +68,18 @@
     </Compile>
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBasePerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBasePerson.Designer.cs">
+      <DependentUpon>FormBasePerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBasePersonModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBasePersonModify.Designer.cs">
+      <DependentUpon>FormBasePersonModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
@@ -311,6 +324,12 @@
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.Designer.cs">
       <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketModifyOnly.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -389,7 +408,6 @@
     <Compile Include="FormStockInfo\FormStockInfoModify.Designer.cs">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaDataDisplay.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDateDisplay.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDate.cs" />
@@ -463,6 +481,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBasePerson.resx">
+      <DependentUpon>FormBasePerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBasePersonModify.resx">
+      <DependentUpon>FormBasePersonModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
@@ -580,6 +604,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.resx">
+      <DependentUpon>FormStockInfoCheckTicketModifyOnly.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StandardFormPreviewExcel.resx">
       <DependentUpon>StandardFormPreviewExcel.cs</DependentUpon>
