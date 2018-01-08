@@ -166,7 +166,12 @@ namespace EMacro
                 return;
             }
 
-            List<Command> commandList = egcmdTranslator.Compile(curPatternCell.Data.ToString());
+            if(egcmdTranslator.Compile(curPatternCell.Data.ToString(),out var commandList,out string errorMessage) == false)
+            {
+                Cell curResultCell = GetOperationResultCell();
+                curResultCell.Data = string.Format("Error({0},{1}):{2}", line, column, errorMessage);
+                return;
+            }
             foreach (Command command in commandList)
             {
                 if (command is Command.WRITE)

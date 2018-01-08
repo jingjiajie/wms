@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DC602B46-DC15-42B2-9136-19ED6876AB1F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>EMacro</RootNamespace>
     <AssemblyName>EMacro</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -56,9 +56,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\CompileErrorStrategy.cs" />
     <Compile Include="Compiler\Command.cs" />
     <Compile Include="Compiler\CompileListener.cs" />
     <Compile Include="Compiler\Compiler.cs" />
+    <Compile Include="Compiler\CompileErrorListener.cs" />
     <Compile Include="Compiler\EMacroBaseListener.cs" />
     <Compile Include="Compiler\EMacroLexer.cs" />
     <Compile Include="Compiler\EMacroListener.cs" />

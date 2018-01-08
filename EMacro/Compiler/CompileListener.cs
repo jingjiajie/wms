@@ -10,6 +10,7 @@ namespace EMacro
     {
         List<Command> commandList;
         public List<Command> CommandList { get => commandList; set => commandList = value; }
+        
 
         public CompileListener(List<Command> commandList)
         {
