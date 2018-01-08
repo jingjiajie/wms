@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EGCMD
+namespace EMacro
 {
-    public class EGCMDCommand
+    public class Command
     {
-        public class TEXT : EGCMDCommand
+        public class TEXT : Command
         {
             string text;
             public string Text { get => text; set => text = value; }
@@ -23,7 +23,7 @@ namespace EGCMD
             }
         }
 
-        public class WRITE : EGCMDCommand
+        public class WRITE : Command
         {
             string jsExpr;
             public string JsExpr { get => jsExpr; set => jsExpr = value; }
@@ -39,7 +39,7 @@ namespace EGCMD
             }
         }
 
-        public class REPEAT : EGCMDCommand
+        public class REPEAT : Command
         {
             int rows;
             int columns;
@@ -65,7 +65,7 @@ namespace EGCMD
             }
         }
 
-        public class SET_COLOR : EGCMDCommand
+        public class SET_COLOR : Command
         {
             string jsExpr;
 

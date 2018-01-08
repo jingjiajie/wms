@@ -675,9 +675,9 @@
       <Project>{3bd69308-acc7-43a0-ac20-f95673d02f89}</Project>
       <Name>DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EGCMDTranslator\EGCMD.csproj">
+    <ProjectReference Include="..\EMacro\EMacro.csproj">
       <Project>{dc602b46-dc15-42b2-9136-19ed6876ab1f}</Project>
-      <Name>EGCMD</Name>
+      <Name>EMacro</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

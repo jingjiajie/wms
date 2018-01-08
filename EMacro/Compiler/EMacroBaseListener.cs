@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from EGCMD.g4 by ANTLR 4.7
+// Generated from EMacro.g4 by ANTLR 4.7
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -27,97 +27,121 @@ using IToken = Antlr4.Runtime.IToken;
 using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 
 /// <summary>
-/// This class provides an empty implementation of <see cref="IEGCMDListener"/>,
+/// This class provides an empty implementation of <see cref="IEMacroListener"/>,
 /// which can be extended to create a listener which only needs to handle a subset
 /// of the available methods.
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.7")]
 [System.CLSCompliant(false)]
-public partial class EGCMDBaseListener : IEGCMDListener {
+public partial class EMacroBaseListener : IEMacroListener {
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="EGCMDParser.stat"/>.
+	/// Enter a parse tree produced by <see cref="EMacroParser.stat"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterStat([NotNull] EGCMDParser.StatContext context) { }
+	public virtual void EnterStat([NotNull] EMacroParser.StatContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="EGCMDParser.stat"/>.
+	/// Exit a parse tree produced by <see cref="EMacroParser.stat"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitStat([NotNull] EGCMDParser.StatContext context) { }
+	public virtual void ExitStat([NotNull] EMacroParser.StatContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="EGCMDParser.command"/>.
+	/// Enter a parse tree produced by <see cref="EMacroParser.command"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterCommand([NotNull] EGCMDParser.CommandContext context) { }
+	public virtual void EnterCommand([NotNull] EMacroParser.CommandContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="EGCMDParser.command"/>.
+	/// Exit a parse tree produced by <see cref="EMacroParser.command"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitCommand([NotNull] EGCMDParser.CommandContext context) { }
+	public virtual void ExitCommand([NotNull] EMacroParser.CommandContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="EGCMDParser.text"/>.
+	/// Enter a parse tree produced by <see cref="EMacroParser.text"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterText([NotNull] EGCMDParser.TextContext context) { }
+	public virtual void EnterText([NotNull] EMacroParser.TextContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="EGCMDParser.text"/>.
+	/// Exit a parse tree produced by <see cref="EMacroParser.text"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitText([NotNull] EGCMDParser.TextContext context) { }
+	public virtual void ExitText([NotNull] EMacroParser.TextContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="EGCMDParser.repeatCommand"/>.
+	/// Enter a parse tree produced by <see cref="EMacroParser.commandStartSharp"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterRepeatCommand([NotNull] EGCMDParser.RepeatCommandContext context) { }
+	public virtual void EnterCommandStartSharp([NotNull] EMacroParser.CommandStartSharpContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="EGCMDParser.repeatCommand"/>.
+	/// Exit a parse tree produced by <see cref="EMacroParser.commandStartSharp"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitRepeatCommand([NotNull] EGCMDParser.RepeatCommandContext context) { }
+	public virtual void ExitCommandStartSharp([NotNull] EMacroParser.CommandStartSharpContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="EGCMDParser.writeCommand"/>.
+	/// Enter a parse tree produced by <see cref="EMacroParser.commandStartAt"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterWriteCommand([NotNull] EGCMDParser.WriteCommandContext context) { }
+	public virtual void EnterCommandStartAt([NotNull] EMacroParser.CommandStartAtContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="EGCMDParser.writeCommand"/>.
+	/// Exit a parse tree produced by <see cref="EMacroParser.commandStartAt"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitWriteCommand([NotNull] EGCMDParser.WriteCommandContext context) { }
+	public virtual void ExitCommandStartAt([NotNull] EMacroParser.CommandStartAtContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="EGCMDParser.setColorCommand"/>.
+	/// Enter a parse tree produced by <see cref="EMacroParser.writeCommand"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterSetColorCommand([NotNull] EGCMDParser.SetColorCommandContext context) { }
+	public virtual void EnterWriteCommand([NotNull] EMacroParser.WriteCommandContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="EGCMDParser.setColorCommand"/>.
+	/// Exit a parse tree produced by <see cref="EMacroParser.writeCommand"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitSetColorCommand([NotNull] EGCMDParser.SetColorCommandContext context) { }
+	public virtual void ExitWriteCommand([NotNull] EMacroParser.WriteCommandContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="EGCMDParser.jsCommand"/>.
+	/// Enter a parse tree produced by <see cref="EMacroParser.repeatCommand"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterJsCommand([NotNull] EGCMDParser.JsCommandContext context) { }
+	public virtual void EnterRepeatCommand([NotNull] EMacroParser.RepeatCommandContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="EGCMDParser.jsCommand"/>.
+	/// Exit a parse tree produced by <see cref="EMacroParser.repeatCommand"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitJsCommand([NotNull] EGCMDParser.JsCommandContext context) { }
+	public virtual void ExitRepeatCommand([NotNull] EMacroParser.RepeatCommandContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="EMacroParser.setColorCommand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSetColorCommand([NotNull] EMacroParser.SetColorCommandContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="EMacroParser.setColorCommand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSetColorCommand([NotNull] EMacroParser.SetColorCommandContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="EMacroParser.jsCommand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterJsCommand([NotNull] EMacroParser.JsCommandContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="EMacroParser.jsCommand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitJsCommand([NotNull] EMacroParser.JsCommandContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

@@ -5,7 +5,7 @@ using System.Linq;
 using unvell.ReoGrid;
 using System.Drawing;
 
-namespace EGCMD
+namespace EMacro
 {
     public class ExcelGenerator
     {
@@ -30,8 +30,8 @@ namespace EGCMD
             Unhandled = 0,NormalHandled
         }
 
-        private Jint.Engine jsEngine = EGCMDJsEngine.GetJsEngine(); //JavaScript引擎
-        private EGCMDTranslator egcmdTranslator = new EGCMDTranslator(); //EGCMD翻译器
+        private Jint.Engine jsEngine = EMacroJsEngine.GetJsEngine(); //JavaScript引擎
+        private Compiler egcmdTranslator = new Compiler(); //EGCMD翻译器
 
         private Worksheet patternTable = null; //模式表
         private CellState[,] stateMatrix = null; //状态矩阵
@@ -166,12 +166,12 @@ namespace EGCMD
                 return;
             }
 
-            List<EGCMDCommand> commandList = egcmdTranslator.Compile(curPatternCell.Data.ToString());
-            foreach (EGCMDCommand command in commandList)
+            List<Command> commandList = egcmdTranslator.Compile(curPatternCell.Data.ToString());
+            foreach (Command command in commandList)
             {
-                if (command is EGCMDCommand.WRITE)
+                if (command is Command.WRITE)
                 {
-                    EGCMDCommand.WRITE writeCommand = command as EGCMDCommand.WRITE;
+                    Command.WRITE writeCommand = command as Command.WRITE;
                     string exprResult; //表达式计算结果
                     try
                     {
@@ -185,9 +185,9 @@ namespace EGCMD
                     curResultCell.Data += exprResult;
                     this.UpdateToNextState(line, column, attribute);
                 }
-                if (command is EGCMDCommand.REPEAT)
+                if (command is Command.REPEAT)
                 {
-                    var repeatCommand = command as EGCMDCommand.REPEAT;
+                    var repeatCommand = command as Command.REPEAT;
                     int countLines = repeatCommand.Rows;
                     int countColumns = repeatCommand.Columns;
                     string varName = repeatCommand.VarName;
@@ -236,15 +236,15 @@ namespace EGCMD
                         }
                     }
                 }
-                if(command is EGCMDCommand.TEXT)
+                if(command is Command.TEXT)
                 {
-                    var textCommand = command as EGCMDCommand.TEXT;
+                    var textCommand = command as Command.TEXT;
                     Cell curResultCell = GetOperationResultCell();
                     curResultCell.Data += textCommand.Text;
                 }
-                if (command is EGCMDCommand.SET_COLOR)
+                if (command is Command.SET_COLOR)
                 {
-                    var setColorCommand = command as EGCMDCommand.SET_COLOR;
+                    var setColorCommand = command as Command.SET_COLOR;
                     Cell curResultCell = GetOperationResultCell();
                     try
                     {
