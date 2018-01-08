@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Jint;
 
-namespace EGCMD
+namespace EMacro
 {
-    internal class EGCMDJsEngine
+    internal class EMacroJsEngine
     {
         private static Jint.Engine engine = null;
 
