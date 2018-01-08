@@ -32,7 +32,7 @@ namespace WMS.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("生成报表错误：" + ex.Message);
+                MessageBox.Show("生成报表错误：" + ex.Message,"提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
         }
