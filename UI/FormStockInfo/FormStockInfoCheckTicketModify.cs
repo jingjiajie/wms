@@ -69,46 +69,45 @@ namespace WMS.UI
             }
             if (this.mode==FormMode.CHECK)
             {
-                this.buttonOK.Visible = false;
-                this.buttonCancel.Visible = false;
+                
                 this.labelStatus.Text = "盘点单条目";
-                // this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+                
 
 
             }
 
-            for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
+            //for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
+            //{
+            //    KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
 
-                if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanel2.Controls.Add(label);
+            //    if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
+            //    {
+            //        continue;
+            //    }
+            //    Label label = new Label();
+            //    label.Text = curKeyName.Name;
+            //    this.tableLayoutPanel2.Controls.Add(label);
 
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanel2.Controls.Add(textBox);
-            }
+            //    TextBox textBox = new TextBox();
+            //    textBox.Name = "textBox" + curKeyName.Key;
+            //    if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
+            //    {
+            //        textBox.Enabled = false;
+            //    }
+            //    this.tableLayoutPanel2.Controls.Add(textBox);
+            //}
 
 
 
-            if (this.mode == FormMode.ALTER||this.mode==FormMode.CHECK)
-            {
-                WMS.DataAccess.StockInfoCheckTicketView  stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
-                                               where s.ID == this.stockInfoCheckID
-                                               select s).Single();
+            //if (this.mode == FormMode.ALTER||this.mode==FormMode.CHECK)
+            //{
+            //    WMS.DataAccess.StockInfoCheckTicketView  stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
+            //                                   where s.ID == this.stockInfoCheckID
+            //                                   select s).Single();
 
-                Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
-            }
-
+            //    Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
+            //}
+            Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
 
             this.InitComponents();
             this.Search();
@@ -116,7 +115,7 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDateDisplay.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -125,12 +124,12 @@ namespace WMS.UI
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTicksModifyMetaDateDisplay.KeyNames.Length; i++)
+            for (int i = 0; i < StockInfoCheckTicksModifyMetaDate.KeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDateDisplay.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDateDisplay.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Visible;
             }
-            worksheet.Columns = StockInfoCheckTicksModifyMetaDateDisplay.KeyNames.Length;//限制表的长度
+            worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
            
         }
 
@@ -205,20 +204,6 @@ namespace WMS.UI
         }
      
 
-        private void tableLayoutPanelProperties_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         
 
@@ -242,13 +227,13 @@ namespace WMS.UI
             if (mode == FormMode.ALTER)
             {
                 this.Text = "修改盘点单信息";
-                this.buttonOK.Text = "修改盘点单信息";
+                
                
             }
             else if (mode == FormMode.ADD)
             {
                 this.Text = "添加盘点单信息";
-                this.buttonOK.Text = "添加盘点单信息";
+               
                
             }
             else if (mode == FormMode.CHECK)
@@ -286,7 +271,7 @@ namespace WMS.UI
                     for (int i = 0; i < stockInfoViews.Length; i++)
                     {
                         WMS.DataAccess.StockInfoCheckTicketItemView curStockInfoView = stockInfoViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDateDisplay.KeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
@@ -350,82 +335,9 @@ namespace WMS.UI
             this.Close();
         }
 
-        private void buttonOK_MouseEnter(object sender, EventArgs e)
-        {
-            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
-        }
+        
 
-        private void buttonOK_MouseLeave(object sender, EventArgs e)
-        {
-            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
-        }
-
-        private void buttonOK_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
-
-        private void buttonCancel_MouseEnter(object sender, EventArgs e)
-        {
-            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_s;
-        }
-
-        private void buttonCancel_MouseLeave(object sender, EventArgs e)
-        {
-            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_q;
-        }
-
-        private void buttonCancel_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
-        }
-
-        private void buttonAdd_MouseEnter(object sender, EventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
-        }
-
-        private void buttonAdd_MouseLeave(object sender, EventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
-        }
-
-        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
-
-
-
-        private void buttonDelete_MouseEnter(object sender, EventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
-        }
-
-        private void buttonDelete_MouseLeave(object sender, EventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
-        }
-
-        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
-
-        private void buttonfinish_MouseEnter(object sender, EventArgs e)
-        {
-            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
-        }
-
-        private void buttonfinish_MouseLeave(object sender, EventArgs e)
-        {
-            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
-        }
-
-        private void buttonfinish_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonfinish.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
+      
     }
     
 }

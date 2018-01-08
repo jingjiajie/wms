@@ -72,27 +72,28 @@ namespace WMS.UI
 
             }
 
-            for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
+            //for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
+            //{
+            //    KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
 
-                if (curKeyName.Visible == false && curKeyName.Editable == false) 
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanel3.Controls.Add(label);
+            //    if (curKeyName.Visible == false && curKeyName.Editable == false) 
+            //    {
+            //        continue;
+            //    }
+            //    Label label = new Label();
+            //    label.Text = curKeyName.Name;
+            //    this.tableLayoutPanel3.Controls.Add(label);
 
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanel3.Controls.Add(textBox);
-            }
+            //    TextBox textBox = new TextBox();
+            //    textBox.Name = "textBox" + curKeyName.Key;
+            //    if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
+            //    {
+            //        textBox.Enabled = false;
+            //    }
+            //    this.tableLayoutPanel3.Controls.Add(textBox);
+            //}
 
+            Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
 
 
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
@@ -229,6 +230,7 @@ namespace WMS.UI
                                       where s.ID == this.stockInfoCheckID
                                       select s).Single();
                     stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+                    stockInfoCheck .LastUpdateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
                 }
                 catch
                 {
