@@ -71,7 +71,7 @@ namespace EMacro
         {
             if(this.patternTable == null)
             {
-                throw new GenerateError("Pattern table not setted");
+                throw new Exception("Pattern table is not setted");
             }
             int patternLines = this.patternTable.RowCount;  //获取模式表行数
             int patternColumns = this.patternTable.ColumnCount; //获取模式表列数
@@ -169,7 +169,7 @@ namespace EMacro
             if(egcmdTranslator.Compile(curPatternCell.Data.ToString(),out var commandList,out string errorMessage) == false)
             {
                 Cell curResultCell = GetOperationResultCell();
-                curResultCell.Data = string.Format("Error({0},{1}):{2}", line, column, errorMessage);
+                curResultCell.Data = string.Format("Error({0},{1}): {2}", line, column, errorMessage);
                 return;
             }
             foreach (Command command in commandList)
@@ -177,16 +177,18 @@ namespace EMacro
                 if (command is Command.WRITE)
                 {
                     Command.WRITE writeCommand = command as Command.WRITE;
-                    string exprResult; //表达式计算结果
+                    var curResultCell = GetOperationResultCell();
+                    string exprResult = null; //表达式计算结果
                     try
                     {
-                        exprResult = jsEngine.Execute(writeCommand.JsExpr).GetCompletionValue().ToString();
+                        var result = jsEngine.Execute(writeCommand.JsExpr).GetCompletionValue();
+                        exprResult = result.ToString();
                     }
                     catch (Exception e)
                     {
-                        throw new LogicError(line, column, e.Message);
+                        curResultCell.Data = string.Format("Error({0},{1}): {2}", line, column, e.Message);
+                        return;
                     }
-                    Cell curResultCell = GetOperationResultCell();
                     curResultCell.Data += exprResult;
                     this.UpdateToNextState(line, column, attribute);
                 }
@@ -196,14 +198,16 @@ namespace EMacro
                     int countLines = repeatCommand.Rows;
                     int countColumns = repeatCommand.Columns;
                     string varName = repeatCommand.VarName;
-                    object[] range; //循环范围
+                    object[] range = null; //循环范围
                     try
                     {
                         range = (object[])jsEngine.Execute(repeatCommand.Range).GetCompletionValue().ToObject();
                     }
                     catch
                     {
-                        throw new LogicError(line, column, "Repeat range must be iterable");
+                        Cell curResultCell = GetOperationResultCell();
+                        curResultCell.Data = string.Format("Error({0},{1}): repeat range \"{2}\" must be iterable", line, column,repeatCommand.Range);
+                        return;
                     }
                     //Console.Write("循环开始位置：{0},{1}", line, column);
                     //Console.WriteLine("循环次数：{0}", range.Length);
@@ -258,7 +262,8 @@ namespace EMacro
                     }
                     catch
                     {
-                        curResultCell.Data += string.Format("ERROR AT({0},{1}): UNKNOWN COLOR {2}",line,column,setColorCommand.JsExpr);
+                        curResultCell.Data = string.Format("Error({0},{1}): unknown color \"{2}\"",line,column,setColorCommand.JsExpr);
+                        return;
                     }
                 }
             }

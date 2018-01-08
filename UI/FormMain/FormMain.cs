@@ -21,9 +21,10 @@ namespace WMS.UI
         private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
         private int supplierid;
-        
-        
-        
+        private int setitem;
+
+
+
         private Action formClosedCallback;
 
         public FormMain(int userID)
@@ -246,7 +247,8 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseWarehouse l = new FormBaseWarehouse();//实例化子窗口
+                this.setitem = 0;
+                FormBaseWarehouse l = new FormBaseWarehouse(this.setitem);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -257,7 +259,8 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBase.FormBaseProject l = new FormBase.FormBaseProject();//实例化子窗口
+                this.setitem = 1;
+                FormBaseProject l = new FormBaseProject();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

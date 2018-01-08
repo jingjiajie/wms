@@ -557,5 +557,27 @@ namespace WMS.UI
                 return;
             }
         }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            //创建导入窗口
+            StandardImportForm<DataAccess.Component> formImport =
+                new StandardImportForm<DataAccess.Component>
+                (
+                    //参数1：KeyName
+                    ComponenViewMetaData.pluscomponenkeyNames,
+                    (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
+                    {
+                        return true;
+                    },
+                    () => //参数3：导入完成回调函数
+                    {
+                        this.pagerWidget.Search();
+                    }
+                );
+
+            //显示导入窗口
+            formImport.Show();
+        }
     }
     }

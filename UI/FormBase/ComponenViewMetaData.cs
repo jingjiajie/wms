@@ -40,11 +40,11 @@ namespace WMS.UI
         };
         public static KeyName[] KeyNames { get => componenkeyNames; set => componenkeyNames = value; }
         public static KeyName[] pluscomponenkeyNames = {
-            new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
-            new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false,Save=false},
-            new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = false,Save=false},
-            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true,Save=false},
-            new KeyName(){Name = "供货商编号", Key = "SupplierNumber" , Visible = true, Editable = true,Save=false},
+            //new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true,Save=false},
+            //new KeyName(){Name = "供货商编号", Key = "SupplierNumber" , Visible = true, Editable = true,Save=false},
             new KeyName(){Key="No",Name="零件代号",Visible = true, Editable = true},
             new KeyName(){Key="Name",Name="零件名称",Visible = true, Editable = true},
             new KeyName(){Key="ContainerNo",Name="容器号",Visible = true, Editable = true},
@@ -62,12 +62,7 @@ namespace WMS.UI
             new KeyName(){Key="InventoryRequirement3Day",Name="3天库存要求",Visible = true, Editable = true},
             new KeyName(){Key="InventoryRequirement5Day",Name="5天库存要求",Visible = true, Editable = true},
             new KeyName(){Key="InventoryRequirement10Day",Name="10天库存要求",Visible = true, Editable = true},
-            //new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = true, Editable = true,Save=false},
-            //new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = true,Save=false},
-            new KeyName(){Name = "历史信息", Key = "IsHistory" , Visible = true, Editable = true,Save=true},
-            //new KeyName(){Name = "零件单箱运输包装信息", Key = "ComponentSingleBoxTranPackingInfo" , Visible = true, Editable = true,Save=false},
-            //new KeyName(){Name = "零件外包装信息", Key = "ComponentOuterPackingSize" , Visible = true, Editable = true,Save=false},
-            //new KeyName(){Name = "零件出货信息", Key = "ComponentShipmentInfo" , Visible = true, Editable = false,Save=true},
+
             new KeyName(){Key="SingleBoxPhotoIndex",Name="单箱照片索引（单体，一拖现状）",Visible = true, Editable = true},
             new KeyName(){Key="SingleBoxPackagingBoxType",Name="单箱包装箱类型",Visible = true, Editable = true},
             new KeyName(){Key="SingleBoxLength",Name="单箱长",Visible = true, Editable = true},
@@ -81,6 +76,21 @@ namespace WMS.UI
             new KeyName(){Key="SingleBoxTheoreticalLayerCount",Name="单箱理论码放层数",Visible = true, Editable = true},
             new KeyName(){Key="SingleBoxTheoreticalStorageHeight",Name="单箱理论码放高度",Visible = true, Editable = true},
             new KeyName(){Key="SingleBoxThroreticalStorageCount",Name="单箱理论码放个数",Visible = true, Editable = true},
+
+            new KeyName(){Key="OuterPackingPhotoIndex",Name="外包装照片索引（标签，单包）",Visible = true, Editable = true},
+            new KeyName(){Key="OuterPackingBoxType",Name="外包装包装箱类型",Visible = true, Editable = true},
+            new KeyName(){Key="OuterPackingLength",Name="外包装长",Visible = true, Editable = true},
+            new KeyName(){Key="OuterPackingWidth",Name="外包装宽",Visible = true, Editable = true},
+            new KeyName(){Key="OuterPackingHeight",Name="外包装高",Visible = true, Editable = true},
+            new KeyName(){Key="OuterPackingSNP",Name="外包装SNP",Visible = true, Editable = true},
+            new KeyName(){Key="OuterPackingComment",Name="外包装备注（SNP）",Visible = true, Editable = true},
+            new KeyName(){Key="OuterPackingRequiredLayers",Name="外包装包装要求码放层数",Visible = true, Editable = true},
+
+            new KeyName(){Key="ShipmentInfoBoxType",Name="出货箱型",Visible = true, Editable = true},
+            new KeyName(){Key="ShipmentInfoBoxLength",Name="出货箱体长度",Visible = true, Editable = true},
+            new KeyName(){Key="ShipmentInfoBoxWidth",Name="出货箱体宽度",Visible = true, Editable = true},
+            new KeyName(){Key="ShipmentInfoBoxHeight",Name="出货箱体高度",Visible = true, Editable = true},
+            new KeyName(){Key="ShipmentInfoUnitAmount",Name="出货单车（箱）数量",Visible = true, Editable = true},
 
         };
 

@@ -68,7 +68,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runner\EMacroJsEngine.cs" />
-    <Compile Include="Runner\Exceptions.cs" />
     <Compile Include="Runner\ExcelGenerator.cs" />
   </ItemGroup>
   <ItemGroup>

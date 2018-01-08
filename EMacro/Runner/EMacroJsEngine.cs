@@ -34,6 +34,7 @@ namespace EMacro
             engine.Execute(sb.ToString());
             engine.SetValue("colorFromName", new Func<string, System.Drawing.Color>(System.Drawing.Color.FromName));
             engine.SetValue("colorFromArgb", new Func<int, int, int, int, System.Drawing.Color>(System.Drawing.Color.FromArgb));
+            engine.SetValue("colorFromRgb", new Func<int, int, int, System.Drawing.Color>(System.Drawing.Color.FromArgb));
         }
 
         private static List<string> listFunc = new List<string>()
@@ -56,8 +57,10 @@ namespace EMacro
             @"function color(){
                 if(arguments.length == 1){
                     return colorFromName(arguments[0]);
+                }else if(arguments.length == 3){
+                    return colorFromRgb(arguments[0],arguments[1],arguments[2]);
                 }else{
-                    return colorFromArgb(arguments[0],arguments[1],arguments[2]);
+                    return colorFromArgb(arguments[0],arguments[1],arguments[2],arguments[3]);
                 }
             }"
         };

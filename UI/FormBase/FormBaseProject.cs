@@ -33,16 +33,6 @@ namespace WMS.UI.FormBase
             this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
             this.toolStripComboBoxSelect.SelectedIndex = 0;
 
-
-            ////初始化表格
-            //var worksheet = this.reoGridControlProject.Worksheets[0];
-            //worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            //for (int i = 0; i < BaseProjectMetaData.KeyNames.Length; i++)
-            //{
-            //    worksheet.ColumnHeaders[i].Text = BaseProjectMetaData.KeyNames[i].Name;
-            //    worksheet.ColumnHeaders[i].IsVisible = BaseProjectMetaData.KeyNames[i].Visible;
-            //}
-            //worksheet.Columns = BaseProjectMetaData.KeyNames.Length;//限制表的长度
             this.pagerWidget = new PagerWidget<ProjectView>(this.reoGridControlProject, BaseProjectMetaData.KeyNames);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
