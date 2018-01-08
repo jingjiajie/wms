@@ -214,5 +214,7 @@ namespace WMS.UI.FormReceipt
             new KeyName{Name = "物流服务费1", Key = "Charge1", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "物流服务费2", Key = "Charge2", Visible = true, Editable = true, Save = true},
         };
+
+        
     }
 }

@@ -295,6 +295,7 @@ namespace WMS.UI.FormReceipt
                         MessageBox.Show("收货单不存在");
                         return;
                     }
+                    
                     submissionTicket.CreateTime = DateTime.Now;
                     submissionTicket.ReceiptTicketID = this.receiptTicketID;
                     submissionTicket.CreateUserID = this.userID;
@@ -303,6 +304,28 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.ProjectID = receiptTicket.ProjectID;
                     submissionTicket.WarehouseID = receiptTicket.Warehouse;
                     submissionTicket.State = "待检";
+                    //////////////////////////// Begin
+                    if (string.IsNullOrWhiteSpace(submissionTicket.No))
+                    {
+                        if (submissionTicket.CreateTime.HasValue == false)
+                        {
+                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                            return;
+                        }
+
+                        DateTime createDay = new DateTime(submissionTicket.CreateTime.Value.Year, submissionTicket.CreateTime.Value.Month, submissionTicket.CreateTime.Value.Day);
+                        DateTime nextDay = createDay.AddDays(1);
+                        int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.SubmissionTicket
+                                                                              where s.CreateTime >= createDay && s.CreateTime < nextDay
+                                                                              select s.No).ToArray());
+                        if (maxRankOfToday == -1)
+                        {
+                            MessageBox.Show("单号生成失败！请手动填写单号");
+                            return;
+                        }
+                        submissionTicket.No = Utilities.GenerateTicketNo("J", submissionTicket.CreateTime.Value, maxRankOfToday + 1);
+                    }
+                    /////////////////////////////////////////////////////////////// End
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
 
                     new Thread(() =>
@@ -332,8 +355,7 @@ namespace WMS.UI.FormReceipt
                                     stockInfo.ReceiptAreaAmount -= vp.Value;
                                     submissionTicketItem.ArriveAmount = vp.Key.ReceiviptAmount;
                                     submissionTicketItem.ReceiptTicketItemID = vp.Key.ID;
-                                    //submissionTicketItem.RejectAmount = 0;
-                                    //submissionTicketItem.ReturnAmount = 0;
+                                    
                                     submissionTicketItem.State = "待检";
                                     vp.Key.State = "送检中";
                                     submissionTicketItem.SubmissionAmount = vp.Value;
