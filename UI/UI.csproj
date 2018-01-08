@@ -410,7 +410,6 @@
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
-    <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDateDisplay.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDate.cs" />
     <Compile Include="FormStockInfo\StockInfoViewMetaData.cs" />
     <Compile Include="FormTest.cs">
