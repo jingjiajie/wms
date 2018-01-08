@@ -41,8 +41,8 @@ namespace WMS.UI
         public static KeyName[] KeyNames { get => componenkeyNames; set => componenkeyNames = value; }
         public static KeyName[] pluscomponenkeyNames = {
             //new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
-            new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false,Save=false},
-            new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = false,Save=false},
             //new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true,Save=false},
             //new KeyName(){Name = "供货商编号", Key = "SupplierNumber" , Visible = true, Editable = true,Save=false},
             new KeyName(){Key="No",Name="零件代号",Visible = true, Editable = true},
