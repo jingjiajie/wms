@@ -72,7 +72,7 @@ namespace WMS.UI
                 }
                 this.tableLayoutPanel2.Controls.Add(textBox);
             }
-
+            
 
 
         }
@@ -216,15 +216,7 @@ namespace WMS.UI
 
 
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+     
 
         private void reoGridControlComponen_Click(object sender, EventArgs e)
         {
