@@ -37,39 +37,43 @@ namespace WMS.UI
             { 
                 throw new Exception("未设置源供应商信息");
             }
-            this.tableLayoutPanel1.Controls.Clear();
-            for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = SupplierMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false) 
-                {
-                    continue;
-                }
-                if (curKeyName.Visible == true  && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanel1.Controls.Add(label);
+            //this.tableLayoutPanel1.Controls.Clear();
+            //for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
+            //{
+            //    KeyName curKeyName = SupplierMetaData.KeyNames[i];
+            //    if (curKeyName.Visible == false && curKeyName.Editable == false) 
+            //    {
+            //        continue;
+            //    }
+            //    //if (curKeyName.Visible == true  && curKeyName.Editable == false)
+            //    //{
+            //    //    continue;
+            //    //}
+            //    Label label = new Label();
+            //    label.Text = curKeyName.Name;
+            //    this.tableLayoutPanel1.Controls.Add(label);
 
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanel1.Controls.Add(textBox);
-            }
-            
+            //    TextBox textBox = new TextBox();
+            //    textBox.Name = "textBox" + curKeyName.Key;
+            //    if (curKeyName.Editable == false)
+            //    {
+            //        textBox.Enabled = false;
+            //    }
+            //    this.tableLayoutPanel1.Controls.Add(textBox);
+            //}
+
+            Utilities.CreateEditPanel(this.tableLayoutPanel1, SupplierMetaData .KeyNames);
+            //this.textBoxSupplierName = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+            //textBoxSupplierName.BackColor = Color.White;
+            //textBoxSupplierName.MouseClick += textBoxSupplierName_MouseClick;
+
+
+
+
             if (this.mode == FormMode.ALTER)
             {
 
-                if (this.contract_change ==0)
-                { 
-                    TextBox textBoxContractState = (TextBox)this.Controls.Find("textBoxContractState", true)[0];
-                    textBoxContractState.Enabled = false;
-                }
+                
                 SupplierView SupplierView = new SupplierView();
 
                 try
@@ -90,7 +94,16 @@ namespace WMS.UI
                     this.Close();
                     return;
                 }
+                if (this.contract_change == 0)
+                {
+                    ComboBox ComBoxContractState = (ComboBox)this.Controls.Find("comboBoxContractState", true)[0];
+                    ComBoxContractState.Enabled = false;
+                }
                 Utilities.CopyPropertiesToTextBoxes(SupplierView, this);
+
+             
+
+
             }
        
 
@@ -235,7 +248,11 @@ namespace WMS.UI
                         MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                   
+                    else
+                    {
+                        Utilities.CopyComboBoxsToProperties(this, supplier, SupplierMetaData.KeyNames);
+                    }
+
                     try
                     {
                         supplier.IsHistory = 0;
@@ -272,6 +289,10 @@ namespace WMS.UI
                     {
                         MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
+                    }
+                    else
+                    {
+                        Utilities.CopyComboBoxsToProperties(this, supplier, SupplierMetaData.KeyNames);
                     }
                     try
                     {

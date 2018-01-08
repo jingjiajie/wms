@@ -106,6 +106,16 @@ namespace WMS.UI
         private void buttonModify_Click(object sender, EventArgs e)
         {
             DataAccess.SupplierStorageInfo supp = null ;
+            TextBox textBoxYear = (TextBox)this.Controls.Find("textBoxYear", true)[0];
+            TextBox textBoxMonth = (TextBox)this.Controls.Find("textBoxMonth", true)[0];
+            if(textBoxYear.Text ==string .Empty || textBoxMonth.Text ==string.Empty  )
+            {
+                MessageBox.Show("存货年份和存货月份不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
+                return;
+
+
+            }
 
             if (mode == FormMode.ALTER)
             {

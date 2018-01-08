@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="CommonDataStructures.cs" />
     <Compile Include="FormBase\BasePersonMetaData.cs" />
+    <Compile Include="FormBase\BasePackageUnitMetaData.cs" />
     <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -409,7 +410,6 @@
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStockInfo\StockInfoCheckTicketViewMetaData.cs" />
-    <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDateDisplay.cs" />
     <Compile Include="FormStockInfo\StockInfoCheckTicksModifyMetaDate.cs" />
     <Compile Include="FormStockInfo\StockInfoViewMetaData.cs" />
     <Compile Include="FormTest.cs">

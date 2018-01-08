@@ -23,7 +23,7 @@ namespace WMS.UI
         private int authority_supplierself = Convert.ToInt32(Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY);
         private PagerWidget<SupplierView > pagerWidget = null;
         private Supplier supplier = null;
-        private int contractst;
+        private string  contractst;
         private int check_history = 0;
         private int userid = -1;
        
@@ -52,20 +52,20 @@ namespace WMS.UI
                                      where u.ID == id
                                      select u).Single();
                 this.supplier = supplier;
-                this.contractst = Convert.ToInt32(supplier.ContractState);
+                this.contractst = supplier.ContractState;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
                 this.buttonCheck.Enabled = false;
-                if (this.contractst ==0)
+                this.buttonImport.Enabled = false;
+                //this.toolStripButton1.Enabled = false;
+                //this.toolStripButtonSelect.Enabled = false;
+                if (this.contractst =="已签合同")
                 {
                     this.toolStripButtonAlter.Enabled = false;
                 }
 
                 InitSupplier();
-                //List<SqlParameter> parameters = new List<SqlParameter>();
-                //string sql = "SELECT * FROM SupplierView WHERE 1=1";
-                //sql += "AND ID = @ID ";
-                //parameters.Add(new SqlParameter("ID", id ));
+             
                 this.pagerWidget.AddCondition("ID",Convert.ToString(id));
                 this.pagerWidget.AddCondition("是否历史信息", "0");
                 this.pagerWidget.Search();
@@ -149,6 +149,7 @@ namespace WMS.UI
             this.buttonCheck.Enabled = false;
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
+            this.buttonImport.Enabled = false;
             this.toolStripButton1.Text = "全部信息";
 
             this.pagerWidget.ClearCondition();
@@ -175,6 +176,7 @@ namespace WMS.UI
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonAlter.Enabled = true;
                 this.buttonCheck.Enabled = true;
+                this.buttonImport.Enabled = true;
                 return;
             }      
             
@@ -187,7 +189,7 @@ namespace WMS.UI
 
             if ((this.authority & authority_supplier) != authority_supplier)
             {
-            this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+            
 
                 this.check_history = 1;
                 this.pagerWidget.Search();
@@ -556,13 +558,14 @@ namespace WMS.UI
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            if(this.toolStripButton1.Text =="全部信息")
+            if(this.toolStripButton1.Text =="全部信息"&& (this.authority & authority_supplier) == authority_supplier)
             {
                 this.toolStripButton1.Text = "查询";
                 this.toolStripButtonAdd .Enabled = true;
-                this.toolStripButtonAlter.Enabled = true;
+                
                 this.buttonCheck.Enabled = true;
             }
+            this.toolStripButtonAlter.Enabled = true;
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("是否历史信息", "0");
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
