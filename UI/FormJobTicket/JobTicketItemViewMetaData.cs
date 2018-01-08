@@ -8,7 +8,8 @@ namespace WMS.UI
     class JobTicketItemViewMetaData
     {
         public const string STRING_STATE_UNFINISHED = "未完成";
-        public const string STRING_STATE_FINISHED = "已完成";
+        public const string STRING_STATE_PART_FINISHED = "部分完成";
+        public const string STRING_STATE_ALL_FINISHED = "全部完成";
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
@@ -19,7 +20,8 @@ namespace WMS.UI
             new KeyName(){Key="State",Name="状态",
                          ComboBoxItems = new ComboBoxItem[]{
                              new ComboBoxItem(STRING_STATE_UNFINISHED),
-                             new ComboBoxItem( STRING_STATE_FINISHED),
+                             new ComboBoxItem( STRING_STATE_PART_FINISHED),
+                             new ComboBoxItem(STRING_STATE_ALL_FINISHED)
                          } },
             new KeyName(){Key="ScheduledAmount",Name="计划翻包数量",NotNull=true},
             new KeyName(){Key="RealAmount",Name="实际翻包数量"},

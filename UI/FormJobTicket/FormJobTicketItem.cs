@@ -165,7 +165,22 @@ namespace WMS.UI
         private void buttonFinish_Click(object sender, EventArgs e)
         {
             ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState",true)[0];
-            comboBoxState.SelectedIndex = 1;
+            TextBox textBoxScheduledAmount = (TextBox)this.Controls.Find("textBoxScheduledAmount",true)[0];
+            TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
+            JobTicketItem tmpJobTicketItem = new JobTicketItem();
+            if (Utilities.CopyTextBoxTextsToProperties(this, tmpJobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(tmpJobTicketItem.RealAmount < tmpJobTicketItem.ScheduledAmount)
+            {
+                comboBoxState.SelectedIndex = 1;
+            }
+            else
+            {
+                comboBoxState.SelectedIndex = 2;
+            }
             this.buttonModify.PerformClick();
 
             //const string STRING_FINISHED = "已完成";
@@ -320,6 +335,11 @@ namespace WMS.UI
                         MessageBox.Show("内部错误：拷贝单选框数据失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+                    if(jobTicketItem.RealAmount > jobTicketItem.ScheduledAmount)
+                    {
+                        MessageBox.Show("实际翻包数量不能超过计划翻包数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     new Thread(()=>
                     {
                         try
@@ -406,12 +426,16 @@ namespace WMS.UI
 
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("确定要全额完成所有条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
             new Thread(new ThreadStart(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount WHERE JobTicketID = {1} AND State<>'{2}';", JobTicketItemViewMetaData.STRING_STATE_FINISHED, this.jobTicketID,JobTicketItemViewMetaData.STRING_STATE_FINISHED));
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount WHERE JobTicketID = {1} AND State<>'{2}';", JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED));
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", JobTicketViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID));
                     wmsEntities.SaveChanges();
                 }
@@ -429,16 +453,21 @@ namespace WMS.UI
         private void UpdateJobTicketStateSync()
         {
             WMSEntities wmsEntities = new WMSEntities();
-            //如果作业单中所有条目都完成，询问是否将作业单标记为完成
-            int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_FINISHED)).Single();
+            int totalJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0}", this.jobTicketID)).Single();
+            int allfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State = '{1}'", this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED)).Single();
+            int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State = '{1}'", this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_UNFINISHED)).Single();
             string jobTicketState = null;
-            if (unfinishedJobTicketItemCount == 0)
+            if (unfinishedJobTicketItemCount == totalJobTicketItemCount)
+            {
+                jobTicketState = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
+            }
+            else if (allfinishedJobTicketItemCount == totalJobTicketItemCount)
             {
                 jobTicketState = JobTicketViewMetaData.STRING_STATE_ALL_FINISHED;
             }
             else
             {
-                jobTicketState = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
+                jobTicketState = JobTicketViewMetaData.STRING_STATE_PART_FINISHED;
             }
 
             try

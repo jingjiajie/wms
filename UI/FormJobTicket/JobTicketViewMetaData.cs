@@ -8,6 +8,7 @@ namespace WMS.UI
     class JobTicketViewMetaData
     {
         public const string STRING_STATE_UNFINISHED = "未完成";
+        public const string STRING_STATE_PART_FINISHED = "部分完成";
         public const string STRING_STATE_ALL_FINISHED = "全部完成";
 
         private static KeyName[] keyNames = {
