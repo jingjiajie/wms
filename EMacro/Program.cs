@@ -13,8 +13,14 @@ namespace EMacro
         {
             string input = Console.ReadLine();
             Compiler compiler = new Compiler();
-            var commandList = compiler.Compile(input);
-            foreach(var command in commandList)
+
+            if (compiler.Compile(input,out var commands,out string errorMessage) == false)
+            {
+                Console.WriteLine("错误:"+errorMessage);
+                Console.Read();
+                return;
+            }
+            foreach(var command in commands)
             {
                 Console.WriteLine("识别到的命令："+command.ToString());
             }

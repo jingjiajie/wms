@@ -33,15 +33,19 @@ namespace WMS.UI
             new KeyName(){Key="ZipCode",Name="邮编",Visible = true, Editable = true},
             new KeyName(){Key="RecipientName",Name="收件人",Visible = true, Editable = true},
             new KeyName(){Key="Number",Name="编号",Visible = true, Editable = true},
-            new KeyName(){Key="ContractState",Name="合同状态",Visible = true, Editable = true},
+            new KeyName(){Key="ContractState",Name="合同状态",Visible = true, Editable = true,
+            ComboBoxItems=new ComboBoxItem[]{
+                new ComboBoxItem("未签合同","未签合同"),
+                new ComboBoxItem("已签合同","已签合同"),
+            }},
             new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = false , Editable = false ,ImportVisible=true ,NotNull =true },
             new KeyName(){Key="NewestSupplierID",Name="最新供应商信息ID",Visible = false    , Editable = false ,ImportVisible=false  },
             new KeyName(){Key="CreateUserID",Name="创建用户ID",Visible = false , Editable = false,ImportVisible=false },
-            new KeyName(){Key="CreateTime",Name="创建时间",Visible = true  , Editable = false },
+            new KeyName(){Key="CreateTime",Name="创建时间",Visible = true  , Editable = false ,EditPlaceHolder= "自动填写"},
             new KeyName(){Key="LastUpdateUserID",Name="最后更新用户ID",Visible = false , Editable = false ,ImportVisible=false },
-            new KeyName(){Key="LastUpdateTime",Name="最后更新时间",Visible = true  , Editable = false  },
-            new KeyName(){Key="CreateUserUsername",Name="创建用户",Visible = true  , Editable = false,Save =false ,ImportVisible=false},
-            new KeyName(){Key="LastUpdateUserUsername",Name="最后更新用户",Visible = true  , Editable = false,Save =false ,ImportVisible=false} ,
+            new KeyName(){Key="LastUpdateTime",Name="最后更新时间",Visible = true  , Editable = false,EditPlaceHolder ="自动填写"  },
+            new KeyName(){Key="CreateUserUsername",Name="创建用户",Visible = true  , Editable = false,Save =false ,ImportVisible=false,EditPlaceHolder ="自动填写"},
+            new KeyName(){Key="LastUpdateUserUsername",Name="最后更新用户",Visible = true  , Editable = false,Save =false ,ImportVisible=false,EditPlaceHolder ="自动填写"} ,
             
         };
 
