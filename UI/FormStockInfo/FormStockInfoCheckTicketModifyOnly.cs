@@ -195,13 +195,14 @@ namespace WMS.UI
             {
                 this.Text = "修改盘点单信息";
                 this.buttonModify.Text = "修改盘点单信息";
+                this.groupBox1.Text = "修改盘点单信息";
 
             }
             else if (mode == FormMode.ADD)
             {
                 this.Text = "添加盘点单信息";
                 this.buttonModify.Text = "添加盘点单信息";
-
+               
             }
             else if (mode == FormMode.CHECK)
                 this.Text = "盘点单条目";
@@ -266,6 +267,11 @@ namespace WMS.UI
 
 
             this.Close();
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
 
         }
     }
