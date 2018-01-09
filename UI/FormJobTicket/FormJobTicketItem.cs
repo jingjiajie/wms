@@ -16,7 +16,6 @@ namespace WMS.UI
     public partial class FormJobTicketItem : Form
     {
         private int jobTicketID = -1;
-        private int curStockInfoID = -1;
         Action jobTicketStateChangedCallback = null;
 
         TextBox textBoxComponentName = null;
@@ -75,30 +74,6 @@ namespace WMS.UI
             worksheet.Columns = JobTicketItemViewMetaData.KeyNames.Length; //限制表的长度
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
-            this.textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName",true)[0];
-            this.textBoxComponentName.BackColor = Color.White;
-            this.textBoxComponentName.Click += textBoxComponentName_Click;
-        }
-
-        private void textBoxComponentName_Click(object sender, EventArgs e)
-        {
-            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
-            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
-            {
-                this.curStockInfoID = selectedStockInfoID;
-                new Thread(new ThreadStart(() =>
-                {
-                    WMSEntities wmsEntities = new WMSEntities();
-                    StockInfoView stockInfoView = (from s in wmsEntities.StockInfoView
-                                                   where s.ID == selectedStockInfoID
-                                                   select s).Single();
-                    this.Invoke(new Action(() =>
-                    {
-                        Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
-                    }));
-                })).Start();
-            });
-            formSelectStockInfo.Show();
         }
 
         private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
@@ -252,7 +227,6 @@ namespace WMS.UI
             if (ids.Length == 0)
             {
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, JobTicketItemViewMetaData.KeyNames);
-                this.curStockInfoID = -1;
                 return;
             }
             int id = ids[0];
@@ -274,14 +248,7 @@ namespace WMS.UI
                 MessageBox.Show("作业单项目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if(jobTicketItemView.StockInfoID != null)
-            {
-                this.curStockInfoID = jobTicketItemView.StockInfoID.Value;
-            }
-            else
-            {
-                this.curStockInfoID = -1;
-            }
+
             Utilities.CopyPropertiesToTextBoxes(jobTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(jobTicketItemView, this);
         }
@@ -300,11 +267,6 @@ namespace WMS.UI
                 return;
             }
             int id = ids[0];
-            if(this.curStockInfoID == -1)
-            {
-                MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             new Thread(() =>
             {
                 WMSEntities wmsEntities1 = new WMSEntities();
@@ -344,7 +306,6 @@ namespace WMS.UI
                     {
                         try
                         {
-                            jobTicketItem.StockInfoID = this.curStockInfoID;
                             wmsEntities1.SaveChanges();
                         }
                         catch

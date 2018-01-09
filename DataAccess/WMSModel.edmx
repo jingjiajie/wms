@@ -1044,6 +1044,7 @@
           <Property Name="ExpectedSubmissionAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="RealSubmissionAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PersonID" Type="int" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.StockInfoCheckTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1062,6 +1063,7 @@
           <Property Name="ProjectID" Type="int" />
           <Property Name="WarehouseID" Type="int" />
           <Property Name="PersonID" Type="int" />
+          <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.StockInfoView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2233,7 +2235,8 @@ FROM [dbo].[ShipmentTicketView] AS [ShipmentTicketView]</DefiningQuery>
 [StockInfoCheckTicketItemView].[RealReceiptAreaAmount] AS [RealReceiptAreaAmount], 
 [StockInfoCheckTicketItemView].[ExpectedSubmissionAmount] AS [ExpectedSubmissionAmount], 
 [StockInfoCheckTicketItemView].[RealSubmissionAmount] AS [RealSubmissionAmount], 
-[StockInfoCheckTicketItemView].[PersonID] AS [PersonID]
+[StockInfoCheckTicketItemView].[PersonID] AS [PersonID], 
+[StockInfoCheckTicketItemView].[PersonName] AS [PersonName]
 FROM [dbo].[StockInfoCheckTicketItemView] AS [StockInfoCheckTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StockInfoCheckTicketView" EntityType="Self.StockInfoCheckTicketView" store:Type="Views" store:Schema="dbo">
@@ -2248,7 +2251,8 @@ FROM [dbo].[StockInfoCheckTicketItemView] AS [StockInfoCheckTicketItemView]</Def
 [StockInfoCheckTicketView].[LastUpdateUserUsername] AS [LastUpdateUserUsername], 
 [StockInfoCheckTicketView].[ProjectID] AS [ProjectID], 
 [StockInfoCheckTicketView].[WarehouseID] AS [WarehouseID], 
-[StockInfoCheckTicketView].[PersonID] AS [PersonID]
+[StockInfoCheckTicketView].[PersonID] AS [PersonID], 
+[StockInfoCheckTicketView].[PersonName] AS [PersonName]
 FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StockInfoView" EntityType="Self.StockInfoView" store:Type="Views" store:Schema="dbo">
@@ -3814,6 +3818,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ExpectedSubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="RealSubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PersonID" Type="Int32" />
+          <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicketView">
           <Key>
@@ -3830,6 +3835,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ProjectID" Type="Int32" />
           <Property Name="WarehouseID" Type="Int32" />
           <Property Name="PersonID" Type="Int32" />
+          <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StockInfoView">
           <Key>
@@ -5480,6 +5486,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoCheckTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketItemView">
               <MappingFragment StoreEntitySet="StockInfoCheckTicketItemView">
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="RealSubmissionAmount" ColumnName="RealSubmissionAmount" />
                 <ScalarProperty Name="ExpectedSubmissionAmount" ColumnName="ExpectedSubmissionAmount" />
@@ -5505,6 +5512,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoCheckTicketView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketView">
               <MappingFragment StoreEntitySet="StockInfoCheckTicketView">
+                <ScalarProperty Name="PersonName" ColumnName="PersonName" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
