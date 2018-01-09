@@ -623,6 +623,7 @@ namespace WMS.UI.FormReceipt
 
             Utilities.CopyComboBoxsToProperties(this, submissionTicketItem, ReceiptMetaData.submissionTicketItemKeyName);
             ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
+            string sql = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).ToString();
             if (receiptTicketItem != null)
             {
                 if (submissionTicketItem.State == "合格")
@@ -675,7 +676,7 @@ namespace WMS.UI.FormReceipt
                             StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
                             if (stockInfo != null)
                             {
-                                stockInfo.OverflowAreaAmount = stockInfo.ReceiptAreaAmount;
+                                stockInfo.OverflowAreaAmount = stockInfo.ReceiptAreaAmount - submissionTicketItem.RejectAmount;
                                 stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
                             }
                             rti.State = "已收货";
