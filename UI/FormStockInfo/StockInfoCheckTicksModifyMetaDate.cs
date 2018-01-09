@@ -11,7 +11,16 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
             new KeyName(){Key="ComponentName",Name="零件",Editable=false,Save=false,EditPlaceHolder ="点击选择零件"},
             new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false},
-           
+            new KeyName(){Key="ExpectedRejectAreaAmount",Name="不良品区数量",Editable=false ,Save=true  },
+            new KeyName(){Key="RealRejectAreaAmount",Name="实际不良品区数量",Editable=false ,Save=true  },
+            new KeyName(){Key="ExpectedReceiptAreaAmount",Name="收货区数量",Editable=false ,Save=true  },
+            new KeyName(){Key="RealReceiptAreaAmount",Name="实际收货区数量",Editable=false ,Save=true  },
+
+
+
+
+
+
             new KeyName(){Key="ExcpetedOverflowAreaAmount",Name="溢库区数量",Editable=false ,Save=true  },
             new KeyName(){Key="ExpectedShipmentAreaAmount",Name="发货区数量",Editable=false ,Save=true  },
 
