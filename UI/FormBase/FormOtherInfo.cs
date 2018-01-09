@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace WMS.UI
 {
-    public partial class FormBaseWarehouse : Form
+    public partial class FormOtherInfo : Form
     {
         private int setitem=-1;
 
@@ -21,7 +21,7 @@ namespace WMS.UI
         private PagerWidget<WarehouseView> warehousepagerWidget = null;
         private PagerWidget<ProjectView> projectpagerWidget = null;
         private WMSEntities wmsEntities = new WMSEntities();
-        public FormBaseWarehouse(int setitem)
+        public FormOtherInfo(int setitem)
         {
             InitializeComponent();
             this.setitem = setitem;
@@ -29,48 +29,39 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-
+            this.reoGridControlWarehouse.SetSettings(WorkbookSettings.View_ShowHorScroll, false);
+            this.reoGridControlWarehouse.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
+            this.reoGridControlProject.SetSettings(WorkbookSettings.View_ShowHorScroll,false);
+            this.reoGridControlProject.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
+            this.reoGridControlPackageUnit.SetSettings(WorkbookSettings.View_ShowHorScroll, false);
+            this.reoGridControlPackageUnit.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
 
             string[] visibleColumnNames = (from kn in FormBase.BaseWarehouseMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
-            this.toolStripComboBoxSelectWarehouse.Items.Add("无");
-            this.toolStripComboBoxSelectWarehouse.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelectWarehouse.SelectedIndex = 0;
-
-
             this.warehousepagerWidget = new PagerWidget<WarehouseView>(this.reoGridControlWarehouse, FormBase.BaseWarehouseMetaData.KeyNames);
-            this.panelPager1.Controls.Add(warehousepagerWidget);
-            warehousepagerWidget.Show();
+            this.warehousepagerWidget.SetPageSize(-1);
+            //this.panelPager1.Controls.Add(warehousepagerWidget);
+            //warehousepagerWidget.Show();
 
             string[] visibleColumnNames1= (from kn in FormBase.BaseProjectMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
-            this.toolStripComboBoxSelectProject.Items.Add("无");
-            this.toolStripComboBoxSelectProject.Items.AddRange(visibleColumnNames1);
-            this.toolStripComboBoxSelectProject.SelectedIndex = 0;
-
             this.projectpagerWidget = new PagerWidget<ProjectView>(this.reoGridControlProject, FormBase.BaseProjectMetaData.KeyNames);
-            this.panelPager2.Controls.Add(projectpagerWidget);
-            projectpagerWidget.Show();
+            this.projectpagerWidget.SetPageSize(-1);
+            //this.panelPager2.Controls.Add(projectpagerWidget);
+            //projectpagerWidget.Show();
 
             string[] visibleColumnNames2 = (from kn in FormBase.BasePackageUnitMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
-            this.toolStripComboBoxSelectPackageUnit.Items.Add("无");
-            this.toolStripComboBoxSelectPackageUnit.Items.AddRange(visibleColumnNames2);
-            this.toolStripComboBoxSelectPackageUnit.SelectedIndex = 0;
-
             this.PackageUnitpagerWidget = new PagerWidget<PackageUnitView>(this.reoGridControlPackageUnit, FormBase.BasePackageUnitMetaData.KeyNames);
-            this.panelPager3.Controls.Add(PackageUnitpagerWidget);
-            PackageUnitpagerWidget.Show();
-
+            this.PackageUnitpagerWidget.SetPageSize(-1);
+            //this.panelPager3.Controls.Add(PackageUnitpagerWidget);
+            //PackageUnitpagerWidget.Show();
 
         }
 
@@ -182,32 +173,6 @@ namespace WMS.UI
             }
         }
 
-        private void toolStripButtonSelect_Click(object sender, EventArgs e)
-        {
-            if (this.setitem == 0)
-            {
-                this.warehousepagerWidget.ClearCondition();
-                if (this.toolStripComboBoxSelectWarehouse.SelectedIndex != 0)
-                {
-                    this.warehousepagerWidget.AddCondition(this.toolStripComboBoxSelectWarehouse.SelectedItem.ToString(), this.toolStripTextBoxSelectWarehouse.Text);
-                }
-                this.warehousepagerWidget.Search();
-            }
-
-        }
-
-
-
-        private void toolStripButtonSelectProject_Click(object sender, EventArgs e)
-        {
-            this.projectpagerWidget.ClearCondition();
-            if (this.toolStripComboBoxSelectProject.SelectedIndex != 0)
-            {
-                this.projectpagerWidget.AddCondition(this.toolStripComboBoxSelectProject.SelectedItem.ToString(), this.toolStripTextBoxSelectProject.Text);
-            }
-            this.projectpagerWidget.Search();
-        }
-
         private void toolStripButtonAddProject_Click(object sender, EventArgs e)
         {
             var formBaseProjectModify = new FormBase.FormBaseProjectModify();
@@ -291,16 +256,6 @@ namespace WMS.UI
                     MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             })).Start();
-        }
-
-        private void toolStripButtonSelectPackageUnit_Click(object sender, EventArgs e)
-        {
-            this.PackageUnitpagerWidget.ClearCondition();
-            if (this.toolStripComboBoxSelectPackageUnit.SelectedIndex != 0)
-            {
-                this.PackageUnitpagerWidget.AddCondition(this.toolStripComboBoxSelectPackageUnit.SelectedItem.ToString(), this.toolStripTextBoxSelectPackageUnit.Text);
-            }
-            this.PackageUnitpagerWidget.Search();
         }
 
         private void toolStripButtonAddPackageUnit_Click(object sender, EventArgs e)
@@ -394,79 +349,19 @@ namespace WMS.UI
         }
 
 
-
-
-
-
-        private void toolStripTextBoxSelect_KeyPress(object sender, KeyPressEventArgs e)
+        private void reoGridControlProject_Click(object sender, EventArgs e)
         {
-            if (e.KeyChar == 13)
-            {
-                this.toolStripButtonSelectWarehouse.PerformClick();
-            }
+
         }
 
-        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //启用双缓冲技术
+        protected override CreateParams CreateParams
         {
-            if (this.toolStripComboBoxSelectWarehouse.SelectedIndex == 0)
+            get
             {
-                this.toolStripTextBoxSelectWarehouse.Text = "";
-                this.toolStripTextBoxSelectWarehouse.Enabled = false;
-                this.toolStripTextBoxSelectWarehouse.BackColor = Color.LightGray;
-
-            }
-            else
-            {
-                this.toolStripTextBoxSelectWarehouse.Enabled = true;
-                this.toolStripTextBoxSelectWarehouse.BackColor = Color.White;
-            }
-        }
-
-        private void toolStripComboBoxSelectProject_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelectProject.SelectedIndex == 0)
-            {
-                this.toolStripTextBoxSelectProject.Text = "";
-                this.toolStripTextBoxSelectProject.Enabled = false;
-                this.toolStripTextBoxSelectProject.BackColor = Color.LightGray;
-
-            }
-            else
-            {
-                this.toolStripTextBoxSelectProject.Enabled = true;
-                this.toolStripTextBoxSelectProject.BackColor = Color.White;
-            }
-        }
-
-        private void toolStripComboBoxSelectPackageUnit_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelectPackageUnit.SelectedIndex == 0)
-            {
-                this.toolStripTextBoxSelectPackageUnit.Text = "";
-                this.toolStripTextBoxSelectPackageUnit.Enabled = false;
-                this.toolStripTextBoxSelectPackageUnit.BackColor = Color.LightGray;
-
-            }
-            else
-            {
-                this.toolStripTextBoxSelectPackageUnit.Enabled = true;
-                this.toolStripTextBoxSelectPackageUnit.BackColor = Color.White;
-            }
-        }
-
-        private void toolStripTextBoxSelectProject_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                this.toolStripButtonSelectProject.PerformClick();
-            }
-        }
-
-        private void toolStripTextBoxSelectPackageUnit_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                this.toolStripButtonSelectPackageUnit.PerformClick();
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
             }
         }
     }

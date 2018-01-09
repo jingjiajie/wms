@@ -20,7 +20,8 @@ namespace WMS.UI
             public string Sql = null;
             public List<SqlParameter> Parameters = new List<SqlParameter>();
         }
-
+        private bool shown = false;
+        private int pageSize = 50;
         private int curPage = 0;
         private int totalPage = 1;
         private ReoGridControl reoGrid = null;
@@ -36,7 +37,12 @@ namespace WMS.UI
         {
             set
             {
-                int totalPage = value / Utilities.PAGE_SIZE + (value % Utilities.PAGE_SIZE == 0 ? 0 : 1);
+                if(pageSize == -1)
+                {
+                    this.totalPage = 1;
+                    return;
+                }
+                int totalPage = value / this.pageSize + (value % this.pageSize == 0 ? 0 : 1);
                 this.TotalPage = totalPage == 0 ? 1 : totalPage; //总页数最少为1，不会出现0页
             }
         }
@@ -55,7 +61,7 @@ namespace WMS.UI
                     throw new Exception(string.Format("目标页{0}不可小于第一页！", value + 1, TotalPage));
                 }
                 curPage = value;
-                if (!this.IsDisposed)
+                if (this.shown && !this.IsDisposed)
                 {
                     this.Invoke(new Action(()=>
                     {
@@ -76,7 +82,7 @@ namespace WMS.UI
                 {
                     CurPage = totalPage - 1;
                 }
-                if (!this.IsDisposed)
+                if (this.shown && !this.IsDisposed)
                 {
                     this.Invoke(new Action(()=>
                     {
@@ -101,6 +107,11 @@ namespace WMS.UI
             this.keyNames = keyNames;
 
             Utilities.InitReoGrid(this.reoGrid,this.keyNames);
+        }
+
+        public void SetPageSize(int pageSize)
+        {
+            this.pageSize = pageSize;
         }
 
         private Condition MakeCondition(string key, string value)
@@ -309,9 +320,12 @@ namespace WMS.UI
 
                     //添加分页条件
                     sqlCondition += " ORDER BY ID DESC"; //倒序排序
-                    sqlCondition += " OFFSET @offsetRows ROWS FETCH NEXT @pageSize ROWS ONLY";
-                    parameters.Add(new SqlParameter("@offsetRows", this.curPage * Utilities.PAGE_SIZE));
-                    parameters.Add(new SqlParameter("@pageSize", Utilities.PAGE_SIZE));
+                    if(this.pageSize != -1)
+                    {
+                        sqlCondition += " OFFSET @offsetRows ROWS FETCH NEXT @pageSize ROWS ONLY";
+                        parameters.Add(new SqlParameter("@offsetRows", this.curPage * this.pageSize));
+                        parameters.Add(new SqlParameter("@pageSize", this.pageSize));
+                    }
 
                     try
                     {
@@ -352,6 +366,11 @@ namespace WMS.UI
                     Utilities.SelectLineByID(this.reoGrid,selectID);
                 }));
             })).Start();
+        }
+
+        private void PagerWidget_Shown(object sender, EventArgs e)
+        {
+            this.shown = true;
         }
     }
 }

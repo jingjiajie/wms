@@ -68,9 +68,8 @@ namespace WMS.UI
                     MakeTreeNode("用户管理"),
                     MakeTreeNode("供应商管理"),
                     MakeTreeNode("零件管理"),
-                    MakeTreeNode("仓库管理"),
-                    MakeTreeNode("项目管理"),
                     MakeTreeNode("人员管理"),
+                    MakeTreeNode("其他")
                     }),
                 MakeTreeNode("收货管理",new TreeNode[]{
                     MakeTreeNode("到货管理"),
@@ -103,14 +102,17 @@ namespace WMS.UI
         {
             var searchResult = (from fa in FormMainMetaData.FunctionAuthorities
                                 where fa.FunctionName == funcName
-                                select fa.Authority).ToArray();
-            if (searchResult.Length == 0) {
+                                select fa.Authorities).FirstOrDefault();
+            if (searchResult == null) {
                 return true;
             }
-            Authority authority = searchResult[0];
-            if (((int)authority & this.user.Authority) > 0)
+            Authority[] authorities = searchResult;
+            foreach(Authority authority in authorities)
             {
-                return true;
+                if(((int)authority & this.user.Authority) == (int)authority)
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -243,17 +245,10 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "仓库管理")
+            if (treeViewLeft.SelectedNode.Text == "其他")
             {
-                this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 this.setitem = 0;
-                FormBaseWarehouse l = new FormBaseWarehouse(this.setitem);//实例化子窗口
-                l.TopLevel = false;
-                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
-                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
-                this.panelRight.Controls.Add(l);
-                l.Show();
+                this.LoadSubWindow(new FormOtherInfo(this.setitem));
             }
             if (treeViewLeft.SelectedNode.Text == "项目管理")
             {
@@ -423,12 +418,14 @@ namespace WMS.UI
 
         private void LoadSubWindow(Form form)
         {
+            this.panelRight.Visible = false;
             form.TopLevel = false;
             form.Dock = DockStyle.Fill;//窗口大小
             form.FormBorderStyle = FormBorderStyle.None;//没有标题栏
             this.panelRight.Controls.Clear();//清空
             this.panelRight.Controls.Add(form);
             form.Show();
+            this.panelRight.Visible = true;
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)

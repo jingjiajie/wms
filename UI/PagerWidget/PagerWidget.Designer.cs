@@ -168,6 +168,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "PagerWidget";
             this.Text = "PagerWidget";
+            this.Shown += new System.EventHandler(this.PagerWidget_Shown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

@@ -385,11 +385,11 @@
     <Compile Include="FormBase\FormBaseUserAlter.Designer.cs">
       <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouse.cs">
+    <Compile Include="FormBase\FormOtherInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\FormBaseWarehouse.Designer.cs">
-      <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
+    <Compile Include="FormBase\FormOtherInfo.Designer.cs">
+      <DependentUpon>FormOtherInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\FormReceiptArrival.cs">
       <SubType>Form</SubType>
@@ -626,8 +626,8 @@
     <EmbeddedResource Include="FormBase\FormBaseUserAlter.resx">
       <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseWarehouse.resx">
-      <DependentUpon>FormBaseWarehouse.cs</DependentUpon>
+    <EmbeddedResource Include="FormBase\FormOtherInfo.resx">
+      <DependentUpon>FormOtherInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceiptArrival.resx">
       <DependentUpon>FormReceiptArrival.cs</DependentUpon>

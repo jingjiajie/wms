@@ -63,10 +63,10 @@ namespace WMS.UI
         BASE_COMPONENT_SUPPLIER_SELFONLY = 134217728,
     }
 
-    public class FunctionAuthority
+    public class FunctionAuthorities
     {
         public string FunctionName;
-        public Authority Authority;
+        public Authority[] Authorities;
     }
 
     public class ComboBoxItem
