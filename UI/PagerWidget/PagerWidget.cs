@@ -360,7 +360,16 @@ namespace WMS.UI
                         {
                             if (columns[j] == null) continue;
                             worksheet.Cells[i, j].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
-                            worksheet[i, j] = columns[j].ToString();
+                            string text = null;
+                            if (columns[j] is decimal || columns[j] is decimal?)
+                            {
+                                text = string.Format("{0:0.###}", columns[j]);
+                            }
+                            else
+                            {
+                                text = columns[j].ToString();
+                            }
+                            worksheet[i, j] = text;
                         }
                     }
                     Utilities.SelectLineByID(this.reoGrid,selectID);

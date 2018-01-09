@@ -16,12 +16,12 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "供应商ID", Key = "SupplierID", Visible = false, Editable = false, Save = true},
             new KeyName(){Name = "单号", Key = "No", Visible = true, Editable = true},
             new KeyName(){Name = "编号", Key = "Number", Visible = true, Editable = true},
-            new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = false, Editable = false, Save=false},
+            new KeyName(){Name = "项目名称", Key = "ProjectName" , Visible = true, Editable = false, Save=false},
             new KeyName(){Name = "供应商编号", Key = "SupplierNumber", Visible = true, Editable = false, Save = false},
             new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true, Save=false},
-            new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = false, Editable = false, Save=false},
+            new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = false, Save=false},
             new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true},
-            new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false},
+            new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("待送检","待送检"), new ComboBoxItem("已收货","已收货"), new ComboBoxItem("拒收", "拒收") } },
             new KeyName(){Name = "送货单号（SRM)", Key = "DeliverTicketNoSRM", Visible = true, Editable = true},
             new KeyName(){Name = "凭证来源", Key = "VoucherSource", Visible = true, Editable = true},
             new KeyName(){Name = "凭证号", Key = "VoucherNo", Visible = true, Editable = true},
@@ -55,7 +55,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "最后修改用户ID", Key = "LastUpdateUserID", Visible = false, Editable = false},
             new KeyName(){Name = "最后修改用户用户名", Key = "LastUpdateUserUsername", Visible = true, Editable = false, Save = false},
             new KeyName(){Name = "最后修改时间", Key = "LastUpdateTime", Visible = true, Editable = false},
-            
+            //new KeyName()
         };
         public static KeyName[] submissionTicketKeyName =
         {
