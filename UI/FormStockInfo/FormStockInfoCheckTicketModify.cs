@@ -76,7 +76,7 @@ namespace WMS.UI
 
             
             Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
-            this.Controls.Find("textBoxPersonID", true)[0].Click += textBoxPersonID_Click;
+            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
             {
@@ -102,8 +102,8 @@ namespace WMS.UI
 
 
 
-        private void textBoxPersonID_Click(object sender, EventArgs e)
-             
+        private void textBoxPersonName_Click(object sender, EventArgs e)
+              
 
         {
             var FormSelectPerson = new FormSelectPerson ();
@@ -121,7 +121,7 @@ namespace WMS.UI
                 //this.supplierID = selectedID;
                 //selectedID = 1;
                 this.personid  = selectedID;
-                this.Controls.Find("textBoxPersonID", true)[0].Text = PersonName .Name ;
+                this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName .Name ;
                
                 
 
