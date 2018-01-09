@@ -101,7 +101,7 @@ namespace WMS.UI
         private void buttonAdd_Click_1(object sender, EventArgs e)
         {
            
-            var form = new FormStockInfoCheckTicketModifyOnly(this.projectID, this.warehouseID,this.userID);
+            var form = new FormStockInfoCheckTicketModify(this.projectID, this.warehouseID,this.userID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback(() =>
             {
@@ -139,7 +139,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var a1 = new FormStockInfoCheckTicketModifyOnly (this.projectID, this.warehouseID,this.userID,stockInfoCheckID);
+                var a1 = new FormStockInfoCheckTicketModify (this.projectID, this.warehouseID,this.userID,stockInfoCheckID);
                 a1 .SetMode(FormMode.ALTER);
                 a1.SetModifyFinishedCallback(() =>
                 {
@@ -213,7 +213,7 @@ namespace WMS.UI
             else if ((ids.Length == 1))
             {
                 int stockiofocheckid = ids[0];
-                var a1 = new FormStockInfoCheckTicketModify(-1, -1,-1, stockiofocheckid);
+                var a1 = new FormStockInfoCheckTicketComponentModify(-1, -1,-1, stockiofocheckid);
                 a1.SetMode(FormMode.CHECK);
                 a1.Show();
             }
