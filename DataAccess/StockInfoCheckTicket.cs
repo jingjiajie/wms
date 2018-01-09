@@ -27,6 +27,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> PersonID { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ICollection<StockInfoCheckTicketItem> StockInfoCheckTicketItem { get; set; }

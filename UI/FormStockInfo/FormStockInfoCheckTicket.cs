@@ -19,6 +19,7 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
         int userID = -1;
+        private int  personid=-1;
         private PagerWidget<StockInfoCheckTicketView > pagerWidget = null;
         public FormStockInfoCheckTicket(int projectID, int warehouseID,int userID)
         {
@@ -27,12 +28,12 @@ namespace WMS.UI
             this.userID = userID;
             InitializeComponent();
         }
-
+         
         private void FormStockInfoCheckTicket_Load(object sender, EventArgs e)
         {
             InitComponents();
-            
-            
+
+            this.pagerWidget.ClearCondition();
             this.pagerWidget.Search();
         }
         private void InitComponents()
@@ -54,13 +55,11 @@ namespace WMS.UI
             pagerWidget.Show();
         }
 
-        private void reoGridControlMain_Click(object sender, EventArgs e)
-        {
-
-        }
+       
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
+            this.pagerWidget.ClearCondition();
             if (this.comboBoxSearchCondition.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
@@ -103,27 +102,11 @@ namespace WMS.UI
            
             var form = new FormStockInfoCheckTicketModify(this.projectID, this.warehouseID,this.userID);
             form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback(() =>
+            form.SetAddFinishedCallback((AddID) =>
             {
                
-                this.pagerWidget.Search();
-                //var worksheet = this.reoGridControlMain.Worksheets[0];
-                //var range = worksheet.SelectionRange;
-                //worksheet.SelectionRange = new RangePosition("A1:A1");
-
-                //int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-
-                //if (ids.Length != 1)
-                //{
-                //    MessageBox.Show("请选择一项");
-                //    return;
-                //}
-                //else if ((ids.Length == 1))
-                //{
-                //    int stockiofocheckid = ids[0];
-                //    FormStockInfoCheckTicketComponentModify a1 = new FormStockInfoCheckTicketComponentModify(stockiofocheckid);
-                //    a1.Show();
-                //}
+                this.pagerWidget.Search(false  ,AddID  );
+                
             });
             form.Show();
         }
@@ -141,9 +124,9 @@ namespace WMS.UI
                 int stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var a1 = new FormStockInfoCheckTicketModify (this.projectID, this.warehouseID,this.userID,stockInfoCheckID);
                 a1 .SetMode(FormMode.ALTER);
-                a1.SetModifyFinishedCallback(() =>
+                a1.SetModifyFinishedCallback((AlterID) =>
                 {
-                    this.pagerWidget.Search();
+                    this.pagerWidget.Search(false ,AlterID  );
                 });
                 a1.Show();
             }
@@ -196,10 +179,7 @@ namespace WMS.UI
             })).Start();
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            this.pagerWidget.Search();
-        }
+        
 
         private void button_additeam_Click(object sender, EventArgs e)
         {
@@ -210,36 +190,27 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项");
                 return;
             }
+
+
             else if ((ids.Length == 1))
             {
+                
+                
+
                 int stockiofocheckid = ids[0];
-                var a1 = new FormStockInfoCheckTicketComponentModify(-1, -1,-1, stockiofocheckid);
+                WMSEntities wmsEntities = new WMSEntities();
+                var personid =(from kn in wmsEntities .StockInfoCheckTicketView where 
+                                   kn.ID ==stockiofocheckid
+                                select kn.PersonID).Single () ;
+
+                this.personid = Convert .ToInt32 ( personid);
+
+                var a1 = new FormStockInfoCheckTicketComponentModify(-1, -1,-1,this.personid , stockiofocheckid);
                 a1.SetMode(FormMode.CHECK);
                 a1.Show();
             }
 
-            //var worksheet = this.reoGridControlMain.Worksheets[0];
-
-            //try
-            //{
-            //    if (worksheet.SelectionRange.Rows != 1)
-            //    {
-            //        throw new Exception();
-            //    }
-            //    int stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-            //    var a1 = new FormStockInfoCheckTicketModify(this.projectID, this.warehouseID, stockInfoCheckID);
-            //    a1.SetMode(FormMode.CHECK);
-            //    a1.SetCheckFinishedCallback(() =>
-            //    {
-            //        this.Search();
-            //    });
-            //    a1.Show();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
+           
 
 
 

@@ -22,9 +22,9 @@ namespace WMS.UI
 
         private PagerWidget<JobTicketView> pagerWidget = null;
 
-        private Action<string> toPutOutStorageTicketCallback = null;
+        private Action<string,string> toPutOutStorageTicketCallback = null;
 
-        public void SetToPutOutStorageTicketCallback(Action<string> callback)
+        public void SetToPutOutStorageTicketCallback(Action<string,string> callback)
         {
             this.toPutOutStorageTicketCallback = callback;
         }
@@ -232,7 +232,7 @@ namespace WMS.UI
                         MessageBox.Show("作业单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    this.toPutOutStorageTicketCallback(jobTicket.JobTicketNo);
+                    this.toPutOutStorageTicketCallback("JobTicketJobTicketNo",jobTicket.JobTicketNo);
                 }
                 catch (Exception)
                 {

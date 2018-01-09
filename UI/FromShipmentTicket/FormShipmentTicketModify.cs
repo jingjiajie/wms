@@ -19,8 +19,8 @@ namespace WMS.UI
         private int warehouseID = -1;
         private int userID = -1;
         private int curSupplierID = -1;
-        private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
+        private Action<int> modifyFinishedCallback = null;
+        private Action<int,bool> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
         private TextBox textBoxSupplierName = null;
@@ -44,7 +44,7 @@ namespace WMS.UI
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ShipmentTicketViewMetaData.KeyNames);
             this.textBoxSupplierName = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
             textBoxSupplierName.BackColor = Color.White;
-            textBoxSupplierName.MouseClick += textBoxSupplierName_MouseClick;
+            textBoxSupplierName.Click += textBoxSupplierName_Click;
 
             WMSEntities wmsEntities = new WMSEntities();
             if (this.mode == FormMode.ALTER)
@@ -85,7 +85,7 @@ namespace WMS.UI
             }
         }
 
-        private void textBoxSupplierName_MouseClick(object sender, EventArgs e)
+        private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
             FormSelectSupplier form = new FormSelectSupplier();
             form.SetSelectFinishCallback((supplierID)=>
@@ -230,25 +230,29 @@ namespace WMS.UI
                     //调用回调函数
                     if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
                         {
-                            this.modifyFinishedCallback();
+                            this.modifyFinishedCallback(shipmentTicket.ID);
                             MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
                         {
-                            this.addFinishedCallback();
-                            MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            bool openTicket = false;
+                            if(MessageBox.Show("添加成功！是否添加零件？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                            {
+                                openTicket = true;
+                            }
+                            this.addFinishedCallback(shipmentTicket.ID,openTicket);
                         }
                         this.Close();
                     }));
             }).Start();
         }
 
-        public void SetModifyFinishedCallback(Action callback)
+        public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
         }
 
-        public void SetAddFinishedCallback(Action callback)
+        public void SetAddFinishedCallback(Action<int,bool> callback)
         {
             this.addFinishedCallback = callback;
         }

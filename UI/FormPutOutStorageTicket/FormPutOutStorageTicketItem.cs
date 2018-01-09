@@ -16,7 +16,6 @@ namespace WMS.UI
     public partial class FormPutOutStorageTicketItem : Form
     {
         private int putOutStorageTicketID = -1;
-        private int curStockInfoID = -1;
 
         private KeyName[] visibleColumns = (from kn in PutOutStorageTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -67,33 +66,6 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, PutOutStorageTicketItemViewMetaData.KeyNames);
             worksheet.SelectionRangeChanged += worksheet_SelectionRangeChanged;
-
-            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            textBoxComponentName.Click += textBoxComponentName_Click;
-            textBoxComponentName.BackColor = Color.White;
-
-        }
-
-        private void textBoxComponentName_Click(object sender, EventArgs e)
-        {
-            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
-            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
-            {
-                this.curStockInfoID = selectedStockInfoID;
-                new Thread(new ThreadStart(() =>
-                {
-                    WMSEntities wmsEntities = new WMSEntities();
-                    StockInfoView stockInfoView = (from s in wmsEntities.StockInfoView
-                                                   where s.ID == selectedStockInfoID
-                                                   select s).Single();
-                    this.Invoke(new Action(() =>
-                    {
-                        Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
-                    }));
-                })).Start();
-            });
-            formSelectStockInfo.Show();
         }
 
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
@@ -120,7 +92,6 @@ namespace WMS.UI
             int[] ids = this.GetSelectedIDs();
             if(ids.Length == 0)
             {
-                this.curStockInfoID = -1; //如果没有选择任何一项，则库存信息ID也为空
                 return;
             }
 
@@ -145,14 +116,6 @@ namespace WMS.UI
                 {
                     MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                }
-                if (putOutStorageTicketItemView.StockInfoID != null)
-                {
-                    this.curStockInfoID = putOutStorageTicketItemView.StockInfoID.Value;
-                }
-                else
-                {
-                    this.curStockInfoID = -1;
                 }
                 this.Invoke(new Action(()=>
                 {
@@ -217,52 +180,9 @@ namespace WMS.UI
             }
             return ids.ToArray();
         }
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            if (this.curStockInfoID == -1)
-            {
-                MessageBox.Show("未选择零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            PutOutStorageTicketItem putOutStorageTicketItem = new PutOutStorageTicketItem();
-            putOutStorageTicketItem.StockInfoID = this.curStockInfoID;
-            putOutStorageTicketItem.PutOutStorageTicketID = this.putOutStorageTicketID;
-
-            if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
-            {
-                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            new Thread(new ThreadStart(() =>
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                wmsEntities.PutOutStorageTicketItem.Add(putOutStorageTicketItem);
-                try
-                {
-                    wmsEntities.SaveChanges();
-                }
-                catch
-                {
-                    MessageBox.Show("添加失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.Invoke(new Action(() =>
-                {
-                    this.Search(putOutStorageTicketItem.ID);
-                }));
-                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
-        }
-
+        
         private void buttonModify_Click(object sender, EventArgs e)
         {
-            if (this.curStockInfoID == -1)
-            {
-                MessageBox.Show("未选择零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if(ids.Length != 1)
             {
@@ -294,7 +214,6 @@ namespace WMS.UI
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                putOutStorageTicketItem.StockInfoID = this.curStockInfoID;
                 try
                 {
                     wmsEntities.SaveChanges();
@@ -341,39 +260,6 @@ namespace WMS.UI
                 MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             })).Start();
-        }
-
-
-        private void buttonAdd_MouseEnter(object sender, EventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
-        }
-
-        private void buttonAdd_MouseLeave(object sender, EventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
-        }
-
-        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
-
-
-
-        private void buttonDelete_MouseEnter(object sender, EventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
-        }
-
-        private void buttonDelete_MouseLeave(object sender, EventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
-        }
-
-        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
-        {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
         private void buttonModify_MouseEnter(object sender, EventArgs e)

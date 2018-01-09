@@ -404,13 +404,13 @@ namespace WMS.UI
             }));
         }
 
-        private void ToPutOutStorageTicketCallback(string jobTicketNo)
+        private void ToPutOutStorageTicketCallback(string condition,string jobTicketNo)
         {
             if (this.IsDisposed) return;
             this.Invoke(new Action(() =>
             {
                 FormPutOutStorageTicket formPutOutStorageTicket = new FormPutOutStorageTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
-                formPutOutStorageTicket.SetSearchCondition("JobTicketJobTicketNo", jobTicketNo);
+                formPutOutStorageTicket.SetSearchCondition(condition, jobTicketNo);
                 this.LoadSubWindow(formPutOutStorageTicket);
                 this.SetTreeViewSelectedNodeByText("出库单管理");
             }));

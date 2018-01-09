@@ -38,12 +38,19 @@ namespace WMS.UI
 
         private void FormShipmentTicketItem_Load(object sender, EventArgs e)
         {
-            InitComponents();
-
             ShipmentTicket shipmentTicket = null;
             try
             {
                 shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == shipmentTicketID select s).FirstOrDefault();
+                PackageUnitView[] units = (from u in wmsEntities.PackageUnitView select u).ToArray();
+                KeyName keyNameUnit = (from kn in ShipmentTicketItemViewMetaData.KeyNames
+                                       where kn.Key == "Unit"
+                                       select kn).First();
+                keyNameUnit.ComboBoxItems = new ComboBoxItem[units.Length];
+                for(int i = 0; i < units.Length; i++)
+                {
+                    keyNameUnit.ComboBoxItems[i] = new ComboBoxItem(units[i].Name);
+                }
             }
             catch
             {
@@ -57,6 +64,7 @@ namespace WMS.UI
                 this.Close();
                 return;
             }
+            InitComponents();
             this.Search();
         }
 

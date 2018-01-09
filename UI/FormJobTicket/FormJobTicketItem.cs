@@ -16,7 +16,6 @@ namespace WMS.UI
     public partial class FormJobTicketItem : Form
     {
         private int jobTicketID = -1;
-        private int curStockInfoID = -1;
         Action jobTicketStateChangedCallback = null;
 
         TextBox textBoxComponentName = null;
@@ -75,30 +74,6 @@ namespace WMS.UI
             worksheet.Columns = JobTicketItemViewMetaData.KeyNames.Length; //限制表的长度
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
-            this.textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName",true)[0];
-            this.textBoxComponentName.BackColor = Color.White;
-            this.textBoxComponentName.Click += textBoxComponentName_Click;
-        }
-
-        private void textBoxComponentName_Click(object sender, EventArgs e)
-        {
-            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
-            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
-            {
-                this.curStockInfoID = selectedStockInfoID;
-                new Thread(new ThreadStart(() =>
-                {
-                    WMSEntities wmsEntities = new WMSEntities();
-                    StockInfoView stockInfoView = (from s in wmsEntities.StockInfoView
-                                                   where s.ID == selectedStockInfoID
-                                                   select s).Single();
-                    this.Invoke(new Action(() =>
-                    {
-                        Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
-                    }));
-                })).Start();
-            });
-            formSelectStockInfo.Show();
         }
 
         private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
@@ -167,6 +142,8 @@ namespace WMS.UI
             ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState",true)[0];
             TextBox textBoxScheduledAmount = (TextBox)this.Controls.Find("textBoxScheduledAmount",true)[0];
             TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
+            TextBox textBoxHappenTime = (TextBox)this.Controls.Find("textBoxHappenTime", true)[0];
+            textBoxHappenTime.Text = DateTime.Now.ToString();
             JobTicketItem tmpJobTicketItem = new JobTicketItem();
             if (Utilities.CopyTextBoxTextsToProperties(this, tmpJobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
             {
@@ -252,7 +229,6 @@ namespace WMS.UI
             if (ids.Length == 0)
             {
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, JobTicketItemViewMetaData.KeyNames);
-                this.curStockInfoID = -1;
                 return;
             }
             int id = ids[0];
@@ -274,14 +250,7 @@ namespace WMS.UI
                 MessageBox.Show("作业单项目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if(jobTicketItemView.StockInfoID != null)
-            {
-                this.curStockInfoID = jobTicketItemView.StockInfoID.Value;
-            }
-            else
-            {
-                this.curStockInfoID = -1;
-            }
+
             Utilities.CopyPropertiesToTextBoxes(jobTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(jobTicketItemView, this);
         }
@@ -300,11 +269,6 @@ namespace WMS.UI
                 return;
             }
             int id = ids[0];
-            if(this.curStockInfoID == -1)
-            {
-                MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
             new Thread(() =>
             {
                 WMSEntities wmsEntities1 = new WMSEntities();
@@ -340,11 +304,15 @@ namespace WMS.UI
                         MessageBox.Show("实际翻包数量不能超过计划翻包数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    if(jobTicketItem.RealAmount < jobTicketItem.ScheduledPutOutAmount)
+                    {
+                        MessageBox.Show("实际翻包数量不能小于已分配出库数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     new Thread(()=>
                     {
                         try
                         {
-                            jobTicketItem.StockInfoID = this.curStockInfoID;
                             wmsEntities1.SaveChanges();
                         }
                         catch
@@ -426,7 +394,7 @@ namespace WMS.UI
 
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确定要全额完成所有条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show("确定要全额完成所有条目吗？（不会改变已经部分完成的条目）", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
@@ -435,7 +403,7 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount WHERE JobTicketID = {1} AND State<>'{2}';", JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED));
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount,HappenTime='{1}' WHERE JobTicketID = {2} AND State<>'{3}';", JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED, DateTime.Now.ToString(), this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED));
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", JobTicketViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID));
                     wmsEntities.SaveChanges();
                 }

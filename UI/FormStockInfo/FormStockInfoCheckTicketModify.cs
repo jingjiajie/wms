@@ -19,9 +19,10 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
         private int userID = -1;
+        private int personid = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
-        private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
+        private Action<int> modifyFinishedCallback = null;
+        private Action<int> addFinishedCallback = null;
         //private Action checkFinishedCallback = null;
 
 
@@ -72,29 +73,10 @@ namespace WMS.UI
 
             }
 
-            //for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
-            //{
-            //    KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
 
-            //    if (curKeyName.Visible == false && curKeyName.Editable == false) 
-            //    {
-            //        continue;
-            //    }
-            //    Label label = new Label();
-            //    label.Text = curKeyName.Name;
-            //    this.tableLayoutPanel3.Controls.Add(label);
-
-            //    TextBox textBox = new TextBox();
-            //    textBox.Name = "textBox" + curKeyName.Key;
-            //    if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
-            //    {
-            //        textBox.Enabled = false;
-            //    }
-            //    this.tableLayoutPanel3.Controls.Add(textBox);
-            //}
-
+            
             Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
-
+            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
             {
@@ -111,6 +93,49 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
+
+        }
+
+
+
+
+
+
+
+        private void textBoxPersonName_Click(object sender, EventArgs e)
+              
+
+        {
+            var FormSelectPerson = new FormSelectPerson ();
+            FormSelectPerson.SetSelectFinishCallback((selectedID) =>
+            {
+
+                var PersonName = (from s in wmsEntities.PersonView 
+                                     where s.ID == selectedID
+                                     select s).FirstOrDefault();
+                if (PersonName.Name  == null)
+                {
+                    MessageBox.Show("选择人员信息失败，人员信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //this.supplierID = selectedID;
+                //selectedID = 1;
+                this.personid  = selectedID;
+                this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName .Name ;
+               
+                
+
+
+
+
+
+            });
+            FormSelectPerson.Show();
+
+
+
+
+
 
         }
 
@@ -157,11 +182,11 @@ namespace WMS.UI
 
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                this.modifyFinishedCallback();
+                this.modifyFinishedCallback(stockInfoCheck.ID );
             }
             else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
-                this.addFinishedCallback();
+                this.addFinishedCallback(stockInfoCheck .ID );
             }
 
 
@@ -169,12 +194,12 @@ namespace WMS.UI
 
 
         }
-        public void SetModifyFinishedCallback(Action callback)
+        public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
         }
 
-        public void SetAddFinishedCallback(Action callback)
+        public void SetAddFinishedCallback(Action<int> callback)
         {
             this.addFinishedCallback = callback;
         }
@@ -220,6 +245,16 @@ namespace WMS.UI
       
         private void buttonModify_Click(object sender, EventArgs e)
         {
+
+            TextBox textBoxPersonName = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
+
+                if (textBoxPersonName.Text == string.Empty)
+            {
+                MessageBox.Show("请选择责任人", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+               
+                return;
+            }
             WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
 
             if (this.mode == FormMode.ALTER)
@@ -252,6 +287,7 @@ namespace WMS.UI
 
             stockInfoCheck.WarehouseID = warehouseID;
             stockInfoCheck.ProjectID = projectID;
+            stockInfoCheck.PersonID = this.personid;
 
             stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
 
@@ -260,11 +296,11 @@ namespace WMS.UI
 
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                this.modifyFinishedCallback();
+                this.modifyFinishedCallback(stockInfoCheck .ID );
             }
             else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
-                this.addFinishedCallback();
+                this.addFinishedCallback(stockInfoCheck .ID );
             }
 
 

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Threading;
+using unvell.ReoGrid.CellTypes;
 
 namespace WMS.UI
 {
@@ -19,9 +20,13 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
 
-        private Action<string> toPutOutStorageTicketCallback = null;
+        private volatile int validRows = 0;
 
-        public void SetToPutOutStorageTicketCallback(Action<string> callback)
+        private int[] editableColumns = new int[] { 1, 2 };
+
+        private Action<string,string> toPutOutStorageTicketCallback = null;
+
+        public void SetToPutOutStorageTicketCallback(Action<string,string> callback)
         {
             this.toPutOutStorageTicketCallback = callback;
         }
@@ -76,14 +81,49 @@ namespace WMS.UI
         private void InitComponents()
         {
             this.pagerWidget = new PagerWidget<JobTicketItemView>(this.reoGridControlMain, JobTicketItemViewMetaData.KeyNames);
-            this.panelPagerWidget.Controls.Add(this.pagerWidget);
-            this.pagerWidget.Show();
+            this.pagerWidget.SetPageSize(-1);
         }
 
         private void Search()
         {
             this.pagerWidget.AddStaticCondition("JobTicketID", this.jobTicketID.ToString());
-            this.pagerWidget.Search();
+            this.pagerWidget.Search(false,-1,(results)=>
+            {
+                this.validRows = results.Length;
+
+                if (this.IsDisposed) return;
+                this.Invoke(new Action(() =>
+                {
+                    var worksheet = this.reoGridControlMain.Worksheets[0];
+                    worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Cell;
+                    worksheet.InsertColumns(1, 2);
+                    worksheet.ColumnHeaders[1].Text = "选择";
+                    worksheet.ColumnHeaders[2].Text = "计划出库数量";
+                    worksheet.BeforeCellEdit += (s, e) =>
+                    {
+                        e.IsCancelled = !(editableColumns.Contains(e.Cell.Column) && e.Cell.Row < validRows);
+                    };
+                    for (int i = 0; i < results.Length; i++)
+                    {
+                        JobTicketItemView curJobTicketItemView = results[i];
+                        if (curJobTicketItemView.RealAmount == curJobTicketItemView.ScheduledPutOutAmount)
+                        {
+                            worksheet.Cells[i, 1].Style.BackColor = Color.LightGray;
+                            worksheet.Cells[i, 1].IsReadOnly = true;
+                        }
+                        else
+                        {
+                            worksheet[i, 1] = new CheckBoxCell(false); //显示复选框
+                        }
+                        //上颜色，边框
+                        worksheet.Cells[i, 2].Style.BackColor = Color.AliceBlue;
+                        worksheet.SetRangeBorders(i, 2, 1, 1, unvell.ReoGrid.BorderPositions.All, unvell.ReoGrid.RangeBorderStyle.SilverSolid);
+                        //计划翻包数量
+                        worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
+                        worksheet[i, 2] = (curJobTicketItemView.RealAmount - (curJobTicketItemView.ScheduledPutOutAmount ?? 0)) ?? 0; //计划出库数量默认等于实际作业数量-已经计划出库过的数量
+                    }
+                }));
+            });
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -94,6 +134,21 @@ namespace WMS.UI
                 MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            List<int> checkedLines = new List<int>();
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            for (int i = 0; i < this.reoGridControlMain.Worksheets[0].Rows; i++)
+            {
+                if ((worksheet[i, 1] as bool? ?? false) == false)
+                {
+                    continue;
+                }
+                checkedLines.Add(i);
+            }
+            if(checkedLines.Count == 0)
+            {
+                MessageBox.Show("至少选择一项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             new Thread(() =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
@@ -102,6 +157,7 @@ namespace WMS.UI
                 JobTicket jobTicket = (from s in wmsEntities.JobTicket
                                                  where s.ID == this.jobTicketID
                                                  select s).FirstOrDefault();
+
                 if (jobTicket == null)
                 {
                     MessageBox.Show("作业单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -113,15 +169,44 @@ namespace WMS.UI
                 newPutOutStorageTicket.CreateUserID = this.userID;
                 newPutOutStorageTicket.CreateTime = DateTime.Now;
 
-                foreach (var jobTicketItem in jobTicket.JobTicketItem)
+                foreach (int line in checkedLines)
                 {
-                    var putOutStorageTicketItem = new PutOutStorageTicketItem();
-                    putOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
-
-                    newPutOutStorageTicket.PutOutStorageTicketItem.Add(putOutStorageTicketItem);
+                    int id = int.Parse(worksheet[line, 0].ToString());
+                    JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
+                                                   where j.ID == id
+                                                   select j).FirstOrDefault();
+                    if (jobTicket == null)
+                    {
+                        MessageBox.Show("无法找到作业单条目，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (Utilities.CopyTextToProperty(worksheet[line, 2].ToString(), "ScheduledPutOutAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+                    {
+                        MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if(jobTicketItem.ScheduledPutOutAmount > jobTicketItem.RealAmount)
+                    {
+                        MessageBox.Show("行"+line+"：计划出库数量不能大于实际翻包完成数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    PutOutStorageTicketItem newPutOutStorageTicketItem = new PutOutStorageTicketItem();
+                    newPutOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
+                    newPutOutStorageTicketItem.ScheduledAmount = jobTicketItem.ScheduledPutOutAmount;
+                    newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
+                    newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
+                    newPutOutStorageTicket.PutOutStorageTicketItem.Add(newPutOutStorageTicketItem);
                 }
-                wmsEntities.SaveChanges();
-                newPutOutStorageTicket.No = Utilities.GenerateNo("C", newPutOutStorageTicket.ID);
+                //生成出库单号
+                if (string.IsNullOrWhiteSpace(newPutOutStorageTicket.No))
+                {
+                    DateTime createDay = new DateTime(jobTicket.CreateTime.Value.Year, jobTicket.CreateTime.Value.Month, jobTicket.CreateTime.Value.Day);
+                    DateTime nextDay = createDay.AddDays(1);
+                    int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from p in wmsEntities.PutOutStorageTicket
+                                                                          where p.CreateTime >= createDay && p.CreateTime < nextDay
+                                                                          select p.No).ToArray());
+                    newPutOutStorageTicket.No = Utilities.GenerateTicketNo("C", newPutOutStorageTicket.CreateTime.Value, maxRankOfToday + 1);
+                }
                 wmsEntities.SaveChanges();
                 if (MessageBox.Show("生成出库单成功，是否查看出库单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
@@ -129,7 +214,7 @@ namespace WMS.UI
                     {
                         throw new Exception("toPutOutStorageTicketCallback不可以为空！");
                     }
-                    this.toPutOutStorageTicketCallback(newPutOutStorageTicket.No);
+                    this.toPutOutStorageTicketCallback("No",newPutOutStorageTicket.No);
                 }
                 if (!this.IsDisposed)
                 {

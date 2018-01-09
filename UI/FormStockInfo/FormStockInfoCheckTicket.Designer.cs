@@ -104,7 +104,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(56, 25);
             this.toolStripButton1.Text = "查询";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButton1.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // toolStripSeparator1
             // 
@@ -188,7 +188,7 @@
             this.tableLayoutPanel1.Controls.Add(this.paperpanel, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 28);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
@@ -203,7 +203,7 @@
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
             this.reoGridControlMain.Location = new System.Drawing.Point(2, 2);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -220,7 +220,7 @@
             // paperpanel
             // 
             this.paperpanel.Location = new System.Drawing.Point(2, 294);
-            this.paperpanel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.paperpanel.Margin = new System.Windows.Forms.Padding(2);
             this.paperpanel.Name = "paperpanel";
             this.paperpanel.Size = new System.Drawing.Size(820, 28);
             this.paperpanel.TabIndex = 5;
@@ -233,7 +233,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormStockInfoCheckTicket";
             this.Text = "库存盘点";
             this.Load += new System.EventHandler(this.FormStockInfoCheckTicket_Load);

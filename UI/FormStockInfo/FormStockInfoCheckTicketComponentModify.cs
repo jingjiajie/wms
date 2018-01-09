@@ -20,6 +20,7 @@ namespace WMS.UI
         private int warehouseID = -1;
         private int userID = -1;
         private int stockinfoid = -1;
+        private int personid = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
@@ -28,13 +29,14 @@ namespace WMS.UI
 
 
 
-        public FormStockInfoCheckTicketComponentModify(int projectID, int warehouseID,int userID ,int stockInfoCheckID=-1)
+        public FormStockInfoCheckTicketComponentModify(int projectID, int warehouseID,int userID ,int personid ,int stockInfoCheckID=-1)
         {
             InitializeComponent();
             this.stockInfoCheckID = stockInfoCheckID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.personid = personid;
 
         }
 
@@ -78,37 +80,6 @@ namespace WMS.UI
 
             }
 
-            //for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
-            //{
-            //    KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
-
-            //    if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
-            //    {
-            //        continue;
-            //    }
-            //    Label label = new Label();
-            //    label.Text = curKeyName.Name;
-            //    this.tableLayoutPanel2.Controls.Add(label);
-
-            //    TextBox textBox = new TextBox();
-            //    textBox.Name = "textBox" + curKeyName.Key;
-            //    if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
-            //    {
-            //        textBox.Enabled = false;
-            //    }
-            //    this.tableLayoutPanel2.Controls.Add(textBox);
-            //}
-
-
-
-            //if (this.mode == FormMode.ALTER||this.mode==FormMode.CHECK)
-            //{
-            //    WMS.DataAccess.StockInfoCheckTicketView  stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
-            //                                   where s.ID == this.stockInfoCheckID
-            //                                   select s).Single();
-
-            //    Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
-            //}
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
@@ -161,6 +132,16 @@ namespace WMS.UI
                 this.Controls.Find("textBoxSupplierName", true)[0].Text = stockinfoName.SupplierName;
                 this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
                 this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+
+
+                this.Controls.Find("textBoxExpectedRejectAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.RejectAreaAmount );
+                this.Controls.Find("textBoxExpectedReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount  );
+                this.Controls.Find("textBoxExpectedSubmissionAmount", true)[0].Text = Convert.ToString(stockinfoName.SubmissionAmount );
+               
+
+
+
+
             });
             FormSelectStockInfo.Show();
 
@@ -252,29 +233,20 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            //FormStockInfoCheckTicketComponentModify1 a1 = new FormStockInfoCheckTicketComponentModify1(this.stockInfoCheckID);
-            //a1.SetAddFinishedCallback(() =>
-            //{
-            //    this.Search();
-
-            //});
-            //a1.Show();
+            
 
 
             DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            //TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
+            
 
             if (textBoxComponentName.Text == string.Empty)
             {
-                //StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text);
+               
                 MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //if (textBoxShipmentAreaAmount.Text != string.Empty)
-            //{
-            //    StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
-            //}
+          
 
 
             StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
@@ -286,7 +258,7 @@ namespace WMS.UI
 
 
             StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
-
+            StockInfoCheckTicketItem.PersonID = this.personid;
             
 
             //开始数据库操作
@@ -300,21 +272,10 @@ namespace WMS.UI
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             this.Search();
-            foreach (Control ctr in (this.tableLayoutPanel2.Controls))
-            {
-                if (ctr is TextBox)
-                {
-                    ctr.Text = "";
-                }
-                if(ctr.Name =="textBoxComponentName" )
-                {
-                    ctr.ForeColor = Color.Gray  ;
-                    
-                    ctr.Text = "点击选择零件";
-                    
-                }
-                
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            
+            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            
 
 
 
@@ -435,14 +396,7 @@ namespace WMS.UI
             })).Start();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
         
-
-      
     }
     
 }
