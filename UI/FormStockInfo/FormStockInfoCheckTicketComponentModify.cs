@@ -19,6 +19,7 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
         private int userID = -1;
+        private int stockinfoid = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
@@ -154,7 +155,8 @@ namespace WMS.UI
                     return;
                 }
                 //this.supplierID = selectedID;
-                selectedID = 1;
+                //selectedID = 1;
+                this.stockinfoid = selectedID;
                 this.Controls.Find("textBoxComponentName", true)[0].Text = stockinfoName.ComponentName;
                 this.Controls.Find("textBoxSupplierName", true)[0].Text = stockinfoName.SupplierName;
                 this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
@@ -260,7 +262,19 @@ namespace WMS.UI
 
 
             DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
+           TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            //TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
 
+            if (textBoxComponentName.Text == string.Empty)
+            {
+                //StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text);
+                MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            //if (textBoxShipmentAreaAmount.Text != string.Empty)
+            //{
+            //    StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
+            //}
 
 
             StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
@@ -268,22 +282,12 @@ namespace WMS.UI
 
 
             StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID ;
-            
+
+
+
+            StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
 
             
-            //StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
-
-            //TextBox textBoxOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxOverflowAreaAmount", true)[0];
-            //TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
-
-            //if (textBoxOverflowAreaAmount.Text != string.Empty)
-            //{
-                //StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text);
-            //}
-            //if (textBoxShipmentAreaAmount.Text != string.Empty)
-            //{
-                //StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
-            //}
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, StockInfoCheckTicketItem, StockInfoCheckTicksModifyMetaDate.KeyNames, out string errorMessage) == false)
@@ -296,6 +300,21 @@ namespace WMS.UI
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             this.Search();
+            foreach (Control ctr in (this.tableLayoutPanel2.Controls))
+            {
+                if (ctr is TextBox)
+                {
+                    ctr.Text = "";
+                }
+                if(ctr.Name =="textBoxComponentName" )
+                {
+                    ctr.ForeColor = Color.Gray  ;
+                    
+                    ctr.Text = "点击选择零件";
+                    
+                }
+                
+            }
 
 
 

@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockInfoCheckTicketModify));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormStockInfoCheckTicketComponentModify));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonfinish = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonfinish = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1.SuspendLayout();
@@ -72,8 +72,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.panel1.Controls.Add(this.buttonDelete);
             this.panel1.Controls.Add(this.buttonfinish);
+            this.panel1.Controls.Add(this.buttonDelete);
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Controls.Add(this.buttonAdd);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -83,26 +83,46 @@
             this.panel1.Size = new System.Drawing.Size(1020, 162);
             this.panel1.TabIndex = 0;
             // 
-            // buttonAdd
+            // buttonDelete
             // 
-            this.buttonAdd.BackColor = System.Drawing.Color.White;
-            this.buttonAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAdd.BackgroundImage")));
-            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonAdd.FlatAppearance.BorderSize = 0;
-            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAdd.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
-            this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(576, 8);
-            this.buttonAdd.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(115, 54);
-            this.buttonAdd.TabIndex = 0;
-            this.buttonAdd.Text = "    添加";
-            this.buttonAdd.UseVisualStyleBackColor = false;
-            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
-
+            this.buttonDelete.BackColor = System.Drawing.Color.White;
+            this.buttonDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDelete.BackgroundImage")));
+            this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonDelete.FlatAppearance.BorderSize = 0;
+            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDelete.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
+            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDelete.Location = new System.Drawing.Point(799, 44);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(115, 54);
+            this.buttonDelete.TabIndex = 8;
+            this.buttonDelete.Text = "    删除";
+            this.buttonDelete.UseVisualStyleBackColor = false;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click_1);
+            // 
+            // buttonfinish
+            // 
+            this.buttonfinish.BackColor = System.Drawing.Color.White;
+            this.buttonfinish.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonfinish.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonfinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonfinish.FlatAppearance.BorderSize = 0;
+            this.buttonfinish.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonfinish.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.buttonfinish.Image = ((System.Drawing.Image)(resources.GetObject("buttonfinish.Image")));
+            this.buttonfinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonfinish.Location = new System.Drawing.Point(690, 105);
+            this.buttonfinish.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.buttonfinish.Name = "buttonfinish";
+            this.buttonfinish.Size = new System.Drawing.Size(140, 54);
+            this.buttonfinish.TabIndex = 7;
+            this.buttonfinish.Text = "完成";
+            this.buttonfinish.UseVisualStyleBackColor = false;
+            this.buttonfinish.Visible = false;
+            this.buttonfinish.Click += new System.EventHandler(this.buttonfinish_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -123,47 +143,25 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(500, 153);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // buttonfinish
+            // buttonAdd
             // 
-            this.buttonfinish.BackColor = System.Drawing.Color.White;
-            this.buttonfinish.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
-            this.buttonfinish.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonfinish.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonfinish.FlatAppearance.BorderSize = 0;
-            this.buttonfinish.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonfinish.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonfinish.Image = ((System.Drawing.Image)(resources.GetObject("buttonfinish.Image")));
-            this.buttonfinish.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonfinish.Location = new System.Drawing.Point(576, 91);
-            this.buttonfinish.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.buttonfinish.Name = "buttonfinish";
-            this.buttonfinish.Size = new System.Drawing.Size(242, 54);
-            this.buttonfinish.TabIndex = 7;
-            this.buttonfinish.Text = "完成";
-            this.buttonfinish.UseVisualStyleBackColor = false;
-            this.buttonfinish.Click += new System.EventHandler(this.buttonfinish_Click);
-
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.BackColor = System.Drawing.Color.White;
-            this.buttonDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDelete.BackgroundImage")));
-            this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonDelete.FlatAppearance.BorderSize = 0;
-            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
-            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDelete.Location = new System.Drawing.Point(722, 9);
-            this.buttonDelete.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(115, 54);
-            this.buttonDelete.TabIndex = 8;
-            this.buttonDelete.Text = "    删除";
-            this.buttonDelete.UseVisualStyleBackColor = false;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click_1);
-
+            this.buttonAdd.BackColor = System.Drawing.Color.White;
+            this.buttonAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAdd.BackgroundImage")));
+            this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAdd.FlatAppearance.BorderSize = 0;
+            this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAdd.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
+            this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAdd.Location = new System.Drawing.Point(598, 44);
+            this.buttonAdd.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(115, 54);
+            this.buttonAdd.TabIndex = 0;
+            this.buttonAdd.Text = "    添加";
+            this.buttonAdd.UseVisualStyleBackColor = false;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -183,7 +181,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1032, 550);
             this.tableLayoutPanel1.TabIndex = 15;
-
             // 
             // reoGridControlMain
             // 
@@ -206,7 +203,7 @@
             this.reoGridControlMain.TabIndex = 13;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
-            // FormStockInfoCheckTicketModify
+            // FormStockInfoCheckTicketComponentModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -217,7 +214,7 @@
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormStockInfoCheckTicketModify";
+            this.Name = "FormStockInfoCheckTicketComponentModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "添加盘点单";
             this.Load += new System.EventHandler(this.FormStockCheckModify_Load);
