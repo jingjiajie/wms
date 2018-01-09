@@ -256,7 +256,7 @@ namespace WMS.UI
             }
         }
 
-        public void Search(bool savePage = false, int selectID = -1)
+        public void Search(bool savePage = false, int selectID = -1,Action<TargetClass[]> searchFinishedCallback=null)
         {
             if(savePage == false)
             {
@@ -364,6 +364,7 @@ namespace WMS.UI
                         }
                     }
                     Utilities.SelectLineByID(this.reoGrid,selectID);
+                    searchFinishedCallback?.Invoke(results);
                 }));
             })).Start();
         }

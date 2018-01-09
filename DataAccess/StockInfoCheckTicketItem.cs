@@ -21,6 +21,12 @@ namespace WMS.DataAccess
         public Nullable<decimal> RealOverflowAreaAmount { get; set; }
         public Nullable<decimal> RealShipmentAreaAmount { get; set; }
         public Nullable<int> StockInfoCheckTicketID { get; set; }
+        public Nullable<decimal> ExpectedRejectAreaAmount { get; set; }
+        public Nullable<decimal> RealRejectAreaAmount { get; set; }
+        public Nullable<decimal> ExpectedReceiptAreaAmount { get; set; }
+        public Nullable<decimal> RealReceiptAreaAmount { get; set; }
+        public Nullable<decimal> ExpectedSubmissionAmount { get; set; }
+        public Nullable<decimal> RealSubmissionAmount { get; set; }
     
         public virtual StockInfoCheckTicket StockInfoCheckTicket { get; set; }
     }

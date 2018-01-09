@@ -46,17 +46,17 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(4, 5);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.reoGridControlMain.Location = new System.Drawing.Point(5, 6);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
             this.reoGridControlMain.Script = null;
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 90;
+            this.reoGridControlMain.SheetTabWidth = 105;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1766, 438);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1064, 189);
             this.reoGridControlMain.TabIndex = 12;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -74,10 +74,10 @@
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             this.tableLayoutPanelMain.RowCount = 3;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 274F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 107F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(1774, 829);
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 308F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(1074, 629);
             this.tableLayoutPanelMain.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -91,12 +91,12 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel3.Controls.Add(this.buttonOK, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 725);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 512);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 101F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1768, 101);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 114F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1068, 114);
             this.tableLayoutPanel3.TabIndex = 14;
             // 
             // buttonOK
@@ -107,9 +107,9 @@
             this.buttonOK.FlatAppearance.BorderSize = 0;
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOK.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonOK.Location = new System.Drawing.Point(706, 3);
+            this.buttonOK.Location = new System.Drawing.Point(427, 3);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(354, 95);
+            this.buttonOK.Size = new System.Drawing.Size(211, 108);
             this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "创建作业单";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -124,9 +124,9 @@
             this.groupBox1.Controls.Add(this.tableLayoutEditPanel);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("黑体", 10F);
-            this.groupBox1.Location = new System.Drawing.Point(3, 451);
+            this.groupBox1.Location = new System.Drawing.Point(3, 204);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1768, 268);
+            this.groupBox1.Size = new System.Drawing.Size(1068, 302);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "作业单信息";
@@ -152,15 +152,16 @@
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutEditPanel.Size = new System.Drawing.Size(1762, 231);
+            this.tableLayoutEditPanel.Size = new System.Drawing.Size(1062, 265);
             this.tableLayoutEditPanel.TabIndex = 13;
             // 
             // FormJobTicketNew
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1774, 829);
+            this.ClientSize = new System.Drawing.Size(1074, 629);
             this.Controls.Add(this.tableLayoutPanelMain);
+            this.Font = new System.Drawing.Font("黑体", 10F);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormJobTicketNew";

@@ -368,6 +368,7 @@ namespace WMS.UI
                     comboBox.SelectedIndex = 0;
                     comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
                     comboBox.Dock = DockStyle.Fill;
+                    comboBox.Font = new Font("微软雅黑", 10);
                     tableLayoutPanel.Controls.Add(comboBox);
                 }
             }
