@@ -33,5 +33,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> ExpectedSubmissionAmount { get; set; }
         public Nullable<decimal> RealSubmissionAmount { get; set; }
         public Nullable<int> PersonID { get; set; }
+        public string PersonName { get; set; }
     }
 }
