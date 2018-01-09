@@ -39,6 +39,7 @@ namespace WMS.UI.FormReceipt
 
         private void ReceiptTicketModify_Load(object sender, EventArgs e)
         {
+            /*
             this.tableLayoutPanelTextBoxes.Controls.Clear();
             for (int i = 0; i < ReceiptMetaData.receiptNameKeys.Length; i++)
             {
@@ -60,13 +61,17 @@ namespace WMS.UI.FormReceipt
                 }
                 
                 this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            }
+                
+            }*/
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ReceiptMetaData.receiptNameKeys);
+
             if (this.formMode == FormMode.ALTER)
             {
                 ReceiptTicketView receiptTicketView = (from s in this.wmsEntities.ReceiptTicketView
                                                        where s.ID == this.ID
                                                        select s).Single();
                 Utilities.CopyPropertiesToTextBoxes(receiptTicketView, this);
+                Utilities.CopyPropertiesToComboBoxes(receiptTicketView, this);
                 if (receiptTicketView.SupplierID != null)
                 {
                     this.supplierID = (int)receiptTicketView.SupplierID;
@@ -75,12 +80,14 @@ namespace WMS.UI.FormReceipt
                 {
                     MessageBox.Show("请重新选择供应商");
                 }
-                this.Controls.Find("textBoxState", true)[0].Enabled = false;
+                //this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 //TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserUserID", true)[0];
                 //textBoxLastUpdateUserID.Text = this.userID.ToString();
             }
             else
             {
+                
+                
                 Warehouse warehouse = (from wh in wmsEntities.Warehouse where wh.ID == this.warehouseID select wh).FirstOrDefault();
                 if (warehouse == null)
                 {
@@ -107,8 +114,8 @@ namespace WMS.UI.FormReceipt
                     textBoxWarehouseName.Text = warehouse.Name;
                     textBoxWarehouseName.Enabled = false;*/
                 }
-                this.Controls.Find("textBoxState", true)[0].Text = "待送检";
-                this.Controls.Find("textBoxState", true)[0].Enabled = false;
+                this.Controls.Find("comboBoxState", true)[0].Text = "待送检";
+                //this.Controls.Find("textBoxState", true)[0].Enabled = false;
                 //TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
                 //textBoxProjectID.Text = this.projectID.ToString();
                 //textBoxProjectID.Enabled = false;
@@ -243,6 +250,7 @@ namespace WMS.UI.FormReceipt
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string oldState;
             TextBox textBox = this.Controls.Find("textBoxSupplierName", true)[0] as TextBox;
             if (textBox.Text == "")
             {
@@ -262,11 +270,98 @@ namespace WMS.UI.FormReceipt
                 //wmsEntities.ReceiptTicket.Add(receiptTicket);
                 else
                 {
+                    oldState = receiptTicket.State;
+                    if (Utilities.CopyComboBoxsToProperties(this, receiptTicket,ReceiptMetaData.receiptNameKeys) == false)
+                    {
+                        MessageBox.Show("状态获取失败。");
+                        return;
+                    }
                     receiptTicket.LastUpdateTime = DateTime.Now;
                     receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.ProjectID = this.projectID;
                     receiptTicket.Warehouse = this.warehouseID;
                     receiptTicket.SupplierID = this.supplierID;
+                    wmsEntities.SaveChanges();
+                    if (oldState == "待送检")
+                    {
+                        if (receiptTicket.State == "已收货")
+                        {
+                            if (MessageBox.Show("是否同时将所有条目置为收货，并将货物放置溢库区？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                                {
+                                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                    if (stockInfo == null)
+                                    {
+                                        return;
+                                    }
+                                    stockInfo.OverflowAreaAmount += stockInfo.ReceiptAreaAmount;
+                                    stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
+                                    rti.State = receiptTicket.State;
+                                }
+                            }
+                        }
+                        else if (receiptTicket.State == "拒收")
+                        {
+                            if (MessageBox.Show("是否同时将所有条目置为拒收？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                                {
+                                    rti.State = receiptTicket.State;
+                                }
+                            }
+                        }
+                    }
+                    else if (oldState == "已收货")
+                    {
+                        if (receiptTicket.State == "待送检" || receiptTicket.State == "拒收")
+                        {
+                            if (MessageBox.Show("是否同时将所有条目置为" + receiptTicket.State + "？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                foreach(ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                                {
+                                    rti.State = receiptTicket.State;
+                                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                    if (stockInfo == null)
+                                    {
+                                        return;
+                                    }
+                                    stockInfo.ReceiptAreaAmount += stockInfo.OverflowAreaAmount;
+                                    stockInfo.OverflowAreaAmount -= stockInfo.OverflowAreaAmount;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (receiptTicket.State == "待送检")
+                        {
+                            if (MessageBox.Show("是否同时将所有零件置为待送检？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                                {
+                                    rti.State = receiptTicket.State;
+                                }
+                            }
+                        }
+                        else if (receiptTicket.State == "已收货")
+                        {
+                            if (MessageBox.Show("是否同时将所有零件置为已收货，并将货物移到溢库区？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                foreach(ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                                {
+                                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                    if (stockInfo == null)
+                                    {
+                                        return;
+                                    }
+                                    stockInfo.OverflowAreaAmount += stockInfo.ReceiptAreaAmount;
+                                    stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
+                                    rti.State = receiptTicket.State;
+                                }
+                            }
+                        }
+                    }
                     wmsEntities.SaveChanges();
                     //MessageBox.Show("Successful!");
                 }
@@ -283,6 +378,11 @@ namespace WMS.UI.FormReceipt
                 //wmsEntities.ReceiptTicket.Add(receiptTicket);
                 else
                 {
+                    if (Utilities.CopyComboBoxsToProperties(this, receiptTicket, ReceiptMetaData.receiptNameKeys) == false)
+                    {
+                        MessageBox.Show("状态获取失败。");
+                        return;
+                    }
                     receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.Warehouse = this.warehouseID;
                     receiptTicket.ProjectID = this.projectID;
@@ -347,6 +447,7 @@ namespace WMS.UI.FormReceipt
                     //MessageBox.Show("Successful!");
                 }
             }
+            
             modifyFinishedCallback();
             this.Close();
         }

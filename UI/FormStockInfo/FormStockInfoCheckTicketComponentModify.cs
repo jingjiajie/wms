@@ -20,6 +20,7 @@ namespace WMS.UI
         private int warehouseID = -1;
         private int userID = -1;
         private int stockinfoid = -1;
+        private int personid = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
@@ -28,13 +29,14 @@ namespace WMS.UI
 
 
 
-        public FormStockInfoCheckTicketComponentModify(int projectID, int warehouseID,int userID ,int stockInfoCheckID=-1)
+        public FormStockInfoCheckTicketComponentModify(int projectID, int warehouseID,int userID ,int personid ,int stockInfoCheckID=-1)
         {
             InitializeComponent();
             this.stockInfoCheckID = stockInfoCheckID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.personid = personid;
 
         }
 
@@ -256,7 +258,7 @@ namespace WMS.UI
 
 
             StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
-
+            StockInfoCheckTicketItem.PersonID = this.personid;
             
 
             //开始数据库操作
