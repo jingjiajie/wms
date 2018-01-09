@@ -82,6 +82,12 @@
     <Compile Include="FormBase\FormBasePersonModify.Designer.cs">
       <DependentUpon>FormBasePersonModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormSelectPerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSelectPerson.Designer.cs">
+      <DependentUpon>FormSelectPerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormBase\FormSelectSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -487,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBasePersonModify.resx">
       <DependentUpon>FormBasePersonModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSelectPerson.resx">
+      <DependentUpon>FormSelectPerson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectSupplier.resx">
       <DependentUpon>FormSelectSupplier.cs</DependentUpon>
