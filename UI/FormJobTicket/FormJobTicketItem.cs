@@ -142,6 +142,8 @@ namespace WMS.UI
             ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState",true)[0];
             TextBox textBoxScheduledAmount = (TextBox)this.Controls.Find("textBoxScheduledAmount",true)[0];
             TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
+            TextBox textBoxHappenTime = (TextBox)this.Controls.Find("textBoxHappenTime", true)[0];
+            textBoxHappenTime.Text = DateTime.Now.ToString();
             JobTicketItem tmpJobTicketItem = new JobTicketItem();
             if (Utilities.CopyTextBoxTextsToProperties(this, tmpJobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
             {
@@ -302,6 +304,11 @@ namespace WMS.UI
                         MessageBox.Show("实际翻包数量不能超过计划翻包数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    if(jobTicketItem.RealAmount < jobTicketItem.ScheduledPutOutAmount)
+                    {
+                        MessageBox.Show("实际翻包数量不能小于已分配出库数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     new Thread(()=>
                     {
                         try
@@ -387,7 +394,7 @@ namespace WMS.UI
 
         private void buttonFinishAll_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确定要全额完成所有条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show("确定要全额完成所有条目吗？（不会改变已经部分完成的条目）", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
@@ -396,7 +403,7 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount WHERE JobTicketID = {1} AND State<>'{2}';", JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED));
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount,HappenTime='{1}' WHERE JobTicketID = {2} AND State<>'{3}';", JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED, DateTime.Now.ToString(), this.jobTicketID, JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED));
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", JobTicketViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID));
                     wmsEntities.SaveChanges();
                 }

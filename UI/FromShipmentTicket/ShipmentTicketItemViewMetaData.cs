@@ -15,7 +15,7 @@ namespace WMS.UI
             new KeyName(){Key="ShipmentAmount",Name="发货数量",NotNull=true,EditPlaceHolder="必填项"},
             new KeyName(){Key="Unit",Name="单位",ComboBoxItems=new ComboBoxItem[0] },
             //new KeyName(){Key="UnitAmount",Name="单位数量",Editable=false,Save=false},
-            new KeyName(){Key="ScheduledJobAmount",Name="已分配翻包数量",Editable=false,DefaultValueFunc=(()=>"0")},
+            new KeyName(){Key="ScheduledJobAmount",Name="已分配翻包数量",DefaultValueFunc=(()=>"0")},
             new KeyName(){Key="ReturnAmount",Name="退回数量（个）",DefaultValueFunc=(()=>"0")},
             new KeyName(){Key="ReturnReason",Name="退回原因"},
             new KeyName(){Key="OnlineTime",Name="上线时间",DefaultValueFunc=(()=>DateTime.Now.ToString()) },

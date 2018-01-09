@@ -14,7 +14,7 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
             new KeyName(){Key="No",Name="出库单号",EditPlaceHolder="留空自动生成"},
             new KeyName(){Key="JobTicketJobTicketNo",Name="关联作业单号",Editable=false,Save=false},
-            new KeyName(){Key="TruckLoadingTicketNo",Name="装车单号",Editable=true},
+            //new KeyName(){Key="TruckLoadingTicketNo",Name="装车单号",Editable=true},
             new KeyName(){Key="State",Name="状态",ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_LOADING),
                 new ComboBoxItem(STRING_STATE_DELIVERED),
@@ -26,7 +26,7 @@ namespace WMS.UI
             //new KeyName(){Key="SortTypeNo",Name="排序类型编码",Editable=true},
             new KeyName(){Key="TruckLoadingTime",Name="装车时间",Editable=true,DefaultValueFunc=(()=>DateTime.Now.ToString())},
             new KeyName(){Key="DeliverTime",Name="发运时间",Editable=true},
-            new KeyName(){Key="PersonName",Name="责任人",Save=false},
+            new KeyName(){Key="PersonName",Name="责任人",Save=false,EditPlaceHolder="点击选择人员"},
             new KeyName(){Key="CreateUserUsername",Name="创建用户",Editable=false,Save=false},
             new KeyName(){Key="CreateTime",Name="创建时间",Editable=false,Save=false},
             new KeyName(){Key="LastUpdateUserUsername",Name="最后修改用户",Editable=false,Save=false},

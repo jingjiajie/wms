@@ -55,8 +55,6 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            this.wmsEntities.Database.Connection.Open();
-
             string[] visibleColumnNames = (from kn in ShipmentTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
@@ -71,14 +69,14 @@ namespace WMS.UI
             this.pagerWidget.Show();
         }
 
-        private void Search()
+        private void Search(bool savePage = false,int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
             if(this.comboBoxSearchCondition.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(),this.textBoxSearchValue.Text);
             }
-            this.pagerWidget.Search();
+            this.pagerWidget.Search(savePage,selectID);
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -86,15 +84,20 @@ namespace WMS.UI
             var worksheet = this.reoGridControlMain.Worksheets[0];
             try
             {
-                if (worksheet.SelectionRange.Rows != 1)
+                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+                if(ids.Length != 1)
                 {
-                    throw new Exception();
+                    MessageBox.Show("请选择一项进行查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                int shipmentTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                int shipmentTicketID = ids[0];
                 var formShipmentTicketItem = new FormShipmentTicketItem(shipmentTicketID);
                 formShipmentTicketItem.SetShipmentTicketStateChangedCallback(() =>
                 {
-                    this.Invoke(new Action(this.Search));
+                    this.Invoke(new Action(() =>
+                    {
+                        this.Search(true);
+                    }));
                 });
                 formShipmentTicketItem.Show();
             }
@@ -109,9 +112,20 @@ namespace WMS.UI
         {
             var form = new FormShipmentTicketModify(this.projectID,this.warehouseID,this.userID);
             form.SetMode(FormMode.ADD);
-            form.SetAddFinishedCallback(() =>
+            form.SetAddFinishedCallback((id,openTicket) =>
             {
-                this.Search();
+                this.Search(false,id);
+                if (openTicket == false) return;
+                var formShipmentTicketItem = new FormShipmentTicketItem(id);
+                formShipmentTicketItem.SetShipmentTicketStateChangedCallback(() =>
+                {
+                    this.Invoke(new Action(()=>
+                    {
+                        this.Search();
+                    }));
+                });
+                formShipmentTicketItem.Show();
+
             });
             form.Show();
         }
@@ -127,9 +141,9 @@ namespace WMS.UI
                 }
                 int shipmentTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formShipmentTicketModify = new FormShipmentTicketModify(this.projectID,this.warehouseID,this.userID,shipmentTicketID);
-                formShipmentTicketModify.SetModifyFinishedCallback(() =>
+                formShipmentTicketModify.SetModifyFinishedCallback((id) =>
                 {
-                    this.Search();
+                    this.Search(true,id);
                 });
                 formShipmentTicketModify.Show();
             }
@@ -170,7 +184,7 @@ namespace WMS.UI
                     MessageBox.Show("删除失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(() => { this.Search(true); }));
             })).Start();
         }
 
