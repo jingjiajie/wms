@@ -46,5 +46,6 @@ namespace WMS.DataAccess
         public string JobPersonName { get; set; }
         public string ConfirmPersonName { get; set; }
         public Nullable<decimal> ScheduledJobAmount { get; set; }
+        public Nullable<decimal> UnitAmount { get; set; }
     }
 }

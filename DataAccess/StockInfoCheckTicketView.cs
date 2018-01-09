@@ -24,5 +24,6 @@ namespace WMS.DataAccess
         public string LastUpdateUserUsername { get; set; }
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> PersonID { get; set; }
     }
 }

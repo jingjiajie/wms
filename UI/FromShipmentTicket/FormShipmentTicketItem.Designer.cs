@@ -66,7 +66,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 496);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 493);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // panel1
@@ -227,7 +227,7 @@
             this.panel2.Location = new System.Drawing.Point(4, 234);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(896, 258);
+            this.panel2.Size = new System.Drawing.Size(896, 255);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlMain
@@ -247,7 +247,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(896, 258);
+            this.reoGridControlMain.Size = new System.Drawing.Size(896, 255);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -257,7 +257,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 496);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 17, 0);
             this.statusStrip1.Size = new System.Drawing.Size(904, 36);
@@ -280,7 +280,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 532);
+            this.ClientSize = new System.Drawing.Size(904, 529);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("黑体", 10F);

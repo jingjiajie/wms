@@ -26,5 +26,12 @@ namespace WMS.DataAccess
         public string ComponentName { get; set; }
         public string ComponentNumber { get; set; }
         public string SupplierNumber { get; set; }
+        public Nullable<decimal> ExpectedRejectAreaAmount { get; set; }
+        public Nullable<decimal> RealRejectAreaAmount { get; set; }
+        public Nullable<decimal> ExpectedReceiptAreaAmount { get; set; }
+        public Nullable<decimal> RealReceiptAreaAmount { get; set; }
+        public Nullable<decimal> ExpectedSubmissionAmount { get; set; }
+        public Nullable<decimal> RealSubmissionAmount { get; set; }
+        public Nullable<int> PersonID { get; set; }
     }
 }
