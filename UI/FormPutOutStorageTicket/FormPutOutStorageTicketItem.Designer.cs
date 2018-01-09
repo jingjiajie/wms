@@ -41,6 +41,8 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonModify = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonAllLoad = new System.Windows.Forms.Button();
+            this.buttonLoad = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -126,7 +128,7 @@
             this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 223F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelProperties, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -156,36 +158,39 @@
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(669, 138);
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(672, 138);
             this.tableLayoutPanelProperties.TabIndex = 0;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tableLayoutPanel3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(678, 3);
+            this.panel3.Location = new System.Drawing.Point(681, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(217, 138);
+            this.panel3.Size = new System.Drawing.Size(214, 138);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 189F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonLoad, 1, 2);
+            this.tableLayoutPanel3.Controls.Add(this.buttonAllLoad, 1, 1);
+            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(217, 138);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(214, 138);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonModify
@@ -193,14 +198,15 @@
             this.buttonModify.BackColor = System.Drawing.Color.White;
             this.buttonModify.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonModify.BackgroundImage")));
             this.buttonModify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonModify.FlatAppearance.BorderSize = 0;
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModify.Image = global::WMS.UI.Properties.Resources.cancle;
             this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(17, 53);
+            this.buttonModify.Location = new System.Drawing.Point(20, 92);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(168, 35);
+            this.buttonModify.Size = new System.Drawing.Size(174, 34);
             this.buttonModify.TabIndex = 1;
             this.buttonModify.Text = "修改项目";
             this.buttonModify.UseVisualStyleBackColor = false;
@@ -217,6 +223,42 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(898, 373);
             this.panel2.TabIndex = 1;
+            // 
+            // buttonAllLoad
+            // 
+            this.buttonAllLoad.BackColor = System.Drawing.Color.White;
+            this.buttonAllLoad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAllLoad.BackgroundImage")));
+            this.buttonAllLoad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAllLoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAllLoad.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAllLoad.FlatAppearance.BorderSize = 0;
+            this.buttonAllLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAllLoad.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.buttonAllLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAllLoad.Location = new System.Drawing.Point(20, 12);
+            this.buttonAllLoad.Name = "buttonAllLoad";
+            this.buttonAllLoad.Size = new System.Drawing.Size(174, 34);
+            this.buttonAllLoad.TabIndex = 2;
+            this.buttonAllLoad.Text = "全部完成装车";
+            this.buttonAllLoad.UseVisualStyleBackColor = false;
+            // 
+            // buttonLoad
+            // 
+            this.buttonLoad.BackColor = System.Drawing.Color.White;
+            this.buttonLoad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonLoad.BackgroundImage")));
+            this.buttonLoad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonLoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLoad.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonLoad.FlatAppearance.BorderSize = 0;
+            this.buttonLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonLoad.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.buttonLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonLoad.Location = new System.Drawing.Point(20, 52);
+            this.buttonLoad.Name = "buttonLoad";
+            this.buttonLoad.Size = new System.Drawing.Size(174, 34);
+            this.buttonLoad.TabIndex = 2;
+            this.buttonLoad.Text = "选中项目装车";
+            this.buttonLoad.UseVisualStyleBackColor = false;
             // 
             // FormPutOutStorageTicketItem
             // 
@@ -260,5 +302,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button buttonModify;
+        private System.Windows.Forms.Button buttonLoad;
+        private System.Windows.Forms.Button buttonAllLoad;
     }
 }

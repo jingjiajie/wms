@@ -24,9 +24,9 @@ namespace WMS.UI
 
         private int[] editableColumns = new int[] { 1, 2 };
 
-        private Action<string> toPutOutStorageTicketCallback = null;
+        private Action<string,string> toPutOutStorageTicketCallback = null;
 
-        public void SetToPutOutStorageTicketCallback(Action<string> callback)
+        public void SetToPutOutStorageTicketCallback(Action<string,string> callback)
         {
             this.toPutOutStorageTicketCallback = callback;
         }
@@ -191,6 +191,7 @@ namespace WMS.UI
                         return;
                     }
                     PutOutStorageTicketItem newPutOutStorageTicketItem = new PutOutStorageTicketItem();
+                    newPutOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
                     newPutOutStorageTicketItem.ScheduledAmount = jobTicketItem.ScheduledPutOutAmount;
                     newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
                     newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
@@ -213,7 +214,7 @@ namespace WMS.UI
                     {
                         throw new Exception("toPutOutStorageTicketCallback不可以为空！");
                     }
-                    this.toPutOutStorageTicketCallback(newPutOutStorageTicket.No);
+                    this.toPutOutStorageTicketCallback("No",newPutOutStorageTicket.No);
                 }
                 if (!this.IsDisposed)
                 {
