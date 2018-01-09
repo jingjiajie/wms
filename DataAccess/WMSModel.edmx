@@ -359,6 +359,7 @@
           <Property Name="LastUpdateTime" Type="datetime" />
           <Property Name="ProjectID" Type="int" />
           <Property Name="WarehouseID" Type="int" />
+          <Property Name="PersonID" Type="int" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicketItem">
           <Key>
@@ -377,6 +378,7 @@
           <Property Name="RealReceiptAreaAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ExpectedSubmissionAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="RealSubmissionAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PersonID" Type="int" />
         </EntityType>
         <EntityType Name="SubmissionTicket">
           <Key>
@@ -1041,6 +1043,7 @@
           <Property Name="RealReceiptAreaAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ExpectedSubmissionAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="RealSubmissionAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PersonID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.StockInfoCheckTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1058,6 +1061,7 @@
           <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
           <Property Name="ProjectID" Type="int" />
           <Property Name="WarehouseID" Type="int" />
+          <Property Name="PersonID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.StockInfoView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2228,7 +2232,8 @@ FROM [dbo].[ShipmentTicketView] AS [ShipmentTicketView]</DefiningQuery>
 [StockInfoCheckTicketItemView].[ExpectedReceiptAreaAmount] AS [ExpectedReceiptAreaAmount], 
 [StockInfoCheckTicketItemView].[RealReceiptAreaAmount] AS [RealReceiptAreaAmount], 
 [StockInfoCheckTicketItemView].[ExpectedSubmissionAmount] AS [ExpectedSubmissionAmount], 
-[StockInfoCheckTicketItemView].[RealSubmissionAmount] AS [RealSubmissionAmount]
+[StockInfoCheckTicketItemView].[RealSubmissionAmount] AS [RealSubmissionAmount], 
+[StockInfoCheckTicketItemView].[PersonID] AS [PersonID]
 FROM [dbo].[StockInfoCheckTicketItemView] AS [StockInfoCheckTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StockInfoCheckTicketView" EntityType="Self.StockInfoCheckTicketView" store:Type="Views" store:Schema="dbo">
@@ -2242,7 +2247,8 @@ FROM [dbo].[StockInfoCheckTicketItemView] AS [StockInfoCheckTicketItemView]</Def
 [StockInfoCheckTicketView].[CreateUserUsername] AS [CreateUserUsername], 
 [StockInfoCheckTicketView].[LastUpdateUserUsername] AS [LastUpdateUserUsername], 
 [StockInfoCheckTicketView].[ProjectID] AS [ProjectID], 
-[StockInfoCheckTicketView].[WarehouseID] AS [WarehouseID]
+[StockInfoCheckTicketView].[WarehouseID] AS [WarehouseID], 
+[StockInfoCheckTicketView].[PersonID] AS [PersonID]
 FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StockInfoView" EntityType="Self.StockInfoView" store:Type="Views" store:Schema="dbo">
@@ -3126,6 +3132,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="ProjectID" Type="Int32" />
           <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="PersonID" Type="Int32" />
           <NavigationProperty Name="Project" Relationship="WMSModel.FK__StockInfo__Proje__7EC1CEDB" FromRole="StockInfoCheckTicket" ToRole="Project" />
           <NavigationProperty Name="StockInfoCheckTicketItem" Relationship="WMSModel.FK__StockInfo__Stock__038683F8" FromRole="StockInfoCheckTicket" ToRole="StockInfoCheckTicketItem" />
           <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK__StockInfo__Wareh__7FB5F314" FromRole="StockInfoCheckTicket" ToRole="Warehouse" />
@@ -3147,6 +3154,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="RealReceiptAreaAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ExpectedSubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="RealSubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PersonID" Type="Int32" />
           <NavigationProperty Name="StockInfoCheckTicket" Relationship="WMSModel.FK__StockInfo__Stock__038683F8" FromRole="StockInfoCheckTicketItem" ToRole="StockInfoCheckTicket" />
         </EntityType>
         <EntityType Name="SubmissionTicket">
@@ -3805,6 +3813,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="RealReceiptAreaAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ExpectedSubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="RealSubmissionAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PersonID" Type="Int32" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicketView">
           <Key>
@@ -3820,6 +3829,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ProjectID" Type="Int32" />
           <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="PersonID" Type="Int32" />
         </EntityType>
         <EntityType Name="StockInfoView">
           <Key>
@@ -4814,6 +4824,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoCheckTicket">
             <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicket">
               <MappingFragment StoreEntitySet="StockInfoCheckTicket">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
@@ -4828,6 +4839,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoCheckTicketItem">
             <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketItem">
               <MappingFragment StoreEntitySet="StockInfoCheckTicketItem">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="RealSubmissionAmount" ColumnName="RealSubmissionAmount" />
                 <ScalarProperty Name="ExpectedSubmissionAmount" ColumnName="ExpectedSubmissionAmount" />
                 <ScalarProperty Name="RealReceiptAreaAmount" ColumnName="RealReceiptAreaAmount" />
@@ -5468,6 +5480,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoCheckTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketItemView">
               <MappingFragment StoreEntitySet="StockInfoCheckTicketItemView">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="RealSubmissionAmount" ColumnName="RealSubmissionAmount" />
                 <ScalarProperty Name="ExpectedSubmissionAmount" ColumnName="ExpectedSubmissionAmount" />
                 <ScalarProperty Name="RealReceiptAreaAmount" ColumnName="RealReceiptAreaAmount" />
@@ -5492,6 +5505,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoCheckTicketView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoCheckTicketView">
               <MappingFragment StoreEntitySet="StockInfoCheckTicketView">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
