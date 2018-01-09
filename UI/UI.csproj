@@ -319,23 +319,23 @@
     <Compile Include="FormReceipt\ReceiptTicketModify.Designer.cs">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.cs">
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.Designer.cs">
-      <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.Designer.cs">
-      <DependentUpon>FormStockInfoCheckTicketModifyOnly.cs</DependentUpon>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify1.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketComponentModify1.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicketModify.Designer.cs">
       <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.Designer.cs">
+      <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormStockInfo\FormStockInfoCheckTicket.cs">
       <SubType>Form</SubType>
@@ -605,8 +605,8 @@
     <EmbeddedResource Include="FormStockInfo\FormStockInfo.resx">
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModifyOnly.resx">
-      <DependentUpon>FormStockInfoCheckTicketModifyOnly.cs</DependentUpon>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModify.resx">
+      <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StandardFormPreviewExcel.resx">
       <DependentUpon>StandardFormPreviewExcel.cs</DependentUpon>
@@ -637,11 +637,11 @@
     <EmbeddedResource Include="FormReceipt\FormReceiptShelves.resx">
       <DependentUpon>FormReceiptShelves.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketComponentModify1.resx">
+      <DependentUpon>FormStockInfoCheckTicketComponentModify1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketComponentModify.resx">
       <DependentUpon>FormStockInfoCheckTicketComponentModify.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModify.resx">
-      <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormStockInfoModify.resx">
       <DependentUpon>FormStockInfoModify.cs</DependentUpon>

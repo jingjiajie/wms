@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using unvell.ReoGrid;
-using WMS.DataAccess;
-
 using System.Threading;
 using System.Data.SqlClient;
 
@@ -16,147 +14,251 @@ namespace WMS.UI
 {
     public partial class FormStockInfoCheckTicketComponentModify : Form
     {
-        private Action<int> selectFinishCallback = null;
-        private WMSEntities wmsEntities = new WMSEntities();
-        int stockinfocheckid = -1;
-        int stockinfoid = -1;
+        private FormMode mode = FormMode.ALTER;
+        private int stockInfoCheckID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
+        private int userID = -1;
+        private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
+        private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
-        public FormStockInfoCheckTicketComponentModify(int stockinfocheckid)
-            
+        //private Action checkFinishedCallback = null;
+       
+
+
+
+        public FormStockInfoCheckTicketComponentModify(int projectID, int warehouseID,int userID ,int stockInfoCheckID=-1)
         {
-            
-            this.stockinfocheckid = stockinfocheckid;
             InitializeComponent();
+            this.stockInfoCheckID = stockInfoCheckID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
+            this.userID = userID;
+
+        }
+
+        private void FormStockCheckModify_Load(object sender, EventArgs e)
+        {
+
+            
+            if (this.mode == FormMode.ALTER && this.stockInfoCheckID == -1)
+            {
+                throw new Exception("未设置源库存信息");
+            }
+            if(this.mode==FormMode.ADD||this.mode==FormMode.ALTER)
+            {
+                this.reoGridControlMain .Visible = false;
+                this.buttonAdd.Visible = false;
+                 
+                this.buttonDelete.Visible = false;
+                this.buttonfinish.Visible = false;
+                this.Size = new Size(500, 300);
+                this.MinimizeBox = false;
+                this.MaximizeBox = false;
+               
+
+            }
+            if (this.mode == FormMode.ADD)
+                {
+                this.labelStatus.Text = "添加盘点单";
+
+                 }
+            if (this.mode == FormMode.ALTER)
+            {
+                this.labelStatus.Text = "修改盘点单";
+
+            }
+            if (this.mode==FormMode.CHECK)
+            {
+                
+                this.labelStatus.Text = "盘点单条目";
+                
+
+
+            }
+
+            //for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
+            //{
+            //    KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
+
+            //    if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
+            //    {
+            //        continue;
+            //    }
+            //    Label label = new Label();
+            //    label.Text = curKeyName.Name;
+            //    this.tableLayoutPanel2.Controls.Add(label);
+
+            //    TextBox textBox = new TextBox();
+            //    textBox.Name = "textBox" + curKeyName.Key;
+            //    if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
+            //    {
+            //        textBox.Enabled = false;
+            //    }
+            //    this.tableLayoutPanel2.Controls.Add(textBox);
+            //}
+
+
+
+            //if (this.mode == FormMode.ALTER||this.mode==FormMode.CHECK)
+            //{
+            //    WMS.DataAccess.StockInfoCheckTicketView  stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
+            //                                   where s.ID == this.stockInfoCheckID
+            //                                   select s).Single();
+
+            //    Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
+            //}
+            Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+
+            this.InitComponents();
+            this.Search();
 
         }
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in StockInfoViewMetaData.KeyNames
+            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
-            this.toolStripComboBoxSelect1.Items.Add("无");
-            this.toolStripComboBoxSelect1.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect1.SelectedIndex = 0;
-
-
+           
+           
             //初始化表格
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = StockInfoViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoViewMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = StockInfoViewMetaData.KeyNames.Length;//限制表的长度
-            Console.WriteLine("表格行数：" + StockInfoViewMetaData.KeyNames.Length);
-
-            this.tableLayoutPanel2.Controls.Clear();
             for (int i = 0; i < StockInfoCheckTicksModifyMetaDate.KeyNames.Length; i++)
             {
-                KeyName curKeyName = StockInfoCheckTicksModifyMetaDate.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanel2.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanel2.Controls.Add(textBox);
+                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Visible;
             }
-            
-
-
+            worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
+           
         }
 
-        private void FormStockInfoCheckTicketComponentModify_Load(object sender, EventArgs e)
+
+        private void textBoxComponentName_Click(object sender, EventArgs e)
+
+
         {
-            this.InitComponents();
-            this.Search();
-           
-            
-           
-
-
-        }
-
-        private void labelStatus_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void Search()
-        {
-           
-            string key = null;
-            string value = null;
-
-            if (this.toolStripComboBoxSelect1.SelectedIndex != 0)
+            var FormSelectStockInfo = new FormSelectStockInfo();
+            FormSelectStockInfo.SetSelectFinishCallback((selectedID) =>
             {
-                key = (from kn in StockInfoViewMetaData.KeyNames
-                       where kn.Name == this.toolStripComboBoxSelect1 .SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.textBoxSearchValue.Text;
+
+                var stockinfoName = (from s in wmsEntities.StockInfoView
+                                     where s.ID == selectedID
+                                     select s).FirstOrDefault();
+                if (stockinfoName.ComponentName == null)
+                {
+                    MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //this.supplierID = selectedID;
+                selectedID = 1;
+                this.Controls.Find("textBoxComponentName", true)[0].Text = stockinfoName.ComponentName;
+                this.Controls.Find("textBoxSupplierName", true)[0].Text = stockinfoName.SupplierName;
+                this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
+                this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+            });
+            FormSelectStockInfo.Show();
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+            private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            WMS.DataAccess.StockInfoCheckTicket   stockInfoCheck = null;
+            
+            if (this.mode == FormMode.ALTER)
+            {
+                try
+                {
+                    stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
+                                      where s.ID == this.stockInfoCheckID
+                                      select s).Single();
+                    stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+                }
+                catch
+                {
+                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    this.Close();
+                    return;
+                }
+            }
+            else if (mode == FormMode.ADD)
+            {
+                stockInfoCheck = new WMS.DataAccess.StockInfoCheckTicket();
+                this.wmsEntities.StockInfoCheckTicket.Add(stockInfoCheck);
+                stockInfoCheck.CreateUserID = userID;
+                stockInfoCheck.CheckDate = Convert.ToDateTime(DateTime.Now.ToLongDateString( ));
+                stockInfoCheck.CreateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
+                stockInfoCheck .LastUpdateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
             }
 
-            this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlComponen .Worksheets[0];
-            worksheet[0, 0] = "加载中...";
-            new Thread(new ThreadStart(() =>
+            stockInfoCheck.WarehouseID = warehouseID;
+            stockInfoCheck.ProjectID  = projectID;
+            
+            stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+            //开始数据库操作
+            //if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
+            //{
+            //    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            wmsEntities.SaveChanges();
+            //调用回调函数
+          
+            if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                StockInfoView[] stockInfoViews = null;
-                string sql = "SELECT * FROM StockInfoView WHERE 1=1";
-                List<SqlParameter> parameters = new List<SqlParameter>();
+                this.modifyFinishedCallback();
+            }
+            else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
 
-             
-                if (key != null && value != null) //查询条件不为null则增加查询条件
-                {
-                    sql += "AND " + key + " = @value ";
-                    parameters.Add(new SqlParameter("value", value));
-                }
-                sql += " ORDER BY ID DESC"; //倒序排序
-                stockInfoViews = wmsEntities.Database.SqlQuery<StockInfoView>(sql, parameters.ToArray()).ToArray();
-                this.reoGridControlComponen.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (stockInfoViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < stockInfoViews.Length; i++)
-                    {
-                        StockInfoView curStockInfoView = stockInfoViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoViewMetaData.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
-                    }
-                }));
 
-            })).Start();
-        }
-
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
-            this.Search();
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
             this.Close();
+
+
         }
+        public void SetModifyFinishedCallback(Action callback)
+        {
+            this.modifyFinishedCallback = callback;
+        }
+
+        public void SetAddFinishedCallback(Action callback)
+        {
+            this.addFinishedCallback = callback;
+        }
+     
+
+
+        
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            //FormStockInfoCheckTicketComponentModify1 a1 = new FormStockInfoCheckTicketComponentModify1(this.stockInfoCheckID);
+            //a1.SetAddFinishedCallback(() =>
+            //{
+            //    this.Search();
+
+            //});
+            //a1.Show();
+
+
             DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
 
 
@@ -165,33 +267,23 @@ namespace WMS.UI
             this.wmsEntities.StockInfoCheckTicketItem.Add(StockInfoCheckTicketItem);
 
 
-            StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockinfocheckid;
-            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlComponen );
-
-            if (ids.Length != 1)
-            {
-                MessageBox.Show("请选择一项");
-                return;
-            }
-            else if ((ids.Length == 1))
-            {
-                int stockiofocheckid = ids[0];
-                
-                        }
-            this.stockinfoid = ids[0];
-            StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
+            StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID ;
             
-            TextBox textBoxOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxOverflowAreaAmount",true)[0];
-            TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
 
-            if (textBoxOverflowAreaAmount.Text != string.Empty)
-            {
-                StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text);
-            }
-            if (textBoxShipmentAreaAmount.Text != string.Empty)
-            {
-                StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
-            }
+            
+            //StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
+
+            //TextBox textBoxOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxOverflowAreaAmount", true)[0];
+            //TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
+
+            //if (textBoxOverflowAreaAmount.Text != string.Empty)
+            //{
+                //StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text);
+            //}
+            //if (textBoxShipmentAreaAmount.Text != string.Empty)
+            //{
+                //StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
+            //}
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, StockInfoCheckTicketItem, StockInfoCheckTicksModifyMetaDate.KeyNames, out string errorMessage) == false)
@@ -199,62 +291,139 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            else
-            {
-                Utilities.CopyComboBoxsToProperties(this, StockInfoCheckTicketItem, StockInfoCheckTicksModifyMetaDate.KeyNames);
-            }
+           
             wmsEntities.SaveChanges();
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            if ( this.addFinishedCallback != null)
-            {
-                this.addFinishedCallback();
-            }
+            this.Search();
+
+
+
+
+
 
         }
 
 
 
 
-     
-
-        private void reoGridControlComponen_Click(object sender, EventArgs e)
+        public void SetMode(FormMode mode)
         {
-            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlComponen);
-            
-            if (ids.Length != 1)
+            this.mode = mode;
+            if (mode == FormMode.ALTER)
             {
-                MessageBox.Show("请选择一项");
-                return;
+                this.Text = "修改盘点单信息";
+                
+               
             }
-            int b = ids[0];
-            WMS.DataAccess.StockInfoView a = (from s in this.wmsEntities.StockInfoView 
-                                             where s.ID == (b)
-                                             select s).Single();
-            Utilities.CopyPropertiesToTextBoxes(a, this);
+            else if (mode == FormMode.ADD)
+            {
+                this.Text = "添加盘点单信息";
+               
+               
+            }
+            else if (mode == FormMode.CHECK)
+                this.Text = "盘点单条目";
+                
 
         }
 
-        private void toolStripComboBoxSelect1_SelectedIndexChanged(object sender, EventArgs e)
+        private void Search()
         {
-            if (this.toolStripComboBoxSelect1.SelectedIndex == 0)
+           var worksheet = this.reoGridControlMain .Worksheets[0];
+            worksheet[0, 0] = "加载中...";
+            new Thread(new ThreadStart(() =>
             {
-                this.textBoxSearchValue.Text = "";
-                this.textBoxSearchValue.Enabled = false;
-                this.Search();
-            }
-            else
-            {
-                this.textBoxSearchValue.Enabled = true;
-            }
-        }
+                WMS.DataAccess.StockInfoCheckTicketItemView[] stockInfoViews = null;
+                string sql = "SELECT * FROM StockInfoCheckTicketItemView WHERE 1=1";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                if (this.stockInfoCheckID != -1)
+                {
+                    sql += "AND StockInfoCheckTicketID = @StockInfoCheckTicketID ";
+                    parameters.Add(new SqlParameter("StockInfoCheckTicketID", this.stockInfoCheckID));
+                }
 
 
-        public void SetAddFinishedCallback(Action callback)
-        {
-            this.addFinishedCallback = callback;
+                sql += " ORDER BY ID DESC"; //倒序排序
+                stockInfoViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoCheckTicketItemView>(sql, parameters.ToArray()).ToArray();
+                this.reoGridControlMain .Invoke(new Action(() =>
+                {
+                    
+                    worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    if (stockInfoViews.Length == 0)
+                    {
+                        worksheet[0, 1] = "没有查询到符合条件的记录";
+                    }
+                    for (int i = 0; i < stockInfoViews.Length; i++)
+                    {
+                        WMS.DataAccess.StockInfoCheckTicketItemView curStockInfoView = stockInfoViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames select kn.Key).ToArray());
+                        for (int j = 0; j < worksheet.Columns; j++)
+                        {
+                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                        }
+                    }
+                    if(this.mode ==FormMode.CHECK )
+                    this.labelStatus.Text = "搜索完成";
+                }));
+
+            })).Start();
         }
 
         
+
+        private void buttonfinish_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonDelete_Click_1(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+            {
+                try
+                {
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            this.labelStatus.Text = "正在删除...";
+
+
+            new Thread(new ThreadStart(() =>
+            {
+                foreach (int id in deleteIDs)
+                {
+                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicketItem WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
+                }
+                this.wmsEntities.SaveChanges();
+                this.Invoke(new Action(this.Search));
+            })).Start();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        
+
+      
     }
+    
 }
