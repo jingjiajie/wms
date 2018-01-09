@@ -10,7 +10,7 @@ namespace WMS.UI
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false ,Editable=false },
             new KeyName(){Key="CheckDate",Name="盘点日期",Visible=true    ,Editable=true ,EditPlaceHolder ="留空自动生成" },
-            new KeyName(){Key="PersonID",Name="责任人",Visible=true    ,Editable=false  , Save=false , EditPlaceHolder ="点击选择人员" },
+            new KeyName(){Key="PersonName",Name="责任人",Visible=true    ,Editable=false  , Save=false , EditPlaceHolder ="点击选择人员" },
             new KeyName(){Key="CreateUserID",Name="创建用户ID",Visible=false ,Editable=false },
             new KeyName(){Key="CreateTime",Name="创建时间",Visible=true,Editable=true,DefaultValueFunc=(()=>DateTime.Now.ToString())},
             new KeyName(){Key="LastUpdateUserID",Name="最后更新用户ID",Visible=false ,Editable=false },
