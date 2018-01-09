@@ -46,7 +46,19 @@ namespace WMS.UI
                 }
                 TextBox curTextBox = (TextBox)foundControls[0];
                 object value = p.GetValue(sourceObject, null);
-                curTextBox.Text = value == null ? "" : value.ToString();
+                string text = null;
+                if(value == null)
+                {
+                    text = "";
+                }else if(value is decimal || value is decimal?)
+                {
+                    text = string.Format("{0:0.###}",value);
+                }
+                else
+                {
+                    text = value.ToString();
+                }
+                curTextBox.Text = text;
             }
         }
 
