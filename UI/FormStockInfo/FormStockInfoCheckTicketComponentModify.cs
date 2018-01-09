@@ -235,18 +235,18 @@ namespace WMS.UI
         {
             
 
-
+            
             DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            
+
 
             if (textBoxComponentName.Text == string.Empty)
             {
-               
+
                 MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-          
+
 
 
             StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
@@ -269,6 +269,7 @@ namespace WMS.UI
             }
            
             wmsEntities.SaveChanges();
+            this.labelStatus.Text = "正在添加";
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             this.Search();
@@ -330,21 +331,37 @@ namespace WMS.UI
                 {
                     
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+
+
                     if (stockInfoViews.Length == 0)
                     {
                         worksheet[0, 1] = "没有查询到符合条件的记录";
                     }
-                    for (int i = 0; i < stockInfoViews.Length; i++)
+                    
+
+                    if (stockInfoViews.Length > worksheet .RowCount )
                     {
-                        WMS.DataAccess.StockInfoCheckTicketItemView curStockInfoView = stockInfoViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < worksheet.Columns; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
+                        worksheet.AppendRows(stockInfoViews.Length- worksheet.RowCount);
                     }
-                    if(this.mode ==FormMode.CHECK )
-                    this.labelStatus.Text = "搜索完成";
+                   
+                    this.labelStatus.Text = "盘点单条目";
+                    
+                        for (int i = 0; i < stockInfoViews.Length; i++)
+                        {
+                            WMS.DataAccess.StockInfoCheckTicketItemView curStockInfoView = stockInfoViews[i];
+                            object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames select kn.Key).ToArray());
+                            for (int j = 0; j < worksheet.Columns; j++)
+                            {
+                                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+                            }
+                        }
+                        if (this.mode == FormMode.CHECK)
+                        {
+                            this.labelStatus.Text = "盘点单条目";
+                        }
+                    
+
+                   
                 }));
 
             })).Start();
