@@ -245,6 +245,16 @@ namespace WMS.UI
       
         private void buttonModify_Click(object sender, EventArgs e)
         {
+
+            TextBox textBoxPersonName = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
+
+                if (textBoxPersonName.Text == string.Empty)
+            {
+                MessageBox.Show("请选择责任人", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+               
+                return;
+            }
             WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
 
             if (this.mode == FormMode.ALTER)

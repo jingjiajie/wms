@@ -270,21 +270,10 @@ namespace WMS.UI
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             this.Search();
-            foreach (Control ctr in (this.tableLayoutPanel2.Controls))
-            {
-                if (ctr is TextBox)
-                {
-                    ctr.Text = "";
-                }
-                if(ctr.Name =="textBoxComponentName" )
-                {
-                    ctr.ForeColor = Color.Gray  ;
-                    
-                    ctr.Text = "点击选择零件";
-                    
-                }
-                
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            
+            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            
 
 
 
@@ -405,15 +394,7 @@ namespace WMS.UI
             })).Start();
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+        
     }
     
 }
