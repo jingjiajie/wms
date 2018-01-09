@@ -40,8 +40,6 @@ namespace WMS.UI
 
         private void FormJobTicketNew_Load(object sender, EventArgs e)
         {
-            this.Size = new Size(950, 500);
-            this.CenterToScreen();
             this.InitComponents();
         }
 
@@ -193,6 +191,8 @@ namespace WMS.UI
                     }
                     jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
                     jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
+                    jobTicketItem.Unit = shipmentTicketItem.Unit;
+                    jobTicketItem.UnitAmount = shipmentTicketItem.UnitAmount;
                     shipmentTicketItem.ScheduledJobAmount += jobTicketItem.ScheduledAmount;
                     newJobTicket.JobTicketItem.Add(jobTicketItem);
                 }

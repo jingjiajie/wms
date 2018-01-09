@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Threading;
+using unvell.ReoGrid.CellTypes;
 
 namespace WMS.UI
 {
@@ -18,6 +19,10 @@ namespace WMS.UI
         private int userID = -1;
         private int projectID = -1;
         private int warehouseID = -1;
+
+        private volatile int validRows = 0;
+
+        private int[] editableColumns = new int[] { 1, 2 };
 
         private Action<string> toPutOutStorageTicketCallback = null;
 
@@ -76,14 +81,50 @@ namespace WMS.UI
         private void InitComponents()
         {
             this.pagerWidget = new PagerWidget<JobTicketItemView>(this.reoGridControlMain, JobTicketItemViewMetaData.KeyNames);
-            this.panelPagerWidget.Controls.Add(this.pagerWidget);
-            this.pagerWidget.Show();
+            this.pagerWidget.SetPageSize(-1);
+
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet.InsertColumns(1, 2);
+            worksheet.ColumnHeaders[1].Text = "选择";
+            worksheet.ColumnHeaders[2].Text = "计划出库数量";
+            worksheet.BeforeCellEdit += (s, e) =>
+            {
+                e.IsCancelled = !(editableColumns.Contains(e.Cell.Column) && e.Cell.Row < validRows);
+            };
         }
 
         private void Search()
         {
             this.pagerWidget.AddStaticCondition("JobTicketID", this.jobTicketID.ToString());
-            this.pagerWidget.Search();
+            this.pagerWidget.Search(false,-1,(results)=>
+            {
+                this.validRows = results.Length;
+
+                if (this.IsDisposed) return;
+                this.Invoke(new Action(() =>
+                {
+                    var worksheet = this.reoGridControlMain.Worksheets[0];
+                    for(int i = 0; i < results.Length; i++)
+                    {
+                        JobTicketItemView curJobTicketItemView = results[i];
+                        if (curJobTicketItemView.RealAmount == curJobTicketItemView.ScheduledPutOutAmount)
+                        {
+                            worksheet.Cells[i, 1].Style.BackColor = Color.LightGray;
+                            worksheet.Cells[i, 1].IsReadOnly = true;
+                        }
+                        else
+                        {
+                            worksheet[i, 1] = new CheckBoxCell(false); //显示复选框
+                        }
+                        //上颜色，边框
+                        worksheet.Cells[i, 2].Style.BackColor = Color.AliceBlue;
+                        worksheet.SetRangeBorders(i, 2, 1, 1, unvell.ReoGrid.BorderPositions.All, unvell.ReoGrid.RangeBorderStyle.SilverSolid);
+                        //计划翻包数量
+                        worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
+                        worksheet[i, 2] = curJobTicketItemView.RealAmount - curJobTicketItemView.ScheduledPutOutAmount; //计划出库数量默认等于实际作业数量-已经计划出库过的数量
+                    }
+                }));
+            });
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

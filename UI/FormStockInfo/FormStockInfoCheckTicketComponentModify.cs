@@ -161,6 +161,16 @@ namespace WMS.UI
                 this.Controls.Find("textBoxSupplierName", true)[0].Text = stockinfoName.SupplierName;
                 this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
                 this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+
+
+                this.Controls.Find("textBoxExpectedRejectAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.RejectAreaAmount );
+                this.Controls.Find("textBoxExpectedReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount  );
+                this.Controls.Find("textBoxExpectedSubmissionAmount", true)[0].Text = Convert.ToString(stockinfoName.SubmissionAmount );
+               
+
+
+
+
             });
             FormSelectStockInfo.Show();
 
@@ -440,9 +450,10 @@ namespace WMS.UI
             this.Close();
         }
 
-        
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
 
-      
+        }
     }
     
 }
