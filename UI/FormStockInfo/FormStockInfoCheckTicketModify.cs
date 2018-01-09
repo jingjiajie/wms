@@ -21,8 +21,8 @@ namespace WMS.UI
         private int userID = -1;
         private int personid = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
-        private Action modifyFinishedCallback = null;
-        private Action addFinishedCallback = null;
+        private Action<int> modifyFinishedCallback = null;
+        private Action<int> addFinishedCallback = null;
         //private Action checkFinishedCallback = null;
 
 
@@ -182,11 +182,11 @@ namespace WMS.UI
 
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                this.modifyFinishedCallback();
+                this.modifyFinishedCallback(stockInfoCheck.ID );
             }
             else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
-                this.addFinishedCallback();
+                this.addFinishedCallback(stockInfoCheck .ID );
             }
 
 
@@ -194,12 +194,12 @@ namespace WMS.UI
 
 
         }
-        public void SetModifyFinishedCallback(Action callback)
+        public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
         }
 
-        public void SetAddFinishedCallback(Action callback)
+        public void SetAddFinishedCallback(Action<int> callback)
         {
             this.addFinishedCallback = callback;
         }
@@ -296,11 +296,11 @@ namespace WMS.UI
 
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                this.modifyFinishedCallback();
+                this.modifyFinishedCallback(stockInfoCheck .ID );
             }
             else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
-                this.addFinishedCallback();
+                this.addFinishedCallback(stockInfoCheck .ID );
             }
 
 
