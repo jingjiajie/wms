@@ -78,37 +78,6 @@ namespace WMS.UI
 
             }
 
-            //for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
-            //{
-            //    KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
-
-            //    if (curKeyName.Visible == false && curKeyName.Editable == false) //&& curKeyName.Name != "ID")
-            //    {
-            //        continue;
-            //    }
-            //    Label label = new Label();
-            //    label.Text = curKeyName.Name;
-            //    this.tableLayoutPanel2.Controls.Add(label);
-
-            //    TextBox textBox = new TextBox();
-            //    textBox.Name = "textBox" + curKeyName.Key;
-            //    if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
-            //    {
-            //        textBox.Enabled = false;
-            //    }
-            //    this.tableLayoutPanel2.Controls.Add(textBox);
-            //}
-
-
-
-            //if (this.mode == FormMode.ALTER||this.mode==FormMode.CHECK)
-            //{
-            //    WMS.DataAccess.StockInfoCheckTicketView  stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
-            //                                   where s.ID == this.stockInfoCheckID
-            //                                   select s).Single();
-
-            //    Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
-            //}
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
@@ -262,29 +231,20 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            //FormStockInfoCheckTicketComponentModify1 a1 = new FormStockInfoCheckTicketComponentModify1(this.stockInfoCheckID);
-            //a1.SetAddFinishedCallback(() =>
-            //{
-            //    this.Search();
-
-            //});
-            //a1.Show();
+            
 
 
             DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            //TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
+            
 
             if (textBoxComponentName.Text == string.Empty)
             {
-                //StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = Convert.ToDecimal(textBoxOverflowAreaAmount.Text);
+               
                 MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            //if (textBoxShipmentAreaAmount.Text != string.Empty)
-            //{
-            //    StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = Convert.ToDecimal(textBoxShipmentAreaAmount.Text);
-            //}
+          
 
 
             StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();

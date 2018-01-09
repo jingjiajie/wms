@@ -19,6 +19,7 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
         private int userID = -1;
+        private int personid = -1;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
@@ -72,29 +73,10 @@ namespace WMS.UI
 
             }
 
-            //for (int i = 0; i < StockInfoCheckTicketViewMetaData.KeyNames.Length; i++)
-            //{
-            //    KeyName curKeyName = StockInfoCheckTicketViewMetaData.KeyNames[i];
 
-            //    if (curKeyName.Visible == false && curKeyName.Editable == false) 
-            //    {
-            //        continue;
-            //    }
-            //    Label label = new Label();
-            //    label.Text = curKeyName.Name;
-            //    this.tableLayoutPanel3.Controls.Add(label);
-
-            //    TextBox textBox = new TextBox();
-            //    textBox.Name = "textBox" + curKeyName.Key;
-            //    if (curKeyName.Editable == false || this.mode == FormMode.CHECK)
-            //    {
-            //        textBox.Enabled = false;
-            //    }
-            //    this.tableLayoutPanel3.Controls.Add(textBox);
-            //}
-
+            
             Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
-
+            this.Controls.Find("textBoxPersonID", true)[0].Click += textBoxPersonID_Click;
 
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
             {
@@ -111,6 +93,49 @@ namespace WMS.UI
         }
         private void InitComponents()
         {
+
+        }
+
+
+
+
+
+
+
+        private void textBoxPersonID_Click(object sender, EventArgs e)
+             
+
+        {
+            var FormSelectPerson = new FormSelectPerson ();
+            FormSelectPerson.SetSelectFinishCallback((selectedID) =>
+            {
+
+                var PersonName = (from s in wmsEntities.PersonView 
+                                     where s.ID == selectedID
+                                     select s).FirstOrDefault();
+                if (PersonName.Name  == null)
+                {
+                    MessageBox.Show("选择人员信息失败，人员信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //this.supplierID = selectedID;
+                //selectedID = 1;
+                this.personid  = selectedID;
+                this.Controls.Find("textBoxPersonID", true)[0].Text = PersonName .Name ;
+               
+                
+
+
+
+
+
+            });
+            FormSelectPerson.Show();
+
+
+
+
+
 
         }
 
@@ -252,6 +277,7 @@ namespace WMS.UI
 
             stockInfoCheck.WarehouseID = warehouseID;
             stockInfoCheck.ProjectID = projectID;
+            stockInfoCheck.PersonID = this.personid;
 
             stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
 
