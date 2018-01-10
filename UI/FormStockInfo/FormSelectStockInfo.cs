@@ -53,7 +53,7 @@ namespace WMS.UI
                 {
                     WMSEntities wmsEntities = new WMSEntities();
                     this.comboBoxSearchCondition.SelectedIndex = 1; //自动选中零件编号选项
-                    this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.ComponentNo).FirstOrDefault();
+                    this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.SupplyNo).FirstOrDefault();
                 }
                 catch
                 {
@@ -87,7 +87,7 @@ namespace WMS.UI
                     if (key == "零件编号")
                     {
                         stockInfoViews = (from s in this.wmsEntities.StockInfoView
-                                          where s.ComponentNo == value
+                                          where s.SupplyNo == value
                                           orderby s.ReceiptTicketItemManufactureDate ascending,
                                                     s.ReceiptTicketItemInventoryDate ascending,
                                                     s.ReceiptTicketItemExpiryDate descending

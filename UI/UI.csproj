@@ -63,12 +63,25 @@
     <Compile Include="FormBase\ComponentShipmentInfoModify.Designer.cs">
       <DependentUpon>ComponentShipmentInfoModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBase\FormSupplyModify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormSupplyModify.Designer.cs">
+      <DependentUpon>FormSupplyModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\SupplyViewMetaData.cs" />
     <Compile Include="FormBase\ComponenViewMetaData.cs" />
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBase\ComponentSingleBoxTranPackingInfoModify.Designer.cs">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase\FormBaseSupply.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBase\FormBaseSupply.Designer.cs">
+      <DependentUpon>FormBaseSupply.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\FormBasePerson.cs">
       <SubType>Form</SubType>
@@ -494,11 +507,17 @@
     <EmbeddedResource Include="FormBase\ComponentSingleBoxTranPackingInfoModify.resx">
       <DependentUpon>ComponentSingleBoxTranPackingInfoModify.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormBaseSupply.resx">
+      <DependentUpon>FormBaseSupply.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBasePerson.resx">
       <DependentUpon>FormBasePerson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBasePersonModify.resx">
       <DependentUpon>FormBasePersonModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase\FormSupplyModify.resx">
+      <DependentUpon>FormSupplyModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSelectPerson.resx">
       <DependentUpon>FormSelectPerson.cs</DependentUpon>

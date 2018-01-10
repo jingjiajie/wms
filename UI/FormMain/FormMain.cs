@@ -51,6 +51,7 @@ namespace WMS.UI
                 MakeTreeNode("基本信息",new TreeNode[]{
                     MakeTreeNode("用户管理"),
                     MakeTreeNode("供应商管理"),
+                    MakeTreeNode("供货管理"),
                     MakeTreeNode("零件管理"),
                     MakeTreeNode("人员管理"),
                     MakeTreeNode("其他")
@@ -223,6 +224,17 @@ namespace WMS.UI
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
                 FormBaseSupplier l = new FormBaseSupplier(user.Authority,Convert.ToInt32(this.user.SupplierID),this.user.ID );//实例化子窗口
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
+                l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+            if (treeViewLeft.SelectedNode.Text == "供货管理")
+            {
+                this.panelRight.Controls.Clear();//清空
+                panelRight.Visible = true;
+                FormBaseSupply l = new FormBaseSupply(user.Authority, Convert.ToInt32(this.user.SupplierID), this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏

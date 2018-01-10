@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 
 namespace WMS.UI
 {
-    public partial class FormBaseComponent : Form
+    public partial class FormBaseSupply : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
@@ -26,20 +26,20 @@ namespace WMS.UI
         private Supplier supplier = null;
         private int contractst;   //合同状态
         private int contract_change = 1;
-        private PagerWidget<ComponentView> pagerWidget = null;
+        private PagerWidget<SupplyView> pagerWidget = null;
 
-        public FormBaseComponent(int authority, int supplierID, int projectID, int warehouseID, int userID)
+        public FormBaseSupply(int authority, int supplierID, int projectID, int warehouseID, int userID)
         {
-            InitializeComponent();
+            InitializeSupply();
             this.authority = authority;
             this.supplierID = supplierID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
         }
-        private void InitComponents()
+        private void InitSupplys()
         {
-            string[] visibleColumnNames = (from kn in ComponenViewMetaData.componenkeyNames
+            string[] visibleColumnNames = (from kn in SupplyViewMetaData.supplykeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
@@ -48,12 +48,12 @@ namespace WMS.UI
             this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
             this.toolStripComboBoxSelect.SelectedIndex = 0;
 
-            this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlComponen, ComponenViewMetaData.componenkeyNames, this.projectID, this.warehouseID);
+            this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlSupply, SupplyViewMetaData.supplykeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
         }
 
-        private void FormBaseComponent_Load(object sender, EventArgs e)
+        private void FormBaseSupply_Load(object sender, EventArgs e)
         {
             if(supplierID !=0)
             { this.toolStripButtonAdd.Enabled = false;
@@ -76,7 +76,7 @@ namespace WMS.UI
                     this.toolStripButtonAlter.Enabled = false;
                 }
 
-                InitComponents();
+                InitSupplys();
 
                 this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
                 this.pagerWidget.AddCondition("IsHistory", "0");
@@ -85,7 +85,7 @@ namespace WMS.UI
             }
             if ((this.authority & authority_self) == authority_self)
             {
-                InitComponents();
+                InitSupplys();
                 this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.Search();
             }
@@ -148,7 +148,7 @@ namespace WMS.UI
 
             this.pagerWidget.ClearCondition();
 
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            var worksheet = this.reoGridControlSupply.Worksheets[0];
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -156,7 +156,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                this.pagerWidget.AddCondition("NewestComponentID", Convert.ToString(componenID));
+                this.pagerWidget.AddCondition("NewestSupplyID", Convert.ToString(componenID));
             }
 
             catch
@@ -189,134 +189,11 @@ namespace WMS.UI
 
         }
 
-        //private void Search(int selectedID = -1)
-        //    {
-        //        string key = null;
-        //        string value = null;
-
-        //        if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-        //        {
-        //            key = (from kn in ComponenViewMetaData.componenkeyNames
-        //                   where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-        //                   select kn.Key).First();
-        //            value = this.textBoxSearchValue.Text;
-        //        }
-
-        //        this.labelStatus.Text = "正在搜索中...";
-
-
-        //        new Thread(new ThreadStart(() =>
-        //        {
-        //            var wmsEntities = new WMSEntities();
-        //            ComponentView[] componentViews = null;
-        //            string sql = "SELECT * FROM ComponentView WHERE 1=1 ";
-        //            List<SqlParameter> parameters = new List<SqlParameter>();
-
-        //            if ((this.authority & authority_self) == authority_self)
-        //            {
-
-        //                if (this.projectID != -1)
-        //                {
-        //                    sql += "AND ProjectID = @projectID ";
-        //                    parameters.Add(new SqlParameter("projectID", this.projectID));
-        //                }
-        //                if (warehouseID != -1)
-        //                {
-        //                    sql += "AND WarehouseID = @warehouseID ";
-        //                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
-        //                }
-        //                if (key != null && value != null) //查询条件不为null则增加查询条件
-        //                {
-        //                    sql += "AND " + key + " = @value ";
-        //                    parameters.Add(new SqlParameter("value", value));
-        //                }
-        //                sql += " ORDER BY ID DESC"; //倒序排序
-        //                try
-        //                {
-        //                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
-        //                }
-        //                catch (EntityCommandExecutionException)
-        //                {
-        //                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //                    return;
-        //                }
-        //                catch (Exception)
-        //                {
-        //                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //                    return;
-        //                }
-
-        //            }
-        //            if ((this.authority & authority_self) == 0)
-        //            {
-
-        //                sql += "AND SupplierID = @supplierID ";
-        //                parameters.Add(new SqlParameter("supplierID", this.supplierID));
-
-        //                if (this.projectID != -1)
-        //                {
-        //                    sql += "AND ProjectID = @projectID ";
-        //                    parameters.Add(new SqlParameter("projectID", this.projectID));
-        //                }
-        //                if (warehouseID != -1)
-        //                {
-        //                    sql += "AND WarehouseID = @warehouseID ";
-        //                    parameters.Add(new SqlParameter("warehouseID", this.warehouseID));
-        //                }
-        //                if (key != null && value != null) //查询条件不为null则增加查询条件
-        //                {
-        //                    sql += "AND " + key + " = @value ";
-        //                    parameters.Add(new SqlParameter("value", value));
-        //                }
-        //                sql += " ORDER BY ID DESC"; //倒序排序
-        //                try
-        //                {
-        //                    componentViews = wmsEntities.Database.SqlQuery<ComponentView>(sql, parameters.ToArray()).ToArray();
-        //                }
-        //                catch (EntityCommandExecutionException)
-        //                {
-        //                    MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //                    return;
-        //                }
-        //                catch (Exception)
-        //                {
-        //                    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //                    return;
-        //                }
-        //            }
-
-        //            this.reoGridControlComponen.Invoke(new Action(() =>
-        //            {
-        //                this.labelStatus.Text = "搜索完成";
-        //                var worksheet = this.reoGridControlComponen.Worksheets[0];
-        //                worksheet.DeleteRangeData(RangePosition.EntireRange);
-        //                if (componentViews.Length == 0)
-        //                {
-        //                    worksheet[0, 1] = "没有查询到符合条件的记录";
-        //                }
-        //                for (int i = 0; i < componentViews.Length; i++)
-        //                {
-
-        //                    ComponentView curComponentView = componentViews[i];
-        //                    object[] columns = Utilities.GetValuesByPropertieNames(curComponentView, (from kn in ComponenViewMetaData.componenkeyNames select kn.Key).ToArray());
-        //                    for (int j = 0; j < worksheet.Columns; j++)
-        //                    {
-        //                        worksheet[i, j] = columns[j];
-        //                    }
-        //                }
-        //                if (selectedID != -1)
-        //                {
-        //                    Utilities.SelectLineByID(this.reoGridControlComponen, selectedID);
-        //                }
-        //            }));
-
-        //        })).Start();
-        //    }
 
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID, this.userID);
+            var form = new FormSupplyModify(this.projectID, this.warehouseID, this.supplierID, this.userID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback((addedID) =>
             {
@@ -329,7 +206,7 @@ namespace WMS.UI
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            var worksheet = this.reoGridControlSupply.Worksheets[0];
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -337,12 +214,12 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formComponenModify = new FormComponenModify(this.projectID, this.warehouseID, this.supplierID, this.userID, componenID);
-                formComponenModify.SetModifyFinishedCallback((addedID) =>
+                var formSupplyModify = new FormSupplyModify(this.projectID, this.warehouseID, this.supplierID, this.userID, componenID);
+                formSupplyModify.SetModifyFinishedCallback((addedID) =>
                 {
                     this.pagerWidget.Search(false,addedID);
                 });
-                formComponenModify.Show();
+                formSupplyModify.Show();
             }
             catch
             {
@@ -353,7 +230,7 @@ namespace WMS.UI
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            var worksheet = this.reoGridControlSupply.Worksheets[0];
             List<int> deleteIDs = new List<int>();
             for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
             {
@@ -381,47 +258,47 @@ namespace WMS.UI
 
                 new Thread(new ThreadStart(() =>
                 {
-                    //try
-                    //{
-                    //    foreach (int id in deleteIDs)
-                    //    {
+                    try
+                    {
+                        foreach (int id in deleteIDs)
+                        {
 
-                    //        var componen_historyid = (from kn in wmsEntities.Component
-                    //                                  where kn.NewestComponentID == id
-                    //                                  select kn.ID).ToArray();
-                    //        if (componen_historyid.Length > 0)
-                    //        {
-                    //            try
-                    //            {
-                    //                foreach (int NewestComponentid in componen_historyid)
-                    //                {
-                    //                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componentID", new SqlParameter("componentID", NewestComponentid));
+                            var componen_historyid = (from kn in wmsEntities.Supply
+                                                      where kn.NewestSupplyID == id
+                                                      select kn.ID).ToArray();
+                            if (componen_historyid.Length > 0)
+                            {
+                                try
+                                {
+                                    foreach (int NewestSupplyid in componen_historyid)
+                                    {
+                                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supply WHERE ID = @componentID", new SqlParameter("componentID", NewestSupplyid));
 
 
-                    //                }
-                    //                wmsEntities.SaveChanges();
-                    //            }
-                    //            catch
-                    //            {
-                    //                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //                return;
-                    //            }
-                    //        }
+                                    }
+                                    wmsEntities.SaveChanges();
+                                }
+                                catch
+                                {
+                                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
 
-                    //    }
+                        }
 
-                    //}
-                    //catch
-                    //{
-                    //    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
+                    }
+                    catch
+                    {
+                        MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     try
                     {
                         foreach (int id in deleteIDs)
                         {
-                            this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Component WHERE ID = @componenID", new SqlParameter("componenID", id));
+                            this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supply WHERE ID = @componenID", new SqlParameter("componenID", id));
                         }
                     }
                     catch (Exception)
@@ -469,9 +346,9 @@ namespace WMS.UI
 
         }
 
-        private void toolStripButtonComponentSingleBoxTranPackingInfo_Click(object sender, EventArgs e)
+        private void toolStripButtonSupplySingleBoxTranPackingInfo_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            var worksheet = this.reoGridControlSupply.Worksheets[0];
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -501,9 +378,9 @@ namespace WMS.UI
             }
         }
 
-        private void toolStripButtonComponentOuterPackingSize_Click(object sender, EventArgs e)
+        private void toolStripButtonSupplyOuterPackingSize_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            var worksheet = this.reoGridControlSupply.Worksheets[0];
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -533,9 +410,9 @@ namespace WMS.UI
             }
         }
 
-        private void toolStripButtonComponentShipmentInfo_Click(object sender, EventArgs e)
+        private void toolStripButtonSupplyShipmentInfo_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlComponen.Worksheets[0];
+            var worksheet = this.reoGridControlSupply.Worksheets[0];
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -569,8 +446,8 @@ namespace WMS.UI
         private void buttonImport_Click(object sender, EventArgs e)
         {
             //创建导入窗口
-            StandardImportForm<DataAccess.Component> formImport =
-                new StandardImportForm<DataAccess.Component>
+            StandardImportForm<DataAccess.Supply> formImport =
+                new StandardImportForm<DataAccess.Supply>
                 (
                     //参数1：KeyName
                     ComponenViewMetaData.pluscomponenkeyNames,

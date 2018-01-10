@@ -108,10 +108,10 @@ namespace WMS.UI
                     try
                     {
                         componen.ID = -1;
-                        componen.IsHistory = 1;
-                        componen.NewestComponentID = this.componenID;
-                        componen.LastUpdateUserID = this.userID;
-                        componen.LastUpdateTime = DateTime.Now;
+                        //componen.IsHistory = 1;
+                        //componen.NewestComponentID = this.componenID;
+                        //componen.LastUpdateUserID = this.userID;
+                        //componen.LastUpdateTime = DateTime.Now;
                         wmsEntities.SaveChanges();
                     }
                     catch
@@ -153,9 +153,9 @@ namespace WMS.UI
                 Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.ComponentOuterPackingSizekeyNames);
             }
 
-            componen.LastUpdateUserID = this.userID;
-            componen.LastUpdateTime = DateTime.Now;
-            componen.IsHistory = 0;
+            //componen.LastUpdateUserID = this.userID;
+            //componen.LastUpdateTime = DateTime.Now;
+            //componen.IsHistory = 0;
             wmsEntities.SaveChanges();
             //调用回调函数
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
