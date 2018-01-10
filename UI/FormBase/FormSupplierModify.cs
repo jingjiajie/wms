@@ -20,6 +20,7 @@ namespace WMS.UI
         private FormMode mode = FormMode.ALTER;
         private int contract_change;
         private int userid = -1;
+        private int history_save = 0;
       
 
         public FormSupplierModify(int supplierID = -1,int contract_change=1,int userid=-1)
@@ -37,30 +38,7 @@ namespace WMS.UI
             { 
                 throw new Exception("未设置源供应商信息");
             }
-            //this.tableLayoutPanel1.Controls.Clear();
-            //for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
-            //{
-            //    KeyName curKeyName = SupplierMetaData.KeyNames[i];
-            //    if (curKeyName.Visible == false && curKeyName.Editable == false) 
-            //    {
-            //        continue;
-            //    }
-            //    //if (curKeyName.Visible == true  && curKeyName.Editable == false)
-            //    //{
-            //    //    continue;
-            //    //}
-            //    Label label = new Label();
-            //    label.Text = curKeyName.Name;
-            //    this.tableLayoutPanel1.Controls.Add(label);
-
-            //    TextBox textBox = new TextBox();
-            //    textBox.Name = "textBox" + curKeyName.Key;
-            //    if (curKeyName.Editable == false)
-            //    {
-            //        textBox.Enabled = false;
-            //    }
-            //    this.tableLayoutPanel1.Controls.Add(textBox);
-            //}
+           
 
             Utilities.CreateEditPanel(this.tableLayoutPanel1, SupplierMetaData .KeyNames);
             //this.textBoxSupplierName = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
@@ -111,11 +89,16 @@ namespace WMS.UI
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
-            DialogResult MsgBoxResult= DialogResult.No;//设置对话框的返回值
+
+
+         
+                DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
+
+           
             TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName", true)[0];
          
             TextBox textBoxName = (TextBox)this.Controls.Find("textBoxName", true)[0];
-            if (this.mode == FormMode.ALTER)
+            if (this.mode == FormMode.ALTER&&this.history_save ==0)//如果没保存过历史信息，则跳出提示
             {
                 
 
@@ -170,17 +153,17 @@ namespace WMS.UI
                         return;
                     }
 
-                    if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
+                    if (MsgBoxResult == DialogResult.Yes)//&&this.history_save ==0)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
                     {
 
 
-                       
+
                         this.wmsEntities.Supplier.Add(supplier);
                         try
                         {
                             supplier.ID = -1;
                             supplier.IsHistory = 1;
-                            supplier.NewestSupplierID =this.supplierID ;
+                            supplier.NewestSupplierID = this.supplierID;
                             supplier.LastUpdateUserID = this.userid;
                             supplier.LastUpdateTime = DateTime.Now;
                             wmsEntities.SaveChanges();
@@ -191,9 +174,10 @@ namespace WMS.UI
                             return;
                         }
 
-                        var supplierstorge = (from u in wmsEntities.SupplierStorageInfo 
-                                             where u.SupplierID  == this.supplierID 
-                                             select u).ToArray();
+                        var supplierstorge = (from u in wmsEntities.SupplierStorageInfo
+                                              where u.SupplierID == this.supplierID
+                                              select u).ToArray();
+
 
                         if (supplierstorge.Length > 0)
                         {
@@ -202,8 +186,12 @@ namespace WMS.UI
                             {
                                 try
                                 {
-                                    supplierstorge[i].ExecuteSupplierID = supplier.ID ;
+                                    supplierstorge[i].ExecuteSupplierID = supplier.ID;
                                     wmsEntities.SaveChanges();
+                                    {
+                                        MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    this.history_save = 1;
                                 }
                                 catch
                                 {
@@ -211,14 +199,25 @@ namespace WMS.UI
                                 }
                             }
 
-                       }
+                        }
+                        else
+                        {
+                            {
+                                MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            this.history_save = 1;
 
+
+                        }
+
+                        
 
 
 
 
 
                         //继续查找
+
                         try
                         {
                             supplier = (from s in this.wmsEntities.Supplier
