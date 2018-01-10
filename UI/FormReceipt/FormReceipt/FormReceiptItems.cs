@@ -95,15 +95,15 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 this.componentID = id;
-                WMS.DataAccess.Component component = (from c in wmsEntities.Component where c.ID == id select c).FirstOrDefault();
-                if (component == null)
+                WMS.DataAccess.Supply supply = (from c in wmsEntities.Supply where c.ID == id select c).FirstOrDefault();
+                if (supply == null)
                 {
                     MessageBox.Show("没有找到该零件");
                 }
                 else
                 {
-                    this.Controls.Find("textBoxComponentName", true)[0].Text = component.Name;
-                    this.Controls.Find("textBoxComponentNo", true)[0].Text = component.No;
+                    this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
+                    this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
                 }
             }));
             formSearch.Show();
@@ -150,9 +150,9 @@ namespace WMS.UI
                 return;
             }
             this.receiptTicketItemID = int.Parse(receiptTicketItemView.ID.ToString());
-            if (receiptTicketItemView.ComponentID != null)
+            if (receiptTicketItemView.SupplyID != null)
             {
-                this.componentID = (int)receiptTicketItemView.ComponentID;
+                this.componentID = (int)receiptTicketItemView.SupplyID;
             }
             Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(receiptTicketItemView, this);
@@ -254,7 +254,7 @@ namespace WMS.UI
                             MessageBox.Show("该收货单不存在");
                             return;
                         }
-                        receiptTicketItem.ComponentID = this.componentID;
+                        receiptTicketItem.SupplyID = this.componentID;
                         receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
                         
                         wmsEntities.SaveChanges();
@@ -333,7 +333,7 @@ namespace WMS.UI
                     {
                         try
                         {
-                            receiptTicketItem.ComponentID = this.componentID;
+                            receiptTicketItem.SupplyID = this.componentID;
                             StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
                             if (stockInfo == null)
                             {

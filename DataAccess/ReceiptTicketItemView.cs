@@ -56,15 +56,16 @@ namespace WMS.DataAccess
         public Nullable<int> SupplyComponentID { get; set; }
         public string SupplyNumber { get; set; }
         public string SupplyNo { get; set; }
-        public Nullable<decimal> SupplyShipmentUnitAmount { get; set; }
-        public string SupplyShipmentUnit { get; set; }
-        public Nullable<decimal> SupplyReceiptUnitAmount { get; set; }
-        public string SupplyReceiptUnit { get; set; }
         public Nullable<decimal> ComponentDefaultShipmentUnitAmount { get; set; }
         public string ComponentDefaultShipmentUnit { get; set; }
         public Nullable<decimal> ComponentDefaultReceiptUnitAmount { get; set; }
         public string ComponentDefaultReceiptUnit { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
         public string Unit { get; set; }
+        public Nullable<int> SupplyID { get; set; }
+        public string SupplyDefaultReceiptUnit { get; set; }
+        public Nullable<decimal> SupplyDefaultReceiptUnitAmount { get; set; }
+        public string SupplyDefaultShipmentUnit { get; set; }
+        public Nullable<decimal> SupplyDefaultShipmentUnitAmount { get; set; }
     }
 }
