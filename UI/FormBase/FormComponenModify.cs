@@ -22,6 +22,7 @@ namespace WMS.UI
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
+        private int history_save = 0;
 
         public FormComponenModify(int projectID, int warehouseID, int supplierID, int userID, int componenID = -1)
         {
@@ -104,7 +105,7 @@ namespace WMS.UI
             var textBoxName = this.Controls.Find("textBoxName", true)[0];
 
             //询问是否保留历史信息
-            if (this.mode == FormMode.ALTER)
+            if (this.mode == FormMode.ALTER && this.history_save == 0)
             {
 
 
@@ -192,6 +193,21 @@ namespace WMS.UI
                         MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+
+                    var componenstorge = (from u in wmsEntities.Component
+                                          where u.NewestComponentID == this.componenID
+                                          select u).ToArray();
+
+
+                    if (componenstorge.Length > 0)
+                    {
+
+
+                                    MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.history_save = 1;
+                    }
+
 
 
                     try

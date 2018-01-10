@@ -102,8 +102,11 @@ namespace WMS.UI
             if (this.buttonSearch.Text == "全部信息")
             {
                 this.buttonSearch.Text = "查询";
+                this.buttonSearch.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
                 this.toolStripButtonAdd.Enabled = true;
                 this.toolStripButtonAlter.Enabled = true;
+                this.toolStripComboBoxSelect.Enabled = true;
+                this.buttonImport.Enabled = true;
             }
 
             this.pagerWidget.ClearCondition();
@@ -136,6 +139,9 @@ namespace WMS.UI
             }
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
+            this.toolStripComboBoxSelect.Enabled = false;
+            this.buttonImport.Enabled = false;
+            this.buttonSearch.DisplayStyle= ToolStripItemDisplayStyle.Text;
             this.buttonSearch.Text = "全部信息";
 
             this.pagerWidget.ClearCondition();
