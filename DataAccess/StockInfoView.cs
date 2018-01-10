@@ -44,5 +44,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ReceiptTicketItemManufactureDate { get; set; }
         public Nullable<System.DateTime> ReceiptTicketItemExpiryDate { get; set; }
         public Nullable<System.DateTime> ReceiptTicketItemInventoryDate { get; set; }
+        public string SupplyNumber { get; set; }
+        public string SupplyNo { get; set; }
     }
 }

@@ -86,12 +86,13 @@ namespace WMS.UI
             formSearch.SetSelectFinishCallback(new Action<int>((int ID) =>
             {
                 //Console.WriteLine(ID);
+                Supply supply = (from s in wmsEntities.Supply where s.ID == ID select s).FirstOrDefault();
                 WMS.DataAccess.Component component = (from c in wmsEntities.Component where c.ID == ID select c).FirstOrDefault();
-                if (component != null)
+                if (supply != null)
                 {
                     //this.Controls.Find("textBoxComponentID", true)[0].Text = ID.ToString();
-                    this.Controls.Find("textBoxComponentName", true)[0].Text = component.Name;
-                    this.Controls.Find("textBoxComponentNo", true)[0].Text = component.No;
+                    this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
+                    this.Controls.Find("textBoxComponentNo", true)[0].Text = supply.No;
                     this.componentID = ID;
                 }
                 else
@@ -142,7 +143,7 @@ namespace WMS.UI
                         receiptTicketItem.State = "待送检";
                         receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
                         receiptTicketItem.ID = 0;
-                        receiptTicketItem.ComponentID = this.componentID;
+                        receiptTicketItem.SupplyID = this.componentID;
                         wmsEntities.ReceiptTicketItem.Add(receiptTicketItem);
                         wmsEntities.SaveChanges();
                         MessageBox.Show("Successful");

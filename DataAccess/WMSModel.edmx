@@ -469,7 +469,7 @@
           <Property Name="Charge1" Type="decimal" Precision="18" Scale="3" />
           <Property Name="Charge2" Type="decimal" Precision="18" Scale="3" />
           <Property Name="IsHistory" Type="int" />
-          <Property Name="NewestComponentID" Type="int" />
+          <Property Name="NewestSupplyID" Type="int" />
           <Property Name="CreateUserID" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="LastUpdateUserID" Type="int" />
@@ -500,10 +500,10 @@
           <Property Name="ShipmentInfoBoxWidth" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="ReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="ShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -589,6 +589,8 @@
           <Property Name="ConfirmPersonID" Type="int" />
           <Property Name="ScheduledPutOutAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.JobTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -778,13 +780,8 @@
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
           <Property Name="ConfirmPersonID" Type="int" />
           <Property Name="JobPersonID" Type="int" />
-          <Property Name="SupplyComponentID" Type="int" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplyReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplyReceiptUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SupplyShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplyShipmentUnitAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutOutStorageTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -876,16 +873,17 @@
           <Property Name="SupplyComponentID" Type="int" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplyShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="SupplyShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplyReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="SupplyReceiptUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="ComponentDefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ComponentDefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="ComponentDefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ComponentDefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyID" Type="int" />
+          <Property Name="SupplyDefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyDefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SupplyDefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyDefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -986,18 +984,8 @@
           <Property Name="ConfirmPersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledJobAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="SupplyComponentID" Type="int" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplyShipmentUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SupplyShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="SupplyReceiptUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SupplyReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ComponentDefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ComponentDefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ComponentDefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ComponentDefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ComponentSingleCarUsageAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1076,6 +1064,10 @@
           <Property Name="RealSubmissionAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="PersonID" Type="int" />
           <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.StockInfoCheckTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1132,6 +1124,8 @@
           <Property Name="ReceiptTicketItemManufactureDate" Type="datetime" />
           <Property Name="ReceiptTicketItemExpiryDate" Type="datetime" />
           <Property Name="ReceiptTicketItemInventoryDate" Type="datetime" />
+          <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1304,78 +1298,48 @@
           <Property Name="Size" Type="nvarchar" MaxLength="64" />
           <Property Name="Category" Type="nvarchar" MaxLength="64" />
           <Property Name="GroupPrincipal" Type="nvarchar" MaxLength="64" />
-          <Property Name="Charge1" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="Charge2" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Charge1" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Charge2" Type="decimal" Precision="18" Scale="3" />
           <Property Name="IsHistory" Type="int" />
-          <Property Name="NewestComponentID" Type="int" />
           <Property Name="CreateUserID" Type="int" />
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="LastUpdateUserID" Type="int" />
           <Property Name="LastUpdateTime" Type="datetime" />
           <Property Name="SingleBoxPhotoIndex" Type="nvarchar" MaxLength="64" />
           <Property Name="SingleBoxPackagingBoxType" Type="nvarchar" MaxLength="64" />
-          <Property Name="SingleBoxLength" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxWidth" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxHeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxSNP" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxRatedMinimumBoxCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxWeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxLayerCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxStorageCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxTheoreticalLayerCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxTheoreticalStorageHeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxThroreticalStorageCount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="SingleBoxLength" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxWidth" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxHeight" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxSNP" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxRatedMinimumBoxCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxWeight" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxLayerCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxStorageCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxTheoreticalLayerCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxTheoreticalStorageHeight" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxThroreticalStorageCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="OuterPackingPhotoIndex" Type="nvarchar" MaxLength="64" />
           <Property Name="OuterPackingBoxType" Type="nvarchar" MaxLength="64" />
-          <Property Name="OuterPackingLength" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="OuterPackingWidth" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="OuterPackingHeight" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="OuterPackingLength" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="OuterPackingWidth" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="OuterPackingHeight" Type="decimal" Precision="18" Scale="3" />
           <Property Name="OuterPackingSNP" Type="nvarchar" MaxLength="64" />
           <Property Name="OuterPackingComment" Type="nvarchar" MaxLength="64" />
-          <Property Name="OuterPackingRequiredLayers" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="OuterPackingRequiredLayers" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoBoxType" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentInfoBoxLength" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInfoBoxWidth" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentUnitAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="ShipmentInfoBoxLength" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ShipmentInfoBoxWidth" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ComponentName" Type="nvarchar" MaxLength="64" />
-          <Property Name="SingleCarUsageAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DailyProduction" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxPackagingBoxType" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultSingleBoxLength" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxWidth" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxHeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxSNP" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxRatedMinimumBoxCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxWeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxLayerCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxStorageCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxTheoreticalLayerCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxTheoreticalStorageHeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxThroreticalStorageCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingPhotoIndex" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultOuterPackingBoxType" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultOuterPackingLength" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingWidth" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingHeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingSNP" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultOuterPackingComment" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultOuterPackingRequiredLayers" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentInfoBoxType" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultShipmentInfoBoxLength" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentInfoBoxWidth" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="DefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
+          <Property Name="NewestSupplyID" Type="int" />
+          <Property Name="DefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.UserView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1761,6 +1725,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Supply_Supply">
+          <End Role="Component" Type="Self.Component" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Supply" Type="Self.Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Supply">
+              <PropertyRef Name="ComponentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Supplier">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1857,7 +1835,9 @@ FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
 [JobTicketItemView].[JobPersonID] AS [JobPersonID], 
 [JobTicketItemView].[ConfirmPersonID] AS [ConfirmPersonID], 
 [JobTicketItemView].[ScheduledPutOutAmount] AS [ScheduledPutOutAmount], 
-[JobTicketItemView].[UnitAmount] AS [UnitAmount]
+[JobTicketItemView].[UnitAmount] AS [UnitAmount], 
+[JobTicketItemView].[SupplyNumber] AS [SupplyNumber], 
+[JobTicketItemView].[SupplyNo] AS [SupplyNo]
 FROM [dbo].[JobTicketItemView] AS [JobTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="JobTicketView" EntityType="Self.JobTicketView" store:Type="Views" store:Schema="dbo">
@@ -2022,13 +2002,8 @@ FROM [dbo].[PutawayTicketView] AS [PutawayTicketView]</DefiningQuery>
 [PutOutStorageTicketItemView].[Unit] AS [Unit], 
 [PutOutStorageTicketItemView].[ConfirmPersonID] AS [ConfirmPersonID], 
 [PutOutStorageTicketItemView].[JobPersonID] AS [JobPersonID], 
-[PutOutStorageTicketItemView].[SupplyComponentID] AS [SupplyComponentID], 
 [PutOutStorageTicketItemView].[SupplyNumber] AS [SupplyNumber], 
-[PutOutStorageTicketItemView].[SupplyNo] AS [SupplyNo], 
-[PutOutStorageTicketItemView].[SupplyReceiptUnit] AS [SupplyReceiptUnit], 
-[PutOutStorageTicketItemView].[SupplyReceiptUnitAmount] AS [SupplyReceiptUnitAmount], 
-[PutOutStorageTicketItemView].[SupplyShipmentUnit] AS [SupplyShipmentUnit], 
-[PutOutStorageTicketItemView].[SupplyShipmentUnitAmount] AS [SupplyShipmentUnitAmount]
+[PutOutStorageTicketItemView].[SupplyNo] AS [SupplyNo]
 FROM [dbo].[PutOutStorageTicketItemView] AS [PutOutStorageTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutOutStorageTicketView" EntityType="Self.PutOutStorageTicketView" store:Type="Views" store:Schema="dbo">
@@ -2114,16 +2089,17 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[SupplyComponentID] AS [SupplyComponentID], 
 [ReceiptTicketItemView].[SupplyNumber] AS [SupplyNumber], 
 [ReceiptTicketItemView].[SupplyNo] AS [SupplyNo], 
-[ReceiptTicketItemView].[SupplyShipmentUnitAmount] AS [SupplyShipmentUnitAmount], 
-[ReceiptTicketItemView].[SupplyShipmentUnit] AS [SupplyShipmentUnit], 
-[ReceiptTicketItemView].[SupplyReceiptUnitAmount] AS [SupplyReceiptUnitAmount], 
-[ReceiptTicketItemView].[SupplyReceiptUnit] AS [SupplyReceiptUnit], 
 [ReceiptTicketItemView].[ComponentDefaultShipmentUnitAmount] AS [ComponentDefaultShipmentUnitAmount], 
 [ReceiptTicketItemView].[ComponentDefaultShipmentUnit] AS [ComponentDefaultShipmentUnit], 
 [ReceiptTicketItemView].[ComponentDefaultReceiptUnitAmount] AS [ComponentDefaultReceiptUnitAmount], 
 [ReceiptTicketItemView].[ComponentDefaultReceiptUnit] AS [ComponentDefaultReceiptUnit], 
 [ReceiptTicketItemView].[UnitAmount] AS [UnitAmount], 
-[ReceiptTicketItemView].[Unit] AS [Unit]
+[ReceiptTicketItemView].[Unit] AS [Unit], 
+[ReceiptTicketItemView].[SupplyID] AS [SupplyID], 
+[ReceiptTicketItemView].[SupplyDefaultReceiptUnit] AS [SupplyDefaultReceiptUnit], 
+[ReceiptTicketItemView].[SupplyDefaultReceiptUnitAmount] AS [SupplyDefaultReceiptUnitAmount], 
+[ReceiptTicketItemView].[SupplyDefaultShipmentUnit] AS [SupplyDefaultShipmentUnit], 
+[ReceiptTicketItemView].[SupplyDefaultShipmentUnitAmount] AS [SupplyDefaultShipmentUnitAmount]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -2215,18 +2191,8 @@ FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
 [ShipmentTicketItemView].[ConfirmPersonName] AS [ConfirmPersonName], 
 [ShipmentTicketItemView].[ScheduledJobAmount] AS [ScheduledJobAmount], 
 [ShipmentTicketItemView].[UnitAmount] AS [UnitAmount], 
-[ShipmentTicketItemView].[SupplyComponentID] AS [SupplyComponentID], 
 [ShipmentTicketItemView].[SupplyNumber] AS [SupplyNumber], 
-[ShipmentTicketItemView].[SupplyNo] AS [SupplyNo], 
-[ShipmentTicketItemView].[SupplyShipmentUnitAmount] AS [SupplyShipmentUnitAmount], 
-[ShipmentTicketItemView].[SupplyShipmentUnit] AS [SupplyShipmentUnit], 
-[ShipmentTicketItemView].[SupplyReceiptUnitAmount] AS [SupplyReceiptUnitAmount], 
-[ShipmentTicketItemView].[SupplyReceiptUnit] AS [SupplyReceiptUnit], 
-[ShipmentTicketItemView].[ComponentDefaultShipmentUnitAmount] AS [ComponentDefaultShipmentUnitAmount], 
-[ShipmentTicketItemView].[ComponentDefaultShipmentUnit] AS [ComponentDefaultShipmentUnit], 
-[ShipmentTicketItemView].[ComponentDefaultReceiptUnitAmount] AS [ComponentDefaultReceiptUnitAmount], 
-[ShipmentTicketItemView].[ComponentDefaultReceiptUnit] AS [ComponentDefaultReceiptUnit], 
-[ShipmentTicketItemView].[ComponentSingleCarUsageAmount] AS [ComponentSingleCarUsageAmount]
+[ShipmentTicketItemView].[SupplyNo] AS [SupplyNo]
 FROM [dbo].[ShipmentTicketItemView] AS [ShipmentTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketView" EntityType="Self.ShipmentTicketView" store:Type="Views" store:Schema="dbo">
@@ -2296,7 +2262,11 @@ FROM [dbo].[ShipmentTicketView] AS [ShipmentTicketView]</DefiningQuery>
 [StockInfoCheckTicketItemView].[ExpectedSubmissionAmount] AS [ExpectedSubmissionAmount], 
 [StockInfoCheckTicketItemView].[RealSubmissionAmount] AS [RealSubmissionAmount], 
 [StockInfoCheckTicketItemView].[PersonID] AS [PersonID], 
-[StockInfoCheckTicketItemView].[PersonName] AS [PersonName]
+[StockInfoCheckTicketItemView].[PersonName] AS [PersonName], 
+[StockInfoCheckTicketItemView].[ProjectName] AS [ProjectName], 
+[StockInfoCheckTicketItemView].[WarehouseName] AS [WarehouseName], 
+[StockInfoCheckTicketItemView].[SupplyNumber] AS [SupplyNumber], 
+[StockInfoCheckTicketItemView].[SupplyNo] AS [SupplyNo]
 FROM [dbo].[StockInfoCheckTicketItemView] AS [StockInfoCheckTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="StockInfoCheckTicketView" EntityType="Self.StockInfoCheckTicketView" store:Type="Views" store:Schema="dbo">
@@ -2346,7 +2316,9 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[SupplierNumber] AS [SupplierNumber], 
 [StockInfoView].[ReceiptTicketItemManufactureDate] AS [ReceiptTicketItemManufactureDate], 
 [StockInfoView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
-[StockInfoView].[ReceiptTicketItemInventoryDate] AS [ReceiptTicketItemInventoryDate]
+[StockInfoView].[ReceiptTicketItemInventoryDate] AS [ReceiptTicketItemInventoryDate], 
+[StockInfoView].[SupplyNumber] AS [SupplyNumber], 
+[StockInfoView].[SupplyNo] AS [SupplyNo]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2506,7 +2478,6 @@ FROM [dbo].[SupplierView] AS [SupplierView]</DefiningQuery>
 [SupplyView].[Charge1] AS [Charge1], 
 [SupplyView].[Charge2] AS [Charge2], 
 [SupplyView].[IsHistory] AS [IsHistory], 
-[SupplyView].[NewestComponentID] AS [NewestComponentID], 
 [SupplyView].[CreateUserID] AS [CreateUserID], 
 [SupplyView].[CreateTime] AS [CreateTime], 
 [SupplyView].[LastUpdateUserID] AS [LastUpdateUserID], 
@@ -2537,44 +2508,15 @@ FROM [dbo].[SupplierView] AS [SupplierView]</DefiningQuery>
 [SupplyView].[ShipmentInfoBoxWidth] AS [ShipmentInfoBoxWidth], 
 [SupplyView].[ShipmentInfoBoxHeight] AS [ShipmentInfoBoxHeight], 
 [SupplyView].[ShipmentInfoUnitAmount] AS [ShipmentInfoUnitAmount], 
-[SupplyView].[ReceiptUnit] AS [ReceiptUnit], 
-[SupplyView].[ReceiptUnitAmount] AS [ReceiptUnitAmount], 
-[SupplyView].[ShipmentUnit] AS [ShipmentUnit], 
-[SupplyView].[ShipmentUnitAmount] AS [ShipmentUnitAmount], 
 [SupplyView].[ComponentName] AS [ComponentName], 
-[SupplyView].[SingleCarUsageAmount] AS [SingleCarUsageAmount], 
-[SupplyView].[DailyProduction] AS [DailyProduction], 
-[SupplyView].[DefaultSingleBoxPackagingBoxType] AS [DefaultSingleBoxPackagingBoxType], 
-[SupplyView].[DefaultSingleBoxLength] AS [DefaultSingleBoxLength], 
-[SupplyView].[DefaultSingleBoxWidth] AS [DefaultSingleBoxWidth], 
-[SupplyView].[DefaultSingleBoxHeight] AS [DefaultSingleBoxHeight], 
-[SupplyView].[DefaultSingleBoxSNP] AS [DefaultSingleBoxSNP], 
-[SupplyView].[DefaultSingleBoxRatedMinimumBoxCount] AS [DefaultSingleBoxRatedMinimumBoxCount], 
-[SupplyView].[DefaultSingleBoxWeight] AS [DefaultSingleBoxWeight], 
-[SupplyView].[DefaultSingleBoxLayerCount] AS [DefaultSingleBoxLayerCount], 
-[SupplyView].[DefaultSingleBoxStorageCount] AS [DefaultSingleBoxStorageCount], 
-[SupplyView].[DefaultSingleBoxTheoreticalLayerCount] AS [DefaultSingleBoxTheoreticalLayerCount], 
-[SupplyView].[DefaultSingleBoxTheoreticalStorageHeight] AS [DefaultSingleBoxTheoreticalStorageHeight], 
-[SupplyView].[DefaultSingleBoxThroreticalStorageCount] AS [DefaultSingleBoxThroreticalStorageCount], 
-[SupplyView].[DefaultOuterPackingPhotoIndex] AS [DefaultOuterPackingPhotoIndex], 
-[SupplyView].[DefaultOuterPackingBoxType] AS [DefaultOuterPackingBoxType], 
-[SupplyView].[DefaultOuterPackingLength] AS [DefaultOuterPackingLength], 
-[SupplyView].[DefaultOuterPackingWidth] AS [DefaultOuterPackingWidth], 
-[SupplyView].[DefaultOuterPackingHeight] AS [DefaultOuterPackingHeight], 
-[SupplyView].[DefaultOuterPackingSNP] AS [DefaultOuterPackingSNP], 
-[SupplyView].[DefaultOuterPackingComment] AS [DefaultOuterPackingComment], 
-[SupplyView].[DefaultOuterPackingRequiredLayers] AS [DefaultOuterPackingRequiredLayers], 
-[SupplyView].[DefaultShipmentInfoBoxType] AS [DefaultShipmentInfoBoxType], 
-[SupplyView].[DefaultShipmentInfoBoxLength] AS [DefaultShipmentInfoBoxLength], 
-[SupplyView].[DefaultShipmentInfoBoxWidth] AS [DefaultShipmentInfoBoxWidth], 
-[SupplyView].[DefaultShipmentInfoBoxHeight] AS [DefaultShipmentInfoBoxHeight], 
+[SupplyView].[ProjectName] AS [ProjectName], 
+[SupplyView].[WarehouseName] AS [WarehouseName], 
+[SupplyView].[SupplierName] AS [SupplierName], 
+[SupplyView].[NewestSupplyID] AS [NewestSupplyID], 
 [SupplyView].[DefaultReceiptUnit] AS [DefaultReceiptUnit], 
 [SupplyView].[DefaultReceiptUnitAmount] AS [DefaultReceiptUnitAmount], 
 [SupplyView].[DefaultShipmentUnit] AS [DefaultShipmentUnit], 
-[SupplyView].[DefaultShipmentUnitAmount] AS [DefaultShipmentUnitAmount], 
-[SupplyView].[ProjectName] AS [ProjectName], 
-[SupplyView].[WarehouseName] AS [WarehouseName], 
-[SupplyView].[SupplierName] AS [SupplierName]
+[SupplyView].[DefaultShipmentUnitAmount] AS [DefaultShipmentUnitAmount]
 FROM [dbo].[SupplyView] AS [SupplyView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserView" EntityType="Self.UserView" store:Type="Views" store:Schema="dbo">
@@ -2699,6 +2641,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="Supplier1" EntitySet="Supplier" />
           </AssociationSet>
+          <AssociationSet Name="FK_Supply_Supply" Association="Self.FK_Supply_Supply">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="Supply" EntitySet="Supply" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Supplier" Association="Self.FK_User_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="User" EntitySet="User" />
@@ -2745,6 +2691,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="DefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="DefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="DefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <NavigationProperty Name="Supply" Relationship="Self.FK_Supply_Supply" FromRole="Component" ToRole="Supply" />
         </EntityType>
         <EntityType Name="JobTicket">
           <Key>
@@ -3219,7 +3166,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Charge1" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Charge2" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="IsHistory" Type="Int32" />
-          <Property Name="NewestComponentID" Type="Int32" />
+          <Property Name="NewestSupplyID" Type="Int32" />
           <Property Name="CreateUserID" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateUserID" Type="Int32" />
@@ -3250,10 +3197,11 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ShipmentInfoBoxWidth" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <NavigationProperty Name="Component" Relationship="Self.FK_Supply_Supply" FromRole="Supply" ToRole="Component" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -3343,6 +3291,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ConfirmPersonID" Type="Int32" />
           <Property Name="ScheduledPutOutAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JobTicketView">
           <Key>
@@ -3518,13 +3468,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ConfirmPersonID" Type="Int32" />
           <Property Name="JobPersonID" Type="Int32" />
-          <Property Name="SupplyComponentID" Type="Int32" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplyReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplyReceiptUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SupplyShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplyShipmentUnitAmount" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="PutOutStorageTicketView">
           <Key>
@@ -3612,16 +3557,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplyComponentID" Type="Int32" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplyShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="SupplyShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplyReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="SupplyReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ComponentDefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ComponentDefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ComponentDefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ComponentDefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyID" Type="Int32" />
+          <Property Name="SupplyDefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyDefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SupplyDefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyDefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
@@ -3718,18 +3664,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ConfirmPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledJobAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="SupplyComponentID" Type="Int32" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplyShipmentUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SupplyShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SupplyReceiptUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SupplyReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ComponentDefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ComponentDefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ComponentDefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ComponentDefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ComponentSingleCarUsageAmount" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="ShipmentTicketView">
           <Key>
@@ -3804,6 +3740,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="RealSubmissionAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="PersonID" Type="Int32" />
           <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicketView">
           <Key>
@@ -3856,6 +3796,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketItemExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketItemInventoryDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -4018,78 +3960,48 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Size" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Category" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="GroupPrincipal" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="Charge1" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Charge2" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Charge1" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Charge2" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="IsHistory" Type="Int32" />
-          <Property Name="NewestComponentID" Type="Int32" />
           <Property Name="CreateUserID" Type="Int32" />
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateUserID" Type="Int32" />
           <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="SingleBoxPhotoIndex" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SingleBoxPackagingBoxType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SingleBoxLength" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxWidth" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxHeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxSNP" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxRatedMinimumBoxCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxWeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxLayerCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxStorageCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxTheoreticalLayerCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxTheoreticalStorageHeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="SingleBoxThroreticalStorageCount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SingleBoxLength" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxWidth" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxHeight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxSNP" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxRatedMinimumBoxCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxWeight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxLayerCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxStorageCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxTheoreticalLayerCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxTheoreticalStorageHeight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SingleBoxThroreticalStorageCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="OuterPackingPhotoIndex" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="OuterPackingBoxType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="OuterPackingLength" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OuterPackingWidth" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="OuterPackingHeight" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OuterPackingLength" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="OuterPackingWidth" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="OuterPackingHeight" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="OuterPackingSNP" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="OuterPackingComment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="OuterPackingRequiredLayers" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="OuterPackingRequiredLayers" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoBoxType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentInfoBoxLength" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInfoBoxWidth" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentUnitAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ShipmentInfoBoxLength" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ShipmentInfoBoxWidth" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ComponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SingleCarUsageAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DailyProduction" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxPackagingBoxType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultSingleBoxLength" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxWidth" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxHeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxSNP" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxRatedMinimumBoxCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxWeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxLayerCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxStorageCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxTheoreticalLayerCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxTheoreticalStorageHeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultSingleBoxThroreticalStorageCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingPhotoIndex" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultOuterPackingBoxType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultOuterPackingLength" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingWidth" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingHeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultOuterPackingSNP" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultOuterPackingComment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultOuterPackingRequiredLayers" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentInfoBoxType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultShipmentInfoBoxLength" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentInfoBoxWidth" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="DefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="DefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="NewestSupplyID" Type="Int32" />
+          <Property Name="DefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="UserView">
           <Key>
@@ -4115,6 +4027,20 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Supply_Supply">
+          <End Role="Component" Type="Self.Component" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Supply" Type="Self.Supply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Component">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Supply">
+              <PropertyRef Name="ComponentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__JobTicket__JobTi__5D60DB10">
           <End Role="JobTicket" Type="Self.JobTicket" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -4485,7 +4411,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Component" EntityType="Self.Component" />
           <EntitySet Name="JobTicket" EntityType="Self.JobTicket" />
           <EntitySet Name="JobTicketItem" EntityType="Self.JobTicketItem" />
@@ -4534,6 +4460,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySet Name="SupplyView" EntityType="Self.SupplyView" />
           <EntitySet Name="UserView" EntityType="Self.UserView" />
           <EntitySet Name="WarehouseView" EntityType="Self.WarehouseView" />
+          <AssociationSet Name="FK_Supply_Supply" Association="Self.FK_Supply_Supply">
+            <End Role="Component" EntitySet="Component" />
+            <End Role="Supply" EntitySet="Supply" />
+          </AssociationSet>
           <AssociationSet Name="FK__JobTicket__JobTi__5D60DB10" Association="Self.FK__JobTicket__JobTi__5D60DB10">
             <End Role="JobTicket" EntitySet="JobTicket" />
             <End Role="JobTicketItem" EntitySet="JobTicketItem" />
@@ -4648,7 +4578,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="WMSEntities">
           <EntitySetMapping Name="Component">
             <EntityTypeMapping TypeName="WMSModel.Component">
               <MappingFragment StoreEntitySet="Component">
@@ -5133,7 +5063,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Charge1" ColumnName="Charge1" />
                 <ScalarProperty Name="Charge2" ColumnName="Charge2" />
                 <ScalarProperty Name="IsHistory" ColumnName="IsHistory" />
-                <ScalarProperty Name="NewestComponentID" ColumnName="NewestComponentID" />
+                <ScalarProperty Name="NewestSupplyID" ColumnName="NewestSupplyID" />
                 <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
@@ -5164,10 +5094,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ShipmentInfoBoxWidth" ColumnName="ShipmentInfoBoxWidth" />
                 <ScalarProperty Name="ShipmentInfoBoxHeight" ColumnName="ShipmentInfoBoxHeight" />
                 <ScalarProperty Name="ShipmentInfoUnitAmount" ColumnName="ShipmentInfoUnitAmount" />
-                <ScalarProperty Name="ReceiptUnit" ColumnName="ReceiptUnit" />
-                <ScalarProperty Name="ReceiptUnitAmount" ColumnName="ReceiptUnitAmount" />
-                <ScalarProperty Name="ShipmentUnit" ColumnName="ShipmentUnit" />
-                <ScalarProperty Name="ShipmentUnitAmount" ColumnName="ShipmentUnitAmount" />
+                <ScalarProperty Name="DefaultReceiptUnit" ColumnName="DefaultReceiptUnit" />
+                <ScalarProperty Name="DefaultReceiptUnitAmount" ColumnName="DefaultReceiptUnitAmount" />
+                <ScalarProperty Name="DefaultShipmentUnit" ColumnName="DefaultShipmentUnit" />
+                <ScalarProperty Name="DefaultShipmentUnitAmount" ColumnName="DefaultShipmentUnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5252,6 +5182,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ConfirmPersonID" ColumnName="ConfirmPersonID" />
                 <ScalarProperty Name="ScheduledPutOutAmount" ColumnName="ScheduledPutOutAmount" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
+                <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
+                <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5430,13 +5362,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="ConfirmPersonID" ColumnName="ConfirmPersonID" />
                 <ScalarProperty Name="JobPersonID" ColumnName="JobPersonID" />
-                <ScalarProperty Name="SupplyComponentID" ColumnName="SupplyComponentID" />
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
-                <ScalarProperty Name="SupplyReceiptUnit" ColumnName="SupplyReceiptUnit" />
-                <ScalarProperty Name="SupplyReceiptUnitAmount" ColumnName="SupplyReceiptUnitAmount" />
-                <ScalarProperty Name="SupplyShipmentUnit" ColumnName="SupplyShipmentUnit" />
-                <ScalarProperty Name="SupplyShipmentUnitAmount" ColumnName="SupplyShipmentUnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5526,16 +5453,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplyComponentID" ColumnName="SupplyComponentID" />
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
-                <ScalarProperty Name="SupplyShipmentUnitAmount" ColumnName="SupplyShipmentUnitAmount" />
-                <ScalarProperty Name="SupplyShipmentUnit" ColumnName="SupplyShipmentUnit" />
-                <ScalarProperty Name="SupplyReceiptUnitAmount" ColumnName="SupplyReceiptUnitAmount" />
-                <ScalarProperty Name="SupplyReceiptUnit" ColumnName="SupplyReceiptUnit" />
                 <ScalarProperty Name="ComponentDefaultShipmentUnitAmount" ColumnName="ComponentDefaultShipmentUnitAmount" />
                 <ScalarProperty Name="ComponentDefaultShipmentUnit" ColumnName="ComponentDefaultShipmentUnit" />
                 <ScalarProperty Name="ComponentDefaultReceiptUnitAmount" ColumnName="ComponentDefaultReceiptUnitAmount" />
                 <ScalarProperty Name="ComponentDefaultReceiptUnit" ColumnName="ComponentDefaultReceiptUnit" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
+                <ScalarProperty Name="SupplyDefaultReceiptUnit" ColumnName="SupplyDefaultReceiptUnit" />
+                <ScalarProperty Name="SupplyDefaultReceiptUnitAmount" ColumnName="SupplyDefaultReceiptUnitAmount" />
+                <ScalarProperty Name="SupplyDefaultShipmentUnit" ColumnName="SupplyDefaultShipmentUnit" />
+                <ScalarProperty Name="SupplyDefaultShipmentUnitAmount" ColumnName="SupplyDefaultShipmentUnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5631,18 +5559,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ConfirmPersonName" ColumnName="ConfirmPersonName" />
                 <ScalarProperty Name="ScheduledJobAmount" ColumnName="ScheduledJobAmount" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
-                <ScalarProperty Name="SupplyComponentID" ColumnName="SupplyComponentID" />
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
-                <ScalarProperty Name="SupplyShipmentUnitAmount" ColumnName="SupplyShipmentUnitAmount" />
-                <ScalarProperty Name="SupplyShipmentUnit" ColumnName="SupplyShipmentUnit" />
-                <ScalarProperty Name="SupplyReceiptUnitAmount" ColumnName="SupplyReceiptUnitAmount" />
-                <ScalarProperty Name="SupplyReceiptUnit" ColumnName="SupplyReceiptUnit" />
-                <ScalarProperty Name="ComponentDefaultShipmentUnitAmount" ColumnName="ComponentDefaultShipmentUnitAmount" />
-                <ScalarProperty Name="ComponentDefaultShipmentUnit" ColumnName="ComponentDefaultShipmentUnit" />
-                <ScalarProperty Name="ComponentDefaultReceiptUnitAmount" ColumnName="ComponentDefaultReceiptUnitAmount" />
-                <ScalarProperty Name="ComponentDefaultReceiptUnit" ColumnName="ComponentDefaultReceiptUnit" />
-                <ScalarProperty Name="ComponentSingleCarUsageAmount" ColumnName="ComponentSingleCarUsageAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5717,6 +5635,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="RealSubmissionAmount" ColumnName="RealSubmissionAmount" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
+                <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5771,6 +5693,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemManufactureDate" ColumnName="ReceiptTicketItemManufactureDate" />
                 <ScalarProperty Name="ReceiptTicketItemExpiryDate" ColumnName="ReceiptTicketItemExpiryDate" />
                 <ScalarProperty Name="ReceiptTicketItemInventoryDate" ColumnName="ReceiptTicketItemInventoryDate" />
+                <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
+                <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5940,7 +5864,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Charge1" ColumnName="Charge1" />
                 <ScalarProperty Name="Charge2" ColumnName="Charge2" />
                 <ScalarProperty Name="IsHistory" ColumnName="IsHistory" />
-                <ScalarProperty Name="NewestComponentID" ColumnName="NewestComponentID" />
                 <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
@@ -5971,44 +5894,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ShipmentInfoBoxWidth" ColumnName="ShipmentInfoBoxWidth" />
                 <ScalarProperty Name="ShipmentInfoBoxHeight" ColumnName="ShipmentInfoBoxHeight" />
                 <ScalarProperty Name="ShipmentInfoUnitAmount" ColumnName="ShipmentInfoUnitAmount" />
-                <ScalarProperty Name="ReceiptUnit" ColumnName="ReceiptUnit" />
-                <ScalarProperty Name="ReceiptUnitAmount" ColumnName="ReceiptUnitAmount" />
-                <ScalarProperty Name="ShipmentUnit" ColumnName="ShipmentUnit" />
-                <ScalarProperty Name="ShipmentUnitAmount" ColumnName="ShipmentUnitAmount" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
-                <ScalarProperty Name="SingleCarUsageAmount" ColumnName="SingleCarUsageAmount" />
-                <ScalarProperty Name="DailyProduction" ColumnName="DailyProduction" />
-                <ScalarProperty Name="DefaultSingleBoxPackagingBoxType" ColumnName="DefaultSingleBoxPackagingBoxType" />
-                <ScalarProperty Name="DefaultSingleBoxLength" ColumnName="DefaultSingleBoxLength" />
-                <ScalarProperty Name="DefaultSingleBoxWidth" ColumnName="DefaultSingleBoxWidth" />
-                <ScalarProperty Name="DefaultSingleBoxHeight" ColumnName="DefaultSingleBoxHeight" />
-                <ScalarProperty Name="DefaultSingleBoxSNP" ColumnName="DefaultSingleBoxSNP" />
-                <ScalarProperty Name="DefaultSingleBoxRatedMinimumBoxCount" ColumnName="DefaultSingleBoxRatedMinimumBoxCount" />
-                <ScalarProperty Name="DefaultSingleBoxWeight" ColumnName="DefaultSingleBoxWeight" />
-                <ScalarProperty Name="DefaultSingleBoxLayerCount" ColumnName="DefaultSingleBoxLayerCount" />
-                <ScalarProperty Name="DefaultSingleBoxStorageCount" ColumnName="DefaultSingleBoxStorageCount" />
-                <ScalarProperty Name="DefaultSingleBoxTheoreticalLayerCount" ColumnName="DefaultSingleBoxTheoreticalLayerCount" />
-                <ScalarProperty Name="DefaultSingleBoxTheoreticalStorageHeight" ColumnName="DefaultSingleBoxTheoreticalStorageHeight" />
-                <ScalarProperty Name="DefaultSingleBoxThroreticalStorageCount" ColumnName="DefaultSingleBoxThroreticalStorageCount" />
-                <ScalarProperty Name="DefaultOuterPackingPhotoIndex" ColumnName="DefaultOuterPackingPhotoIndex" />
-                <ScalarProperty Name="DefaultOuterPackingBoxType" ColumnName="DefaultOuterPackingBoxType" />
-                <ScalarProperty Name="DefaultOuterPackingLength" ColumnName="DefaultOuterPackingLength" />
-                <ScalarProperty Name="DefaultOuterPackingWidth" ColumnName="DefaultOuterPackingWidth" />
-                <ScalarProperty Name="DefaultOuterPackingHeight" ColumnName="DefaultOuterPackingHeight" />
-                <ScalarProperty Name="DefaultOuterPackingSNP" ColumnName="DefaultOuterPackingSNP" />
-                <ScalarProperty Name="DefaultOuterPackingComment" ColumnName="DefaultOuterPackingComment" />
-                <ScalarProperty Name="DefaultOuterPackingRequiredLayers" ColumnName="DefaultOuterPackingRequiredLayers" />
-                <ScalarProperty Name="DefaultShipmentInfoBoxType" ColumnName="DefaultShipmentInfoBoxType" />
-                <ScalarProperty Name="DefaultShipmentInfoBoxLength" ColumnName="DefaultShipmentInfoBoxLength" />
-                <ScalarProperty Name="DefaultShipmentInfoBoxWidth" ColumnName="DefaultShipmentInfoBoxWidth" />
-                <ScalarProperty Name="DefaultShipmentInfoBoxHeight" ColumnName="DefaultShipmentInfoBoxHeight" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="NewestSupplyID" ColumnName="NewestSupplyID" />
                 <ScalarProperty Name="DefaultReceiptUnit" ColumnName="DefaultReceiptUnit" />
                 <ScalarProperty Name="DefaultReceiptUnitAmount" ColumnName="DefaultReceiptUnitAmount" />
                 <ScalarProperty Name="DefaultShipmentUnit" ColumnName="DefaultShipmentUnit" />
                 <ScalarProperty Name="DefaultShipmentUnitAmount" ColumnName="DefaultShipmentUnitAmount" />
-                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
-                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

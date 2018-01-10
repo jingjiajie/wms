@@ -32,5 +32,9 @@ namespace WMS.DataAccess
         public Nullable<decimal> RealSubmissionAmount { get; set; }
         public Nullable<int> PersonID { get; set; }
         public string PersonName { get; set; }
+        public string ProjectName { get; set; }
+        public string WarehouseName { get; set; }
+        public string SupplyNumber { get; set; }
+        public string SupplyNo { get; set; }
     }
 }

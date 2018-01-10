@@ -34,12 +34,7 @@ namespace WMS.DataAccess
         public string Unit { get; set; }
         public Nullable<int> ConfirmPersonID { get; set; }
         public Nullable<int> JobPersonID { get; set; }
-        public Nullable<int> SupplyComponentID { get; set; }
         public string SupplyNumber { get; set; }
         public string SupplyNo { get; set; }
-        public string SupplyReceiptUnit { get; set; }
-        public Nullable<decimal> SupplyReceiptUnitAmount { get; set; }
-        public string SupplyShipmentUnit { get; set; }
-        public Nullable<decimal> SupplyShipmentUnitAmount { get; set; }
     }
 }

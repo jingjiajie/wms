@@ -33,7 +33,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> Charge1 { get; set; }
         public Nullable<decimal> Charge2 { get; set; }
         public Nullable<int> IsHistory { get; set; }
-        public Nullable<int> NewestComponentID { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
@@ -64,43 +63,14 @@ namespace WMS.DataAccess
         public Nullable<decimal> ShipmentInfoBoxWidth { get; set; }
         public Nullable<decimal> ShipmentInfoBoxHeight { get; set; }
         public Nullable<decimal> ShipmentInfoUnitAmount { get; set; }
-        public string ReceiptUnit { get; set; }
-        public Nullable<decimal> ReceiptUnitAmount { get; set; }
-        public string ShipmentUnit { get; set; }
-        public Nullable<decimal> ShipmentUnitAmount { get; set; }
         public string ComponentName { get; set; }
-        public Nullable<decimal> SingleCarUsageAmount { get; set; }
-        public Nullable<decimal> DailyProduction { get; set; }
-        public string DefaultSingleBoxPackagingBoxType { get; set; }
-        public Nullable<decimal> DefaultSingleBoxLength { get; set; }
-        public Nullable<decimal> DefaultSingleBoxWidth { get; set; }
-        public Nullable<decimal> DefaultSingleBoxHeight { get; set; }
-        public Nullable<decimal> DefaultSingleBoxSNP { get; set; }
-        public Nullable<decimal> DefaultSingleBoxRatedMinimumBoxCount { get; set; }
-        public Nullable<decimal> DefaultSingleBoxWeight { get; set; }
-        public Nullable<decimal> DefaultSingleBoxLayerCount { get; set; }
-        public Nullable<decimal> DefaultSingleBoxStorageCount { get; set; }
-        public Nullable<decimal> DefaultSingleBoxTheoreticalLayerCount { get; set; }
-        public Nullable<decimal> DefaultSingleBoxTheoreticalStorageHeight { get; set; }
-        public Nullable<decimal> DefaultSingleBoxThroreticalStorageCount { get; set; }
-        public string DefaultOuterPackingPhotoIndex { get; set; }
-        public string DefaultOuterPackingBoxType { get; set; }
-        public Nullable<decimal> DefaultOuterPackingLength { get; set; }
-        public Nullable<decimal> DefaultOuterPackingWidth { get; set; }
-        public Nullable<decimal> DefaultOuterPackingHeight { get; set; }
-        public string DefaultOuterPackingSNP { get; set; }
-        public string DefaultOuterPackingComment { get; set; }
-        public Nullable<decimal> DefaultOuterPackingRequiredLayers { get; set; }
-        public string DefaultShipmentInfoBoxType { get; set; }
-        public Nullable<decimal> DefaultShipmentInfoBoxLength { get; set; }
-        public Nullable<decimal> DefaultShipmentInfoBoxWidth { get; set; }
-        public Nullable<decimal> DefaultShipmentInfoBoxHeight { get; set; }
+        public string ProjectName { get; set; }
+        public string WarehouseName { get; set; }
+        public string SupplierName { get; set; }
+        public Nullable<int> NewestSupplyID { get; set; }
         public string DefaultReceiptUnit { get; set; }
         public Nullable<decimal> DefaultReceiptUnitAmount { get; set; }
         public string DefaultShipmentUnit { get; set; }
         public Nullable<decimal> DefaultShipmentUnitAmount { get; set; }
-        public string ProjectName { get; set; }
-        public string WarehouseName { get; set; }
-        public string SupplierName { get; set; }
     }
 }

@@ -14,6 +14,11 @@ namespace WMS.DataAccess
     
     public partial class Component
     {
+        public Component()
+        {
+            this.Supply = new HashSet<Supply>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<decimal> SingleCarUsageAmount { get; set; }
@@ -46,5 +51,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> DefaultReceiptUnitAmount { get; set; }
         public string DefaultShipmentUnit { get; set; }
         public Nullable<decimal> DefaultShipmentUnitAmount { get; set; }
+    
+        public virtual ICollection<Supply> Supply { get; set; }
     }
 }

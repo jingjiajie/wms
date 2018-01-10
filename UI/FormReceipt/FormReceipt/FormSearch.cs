@@ -66,17 +66,17 @@ namespace WMS.UI.FormReceipt
             this.labelStatus.Text = "正在搜索...";
             new Thread(new ThreadStart(() =>
             {
-                WMS.DataAccess.ComponentView[] componentView = null;
+                WMS.DataAccess.SupplyView[] supplyView = null;
                 if (key == "零件编号")
                 {
-                    componentView = (from s in this.wmsEntities.ComponentView
+                    supplyView = (from s in this.wmsEntities.SupplyView
                                       where s.No == value
                                       select s).ToArray();
                 }
                 else if (key == "零件名称")
                 {
-                    componentView = (from s in this.wmsEntities.ComponentView
-                                      where s.Name.Contains(value)
+                    supplyView = (from s in this.wmsEntities.SupplyView
+                                      where s.ComponentName.Contains(value)
                                       select s).ToArray();
                 }
                 else
@@ -88,16 +88,16 @@ namespace WMS.UI.FormReceipt
                 {
                     var worksheet = this.reoGridControlMain.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    for (int i = 0; i < componentView.Length; i++)
+                    for (int i = 0; i < supplyView.Length; i++)
                     {
-                        WMS.DataAccess.ComponentView curComponent = componentView[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in ReceiptMetaData.componentKeyName select kn.Key).ToArray());
+                        WMS.DataAccess.SupplyView curSupplyView = supplyView[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curSupplyView, (from kn in ReceiptMetaData.componentKeyName select kn.Key).ToArray());
                         for (int j = 0; j < worksheet.Columns; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
-                    if (componentView.Length == 0)
+                    if (supplyView.Length == 0)
                     {
                         worksheet[0, 2] = "没有查询到符合条件的记录";
                     }

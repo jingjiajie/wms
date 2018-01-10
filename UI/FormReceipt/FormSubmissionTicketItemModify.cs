@@ -48,8 +48,8 @@ namespace WMS.UI.FormReceipt
             }
             this.Controls.Find("textBoxSubmissionTicketID", true)[0].Text = this.submissionTicketID.ToString();
             this.Controls.Find("textBoxSubmissionTicketID", true)[0].Enabled = false;
-            this.Controls.Find("textBoxComponentID", true)[0].Enabled = false;
-            this.Controls.Find("textBoxComponentID", true)[0].Text = this.receiptTicketItem.ComponentID.ToString();
+            this.Controls.Find("textBoxSupplyID", true)[0].Enabled = false;
+            this.Controls.Find("textBoxSupplyID", true)[0].Text = this.receiptTicketItem.SupplyID.ToString();
             /*
             if (this.formMode == FormMode.ALTER)
             {
