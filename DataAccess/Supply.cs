@@ -33,7 +33,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> Charge1 { get; set; }
         public Nullable<decimal> Charge2 { get; set; }
         public Nullable<int> IsHistory { get; set; }
-        public Nullable<int> NewestComponentID { get; set; }
+        public Nullable<int> NewestSupplyID { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
@@ -68,5 +68,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> ReceiptUnitAmount { get; set; }
         public string ShipmentUnit { get; set; }
         public Nullable<decimal> ShipmentUnitAmount { get; set; }
+    
+        public virtual Component Component { get; set; }
     }
 }
