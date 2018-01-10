@@ -174,11 +174,21 @@ namespace WMS.UI
                 }
                 catch
                 {
-                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     this.Close();
                     return;
                 }
+                if (stockInfoCheck == null)
+                {
+                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+
+
+                
             }
             else if (mode == FormMode.ADD)
             {
@@ -272,7 +282,45 @@ namespace WMS.UI
             this.labelStatus.Text = "正在添加";
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+
+            //修改盘点条目，盘点单最后修改时间和用户改变
+            WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
+            try
+            {
+                  stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
+                                  where s.ID == this.stockInfoCheckID
+                                  select s).Single();
+                
+
+            }
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                this.Close();
+                return;
+            }
+            if (stockInfoCheck == null)
+            {
+                MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+
+            try
+            {
+                stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+                stockInfoCheck.LastUpdateTime = DateTime.Now;
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             this.Search();
+
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
             
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
