@@ -42,7 +42,6 @@
             this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
             this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
-            this.buttonHistorySearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonAlter = new System.Windows.Forms.ToolStripButton();
@@ -116,7 +115,7 @@
             this.reoGridControlComponen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlComponen.LeadHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Location = new System.Drawing.Point(2, 2);
-            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlComponen.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlComponen.Name = "reoGridControlComponen";
             this.reoGridControlComponen.RowHeaderContextMenuStrip = null;
             this.reoGridControlComponen.Script = null;
@@ -148,7 +147,6 @@
             this.toolStripComboBoxSelect,
             this.textBoxSearchValue,
             this.buttonSearch,
-            this.buttonHistorySearch,
             this.toolStripSeparator1,
             this.toolStripButtonAdd,
             this.toolStripButtonAlter,
@@ -194,15 +192,6 @@
             this.buttonSearch.Size = new System.Drawing.Size(56, 25);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
-            // 
-            // buttonHistorySearch
-            // 
-            this.buttonHistorySearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonHistorySearch.Image")));
-            this.buttonHistorySearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonHistorySearch.Name = "buttonHistorySearch";
-            this.buttonHistorySearch.Size = new System.Drawing.Size(104, 25);
-            this.buttonHistorySearch.Text = "历史信息查询";
-            this.buttonHistorySearch.Click += new System.EventHandler(this.buttonHistorySearch_Click);
             // 
             // toolStripSeparator1
             // 
@@ -281,7 +270,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormBaseComponent";
             this.Text = "零件信息";
             this.Load += new System.EventHandler(this.FormBaseComponent_Load);
@@ -316,7 +305,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonComponentSingleBoxTranPackingInfo;
         private System.Windows.Forms.ToolStripButton toolStripButtonComponentOuterPackingSize;
         private System.Windows.Forms.ToolStripButton toolStripButtonComponentShipmentInfo;
-        private System.Windows.Forms.ToolStripButton buttonHistorySearch;
         private System.Windows.Forms.ToolStripButton buttonImport;
     }
 }
