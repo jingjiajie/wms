@@ -159,54 +159,6 @@ namespace WMS.UI
                 comboBoxState.SelectedIndex = 2;
             }
             this.buttonModify.PerformClick();
-
-            //const string STRING_FINISHED = "已完成";
-            //int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            //if(selectedIDs.Length == 0)
-            //{
-            //    MessageBox.Show("请选择您要操作的条目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-            //new Thread(new ThreadStart(()=>
-            //{
-            //    WMSEntities wmsEntities = new WMSEntities();
-            //    try
-            //    {
-            //        //将状态置为已完成
-            //        foreach (int id in selectedIDs)
-            //        {
-            //            wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount WHERE ID = {1};", STRING_FINISHED, id));
-            //        }
-            //        wmsEntities.SaveChanges();
-            //    }
-            //    catch
-            //    {
-            //    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        return;
-            //    }
-                
-            //    //如果作业单中所有条目都完成，询问是否将作业单标记为完成
-            //    int unfinishedJobTicketItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM JobTicketItem WHERE JobTicketID = {0} AND State <> '{1}'", this.jobTicketID, STRING_FINISHED)).Single();
-            //    if (unfinishedJobTicketItemCount == 0)
-            //    {
-            //        if (MessageBox.Show("检测到所有的作业任务都已经完成，是否将作业单状态更新为全部完成？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            //        {
-            //            try
-            //            {
-            //                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", "全部完成", this.jobTicketID));
-            //                wmsEntities.SaveChanges();
-            //            }
-            //            catch
-            //            {
-            //                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //                return;
-            //            }
-            //        }
-            //        this.jobTicketStateChangedCallback?.Invoke();
-            //    }
-            //    this.Invoke(new Action(()=> this.Search()));
-            //    MessageBox.Show("操作成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //})).Start();
         }
 
         private void ClearTextBoxes()

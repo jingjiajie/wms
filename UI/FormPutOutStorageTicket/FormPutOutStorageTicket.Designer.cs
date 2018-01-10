@@ -37,7 +37,6 @@
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -45,6 +44,9 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
+            this.buttonDeliver = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -85,6 +87,8 @@
             this.buttonSearch,
             this.toolStripSeparator1,
             this.buttonOpen,
+            this.toolStripSeparator3,
+            this.buttonDeliver,
             this.toolStripSeparator2,
             this.buttonAlter,
             this.buttonDelete});
@@ -99,7 +103,7 @@
             // 
             this.labelSelect.Name = "labelSelect";
             this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(134, 36);
+            this.labelSelect.Size = new System.Drawing.Size(134, 57);
             this.labelSelect.Text = "查询条件：";
             // 
             // comboBoxSearchCondition
@@ -107,7 +111,7 @@
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 39);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 60);
             this.comboBoxSearchCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxSearchCondition_SelectedIndexChanged);
             // 
             // textBoxSearchValue
@@ -115,7 +119,7 @@
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Enabled = false;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 39);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 60);
             this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
             // buttonSearch
@@ -138,22 +142,16 @@
             this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
             this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(158, 36);
+            this.buttonOpen.Size = new System.Drawing.Size(158, 57);
             this.buttonOpen.Text = "查看出库单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.AutoSize = false;
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
             // 
             // buttonAlter
             // 
             this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
             this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(86, 36);
+            this.buttonAlter.Size = new System.Drawing.Size(86, 57);
             this.buttonAlter.Text = "修改";
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
@@ -162,7 +160,7 @@
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(86, 36);
+            this.buttonDelete.Size = new System.Drawing.Size(86, 57);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -216,6 +214,27 @@
             this.panelPagerWidget.Size = new System.Drawing.Size(1418, 54);
             this.panelPagerWidget.TabIndex = 13;
             // 
+            // buttonDeliver
+            // 
+            this.buttonDeliver.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDeliver.Name = "buttonDeliver";
+            this.buttonDeliver.Size = new System.Drawing.Size(66, 57);
+            this.buttonDeliver.Text = "发运";
+            this.buttonDeliver.ToolTipText = "发运";
+            this.buttonDeliver.Click += new System.EventHandler(this.buttonDeliver_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.AutoSize = false;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
+            // 
             // FormPutOutStorageTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -253,8 +272,10 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelPagerWidget;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton buttonDeliver;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

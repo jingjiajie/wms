@@ -39,10 +39,10 @@
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonLoad = new System.Windows.Forms.Button();
+            this.buttonAllLoad = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.buttonAllLoad = new System.Windows.Forms.Button();
-            this.buttonLoad = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -193,6 +193,48 @@
             this.tableLayoutPanel3.Size = new System.Drawing.Size(214, 138);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
+            // buttonLoad
+            // 
+            this.buttonLoad.BackColor = System.Drawing.Color.White;
+            this.buttonLoad.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonLoad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonLoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonLoad.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonLoad.FlatAppearance.BorderSize = 0;
+            this.buttonLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonLoad.Location = new System.Drawing.Point(20, 52);
+            this.buttonLoad.Name = "buttonLoad";
+            this.buttonLoad.Size = new System.Drawing.Size(174, 34);
+            this.buttonLoad.TabIndex = 2;
+            this.buttonLoad.Text = "选中项目装车";
+            this.buttonLoad.UseVisualStyleBackColor = false;
+            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            this.buttonLoad.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonLoad_MouseDown);
+            this.buttonLoad.MouseEnter += new System.EventHandler(this.buttonLoad_MouseEnter);
+            this.buttonLoad.MouseLeave += new System.EventHandler(this.buttonLoad_MouseLeave);
+            // 
+            // buttonAllLoad
+            // 
+            this.buttonAllLoad.BackColor = System.Drawing.Color.White;
+            this.buttonAllLoad.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonAllLoad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAllLoad.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAllLoad.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAllLoad.FlatAppearance.BorderSize = 0;
+            this.buttonAllLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAllLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAllLoad.Location = new System.Drawing.Point(20, 12);
+            this.buttonAllLoad.Name = "buttonAllLoad";
+            this.buttonAllLoad.Size = new System.Drawing.Size(174, 34);
+            this.buttonAllLoad.TabIndex = 2;
+            this.buttonAllLoad.Text = "全部完成装车";
+            this.buttonAllLoad.UseVisualStyleBackColor = false;
+            this.buttonAllLoad.Click += new System.EventHandler(this.buttonAllLoad_Click);
+            this.buttonAllLoad.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAllLoad_MouseDown);
+            this.buttonAllLoad.MouseEnter += new System.EventHandler(this.buttonAllLoad_MouseEnter);
+            this.buttonAllLoad.MouseLeave += new System.EventHandler(this.buttonAllLoad_MouseLeave);
+            // 
             // buttonModify
             // 
             this.buttonModify.BackColor = System.Drawing.Color.White;
@@ -223,42 +265,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(898, 373);
             this.panel2.TabIndex = 1;
-            // 
-            // buttonAllLoad
-            // 
-            this.buttonAllLoad.BackColor = System.Drawing.Color.White;
-            this.buttonAllLoad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAllLoad.BackgroundImage")));
-            this.buttonAllLoad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAllLoad.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAllLoad.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonAllLoad.FlatAppearance.BorderSize = 0;
-            this.buttonAllLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAllLoad.Image = global::WMS.UI.Properties.Resources.cancle;
-            this.buttonAllLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAllLoad.Location = new System.Drawing.Point(20, 12);
-            this.buttonAllLoad.Name = "buttonAllLoad";
-            this.buttonAllLoad.Size = new System.Drawing.Size(174, 34);
-            this.buttonAllLoad.TabIndex = 2;
-            this.buttonAllLoad.Text = "全部完成装车";
-            this.buttonAllLoad.UseVisualStyleBackColor = false;
-            // 
-            // buttonLoad
-            // 
-            this.buttonLoad.BackColor = System.Drawing.Color.White;
-            this.buttonLoad.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonLoad.BackgroundImage")));
-            this.buttonLoad.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonLoad.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonLoad.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonLoad.FlatAppearance.BorderSize = 0;
-            this.buttonLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonLoad.Image = global::WMS.UI.Properties.Resources.cancle;
-            this.buttonLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonLoad.Location = new System.Drawing.Point(20, 52);
-            this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(174, 34);
-            this.buttonLoad.TabIndex = 2;
-            this.buttonLoad.Text = "选中项目装车";
-            this.buttonLoad.UseVisualStyleBackColor = false;
             // 
             // FormPutOutStorageTicketItem
             // 

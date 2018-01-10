@@ -363,7 +363,7 @@ namespace WMS.UI
                             string text = null;
                             if (columns[j] is decimal || columns[j] is decimal?)
                             {
-                                text = string.Format("{0:0.###}", columns[j]);
+                                text = Utilities.DecimalToString((decimal)columns[j]);
                             }
                             else
                             {

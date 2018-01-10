@@ -27,7 +27,7 @@ namespace WMS.UI
                 PropertyInfo propertyInfo = objType.GetProperty(key);
                 if (propertyInfo == null)
                 {
-                    throw new Exception("你给的类型"+objType.Name+"里没有" + key + "这个属性！检查检查你的代码吧。");
+                    throw new Exception("你给的类型" + objType.Name + "里没有" + key + "这个属性！检查检查你的代码吧。");
                 }
                 values[i] = propertyInfo.GetValue(obj, null);
             }
@@ -47,12 +47,13 @@ namespace WMS.UI
                 TextBox curTextBox = (TextBox)foundControls[0];
                 object value = p.GetValue(sourceObject, null);
                 string text = null;
-                if(value == null)
+                if (value == null)
                 {
                     text = "";
-                }else if(value is decimal || value is decimal?)
+                }
+                else if (value is decimal || value is decimal?)
                 {
-                    text = string.Format("{0:0.###}",value);
+                    text = DecimalToString((decimal)value);
                 }
                 else
                 {
@@ -86,11 +87,11 @@ namespace WMS.UI
             }
         }
 
-        public static bool CopyComboBoxsToProperties<T>(Form form, T targetObject, KeyName[] keyNames,string textBoxNamePrefix = "comboBox")
+        public static bool CopyComboBoxsToProperties<T>(Form form, T targetObject, KeyName[] keyNames, string textBoxNamePrefix = "comboBox")
         {
             Type objType = typeof(T);
             KeyName[] comboBoxProperties = (from kn in keyNames where kn.ComboBoxItems != null select kn).ToArray();
-            foreach(KeyName curKeyName in comboBoxProperties)
+            foreach (KeyName curKeyName in comboBoxProperties)
             {
                 if (curKeyName.Save == false)
                 {
@@ -116,6 +117,7 @@ namespace WMS.UI
                 {
                     throw new Exception(comboBox.Name + "中Item的类型必须是ComboBoxItem类型，才可以调用Utilities.CopyComboBoxsToProperties！");
                 }
+
                 try
                 {
                     p.SetValue(targetObject, comboBoxValue, null);
@@ -140,7 +142,7 @@ namespace WMS.UI
                 PropertyInfo p = objType.GetProperty(curKeyName.Key);
                 if (p == null)
                 {
-                    throw new Exception("你的类型"+objType.Name+"里没有" + curKeyName.Key + "这个属性！检查一下你的代码吧！");
+                    throw new Exception("你的类型" + objType.Name + "里没有" + curKeyName.Key + "这个属性！检查一下你的代码吧！");
                 }
                 Control[] foundControls = form.Controls.Find(textBoxNamePrefix + p.Name, true);
                 if (foundControls.Length == 0)
@@ -148,7 +150,7 @@ namespace WMS.UI
                     continue;
                 }
                 TextBox curTextBox = (TextBox)foundControls[0];
-                if(CopyTextToProperty(curTextBox.Text,p.Name, targetObject, keyNames, out errorMessage) == false)
+                if (CopyTextToProperty(curTextBox.Text, p.Name, targetObject, keyNames, out errorMessage) == false)
                 {
                     return false;
                 }
@@ -168,14 +170,14 @@ namespace WMS.UI
             }
 
             KeyName keyName = (from kn in keyNames where kn.Key == p.Name select kn).FirstOrDefault();
-            if(keyName == null)
+            if (keyName == null)
             {
                 throw new Exception(objType.Name + "的KeyNames中不存在" + p.Name + "，请检查你的代码！");
             }
             string chineseName = keyName.Name;
 
             Type originType = p.PropertyType;
-            if(string.IsNullOrWhiteSpace(text) && keyName.NotNull == true)
+            if (string.IsNullOrWhiteSpace(text) && keyName.NotNull == true)
             {
                 errorMessage = chineseName + " 不允许为空！";
                 return false;
@@ -283,7 +285,7 @@ namespace WMS.UI
             return false;
         }
 
-        public static void CreateEditPanel(TableLayoutPanel tableLayoutPanel,KeyName[] keyNames)
+        public static void CreateEditPanel(TableLayoutPanel tableLayoutPanel, KeyName[] keyNames)
         {
             //初始化属性编辑框
             tableLayoutPanel.Controls.Clear();
@@ -309,7 +311,7 @@ namespace WMS.UI
                     textBox.Font = new Font("微软雅黑", 10);
 
                     //设置了默认值，就添加事件，更改文字后文字变成黑色。默认值在后面统一填入
-                    if(curKeyName.DefaultValueFunc != null)
+                    if (curKeyName.DefaultValueFunc != null)
                     {
                         textBox.TextChanged += (obj, e) =>
                         {
@@ -338,13 +340,14 @@ namespace WMS.UI
                         textBox.Controls.Add(labelLayer);
 
                         //防止第一次显示的时候有字也显示占位符的囧境
-                        textBox.TextChanged += (obj,e)=>{
-                            if(textBox.Text.Length != 0)
+                        textBox.TextChanged += (obj, e) =>
+                        {
+                            if (textBox.Text.Length != 0)
                             {
                                 labelLayer.Hide();
                             }
                         };
-                        
+
                         textBox.Click += (obj, e) =>
                         {
                             labelLayer.Hide();
@@ -402,27 +405,27 @@ namespace WMS.UI
             return ids.ToArray();
         }
 
-        public static void SelectLineByID(ReoGridControl reoGridControl,int id)
+        public static void SelectLineByID(ReoGridControl reoGridControl, int id)
         {
             var worksheet = reoGridControl.Worksheets[0];
             for (int i = 0; i < worksheet.Rows; i++)
             {
-                if(worksheet[i,0] == null)
+                if (worksheet[i, 0] == null)
                 {
                     continue;
                 }
-                if (int.TryParse(worksheet[i,0].ToString(),out int value) == true)
+                if (int.TryParse(worksheet[i, 0].ToString(), out int value) == true)
                 {
-                    if(value != id)
+                    if (value != id)
                     {
                         continue;
                     }
-                    worksheet.SelectionRange = new RangePosition(i,0,1,1);
+                    worksheet.SelectionRange = new RangePosition(i, 0, 1, 1);
                     return;
                 }
             }
         }
-        
+
         [Obsolete] //已废弃
         public static string GenerateNo(string prefix, int id)
         {
@@ -431,10 +434,10 @@ namespace WMS.UI
 
         public static string GenerateTicketNumber(string supplierNumber, DateTime createTime, int rankOfMonth)
         {
-            return string.Format("{0}-{1:00}-{2}",supplierNumber,createTime.Month,rankOfMonth);
+            return string.Format("{0}-{1:00}-{2}", supplierNumber, createTime.Month, rankOfMonth);
         }
 
-        public static string GenerateTicketNo(string prefix,DateTime createTime, int rankOfDay/*当天第几张*/)
+        public static string GenerateTicketNo(string prefix, DateTime createTime, int rankOfDay/*当天第几张*/)
         {
             return string.Format("{0}{1:0000}{2:00}{3:00}{4:00}{5:00}-{6}", prefix, createTime.Year, createTime.Month, createTime.Day, createTime.Hour, createTime.Minute, rankOfDay);
         }
@@ -448,15 +451,15 @@ namespace WMS.UI
         {
             if (allNoOfDay.Length == 0) return 0;
             int[] ranks = new int[allNoOfDay.Length];
-            for(int i = 0; i < allNoOfDay.Length; i++)
+            for (int i = 0; i < allNoOfDay.Length; i++)
             {
-                if(allNoOfDay[i] == null)
+                if (allNoOfDay[i] == null)
                 {
                     ranks[i] = 0;
                     continue;
                 }
                 string[] segments = allNoOfDay[i].Split('-');
-                if(segments.Length != 2 || int.TryParse(segments[1],out ranks[i]) == false)
+                if (segments.Length != 2 || int.TryParse(segments[1], out ranks[i]) == false)
                 {
                     Console.WriteLine("输入单号不合法：" + allNoOfDay[i]);
                     ranks[i] = 0;
@@ -491,7 +494,7 @@ namespace WMS.UI
             return ranks.Max();
         }
 
-        public static void FillTextBoxDefaultValues(TableLayoutPanel editPanel,KeyName[] keyNames,string prefix = "textBox")
+        public static void FillTextBoxDefaultValues(TableLayoutPanel editPanel, KeyName[] keyNames, string prefix = "textBox")
         {
             KeyName[] keyNameHasDefaultValueFunc = (from kn in keyNames
                                                     where kn.DefaultValueFunc != null
@@ -506,9 +509,10 @@ namespace WMS.UI
             }
         }
 
-        public static void InitReoGrid(ReoGridControl reoGrid,KeyName[] keyNames,WorksheetSelectionMode selectionMode = WorksheetSelectionMode.Row)
+        public static void InitReoGrid(ReoGridControl reoGrid, KeyName[] keyNames, WorksheetSelectionMode selectionMode = WorksheetSelectionMode.Row)
         {
             //初始化表格
+            reoGrid.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = reoGrid.Worksheets[0];
             worksheet.SelectionMode = selectionMode;
             for (int i = 0; i < keyNames.Length; i++)
@@ -517,6 +521,20 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = keyNames[i].Visible;
             }
             worksheet.Columns = keyNames.Length; //限制表的长度
+        }
+
+        public static string DecimalToString(decimal value, int precision = 3)
+        {
+            if (precision == 3)
+            {
+                return string.Format("{0:0.###}", value);
+            }
+            StringBuilder format = new StringBuilder("{0:0.}");
+            for (int i = 0; i < precision; i++)
+            {
+                format.Append("#");
+            }
+            return string.Format(format.ToString(), value);
         }
     }
 }

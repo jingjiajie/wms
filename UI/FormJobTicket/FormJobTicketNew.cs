@@ -46,6 +46,7 @@ namespace WMS.UI
         private void InitComponents()
         {
             Utilities.InitReoGrid(this.reoGridControlMain, ShipmentTicketItemViewMetaData.KeyNames,WorksheetSelectionMode.Cell);
+            this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.InsertColumns(1, 2);
             worksheet.ColumnHeaders[1].Text = "选择";
@@ -123,7 +124,7 @@ namespace WMS.UI
                 worksheet.Cells[i, 2].Style.BackColor = Color.AliceBlue;
                 //计划翻包数量
                 worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
-                worksheet[i, 2] = cur.ShipmentAmount - cur.ScheduledJobAmount; //计划翻包数量默认等于发货数量-已经计划翻包过的数量
+                worksheet[i, 2] = Utilities.DecimalToString((cur.ShipmentAmount - (cur.ScheduledJobAmount ?? 0)) ?? 0); //计划翻包数量默认等于发货数量-已经计划翻包过的数量
                 object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in ShipmentTicketItemViewMetaData.KeyNames select kn.Key).ToArray());
                 int offsetColumn = 0;
                 for (int j = 0; j < columns.Length; j++)
@@ -131,7 +132,16 @@ namespace WMS.UI
                     while (this.editableColumns.Contains(j + offsetColumn)) offsetColumn++;
                     if (columns[j] == null) continue;
                     worksheet.Cells[i, offsetColumn + j].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
-                    worksheet[i, offsetColumn + j] = columns[j].ToString();
+                    string text = null;
+                    if(columns[j] is decimal)
+                    {
+                        text = Utilities.DecimalToString((decimal)columns[j]);
+                    }
+                    else
+                    {
+                        text = columns[j].ToString();
+                    }
+                    worksheet[i, offsetColumn + j] = text;
                 }
             }
         }

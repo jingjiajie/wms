@@ -8,6 +8,7 @@ namespace WMS.UI
     class PutOutStorageTicketViewMetaData
     {
         public const string STRING_STATE_LOADING = "装车中";
+        public const string STRING_STATE_LOADED = "装车完成";
         public const string STRING_STATE_DELIVERED = "已发运";
 
         private static KeyName[] keyNames = {
@@ -17,6 +18,7 @@ namespace WMS.UI
             //new KeyName(){Key="TruckLoadingTicketNo",Name="装车单号",Editable=true},
             new KeyName(){Key="State",Name="状态",ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_LOADING),
+                new ComboBoxItem(STRING_STATE_LOADED),
                 new ComboBoxItem(STRING_STATE_DELIVERED),
             } },
             new KeyName(){Key="CarNum",Name="车牌号",Editable=true},

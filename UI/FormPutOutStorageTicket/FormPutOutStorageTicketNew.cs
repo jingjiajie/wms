@@ -80,6 +80,7 @@ namespace WMS.UI
 
         private void InitComponents()
         {
+            this.reoGridControlMain.SetSettings(unvell.ReoGrid.WorkbookSettings.View_ShowSheetTabControl, false);
             this.pagerWidget = new PagerWidget<JobTicketItemView>(this.reoGridControlMain, JobTicketItemViewMetaData.KeyNames);
             this.pagerWidget.SetPageSize(-1);
         }

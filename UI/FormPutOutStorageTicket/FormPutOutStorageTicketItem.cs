@@ -16,6 +16,7 @@ namespace WMS.UI
     public partial class FormPutOutStorageTicketItem : Form
     {
         private int putOutStorageTicketID = -1;
+        private Action<int> putOutStorageTicketStateChangedCallback = null;
 
         private KeyName[] visibleColumns = (from kn in PutOutStorageTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -25,6 +26,11 @@ namespace WMS.UI
         {
             InitializeComponent();
             this.putOutStorageTicketID = putOutStorageTicketID;
+        }
+
+        public void SetPutOutStorageTicketStateChangedCallback(Action<int> callback)
+        {
+            this.putOutStorageTicketStateChangedCallback = callback;
         }
 
         private void FormPutOutStorageTicketItem_Load(object sender, EventArgs e)
@@ -180,40 +186,46 @@ namespace WMS.UI
             }
             return ids.ToArray();
         }
-        
+
         private void buttonModify_Click(object sender, EventArgs e)
         {
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if(ids.Length != 1)
+            if (ids.Length != 1)
             {
-                MessageBox.Show("请选择一项进行修改","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             int id = ids[0];
 
-            new Thread(new ThreadStart(() =>
+            WMSEntities wmsEntities = new WMSEntities();
+            PutOutStorageTicketItem putOutStorageTicketItem = null;
+            try
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                PutOutStorageTicketItem putOutStorageTicketItem = null;
-                try
-                {
-                    putOutStorageTicketItem = (from p in wmsEntities.PutOutStorageTicketItem where p.ID == id select p).FirstOrDefault();
-                }
-                catch
-                {
-                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if(putOutStorageTicketItem == null)
-                {
-                    MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
-                {
-                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                putOutStorageTicketItem = (from p in wmsEntities.PutOutStorageTicketItem where p.ID == id select p).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (putOutStorageTicketItem == null)
+            {
+                MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (Utilities.CopyComboBoxsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames) == false)
+            {
+                MessageBox.Show("内部错误：读取复选框数据失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            new Thread(() =>
+            {
                 try
                 {
                     wmsEntities.SaveChanges();
@@ -228,7 +240,7 @@ namespace WMS.UI
                     this.Search(putOutStorageTicketItem.ID);
                 }));
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
+            }).Start();
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -275,6 +287,95 @@ namespace WMS.UI
         private void buttonModify_MouseDown(object sender, MouseEventArgs e)
         {
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAllLoad_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("确定要全额装车所有条目吗？（不会改变已经全部装车的条目）", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            new Thread(new ThreadStart(() =>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                try
+                {
+                    wmsEntities.Database.ExecuteSqlCommand(
+                        String.Format(@"UPDATE PutOutStorageTicketItem SET State = '{0}',
+                                        RealAmount = ScheduledAmount
+                                        WHERE PutOutStorageTicketID = {1} AND State<>'{2}';",
+                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOAD,
+                                    this.putOutStorageTicketID,
+                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOAD));
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}',TruckLoadingTime='{1}' WHERE ID = {2}", PutOutStorageTicketViewMetaData.STRING_STATE_LOADED,DateTime.Now, this.putOutStorageTicketID));
+                    wmsEntities.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                this.putOutStorageTicketStateChangedCallback?.Invoke(this.putOutStorageTicketID);
+                this.Invoke(new Action(() => this.Search()));
+                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            })).Start();
+        }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
+            TextBox textBoxScheduledAmount = (TextBox)this.Controls.Find("textBoxScheduledAmount", true)[0];
+            TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
+            if (string.IsNullOrWhiteSpace(textBoxRealAmount.Text))
+            {
+                MessageBox.Show("请填写实际装车数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            PutOutStorageTicketItem tmpPutOutStorageTicketItem = new PutOutStorageTicketItem();
+            if (Utilities.CopyTextBoxTextsToProperties(this, tmpPutOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (tmpPutOutStorageTicketItem.RealAmount < tmpPutOutStorageTicketItem.ScheduledAmount)
+            {
+                comboBoxState.SelectedIndex = 1;
+            }
+            else
+            {
+                comboBoxState.SelectedIndex = 2;
+            }
+            this.buttonModify.PerformClick();
+        }
+
+        private void buttonAllLoad_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAllLoad.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonLoad_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonLoad.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonLoad_MouseEnter(object sender, EventArgs e)
+        {
+            buttonLoad.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonAllLoad_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAllLoad.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonAllLoad_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAllLoad.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonLoad_MouseLeave(object sender, EventArgs e)
+        {
+            buttonLoad.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
         }
     }
 }

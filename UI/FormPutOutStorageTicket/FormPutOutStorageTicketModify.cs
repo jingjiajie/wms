@@ -54,6 +54,7 @@ namespace WMS.UI
                 return;
             }
             Utilities.CopyPropertiesToTextBoxes(putOutStorageTicketView, this);
+            Utilities.CopyPropertiesToComboBoxes(putOutStorageTicketView, this);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -85,6 +86,12 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if(Utilities.CopyComboBoxsToProperties(this,putOutStorageTicket, PutOutStorageTicketViewMetaData.KeyNames) == false)
+            {
+                MessageBox.Show("内部错误，读取选择框数据失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
                 wmsEntities.SaveChanges();
