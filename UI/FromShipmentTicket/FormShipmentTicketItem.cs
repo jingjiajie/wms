@@ -20,6 +20,12 @@ namespace WMS.UI
         Action shipmentTicketStateChangedCallback = null;
 
         private int curStockInfoID = -1;
+        private int curConfirmPersonID = -1;
+        private int curJobPersonID = -1;
+
+        private TextBox textBoxConfirmPersonName = null;
+        private TextBox textBoxJobPersonName = null;
+        private TextBox textBoxComponentName = null;
 
         private KeyName[] visibleColumns = (from kn in ShipmentTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -46,11 +52,6 @@ namespace WMS.UI
                 KeyName keyNameUnit = (from kn in ShipmentTicketItemViewMetaData.KeyNames
                                        where kn.Key == "Unit"
                                        select kn).First();
-                keyNameUnit.ComboBoxItems = new ComboBoxItem[units.Length];
-                for(int i = 0; i < units.Length; i++)
-                {
-                    keyNameUnit.ComboBoxItems[i] = new ComboBoxItem(units[i].Name);
-                }
             }
             catch
             {
@@ -85,10 +86,68 @@ namespace WMS.UI
 
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
 
-            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            this.textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.Click += textBoxComponentName_Click;
             textBoxComponentName.ReadOnly = true;
             textBoxComponentName.BackColor = Color.White;
+
+            this.textBoxJobPersonName = (TextBox)this.Controls.Find("textBoxJobPersonName", true)[0];
+            textBoxJobPersonName.ReadOnly = true;
+            textBoxJobPersonName.BackColor = Color.White;
+            textBoxJobPersonName.Click += textBoxJobPersonName_Click;
+
+            this.textBoxConfirmPersonName = (TextBox)this.Controls.Find("textBoxConfirmPersonName", true)[0];
+            textBoxConfirmPersonName.ReadOnly = true;
+            textBoxConfirmPersonName.BackColor = Color.White;
+            textBoxConfirmPersonName.Click += textBoxConfirmPersonName_Click;
+        }
+
+        private void textBoxConfirmPersonName_Click(object sender, EventArgs e)
+        {
+            FormSelectPerson form = new FormSelectPerson();
+            form.SetSelectFinishCallback((id)=>
+            {
+                this.curConfirmPersonID = id;
+                if (!this.IsDisposed)
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    Person person = (from p in wmsEntities.Person
+                                     where p.ID == id
+                                     select p).FirstOrDefault();
+                    if(person == null)
+                    {
+                        MessageBox.Show("选中人员不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.curConfirmPersonID = id;
+                    this.textBoxConfirmPersonName.Text = person.Name;
+                }
+            });
+            form.Show();
+        }
+
+        private void textBoxJobPersonName_Click(object sender, EventArgs e)
+        {
+            FormSelectPerson form = new FormSelectPerson();
+            form.SetSelectFinishCallback((id) =>
+            {
+                this.curJobPersonID = id;
+                if (!this.IsDisposed)
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    Person person = (from p in wmsEntities.Person
+                                     where p.ID == id
+                                     select p).FirstOrDefault();
+                    if (person == null)
+                    {
+                        MessageBox.Show("选中人员不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.curJobPersonID = id;
+                    this.textBoxJobPersonName.Text = person.Name;
+                }
+            });
+            form.Show();
         }
 
         private void textBoxComponentName_Click(object sender, EventArgs e)
@@ -153,6 +212,8 @@ namespace WMS.UI
             if (ids.Length == 0)
             {
                 this.curStockInfoID = -1;
+                this.curConfirmPersonID = -1;
+                this.curJobPersonID = -1;
                 //为编辑框填写默认值
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, ShipmentTicketItemViewMetaData.KeyNames);
                 return;
@@ -328,14 +389,17 @@ namespace WMS.UI
         {
             if (this.curStockInfoID == -1)
             {
-                MessageBox.Show("未选择零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             ShipmentTicketItem shipmentTicketItem = new ShipmentTicketItem();
             shipmentTicketItem.StockInfoID = this.curStockInfoID;
             shipmentTicketItem.ShipmentTicketID = this.shipmentTicketID;
-          
-            if(Utilities.CopyTextBoxTextsToProperties(this,shipmentTicketItem,ShipmentTicketItemViewMetaData.KeyNames,out string errorMessage) == false)
+            shipmentTicketItem.ConfirmPersonID = this.curConfirmPersonID == -1 ? null : (int?)this.curConfirmPersonID;
+            shipmentTicketItem.JobPersonID = this.curJobPersonID == -1 ? null : (int?)this.curJobPersonID;
+
+
+            if (Utilities.CopyTextBoxTextsToProperties(this,shipmentTicketItem,ShipmentTicketItemViewMetaData.KeyNames,out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -388,6 +452,8 @@ namespace WMS.UI
                     return;
                 }
                 shipmentTicketItem.StockInfoID = this.curStockInfoID;
+                shipmentTicketItem.ConfirmPersonID = this.curConfirmPersonID == -1 ? null : (int?)this.curConfirmPersonID;
+                shipmentTicketItem.JobPersonID = this.curJobPersonID == -1 ? null : (int?)this.curJobPersonID;
 
                 if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicketItem, ShipmentTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
                 {
