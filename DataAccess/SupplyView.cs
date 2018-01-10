@@ -63,14 +63,14 @@ namespace WMS.DataAccess
         public Nullable<decimal> ShipmentInfoBoxWidth { get; set; }
         public Nullable<decimal> ShipmentInfoBoxHeight { get; set; }
         public Nullable<decimal> ShipmentInfoUnitAmount { get; set; }
-        public string ReceiptUnit { get; set; }
-        public Nullable<decimal> ReceiptUnitAmount { get; set; }
-        public string ShipmentUnit { get; set; }
-        public Nullable<decimal> ShipmentUnitAmount { get; set; }
         public string ComponentName { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public string SupplierName { get; set; }
         public Nullable<int> NewestSupplyID { get; set; }
+        public string DefaultReceiptUnit { get; set; }
+        public Nullable<decimal> DefaultReceiptUnitAmount { get; set; }
+        public string DefaultShipmentUnit { get; set; }
+        public Nullable<decimal> DefaultShipmentUnitAmount { get; set; }
     }
 }

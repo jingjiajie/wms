@@ -1331,15 +1331,15 @@
           <Property Name="ShipmentInfoBoxWidth" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoBoxHeight" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoUnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="ReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="ShipmentUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ComponentName" Type="nvarchar" MaxLength="64" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
           <Property Name="NewestSupplyID" Type="int" />
+          <Property Name="DefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.UserView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2508,15 +2508,15 @@ FROM [dbo].[SupplierView] AS [SupplierView]</DefiningQuery>
 [SupplyView].[ShipmentInfoBoxWidth] AS [ShipmentInfoBoxWidth], 
 [SupplyView].[ShipmentInfoBoxHeight] AS [ShipmentInfoBoxHeight], 
 [SupplyView].[ShipmentInfoUnitAmount] AS [ShipmentInfoUnitAmount], 
-[SupplyView].[ReceiptUnit] AS [ReceiptUnit], 
-[SupplyView].[ReceiptUnitAmount] AS [ReceiptUnitAmount], 
-[SupplyView].[ShipmentUnit] AS [ShipmentUnit], 
-[SupplyView].[ShipmentUnitAmount] AS [ShipmentUnitAmount], 
 [SupplyView].[ComponentName] AS [ComponentName], 
 [SupplyView].[ProjectName] AS [ProjectName], 
 [SupplyView].[WarehouseName] AS [WarehouseName], 
 [SupplyView].[SupplierName] AS [SupplierName], 
-[SupplyView].[NewestSupplyID] AS [NewestSupplyID]
+[SupplyView].[NewestSupplyID] AS [NewestSupplyID], 
+[SupplyView].[DefaultReceiptUnit] AS [DefaultReceiptUnit], 
+[SupplyView].[DefaultReceiptUnitAmount] AS [DefaultReceiptUnitAmount], 
+[SupplyView].[DefaultShipmentUnit] AS [DefaultShipmentUnit], 
+[SupplyView].[DefaultShipmentUnitAmount] AS [DefaultShipmentUnitAmount]
 FROM [dbo].[SupplyView] AS [SupplyView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserView" EntityType="Self.UserView" store:Type="Views" store:Schema="dbo">
@@ -3993,15 +3993,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ShipmentInfoBoxWidth" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoBoxHeight" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ShipmentInfoUnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="ShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ComponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="NewestSupplyID" Type="Int32" />
+          <Property Name="DefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="UserView">
           <Key>
@@ -5894,15 +5894,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ShipmentInfoBoxWidth" ColumnName="ShipmentInfoBoxWidth" />
                 <ScalarProperty Name="ShipmentInfoBoxHeight" ColumnName="ShipmentInfoBoxHeight" />
                 <ScalarProperty Name="ShipmentInfoUnitAmount" ColumnName="ShipmentInfoUnitAmount" />
-                <ScalarProperty Name="ReceiptUnit" ColumnName="ReceiptUnit" />
-                <ScalarProperty Name="ReceiptUnitAmount" ColumnName="ReceiptUnitAmount" />
-                <ScalarProperty Name="ShipmentUnit" ColumnName="ShipmentUnit" />
-                <ScalarProperty Name="ShipmentUnitAmount" ColumnName="ShipmentUnitAmount" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="NewestSupplyID" ColumnName="NewestSupplyID" />
+                <ScalarProperty Name="DefaultReceiptUnit" ColumnName="DefaultReceiptUnit" />
+                <ScalarProperty Name="DefaultReceiptUnitAmount" ColumnName="DefaultReceiptUnitAmount" />
+                <ScalarProperty Name="DefaultShipmentUnit" ColumnName="DefaultShipmentUnit" />
+                <ScalarProperty Name="DefaultShipmentUnitAmount" ColumnName="DefaultShipmentUnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
