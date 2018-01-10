@@ -19,7 +19,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> OverflowAreaAmount { get; set; }
         public Nullable<decimal> ReceiptAreaAmount { get; set; }
         public Nullable<decimal> ShipmentAreaAmount { get; set; }
-        public Nullable<int> ReceiptTicketItemComponentID { get; set; }
         public string ReceiptTicketItemPackageName { get; set; }
         public Nullable<decimal> ReceiptTicketItemExpectedPackageAmount { get; set; }
         public Nullable<decimal> ReceiptTicketItemExpectedAmount { get; set; }
@@ -29,7 +28,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> ReceiptTicketItemDisqualifiedAmount { get; set; }
         public Nullable<int> ReceiptTicketSupplierID { get; set; }
         public string SupplierName { get; set; }
-        public string ComponentNo { get; set; }
         public string ComponentName { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
@@ -39,7 +37,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> SubmissionAmount { get; set; }
         public string ReceiptTicketItemState { get; set; }
         public Nullable<int> ReceiptTicketItemReceiptTicketID { get; set; }
-        public string ComponentNumber { get; set; }
         public string ReceiptTicketState { get; set; }
         public string ReceiptTicketNo { get; set; }
         public string ReceiptTicketNumber { get; set; }

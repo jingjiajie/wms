@@ -25,7 +25,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> DistrabuteCount { get; set; }
         public Nullable<decimal> MoveCount { get; set; }
         public string OperateTime { get; set; }
-        public Nullable<int> ReceiptTicketItemComponentID { get; set; }
         public Nullable<decimal> ReceiptTicketItemExpectedAmount { get; set; }
         public Nullable<decimal> ReceiptTicketItemReceiviptAmount { get; set; }
         public Nullable<decimal> ReceiptTicketItemWrongComponentAmount { get; set; }
@@ -35,7 +34,6 @@ namespace WMS.DataAccess
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public string SupplierName { get; set; }
-        public string ComponentNo { get; set; }
         public string ComponentName { get; set; }
         public Nullable<int> PutawayTicketProjectID { get; set; }
         public Nullable<int> PutawayTicketWarehouseID { get; set; }
@@ -48,10 +46,19 @@ namespace WMS.DataAccess
         public string ReceiptTicketNo { get; set; }
         public string ReceiptTicketNumber { get; set; }
         public string SupplierNumber { get; set; }
-        public string ComponentNumber { get; set; }
         public Nullable<int> JobPersonID { get; set; }
         public Nullable<int> ConfirmPersonID { get; set; }
         public string JobPersonName { get; set; }
         public string ConfirmPersonName { get; set; }
+        public Nullable<int> ReceiptTicketItemSupplyID { get; set; }
+        public Nullable<int> SupplyComponentID { get; set; }
+        public string SupplyNumber { get; set; }
+        public string SupplyNo { get; set; }
+        public string SupplyReceiptUnit { get; set; }
+        public Nullable<decimal> SupplyReceiptUnitAmount { get; set; }
+        public string SupplyShipmentUnit { get; set; }
+        public Nullable<decimal> SupplyShipmentUnitAmount { get; set; }
+        public Nullable<decimal> UnitAmount { get; set; }
+        public string Unit { get; set; }
     }
 }

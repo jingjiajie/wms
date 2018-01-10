@@ -46,6 +46,7 @@ namespace WMS.DataAccess
         public DbSet<SubmissionTicketItem> SubmissionTicketItem { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<SupplierStorageInfo> SupplierStorageInfo { get; set; }
+        public DbSet<Supply> Supply { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Warehouse> Warehouse { get; set; }
         public DbSet<ComponentView> ComponentView { get; set; }
@@ -69,6 +70,7 @@ namespace WMS.DataAccess
         public DbSet<SubmissionTicketView> SubmissionTicketView { get; set; }
         public DbSet<SupplierStorageInfoView> SupplierStorageInfoView { get; set; }
         public DbSet<SupplierView> SupplierView { get; set; }
+        public DbSet<SupplyView> SupplyView { get; set; }
         public DbSet<UserView> UserView { get; set; }
         public DbSet<WarehouseView> WarehouseView { get; set; }
     }

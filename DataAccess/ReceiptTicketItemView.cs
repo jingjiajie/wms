@@ -15,7 +15,6 @@ namespace WMS.DataAccess
     public partial class ReceiptTicketItemView
     {
         public Nullable<int> ReceiptTicketID { get; set; }
-        public Nullable<int> ComponentID { get; set; }
         public string PackageName { get; set; }
         public Nullable<decimal> ExpectedPackageAmount { get; set; }
         public Nullable<decimal> ExpectedAmount { get; set; }
@@ -29,7 +28,6 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public string RealRightProperty { get; set; }
         public string BoxNo { get; set; }
-        public string ComponentNo { get; set; }
         public string ComponentName { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
@@ -48,7 +46,6 @@ namespace WMS.DataAccess
         public string ReceiptTicketState { get; set; }
         public string ReceiptTicketNo { get; set; }
         public string ReceiptTicketNumber { get; set; }
-        public string ComponentNumber { get; set; }
         public Nullable<int> ReceiptTicketSupplierID { get; set; }
         public string SupplierName { get; set; }
         public string SupplierNumber { get; set; }
@@ -56,5 +53,18 @@ namespace WMS.DataAccess
         public Nullable<int> ConfirmPersonID { get; set; }
         public string JobPersonName { get; set; }
         public string ConfirmPersonName { get; set; }
+        public Nullable<int> SupplyComponentID { get; set; }
+        public string SupplyNumber { get; set; }
+        public string SupplyNo { get; set; }
+        public Nullable<decimal> SupplyShipmentUnitAmount { get; set; }
+        public string SupplyShipmentUnit { get; set; }
+        public Nullable<decimal> SupplyReceiptUnitAmount { get; set; }
+        public string SupplyReceiptUnit { get; set; }
+        public Nullable<decimal> ComponentDefaultShipmentUnitAmount { get; set; }
+        public string ComponentDefaultShipmentUnit { get; set; }
+        public Nullable<decimal> ComponentDefaultReceiptUnitAmount { get; set; }
+        public string ComponentDefaultReceiptUnit { get; set; }
+        public Nullable<decimal> UnitAmount { get; set; }
+        public string Unit { get; set; }
     }
 }
