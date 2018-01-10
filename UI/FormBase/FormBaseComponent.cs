@@ -137,6 +137,8 @@ namespace WMS.UI
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
             this.buttonSearch.Text = "全部信息";
+            
+
 
             this.pagerWidget.ClearCondition();
 

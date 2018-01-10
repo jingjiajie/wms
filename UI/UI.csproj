@@ -273,6 +273,12 @@
     <Compile Include="FormReceipt\FormSubmission\FormSubmissionItem.Designer.cs">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormRemind\FormSupplierRemind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormRemind\FormSupplierRemind.Designer.cs">
+      <DependentUpon>FormSupplierRemind.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStockInfo\FormSelectStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -586,6 +592,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSubmission\FormSubmissionItem.resx">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormRemind\FormSupplierRemind.resx">
+      <DependentUpon>FormSupplierRemind.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStockInfo\FormSelectStockInfo.resx">
       <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
