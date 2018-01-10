@@ -48,10 +48,6 @@ namespace WMS.UI
             try
             {
                 shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == shipmentTicketID select s).FirstOrDefault();
-                PackageUnitView[] units = (from u in wmsEntities.PackageUnitView select u).ToArray();
-                KeyName keyNameUnit = (from kn in ShipmentTicketItemViewMetaData.KeyNames
-                                       where kn.Key == "Unit"
-                                       select kn).First();
             }
             catch
             {
@@ -72,6 +68,7 @@ namespace WMS.UI
         private void InitComponents()
         {
             //初始化表格
+            this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
 
@@ -152,19 +149,19 @@ namespace WMS.UI
 
         private void textBoxComponentName_Click(object sender, EventArgs e)
         {
-            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            var formSelectStockInfo = new FormSelectStockInfo(this.curStockInfoID);
-            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID)=>
+
+            var formSelectStockInfo = new FormSelectStockInfo();
+            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
             {
                 this.curStockInfoID = selectedStockInfoID;
                 if (!this.IsDisposed)
                 {
-                    this.Invoke(new Action(()=>
+                    this.Invoke(new Action(() =>
                     {
                         textBoxComponentName.Text = "加载中...";
                     }));
                 }
-                new Thread(new ThreadStart(()=>
+                new Thread(new ThreadStart(() =>
                 {
                     StockInfoView stockInfoView = null;
                     try
@@ -175,7 +172,7 @@ namespace WMS.UI
                     }
                     catch
                     {
-                        MessageBox.Show("刷新数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("刷新数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     this.Invoke(new Action(() =>
@@ -184,6 +181,7 @@ namespace WMS.UI
                     }));
                 })).Start();
             });
+
             formSelectStockInfo.Show();
         }
 
@@ -211,6 +209,7 @@ namespace WMS.UI
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             if (ids.Length == 0)
             {
+                this.buttonAdd.Text = "添加条目";
                 this.curStockInfoID = -1;
                 this.curConfirmPersonID = -1;
                 this.curJobPersonID = -1;
@@ -218,6 +217,7 @@ namespace WMS.UI
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, ShipmentTicketItemViewMetaData.KeyNames);
                 return;
             }
+            this.buttonAdd.Text = "复制条目";
             int id = ids[0];
             ShipmentTicketItemView shipmentTicketItemView = null;
             try

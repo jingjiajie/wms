@@ -346,6 +346,11 @@ namespace WMS.UI
                             {
                                 labelLayer.Hide();
                             }
+                            else
+                            {
+                                textBox.Text = "";
+                                labelLayer.Show();
+                            }
                         };
 
                         textBox.Click += (obj, e) =>
@@ -504,6 +509,7 @@ namespace WMS.UI
                 Control[] foundControls = editPanel.Controls.Find(prefix + curKeyName.Key, true);
                 if (foundControls.Length == 0) continue;
                 TextBox textBox = (TextBox)foundControls[0];
+                if (string.IsNullOrWhiteSpace(textBox.Text) == false) continue;
                 textBox.Text = curKeyName.DefaultValueFunc();
                 textBox.ForeColor = Color.DarkGray;
             }

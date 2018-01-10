@@ -60,6 +60,7 @@ namespace WMS.UI
         private void InitComponents()
         {
             //初始化表格
+            this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
 

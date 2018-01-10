@@ -159,6 +159,7 @@
             this.buttonDelete.BackColor = System.Drawing.Color.White;
             this.buttonDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDelete.BackgroundImage")));
             this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonDelete.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonDelete.FlatAppearance.BorderSize = 0;
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -167,9 +168,9 @@
             this.buttonDelete.Location = new System.Drawing.Point(12, 137);
             this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(168, 35);
+            this.buttonDelete.Size = new System.Drawing.Size(168, 38);
             this.buttonDelete.TabIndex = 4;
-            this.buttonDelete.Text = "删除项目";
+            this.buttonDelete.Text = "删除条目";
             this.buttonDelete.UseVisualStyleBackColor = false;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             this.buttonDelete.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonDelete_MouseDown);
@@ -181,6 +182,7 @@
             this.buttonAlter.BackColor = System.Drawing.Color.White;
             this.buttonAlter.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAlter.BackgroundImage")));
             this.buttonAlter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAlter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAlter.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonAlter.FlatAppearance.BorderSize = 0;
             this.buttonAlter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -189,9 +191,9 @@
             this.buttonAlter.Location = new System.Drawing.Point(12, 88);
             this.buttonAlter.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(168, 35);
+            this.buttonAlter.Size = new System.Drawing.Size(168, 41);
             this.buttonAlter.TabIndex = 1;
-            this.buttonAlter.Text = "修改项目";
+            this.buttonAlter.Text = "修改条目";
             this.buttonAlter.UseVisualStyleBackColor = false;
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             this.buttonAlter.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAlter_MouseDown);
@@ -203,6 +205,7 @@
             this.buttonAdd.BackColor = System.Drawing.Color.White;
             this.buttonAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAdd.BackgroundImage")));
             this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAdd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonAdd.FlatAppearance.BorderSize = 0;
             this.buttonAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -211,9 +214,9 @@
             this.buttonAdd.Location = new System.Drawing.Point(12, 38);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(168, 35);
+            this.buttonAdd.Size = new System.Drawing.Size(168, 42);
             this.buttonAdd.TabIndex = 0;
-            this.buttonAdd.Text = "添加项目";
+            this.buttonAdd.Text = "添加条目";
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             this.buttonAdd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAdd_MouseDown);

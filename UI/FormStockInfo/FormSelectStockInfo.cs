@@ -18,6 +18,12 @@ namespace WMS.UI
         private int defaultStockInfoID = -1;
         private Action<int> selectFinishCallback = null;
 
+        static int staticSelectedID = -1;
+        static int staticComboBoxSelectedIndex = 0;
+        static string staticSearchCondition = "";
+        static Point staticLocation = new Point(-1,-1);
+        
+
         public FormSelectStockInfo(int defaultStockInfoID = -1)
         {
             InitializeComponent();
@@ -31,10 +37,15 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            this.comboBoxSearchCondition.SelectedIndex = 0;
-
+            this.comboBoxSearchCondition.SelectedIndex = staticComboBoxSelectedIndex;
+            this.textBoxSearchContition.Text = staticSearchCondition;
+            if(staticLocation != new Point(-1, -1))
+            {
+                this.Location = staticLocation;
+            }
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
+            this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
             for (int i = 0; i < StockInfoViewMetaData.KeyNames.Length; i++)
             {
@@ -47,22 +58,26 @@ namespace WMS.UI
         private void FormJobTicketSelectStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
-            if(this.defaultStockInfoID != -1)
+            if (this.defaultStockInfoID != -1)
             {
                 try
                 {
                     WMSEntities wmsEntities = new WMSEntities();
                     this.comboBoxSearchCondition.SelectedIndex = 1; //自动选中零件编号选项
                     this.textBoxSearchContition.Text = (from s in wmsEntities.StockInfoView where s.ID == defaultStockInfoID select s.SupplyNo).FirstOrDefault();
+                    this.Search(defaultStockInfoID);
                 }
                 catch
                 {
-                    MessageBox.Show("加载数据失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                     return;
                 }
             }
-            this.Search();
+            else
+            {
+                this.Search(staticSelectedID);
+            }
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -70,7 +85,7 @@ namespace WMS.UI
             this.Search();
         }
 
-        private void Search()
+        private void Search(int selectID = -1)
         {
             string value = this.textBoxSearchContition.Text;
             string key = this.comboBoxSearchCondition.SelectedItem.ToString();
@@ -84,7 +99,7 @@ namespace WMS.UI
                 StockInfoView[] stockInfoViews = null;
                 try
                 {
-                    if (key == "零件编号")
+                    if (key == "供货编号")
                     {
                         stockInfoViews = (from s in this.wmsEntities.StockInfoView
                                           where s.SupplyNo == value
@@ -128,6 +143,10 @@ namespace WMS.UI
                     {
                         worksheet[0, 2] = "没有查询到符合条件的记录";
                     }
+                    if (selectID != -1)
+                    {
+                        Utilities.SelectLineByID(this.reoGridControlMain, selectID);
+                    }
                     this.labelStatus.Text = "搜索完成";
                 }));
             })).Start();
@@ -155,6 +174,18 @@ namespace WMS.UI
             if(e.KeyChar == 13)
             {
                 this.buttonSearch.PerformClick();
+            }
+        }
+
+        private void FormSelectStockInfo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            staticComboBoxSelectedIndex = this.comboBoxSearchCondition.SelectedIndex;
+            staticSearchCondition = this.textBoxSearchContition.Text;
+            staticLocation = this.Location;
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length > 0)
+            {
+                staticSelectedID = ids[0];
             }
         }
     }
