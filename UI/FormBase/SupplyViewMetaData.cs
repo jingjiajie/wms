@@ -15,8 +15,8 @@ namespace WMS.UI
             new KeyName(){Name = "供货商编号", Key = "SupplierNumber" , Visible = true, Editable = true,Save=false,EditPlaceHolder= "自动生成"},
 
             new KeyName(){Key="No",Name="代号",Visible = true, Editable = true},
-            new KeyName(){Key="Number",Name="零件编号",Visible = true, Editable = true},
-            new KeyName(){Key="ComponentName",Name="零件名",Visible = true, Editable = true},
+            new KeyName(){Key="Number",Name="零件编号", Visible = true, Editable = true,Save=false},
+            new KeyName(){Key="ComponentName",Name="零件名",Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择零件"},
 
             new KeyName(){Key="DefaultReceiptUnit",Name="默认收货单位",Visible = true, Editable = true},
             new KeyName(){Key="DefaultReceiptUnitAmount",Name="默认收货单位数量",Visible = true, Editable = true},
@@ -32,7 +32,6 @@ namespace WMS.UI
             new KeyName(){Key="Size",Name="尺寸（大件/小件）",Visible = true, Editable = true},
             new KeyName(){Key="Category",Name="分类",Visible = true, Editable = true},
             new KeyName(){Key="GroupPrincipal",Name="分组负责人",Visible = true, Editable = true},
-            new KeyName(){Key="SingleCarUsageAmount",Name="单台用量",Visible = true, Editable = true},
             new KeyName(){Key="Charge1",Name="物流服务费1",Visible = true, Editable = true},
             new KeyName(){Key="Charge2",Name="物流服务费2",Visible = true, Editable = true},
 

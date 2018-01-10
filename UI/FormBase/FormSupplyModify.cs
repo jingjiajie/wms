@@ -18,6 +18,7 @@ namespace WMS.UI
         private int userID = -1;
         private int supplyID = -1;
         private int supplierID = -1;
+        private int componenID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
@@ -72,6 +73,7 @@ namespace WMS.UI
             }
 
             this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
+            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
         }
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
@@ -95,14 +97,35 @@ namespace WMS.UI
             formSelectSupplier.Show();
             
         }
+        private void textBoxComponentName_Click(object sender, EventArgs e)
+        {
 
+            var formSelectComponent = new FormSelectComponen();
+            formSelectComponent.SetSelectFinishCallback((selectedID) =>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                var componenName = (from s in wmsEntities.ComponentView
+                                    where s.ID == selectedID
+                                    select s).FirstOrDefault();
+                if (componenName.Name == null)
+                {
+                    MessageBox.Show("选择零件失败，零件不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                this.supplierID = selectedID;
+                this.Controls.Find("textBoxComponentName", true)[0].Text = componenName.Name;
+            });
+            formSelectComponent.Show();
 
+        }
+
+        
         private void buttonOK_Click(object sender, EventArgs e)
         {
             DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
             var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
             var textBoxNo = this.Controls.Find("textBoxNo", true)[0];
-            var textBoxName = this.Controls.Find("textBoxName", true)[0];
+            var textBoxComponentName = this.Controls.Find("textBoxComponentName", true)[0];
 
             //询问是否保留历史信息
             if (this.mode == FormMode.ALTER && this.history_save == 0)
@@ -118,7 +141,7 @@ namespace WMS.UI
                 MessageBox.Show("零件代号不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (textBoxName.Text == string.Empty)
+            if (textBoxComponentName.Text == string.Empty)
             {
                 MessageBox.Show("零件名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
