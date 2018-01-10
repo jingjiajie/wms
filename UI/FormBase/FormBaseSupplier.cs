@@ -146,6 +146,8 @@ namespace WMS.UI
                 return;
             }
 
+            this.toolStripComboBoxSelect.Enabled = false;
+            this.toolStripComboBoxSelect.SelectedIndex  = 0;
             this.buttonCheck.Enabled = false;
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
@@ -177,6 +179,7 @@ namespace WMS.UI
                 this.toolStripButtonAlter.Enabled = true;
                 this.buttonCheck.Enabled = true;
                 this.buttonImport.Enabled = true;
+                this.toolStripComboBoxSelect.Enabled = true;
                 return;
             }      
             
@@ -564,12 +567,26 @@ namespace WMS.UI
                 this.toolStripButtonAdd .Enabled = true;
                 
                 this.buttonCheck.Enabled = true;
+                this.toolStripComboBoxSelect.Enabled = true;
+                this.buttonImport.Enabled = true;
             }
             this.toolStripButtonAlter.Enabled = true;
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("是否历史信息", "0");
+
+
+
+
+
             if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
+                if(this.toolStripButton1.Text == "查询" && this.toolStripTextBoxSelect.Text ==string.Empty)
+                {
+
+                    MessageBox.Show("请输入要查询的关键词", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                    return;
+
+                }
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
             }
 
