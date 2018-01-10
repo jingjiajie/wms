@@ -29,17 +29,12 @@ namespace WMS.DataAccess
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public Nullable<int> ReceiptTicketItemReceiptTicketID { get; set; }
-        public Nullable<int> ReceiptTicketItemComponentID { get; set; }
         public string SupplierName { get; set; }
-        public Nullable<int> ComponentProjectID { get; set; }
-        public Nullable<int> ComponentWarehouseID { get; set; }
-        public string ComponentNo { get; set; }
         public string ComponentName { get; set; }
         public Nullable<decimal> ReturnAmount { get; set; }
         public string ReturnReason { get; set; }
         public string ShipmentTicketNumber { get; set; }
         public string ShipmentTicketNo { get; set; }
-        public string ComponentNumber { get; set; }
         public string SupplierNumber { get; set; }
         public Nullable<int> JobPersonID { get; set; }
         public Nullable<int> ConfirmPersonID { get; set; }
@@ -47,5 +42,7 @@ namespace WMS.DataAccess
         public string ConfirmPersonName { get; set; }
         public Nullable<decimal> ScheduledJobAmount { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
+        public string SupplyNumber { get; set; }
+        public string SupplyNo { get; set; }
     }
 }

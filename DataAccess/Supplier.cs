@@ -16,7 +16,6 @@ namespace WMS.DataAccess
     {
         public Supplier()
         {
-            this.Component = new HashSet<Component>();
             this.ReceiptTicket = new HashSet<ReceiptTicket>();
             this.SupplierStorageInfo = new HashSet<SupplierStorageInfo>();
             this.SupplierStorageInfo1 = new HashSet<SupplierStorageInfo>();
@@ -52,7 +51,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> FixedStorageCost { get; set; }
         public Nullable<decimal> ContractStorageArea { get; set; }
     
-        public virtual ICollection<Component> Component { get; set; }
         public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
         public virtual ICollection<SupplierStorageInfo> SupplierStorageInfo { get; set; }
         public virtual ICollection<SupplierStorageInfo> SupplierStorageInfo1 { get; set; }

@@ -20,17 +20,12 @@ namespace WMS.DataAccess
         public Nullable<decimal> ExceedStockAmount { get; set; }
         public string PutOutStorageTicketNo { get; set; }
         public Nullable<int> ReceiptTicketItemReceiptTicketID { get; set; }
-        public Nullable<int> ReceiptTicketItemComponentID { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
         public Nullable<decimal> ScheduledAmount { get; set; }
         public Nullable<decimal> RealAmount { get; set; }
         public string State { get; set; }
-        public string ComponentNo { get; set; }
-        public Nullable<int> ComponentProjectID { get; set; }
-        public string ComponentNumber { get; set; }
         public string ComponentName { get; set; }
-        public Nullable<int> ComponentWarehouseID { get; set; }
         public string SupplierNumber { get; set; }
         public string SupplierName { get; set; }
         public string JobPersonName { get; set; }
@@ -39,5 +34,7 @@ namespace WMS.DataAccess
         public string Unit { get; set; }
         public Nullable<int> ConfirmPersonID { get; set; }
         public Nullable<int> JobPersonID { get; set; }
+        public string SupplyNumber { get; set; }
+        public string SupplyNo { get; set; }
     }
 }

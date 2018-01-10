@@ -38,24 +38,24 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
-        public string ComponentNo { get; set; }
         public string ComponentName { get; set; }
         public Nullable<int> ReceiptTicketWarehouse { get; set; }
         public string ReceiptTicketNo { get; set; }
         public Nullable<int> ReceiptTicketSupplierID { get; set; }
         public string ReceiptTicketItemState { get; set; }
-        public Nullable<int> ReceiptTicketItemComponentID { get; set; }
         public string SubmissionTicketNo { get; set; }
         public string SubmissionTicketState { get; set; }
         public string ReceiptTicketState { get; set; }
         public Nullable<int> ReceiptTicketProjectID { get; set; }
         public string ReceiptTicketNumber { get; set; }
         public string SupplierNumber { get; set; }
-        public string ComponentComponent { get; set; }
         public Nullable<int> JobPersonID { get; set; }
         public Nullable<int> ConfirmPersonID { get; set; }
         public string JobPersonName { get; set; }
         public string ConfirmPersonName { get; set; }
         public Nullable<decimal> RejectAmount { get; set; }
+        public string SupplyNumber { get; set; }
+        public string SupplyNo { get; set; }
+        public Nullable<decimal> UnitAmount { get; set; }
     }
 }
