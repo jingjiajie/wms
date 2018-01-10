@@ -48,6 +48,13 @@ namespace WMS.UI
         };
         public static KeyName[] KeyNames { get => componenkeyNames; set => componenkeyNames = value; }
 
+        public static KeyName[] componenmodifykeyNames = {
+            new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
+            new KeyName(){Key="Name",Name="零件名称",Visible = true, Editable = true},
+            new KeyName(){Key="SingleCarUsageAmount",Name="单台用量",Visible = true, Editable = true},
+            new KeyName(){Key="DailyProduction",Name="单日产量",Visible = true, Editable = true},
+        };
+
 
         public static KeyName[] ComponentShipmentInfokeyNames = {
             new KeyName(){Key="DefaultShipmentInfoBoxType",Name="默认出货箱型",Visible = true, Editable = true},

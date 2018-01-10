@@ -132,6 +132,7 @@
             this.ClientSize = new System.Drawing.Size(997, 362);
             this.Controls.Add(this.groupBox1);
             this.Name = "SupplierStorageInfoModify";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormSupplierAnnualInfoModify";
             this.Load += new System.EventHandler(this.FormSupplierAnnualInfoModify_Load);
             this.tableLayoutPanel3.ResumeLayout(false);

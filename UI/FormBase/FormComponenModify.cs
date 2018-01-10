@@ -41,7 +41,7 @@ namespace WMS.UI
                 throw new Exception("未设置源零件信息");
             }
 
-            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.componenkeyNames);
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ComponenViewMetaData.componenmodifykeyNames);
 
 
 
