@@ -108,14 +108,25 @@ namespace WMS.UI
             DataAccess.SupplierStorageInfo supp = null ;
             TextBox textBoxYear = (TextBox)this.Controls.Find("textBoxYear", true)[0];
             TextBox textBoxMonth = (TextBox)this.Controls.Find("textBoxMonth", true)[0];
-            if(textBoxYear.Text ==string .Empty || textBoxMonth.Text ==string.Empty  )
+            if(textBoxYear.Text ==string .Empty   )
             {
-                MessageBox.Show("存货年份和存货月份不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("存货年份不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
                 
                 return;
 
 
             }
+
+
+            if ( textBoxMonth.Text == string.Empty)
+            {
+                MessageBox.Show("存货月份不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+
+
+            }
+
 
             if (mode == FormMode.ALTER)
             {
