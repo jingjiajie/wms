@@ -26,9 +26,9 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeSupply()
+        private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBaseSupply));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBaseComponent));
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -116,7 +116,7 @@
             this.reoGridControlSupply.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlSupply.LeadHeaderContextMenuStrip = null;
             this.reoGridControlSupply.Location = new System.Drawing.Point(2, 2);
-            this.reoGridControlSupply.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.reoGridControlSupply.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlSupply.Name = "reoGridControlSupply";
             this.reoGridControlSupply.RowHeaderContextMenuStrip = null;
             this.reoGridControlSupply.Script = null;
@@ -189,18 +189,20 @@
             // buttonSearch
             // 
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(56, 25);
+            this.buttonSearch.Size = new System.Drawing.Size(36, 25);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonHistorySearch
             // 
-            this.buttonHistorySearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonHistorySearch.Image")));
+            this.buttonHistorySearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
+
             this.buttonHistorySearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonHistorySearch.Name = "buttonHistorySearch";
-            this.buttonHistorySearch.Size = new System.Drawing.Size(104, 25);
+            this.buttonHistorySearch.Size = new System.Drawing.Size(84, 25);
             this.buttonHistorySearch.Text = "历史信息查询";
             this.buttonHistorySearch.Click += new System.EventHandler(this.buttonHistorySearch_Click);
             // 
@@ -221,7 +223,7 @@
             // 
             // toolStripButtonAlter
             // 
-            this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
+            this.toolStripButtonAlter.Image = global::WMS.UI.Properties.Resources.cancle;
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
             this.toolStripButtonAlter.Size = new System.Drawing.Size(56, 25);
@@ -230,7 +232,7 @@
             // 
             // toolStripButtonDelete
             // 
-            this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
+            this.toolStripButtonDelete.Image = global::WMS.UI.Properties.Resources.delete;
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
             this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 25);
@@ -239,28 +241,30 @@
             // 
             // toolStripButtonSupplySingleBoxTranPackingInfo
             // 
-            this.toolStripButtonSupplySingleBoxTranPackingInfo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSupplySingleBoxTranPackingInfo.Image")));
+            this.toolStripButtonSupplySingleBoxTranPackingInfo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonComponentSingleBoxTranPackingInfo.Image")));
             this.toolStripButtonSupplySingleBoxTranPackingInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Name = "toolStripButtonSupplySingleBoxTranPackingInfo";
-            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(157, 25);
+            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(137, 25);
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Text = "查看/修改单箱包装信息";
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Click += new System.EventHandler(this.toolStripButtonSupplySingleBoxTranPackingInfo_Click);
             // 
             // toolStripButtonSupplyOuterPackingSize
             // 
-            this.toolStripButtonSupplyOuterPackingSize.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSupplyOuterPackingSize.Image")));
+            this.toolStripButtonSupplyOuterPackingSize.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonComponentOuterPackingSize.Image")));
+
             this.toolStripButtonSupplyOuterPackingSize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyOuterPackingSize.Name = "toolStripButtonSupplyOuterPackingSize";
-            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(169, 24);
+            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(149, 21);
             this.toolStripButtonSupplyOuterPackingSize.Text = "查看/修改零件外包装信息";
             this.toolStripButtonSupplyOuterPackingSize.Click += new System.EventHandler(this.toolStripButtonSupplyOuterPackingSize_Click);
             // 
             // toolStripButtonSupplyShipmentInfo
             // 
-            this.toolStripButtonSupplyShipmentInfo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonSupplyShipmentInfo.Image")));
+            this.toolStripButtonSupplyShipmentInfo.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonComponentShipmentInfo.Image")));
+
             this.toolStripButtonSupplyShipmentInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyShipmentInfo.Name = "toolStripButtonSupplyShipmentInfo";
-            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(157, 24);
+            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(137, 21);
             this.toolStripButtonSupplyShipmentInfo.Text = "查看/修改出货包装信息";
             this.toolStripButtonSupplyShipmentInfo.Click += new System.EventHandler(this.toolStripButtonSupplyShipmentInfo_Click);
             // 
@@ -281,7 +285,7 @@
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormBaseSupply";
             this.Text = "零件信息";
             this.Load += new System.EventHandler(this.FormBaseSupply_Load);

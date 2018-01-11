@@ -27,7 +27,7 @@ namespace WMS.UI
 
         public FormSupplyModify(int projectID, int warehouseID, int supplierID, int userID, int supplyID = -1)
         {
-            InitializeSupply();
+            InitializeComponent();
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.projectID = projectID;
@@ -115,6 +115,10 @@ namespace WMS.UI
                 }
                 this.supplierID = selectedID;
                 this.Controls.Find("textBoxComponentName", true)[0].Text = componenName.Name;
+                this.Controls.Find("textBoxDefaultReceiptUnit", true)[0].Text = componenName.DefaultReceiptUnit;
+                this.Controls.Find("textBoxDefaultReceiptUnitAmount", true)[0].Text = Convert.ToString(componenName.DefaultReceiptUnitAmount);
+                this.Controls.Find("textBoxDefaultShipmentUnit", true)[0].Text = componenName.DefaultShipmentUnit;
+                this.Controls.Find("textBoxDefaultShipmentUnitAmount", true)[0].Text = Convert.ToString(componenName.DefaultShipmentUnitAmount);
             });
             formSelectComponent.Show();
 

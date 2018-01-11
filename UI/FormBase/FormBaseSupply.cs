@@ -31,7 +31,7 @@ namespace WMS.UI
 
         public FormBaseSupply(int authority, int supplierID, int projectID, int warehouseID, int userID)
         {
-            InitializeSupply();
+            InitializeComponent();
             this.authority = authority;
             this.supplierID = supplierID;
             this.projectID = projectID;
