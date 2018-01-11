@@ -54,11 +54,18 @@ namespace WMS.DataAccess
         public Nullable<int> SupplyComponentID { get; set; }
         public string SupplyNumber { get; set; }
         public string SupplyNo { get; set; }
-        public string SupplyReceiptUnit { get; set; }
-        public Nullable<decimal> SupplyReceiptUnitAmount { get; set; }
-        public string SupplyShipmentUnit { get; set; }
-        public Nullable<decimal> SupplyShipmentUnitAmount { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
         public string Unit { get; set; }
+        public string SupplyDefaultReceiptUnit { get; set; }
+        public Nullable<decimal> SupplyDefaultReceiptUnitAmount { get; set; }
+        public Nullable<decimal> ComponentSingleCarUsageAmount { get; set; }
+        public Nullable<decimal> ComponentDailyProduction { get; set; }
+        public Nullable<decimal> StockInfoReceiptAreaAmount { get; set; }
+        public Nullable<decimal> StockInfoSubmissionAmount { get; set; }
+        public Nullable<decimal> StockInfoOverflowAreaAmount { get; set; }
+        public Nullable<decimal> StockInfoShipmentAreaAmount { get; set; }
+        public Nullable<decimal> StockInfoRejectAreaAmount { get; set; }
+        public Nullable<System.DateTime> ReceiptTicketItemInventoryDate { get; set; }
+        public Nullable<System.DateTime> ReceiptTicketItemExpiryDate { get; set; }
     }
 }

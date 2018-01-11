@@ -27,6 +27,7 @@ namespace WMS.DataAccess
         public Nullable<int> ConfirmPersonID { get; set; }
         public Nullable<decimal> ScheduledPutOutAmount { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
+        public Nullable<int> ShipmentTicketItemID { get; set; }
     
         public virtual JobTicket JobTicket { get; set; }
     }

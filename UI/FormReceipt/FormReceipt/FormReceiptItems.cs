@@ -75,7 +75,7 @@ namespace WMS.UI
         {
             InitComponents();
             InitPanel();
-            TextBox textBoxComponentNo = (TextBox)this.Controls.Find("textBoxComponentNo", true)[0];
+            TextBox textBoxComponentNo = (TextBox)this.Controls.Find("textBoxSupplyNo", true)[0];
             textBoxComponentNo.Click += TextBoxComponentNo_Click;
             WMSEntities wmsEntities = new WMSEntities();
             ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == receiptTicketID select rt).FirstOrDefault();
@@ -562,5 +562,9 @@ namespace WMS.UI
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

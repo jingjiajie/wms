@@ -47,5 +47,6 @@ namespace WMS.DataAccess
         public string ReceiptTicketNumber { get; set; }
         public string SupplierNumber { get; set; }
         public Nullable<int> PersonID { get; set; }
+        public string PersonName { get; set; }
     }
 }

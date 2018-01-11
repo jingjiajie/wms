@@ -440,6 +440,11 @@ namespace WMS.UI
                     MessageBox.Show("该收货单未收货，请先收货!");
                     return;
                 }
+                if (receiptTicket.HasPutawayTicket == "是")
+                {
+                    MessageBox.Show("该收货单已经生成上架单，点击查看对应上架单按钮查看！");
+                    return;
+                }
                 FormPutawayNew formPutawayNew = new FormPutawayNew(receiptTicket.ID, this.userID, FormMode.ADD);
                 formPutawayNew.SetCallBack(new Action(() =>
                 {

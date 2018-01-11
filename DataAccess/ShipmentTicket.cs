@@ -37,7 +37,7 @@ namespace WMS.DataAccess
         public Nullable<int> PrintTimes { get; set; }
         public string DeliveryTicketNo { get; set; }
         public string OuterPhysicalDistributionPath { get; set; }
-        public string DeliveryPoint { get; set; }
+        public string Destination { get; set; }
         public Nullable<int> Emergency { get; set; }
         public string ShipmentPlaceNo { get; set; }
         public Nullable<int> BoardPrintedTimes { get; set; }
@@ -49,6 +49,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ReturnTicketDate { get; set; }
         public Nullable<int> SupplierID { get; set; }
         public Nullable<int> PersonID { get; set; }
+        public string Factory { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Warehouse Warehouse { get; set; }

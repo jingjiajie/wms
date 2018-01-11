@@ -18,7 +18,6 @@ namespace WMS.DataAccess
         public Nullable<int> ReceiptTicketID { get; set; }
         public string No { get; set; }
         public string State { get; set; }
-        public Nullable<int> HasSelfInspectionReport { get; set; }
         public string DeliverSubmissionPerson { get; set; }
         public string ReceivePerson { get; set; }
         public string SubmissionPerson { get; set; }
@@ -49,5 +48,6 @@ namespace WMS.DataAccess
         public string SupplierNumber { get; set; }
         public Nullable<int> PersonID { get; set; }
         public string PersonName { get; set; }
+        public string HasSelfInspectionReport { get; set; }
     }
 }
