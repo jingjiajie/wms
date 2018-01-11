@@ -162,6 +162,12 @@
     <Compile Include="FormReceipt\FormPutawayTicketItem\FormPutawayTicketItem.Designer.cs">
       <DependentUpon>FormPutawayTicketItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.Designer.cs">
+      <DependentUpon>FormPutOutTicketChooseExcelType.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormReceipt\FormAddPutawayItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -563,6 +569,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutawayTicketItem\FormPutawayTicketItem.resx">
       <DependentUpon>FormPutawayTicketItem.cs</DependentUpon>
+      </EmbeddedResource>
+    <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.resx">
+      <DependentUpon>FormPutOutTicketChooseExcelType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceipt\FormAddPutawayItem.resx">
       <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
@@ -751,6 +760,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Resources\patternShipmentTicket.xlsx" />
+    <None Include="Resources\patternShipmentTicketCover.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">

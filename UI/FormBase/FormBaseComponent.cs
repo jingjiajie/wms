@@ -23,6 +23,7 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
         int userID = -1;
+        private int setitem = -1;
         private Supplier supplier = null;
         private int contractst;   //合同状态
         private int contract_change = 1;
@@ -227,7 +228,8 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentSingleBoxTranPackingInfoModify(this.userID,componenID);
+                this.setitem = 1;
+                var form = new ComponentSingleBoxTranPackingInfoModify(this.userID, this.setitem, componenID);
                 if (check_history == 1)
                 {
                     form.SetMode(FormMode.CHECK);
@@ -259,7 +261,8 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentOuterPackingSizeModify(this.userID,componenID);
+                this.setitem = 1;
+                var form = new ComponentOuterPackingSizeModify(this.userID,this.setitem,componenID);
                 if (check_history == 1)
                 {
                     form.SetMode(FormMode.CHECK);
@@ -291,7 +294,8 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentShipmentInfoModify(this.userID,componenID);
+                this.setitem = 1;
+                var form = new ComponentShipmentInfoModify(this.userID, this.setitem,componenID);
 
                 if (check_history == 1)
                 {

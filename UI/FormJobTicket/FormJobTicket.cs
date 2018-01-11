@@ -127,6 +127,13 @@ namespace WMS.UI
                 {
                     foreach (int id in ids)
                     {
+                        JobTicket jobTicket = (from j in this.wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
+                        foreach(JobTicketItem jobTicketItem in jobTicket.JobTicketItem)
+                        {
+                            ShipmentTicketItem shipmentTicketItem = (from s in wmsEntities.ShipmentTicketItem where s.ID == jobTicketItem.ShipmentTicketItemID select s).FirstOrDefault();
+                            if (shipmentTicketItem == null) continue;
+                            shipmentTicketItem.ScheduledJobAmount -= (jobTicketItem.ScheduledAmount - (jobTicketItem.RealAmount ?? 0)) ?? 0;
+                        }
                         this.wmsEntities.Database.ExecuteSqlCommand(string.Format("DELETE FROM JobTicket WHERE ID = {0}", id));
                     }
                     this.wmsEntities.SaveChanges();

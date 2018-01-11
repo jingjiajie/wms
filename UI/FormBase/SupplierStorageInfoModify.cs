@@ -32,26 +32,10 @@ namespace WMS.UI
             {
                 throw new Exception("未设置源供应商信息");
             }
-            this.tableLayoutPanel1.Controls.Clear();
-            for (int i = 0; i < SupplierStorageInfoMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = SupplierStorageInfoMetaData.KeyNames[i];
-                if (curKeyName.Visible == false && curKeyName.Editable == false)
-                {
-                    continue;
-                }
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanel1.Controls.Add(label);
+            
+            Utilities.CreateEditPanel(this.tableLayoutPanel1, SupplierStorageInfoMetaData.KeyNames);
 
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                if (curKeyName.Editable == false)
-                {
-                    textBox.Enabled = false;
-                }
-                this.tableLayoutPanel1.Controls.Add(textBox);
-                WMS.DataAccess.SupplierStorageInfoView supplierstorgrinfoView = new DataAccess.SupplierStorageInfoView();
+            WMS.DataAccess.SupplierStorageInfoView supplierstorgrinfoView = new DataAccess.SupplierStorageInfoView();
                 if (this.mode == FormMode.ALTER)
                 {
                     try
@@ -75,7 +59,7 @@ namespace WMS.UI
                     }
                     Utilities.CopyPropertiesToTextBoxes(supplierstorgrinfoView , this);
                 }
-            }
+            
         }
         public void SetMode(FormMode mode)
         {

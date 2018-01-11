@@ -131,7 +131,13 @@ namespace WMS.UI.FormBase
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-
+            var formUserModify = new FormUserModify();
+            formUserModify.SetMode(FormMode.ADD);
+            formUserModify.SetAddFinishedCallback((addedID) =>
+            {
+                this.Search(addedID);
+            });
+            formUserModify.Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -145,9 +151,9 @@ namespace WMS.UI.FormBase
                 }
                 int userID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 var formUserModify = new FormUserModify(userID);
-                formUserModify.SetModifyFinishedCallback((addedID) =>
+                formUserModify.SetModifyFinishedCallback((id) =>
                 {
-                    this.Search(addedID);
+                    this.Search(id);
                 });
                 formUserModify.Show();
             }

@@ -193,6 +193,7 @@ namespace WMS.UI
                     }
                     PutOutStorageTicketItem newPutOutStorageTicketItem = new PutOutStorageTicketItem();
                     newPutOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
+                    newPutOutStorageTicketItem.JobTicketItemID = jobTicket.ID;
                     newPutOutStorageTicketItem.ScheduledAmount = jobTicketItem.ScheduledPutOutAmount;
                     newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
                     newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;

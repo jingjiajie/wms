@@ -20,7 +20,7 @@ namespace WMS.UI
         private Project project = null;
         private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
-        private int supplierid;
+        private int supplierid=0;
         private int setitem;
 
 
@@ -198,6 +198,7 @@ namespace WMS.UI
               
                 FormSupplierRemind a1 = new FormSupplierRemind(this.supplierid );
                 a1.Show();
+                
 
             }
 
