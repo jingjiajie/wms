@@ -26,6 +26,7 @@ namespace WMS.UI
         private Supplier supplier = null;
         private int contractst;   //合同状态
         private int contract_change = 1;
+        private int setitem = -1;
         private PagerWidget<SupplyView> pagerWidget = null;
 
         public FormBaseSupply(int authority, int supplierID, int projectID, int warehouseID, int userID)
@@ -79,18 +80,27 @@ namespace WMS.UI
                 InitSupplys();
 
                 this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
-                this.pagerWidget.AddCondition("IsHistory", "0");
+                //this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.Search();
 
             }
             if ((this.authority & authority_self) == authority_self)
             {
                 InitSupplys();
-                this.pagerWidget.AddCondition("IsHistory", "0");
+                //this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.Search();
             }
         }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
+        }
         private void reoGridControlUser_Click(object sender, EventArgs e)
         {
 
@@ -355,8 +365,9 @@ namespace WMS.UI
                 {
                     throw new Exception();
                 }
-                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentSingleBoxTranPackingInfoModify(this.userID,componenID);
+                int ID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                this.setitem = 0;
+                var form = new ComponentSingleBoxTranPackingInfoModify(this.userID,this.setitem,ID);
                 if (check_history == 1)
                 {
                     form.SetMode(FormMode.CHECK);

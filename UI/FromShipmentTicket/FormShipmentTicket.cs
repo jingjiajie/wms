@@ -283,40 +283,7 @@ namespace WMS.UI
 
         private void buttonPreview_Click(object sender, EventArgs e)
         {
-            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if(ids.Length != 1)
-            {
-                MessageBox.Show("请选择一项进行预览","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            int shipmentTicketID = ids[0];
-            ShipmentTicketView shipmentTicketView = null;
-            ShipmentTicketItemView[] shipmentTicketItemViews = null;
-            try
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                shipmentTicketView = (from s in wmsEntities.ShipmentTicketView
-                                      where s.ID == shipmentTicketID
-                                      select s).FirstOrDefault();
-                if (shipmentTicketView == null)
-                {
-                    MessageBox.Show("发货单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView
-                                           where s.ShipmentTicketID == shipmentTicketID
-                                           select s).ToArray();
-            }
-            catch
-            {
-                MessageBox.Show("查询发货单失败，请检查网络连接！","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            StandardFormPreviewExcel formpreview = new StandardFormPreviewExcel("发货单预览");
-            formpreview.SetPatternTable(Properties.Resources.patternShipmentTicket);
-            formpreview.AddData("ticket", shipmentTicketView);
-            formpreview.AddData("items", shipmentTicketItemViews);
-            formpreview.Show();
+ 
         }
     }
 }
