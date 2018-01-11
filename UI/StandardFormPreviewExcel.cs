@@ -61,18 +61,27 @@ namespace WMS.UI
             this.SetPrintScale(this.defaultPrintScale);
         }
 
-        public void SetPatternTable(byte[] patternTableExcelFile)
+        public bool SetPatternTable(byte[] patternTableExcelFile)
         {
             ReoGridControl tmpReoGrid = new ReoGridControl();
             tmpReoGrid.Load(new MemoryStream(patternTableExcelFile), unvell.ReoGrid.IO.FileFormat.Excel2007);
             this.excelGenerator.SetPatternTable(tmpReoGrid.Worksheets[0]);
+            return true;
         }
 
-        public void SetPatternTable(string filePath)
+        public bool SetPatternTable(string filePath)
         {
             ReoGridControl tmpReoGrid = new ReoGridControl();
-            tmpReoGrid.Load(filePath);
+            try
+            {
+                tmpReoGrid.Load(filePath);
+            }catch(Exception e)
+            {
+                MessageBox.Show("加载Excel文件失败！详细信息：\n"+e.Message);
+                return false;
+            }
             this.excelGenerator.SetPatternTable(tmpReoGrid.Worksheets[0]);
+            return true;
         }
 
         public void AddData<T>(string name, T data)

@@ -26,6 +26,12 @@ namespace WMS.UI
 
         private void buttonCover_Click(object sender, EventArgs e)
         {
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("发货单预览");
+            if (formPreview.SetPatternTable(@"Excel\patternPutOutStorageTicketNormal.xlsx") == false)
+            {
+                this.Close();
+                return;
+            }
 
             PutOutStorageTicketView putOutStorageTicketView = null;
             ShipmentTicketView shipmentTicketView = null;
@@ -55,8 +61,7 @@ namespace WMS.UI
                 MessageBox.Show("加载失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("发货单预览");
-            formPreview.SetPatternTable(Properties.Resources.patternShipmentTicketInner);
+
             formPreview.AddData("putOutStorageTicket", putOutStorageTicketView);
             formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketItemViews);
             formPreview.AddData("shipmentTicket", shipmentTicketView);
@@ -67,6 +72,12 @@ namespace WMS.UI
 
         private void buttonInner_Click(object sender, EventArgs e)
         {
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
+            if (formPreview.SetPatternTable(@"Excel\patternPutOutStorageTicketCover.xlsx") == false)
+            {
+                this.Close();
+                return;
+            }
             WMSEntities wmsEntities = new WMSEntities();
             PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
                                                                where p.ID == this.putOutStorageTicketID
@@ -84,8 +95,6 @@ namespace WMS.UI
                 wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
                                                     (SELECT ShipmentTicketID FROM JobTicket
                                                         WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
-            formPreview.SetPatternTable(Properties.Resources.patternShipmentTicketCover);
 
             formPreview.AddData("putOutStorageTicket", putOutStorageTicketView);
             formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketTiemViews);
