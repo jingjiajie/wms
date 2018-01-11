@@ -266,5 +266,17 @@ namespace WMS.UI
             MessageBox.Show("发运成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if (ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行预览", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            FormPutOutTicketChooseExcelType form = new FormPutOutTicketChooseExcelType(ids[0]);
+            form.Show();
+        }
     }
 }

@@ -38,6 +38,8 @@ namespace WMS.UI
             new KeyName(){Key="ReturnTicketNo",Name="回单号"},
             new KeyName(){Key="ReturnTicketDate",Name="回单时间"},
             new KeyName(){Key="Station",Name="工位"},
+            new KeyName(){Key="Destination",Name="使用单位"},
+            new KeyName(){Key="Factory",Name="出货单位"},
             new KeyName(){Key="ReceivingPersonName",Name="收货人姓名"},
             new KeyName(){Key="ContactAddress",Name="联系地址"},
             new KeyName(){Key="Source",Name="单据来源"},
@@ -45,7 +47,6 @@ namespace WMS.UI
             new KeyName(){Key="Description",Name="描述"},
             new KeyName(){Key="DeliveryTicketNo",Name="配送单号"},
             new KeyName(){Key="OuterPhysicalDistributionPath",Name="外物流路线"},
-            new KeyName(){Key="DeliveryPoint",Name="出库目的地"},
             new KeyName(){Key="Emergency",Name="是否紧急",ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem("否",0),
                 new ComboBoxItem("是",1),
