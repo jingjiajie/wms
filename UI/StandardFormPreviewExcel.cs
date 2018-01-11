@@ -17,11 +17,18 @@ namespace WMS.UI
     public partial class StandardFormPreviewExcel : Form
     {
         ExcelGenerator excelGenerator = new ExcelGenerator();
+        float printScale = 1;
 
-        public StandardFormPreviewExcel(string formTitle)
+        public StandardFormPreviewExcel(string formTitle,float printScale = 1.0F)
         {
             InitializeComponent();
             this.Text = formTitle;
+            this.printScale = printScale;
+        }
+
+        public void SetPrintScale(float scale)
+        {
+            this.printScale = scale;
         }
 
         private void StandardFormPreviewExcel_Load(object sender, EventArgs e)
@@ -39,6 +46,8 @@ namespace WMS.UI
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             worksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
             worksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
+            worksheet.PrintSettings.PageScaling = this.printScale;
+            worksheet.AutoSplitPage();
         }
 
         public void SetPatternTable(byte[] patternTableExcelFile)
