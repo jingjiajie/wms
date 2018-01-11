@@ -60,6 +60,7 @@ namespace WMS.UI
             formPreview.AddData("putOutStorageTicket", putOutStorageTicketView);
             formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketItemViews);
             formPreview.AddData("shipmentTicket", shipmentTicketView);
+            formPreview.SetPrintScale(0.9F);
             formPreview.Show();
             this.Close();
         }
