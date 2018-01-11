@@ -205,7 +205,14 @@ namespace WMS.UI
 
                 this.personid = Convert .ToInt32 ( personid);
 
-                var a1 = new FormStockInfoCheckTicketComponentModify(-1, -1,-1,this.personid , stockiofocheckid);
+                var a1 = new FormStockInfoCheckTicketComponentModify(-1, -1,this.userID ,this.personid , stockiofocheckid);
+
+                a1.SetAddFinishedCallback(() =>
+                {
+
+                    this.pagerWidget.Search();
+
+                });
                 a1.SetMode(FormMode.CHECK);
                 a1.Show();
             }
