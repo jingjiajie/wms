@@ -569,7 +569,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutawayTicketItem\FormPutawayTicketItem.resx">
       <DependentUpon>FormPutawayTicketItem.cs</DependentUpon>
-      </EmbeddedResource>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.resx">
       <DependentUpon>FormPutOutTicketChooseExcelType.cs</DependentUpon>
     </EmbeddedResource>
@@ -759,8 +759,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\patternShipmentTicket.xlsx" />
-    <None Include="Resources\patternShipmentTicketCover.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">

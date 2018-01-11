@@ -279,25 +279,5 @@ namespace WMS.UI.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] patternShipmentTicketCover {
-            get {
-                object obj = ResourceManager.GetObject("patternShipmentTicketCover", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] patternShipmentTicketInner {
-            get {
-                object obj = ResourceManager.GetObject("patternShipmentTicketInner", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
