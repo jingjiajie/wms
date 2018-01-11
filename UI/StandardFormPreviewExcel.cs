@@ -68,6 +68,13 @@ namespace WMS.UI
             this.excelGenerator.SetPatternTable(tmpReoGrid.Worksheets[0]);
         }
 
+        public void SetPatternTable(string filePath)
+        {
+            ReoGridControl tmpReoGrid = new ReoGridControl();
+            tmpReoGrid.Load(filePath);
+            this.excelGenerator.SetPatternTable(tmpReoGrid.Worksheets[0]);
+        }
+
         public void AddData<T>(string name, T data)
         {
             this.excelGenerator.AddData(name,data);
