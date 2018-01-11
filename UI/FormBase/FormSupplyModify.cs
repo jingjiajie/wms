@@ -46,13 +46,15 @@ namespace WMS.UI
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
 
             //TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
-            //TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
-            //TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
+            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
+            TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
             textboxsuppliername.ReadOnly = true;
             //textboxsuppliernumber.ReadOnly = true;
-            //textboxLastUpdateUserUsername.ReadOnly = true;
-            //textboxCreateUserUsername.ReadOnly = true;
 
+            textboxLastUpdateUserUsername.ReadOnly = true;
+            textboxCreateUserUsername.ReadOnly = true;
+            textBoxComponentName.ReadOnly = true;
 
             if (this.mode == FormMode.ALTER)
             {
@@ -113,7 +115,7 @@ namespace WMS.UI
                     MessageBox.Show("选择零件失败，零件不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                this.supplierID = selectedID;
+                this.componenID = selectedID;
                 this.Controls.Find("textBoxComponentName", true)[0].Text = componenName.Name;
                 this.Controls.Find("textBoxDefaultReceiptUnit", true)[0].Text = componenName.DefaultReceiptUnit;
                 this.Controls.Find("textBoxDefaultReceiptUnitAmount", true)[0].Text = Convert.ToString(componenName.DefaultReceiptUnitAmount);
@@ -156,9 +158,9 @@ namespace WMS.UI
                 string componentName = textBoxComponentName.Text;
                 try
                 {
-                    DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentName select s).Single();
+                    DataAccess.Component componenID1 = (from s in this.wmsEntities.Component where s.Name == componentName select s).Single();
 
-                    this.componenID = componenID.ID;
+                    this.componenID = componenID1.ID;
                 }
                 catch
                 {
@@ -279,6 +281,22 @@ namespace WMS.UI
                 supply.CreateUserID = this.userID;
                 supply.CreateTime = DateTime.Now;
 
+            }
+
+            //把选择零件的默认包装信息存进供应表
+            DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.ID == this.componenID select s).Single();
+            PropertyInfo[] proAs = componenID.GetType().GetProperties();
+            PropertyInfo[] proBs = supply.GetType().GetProperties();
+            for (int i = 0; i < proAs.Length; i++)
+            {
+                for (int j = 0; j < proBs.Length; j++)
+                {
+                    if (proAs[i].Name == "Default" + proBs[j].Name)
+                    {
+                        object a = proAs[i].GetValue(componenID, null);
+                        proBs[j].SetValue(supply, a, null);
+                    }
+                }
             }
             supply.LastUpdateUserID = this.userID;
             supply.LastUpdateTime = DateTime.Now;

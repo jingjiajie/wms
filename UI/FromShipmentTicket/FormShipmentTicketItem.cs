@@ -18,6 +18,8 @@ namespace WMS.UI
         private int shipmentTicketID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         Action shipmentTicketStateChangedCallback = null;
+        private int projectID = -1;
+        private int warehouseID = -1;
 
         private int curStockInfoID = -1;
         private int curConfirmPersonID = -1;
@@ -26,15 +28,18 @@ namespace WMS.UI
         private TextBox textBoxConfirmPersonName = null;
         private TextBox textBoxJobPersonName = null;
         private TextBox textBoxComponentName = null;
+        private FormSelectStockInfo formSelectStockInfo = null;
 
         private KeyName[] visibleColumns = (from kn in ShipmentTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
                                             select kn).ToArray();
 
-        public FormShipmentTicketItem(int shipmentTicketID)
+        public FormShipmentTicketItem(int shipmentTicketID,int projectID,int warehouseID)
         {
             InitializeComponent();
             this.shipmentTicketID = shipmentTicketID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         public void SetShipmentTicketStateChangedCallback(Action jobTicketStateChangedCallback)
@@ -149,38 +154,41 @@ namespace WMS.UI
 
         private void textBoxComponentName_Click(object sender, EventArgs e)
         {
-
-            var formSelectStockInfo = new FormSelectStockInfo();
-            formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
+            if (this.formSelectStockInfo == null)
             {
-                this.curStockInfoID = selectedStockInfoID;
-                if (!this.IsDisposed)
+                this.formSelectStockInfo = new FormSelectStockInfo(this.projectID, this.warehouseID);
+
+                formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
                 {
-                    this.Invoke(new Action(() =>
+                    this.curStockInfoID = selectedStockInfoID;
+                    if (!this.IsDisposed)
                     {
-                        textBoxComponentName.Text = "加载中...";
-                    }));
-                }
-                new Thread(new ThreadStart(() =>
-                {
-                    StockInfoView stockInfoView = null;
-                    try
-                    {
-                        stockInfoView = (from s in this.wmsEntities.StockInfoView
-                                         where s.ID == selectedStockInfoID
-                                         select s).Single();
+                        this.Invoke(new Action(() =>
+                        {
+                            textBoxComponentName.Text = "加载中...";
+                        }));
                     }
-                    catch
+                    new Thread(new ThreadStart(() =>
                     {
-                        MessageBox.Show("刷新数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    this.Invoke(new Action(() =>
-                    {
-                        Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
-                    }));
-                })).Start();
-            });
+                        StockInfoView stockInfoView = null;
+                        try
+                        {
+                            stockInfoView = (from s in this.wmsEntities.StockInfoView
+                                             where s.ID == selectedStockInfoID
+                                             select s).Single();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("刷新数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        this.Invoke(new Action(() =>
+                        {
+                            Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
+                        }));
+                    })).Start();
+                });
+            }
 
             formSelectStockInfo.Show();
         }
@@ -404,10 +412,30 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if(shipmentTicketItem.ShipmentAmount < shipmentTicketItem.ScheduledJobAmount)
+            {
+                MessageBox.Show("发货数量不能小于已分配翻包作业数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             new Thread(new ThreadStart(()=>
             {
                 try
                 {
+                    //扣除库存数量
+                    StockInfo stockInfo = (from s in wmsEntities.StockInfo
+                                           where s.ID == shipmentTicketItem.StockInfoID
+                                           select s).FirstOrDefault();
+                    if (stockInfo == null)
+                    {
+                        MessageBox.Show("零件不存在，请重新选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (stockInfo.ShipmentAreaAmount < shipmentTicketItem.ShipmentAmount*shipmentTicketItem.UnitAmount)
+                    {
+                        MessageBox.Show("添加失败，零件库存不足！发货区存货数：" + Utilities.DecimalToString(stockInfo.ShipmentAreaAmount ?? 0), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    stockInfo.ShipmentAreaAmount -= shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount;
                     this.wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
                     this.wmsEntities.SaveChanges();
                 }
@@ -460,6 +488,7 @@ namespace WMS.UI
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
                 try
                 {
                     this.wmsEntities.SaveChanges();

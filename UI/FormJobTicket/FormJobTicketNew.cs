@@ -20,6 +20,8 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
 
+        private int curPersonID = -1;
+
         private Action<string> toJobTicketCallback = null;
         private int[] editableColumns = new int[] { 1, 2 };
         private int validRows = 0;
@@ -88,7 +90,33 @@ namespace WMS.UI
             this.Controls.Find("textBoxCreateUserUsername", true)[0].Text = user.Username;
             this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
             this.Controls.Find("textBoxShipmentTicketNo", true)[0].Text = shipmentTicket.No;
+            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
             this.Search();
+        }
+
+        private void textBoxPersonName_Click(object sender, EventArgs e)
+        {
+            TextBox textBoxPersonName = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
+            FormSelectPerson formSelectPerson = new FormSelectPerson();
+            formSelectPerson.SetSelectFinishCallback((id)=>
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                Person person = (from p in wmsEntities.Person
+                                 where p.ID == id
+                                 select p).FirstOrDefault();
+                if(person == null)
+                {
+                    MessageBox.Show("人员不存在，请重新查询","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                this.curPersonID = id;
+                if (this.IsDisposed) return;
+                this.Invoke(new Action(() =>
+                {
+                    textBoxPersonName.Text = person.Name;
+                }));
+            });
+            formSelectPerson.Show();
         }
 
         private void Search()
@@ -111,7 +139,7 @@ namespace WMS.UI
             for (int i = 0; i < shipmentTicketItemViews.Length; i++)
             {
                 ShipmentTicketItemView cur = shipmentTicketItemViews[i];
-                if (cur.ShipmentAmount == cur.ScheduledJobAmount)
+                if (cur.ShipmentAmount <= cur.ScheduledJobAmount)
                 {
                     worksheet.Cells[i, 1].Style.BackColor = Color.LightGray;
                     worksheet.Cells[i, 1].IsReadOnly = true;
@@ -124,7 +152,8 @@ namespace WMS.UI
                 worksheet.Cells[i, 2].Style.BackColor = Color.AliceBlue;
                 //计划翻包数量
                 worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
-                worksheet[i, 2] = Utilities.DecimalToString((cur.ShipmentAmount - (cur.ScheduledJobAmount ?? 0)) ?? 0); //计划翻包数量默认等于发货数量-已经计划翻包过的数量
+                decimal defaultScheduledJobAmount = (cur.ShipmentAmount - (cur.ScheduledJobAmount ?? 0)) ?? 0; //计划翻包数量默认等于发货数量-已经计划翻包过的数量
+                worksheet[i, 2] = Utilities.DecimalToString(defaultScheduledJobAmount < 0 ? 0 : defaultScheduledJobAmount);
                 object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in ShipmentTicketItemViewMetaData.KeyNames select kn.Key).ToArray());
                 int offsetColumn = 0;
                 for (int j = 0; j < columns.Length; j++)
@@ -168,12 +197,13 @@ namespace WMS.UI
                     MessageBox.Show("发货单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_WAITING_PUTOUT;
+                shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_PART_ASSIGNED_JOB;
                 newJobTicket.ShipmentTicketID = shipmentTicket.ID;
                 newJobTicket.ProjectID = this.projectID;
                 newJobTicket.WarehouseID = this.warehouseID;
                 newJobTicket.CreateUserID = this.userID;
                 newJobTicket.CreateTime = DateTime.Now;
+                newJobTicket.PersonID = this.curPersonID == -1 ? null : (int?)this.curPersonID;
 
                 var worksheet = this.reoGridControlMain.Worksheets[0];
                 for (int i=0;i<worksheet.Rows;i++)
@@ -222,6 +252,7 @@ namespace WMS.UI
                     newJobTicket.JobTicketNo = Utilities.GenerateTicketNo("Z", newJobTicket.CreateTime.Value, maxRankOfToday + 1);
                 }
                 wmsEntities.SaveChanges();
+                this.UpdateShipmentTicketStateSync(this.shipmentTicketID);
                 if(MessageBox.Show("生成作业单成功，是否查看作业单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     if(this.toJobTicketCallback == null)
@@ -238,6 +269,32 @@ namespace WMS.UI
                     }));
                 }
             }).Start();
+        }
+
+        private void UpdateShipmentTicketStateSync(int shipmentTicketID)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            int total = wmsEntities.Database.SqlQuery<int>(string.Format(
+                @"SELECT COUNT(*) FROM ShipmentTicketItem 
+                    WHERE ShipmentTicketID = {0}",
+                shipmentTicketID
+                )).Single();
+            int fullAssignedCount = wmsEntities.Database.SqlQuery<int>(string.Format(
+                @"SELECT COUNT(*) FROM ShipmentTicketItem 
+                    WHERE ShipmentTicketID = {0} AND ScheduledJobAmount = ShipmentAmount",
+                shipmentTicketID
+                )).Single();
+            if(fullAssignedCount == total)
+            {
+                wmsEntities.Database.ExecuteSqlCommand(string.Format(
+                    @"UPDATE ShipmentTicket SET State = '{0}'",ShipmentTicketViewMetaData.STRING_STATE_ALL_ASSIGNED_JOB));
+            }
+            else
+            {
+                wmsEntities.Database.ExecuteSqlCommand(string.Format(
+                    @"UPDATE ShipmentTicket SET State = '{0}'", ShipmentTicketViewMetaData.STRING_STATE_PART_ASSIGNED_JOB));
+            }
+            wmsEntities.SaveChanges();
         }
 
         private void buttonOK_MouseEnter(object sender, EventArgs e)
