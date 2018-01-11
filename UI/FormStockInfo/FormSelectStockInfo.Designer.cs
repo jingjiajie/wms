@@ -40,8 +40,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.buttonSelect = new System.Windows.Forms.ToolStripButton();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // reoGridControlMain
@@ -50,7 +53,7 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 39);
+            this.reoGridControlMain.Location = new System.Drawing.Point(5, 4);
             this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
@@ -61,7 +64,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(774, 454);
+            this.reoGridControlMain.Size = new System.Drawing.Size(764, 416);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -87,8 +90,8 @@
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(134, 31);
-            this.labelStatus.Text = "查看发货单";
+            this.labelStatus.Size = new System.Drawing.Size(110, 31);
+            this.labelStatus.Text = "选择零件";
             // 
             // toolStrip1
             // 
@@ -154,12 +157,35 @@
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 39);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(774, 454);
+            this.tableLayoutPanel1.TabIndex = 13;
+            // 
+            // panelPagerWidget
+            // 
+            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPagerWidget.Location = new System.Drawing.Point(3, 427);
+            this.panelPagerWidget.Name = "panelPagerWidget";
+            this.panelPagerWidget.Size = new System.Drawing.Size(768, 24);
+            this.panelPagerWidget.TabIndex = 10;
+            // 
             // FormSelectStockInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 529);
-            this.Controls.Add(this.reoGridControlMain);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("黑体", 10F);
@@ -170,10 +196,12 @@
             this.Text = "选择零件";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSelectStockInfo_FormClosing);
             this.Load += new System.EventHandler(this.FormJobTicketSelectStockInfo_Load);
+            this.VisibleChanged += new System.EventHandler(this.FormSelectStockInfo_VisibleChanged);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -192,5 +220,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripComboBox comboBoxSearchCondition;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panelPagerWidget;
     }
 }
