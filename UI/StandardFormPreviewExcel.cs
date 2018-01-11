@@ -17,18 +17,29 @@ namespace WMS.UI
     public partial class StandardFormPreviewExcel : Form
     {
         ExcelGenerator excelGenerator = new ExcelGenerator();
-        float printScale = 1;
+        bool loadFinished = false;
+        float defaultPrintScale = 1;
 
         public StandardFormPreviewExcel(string formTitle,float printScale = 1.0F)
         {
             InitializeComponent();
             this.Text = formTitle;
-            this.printScale = printScale;
+            this.SetPrintScale(printScale);
         }
 
         public void SetPrintScale(float scale)
         {
-            this.printScale = scale;
+            if (this.loadFinished == false)
+            {
+                this.defaultPrintScale = scale;
+            }
+            else
+            {
+                var worksheet = this.reoGridControlMain.CurrentWorksheet;
+                worksheet.PrintSettings.PageScaling = scale;
+                worksheet.AutoSplitPage();
+                this.textBoxScale.Text = scale.ToString();
+            }
         }
 
         private void StandardFormPreviewExcel_Load(object sender, EventArgs e)
@@ -40,14 +51,14 @@ namespace WMS.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show("生成报表错误：" + ex.Message,"提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("生成报表错误：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             worksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
             worksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
-            worksheet.PrintSettings.PageScaling = this.printScale;
-            worksheet.AutoSplitPage();
+            loadFinished = true;
+            this.SetPrintScale(this.defaultPrintScale);
         }
 
         public void SetPatternTable(byte[] patternTableExcelFile)
@@ -104,6 +115,52 @@ namespace WMS.UI
             }
 
             if (doc != null) doc.Dispose();
+        }
+
+        private void textBoxScale_TextChanged(object sender, EventArgs e)
+        {
+            if (float.TryParse(this.textBoxScale.Text,out float printScale) == false)
+            {
+                return;
+            }
+            this.SetPrintScale(printScale);
+        }
+
+        private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void textBoxScale_Click(object sender, EventArgs e)
+        {
+            this.textBoxScale.SelectAll();
+        }
+
+        private void textBoxScale_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (float.TryParse(this.textBoxScale.Text, out float printScale) == false)
+            {
+                return;
+            }
+            if(printScale <= 0)
+            {
+                return;
+            }
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Right)
+            {
+                printScale += 0.1F;
+                this.textBoxScale.Text = string.Format("{0:0.##}",printScale);
+            }
+            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Left)
+            {
+                printScale -= 0.1F;
+                this.textBoxScale.Text = string.Format("{0:0.##}", printScale);
+            }
+        }
+
+        private void textBoxScale_KeyUp(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }
