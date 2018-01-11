@@ -151,7 +151,7 @@
             this.labelStatus.Size = new System.Drawing.Size(68, 17);
             this.labelStatus.Text = "添加盘点单";
             // 
-            // FormStockInfoCheckTicketModifyOnly
+            // FormStockInfoCheckTicketModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -161,7 +161,7 @@
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormStockInfoCheckTicketModifyOnly";
+            this.Name = "FormStockInfoCheckTicketModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "添加盘点单";
             this.Load += new System.EventHandler(this.FormStockCheckModify_Load);

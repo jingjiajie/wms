@@ -20,6 +20,7 @@ namespace WMS.UI
         private int warehouseID = -1;
         private int userID = -1;
         private int personid = -1;
+        private int personidc = 0;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
@@ -80,9 +81,29 @@ namespace WMS.UI
 
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
             {
-                WMS.DataAccess.StockInfoCheckTicketView stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
-                                                                              where s.ID == this.stockInfoCheckID
-                                                                              select s).Single();
+                WMS.DataAccess.StockInfoCheckTicketView stockInfoCheckView = new DataAccess.StockInfoCheckTicketView();
+
+                try
+                {
+
+                     stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
+                                                                                  where s.ID == this.stockInfoCheckID
+                                                                                  select s).Single();
+
+                }
+                catch
+                {
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (stockInfoCheckView == null)
+                {
+                    MessageBox.Show("修改失败，发货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
 
                 Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
             }
@@ -121,7 +142,8 @@ namespace WMS.UI
                 //this.supplierID = selectedID;
                 //selectedID = 1;
                 this.personid  = selectedID;
-                this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName .Name ;
+                this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName.Name ;
+                this.personidc = 1;
                
                 
 
@@ -182,11 +204,11 @@ namespace WMS.UI
 
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
-                this.modifyFinishedCallback(stockInfoCheck.ID );
+                this.modifyFinishedCallback(stockInfoCheck.ID);
             }
             else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
-                this.addFinishedCallback(stockInfoCheck .ID );
+                this.addFinishedCallback(stockInfoCheck.ID);
             }
 
 
@@ -205,7 +227,7 @@ namespace WMS.UI
         }
 
 
-       
+
 
 
 
@@ -264,13 +286,19 @@ namespace WMS.UI
                     stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
                                       where s.ID == this.stockInfoCheckID
                                       select s).Single();
-                    stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
-                    stockInfoCheck .LastUpdateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
+                    
+                   
                 }
                 catch
                 {
-                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                    this.Close();
+                    return;
+                }
+                if (stockInfoCheck == null)
+                {
+                    MessageBox.Show("修改失败，盘点单已不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     this.Close();
                     return;
                 }
@@ -279,19 +307,61 @@ namespace WMS.UI
             {
                 stockInfoCheck = new WMS.DataAccess.StockInfoCheckTicket();
                 this.wmsEntities.StockInfoCheckTicket.Add(stockInfoCheck);
+                
+            }
+
+            if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
+            {
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            if (this.mode == FormMode.ALTER)
+            {
+
+
+                stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+                stockInfoCheck.LastUpdateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
+                if (this.personidc == 0)
+                {
+                    this.personid = Convert.ToInt32(stockInfoCheck.PersonID);
+                }
+
+            }
+            else if (mode == FormMode.ADD)
+            {
+                
+                
                 stockInfoCheck.CreateUserID = userID;
                 stockInfoCheck.CheckDate = Convert.ToDateTime(DateTime.Now.ToLongDateString());
-                stockInfoCheck.CreateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
+                //stockInfoCheck.CreateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
                 stockInfoCheck.LastUpdateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
+
             }
+
+
+
+
+
+
+
+
 
             stockInfoCheck.WarehouseID = warehouseID;
             stockInfoCheck.ProjectID = projectID;
             stockInfoCheck.PersonID = this.personid;
 
             stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
-
-            wmsEntities.SaveChanges();
+            try
+            {
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             //调用回调函数
 
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)

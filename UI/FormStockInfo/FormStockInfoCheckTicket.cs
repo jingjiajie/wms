@@ -99,14 +99,14 @@ namespace WMS.UI
 
         private void buttonAdd_Click_1(object sender, EventArgs e)
         {
-           
+
             var form = new FormStockInfoCheckTicketModify(this.projectID, this.warehouseID,this.userID);
             form.SetMode(FormMode.ADD);
             form.SetAddFinishedCallback((AddID) =>
             {
-               
+
                 this.pagerWidget.Search(false  ,AddID  );
-                
+
             });
             form.Show();
         }
@@ -114,7 +114,7 @@ namespace WMS.UI
         private void buttonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            
+
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
