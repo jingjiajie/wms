@@ -49,6 +49,8 @@ namespace WMS.UI
 
             this.textBoxContractRemind.Text = " 无合同过期提醒";
             this.textBoxContractRemind.Font = new Font("宋体", 12, FontStyle.Bold);
+            this.textBox3.Text = "无库存预警";
+            this.textBox3 .Font = new Font("宋体", 12, FontStyle.Bold);
             contractrenmind();
 
             componentremind();
@@ -87,8 +89,8 @@ namespace WMS.UI
                 if ((-days) < 10)
                 {
 
-                    this.textBoxContractRemind.Text = "您的合同还有" + (-days) + "天就到期了";
-                    this.textBoxContractRemind.Font = new Font("宋体", 12, FontStyle.Bold);
+                    this.textBoxContractRemind.Text= "您的合同还有" + (-days) + "天就到期了";
+                    
 
                 }
 
@@ -117,6 +119,7 @@ namespace WMS.UI
         {
 
             int[] warringdays = { 3, 5, 10 };
+            int reminedays;
             
             var ShipmentAreaAmount = (from u in wmsEntities.StockInfoView
                        where u.ReceiptTicketSupplierID ==
@@ -138,6 +141,18 @@ namespace WMS.UI
 
                 singlecaramount [i] = Convert .ToInt32 ( compon.SingleCarUsageAmount);
                 dailyproduction[i] = Convert.ToInt32(compon.DailyProduction);
+                reminedays = Convert.ToInt32(ShipmentAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
+
+
+
+                if(reminedays <10)
+                {
+                    this.textBox3.AppendText ( "零件" + ComponentName[i] + " 大约仅可以用" + reminedays + "天");
+                }
+                    
+
+
+
 
             }
 
