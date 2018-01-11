@@ -91,7 +91,7 @@ namespace WMS.UI
                     return;
                 }
                 int shipmentTicketID = ids[0];
-                var formShipmentTicketItem = new FormShipmentTicketItem(shipmentTicketID);
+                var formShipmentTicketItem = new FormShipmentTicketItem(shipmentTicketID,this.projectID,this.warehouseID);
                 formShipmentTicketItem.SetShipmentTicketStateChangedCallback(() =>
                 {
                     this.Invoke(new Action(() =>
@@ -116,7 +116,7 @@ namespace WMS.UI
             {
                 this.Search(false,id);
                 if (openTicket == false) return;
-                var formShipmentTicketItem = new FormShipmentTicketItem(id);
+                var formShipmentTicketItem = new FormShipmentTicketItem(id, this.projectID, this.warehouseID);
                 formShipmentTicketItem.SetShipmentTicketStateChangedCallback(() =>
                 {
                     this.Invoke(new Action(()=>
