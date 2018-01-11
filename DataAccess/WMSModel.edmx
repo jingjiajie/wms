@@ -1342,6 +1342,9 @@
           <Property Name="DefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="DefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="DefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ComponentSingleCarUsageAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
+          <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.UserView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2519,7 +2522,10 @@ FROM [dbo].[SupplierView] AS [SupplierView]</DefiningQuery>
 [SupplyView].[DefaultReceiptUnit] AS [DefaultReceiptUnit], 
 [SupplyView].[DefaultReceiptUnitAmount] AS [DefaultReceiptUnitAmount], 
 [SupplyView].[DefaultShipmentUnit] AS [DefaultShipmentUnit], 
-[SupplyView].[DefaultShipmentUnitAmount] AS [DefaultShipmentUnitAmount]
+[SupplyView].[DefaultShipmentUnitAmount] AS [DefaultShipmentUnitAmount], 
+[SupplyView].[ComponentSingleCarUsageAmount] AS [ComponentSingleCarUsageAmount], 
+[SupplyView].[CreateUserUsername] AS [CreateUserUsername], 
+[SupplyView].[LastUpdateUserUsername] AS [LastUpdateUserUsername]
 FROM [dbo].[SupplyView] AS [SupplyView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="UserView" EntityType="Self.UserView" store:Type="Views" store:Schema="dbo">
@@ -4168,6 +4174,9 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="DefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="DefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="DefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ComponentSingleCarUsageAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserView">
           <Key>
@@ -5851,6 +5860,9 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="SupplyView">
             <EntityTypeMapping TypeName="WMSModel.SupplyView">
               <MappingFragment StoreEntitySet="SupplyView">
+                <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
+                <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
+                <ScalarProperty Name="ComponentSingleCarUsageAmount" ColumnName="ComponentSingleCarUsageAmount" />
                 <ScalarProperty Name="DefaultShipmentUnitAmount" ColumnName="DefaultShipmentUnitAmount" />
                 <ScalarProperty Name="DefaultShipmentUnit" ColumnName="DefaultShipmentUnit" />
                 <ScalarProperty Name="DefaultReceiptUnitAmount" ColumnName="DefaultReceiptUnitAmount" />

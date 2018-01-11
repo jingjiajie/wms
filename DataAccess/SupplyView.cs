@@ -72,5 +72,8 @@ namespace WMS.DataAccess
         public Nullable<decimal> DefaultReceiptUnitAmount { get; set; }
         public string DefaultShipmentUnit { get; set; }
         public Nullable<decimal> DefaultShipmentUnitAmount { get; set; }
+        public Nullable<decimal> ComponentSingleCarUsageAmount { get; set; }
+        public string CreateUserUsername { get; set; }
+        public string LastUpdateUserUsername { get; set; }
     }
 }

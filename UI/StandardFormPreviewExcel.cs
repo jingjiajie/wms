@@ -10,6 +10,7 @@ using EMacro;
 using System.IO;
 
 using unvell.ReoGrid;
+using unvell.ReoGrid.Print;
 
 namespace WMS.UI
 {
@@ -35,6 +36,9 @@ namespace WMS.UI
                 MessageBox.Show("生成报表错误：" + ex.Message,"提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            worksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
+            worksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
         }
 
         public void SetPatternTable(byte[] patternTableExcelFile)
@@ -52,6 +56,45 @@ namespace WMS.UI
         private void StandardFormPreviewExcel_Shown(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonExport_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Excel文件|.xlsx";
+            dialog.ShowDialog();
+            string filePath = dialog.FileName;
+            this.reoGridControlMain.Save(filePath);
+        }
+
+        private void buttonPrint_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+
+            System.Drawing.Printing.PrintDocument doc = null;
+            try
+            {
+                doc = worksheet.CreatePrintSession().PrintDocument;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, this.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (var pd = new System.Windows.Forms.PrintDialog())
+            {
+                pd.Document = doc;
+                pd.UseEXDialog = true;  // in 64bit Windows
+
+                if (pd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    doc.PrinterSettings = pd.PrinterSettings;
+                    doc.Print();
+                }
+            }
+
+            if (doc != null) doc.Dispose();
         }
     }
 }
