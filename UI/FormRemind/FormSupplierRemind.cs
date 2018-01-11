@@ -127,13 +127,17 @@ namespace WMS.UI
                        select u.ShipmentAreaAmount ).ToArray();
             var ComponentName = (from u in wmsEntities.StockInfoView
                            where u.ReceiptTicketSupplierID == supplierid
-                           select u.ComponentName).ToArray  ();
+                           select u.ComponentName).ToArray();
             int[] singlecaramount = new int[ComponentName.Length];
             int[] dailyproduction = new int[ComponentName.Length];
 
             for (int i=0; i<ComponentName .Length;i++ )
 
             {
+                
+
+
+
 
                 var compon = (from u in wmsEntities.ComponentView
                               where u.Name == ComponentName[i]
@@ -141,6 +145,11 @@ namespace WMS.UI
 
                 singlecaramount [i] = Convert .ToInt32 ( compon.SingleCarUsageAmount);
                 dailyproduction[i] = Convert.ToInt32(compon.DailyProduction);
+                if(ShipmentAreaAmount[i] == 0||singlecaramount [i]==0||dailyproduction[0] == 0)
+                {
+                    continue;
+                }
+
                 reminedays = Convert.ToInt32(ShipmentAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
 
 
