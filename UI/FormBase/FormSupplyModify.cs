@@ -44,13 +44,13 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, SupplyViewMetaData.supplykeyNames);
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
-            TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
-            TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
-            TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
+            //TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
+            //TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
+            //TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
             textboxsuppliername.ReadOnly = true;
-            textboxsuppliernumber.ReadOnly = true;
-            textboxLastUpdateUserUsername.ReadOnly = true;
-            textboxCreateUserUsername.ReadOnly = true;
+            //textboxsuppliernumber.ReadOnly = true;
+            //textboxLastUpdateUserUsername.ReadOnly = true;
+            //textboxCreateUserUsername.ReadOnly = true;
 
 
             if (this.mode == FormMode.ALTER)
@@ -92,7 +92,7 @@ namespace WMS.UI
                 }
                 this.supplierID = selectedID;
                 this.Controls.Find("textBoxSupplierName", true)[0].Text = supplierName.Name;
-                this.Controls.Find("textBoxSupplierNumber", true)[0].Text = supplierName.Number;
+                //this.Controls.Find("textBoxSupplierNumber", true)[0].Text = supplierName.Number;
             });
             formSelectSupplier.Show();
             

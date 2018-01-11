@@ -12,6 +12,9 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible = false, Editable = false },
             new KeyName(){Key="SupplierID",Name="供应商ID",Visible = false, Editable = false },
             new KeyName(){Key="ExecuteSupplierID",Name="实际执行供应商合同ID",Visible = false  , Editable = false    },
+            new KeyName(){Key="SupplierName",Name="供货商名称",Visible = true   , Editable = false ,Save =false   ,EditPlaceHolder ="自动填写" },
+            new KeyName(){Key="SupplierNumber",Name="供应商编号",Visible = true   , Editable = false   ,Save =false ,EditPlaceHolder ="自动填写" },
+            
             new KeyName(){Key="Year",Name="存货年份",Visible = true  , Editable = true  },
             new KeyName(){Key="Month",Name="存货月份",Visible = true , Editable = true  },
             new KeyName(){Key="AreaIncrement",Name="增面积",Visible = true , Editable = true   },
