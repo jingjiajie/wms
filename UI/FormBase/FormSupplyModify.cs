@@ -44,6 +44,7 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, SupplyViewMetaData.supplykeyNames);
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+
             //TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
             //TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
             //TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
@@ -146,6 +147,20 @@ namespace WMS.UI
                 MessageBox.Show("零件名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            else
+            {
+                string componentName = textBoxComponentName.Text;
+                try
+                {
+                    DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentName select s).Single();
+
+                    this.componenID = componenID.ID;
+                }
+                catch
+                {
+
+                }
+            }
 
 
             if (textBoxSupplierName.Text == string.Empty)
@@ -167,6 +182,7 @@ namespace WMS.UI
 
                 }
             }
+
 
 
 
@@ -265,6 +281,7 @@ namespace WMS.UI
             supply.ProjectID = this.projectID;
             supply.WarehouseID = this.warehouseID;
             supply.SupplierID = this.supplierID;
+            supply.ComponentID = this.componenID;
 
 
             //开始数据库操作

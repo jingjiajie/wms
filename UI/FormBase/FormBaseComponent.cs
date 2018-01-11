@@ -262,7 +262,7 @@ namespace WMS.UI
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 this.setitem = 1;
-                var form = new ComponentOuterPackingSizeModify(this.userID,componenID);
+                var form = new ComponentOuterPackingSizeModify(this.userID,this.setitem,componenID);
                 if (check_history == 1)
                 {
                     form.SetMode(FormMode.CHECK);
@@ -295,7 +295,7 @@ namespace WMS.UI
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 this.setitem = 1;
-                var form = new ComponentShipmentInfoModify(this.userID,componenID);
+                var form = new ComponentShipmentInfoModify(this.userID, this.setitem,componenID);
 
                 if (check_history == 1)
                 {

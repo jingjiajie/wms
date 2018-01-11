@@ -80,14 +80,14 @@ namespace WMS.UI
                 InitSupplys();
 
                 this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
-                //this.pagerWidget.AddCondition("IsHistory", "0");
+                this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.Search();
 
             }
             if ((this.authority & authority_self) == authority_self)
             {
                 InitSupplys();
-                //this.pagerWidget.AddCondition("IsHistory", "0");
+                this.pagerWidget.AddCondition("IsHistory", "0");
                 this.pagerWidget.Search();
             }
         }
@@ -367,7 +367,7 @@ namespace WMS.UI
                 }
                 int ID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 this.setitem = 0;
-                var form = new ComponentSingleBoxTranPackingInfoModify(this.userID,this.setitem,ID);
+                var form = new ComponentSingleBoxTranPackingInfoModify(this.userID, this.setitem,ID);
                 if (check_history == 1)
                 {
                     form.SetMode(FormMode.CHECK);
@@ -399,7 +399,8 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentOuterPackingSizeModify(this.userID,componenID);
+                this.setitem = 0;
+                var form = new ComponentOuterPackingSizeModify(this.userID, this.setitem, componenID);
                 if (check_history == 1)
                 {
                     form.SetMode(FormMode.CHECK);
@@ -431,7 +432,8 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var form = new ComponentShipmentInfoModify(this.userID,componenID);
+                this.setitem = 0;
+                var form = new ComponentShipmentInfoModify(this.userID,this.setitem, componenID);
 
                 if (check_history == 1)
                 {
