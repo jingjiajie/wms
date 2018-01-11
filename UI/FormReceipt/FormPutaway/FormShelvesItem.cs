@@ -150,6 +150,8 @@ namespace WMS.UI.FormReceipt
                  orderby ptiv.StockInfoShipmentAreaAmount / (ptiv.ComponentDailyProduction * ptiv.ComponentSingleCarUsageAmount) ascending,
                  ptiv.ReceiptTicketItemInventoryDate ascending
                  select ptiv).ToArray();
+
+
                 string sql = (from ptiv in wmsEntities.PutawayTicketItemView
                                 where ptiv.PutawayTicketProjectID == this.projectID && ptiv.PutawayTicketWarehouseID == this.warehouseID
                               orderby ptiv.StockInfoShipmentAreaAmount / (ptiv.ComponentDailyProduction * ptiv.ComponentSingleCarUsageAmount) ascending,

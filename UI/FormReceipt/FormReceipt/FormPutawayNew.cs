@@ -243,6 +243,12 @@ namespace WMS.UI.FormReceipt
                                 putawayTicketItem.ReceiptTicketItemID = rti.ID;
                                 putawayTicketItem.State = "待上架";
                                 putawayTicketItem.PutawayTicketID = putawayTicket.ID;
+                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                if (stockInfo != null)
+                                {
+                                    stockInfo.ShipmentAreaAmount += stockInfo.OverflowAreaAmount;
+                                    stockInfo.OverflowAreaAmount -= stockInfo.OverflowAreaAmount;
+                                }
                                 wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
                             }
                             wmsEntities.SaveChanges();
