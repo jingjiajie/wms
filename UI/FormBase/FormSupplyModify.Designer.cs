@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeSupply()
+        private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -51,7 +51,7 @@
             this.groupBox1.Size = new System.Drawing.Size(982, 419);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "修改零件信息";
+            this.groupBox1.Text = "修改供货信息";
             // 
             // tableLayoutPanel2
             // 
@@ -128,7 +128,7 @@
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(211, 69);
             this.buttonOK.TabIndex = 30;
-            this.buttonOK.Text = "修改零件信息";
+            this.buttonOK.Text = "修改供货信息";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             this.buttonOK.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonOK_MouseDown);
@@ -148,7 +148,7 @@
             this.MinimizeBox = false;
             this.Name = "FormSupplyModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "修改零件信息";
+            this.Text = "修改供货信息";
             this.Load += new System.EventHandler(this.FormSupplyModify_Load);
             this.groupBox1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
