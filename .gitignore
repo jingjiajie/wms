@@ -11,7 +11,7 @@
 *.userprefs
 
 # Build results
-!Excel/
+!/UI/bin/Debug/Excel/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -23,7 +23,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 
-!Excel/
+!/UI/bin/Debug/Excel/
 
 # Visual Studio 2015 cache/options directory
 .vs/
