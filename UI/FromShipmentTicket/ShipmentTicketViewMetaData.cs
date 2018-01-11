@@ -15,9 +15,8 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
             //new KeyName(){Key="ProjectName",Name="项目",Editable=false,Save=false},
             //new KeyName(){Key="WarehouseName",Name="仓库",Editable=false,Save=false},
-            new KeyName(){Key="Number",Name="编号",EditPlaceHolder="留空自动生成"},
+            //new KeyName(){Key="Number",Name="编号",EditPlaceHolder="留空自动生成"},
             new KeyName(){Key="No",Name="发货单号",EditPlaceHolder="留空自动生成"},
-            new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false,EditPlaceHolder="点击选择供应商"},
             new KeyName(){Key="Type",Name="出库类型",ComboBoxItems = new ComboBoxItem[]{
                 new ComboBoxItem("正常出库"),
                 new ComboBoxItem("售后出库"),

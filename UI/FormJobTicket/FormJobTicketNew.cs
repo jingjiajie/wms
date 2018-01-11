@@ -230,10 +230,11 @@ namespace WMS.UI
                         return;
                     }
                     jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
+                    jobTicketItem.ShipmentTicketItemID = shipmentTicketItem.ID;
                     jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
                     jobTicketItem.Unit = shipmentTicketItem.Unit;
                     jobTicketItem.UnitAmount = shipmentTicketItem.UnitAmount;
-                    shipmentTicketItem.ScheduledJobAmount += jobTicketItem.ScheduledAmount;
+                    shipmentTicketItem.ScheduledJobAmount = (shipmentTicketItem.ScheduledJobAmount ?? 0) + jobTicketItem.ScheduledAmount;
                     newJobTicket.JobTicketItem.Add(jobTicketItem);
                 }
                 if(newJobTicket.JobTicketItem.Count == 0)

@@ -69,5 +69,6 @@ namespace WMS.DataAccess
         public string SupplierName { get; set; }
         public Nullable<int> PostedCount { get; set; }
         public string PersonName { get; set; }
+        public string HasPutawayTicket { get; set; }
     }
 }

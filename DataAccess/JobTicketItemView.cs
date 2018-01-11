@@ -36,5 +36,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> UnitAmount { get; set; }
         public string SupplyNumber { get; set; }
         public string SupplyNo { get; set; }
+        public Nullable<int> ShipmentTicketItemID { get; set; }
     }
 }

@@ -36,5 +36,6 @@ namespace WMS.DataAccess
         public Nullable<int> JobPersonID { get; set; }
         public string SupplyNumber { get; set; }
         public string SupplyNo { get; set; }
+        public Nullable<int> JobTicketItemID { get; set; }
     }
 }

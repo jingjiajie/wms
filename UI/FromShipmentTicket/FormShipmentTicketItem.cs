@@ -171,11 +171,13 @@ namespace WMS.UI
                     new Thread(new ThreadStart(() =>
                     {
                         StockInfoView stockInfoView = null;
+                        Supply supply = null;
                         try
                         {
                             stockInfoView = (from s in this.wmsEntities.StockInfoView
                                              where s.ID == selectedStockInfoID
-                                             select s).Single();
+                                             select s).FirstOrDefault();
+                            supply = wmsEntities.Database.SqlQuery<Supply>(String.Format("SELECT * FROM Supply WHERE ID = (SELECT SupplyID FROM ReceiptTicketItem AS RI WHERE RI.ID = {0})",stockInfoView.ReceiptTicketItemID)).FirstOrDefault();
                         }
                         catch
                         {
@@ -185,6 +187,17 @@ namespace WMS.UI
                         this.Invoke(new Action(() =>
                         {
                             Utilities.CopyPropertiesToTextBoxes(stockInfoView, this);
+                            TextBox textBoxUnit = (TextBox)this.Controls.Find("textBoxUnit",true)[0];
+                            TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+                            if (supply != null && string.IsNullOrWhiteSpace(textBoxUnit.Text) && string.IsNullOrWhiteSpace(textBoxUnitAmount.Text))
+                            {
+                                textBoxUnit.Text = supply.DefaultShipmentUnit;
+                                if (supply.DefaultShipmentUnitAmount != null)
+                                {
+                                    textBoxUnitAmount.Text = Utilities.DecimalToString(supply.DefaultShipmentUnitAmount.Value);
+                                }
+                            }
+
                         }));
                     })).Start();
                 });
