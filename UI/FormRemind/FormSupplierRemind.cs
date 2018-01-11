@@ -22,7 +22,7 @@ namespace WMS.UI
 
         private int supplierid;
         private WMSEntities wmsEntities = new WMSEntities();
-        
+        WMS.DataAccess.ComponentView component = null;
         private DateTime contract_enddate;
         //private TimeSpan days;
         private int days;
@@ -120,7 +120,7 @@ namespace WMS.UI
 
             int[] warringdays = { 3, 5, 10 };
             int reminedays;
-            
+           
             var ShipmentAreaAmount = (from u in wmsEntities.StockInfoView
                        where u.ReceiptTicketSupplierID ==
                        this.supplierid
@@ -128,37 +128,78 @@ namespace WMS.UI
             var ComponentName = (from u in wmsEntities.StockInfoView
                            where u.ReceiptTicketSupplierID == supplierid
                            select u.ComponentName).ToArray();
-            int[] singlecaramount = new int[ComponentName.Length];
-            int[] dailyproduction = new int[ComponentName.Length];
+            int[] singlecaramount = new int[ComponentName.Length] ;
+            
 
+
+
+            int[] dailyproduction = new int[ComponentName.Length];
+            
             for (int i=0; i<ComponentName .Length;i++ )
 
             {
                 
 
-
-
-
-                var compon = (from u in wmsEntities.ComponentView
-                              where u.Name == ComponentName[i]
-                              select u).Single();
-
-                singlecaramount [i] = Convert .ToInt32 ( compon.SingleCarUsageAmount);
-                dailyproduction[i] = Convert.ToInt32(compon.DailyProduction);
-                if(ShipmentAreaAmount[i] == 0||singlecaramount [i]==0||dailyproduction[0] == 0)
+                string ComponentNamei = ComponentName[i];
+                
+                if (ShipmentAreaAmount[i] == null)
                 {
+                    MessageBox.Show(ComponentNamei + "的发货区内容没填写，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     continue;
                 }
+
+
+
+
+
+
+
+                component = (from u in wmsEntities.ComponentView
+                              where u.Name == ComponentNamei
+                             select u).FirstOrDefault ();
+                if(component ==null)
+                {
+                    MessageBox.Show("没查找到零件"+ ComponentNamei+"可能已经被删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue ;
+                 }
+
+                if (component.SingleCarUsageAmount == null)
+                {
+                    MessageBox.Show(ComponentNamei + "的单台车用量内容没填写，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue ;
+
+                }
+
+                singlecaramount[i] = Convert.ToInt32(component.SingleCarUsageAmount);
+
+                if (component.DailyProduction == null)
+                {
+                    MessageBox.Show(ComponentNamei + "的单日生产量内容没填写，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    continue ;
+
+                }
+
+                dailyproduction[i] = Convert.ToInt32(component.DailyProduction);
+               
 
                 reminedays = Convert.ToInt32(ShipmentAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
 
 
 
-                if(reminedays <10)
+                if (reminedays < 10)
                 {
-                    this.textBox3.AppendText ( "零件" + ComponentName[i] + " 大约仅可以用" + reminedays + "天");
+                    if (this.textBox3.Text == "无库存预警")
+                    {
+                        this.textBox3.Text = "";
+                        this.textBox3.AppendText("零件"+ ComponentName[i] + "大约仅可以用" + reminedays + "天");
+                    }
+                    else
+                    {
+                        this.textBox3.AppendText("零件"+ ComponentName[i] + "大约仅可以用" + reminedays + "天");
+                    }
+
                 }
-                    
+
 
 
 
