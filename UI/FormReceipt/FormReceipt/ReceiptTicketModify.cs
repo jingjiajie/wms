@@ -390,6 +390,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.LastUpdateTime = DateTime.Now;
                     receiptTicket.CreateTime = DateTime.Now;
                     receiptTicket.SupplierID = this.supplierID;
+                    receiptTicket.HasPutawayTicket = "否";
                     wmsEntities.ReceiptTicket.Add(receiptTicket);
                     wmsEntities.SaveChanges();
 

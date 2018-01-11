@@ -60,7 +60,7 @@ namespace WMS.UI
                     MakeTreeNode("到货单管理"),
                     MakeTreeNode("送检单管理"),
                     MakeTreeNode("上架单管理"),
-
+                    MakeTreeNode("上架零件管理"),
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
                     MakeTreeNode("发货单管理"),
@@ -329,6 +329,19 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
+
+            if (treeViewLeft.SelectedNode.Text == "上架零件管理")
+            {
+                this.panelRight.Controls.Clear();
+                panelRight.Visible = true;
+                FormShelvesItem l = new FormShelvesItem(this.project.ID, this.warehouse.ID);
+                l.TopLevel = false;
+                l.Dock = System.Windows.Forms.DockStyle.Fill;
+                l.FormBorderStyle = FormBorderStyle.None;
+                this.panelRight.Controls.Add(l);
+                l.Show();
+            }
+
             if (treeViewLeft.SelectedNode.Text == "发货单管理")
             {
                 this.panelRight.Controls.Clear();//清空

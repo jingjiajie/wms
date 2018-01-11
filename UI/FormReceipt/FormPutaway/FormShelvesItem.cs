@@ -15,6 +15,8 @@ namespace WMS.UI.FormReceipt
 {
     public partial class FormShelvesItem : Form
     {
+        private int projectID;
+        private int warehouseID;
         private int putawayTicketItemID;
         private int putawayTicketID;
         WMSEntities wmsEntities = new WMSEntities();
@@ -28,6 +30,13 @@ namespace WMS.UI.FormReceipt
         {
             InitializeComponent();
             this.putawayTicketID = putawayTicketID;
+        }
+
+        public FormShelvesItem(int projectID, int warehouseID)
+        {
+            InitializeComponent();
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         public void SetCallBack(Action action)
@@ -125,15 +134,28 @@ namespace WMS.UI.FormReceipt
                 var wmsEntities = new WMSEntities();
                 //ReceiptTicketView[] receiptTicketViews = null;
                 PutawayTicketItemView[] putawayTicketItemView = null;
+                /*
                 try
                 {
-                    putawayTicketItemView = wmsEntities.Database.SqlQuery<PutawayTicketItemView>(String.Format("SELECT * FROM PutawayTicketItemView WHERE PutawayTicketID={0}", putawayTicketID)).ToArray();
+                    putawayTicketItemView = wmsEntities.Database.SqlQuery<PutawayTicketItemView>("SELECT * FROM PutawayTicketItemView WHERE PutawayTicketID=@putawayTicketID", new SqlParameter("putawayTicketID", putawayTicketID)).ToArray();
                 }
                 catch
                 {
                     MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                     return;
-                }
+                }*/
+                putawayTicketItemView = 
+                (from ptiv in wmsEntities.PutawayTicketItemView
+                 where ptiv.PutawayTicketProjectID == this.projectID && ptiv.PutawayTicketWarehouseID == this.warehouseID
+                 orderby ptiv.StockInfoShipmentAreaAmount / (ptiv.ComponentDailyProduction * ptiv.ComponentSingleCarUsageAmount) ascending,
+                 ptiv.ReceiptTicketItemInventoryDate ascending
+                 select ptiv).ToArray();
+                string sql = (from ptiv in wmsEntities.PutawayTicketItemView
+                                where ptiv.PutawayTicketProjectID == this.projectID && ptiv.PutawayTicketWarehouseID == this.warehouseID
+                              orderby ptiv.StockInfoShipmentAreaAmount / (ptiv.ComponentDailyProduction * ptiv.ComponentSingleCarUsageAmount) ascending,
+                              ptiv.ReceiptTicketItemInventoryDate ascending
+                              select ptiv).ToString();
+                Console.WriteLine(sql);
                 this.reoGridControlPutaway.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -483,7 +505,14 @@ namespace WMS.UI.FormReceipt
             buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
         }
 
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
 
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = false, Save=false},
             new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true},
             new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("待送检","待送检"), new ComboBoxItem("已收货","已收货"), new ComboBoxItem("拒收", "拒收") } },
+            new KeyName(){Name = "是否已经生成上架单", Key = "HasPutawayTicket", Visible = true, Editable = false, Save = true},
             new KeyName(){Name = "送货单号（SRM)", Key = "DeliverTicketNoSRM", Visible = true, Editable = true},
             new KeyName(){Name = "凭证来源", Key = "VoucherSource", Visible = true, Editable = true},
             new KeyName(){Name = "凭证号", Key = "VoucherNo", Visible = true, Editable = true},
@@ -64,7 +65,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="送检单单号", Key="No",Visible=true,Editable=false},
             new KeyName(){Name="收货单单号", Key="ReceiptTicketNo", Visible = true, Editable = false, Save = false},
             new KeyName(){Name="状态", Key="State",Visible=true,Editable=false},
-            new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=true, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("有", 1), new ComboBoxItem("无", 0)} },
+            new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=true, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("有", "有"), new ComboBoxItem("无", "无")} },
             new KeyName(){Name="责任人ID", Key="PersonID", Visible=false,Editable=false,Save=true},
             new KeyName(){Name="责任人",Key="PersonName",Visible=true, Editable=true, Save=false},
             new KeyName(){Name="送检员", Key="DeliverSubmissionPerson",Visible=true,Editable=true},
@@ -104,6 +105,8 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="物权属性", Key="RealRightProperty",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="箱号", Key="BoxNo",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="单位名称", Key="Unit",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="单位数量", Key="UnitAmount",Visible=true,Editable=true,Save=true}
             //new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false},
         };
 
@@ -204,17 +207,17 @@ namespace WMS.UI.FormReceipt
             new KeyName{Name = "供应商", Key = "SupplierName", Visible = true,Editable = true, Save = true},
             new KeyName{Name = "容器号", Key = "ContainerNo", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "工厂", Key = "Factroy", Visible = true, Editable = true, Save = true},
-            new KeyName{Name = "工位", Key = "WorkPosition", Visible = true, Editable = true, Save = true}, 
+            new KeyName{Name = "工位", Key = "WorkPosition", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "A系列/B系列供应商", Key = "SupplierType", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "机型区分", Key = "Type", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "尺寸（大件/小件）", Key = "Size", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "分类", Key = "Category", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "分组责任人", Key = "GroupPrincipal", Visible = true, Editable = true, Save = true},
-            new KeyName{Name = "单台用量", Key = "SingleCarUsageAmount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "单台用量", Key = "ComponentSingleCarUsageAmount", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "物流服务费1", Key = "Charge1", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "物流服务费2", Key = "Charge2", Visible = true, Editable = true, Save = true},
         };
 
-        
+
     }
 }

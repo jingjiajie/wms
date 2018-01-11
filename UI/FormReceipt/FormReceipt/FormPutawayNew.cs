@@ -59,21 +59,13 @@ namespace WMS.UI.FormReceipt
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
             int n = 0;
-            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length + 1; i++)
+            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length; i++)
             {
-                if (i == this.checkBoxColumn)
-                {
-                    worksheet.ColumnHeaders[i].Text = "是否上架";
-                }
-                else
-                {
-                    worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[n].Name;
-                    worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[n].Visible;
-                    n++;
-                }
+                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
             }
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
-            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length + 1;
+            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length;
         }
 
         private void InitPanel()
@@ -120,6 +112,18 @@ namespace WMS.UI.FormReceipt
                         int m = 0;
                         for (int j = 0; j < worksheet.Columns - 1; j++)
                         {
+                            worksheet[i, j] = columns[j];
+                        }
+                    }
+                    /*
+                    for (int i = 0; i < receiptTicketItemViews.Length; i++)
+                    {
+                        ReceiptTicketItemView curReceiptTicketItemView = receiptTicketItemViews[i];
+                        object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ReceiptMetaData.itemsKeyName select kn.Key).ToArray());
+
+                        int m = 0;
+                        for (int j = 0; j < worksheet.Columns - 1; j++)
+                        {
                             if (j == this.checkBoxColumn)
                             {
                                 CheckBoxCell checkboxCell;
@@ -132,7 +136,7 @@ namespace WMS.UI.FormReceipt
                                 m++;
                             }
                         }
-                    }
+                    }*/
                 }));
 
             })).Start();
@@ -181,6 +185,7 @@ namespace WMS.UI.FormReceipt
         private void OK_Click(object sender, EventArgs e)
         {
             WMSEntities wmsEntities = new WMSEntities();
+            /*
             List<int> ids = SelectReceiptTicketItem();
             if (ids.Count == 0)
             {
@@ -196,6 +201,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicketItems.Add(receiptTicketItem);
                 }
             }
+            */
             if (this.formMode == FormMode.ADD)
             {
                 PutawayTicket putawayTicket = new PutawayTicket();
@@ -207,12 +213,14 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
+                    
                     ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                     if (receiptTicket == null)
                     {
                         MessageBox.Show("收货单不存在");
                         return;
                     }
+                    receiptTicket.HasPutawayTicket = "是";
                     putawayTicket.CreateTime = DateTime.Now;
                     putawayTicket.ReceiptTicketID = this.receiptTicketID;
                     putawayTicket.CreateUserID = this.userID;
@@ -229,14 +237,11 @@ namespace WMS.UI.FormReceipt
                             wmsEntities.SaveChanges();
                             putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
                             wmsEntities.SaveChanges();
-                            foreach (ReceiptTicketItem rti in receiptTicketItems)
+                            foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
                             {
-                                
-
                                 PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
                                 putawayTicketItem.ReceiptTicketItemID = rti.ID;
                                 putawayTicketItem.State = "待上架";
-                                rti.State = "待上架";
                                 putawayTicketItem.PutawayTicketID = putawayTicket.ID;
                                 wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
                             }
