@@ -198,6 +198,7 @@ namespace WMS.UI
               
                 FormSupplierRemind a1 = new FormSupplierRemind(this.supplierid );
                 a1.Show();
+                
 
             }
 
