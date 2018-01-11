@@ -49,7 +49,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonGenerateJobTicket = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonToJobTicket = new System.Windows.Forms.ToolStripButton();
-            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -138,7 +137,6 @@
             this.buttonSearch,
             this.toolStripSeparator3,
             this.buttonOpen,
-            this.buttonPreview,
             this.toolStripSeparator2,
             this.buttonAdd,
             this.buttonAlter,
@@ -257,15 +255,6 @@
             this.toolStripButtonToJobTicket.Text = "查看作业单";
             this.toolStripButtonToJobTicket.Click += new System.EventHandler(this.toolStripButtonToJobTicket_Click);
             // 
-            // buttonPreview
-            // 
-            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
-            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(144, 36);
-            this.buttonPreview.Text = "导出/打印";
-            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
-            // 
             // FormShipmentTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -310,6 +299,5 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelPagerWidget;
-        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }

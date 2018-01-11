@@ -30,9 +30,9 @@
         {
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.buttonExport = new System.Windows.Forms.ToolStripButton();
             this.buttonPrint = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonExport = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -77,24 +77,26 @@
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
-            // buttonExport
-            // 
-            this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(123, 35);
-            this.buttonExport.Text = "导出Excel";
-            // 
             // buttonPrint
             // 
             this.buttonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPrint.Name = "buttonPrint";
-            this.buttonPrint.Size = new System.Drawing.Size(66, 35);
+            this.buttonPrint.Size = new System.Drawing.Size(66, 27);
             this.buttonPrint.Text = "打印";
+            this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 38);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(123, 27);
+            this.buttonExport.Text = "导出Excel";
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // tableLayoutPanel1
             // 
