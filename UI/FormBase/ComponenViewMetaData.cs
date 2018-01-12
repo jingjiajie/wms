@@ -8,7 +8,7 @@ namespace WMS.UI
     public class ComponenViewMetaData
     {
         public static KeyName[] componenkeyNames = {
-            new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
             new KeyName(){Key="Name",Name="零件名称",Visible = true, Editable = true},
             new KeyName(){Key="SingleCarUsageAmount",Name="单台用量",Visible = true, Editable = true},
             new KeyName(){Key="DailyProduction",Name="单日产量",Visible = true, Editable = true},

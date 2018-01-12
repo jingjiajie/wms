@@ -8,7 +8,7 @@ namespace WMS.UI
     public class SupplyViewMetaData
     {
         public static KeyName[] supplykeyNames = {
-            new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
+            //new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
             //new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false,Save=false},
             //new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = false,Save=false},
             new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择供应商"},
