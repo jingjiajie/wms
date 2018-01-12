@@ -18,6 +18,14 @@ namespace WMS.UI
         private int putOutStorageTicketID = -1;
         private Action<int> putOutStorageTicketStateChangedCallback = null;
 
+        private TextBox textBoxUnit = null;
+        private TextBox textBoxUnitAmount = null;
+        private TextBox textBoxReturnUnit = null;
+        private TextBox textBoxReturnUnitAmount = null;
+
+        private Func<int> jobPersonGetter = null;
+        private Func<int> confirmPersonGetter = null;
+
         private KeyName[] visibleColumns = (from kn in PutOutStorageTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
                                             select kn).ToArray();
@@ -54,6 +62,13 @@ namespace WMS.UI
                 this.Close();
                 return;
             }
+            this.jobPersonGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
+            this.confirmPersonGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
+            this.textBoxUnit = (TextBox)this.Controls.Find("textBoxUnit", true)[0];
+            this.textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+            this.textBoxReturnUnit = (TextBox)this.Controls.Find("textBoxReturnUnit", true)[0];
+            this.textBoxReturnUnitAmount = (TextBox)this.Controls.Find("textBoxReturnUnitAmount", true)[0];
+
             this.Search();
         }
 
@@ -150,6 +165,7 @@ namespace WMS.UI
                 {
                     this.labelStatus.Text = "加载完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    worksheet.Rows = putOutStorageTicketItemViews.Length < 10 ? 10 : putOutStorageTicketItemViews.Length;
                     if (putOutStorageTicketItemViews.Length == 0)
                     {
                         worksheet[0, 1] = "没有符合条件的记录";
@@ -224,7 +240,10 @@ namespace WMS.UI
                 MessageBox.Show("内部错误：读取复选框数据失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
+            int jobPersonID = this.jobPersonGetter();
+            int confirmPersonID = this.confirmPersonGetter();
+            putOutStorageTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
+            putOutStorageTicketItem.ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
             new Thread(() =>
             {
                 try

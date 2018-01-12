@@ -204,6 +204,8 @@ namespace WMS.UI
                     newPutOutStorageTicketItem.ScheduledAmount = jobTicketItem.ScheduledPutOutAmount;
                     newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
                     newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
+                    newPutOutStorageTicketItem.ReturnUnit = jobTicketItem.Unit;
+                    newPutOutStorageTicketItem.ReturnUnitAmount = jobTicketItem.UnitAmount;
                     newPutOutStorageTicket.PutOutStorageTicketItem.Add(newPutOutStorageTicketItem);
                 }
                 //生成出库单号

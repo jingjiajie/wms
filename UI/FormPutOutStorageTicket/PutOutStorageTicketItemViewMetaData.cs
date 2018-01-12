@@ -18,16 +18,22 @@ namespace WMS.UI
             new KeyName(){Key="ComponentName",Name="零件",Editable=false,Save=false},
             new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false},
             new KeyName(){Key="ScheduledAmount",Name="装车数量",Editable=false,Save=false},
-            new KeyName(){Key="RealAmount",Name="实际装车数量"},
-            new KeyName(){Key="ExceedStockAmount",Name="超库存数量",Editable=true},
-            new KeyName(){Key="Unit",Name="单位",Editable=false,Save=false },
-            new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
+                        new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_WAIT_FOR_LOAD),
                 new ComboBoxItem(STRING_STATE_PART_LOAD),
                 new ComboBoxItem(STRING_STATE_ALL_LOAD)
             } },
+            new KeyName(){Key="RealAmount",Name="实际装车数量"},
+            new KeyName(){Key="ExceedStockAmount",Name="超库存数量",Editable=true},
+            new KeyName(){Key="Unit",Name="单位",Editable=false,Save=false },
+            new KeyName(){Key="UnitAmount",Name="单位数量",Editable=false,Save=false},
             new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false,EditPlaceHolder="点击选择人员"},
             new KeyName(){Key="ConfirmPersonName",Name="确认人",Save=false,EditPlaceHolder="点击选择人员"},
+            new KeyName(){Key="ReturnAmount",Name="退回数量",EditPlaceHolder="退回时填写"},
+            new KeyName(){Key="ReturnTime",Name="退回时间",EditPlaceHolder="退回时生成"},
+            new KeyName(){Key="ReturnReason",Name="退回原因",EditPlaceHolder="退回时填写"},
+            new KeyName(){Key="ReturnUnit",Name="退回单位",EditPlaceHolder="退回时填写"},
+            new KeyName(){Key="ReturnUnitAmount",Name="退回单位数量",EditPlaceHolder="退回时填写"},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

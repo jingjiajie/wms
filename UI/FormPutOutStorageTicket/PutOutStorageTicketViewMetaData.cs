@@ -28,6 +28,8 @@ namespace WMS.UI
             //new KeyName(){Key="SortTypeNo",Name="排序类型编码",Editable=true},
             new KeyName(){Key="TruckLoadingTime",Name="装车时间",Editable=true,DefaultValueFunc=(()=>DateTime.Now.ToString())},
             new KeyName(){Key="DeliverTime",Name="发运时间",Editable=true},
+            new KeyName(){Key="ReturnTicketNo",Name="回单号",EditPlaceHolder="回单时填写"},
+            new KeyName(){Key="ReturnTicketTime",Name="回单时间",EditPlaceHolder="回单时生成"},
             new KeyName(){Key="PersonName",Name="责任人",Save=false,EditPlaceHolder="点击选择人员"},
             new KeyName(){Key="CreateUserUsername",Name="创建用户",Editable=false,Save=false},
             new KeyName(){Key="CreateTime",Name="创建时间",Editable=false,Save=false},
