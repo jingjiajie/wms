@@ -20,7 +20,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 
-[Bb]in/
+[Bb]in/*
 ![Bb]in/[Dd]ebug/
 ![Bb]in/[Dd]ebug/[Ee]xcel/
 
