@@ -98,11 +98,46 @@ namespace WMS.UI
                     MessageBox.Show("零件信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                try
+                {
+                    var sameNameComponent = (from u in wmsEntities.Component
+                                             where u.Name == textBoxName.Text
+                                             && u.ID != componen.ID
+                                             select u).ToArray();
+                    if (sameNameComponent.Length > 0)
+                    {
+                        MessageBox.Show("修改零件名失败，已存在同名零件：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
 
             }
             else if (mode == FormMode.ADD)
             {
+                try
+                {
+                    var sameNameComponent = (from u in wmsEntities.Component
+                                             where u.Name == textBoxName.Text
+                                             select u).ToArray();
+                    if (sameNameComponent.Length > 0)
+                    {
+                        MessageBox.Show("修改零件名失败，已存在同名零件：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 componen = new DataAccess.Component();
                 this.wmsEntities.Component.Add(componen);
 

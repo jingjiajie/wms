@@ -123,10 +123,46 @@ namespace WMS.UI.FormBase
                     MessageBox.Show("项目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                
+
+                try
+                {
+                    var sameNameUsers = (from u in wmsEntities.Project
+                                         where u.Name == textBoxName.Text
+                                            && u.ID != project.ID
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("修改项目名失败，已存在同名项目：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
             }
             else if (mode == FormMode.ADD)
             {
+                try
+                {
+                    var sameNameUsers = (from u in wmsEntities.Project
+                                         where u.Name == textBoxName.Text
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("修改项目名失败，已存在同名项目：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 project = new Project();
                 this.wmsEntities.Project.Add(project);
             }

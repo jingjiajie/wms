@@ -71,7 +71,8 @@ namespace WMS.UI
             InitComponents();
             this.warehousepagerWidget.Search();
             this.projectpagerWidget.Search();
-            this.PackageUnitpagerWidget.Search();
+            this.groupBoxPackageUnit.Visible = false;
+            //this.PackageUnitpagerWidget.Search();
 
         }
 

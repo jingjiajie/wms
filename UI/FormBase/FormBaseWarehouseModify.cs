@@ -174,10 +174,45 @@ namespace WMS.UI.FormBase
                         MessageBox.Show("仓库不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+                    try
+                    {
+                        var sameNameWarehouse = (from u in wmsEntities.Warehouse
+                                             where u.Name == textBoxName.Text
+                                                && u.ID != warehouse.ID
+                                             select u).ToArray();
+                        if (sameNameWarehouse.Length > 0)
+                        {
+                            MessageBox.Show("修改仓库名失败，已存在同名仓库：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                    catch
+                    {
+
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                 }
                 else if (mode == FormMode.ADD)
                 {
+                    try
+                    {
+                        var sameNameWarehouse = (from u in wmsEntities.Warehouse
+                                             where u.Name == textBoxName.Text
+                                             select u).ToArray();
+                        if (sameNameWarehouse.Length > 0)
+                        {
+                            MessageBox.Show("修改仓库名失败，已存在同名仓库：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                    catch
+                    {
+
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                     warehouse = new Warehouse();
                     this.wmsEntities.Warehouse.Add(warehouse);
                 }
