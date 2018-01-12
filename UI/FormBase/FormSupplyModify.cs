@@ -217,6 +217,25 @@ namespace WMS.UI
                     MessageBox.Show("历史零件信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                try
+                {
+                    var sameNameUsers = (from u in wmsEntities.Supply
+                                         where u.SupplierID == supplierID
+                                         && u.ComponentID== this.componenID
+                                            && u.ID != supply.ID && u.IsHistory == 0
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("修改供应信息失败，已存在同名供应商——零件供货条目：" + textBoxSupplierName.Text+"——"+ textBoxComponentName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
 
                 if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
@@ -276,6 +295,24 @@ namespace WMS.UI
             }
             else if (mode == FormMode.ADD)
             {
+                try
+                {
+                    var sameNameUsers = (from u in wmsEntities.Supply
+                                         where u.SupplierID == supplierID
+                                         && u.ComponentID == this.componenID                                            
+                                         select u).ToArray();
+                    if (sameNameUsers.Length > 0)
+                    {
+                        MessageBox.Show("修改供应信息失败，已存在同名供应商——零件供货条目：" + textBoxSupplierName.Text + "——" + textBoxComponentName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 supply = new DataAccess.Supply();
                 this.wmsEntities.Supply.Add(supply);
                 supply.CreateUserID = this.userID;
