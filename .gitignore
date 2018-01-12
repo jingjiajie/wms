@@ -21,6 +21,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 
+!/UI/[Bb]in/[Dd]ebug/
 /UI/[Bb]in/[Dd]ebug/*
 !/UI/[Bb]in/[Dd]ebug/Excel/
 
