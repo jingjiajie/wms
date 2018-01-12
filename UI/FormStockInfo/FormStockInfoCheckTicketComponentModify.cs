@@ -227,11 +227,6 @@ namespace WMS.UI
 
 
 
-            private void buttonDelete_Click(object sender, EventArgs e)
-        {
-
-        }
-
 
 
         public void SetModifyFinishedCallback(Action callback)
@@ -518,9 +513,16 @@ namespace WMS.UI
 
         }
 
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
+       
 
+        private void buttonAlter_Click(object sender, EventArgs e)
+        {
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if (ids.Length != 1)
+            {
+                MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
         }
     }
     
