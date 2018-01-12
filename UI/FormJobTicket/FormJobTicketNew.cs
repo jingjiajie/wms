@@ -253,7 +253,7 @@ namespace WMS.UI
                     newJobTicket.JobTicketNo = Utilities.GenerateTicketNo("Z", newJobTicket.CreateTime.Value, maxRankOfToday + 1);
                 }
                 wmsEntities.SaveChanges();
-                this.UpdateShipmentTicketStateSync(this.shipmentTicketID);
+                ShipmentTicketUtilities.UpdateShipmentTicketStateSync(this.shipmentTicketID);
                 if(MessageBox.Show("生成作业单成功，是否查看作业单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     if(this.toJobTicketCallback == null)
@@ -270,32 +270,6 @@ namespace WMS.UI
                     }));
                 }
             }).Start();
-        }
-
-        private void UpdateShipmentTicketStateSync(int shipmentTicketID)
-        {
-            WMSEntities wmsEntities = new WMSEntities();
-            int total = wmsEntities.Database.SqlQuery<int>(string.Format(
-                @"SELECT COUNT(*) FROM ShipmentTicketItem 
-                    WHERE ShipmentTicketID = {0}",
-                shipmentTicketID
-                )).Single();
-            int fullAssignedCount = wmsEntities.Database.SqlQuery<int>(string.Format(
-                @"SELECT COUNT(*) FROM ShipmentTicketItem 
-                    WHERE ShipmentTicketID = {0} AND ScheduledJobAmount = ShipmentAmount",
-                shipmentTicketID
-                )).Single();
-            if(fullAssignedCount == total)
-            {
-                wmsEntities.Database.ExecuteSqlCommand(string.Format(
-                    @"UPDATE ShipmentTicket SET State = '{0}'",ShipmentTicketViewMetaData.STRING_STATE_ALL_ASSIGNED_JOB));
-            }
-            else
-            {
-                wmsEntities.Database.ExecuteSqlCommand(string.Format(
-                    @"UPDATE ShipmentTicket SET State = '{0}'", ShipmentTicketViewMetaData.STRING_STATE_PART_ASSIGNED_JOB));
-            }
-            wmsEntities.SaveChanges();
         }
 
         private void buttonOK_MouseEnter(object sender, EventArgs e)

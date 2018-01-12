@@ -18,11 +18,12 @@
 x64/
 x86/
 bld/
-[Bb]in/
 [Oo]bj/
 [Ll]og/
 
-!Excel/
+!/UI/[Bb]in/[Dd]ebug/
+/UI/[Bb]in/[Dd]ebug/*
+!/UI/[Bb]in/[Dd]ebug/Excel/
 
 # Visual Studio 2015 cache/options directory
 .vs/

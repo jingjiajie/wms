@@ -16,7 +16,7 @@ namespace WMS.UI
             new KeyName(){Key="No",Name="出库单号",EditPlaceHolder="留空自动生成"},
             new KeyName(){Key="JobTicketJobTicketNo",Name="关联作业单号",Editable=false,Save=false},
             //new KeyName(){Key="TruckLoadingTicketNo",Name="装车单号",Editable=true},
-            new KeyName(){Key="State",Name="状态",ComboBoxItems=new ComboBoxItem[]{
+            new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_LOADING),
                 new ComboBoxItem(STRING_STATE_LOADED),
                 new ComboBoxItem(STRING_STATE_DELIVERED),

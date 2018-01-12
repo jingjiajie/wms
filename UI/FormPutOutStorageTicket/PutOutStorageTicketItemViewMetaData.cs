@@ -21,7 +21,7 @@ namespace WMS.UI
             new KeyName(){Key="RealAmount",Name="实际装车数量"},
             new KeyName(){Key="ExceedStockAmount",Name="超库存数量",Editable=true},
             new KeyName(){Key="Unit",Name="单位",Editable=false,Save=false },
-            new KeyName(){Key="State",Name="状态",ComboBoxItems=new ComboBoxItem[]{
+            new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_WAIT_FOR_LOAD),
                 new ComboBoxItem(STRING_STATE_PART_LOAD),
                 new ComboBoxItem(STRING_STATE_ALL_LOAD)

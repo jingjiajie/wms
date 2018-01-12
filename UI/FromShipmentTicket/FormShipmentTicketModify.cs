@@ -19,11 +19,13 @@ namespace WMS.UI
         private int warehouseID = -1;
         private int userID = -1;
         //private int curSupplierID = -1;
+        private int curPersonID = -1;
         private Action<int> modifyFinishedCallback = null;
         private Action<int,bool> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
         //private TextBox textBoxSupplierName = null;
+        private TextBox textBoxPersonName = null;
 
         public FormShipmentTicketModify(int projectID,int warehouseID, int userID,int shipmentTicketID = -1)
         {
@@ -45,6 +47,11 @@ namespace WMS.UI
             //this.textBoxSupplierName = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
             //textBoxSupplierName.BackColor = Color.White;
             //textBoxSupplierName.Click += textBoxSupplierName_Click;
+
+            this.textBoxPersonName = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
+            textBoxPersonName.ReadOnly = true;
+            textBoxPersonName.BackColor = Color.White;
+            textBoxPersonName.Click += textBoxPersonName_Click;
 
             WMSEntities wmsEntities = new WMSEntities();
             if (this.mode == FormMode.ALTER)
@@ -83,6 +90,30 @@ namespace WMS.UI
             {
                 this.Text = "添加发货单";
             }
+        }
+
+        private void textBoxPersonName_Click(object sender, EventArgs e)
+        {
+            FormSelectPerson form = new FormSelectPerson();
+            form.SetSelectFinishCallback((id) =>
+            {
+                this.curPersonID = id;
+                if (!this.IsDisposed)
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    Person person = (from p in wmsEntities.Person
+                                     where p.ID == id
+                                     select p).FirstOrDefault();
+                    if (person == null)
+                    {
+                        MessageBox.Show("选中人员不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.curPersonID = id;
+                    this.textBoxPersonName.Text = person.Name;
+                }
+            });
+            form.Show();
         }
 
         //private void textBoxSupplierName_Click(object sender, EventArgs e)
@@ -156,6 +187,14 @@ namespace WMS.UI
             //    return;
             //}
             //shipmentTicket.SupplierID = this.curSupplierID;
+            if(this.curPersonID == -1)
+            {
+                shipmentTicket.PersonID = null;
+            }
+            else
+            {
+                shipmentTicket.PersonID = this.curPersonID;
+            }
 
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicket, ShipmentTicketViewMetaData.KeyNames, out string errorMessage) == false)
