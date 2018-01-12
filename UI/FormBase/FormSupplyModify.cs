@@ -316,7 +316,7 @@ namespace WMS.UI
                 supply = new DataAccess.Supply();
                 this.wmsEntities.Supply.Add(supply);
                 supply.CreateUserID = this.userID;
-                supply.CreateTime = DateTime.Now;
+                //supply.CreateTime = DateTime.Now;
 
             }
 
@@ -335,8 +335,7 @@ namespace WMS.UI
                     }
                 }
             }
-            supply.LastUpdateUserID = this.userID;
-            supply.LastUpdateTime = DateTime.Now;
+
             supply.ProjectID = this.projectID;
             supply.WarehouseID = this.warehouseID;
             supply.SupplierID = this.supplierID;
@@ -353,6 +352,8 @@ namespace WMS.UI
             {
                 Utilities.CopyComboBoxsToProperties(this, supply, SupplyViewMetaData.KeyNames);
             }
+            supply.LastUpdateUserID = this.userID;
+            supply.LastUpdateTime = DateTime.Now;
             supply.IsHistory = 0;
             wmsEntities.SaveChanges();
 
