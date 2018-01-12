@@ -17,7 +17,7 @@ namespace WMS.UI
             //new KeyName(){Key="WarehouseName",Name="仓库",Editable=false,Save=false},
             //new KeyName(){Key="Number",Name="编号",EditPlaceHolder="留空自动生成"},
             new KeyName(){Key="No",Name="发货单号",EditPlaceHolder="留空自动生成"},
-            new KeyName(){Key="Type",Name="出库类型",ComboBoxItems = new ComboBoxItem[]{
+            new KeyName(){Key="Type",Name="出库类型",Editable=false,ComboBoxItems = new ComboBoxItem[]{
                 new ComboBoxItem("正常出库"),
                 new ComboBoxItem("售后出库"),
                 new ComboBoxItem("返厂出库"),
@@ -25,7 +25,7 @@ namespace WMS.UI
             } },
             new KeyName(){Key="Date",Name="订单日期",DefaultValueFunc=(()=>DateTime.Now.ToString())},
             new KeyName(){Key="RequireArriveDate",Name="要求到达日期"},
-            new KeyName(){Key="State",Name="状态",ComboBoxItems=new ComboBoxItem[]{
+            new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_NOT_ASSIGNED_JOB),
                 new ComboBoxItem(STRING_STATE_PART_ASSIGNED_JOB),
                 new ComboBoxItem(STRING_STATE_ALL_ASSIGNED_JOB)
@@ -40,7 +40,7 @@ namespace WMS.UI
             new KeyName(){Key="Description",Name="描述"},
             new KeyName(){Key="DeliveryTicketNo",Name="配送单号"},
             new KeyName(){Key="OuterPhysicalDistributionPath",Name="外物流路线"},
-            new KeyName(){Key="Emergency",Name="是否紧急",ComboBoxItems=new ComboBoxItem[]{
+            new KeyName(){Key="Emergency",Name="是否紧急",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem("否",0),
                 new ComboBoxItem("是",1),
             } },

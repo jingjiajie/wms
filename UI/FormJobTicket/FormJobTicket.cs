@@ -125,6 +125,7 @@ namespace WMS.UI
             {
                 try
                 {
+                    List<int> shipmentTicketIDs = new List<int>();
                     foreach (int id in ids)
                     {
                         JobTicket jobTicket = (from j in this.wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
@@ -134,9 +135,18 @@ namespace WMS.UI
                             if (shipmentTicketItem == null) continue;
                             shipmentTicketItem.ScheduledJobAmount -= (jobTicketItem.ScheduledAmount - (jobTicketItem.RealAmount ?? 0)) ?? 0;
                         }
+                        if (jobTicket.ShipmentTicketID != null)
+                        {
+                            shipmentTicketIDs.Add(jobTicket.ShipmentTicketID.Value);
+                        }
                         this.wmsEntities.Database.ExecuteSqlCommand(string.Format("DELETE FROM JobTicket WHERE ID = {0}", id));
                     }
-                    this.wmsEntities.SaveChanges();
+                    wmsEntities.SaveChanges();
+                    foreach(int shipmentTicketID in shipmentTicketIDs)
+                    {
+                        ShipmentTicketUtilities.UpdateShipmentTicketStateSync(shipmentTicketID);
+                    }
+                    //wmsEntities.SaveChanges();
                 }
                 catch
                 {

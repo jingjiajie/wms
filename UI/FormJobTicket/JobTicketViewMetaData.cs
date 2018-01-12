@@ -15,12 +15,12 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false},
             new KeyName(){Key="JobTicketNo",Name="作业单号",EditPlaceHolder="留空自动生成"},
             new KeyName(){Key="ShipmentTicketNo",Name="关联发货单号",Editable=false,Save=false},
-            new KeyName(){Key="JobType",Name="作业类型",ComboBoxItems=new ComboBoxItem[]{
+            new KeyName(){Key="JobType",Name="作业类型",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem("翻包"),
                 new ComboBoxItem("其他")
             } },
             new KeyName(){Key="JobGroupName",Name="作业组名称"},
-            new KeyName(){Key="State",Name="状态",ComboBoxItems=new ComboBoxItem[]{
+            new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_UNFINISHED),
                 new ComboBoxItem(STRING_STATE_ALL_FINISHED),
             } },

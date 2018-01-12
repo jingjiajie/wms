@@ -19,6 +19,9 @@ namespace WMS.UI
         private WMSEntities wmsEntities = new WMSEntities();
         private Action modifyFinishedCallback = null;
 
+        private TextBox textBoxPersonName = null;
+        private int curPersonID = -1;
+
         public FormJobTicketModify(int userID,int jobTicketID)
         {
             InitializeComponent();
@@ -33,6 +36,11 @@ namespace WMS.UI
                 throw new Exception("未设置源作业单信息");
             }
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, JobTicketViewMetaData.KeyNames);
+
+            this.textBoxPersonName = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
+            textBoxPersonName.ReadOnly = true;
+            textBoxPersonName.BackColor = Color.White;
+            textBoxPersonName.Click += textBoxPersonName_Click;
 
             JobTicketView jobTicketView = null;
             try
@@ -56,12 +64,36 @@ namespace WMS.UI
             Utilities.CopyPropertiesToTextBoxes(jobTicketView, this);
         }
 
+        private void textBoxPersonName_Click(object sender, EventArgs e)
+        {
+            FormSelectPerson form = new FormSelectPerson();
+            form.SetSelectFinishCallback((id) =>
+            {
+                this.curPersonID = id;
+                if (!this.IsDisposed)
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    Person person = (from p in wmsEntities.Person
+                                     where p.ID == id
+                                     select p).FirstOrDefault();
+                    if (person == null)
+                    {
+                        MessageBox.Show("选中人员不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.curPersonID = id;
+                    this.textBoxPersonName.Text = person.Name;
+                }
+            });
+            form.Show();
+        }
+
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            JobTicket JobTicket = null;
+            JobTicket jobTicket = null;
             try
             {
-                JobTicket = (from s in this.wmsEntities.JobTicket
+                jobTicket = (from s in this.wmsEntities.JobTicket
                              where s.ID == this.jobTicketID
                              select s).FirstOrDefault();
             }
@@ -70,19 +102,32 @@ namespace WMS.UI
                 MessageBox.Show("修改失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (JobTicket == null)
+            if (jobTicket == null)
             {
                 MessageBox.Show("作业单不存在，请刷新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            JobTicket.LastUpdateUserID = this.userID;
-            JobTicket.LastUpdateTime = DateTime.Now;
+            if (this.curPersonID == -1)
+            {
+                jobTicket.PersonID = null;
+            }
+            else
+            {
+                jobTicket.PersonID = this.curPersonID;
+            }
+            jobTicket.LastUpdateUserID = this.userID;
+            jobTicket.LastUpdateTime = DateTime.Now;
 
 
             //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, JobTicket, JobTicketViewMetaData.KeyNames, out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, jobTicket, JobTicketViewMetaData.KeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(Utilities.CopyComboBoxsToProperties(this,jobTicket, JobTicketViewMetaData.KeyNames) == false)
+            {
+                MessageBox.Show("内部错误：读取复选框数据失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
@@ -99,6 +144,7 @@ namespace WMS.UI
             {
                 this.modifyFinishedCallback();
             }
+            MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
 
         }

@@ -386,7 +386,14 @@ namespace WMS.UI
                     comboBox.Name = "comboBox" + curKeyName.Key;
                     comboBox.Items.AddRange(curKeyName.ComboBoxItems);
                     comboBox.SelectedIndex = 0;
-                    comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                    if (curKeyName.Editable == false)
+                    {
+                        comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                    }
+                    else
+                    {
+                        comboBox.DropDownStyle = ComboBoxStyle.DropDown;
+                    }
                     comboBox.Dock = DockStyle.Fill;
                     comboBox.Font = new Font("微软雅黑", 10);
                     tableLayoutPanel.Controls.Add(comboBox);

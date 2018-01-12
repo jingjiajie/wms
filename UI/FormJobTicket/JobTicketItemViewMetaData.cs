@@ -17,7 +17,7 @@ namespace WMS.UI
             //new KeyName(){Key="StockInfoID",Name="库存信息ID",Editable=true,Save=true},
             new KeyName(){Key="ComponentName",Name="零件名",Editable=false,Save=false},
             new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false},
-            new KeyName(){Key="State",Name="状态",
+            new KeyName(){Key="State",Name="状态",Editable=false,
             ComboBoxItems = new ComboBoxItem[]{
                              new ComboBoxItem(STRING_STATE_UNFINISHED),
                              new ComboBoxItem(STRING_STATE_PART_FINISHED),
