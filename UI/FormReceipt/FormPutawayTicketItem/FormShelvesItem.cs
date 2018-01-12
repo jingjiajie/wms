@@ -319,8 +319,8 @@ namespace WMS.UI.FormReceipt
         private void buttonFInished_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlPutaway.Worksheets[0];
-            //try
-            //{
+            try
+            {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
                     throw new EntityCommandExecutionException();
@@ -343,17 +343,19 @@ namespace WMS.UI.FormReceipt
                     }
                     else
                     {
+                        /*
                         decimal putawayAmount;
                         if (decimal.TryParse(this.Controls.Find("textboxPutawayAmount", true)[0].Text, out putawayAmount) == false)
                         {
                             MessageBox.Show("请输入合法的上架数量");
                             return;
-                        }
+                        }*/
+                        putawayTicketItem.PutawayAmount = putawayTicketItem.UnitAmount * putawayTicketItem.UnitCount;
                         StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == putawayTicketItem.ReceiptTicketItemID select si).FirstOrDefault();
                         if (stockInfo != null)
                         {
-                            stockInfo.OverflowAreaAmount -= putawayAmount;
-                            stockInfo.ShipmentAreaAmount += putawayAmount;
+                            stockInfo.OverflowAreaAmount -= putawayTicketItem.PutawayAmount;
+                            stockInfo.ShipmentAreaAmount += putawayTicketItem.PutawayAmount;
                         }
                         if (stockInfo.OverflowAreaAmount < 0)
                         {
@@ -436,17 +438,17 @@ namespace WMS.UI.FormReceipt
                     */
                 }
 
-            //}
-            //catch (EntityCommandExecutionException)
-            //{
-            //    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-            //catch (Exception)
-            //{
-            //    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-            //    return;
-            //}
+            }
+            catch (EntityCommandExecutionException)
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
@@ -475,7 +477,6 @@ namespace WMS.UI.FormReceipt
                             "SELECT COUNT(*) FROM PutawayTicketItem " +
                         "WHERE PutawayTicketID = @putawayTicketID AND State <> '待上架'",
                         new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
-
 
                         if (count == 0)
                         {
