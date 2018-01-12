@@ -21,6 +21,8 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
 
+        static Point staticPos = new Point(-1, -1);
+
         public FormSelectStockInfo(int projectID,int warehouseID,int defaultStockInfoID = -1)
         {
             InitializeComponent();
@@ -115,14 +117,24 @@ namespace WMS.UI
 
         private void FormSelectStockInfo_VisibleChanged(object sender, EventArgs e)
         {
-            if (this.Visible == false) return;
-            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            int id = -1;
-            if(ids.Length > 0)
+            if (this.Visible == false)
             {
-                id = ids[0];
+                staticPos = this.Location;
             }
-            this.pagerWidget.Search(true, id);
+            else
+            {
+                if(staticPos!=new Point(-1, -1))
+                {
+                    this.Location = staticPos;
+                }
+                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+                int id = -1;
+                if (ids.Length > 0)
+                {
+                    id = ids[0];
+                }
+                this.pagerWidget.Search(true, id);
+            }
         }
     }
 }

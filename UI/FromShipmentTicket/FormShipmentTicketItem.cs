@@ -203,7 +203,7 @@ namespace WMS.UI
                 });
             }
 
-            formSelectStockInfo.Show();
+            formSelectStockInfo.ShowDialog();
         }
 
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
