@@ -124,126 +124,152 @@ namespace WMS.UI
 
             int[] warringdays = { 3, 5, 10 };
             int reminedays;
-           
+
+            try
+            {
+
+                var ComponentName = (from u in wmsEntities.StockInfoView
+                                     where u.ReceiptTicketSupplierID == supplierid
+                                     select u.ComponentName).ToArray();
+
+
                 var ShipmentAreaAmount = (from u in wmsEntities.StockInfoView
                                           where u.ReceiptTicketSupplierID ==
                                           this.supplierid
                                           select u.ShipmentAreaAmount).ToArray();
-            
-           
 
-            var ComponentName = (from u in wmsEntities.StockInfoView
-                           where u.ReceiptTicketSupplierID == supplierid
-                           select u.ComponentName).ToArray();
-            var ReceiptTicketNo = (from u in wmsEntities.StockInfoView
-                          where u.ReceiptTicketSupplierID == supplierid
-                          select u.ReceiptTicketNo ).ToArray();
-            
-            int[] singlecaramount = new int[ComponentName.Length] ;
-            
 
-             
 
-            int[] dailyproduction = new int[ComponentName.Length];
-            
-            for (int i=0; i<ComponentName .Length;i++ )
+                var ReceiptTicketNo = (from u in wmsEntities.StockInfoView
+                                       where u.ReceiptTicketSupplierID == supplierid
+                                       select u.SupplyNumber).ToArray();
 
+
+
+
+
+                int[] singlecaramount = new int[ComponentName.Length];
+
+                int[] dailyproduction = new int[ComponentName.Length];
+
+                for (int i = 0; i < ComponentName.Length; i++)
+
+                {
+
+
+                    string ComponentNamei = ComponentName[i];
+
+                    if (ShipmentAreaAmount[i] == null)
+                    {
+                        MessageBox.Show(ComponentNamei + "的发货区内容没填写或已被删除，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        continue;
+                    }
+
+                    if (ReceiptTicketNo[i] == null)
+
+                    {
+                        MessageBox.Show(ComponentNamei + "的库存信息已不存在，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        continue;
+                    }
+
+
+                    try
+                    {
+                        component = (from u in wmsEntities.ComponentView
+                                     where u.Name == ComponentNamei
+                                     select u).FirstOrDefault();
+
+                        if (component == null)
+                        {
+                            MessageBox.Show("没查找到零件" + ComponentNamei + "可能已经被删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            continue;
+                        }
+                        if (component.SingleCarUsageAmount == null)
+                        {
+                            MessageBox.Show(ComponentNamei + "的单台车用量内容没填写或已被删除，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            continue;
+
+                        }
+
+                        singlecaramount[i] = Convert.ToInt32(component.SingleCarUsageAmount);
+
+                        if (component.DailyProduction == null)
+                        {
+                            MessageBox.Show(ComponentNamei + "的单日生产量内容没填写或已被删除，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            continue;
+
+                        }
+
+                        dailyproduction[i] = Convert.ToInt32(component.DailyProduction);
+
+
+                        reminedays = Convert.ToInt32(ShipmentAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
+
+
+
+                        if (reminedays < 10)
+                        {
+                            if (this.textBox3.Text == "无库存预警")
+                            {
+                                this.textBox3.Text = "";
+
+                                if (reminedays == 0)
+                                {
+                                    this.textBox3.AppendText("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n");
+                                }
+
+                                else
+                                {
+                                    this.textBox3.AppendText("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n");
+                                }
+                            }
+
+
+
+
+                            else
+                            {
+
+                                if (reminedays == 0)
+                                {
+                                    this.textBox3.AppendText("\r\n" + "您供货编号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n");
+                                }
+                                else
+                                {
+                                    this.textBox3.AppendText("\r\n" + "您供货编号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n");
+
+                                }
+
+
+                            }
+                        }
+                    }
+
+
+
+                    catch
+                    {
+
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+
+
+
+
+                }
+            }
+
+
+
+            catch
             {
-                
 
-                string ComponentNamei = ComponentName[i];
-                
-                if (ShipmentAreaAmount[i] == null)
-                {
-                    MessageBox.Show(ComponentNamei + "的发货区内容没填写或已被删除，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    continue;
-                }
-
-                if(ReceiptTicketNo[i] ==null)
-
-                {
-                    MessageBox.Show(ComponentNamei + "的库存信息已不存在，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    continue;
-                }
-
-
-
-                component = (from u in wmsEntities.ComponentView
-                              where u.Name == ComponentNamei
-                             select u).FirstOrDefault ();
-                if(component ==null)
-                {
-                    MessageBox.Show("没查找到零件"+ ComponentNamei+"可能已经被删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    continue ;
-                }
-
-                if (component.SingleCarUsageAmount == null)
-                {
-                    MessageBox.Show(ComponentNamei + "的单台车用量内容没填写或已被删除，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    continue ;
-
-                }
-
-                singlecaramount[i] = Convert.ToInt32(component.SingleCarUsageAmount);
-
-                if (component.DailyProduction == null)
-                {
-                    MessageBox.Show(ComponentNamei + "的单日生产量内容没填写或已被删除，跳过该零件的库存预警", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    continue ;
-
-                }
-                
-                dailyproduction[i] = Convert.ToInt32(component.DailyProduction);
-               
-
-                reminedays = Convert.ToInt32(ShipmentAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
-                
-                
-
-                if (reminedays < 10)
-                {
-                    if (this.textBox3.Text == "无库存预警")
-                    {
-                        this.textBox3.Text = "";
-                        
-                        if(reminedays ==0)
-                        {
-                            this.textBox3.AppendText("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n");
-                        }
-
-                        else
-                        { this.textBox3.AppendText("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n");
-                          }
-                    }
-
-
-
-
-                    else
-                    {
-                        
-                        if (reminedays == 0)
-                        {
-                            this.textBox3.AppendText("\r\n"+"您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n");
-                        }
-                        else
-                        {
-                            this.textBox3.AppendText("\r\n"+"您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n");
- 
-                    }
-
-
-
-                }
-
-                }
-                
-              
-
-
-                
-             }
-            
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             
 

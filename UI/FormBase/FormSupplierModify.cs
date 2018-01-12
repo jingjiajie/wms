@@ -78,8 +78,9 @@ namespace WMS.UI
                     ComBoxContractState.Enabled = false;
                 }
                 Utilities.CopyPropertiesToTextBoxes(SupplierView, this);
+                Utilities.CopyPropertiesToComboBoxes(SupplierView, this);
 
-             
+
 
 
             }
@@ -143,16 +144,25 @@ namespace WMS.UI
 
                     //开始数据库操作
                     //将原供应商存为历史信息
-                    var sameNameUsers = (from u in wmsEntities.Supplier
-                                         where u.Name == textBoxName.Text
-                                            && u.ID != supplier.ID&&u.IsHistory ==0
-                                         select u).ToArray();
-                    if (sameNameUsers.Length > 0)
+
+                    try
                     {
-                        MessageBox.Show("修改供应商名失败，已存在同名供应商：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        var sameNameUsers = (from u in wmsEntities.Supplier
+                                             where u.Name == textBoxName.Text
+                                                && u.ID != supplier.ID && u.IsHistory == 0
+                                             select u).ToArray();
+                        if (sameNameUsers.Length > 0)
+                        {
+                            MessageBox.Show("修改供应商名失败，已存在同名供应商：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                    catch
+                    {
+
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-
                     if (MsgBoxResult == DialogResult.Yes)//&&this.history_save ==0)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
                     {
 
@@ -272,12 +282,23 @@ namespace WMS.UI
 
                 else if (mode == FormMode.ADD)
                 {
-                    var sameNameUsers = (from u in wmsEntities.Supplier 
-                                         where u.Name == textBoxName.Text
-                                         select u).ToArray();
-                    if (sameNameUsers.Length > 0)
+
+                    try
                     {
-                        MessageBox.Show("添加供应商失败，已存在同名供应商：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        var sameNameUsers = (from u in wmsEntities.Supplier
+                                             where u.Name == textBoxName.Text
+                                             select u).ToArray();
+                        if (sameNameUsers.Length > 0)
+                        {
+                            MessageBox.Show("添加供应商失败，已存在同名供应商：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+                    catch
+                    {
+
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                     supplier = new Supplier();
