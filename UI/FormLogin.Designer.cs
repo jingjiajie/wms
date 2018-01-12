@@ -108,6 +108,8 @@
             this.buttonClosing.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB4_q;
             this.buttonClosing.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonClosing.FlatAppearance.BorderSize = 0;
+            this.buttonClosing.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonClosing.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonClosing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClosing.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.buttonClosing.Location = new System.Drawing.Point(305, 227);
@@ -129,6 +131,8 @@
             this.buttonEnter.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonEnter.FlatAppearance.BorderColor = System.Drawing.Color.MintCream;
             this.buttonEnter.FlatAppearance.BorderSize = 0;
+            this.buttonEnter.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonEnter.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonEnter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEnter.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.buttonEnter.ForeColor = System.Drawing.SystemColors.ControlText;
