@@ -22,6 +22,7 @@ bld/
 
 [Bb]in/*
 ![Bb]in/[Dd]ebug/
+[Bb]in/[Dd]ebug/*
 ![Bb]in/[Dd]ebug/[Ee]xcel/
 
 # Visual Studio 2015 cache/options directory
