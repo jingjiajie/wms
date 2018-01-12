@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormBaseSupply));
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -77,7 +78,7 @@
             this.labelStatus});
             this.toolStrip1.Location = new System.Drawing.Point(0, 569);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1183, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1501, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -106,7 +107,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1183, 541);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1501, 541);
             this.tableLayoutPanel2.TabIndex = 6;
             // 
             // reoGridControlSupply
@@ -125,7 +126,7 @@
             this.reoGridControlSupply.SheetTabVisible = true;
             this.reoGridControlSupply.SheetTabWidth = 80;
             this.reoGridControlSupply.ShowScrollEndSpacing = true;
-            this.reoGridControlSupply.Size = new System.Drawing.Size(1177, 499);
+            this.reoGridControlSupply.Size = new System.Drawing.Size(1495, 499);
             this.reoGridControlSupply.TabIndex = 4;
             this.reoGridControlSupply.Text = "reoGridControl1";
             // 
@@ -135,7 +136,7 @@
             this.panelPager.Location = new System.Drawing.Point(4, 507);
             this.panelPager.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(1175, 30);
+            this.panelPager.Size = new System.Drawing.Size(1493, 30);
             this.panelPager.TabIndex = 5;
             // 
             // toolStripTop
@@ -160,7 +161,7 @@
             this.buttonImport});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1183, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(1501, 28);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -189,17 +190,19 @@
             // 
             // buttonSearch
             // 
+            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(43, 25);
+            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonHistorySearch
             // 
+            this.buttonHistorySearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonHistorySearch.Image")));
             this.buttonHistorySearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonHistorySearch.Name = "buttonHistorySearch";
-            this.buttonHistorySearch.Size = new System.Drawing.Size(103, 25);
+            this.buttonHistorySearch.Size = new System.Drawing.Size(123, 25);
             this.buttonHistorySearch.Text = "查看历史信息";
             this.buttonHistorySearch.Click += new System.EventHandler(this.buttonHistorySearch_Click);
             // 
@@ -211,9 +214,10 @@
             // 
             // toolStripButtonAdd
             // 
+            this.toolStripButtonAdd.Image = global::WMS.UI.Properties.Resources.add;
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(43, 25);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 25);
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
@@ -237,33 +241,37 @@
             // 
             // toolStripButtonSupplySingleBoxTranPackingInfo
             // 
+            this.toolStripButtonSupplySingleBoxTranPackingInfo.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplySingleBoxTranPackingInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Name = "toolStripButtonSupplySingleBoxTranPackingInfo";
-            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(169, 25);
+            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(189, 25);
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Text = "查看/修改单箱包装信息";
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Click += new System.EventHandler(this.toolStripButtonSupplySingleBoxTranPackingInfo_Click);
             // 
             // toolStripButtonSupplyOuterPackingSize
             // 
+            this.toolStripButtonSupplyOuterPackingSize.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplyOuterPackingSize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyOuterPackingSize.Name = "toolStripButtonSupplyOuterPackingSize";
-            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(184, 25);
+            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(204, 25);
             this.toolStripButtonSupplyOuterPackingSize.Text = "查看/修改零件外包装信息";
             this.toolStripButtonSupplyOuterPackingSize.Click += new System.EventHandler(this.toolStripButtonSupplyOuterPackingSize_Click);
             // 
             // toolStripButtonSupplyShipmentInfo
             // 
+            this.toolStripButtonSupplyShipmentInfo.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplyShipmentInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyShipmentInfo.Name = "toolStripButtonSupplyShipmentInfo";
-            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(169, 24);
+            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(189, 25);
             this.toolStripButtonSupplyShipmentInfo.Text = "查看/修改出货包装信息";
             this.toolStripButtonSupplyShipmentInfo.Click += new System.EventHandler(this.toolStripButtonSupplyShipmentInfo_Click);
             // 
             // buttonImport
             // 
+            this.buttonImport.Image = global::WMS.UI.Properties.Resources.add;
             this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(73, 24);
+            this.buttonImport.Size = new System.Drawing.Size(93, 24);
             this.buttonImport.Text = "批量导入";
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
@@ -271,7 +279,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1183, 594);
+            this.ClientSize = new System.Drawing.Size(1501, 594);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);

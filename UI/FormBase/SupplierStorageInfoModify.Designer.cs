@@ -49,10 +49,10 @@
             this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonModify.Location = new System.Drawing.Point(391, 8);
+            this.buttonModify.Location = new System.Drawing.Point(391, 17);
             this.buttonModify.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(210, 75);
+            this.buttonModify.Size = new System.Drawing.Size(210, 58);
             this.buttonModify.TabIndex = 30;
             this.buttonModify.Text = "修改供应商信息";
             this.buttonModify.UseVisualStyleBackColor = true;
@@ -69,14 +69,14 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 169);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 168);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(992, 92);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(992, 93);
             this.tableLayoutPanel3.TabIndex = 31;
             // 
             // tableLayoutPanel2
@@ -91,8 +91,8 @@
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.41379F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.58621F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.26141F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 37.73859F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1000, 265);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
@@ -115,7 +115,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.5618F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.4382F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(992, 155);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(992, 154);
             this.tableLayoutPanel1.TabIndex = 30;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
