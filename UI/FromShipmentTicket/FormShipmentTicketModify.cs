@@ -26,6 +26,8 @@ namespace WMS.UI
 
         //private TextBox textBoxSupplierName = null;
         private TextBox textBoxPersonName = null;
+        private TextBox textBoxCreateUserUsername = null;
+        private TextBox textBoxCreateTime = null;
 
         public FormShipmentTicketModify(int projectID,int warehouseID, int userID,int shipmentTicketID = -1)
         {
@@ -48,6 +50,8 @@ namespace WMS.UI
             //textBoxSupplierName.BackColor = Color.White;
             //textBoxSupplierName.Click += textBoxSupplierName_Click;
 
+            this.textBoxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
+            this.textBoxCreateTime = (TextBox)this.Controls.Find("textBoxCreateTime", true)[0];
             this.textBoxPersonName = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
             textBoxPersonName.ReadOnly = true;
             textBoxPersonName.BackColor = Color.White;
@@ -89,6 +93,23 @@ namespace WMS.UI
             else if(this.mode == FormMode.ADD)
             {
                 this.Text = "添加发货单";
+                try
+                {
+                    User user = (from u in wmsEntities.User
+                                 where u.ID == this.userID
+                                 select u).FirstOrDefault();
+                    if(user == null)
+                    {
+                        MessageBox.Show("登录用户不存在，请重新登录！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.textBoxCreateUserUsername.Text = user.Username;
+                    this.textBoxCreateTime.Text = DateTime.Now.ToString();
+                }
+                catch
+                {
+                    MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
