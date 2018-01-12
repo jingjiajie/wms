@@ -92,4 +92,9 @@ namespace WMS.UI
     {
         SUPPLIER, COMPONENT
     }
+
+    public interface IFormSelect
+    {
+        void SetSelectFinishedCallback(Action<int> callback);
+    }
 }

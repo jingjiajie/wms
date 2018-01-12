@@ -105,7 +105,7 @@
             // 
             this.labelSelect.Name = "labelSelect";
             this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(134, 27);
+            this.labelSelect.Size = new System.Drawing.Size(134, 57);
             this.labelSelect.Text = "查询条件：";
             // 
             // comboBoxSearchCondition
@@ -113,7 +113,7 @@
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 30);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 60);
             this.comboBoxSearchCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxSearchCondition_SelectedIndexChanged);
             // 
             // textBoxSearchValue
@@ -121,7 +121,7 @@
             this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearchValue.Enabled = false;
             this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 30);
+            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 60);
             this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
             // 
             // buttonSearch
@@ -144,7 +144,7 @@
             this.buttonOpen.Image = ((System.Drawing.Image)(resources.GetObject("buttonOpen.Image")));
             this.buttonOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(158, 27);
+            this.buttonOpen.Size = new System.Drawing.Size(158, 57);
             this.buttonOpen.Text = "查看作业单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
@@ -159,7 +159,7 @@
             this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
             this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(86, 27);
+            this.buttonAlter.Size = new System.Drawing.Size(86, 57);
             this.buttonAlter.Text = "修改";
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
@@ -169,7 +169,7 @@
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(80, 36);
+            this.buttonDelete.Size = new System.Drawing.Size(86, 57);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -184,7 +184,7 @@
             this.buttonGeneratePutOutStorageTicket.Image = ((System.Drawing.Image)(resources.GetObject("buttonGeneratePutOutStorageTicket.Image")));
             this.buttonGeneratePutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonGeneratePutOutStorageTicket.Name = "buttonGeneratePutOutStorageTicket";
-            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(158, 27);
+            this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(158, 57);
             this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
             this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
             // 
@@ -193,7 +193,7 @@
             this.buttonToPutOutStorageTicket.Image = global::WMS.UI.Properties.Resources.find;
             this.buttonToPutOutStorageTicket.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonToPutOutStorageTicket.Name = "buttonToPutOutStorageTicket";
-            this.buttonToPutOutStorageTicket.Size = new System.Drawing.Size(158, 27);
+            this.buttonToPutOutStorageTicket.Size = new System.Drawing.Size(158, 57);
             this.buttonToPutOutStorageTicket.Text = "查看出库单";
             this.buttonToPutOutStorageTicket.Click += new System.EventHandler(this.buttonToPutOutStorageTicket_Click);
             // 

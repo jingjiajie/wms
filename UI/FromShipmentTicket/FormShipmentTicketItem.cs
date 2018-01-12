@@ -107,7 +107,7 @@ namespace WMS.UI
         private void textBoxConfirmPersonName_Click(object sender, EventArgs e)
         {
             FormSelectPerson form = new FormSelectPerson();
-            form.SetSelectFinishCallback((id)=>
+            form.SetSelectFinishedCallback((id)=>
             {
                 this.curConfirmPersonID = id;
                 if (!this.IsDisposed)
@@ -131,7 +131,7 @@ namespace WMS.UI
         private void textBoxJobPersonName_Click(object sender, EventArgs e)
         {
             FormSelectPerson form = new FormSelectPerson();
-            form.SetSelectFinishCallback((id) =>
+            form.SetSelectFinishedCallback((id) =>
             {
                 this.curJobPersonID = id;
                 if (!this.IsDisposed)
@@ -158,7 +158,7 @@ namespace WMS.UI
             {
                 this.formSelectStockInfo = new FormSelectStockInfo(this.projectID, this.warehouseID);
 
-                formSelectStockInfo.SetSelectFinishCallback((selectedStockInfoID) =>
+                formSelectStockInfo.SetSelectFinishedCallback((selectedStockInfoID) =>
                 {
                     this.curStockInfoID = selectedStockInfoID;
                     if (!this.IsDisposed)

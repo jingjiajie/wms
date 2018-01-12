@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using unvell.ReoGrid;
 using System.Drawing;
+using WMS.DataAccess;
 
 namespace WMS.UI
 {
@@ -548,6 +549,59 @@ namespace WMS.UI
                 format.Append("#");
             }
             return string.Format(format.ToString(), value);
+        }
+
+        public static Func<int> BindTextBoxSelect<TFormSelect, TSelectObject>(Form form, string textBoxName,string fieldName) where TFormSelect : Form, IFormSelect, new()
+        {
+            int selectedID = -1;
+            if (textBoxName.StartsWith("textBox") == false)
+            {
+                throw new Exception("编辑框名称必须为\"textBox字段名\"形式");
+            }
+            Control[] foundControls = form.Controls.Find(textBoxName, true);
+            if (foundControls.Length == 0)
+            {
+                throw new Exception(string.Format("窗口{0}中没有名为{1}的编辑框！请检查代码！", form.Text, textBoxName));
+            }
+            TextBox textBox = (TextBox)foundControls[0];
+            PropertyInfo property = typeof(TSelectObject).GetProperty(fieldName);
+            if (property == null)
+            {
+                throw new Exception(string.Format("类型{0}中没有字段{1}，请检查代码！", typeof(TSelectObject).Name, fieldName));
+            }
+
+            TFormSelect formSelect = new TFormSelect();
+            formSelect.SetSelectFinishedCallback((id) =>
+            {
+                selectedID = id;
+                if (!form.IsDisposed)
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    TSelectObject selectedObject = wmsEntities.Database.SqlQuery<TSelectObject>(string.Format("SELECT * FROM {0} WHERE ID = {1}",typeof(TSelectObject).Name,id)).FirstOrDefault();
+                    if (selectedObject == null)
+                    {
+                        MessageBox.Show("选中项目不存在，请重新选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    textBox.Text = property.GetValue(selectedObject,null).ToString();
+                }
+            });
+
+            textBox.Click += (obj, e) =>
+            {
+                formSelect.Show();
+            };
+
+            textBox.KeyDown += (obj, e) =>
+            {
+                if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+                {
+                    selectedID = -1;
+                    textBox.Text = "";
+                }
+            };
+
+            return new Func<int>(()=>selectedID);
         }
     }
 }

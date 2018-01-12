@@ -204,7 +204,7 @@ namespace WMS.UI
 
         {
             var FormSelectStockInfo = new FormSelectStockInfo(this.projectID,this.warehouseID);
-            FormSelectStockInfo.SetSelectFinishCallback((selectedID) =>
+            FormSelectStockInfo.SetSelectFinishedCallback((selectedID) =>
             {
 
                 var stockinfoName = (from s in wmsEntities.StockInfoView

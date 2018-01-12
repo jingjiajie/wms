@@ -62,12 +62,13 @@ namespace WMS.UI
                 return;
             }
             Utilities.CopyPropertiesToTextBoxes(jobTicketView, this);
+            Utilities.CopyPropertiesToComboBoxes(jobTicketView, this);
         }
 
         private void textBoxPersonName_Click(object sender, EventArgs e)
         {
             FormSelectPerson form = new FormSelectPerson();
-            form.SetSelectFinishCallback((id) =>
+            form.SetSelectFinishedCallback((id) =>
             {
                 this.curPersonID = id;
                 if (!this.IsDisposed)
