@@ -48,6 +48,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelPager = new System.Windows.Forms.Panel();
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -65,11 +67,13 @@
             this.toolStripTextBoxSelect,
             this.toolStripButton1,
             this.toolStripButtonSelect,
-            this.toolStripSeparator1,
+            this.toolStripSeparator2,
             this.toolStripButtonAdd,
             this.toolStripButtonAlter,
             this.toolStripButtonDelete,
+            this.toolStripSeparator3,
             this.buttonCheck,
+            this.toolStripSeparator1,
             this.buttonImport});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
@@ -215,7 +219,7 @@
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlUser, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 28);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -252,6 +256,18 @@
             this.reoGridControlUser.Size = new System.Drawing.Size(1326, 433);
             this.reoGridControlUser.TabIndex = 7;
             this.reoGridControlUser.Text = "reoGridControl1";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.AutoSize = false;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
             // 
             // FormBaseSupplier
             // 
@@ -297,5 +313,7 @@
         private System.Windows.Forms.ToolStripButton buttonCheck;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton buttonImport;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

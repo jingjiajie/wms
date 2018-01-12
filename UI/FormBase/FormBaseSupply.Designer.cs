@@ -51,6 +51,8 @@
             this.toolStripButtonSupplyOuterPackingSize = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSupplyShipmentInfo = new System.Windows.Forms.ToolStripButton();
             this.buttonImport = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -78,7 +80,7 @@
             this.labelStatus});
             this.toolStrip1.Location = new System.Drawing.Point(0, 569);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1501, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1585, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -102,12 +104,12 @@
             this.tableLayoutPanel2.Controls.Add(this.panelPager, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 28);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1501, 541);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1585, 541);
             this.tableLayoutPanel2.TabIndex = 6;
             // 
             // reoGridControlSupply
@@ -126,7 +128,7 @@
             this.reoGridControlSupply.SheetTabVisible = true;
             this.reoGridControlSupply.SheetTabWidth = 80;
             this.reoGridControlSupply.ShowScrollEndSpacing = true;
-            this.reoGridControlSupply.Size = new System.Drawing.Size(1495, 499);
+            this.reoGridControlSupply.Size = new System.Drawing.Size(1579, 499);
             this.reoGridControlSupply.TabIndex = 4;
             this.reoGridControlSupply.Text = "reoGridControl1";
             // 
@@ -134,9 +136,9 @@
             // 
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPager.Location = new System.Drawing.Point(4, 507);
-            this.panelPager.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panelPager.Margin = new System.Windows.Forms.Padding(4);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(1493, 30);
+            this.panelPager.Size = new System.Drawing.Size(1577, 30);
             this.panelPager.TabIndex = 5;
             // 
             // toolStripTop
@@ -151,17 +153,19 @@
             this.textBoxSearchValue,
             this.buttonSearch,
             this.buttonHistorySearch,
-            this.toolStripSeparator1,
+            this.toolStripSeparator2,
             this.toolStripButtonAdd,
             this.toolStripButtonAlter,
             this.toolStripButtonDelete,
+            this.toolStripSeparator3,
             this.toolStripButtonSupplySingleBoxTranPackingInfo,
             this.toolStripButtonSupplyOuterPackingSize,
             this.toolStripButtonSupplyShipmentInfo,
+            this.toolStripSeparator1,
             this.buttonImport});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1501, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(1585, 28);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -271,15 +275,27 @@
             this.buttonImport.Image = global::WMS.UI.Properties.Resources.add;
             this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(93, 24);
+            this.buttonImport.Size = new System.Drawing.Size(93, 25);
             this.buttonImport.Text = "批量导入";
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.AutoSize = false;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
             // 
             // FormBaseSupply
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1501, 594);
+            this.ClientSize = new System.Drawing.Size(1585, 594);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.toolStripTop);
@@ -320,5 +336,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonSupplyShipmentInfo;
         private System.Windows.Forms.ToolStripButton buttonHistorySearch;
         private System.Windows.Forms.ToolStripButton buttonImport;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
