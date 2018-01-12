@@ -629,18 +629,19 @@ namespace WMS.UI
             {
                 int id = ids[0];
                 WMS .DataAccess .StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
+                wmsEntities = new WMS.DataAccess.WMSEntities();
                 try
                 {
                     StockInfoCheckTicketItem = (from s in this.wmsEntities.StockInfoCheckTicketItem  where s.ID == id select s).FirstOrDefault();
                 }
                 catch
                 {
-                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("查找盘点单条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 if (StockInfoCheckTicketItem == null)
                 {
-                    MessageBox.Show("发货单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("盘点单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -673,7 +674,7 @@ namespace WMS.UI
                 }
                 catch
                 {
-                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("修改信息操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 this.Invoke(new Action(() =>
@@ -684,8 +685,49 @@ namespace WMS.UI
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             })).Start();
 
+            //更改盘点信息
+
+            WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
+            try
+            {
+                wmsEntities = new DataAccess.WMSEntities( );
+                stockInfoCheck = (from s in wmsEntities.StockInfoCheckTicket
+                                  where s.ID == this.stockInfoCheckID
+                                  select s).FirstOrDefault();
 
 
+            }
+            catch
+            {
+                MessageBox.Show("加载盘点单数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                this.Close();
+                return;
+            }
+            if (stockInfoCheck == null)
+            {
+                MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
+
+            try
+            {
+                stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+                stockInfoCheck.LastUpdateTime = DateTime.Now;
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("修改盘点单操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback();
+            }
 
 
 
