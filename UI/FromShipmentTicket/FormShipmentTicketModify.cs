@@ -95,7 +95,7 @@ namespace WMS.UI
         private void textBoxPersonName_Click(object sender, EventArgs e)
         {
             FormSelectPerson form = new FormSelectPerson();
-            form.SetSelectFinishCallback((id) =>
+            form.SetSelectFinishedCallback((id) =>
             {
                 this.curPersonID = id;
                 if (!this.IsDisposed)

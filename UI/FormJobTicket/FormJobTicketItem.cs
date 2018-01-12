@@ -18,7 +18,7 @@ namespace WMS.UI
         private int jobTicketID = -1;
         Action jobTicketStateChangedCallback = null;
 
-        TextBox textBoxComponentName = null;
+        Func<int> JobPersonIDGetter = null;
 
         private KeyName[] visibleColumns = (from kn in JobTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -75,6 +75,7 @@ namespace WMS.UI
             worksheet.Columns = JobTicketItemViewMetaData.KeyNames.Length; //限制表的长度
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
+            this.JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
         }
 
         private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
@@ -262,6 +263,8 @@ namespace WMS.UI
                         MessageBox.Show("实际翻包数量不能小于已分配出库数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    int jobPersonID = this.JobPersonIDGetter();
+                    jobTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
                     new Thread(()=>
                     {
                         try

@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace WMS.UI
 {
-    public partial class FormSelectStockInfo : Form
+    public partial class FormSelectStockInfo : Form,IFormSelect
     {
         private WMSEntities wmsEntities = new WMSEntities();
         private int defaultStockInfoID = -1;
@@ -29,7 +29,7 @@ namespace WMS.UI
             this.warehouseID = warehouseID;
         }
 
-        public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
+        public void SetSelectFinishedCallback(Action<int> selectFinishedCallback)
         {
             this.selectFinishCallback = selectFinishedCallback;
         }

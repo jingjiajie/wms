@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace WMS.UI
 {
-    public partial class FormSelectPerson : Form
+    public partial class FormSelectPerson : Form,IFormSelect
     {
         private Action<int> selectFinishCallback = null;
         private int defaultPersonID = -1;
@@ -22,7 +22,7 @@ namespace WMS.UI
             InitializeComponent();
         }
 
-        public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
+        public void SetSelectFinishedCallback(Action<int> selectFinishedCallback)
         {
             this.selectFinishCallback = selectFinishedCallback;
         }
@@ -113,7 +113,7 @@ namespace WMS.UI
                 return;
             }
             this.selectFinishCallback?.Invoke(ids[0]);
-            this.Close();
+            this.Hide();
         }
 
         private void textBoxPersonName_Click(object sender, EventArgs e)
@@ -127,6 +127,12 @@ namespace WMS.UI
             {
                 this.Search();
             }
+        }
+
+        private void FormSelectPerson_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
         }
     }
 }

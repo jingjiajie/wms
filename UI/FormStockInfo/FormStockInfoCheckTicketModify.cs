@@ -128,7 +128,7 @@ namespace WMS.UI
 
         {
             var FormSelectPerson = new FormSelectPerson ();
-            FormSelectPerson.SetSelectFinishCallback((selectedID) =>
+            FormSelectPerson.SetSelectFinishedCallback((selectedID) =>
             {
 
                 var PersonName = (from s in wmsEntities.PersonView 
