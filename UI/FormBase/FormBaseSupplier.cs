@@ -129,8 +129,9 @@ namespace WMS.UI
             a1.SetAddFinishedCallback((AddID ) =>
             {
                 this.pagerWidget.Search(false ,AddID );
+                this.labelStatus.Text = "供应商信息";
                 //var worksheet = this.reoGridControlUser.Worksheets[0];
-                
+
                 //worksheet.SelectionRange = new RangePosition("A1:A1");
             });
             a1.Show();  
@@ -196,11 +197,13 @@ namespace WMS.UI
 
                 this.check_history = 1;
                 this.pagerWidget.Search();
+                this.labelStatus.Text = "供应商信息";
             }
             if ((this.authority & authority_supplier) == authority_supplier)
             {
                 this.check_history = 1;
                 this.pagerWidget.Search();
+                this.labelStatus.Text = "供应商信息";
             }
 
             
@@ -334,6 +337,7 @@ namespace WMS.UI
                 a1.SetModifyFinishedCallback((AlterID) =>
                 {
                     this.pagerWidget.Search(false ,AlterID );
+                    this.labelStatus.Text = "供应商信息";
                 });
                 a1.Show();
             }
@@ -501,6 +505,7 @@ namespace WMS.UI
                 this.Invoke(new Action(() =>
                 {
                     this.pagerWidget.Search();
+                    this.labelStatus.Text = "搜索完成";
                 }));
                 
             })).Start();
@@ -595,11 +600,13 @@ namespace WMS.UI
                 this.pagerWidget.AddCondition("ID", Convert.ToString(id));
                 this.check_history = 0;
                 this.pagerWidget.Search();
+                this.labelStatus.Text = "供应商信息";
             }
             if ((this.authority & authority_supplier) == authority_supplier)
             {
                 this.check_history = 0;
                 this.pagerWidget.Search();
+                this.labelStatus.Text = "供应商信息";
             }
         }
 
