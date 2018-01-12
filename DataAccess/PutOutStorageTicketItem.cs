@@ -26,6 +26,11 @@ namespace WMS.DataAccess
         public string Unit { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
         public Nullable<int> JobTicketItemID { get; set; }
+        public Nullable<decimal> ReturnAmount { get; set; }
+        public string ReturnReason { get; set; }
+        public Nullable<System.DateTime> ReturnTime { get; set; }
+        public string ReturnUnit { get; set; }
+        public Nullable<decimal> ReturnUnitAmount { get; set; }
     
         public virtual PutOutStorageTicket PutOutStorageTicket { get; set; }
     }

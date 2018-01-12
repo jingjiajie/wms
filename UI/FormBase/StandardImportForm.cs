@@ -20,12 +20,13 @@ namespace WMS.UI
         private Func<TargetClass[],Dictionary<string,string[]>,bool> importListener = null;
         private Action importFinishedCallback = null;
 
-        public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback)
+        public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback,string formTitle = "导入信息")
         {
             InitializeComponent();
             this.keyNames = keyNames;
             this.importListener = importHandler;
             this.importFinishedCallback = importFinishedCallback;
+            this.Text = formTitle;
         }
 
         private void StandardImportForm_Load(object sender, EventArgs e)
