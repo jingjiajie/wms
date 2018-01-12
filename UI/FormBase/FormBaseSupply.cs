@@ -24,7 +24,7 @@ namespace WMS.UI
         int warehouseID = -1;
         int userID = -1;
         private Supplier supplier = null;
-        private int contractst;   //合同状态
+        private string  contractst;   //合同状态
         private int contract_change = 1;
         private int setitem = -1;
         private PagerWidget<SupplyView> pagerWidget = null;
@@ -69,12 +69,12 @@ namespace WMS.UI
                                      where u.ID == supplierID
                                      select u).Single();
                 this.supplier = supplier;
-                this.contractst = Convert.ToInt32(supplier.ContractState);
+                this.contractst = (supplier.ContractState);
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
-                if (this.contractst == 0)
+                if (this.contractst == "未签合同")
                 {
-                    this.toolStripButtonAlter.Enabled = false;
+                    this.toolStripButtonAlter.Enabled = true ;
                 }
 
                 InitSupplys();
