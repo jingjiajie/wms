@@ -54,7 +54,7 @@ namespace WMS.UI
                 this.buttonAdd.Visible = false;
                  
                 this.buttonDelete.Visible = false;
-                this.buttonfinish.Visible = false;
+                
                 this.Size = new Size(500, 300);
                 this.MinimizeBox = false;
                 this.MaximizeBox = false;
@@ -83,11 +83,79 @@ namespace WMS.UI
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
-
+            this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
             this.Search();
 
         }
+        private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        {
+            this.RefreshTextBoxes();
+        }
+
+        private void RefreshTextBoxes()
+        {
+            this.ClearTextBoxes();
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if (ids.Length == 0)
+            {
+
+                //为编辑框填写默认值
+                Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
+                return;
+            }
+
+            int id = ids[0];
+            WMS.DataAccess.StockInfoCheckTicketItemView StockInfoCheckTicketItem = null;
+            try
+            {
+                StockInfoCheckTicketItem = (from s in this.wmsEntities.StockInfoCheckTicketItemView
+                                            where s.ID == id
+                                            select s).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("刷新数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (StockInfoCheckTicketItem == null)
+            {
+                MessageBox.Show("系统错误，未找到相应盘点单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            //if (StockInfoCheckTicketItem.StockInfoID != null)
+            //{
+            //    this.curStockInfoID = shipmentTicketItemView.StockInfoID.Value;
+            //}
+            //else
+            //{
+            //    this.curStockInfoID = -1;
+            //}
+            Utilities.CopyPropertiesToTextBoxes(StockInfoCheckTicketItem, this);
+            Utilities.CopyPropertiesToComboBoxes(StockInfoCheckTicketItem, this);
+        }
+
+        private void ClearTextBoxes()
+        {
+            foreach (Control control in this.tableLayoutPanel2.Controls)
+            {
+                if (control is TextBox)
+                {
+                    TextBox textBox = control as TextBox;
+                    textBox.Text = "";
+                }
+            }
+
+
+
+        }
+
+
+
+
+
+
         private void InitComponents()
         {
             string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
@@ -161,70 +229,6 @@ namespace WMS.UI
 
             private void buttonDelete_Click(object sender, EventArgs e)
         {
-            WMS.DataAccess.StockInfoCheckTicket   stockInfoCheck = null;
-            
-            if (this.mode == FormMode.ALTER)
-            {
-                try
-                {
-                    stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
-                                      where s.ID == this.stockInfoCheckID
-                                      select s).Single();
-                    stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
-                }
-                catch
-                {
-                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                    this.Close();
-                    return;
-                }
-                if (stockInfoCheck == null)
-                {
-                    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                    return;
-                }
-
-
-
-                
-            }
-            else if (mode == FormMode.ADD)
-            {
-                stockInfoCheck = new WMS.DataAccess.StockInfoCheckTicket();
-                this.wmsEntities.StockInfoCheckTicket.Add(stockInfoCheck);
-                stockInfoCheck.CreateUserID = userID;
-                stockInfoCheck.CheckDate = Convert.ToDateTime(DateTime.Now.ToLongDateString( ));
-                stockInfoCheck.CreateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
-                stockInfoCheck .LastUpdateTime = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
-            }
-
-            stockInfoCheck.WarehouseID = warehouseID;
-            stockInfoCheck.ProjectID  = projectID;
-            
-            stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
-            //开始数据库操作
-            //if (Utilities.CopyTextBoxTextsToProperties(this, stockInfoCheck, StockInfoCheckTicketViewMetaData.KeyNames, out string errorMessage) == false)
-            //{
-            //    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-            wmsEntities.SaveChanges();
-            //调用回调函数
-          
-            if (this.mode == FormMode.CHECK  && this.modifyFinishedCallback != null)
-            {
-                this.modifyFinishedCallback();
-            }
-            else if (this.mode == FormMode.CHECK  && this.addFinishedCallback != null)
-            {
-                this.addFinishedCallback();
-            }
-
-
-            this.Close();
-
 
         }
 
@@ -502,16 +506,11 @@ namespace WMS.UI
             }
             catch
             {
-                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("更新时间操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-
-
-
-
-
-            if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
+           if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
             {
                 this.addFinishedCallback();
             }
@@ -519,13 +518,10 @@ namespace WMS.UI
 
         }
 
-        
-       
-
-
-
-
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
 
         }
+    }
     
 }

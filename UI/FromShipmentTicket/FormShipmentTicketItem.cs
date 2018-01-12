@@ -591,6 +591,6 @@ namespace WMS.UI
         private void buttonAlter_MouseDown(object sender, MouseEventArgs e)
         {
             buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }
+        }      
     }
 }
