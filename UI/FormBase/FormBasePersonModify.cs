@@ -123,10 +123,45 @@ namespace WMS.UI.FormBase
                     MessageBox.Show("人员不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                
+                try
+                {
+                    var sameNamePerson = (from u in wmsEntities.Person
+                                             where u.Name == textBoxName.Text
+                                                && u.ID != person.ID
+                                             select u).ToArray();
+                    if (sameNamePerson.Length > 0)
+                    {
+                        MessageBox.Show("修改人员名失败，已存在同名人员：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
             }
             else if (mode == FormMode.ADD)
             {
+                try
+                {
+                    var sameNamePerson = (from u in wmsEntities.Person
+                                          where u.Name == textBoxName.Text
+                                          select u).ToArray();
+                    if (sameNamePerson.Length > 0)
+                    {
+                        MessageBox.Show("修改人员名失败，已存在同名人员：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                catch
+                {
+
+                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 person = new Person();
                 this.wmsEntities.Person.Add(person);
             }

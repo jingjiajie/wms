@@ -120,7 +120,7 @@ namespace WMS.UI
                 {
                     supp = (from s in this.wmsEntities.SupplierStorageInfo
                             where s.ID == this.SupplierStorageInfoID 
-                                select s).Single();
+                                select s).FirstOrDefault ();
                 }
                 catch
                 {
@@ -177,26 +177,22 @@ namespace WMS.UI
 
 
 
-                if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
-                {
-                    this.modifyFinishedCallback(supp.ID);
-                    MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
-                {
-                    this.addFinishedCallback(supp.ID);
-                    MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                }
-
-                this.Close();
+                  }
 
 
+            if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
+            {
+                this.modifyFinishedCallback(supp.ID);
+                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (this.mode == FormMode.ADD && this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback(supp.ID);
+                MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }
 
-
-
+            this.Close();
 
         }
 

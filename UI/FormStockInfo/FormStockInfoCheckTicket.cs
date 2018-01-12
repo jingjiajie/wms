@@ -20,6 +20,7 @@ namespace WMS.UI
         int warehouseID = -1;
         int userID = -1;
         private int  personid=-1;
+        private int checkid = -1;
         private PagerWidget<StockInfoCheckTicketView > pagerWidget = null;
         public FormStockInfoCheckTicket(int projectID, int warehouseID,int userID)
         {
@@ -201,16 +202,77 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 var personid =(from kn in wmsEntities .StockInfoCheckTicketView where 
                                    kn.ID ==stockiofocheckid
-                                select kn.PersonID).Single () ;
+                                select kn.PersonID).FirstOrDefault() ;
 
                 this.personid = Convert .ToInt32 ( personid);
 
                 var a1 = new FormStockInfoCheckTicketComponentModify(-1, -1,this.userID ,this.personid , stockiofocheckid);
 
-                a1.SetAddFinishedCallback(() =>
+                a1.SetAddFinishedCallback((CheckID) =>
                 {
 
-                    this.pagerWidget.Search();
+                    this.checkid = CheckID;
+                    //更改盘点信息
+
+                    WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
+                    try
+                    {
+                        wmsEntities = new DataAccess.WMSEntities();
+                        stockInfoCheck = (from s in wmsEntities.StockInfoCheckTicket
+                                          where s.ID == this.checkid
+                                          select s).FirstOrDefault();
+
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("加载盘点单数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        this.Close();
+                        return;
+                    }
+                    if (stockInfoCheck == null)
+                    {
+                        MessageBox.Show("要修改的项目已不存在1121，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        this.Close();
+                        return;
+                    }
+                    stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
+                    stockInfoCheck.LastUpdateTime = DateTime.Now;
+                    try
+                    {
+
+                        wmsEntities.SaveChanges();
+
+                    }
+                    catch
+                    {
+                        MessageBox.Show("修改盘点单操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    this.pagerWidget.Search(false ,checkid);
 
                 });
                 a1.SetMode(FormMode.CHECK);

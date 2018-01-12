@@ -337,6 +337,7 @@ namespace WMS.UI
                 );
 
             //显示导入窗口
+            formImport.Text = "导入零件信息";
             formImport.Show();
         }
     }
