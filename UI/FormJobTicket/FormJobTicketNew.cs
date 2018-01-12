@@ -98,7 +98,7 @@ namespace WMS.UI
         {
             TextBox textBoxPersonName = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
             FormSelectPerson formSelectPerson = new FormSelectPerson();
-            formSelectPerson.SetSelectFinishCallback((id)=>
+            formSelectPerson.SetSelectFinishedCallback((id)=>
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 Person person = (from p in wmsEntities.Person

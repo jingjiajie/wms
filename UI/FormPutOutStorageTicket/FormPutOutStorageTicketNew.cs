@@ -20,6 +20,7 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
 
+        private Func<int> personIDGetter = null;
         private volatile int validRows = 0;
 
         private int[] editableColumns = new int[] { 1, 2 };
@@ -44,6 +45,7 @@ namespace WMS.UI
         {
             this.InitComponents();
             Utilities.CreateEditPanel(this.tableLayoutEditPanel, PutOutStorageTicketViewMetaData.KeyNames);
+            this.personIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             JobTicket jobTicket = null;
             User user = null;
             try
@@ -121,7 +123,7 @@ namespace WMS.UI
                         worksheet.SetRangeBorders(i, 2, 1, 1, unvell.ReoGrid.BorderPositions.All, unvell.ReoGrid.RangeBorderStyle.SilverSolid);
                         //计划翻包数量
                         worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
-                        worksheet[i, 2] = (curJobTicketItemView.RealAmount - (curJobTicketItemView.ScheduledPutOutAmount ?? 0)) ?? 0; //计划出库数量默认等于实际作业数量-已经计划出库过的数量
+                        worksheet[i, 2] = Utilities.DecimalToString((curJobTicketItemView.RealAmount - (curJobTicketItemView.ScheduledPutOutAmount ?? 0)) ?? 0); //计划出库数量默认等于实际作业数量-已经计划出库过的数量
                     }
                 }));
             });
@@ -169,6 +171,11 @@ namespace WMS.UI
                 newPutOutStorageTicket.WarehouseID = this.warehouseID;
                 newPutOutStorageTicket.CreateUserID = this.userID;
                 newPutOutStorageTicket.CreateTime = DateTime.Now;
+                int personID = this.personIDGetter();
+                if(personID != -1)
+                {
+                    newPutOutStorageTicket.PersonID = personID;
+                }
 
                 foreach (int line in checkedLines)
                 {
