@@ -39,12 +39,12 @@
             this.comboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -136,6 +136,15 @@
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::WMS.UI.Properties.Resources.find;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(182, 47);
+            this.toolStripButton1.Text = "上架选中条目";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
@@ -199,14 +208,6 @@
             this.reoGridControlUser.Size = new System.Drawing.Size(2052, 887);
             this.reoGridControlUser.TabIndex = 10;
             this.reoGridControlUser.Text = "reoGridControl1";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = global::WMS.UI.Properties.Resources.find;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(182, 47);
-            this.toolStripButton1.Text = "上架选中条目";
             // 
             // FormPutawayTicketItem
             // 

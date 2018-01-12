@@ -95,16 +95,27 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 this.componentID = id;
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                 WMS.DataAccess.Supply supply = (from c in wmsEntities.Supply where c.ID == id select c).FirstOrDefault();
                 if (supply == null)
                 {
                     MessageBox.Show("没有找到该零件");
                 }
+                else if (receiptTicket == null)
+                {
+                    MessageBox.Show("没有找到该收货单");
+                }
                 else
                 {
+                    this.ClearTextBoxes();
+
+                    this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
                     this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
                     this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
+                    this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.Component.DefaultReceiptUnitAmount.ToString();
+                    this.Controls.Find("textBoxUnit", true)[0].Text = supply.Component.DefaultReceiptUnit;
                 }
+                
             }));
             formSearch.Show();
         }
@@ -256,10 +267,22 @@ namespace WMS.UI
                         }
                         receiptTicketItem.SupplyID = this.componentID;
                         receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
+                        if (receiptTicketItem.Unit == "")
+                        {
+                            receiptTicketItem.Unit = "个";
+                        }
+                        if (receiptTicketItem.UnitAmount == null)
+                        {
+                            receiptTicketItem.UnitAmount = 1;
+                        }
+                        if (receiptTicketItem.UnitCount == null)
+                        {
+                            receiptTicketItem.UnitCount = 0;
+                        }
                         
                         wmsEntities.SaveChanges();
 
-                        
+                        receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitCount * receiptTicketItem.UnitAmount;
                         StockInfo stockInfo = new StockInfo();
                         stockInfo.ProjectID = receiptTicket.ProjectID;
                         stockInfo.WarehouseID = receiptTicket.Warehouse;
@@ -329,6 +352,7 @@ namespace WMS.UI
                 }
                 else
                 {
+                    receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitAmount * receiptTicketItem.UnitCount;
                     new Thread(() =>
                     {
                         try

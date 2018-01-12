@@ -60,5 +60,10 @@ namespace WMS.UI.FormReceipt.FormPutawayTicketItem
         {
 
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

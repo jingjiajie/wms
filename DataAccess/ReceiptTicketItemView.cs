@@ -67,5 +67,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> SupplyDefaultReceiptUnitAmount { get; set; }
         public string SupplyDefaultShipmentUnit { get; set; }
         public Nullable<decimal> SupplyDefaultShipmentUnitAmount { get; set; }
+        public Nullable<decimal> UnitCount { get; set; }
     }
 }

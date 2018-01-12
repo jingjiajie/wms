@@ -40,6 +40,7 @@ namespace WMS.DataAccess
         public Nullable<int> ConfirmPersonID { get; set; }
         public string Unit { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
+        public Nullable<decimal> UnitCount { get; set; }
     
         public virtual ReceiptTicket ReceiptTicket { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }
