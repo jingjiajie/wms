@@ -168,12 +168,13 @@ namespace WMS.UI.FormReceipt
             new KeyName{Name = "计划移位数量", Key = "ScheduledMoveCount", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "分配数量", Key = "DistrabuteCount", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "移位数量", Key = "MoveCount", Visible = true, Editable = true, Save = true},
-            new KeyName(){Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},
-            new KeyName(){Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false},
-            new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
-            new KeyName(){Name="确认人", Key = "ConfirmPersonName", Visible = true, Editable = true, Save = false},
+            new KeyName{Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},
+            new KeyName{Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false},
+            new KeyName{Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
+            new KeyName{Name="确认人", Key = "ConfirmPersonName", Visible = true, Editable = true, Save = false},
             new KeyName{Name = "作业时间", Key = "OperateTime", Visible = true, Editable = true, Save = true},
-
+            new KeyName{Name="溢库区数量", Key="StockInfoOverflowAreaAmount", Visible = true, Editable = false, Save = false},
+            new KeyName{Name="发货区数量", Key="StockInfoShipmentAreaAmount", Visible = true, Editable = false, Save = false},
         };
 
         public static KeyName[] supplierKeyName =
