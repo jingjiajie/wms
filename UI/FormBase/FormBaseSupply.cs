@@ -463,7 +463,7 @@ namespace WMS.UI
                 new StandardImportForm<DataAccess.Supply>
                 (
                     //参数1：KeyName
-                    SupplyViewMetaData.supplykeyNames,
+                    SupplyViewMetaData.importsupplykeyNames,
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
                         return true;
