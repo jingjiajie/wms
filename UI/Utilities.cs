@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using unvell.ReoGrid;
-using System.Drawing;
 using WMS.DataAccess;
 
 namespace WMS.UI
@@ -398,6 +398,10 @@ namespace WMS.UI
                 }
                 else //否则是下拉列表形式
                 {
+                    if(curKeyName.Editable == false && curKeyName.GetAllValueToComboBox != null)
+                    {
+                        throw new Exception("KeyName "+curKeyName.Name+"的GetAllValueToComboBox只能用于可编辑的下拉框（Editable必须为true）");
+                    }
                     ComboBox comboBox = new ComboBox();
                     comboBox.Name = "comboBox" + curKeyName.Key;
                     if (curKeyName.ComboBoxItems != null)
