@@ -158,9 +158,24 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
+                    //删除每个选中的出库单
                     foreach (int id in ids)
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicket WHERE ID = @id", new SqlParameter("@id", id));
+                        PutOutStorageTicket putOutStorageTicket = (from p in wmsEntities.PutOutStorageTicket
+                                                                   where p.ID == id
+                                                                   select p).FirstOrDefault();
+                        if (putOutStorageTicket == null) continue;
+                        //把没完成出库的条目在作业单的已分配出库数量里减去
+                        var items = putOutStorageTicket.PutOutStorageTicketItem;
+                        foreach(var item in items)
+                        {
+                            JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
+                                                           where j.ID == item.JobTicketItemID
+                                                           select j).FirstOrDefault();
+                            if (jobTicketItem == null) continue;
+                            jobTicketItem.ScheduledPutOutAmount -= (item.ScheduledAmount - (item.RealAmount ?? 0)) ?? 0;
+                        }
+                        wmsEntities.PutOutStorageTicket.Remove(putOutStorageTicket);
                     }
                     wmsEntities.SaveChanges();
                 }

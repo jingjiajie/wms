@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using WMS.DataAccess;
 using System.Threading;
 using unvell.ReoGrid.CellTypes;
+using unvell.ReoGrid;
 
 namespace WMS.UI
 {
@@ -131,10 +132,16 @@ namespace WMS.UI
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            this.reoGridControlMain.CurrentWorksheet.EndEdit(new EndEditReason());
             PutOutStorageTicket newPutOutStorageTicket = new PutOutStorageTicket();
             if (Utilities.CopyTextBoxTextsToProperties(this, newPutOutStorageTicket, PutOutStorageTicketViewMetaData.KeyNames, out string errorMesage) == false)
             {
                 MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if(Utilities.CopyComboBoxsToProperties(this,newPutOutStorageTicket, PutOutStorageTicketViewMetaData.KeyNames) == false)
+            {
+                MessageBox.Show("内部错误：读取复选框数据失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             List<int> checkedLines = new List<int>();
@@ -177,6 +184,7 @@ namespace WMS.UI
                     newPutOutStorageTicket.PersonID = personID;
                 }
 
+                //把选中的条目加进出库单
                 foreach (int line in checkedLines)
                 {
                     int id = int.Parse(worksheet[line, 0].ToString());
@@ -188,20 +196,23 @@ namespace WMS.UI
                         MessageBox.Show("无法找到作业单条目，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    if (Utilities.CopyTextToProperty(worksheet[line, 2].ToString(), "ScheduledPutOutAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
+
+                    PutOutStorageTicketItem newPutOutStorageTicketItem = new PutOutStorageTicketItem();
+
+                    if (Utilities.CopyTextToProperty(worksheet[line, 2].ToString(), "ScheduledAmount", newPutOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
                     {
                         MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    if(jobTicketItem.ScheduledPutOutAmount > jobTicketItem.RealAmount)
+                    if (newPutOutStorageTicketItem.ScheduledAmount + (jobTicketItem.ScheduledPutOutAmount ?? 0) > jobTicketItem.RealAmount)
                     {
-                        MessageBox.Show("行"+line+"：计划出库数量不能大于实际翻包完成数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("行" + line + "：计划出库数量不能大于实际翻包完成数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    PutOutStorageTicketItem newPutOutStorageTicketItem = new PutOutStorageTicketItem();
+                    jobTicketItem.ScheduledPutOutAmount = (jobTicketItem.ScheduledPutOutAmount ?? 0) + newPutOutStorageTicketItem.ScheduledAmount;
                     newPutOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
-                    newPutOutStorageTicketItem.JobTicketItemID = jobTicket.ID;
-                    newPutOutStorageTicketItem.ScheduledAmount = jobTicketItem.ScheduledPutOutAmount;
+                    newPutOutStorageTicketItem.JobTicketItemID = jobTicketItem.ID;
+                    newPutOutStorageTicketItem.RealAmount = 0;
                     newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
                     newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
                     newPutOutStorageTicketItem.ReturnUnit = jobTicketItem.Unit;

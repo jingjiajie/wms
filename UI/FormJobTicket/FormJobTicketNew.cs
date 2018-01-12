@@ -177,6 +177,7 @@ namespace WMS.UI
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            this.reoGridControlMain.CurrentWorksheet.EndEdit(new EndEditReason());
             JobTicket newJobTicket = new JobTicket();
             string errorMessage = null;
             if(Utilities.CopyTextBoxTextsToProperties(this, newJobTicket, JobTicketViewMetaData.KeyNames, out errorMessage) == false)
@@ -224,7 +225,7 @@ namespace WMS.UI
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    if(jobTicketItem.ScheduledAmount + shipmentTicketItem.ScheduledJobAmount > shipmentTicketItem.ShipmentAmount)
+                    if (jobTicketItem.ScheduledAmount + (shipmentTicketItem.ScheduledJobAmount ?? 0) > shipmentTicketItem.ShipmentAmount)
                     {
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, "计划翻包数量总和不可以超过发货数量！"), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
@@ -234,6 +235,7 @@ namespace WMS.UI
                     jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
                     jobTicketItem.Unit = shipmentTicketItem.Unit;
                     jobTicketItem.UnitAmount = shipmentTicketItem.UnitAmount;
+                    jobTicketItem.RealAmount = 0;
                     shipmentTicketItem.ScheduledJobAmount = (shipmentTicketItem.ScheduledJobAmount ?? 0) + jobTicketItem.ScheduledAmount;
                     newJobTicket.JobTicketItem.Add(jobTicketItem);
                 }
