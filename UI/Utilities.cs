@@ -77,13 +77,21 @@ namespace WMS.UI
                 ComboBox curComboBox = (ComboBox)foundControls[0];
                 object value = p.GetValue(sourceObject, null);
                 if (value == null) continue;
-                foreach (object item in curComboBox.Items)
+                bool foundItem = false;
+                foreach (ComboBoxItem item in curComboBox.Items)
                 {
-                    if (item.ToString() == value.ToString())
+                    if (item.Value.ToString() == value.ToString())
                     {
                         curComboBox.SelectedItem = item;
+                        foundItem = true;
                         break;
                     }
+                }
+                //如果是可编辑下拉框中未找到当前字段值，并且字段不为空值，则向可编辑下拉框插入一项，并选中。
+                if (foundItem == false && string.IsNullOrWhiteSpace(value.ToString())==false && curComboBox.DropDownStyle == ComboBoxStyle.DropDown)
+                {
+                    int index = curComboBox.Items.Add(new ComboBoxItem(value.ToString()));
+                    curComboBox.SelectedIndex = index;
                 }
             }
         }
@@ -91,7 +99,7 @@ namespace WMS.UI
         public static bool CopyComboBoxsToProperties<T>(Form form, T targetObject, KeyName[] keyNames, string textBoxNamePrefix = "comboBox")
         {
             Type objType = typeof(T);
-            KeyName[] comboBoxProperties = (from kn in keyNames where kn.ComboBoxItems != null select kn).ToArray();
+            KeyName[] comboBoxProperties = (from kn in keyNames where kn.ComboBoxItems != null || kn.GetAllValueToComboBox != null select kn).ToArray();
             foreach (KeyName curKeyName in comboBoxProperties)
             {
                 if (curKeyName.Save == false)
@@ -116,7 +124,14 @@ namespace WMS.UI
                 }
                 catch
                 {
-                    throw new Exception(comboBox.Name + "中Item的类型必须是ComboBoxItem类型，才可以调用Utilities.CopyComboBoxsToProperties！");
+                    if (curKeyName.Editable == true)
+                    {
+                        comboBoxValue = comboBox.Text;
+                    }
+                    else
+                    {
+                        throw new Exception("不可编辑下拉框"+comboBox.Name + "中Item的类型必须是ComboBoxItem类型，才可以调用Utilities.CopyComboBoxsToProperties！");
+                    }
                 }
 
                 try
@@ -306,7 +321,7 @@ namespace WMS.UI
                 tableLayoutPanel.Controls.Add(label);
 
                 //如果是编辑框形式
-                if (curKeyName.ComboBoxItems == null)
+                if (curKeyName.ComboBoxItems == null && curKeyName.GetAllValueToComboBox == null)
                 {
                     TextBox textBox = new TextBox();
                     textBox.Font = new Font("微软雅黑", 10);
@@ -385,8 +400,30 @@ namespace WMS.UI
                 {
                     ComboBox comboBox = new ComboBox();
                     comboBox.Name = "comboBox" + curKeyName.Key;
-                    comboBox.Items.AddRange(curKeyName.ComboBoxItems);
-                    comboBox.SelectedIndex = 0;
+                    if (curKeyName.ComboBoxItems != null)
+                    {
+                        comboBox.Items.AddRange(curKeyName.ComboBoxItems);
+                    }else if(curKeyName.GetAllValueToComboBox != null)
+                    {
+                        string[] segments = curKeyName.GetAllValueToComboBox.Split('.');
+                        if(segments.Length != 2)
+                        {
+                            throw new Exception("KeyName的GetAllValueToComboBox属性必须是\"表名.列名\"格式！");
+                        }
+                        string tableName = segments[0];
+                        string columnName = segments[1];
+                        comboBox.VisibleChanged += (obj, e) =>
+                        {
+                            List<string> allValues = new List<string>(Utilities.GetAllValues(tableName, columnName));
+                            foreach(ComboBoxItem item in comboBox.Items)
+                            {
+                                allValues.Remove(item.Text);
+                            }
+                            comboBox.Items.AddRange((from value in allValues
+                                                     select new ComboBoxItem(value)).ToArray());
+                        };
+                    }
+                    if(comboBox.Items.Count > 0) comboBox.SelectedIndex = 0;
                     if (curKeyName.Editable == false)
                     {
                         comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -602,6 +639,25 @@ namespace WMS.UI
             };
 
             return new Func<int>(()=>selectedID);
+        }
+
+        public static string[] GetAllValues(string TableName,string fieldName)
+        {
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                string[] allValues = wmsEntities.Database.SqlQuery<string>(string.Format(
+                    @"SELECT {0} FROM {1} 
+                    WHERE {0} IS NOT NULL AND {0} <> ''
+                    GROUP BY {0}
+                    ORDER BY COUNT(*),{0}", fieldName, TableName)).ToArray();
+                return allValues;
+            }
+            catch
+            {
+                MessageBox.Show("获取信息失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
     }
 }
