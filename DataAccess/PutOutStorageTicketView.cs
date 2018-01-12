@@ -49,5 +49,7 @@ namespace WMS.DataAccess
         public string ShipmentTicketNumber { get; set; }
         public Nullable<int> PersonID { get; set; }
         public string PersonName { get; set; }
+        public string ReturnTicketNo { get; set; }
+        public Nullable<System.DateTime> ReturnTicketTime { get; set; }
     }
 }
