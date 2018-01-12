@@ -20,7 +20,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 
-[Dd]ebug/*.txt
+UI/bin/[Dd]ebug/*.txt
 ![Dd]ebug/[Ee]xcel/
 
 # Visual Studio 2015 cache/options directory
