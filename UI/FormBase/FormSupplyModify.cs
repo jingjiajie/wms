@@ -24,6 +24,7 @@ namespace WMS.UI
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
         private int history_save = 0;
+        private TextBox textboxCreateUserUsername = null;
 
         public FormSupplyModify(int projectID, int warehouseID, int supplierID, int userID, int supplyID = -1)
         {
@@ -48,7 +49,7 @@ namespace WMS.UI
             //TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
-            TextBox textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
+            this.textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
             textboxsuppliername.ReadOnly = true;
             //textboxsuppliernumber.ReadOnly = true;
 
@@ -73,6 +74,27 @@ namespace WMS.UI
                     return;
                 }
 
+            }
+            else if (this.mode == FormMode.ADD)
+            {
+                this.Text = "添加发货单";
+                try
+                {
+                    User user = (from u in wmsEntities.User
+                                 where u.ID == this.userID
+                                 select u).FirstOrDefault();
+                    if (user == null)
+                    {
+                        MessageBox.Show("登录用户不存在，请重新登录！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    this.textboxCreateUserUsername.Text = user.Username;
+                    //this.textBoxCreateTime.Text = DateTime.Now.ToString();
+                }
+                catch
+                {
+                    MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
