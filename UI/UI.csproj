@@ -411,24 +411,6 @@
     <Compile Include="FormBase\FormBaseComponent.Designer.cs">
       <DependentUpon>FormBaseComponent.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\FormBaseUser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseUser.Designer.cs">
-      <DependentUpon>FormBaseUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormBaseUserAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseUserAdd.Designer.cs">
-      <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormBase\FormBaseUserAlter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormBase\FormBaseUserAlter.Designer.cs">
-      <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormBase\FormOtherInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -681,15 +663,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
       <DependentUpon>FormBaseComponent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseUser.resx">
-      <DependentUpon>FormBaseUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseUserAdd.resx">
-      <DependentUpon>FormBaseUserAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\FormBaseUserAlter.resx">
-      <DependentUpon>FormBaseUserAlter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormOtherInfo.resx">
       <DependentUpon>FormOtherInfo.cs</DependentUpon>

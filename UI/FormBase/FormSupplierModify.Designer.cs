@@ -94,12 +94,12 @@ namespace WMS.UI
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 23);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 27);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1002, 423);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1002, 419);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
             // tableLayoutPanel1
@@ -155,17 +155,17 @@ namespace WMS.UI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(996, 330);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(996, 327);
             this.tableLayoutPanel1.TabIndex = 30;
             // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label19.Location = new System.Drawing.Point(748, 198);
+            this.label19.Location = new System.Drawing.Point(748, 195);
             this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(91, 66);
+            this.label19.Size = new System.Drawing.Size(91, 65);
             this.label19.TabIndex = 34;
             this.label19.Text = "收件人";
             // 
@@ -173,38 +173,38 @@ namespace WMS.UI
             // 
             this.label17.AutoSize = true;
             this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label17.Location = new System.Drawing.Point(748, 66);
+            this.label17.Location = new System.Drawing.Point(748, 65);
             this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(91, 66);
+            this.label17.Size = new System.Drawing.Size(91, 65);
             this.label17.TabIndex = 32;
             this.label17.Text = "供货商全称";
             // 
             // textBoxRecipientName
             // 
             this.textBoxRecipientName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxRecipientName.Location = new System.Drawing.Point(847, 202);
+            this.textBoxRecipientName.Location = new System.Drawing.Point(847, 199);
             this.textBoxRecipientName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxRecipientName.Name = "textBoxRecipientName";
-            this.textBoxRecipientName.Size = new System.Drawing.Size(145, 25);
+            this.textBoxRecipientName.Size = new System.Drawing.Size(145, 29);
             this.textBoxRecipientName.TabIndex = 16;
             // 
             // textBoxBankName
             // 
             this.textBoxBankName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBankName.Location = new System.Drawing.Point(847, 136);
+            this.textBoxBankName.Location = new System.Drawing.Point(847, 134);
             this.textBoxBankName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBankName.Name = "textBoxBankName";
-            this.textBoxBankName.Size = new System.Drawing.Size(145, 25);
+            this.textBoxBankName.Size = new System.Drawing.Size(145, 29);
             this.textBoxBankName.TabIndex = 12;
             // 
             // textBoxFullName
             // 
             this.textBoxFullName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxFullName.Location = new System.Drawing.Point(847, 70);
+            this.textBoxFullName.Location = new System.Drawing.Point(847, 69);
             this.textBoxFullName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxFullName.Name = "textBoxFullName";
-            this.textBoxFullName.Size = new System.Drawing.Size(145, 25);
+            this.textBoxFullName.Size = new System.Drawing.Size(145, 29);
             this.textBoxFullName.TabIndex = 8;
             // 
             // textBoxStartDate
@@ -213,7 +213,7 @@ namespace WMS.UI
             this.textBoxStartDate.Location = new System.Drawing.Point(847, 5);
             this.textBoxStartDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStartDate.Name = "textBoxStartDate";
-            this.textBoxStartDate.Size = new System.Drawing.Size(145, 25);
+            this.textBoxStartDate.Size = new System.Drawing.Size(145, 29);
             this.textBoxStartDate.TabIndex = 4;
             // 
             // label1
@@ -223,7 +223,7 @@ namespace WMS.UI
             this.label1.Location = new System.Drawing.Point(4, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 66);
+            this.label1.Size = new System.Drawing.Size(91, 65);
             this.label1.TabIndex = 0;
             this.label1.Text = "供货商名称";
             // 
@@ -233,7 +233,7 @@ namespace WMS.UI
             this.textBoxName.Location = new System.Drawing.Point(103, 5);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(141, 25);
+            this.textBoxName.Size = new System.Drawing.Size(141, 29);
             this.textBoxName.TabIndex = 1;
             // 
             // label2
@@ -243,7 +243,7 @@ namespace WMS.UI
             this.label2.Location = new System.Drawing.Point(252, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 66);
+            this.label2.Size = new System.Drawing.Size(91, 65);
             this.label2.TabIndex = 2;
             this.label2.Text = "仓库ID";
             // 
@@ -253,86 +253,86 @@ namespace WMS.UI
             this.textBoxWarehouseID.Location = new System.Drawing.Point(351, 5);
             this.textBoxWarehouseID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxWarehouseID.Name = "textBoxWarehouseID";
-            this.textBoxWarehouseID.Size = new System.Drawing.Size(141, 25);
+            this.textBoxWarehouseID.Size = new System.Drawing.Size(141, 29);
             this.textBoxWarehouseID.TabIndex = 2;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(4, 66);
+            this.label4.Location = new System.Drawing.Point(4, 65);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 66);
+            this.label4.Size = new System.Drawing.Size(91, 65);
             this.label4.TabIndex = 6;
             this.label4.Text = "结束有效日期";
             // 
             // textBoxEndDate
             // 
             this.textBoxEndDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxEndDate.Location = new System.Drawing.Point(103, 70);
+            this.textBoxEndDate.Location = new System.Drawing.Point(103, 69);
             this.textBoxEndDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxEndDate.Name = "textBoxEndDate";
-            this.textBoxEndDate.Size = new System.Drawing.Size(141, 25);
+            this.textBoxEndDate.Size = new System.Drawing.Size(141, 29);
             this.textBoxEndDate.TabIndex = 5;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(252, 66);
+            this.label5.Location = new System.Drawing.Point(252, 65);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(91, 66);
+            this.label5.Size = new System.Drawing.Size(91, 65);
             this.label5.TabIndex = 8;
             this.label5.Text = "开票日期";
             // 
             // textBoxBankNo
             // 
             this.textBoxBankNo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBankNo.Location = new System.Drawing.Point(351, 202);
+            this.textBoxBankNo.Location = new System.Drawing.Point(351, 199);
             this.textBoxBankNo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBankNo.Name = "textBoxBankNo";
-            this.textBoxBankNo.Size = new System.Drawing.Size(141, 25);
+            this.textBoxBankNo.Size = new System.Drawing.Size(141, 29);
             this.textBoxBankNo.TabIndex = 14;
             // 
             // textBoxInvoiceDate
             // 
             this.textBoxInvoiceDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxInvoiceDate.Location = new System.Drawing.Point(351, 70);
+            this.textBoxInvoiceDate.Location = new System.Drawing.Point(351, 69);
             this.textBoxInvoiceDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxInvoiceDate.Name = "textBoxInvoiceDate";
-            this.textBoxInvoiceDate.Size = new System.Drawing.Size(141, 25);
+            this.textBoxInvoiceDate.Size = new System.Drawing.Size(141, 29);
             this.textBoxInvoiceDate.TabIndex = 6;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(252, 198);
+            this.label11.Location = new System.Drawing.Point(252, 195);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(91, 66);
+            this.label11.Size = new System.Drawing.Size(91, 65);
             this.label11.TabIndex = 20;
             this.label11.Text = "开户行行号";
             // 
             // textBoxBankAccount
             // 
             this.textBoxBankAccount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBankAccount.Location = new System.Drawing.Point(103, 202);
+            this.textBoxBankAccount.Location = new System.Drawing.Point(103, 199);
             this.textBoxBankAccount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBankAccount.Name = "textBoxBankAccount";
-            this.textBoxBankAccount.Size = new System.Drawing.Size(141, 25);
+            this.textBoxBankAccount.Size = new System.Drawing.Size(141, 29);
             this.textBoxBankAccount.TabIndex = 12;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label7.Location = new System.Drawing.Point(4, 132);
+            this.label7.Location = new System.Drawing.Point(4, 130);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(91, 66);
+            this.label7.Size = new System.Drawing.Size(91, 65);
             this.label7.TabIndex = 12;
             this.label7.Text = "纳税人识别号";
             // 
@@ -340,39 +340,39 @@ namespace WMS.UI
             // 
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label8.Location = new System.Drawing.Point(252, 132);
+            this.label8.Location = new System.Drawing.Point(252, 130);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(91, 66);
+            this.label8.Size = new System.Drawing.Size(91, 65);
             this.label8.TabIndex = 14;
             this.label8.Text = "地址";
             // 
             // textBoxAddress
             // 
             this.textBoxAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxAddress.Location = new System.Drawing.Point(351, 136);
+            this.textBoxAddress.Location = new System.Drawing.Point(351, 134);
             this.textBoxAddress.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxAddress.Name = "textBoxAddress";
-            this.textBoxAddress.Size = new System.Drawing.Size(141, 25);
+            this.textBoxAddress.Size = new System.Drawing.Size(141, 29);
             this.textBoxAddress.TabIndex = 10;
             // 
             // textBoxTaxpayerNumber
             // 
             this.textBoxTaxpayerNumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxTaxpayerNumber.Location = new System.Drawing.Point(103, 136);
+            this.textBoxTaxpayerNumber.Location = new System.Drawing.Point(103, 134);
             this.textBoxTaxpayerNumber.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxTaxpayerNumber.Name = "textBoxTaxpayerNumber";
-            this.textBoxTaxpayerNumber.Size = new System.Drawing.Size(141, 25);
+            this.textBoxTaxpayerNumber.Size = new System.Drawing.Size(141, 29);
             this.textBoxTaxpayerNumber.TabIndex = 9;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(4, 198);
+            this.label10.Location = new System.Drawing.Point(4, 195);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(91, 66);
+            this.label10.Size = new System.Drawing.Size(91, 65);
             this.label10.TabIndex = 18;
             this.label10.Text = "帐号";
             // 
@@ -383,7 +383,7 @@ namespace WMS.UI
             this.label3.Location = new System.Drawing.Point(500, 0);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 66);
+            this.label3.Size = new System.Drawing.Size(91, 65);
             this.label3.TabIndex = 4;
             this.label3.Text = "合同编码";
             // 
@@ -391,10 +391,10 @@ namespace WMS.UI
             // 
             this.label6.AutoSize = true;
             this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Location = new System.Drawing.Point(500, 66);
+            this.label6.Location = new System.Drawing.Point(500, 65);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(91, 66);
+            this.label6.Size = new System.Drawing.Size(91, 65);
             this.label6.TabIndex = 10;
             this.label6.Text = "结算日期";
             // 
@@ -403,10 +403,10 @@ namespace WMS.UI
             this.label9.AutoSize = true;
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label9.Font = new System.Drawing.Font("黑体", 10F);
-            this.label9.Location = new System.Drawing.Point(500, 132);
+            this.label9.Location = new System.Drawing.Point(500, 130);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(91, 66);
+            this.label9.Size = new System.Drawing.Size(91, 65);
             this.label9.TabIndex = 16;
             this.label9.Text = "电话";
             // 
@@ -414,10 +414,10 @@ namespace WMS.UI
             // 
             this.label12.AutoSize = true;
             this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(500, 198);
+            this.label12.Location = new System.Drawing.Point(500, 195);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(91, 66);
+            this.label12.Size = new System.Drawing.Size(91, 65);
             this.label12.TabIndex = 22;
             this.label12.Text = "邮编";
             // 
@@ -427,34 +427,34 @@ namespace WMS.UI
             this.textBoxContractNo.Location = new System.Drawing.Point(599, 5);
             this.textBoxContractNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxContractNo.Name = "textBoxContractNo";
-            this.textBoxContractNo.Size = new System.Drawing.Size(141, 25);
+            this.textBoxContractNo.Size = new System.Drawing.Size(141, 29);
             this.textBoxContractNo.TabIndex = 3;
             // 
             // textBoxBalanceDate
             // 
             this.textBoxBalanceDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxBalanceDate.Location = new System.Drawing.Point(599, 70);
+            this.textBoxBalanceDate.Location = new System.Drawing.Point(599, 69);
             this.textBoxBalanceDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBalanceDate.Name = "textBoxBalanceDate";
-            this.textBoxBalanceDate.Size = new System.Drawing.Size(141, 25);
+            this.textBoxBalanceDate.Size = new System.Drawing.Size(141, 29);
             this.textBoxBalanceDate.TabIndex = 7;
             // 
             // textBoxTel
             // 
             this.textBoxTel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxTel.Location = new System.Drawing.Point(599, 136);
+            this.textBoxTel.Location = new System.Drawing.Point(599, 134);
             this.textBoxTel.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxTel.Name = "textBoxTel";
-            this.textBoxTel.Size = new System.Drawing.Size(141, 25);
+            this.textBoxTel.Size = new System.Drawing.Size(141, 29);
             this.textBoxTel.TabIndex = 11;
             // 
             // textBoxZipCode
             // 
             this.textBoxZipCode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxZipCode.Location = new System.Drawing.Point(599, 202);
+            this.textBoxZipCode.Location = new System.Drawing.Point(599, 199);
             this.textBoxZipCode.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxZipCode.Name = "textBoxZipCode";
-            this.textBoxZipCode.Size = new System.Drawing.Size(141, 25);
+            this.textBoxZipCode.Size = new System.Drawing.Size(141, 29);
             this.textBoxZipCode.TabIndex = 15;
             // 
             // label16
@@ -464,7 +464,7 @@ namespace WMS.UI
             this.label16.Location = new System.Drawing.Point(748, 0);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(91, 66);
+            this.label16.Size = new System.Drawing.Size(91, 65);
             this.label16.TabIndex = 31;
             this.label16.Text = "起始有效日期";
             // 
@@ -472,10 +472,10 @@ namespace WMS.UI
             // 
             this.label18.AutoSize = true;
             this.label18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label18.Location = new System.Drawing.Point(748, 132);
+            this.label18.Location = new System.Drawing.Point(748, 130);
             this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(91, 66);
+            this.label18.Size = new System.Drawing.Size(91, 65);
             this.label18.TabIndex = 33;
             this.label18.Text = "开户行";
             // 
@@ -487,13 +487,13 @@ namespace WMS.UI
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 341);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 338);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(996, 79);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(996, 78);
             this.tableLayoutPanel3.TabIndex = 31;
             // 
             // buttonModify
@@ -503,6 +503,8 @@ namespace WMS.UI
             this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonModify.FlatAppearance.BorderSize = 0;
+            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModify.Location = new System.Drawing.Point(392, 9);
             this.buttonModify.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -518,7 +520,7 @@ namespace WMS.UI
             // 
             // FormSupplierModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1010, 451);
             this.Controls.Add(this.groupBox1);
