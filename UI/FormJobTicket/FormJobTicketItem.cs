@@ -19,6 +19,7 @@ namespace WMS.UI
         Action jobTicketStateChangedCallback = null;
 
         Func<int> JobPersonIDGetter = null;
+        Func<int> ConfirmPersonIDGetter = null;
 
         private KeyName[] visibleColumns = (from kn in JobTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
@@ -76,6 +77,7 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
             this.JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
+            this.ConfirmPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
         }
 
         private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
@@ -152,7 +154,11 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if(tmpJobTicketItem.RealAmount < tmpJobTicketItem.ScheduledAmount)
+            if(int.TryParse(textBoxScheduledAmount.Text, out int scheduledAmount) == false)
+            {
+                scheduledAmount = 0;
+            }
+            if(tmpJobTicketItem.RealAmount < scheduledAmount)
             {
                 comboBoxState.SelectedIndex = 1;
             }
@@ -264,7 +270,9 @@ namespace WMS.UI
                         return;
                     }
                     int jobPersonID = this.JobPersonIDGetter();
+                    int confirmPersonID = this.ConfirmPersonIDGetter();
                     jobTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
+                    jobTicketItem.ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
                     new Thread(()=>
                     {
                         try

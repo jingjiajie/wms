@@ -62,6 +62,7 @@ namespace WMS.UI
                 return;
             }
             Utilities.CopyPropertiesToTextBoxes(jobTicketView, this);
+            Utilities.CopyPropertiesToComboBoxes(jobTicketView, this);
         }
 
         private void textBoxPersonName_Click(object sender, EventArgs e)
