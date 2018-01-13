@@ -30,7 +30,7 @@
         {
             this.buttonCover = new System.Windows.Forms.Button();
             this.buttonNormal = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonMoBiSi = new System.Windows.Forms.Button();
             this.buttonZhongDu = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
@@ -62,17 +62,18 @@
             this.buttonNormal.UseVisualStyleBackColor = true;
             this.buttonNormal.Click += new System.EventHandler(this.buttonCover_Click);
             // 
-            // button1
+            // buttonMoBiSi
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.button1.Location = new System.Drawing.Point(290, 4);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 91);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "摩比斯出库单";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonMoBiSi.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMoBiSi.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.buttonMoBiSi.Location = new System.Drawing.Point(290, 4);
+            this.buttonMoBiSi.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonMoBiSi.Name = "buttonMoBiSi";
+            this.buttonMoBiSi.Size = new System.Drawing.Size(135, 91);
+            this.buttonMoBiSi.TabIndex = 2;
+            this.buttonMoBiSi.Text = "摩比斯出库单";
+            this.buttonMoBiSi.UseVisualStyleBackColor = true;
+            this.buttonMoBiSi.Click += new System.EventHandler(this.buttonMoBiSi_Click);
             // 
             // buttonZhongDu
             // 
@@ -97,7 +98,7 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonNormal, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonZhongDu, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonCover, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.button1, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.buttonMoBiSi, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -128,7 +129,7 @@
 
         private System.Windows.Forms.Button buttonCover;
         private System.Windows.Forms.Button buttonNormal;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonMoBiSi;
         private System.Windows.Forms.Button buttonZhongDu;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
