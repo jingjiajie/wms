@@ -17,6 +17,7 @@ namespace WMS.UI.FormReceipt
         private int putawayTicketID;
         private WMSEntities wmsEntities = new WMSEntities();
         private PutawayTicket putawayTicket;
+        private Func<int> PersonIDGetter = null;
         public FormPutawayModify()
         {
             InitializeComponent();
@@ -35,45 +36,24 @@ namespace WMS.UI.FormReceipt
 
         private void FormPutawayModify_Load(object sender, EventArgs e)
         {
-            InitComponent();
+            //InitComponent();
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ReceiptMetaData.putawayTicketKeyName);
+            this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == this.putawayTicketID select pt).FirstOrDefault();
-            if (putawayTicket == null)
+            PutawayTicketView putawayTicketView = (from ptv in wmsEntities.PutawayTicketView where ptv.ID == this.putawayTicketID select ptv).FirstOrDefault();
+
+            if (putawayTicketView == null)
             {
                 MessageBox.Show("找不到该上架单");
                 return;
             }
             else
             {
-                Utilities.CopyPropertiesToTextBoxes(putawayTicket, this);
+                Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
             }
         }
 
-        private void InitComponent()
-        {
-            this.tableLayoutPanelTextBoxes.Controls.Clear();
-            for (int i = 0; i < ReceiptMetaData.putawayTicketKeyName.Length; i++)
-            {
-                KeyName curKeyName = ReceiptMetaData.putawayTicketKeyName[i];
-
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanelTextBoxes.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-
-                //Console.WriteLine("{0}  {1}", label.Text, textBox.Name);
-
-
-                this.tableLayoutPanelTextBoxes.Controls.Add(textBox);
-            }
-            /*
-            this.Controls.Find("textBoxSubmissionTicketID", true)[0].Text = this.submissionTicketID.ToString();
-            this.Controls.Find("textBoxSubmissionTicketID", true)[0].Enabled = false;
-            this.Controls.Find("textBoxComponentID", true)[0].Enabled = false;
-            this.Controls.Find("textBoxComponentID", true)[0].Text = this.receiptTicketItem.ComponentID.ToString();
-            */
-        }
+        
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
@@ -82,6 +62,10 @@ namespace WMS.UI.FormReceipt
             //if (putwayTicket)
             if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo) == true)
             {
+                if (this.PersonIDGetter() != -1)
+                {
+                    putawayTicket.PersonID = this.PersonIDGetter();
+                }
                 //wmsEntities.PutawayTicket.Add(putawayTicket);
                 new Thread(() =>
                 {

@@ -12,14 +12,19 @@ using System.Threading;
 
 namespace WMS.UI
 {
-    public partial class FormSelectSupplier : Form
+    public partial class FormSelectSupplier : Form  
     {
         private Action<int> selectFinishCallback = null;
         private int defaultSupplierID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
+        private PagerWidget<SupplierView > pagerWidget = null;
+        static Point staticPos = new Point(-1, -1);
 
-        public FormSelectSupplier()
+        public FormSelectSupplier(int supplierid = -1)
         {
             InitializeComponent();
+            this.defaultSupplierID = supplierid;
         }
 
         public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
@@ -29,26 +34,58 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            //初始化表格
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < SupplierMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = SupplierMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = SupplierMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = SupplierMetaData.KeyNames.Length; //限制表的长度
+            this.textBoxSupplierName .Text  = "";
+            this.pagerWidget = new PagerWidget<SupplierView>(this.reoGridControlMain, SupplierMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.panelPagerWidget.Controls.Add(this.pagerWidget);
+            this.pagerWidget.Show();
         }
 
         private void FormSelectSupplier_Load(object sender, EventArgs e)
         {
             InitComponents();
+
+
+
+
+
+
             if (this.defaultSupplierID != -1)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                this.textBoxSupplierName.Text = (from s in wmsEntities.SupplierView where s.ID == defaultSupplierID select s.Name).FirstOrDefault();
+
+
+                try
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+                    
+                    this.textBoxSupplierName.Text = (from s in wmsEntities.SupplierView where s.ID == defaultSupplierID select s.Name).FirstOrDefault();
+                    this.Search(defaultSupplierID);
+
+                }
+
+                catch  {
+                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+            }
+            else
+            {
                 this.Search();
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -56,47 +93,29 @@ namespace WMS.UI
             this.Search();
         }
 
-        private void Search()
+        private void Search(int selectID=-1)
         {
-            string supplierName = this.textBoxSupplierName.Text;
-            this.labelStatus.Text = "正在搜索...";
-            new Thread(new ThreadStart(() =>
+
+
+            if (this.textBoxSupplierName.Text != "")
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
-                {
-                   
-                    SupplierView[] supplierViews = (from s in wmsEntities.SupplierView
-                                                    where s.Name.Contains(supplierName)&&s.IsHistory ==0
-                                                    orderby s.Name ascending
-                                                    select s).ToArray();
-                    this.Invoke(new Action(() =>
-                    {
-                        var worksheet = this.reoGridControlMain.Worksheets[0];
-                        worksheet.DeleteRangeData(RangePosition.EntireRange);
-                        for (int i = 0; i < supplierViews.Length; i++)
-                        {
-                            SupplierView curSupplierView = supplierViews[i];
-                            object[] columns = Utilities.GetValuesByPropertieNames(curSupplierView, (from kn in SupplierMetaData.KeyNames select kn.Key).ToArray());
-                            for (int j = 0; j < worksheet.Columns; j++)
-                            {
-                                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                            }
-                        }
-                        if (supplierViews.Length == 0)
-                        {
-                            worksheet[0, 2] = "没有查询到符合条件的记录";
-                        }
-                        this.labelStatus.Text = "搜索完成";
-                    }));
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                string value = this.textBoxSupplierName.Text;
+                this.pagerWidget.ClearCondition();
+                this.pagerWidget.AddCondition("是否历史信息", "0");
+                this.pagerWidget.AddCondition("供货商名称", value);
+                this.pagerWidget.Search(false, selectID);
+            }
+            else
+            {
+                //string value = this.textBoxSupplierName.Text;
+                this.pagerWidget.ClearCondition();
+                //this.pagerWidget.AddCondition("供货商名称", value);
                 
-            })).Start();
+                this.pagerWidget.AddCondition("是否历史信息", "0");
+                this.pagerWidget.Search(false, selectID);
+            }
+          
+     
         }
 
         private void buttonSelect_Click(object sender, EventArgs e)
@@ -113,19 +132,44 @@ namespace WMS.UI
                 return;
             }
             this.selectFinishCallback?.Invoke(ids[0]);
-            this.Close();
+            this.Hide ();
         }
 
-        private void textBoxSupplierName_Click(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void textBoxSupplierName_KeyPress(object sender, KeyPressEventArgs e)
         {
             if(e.KeyChar == 13)
             {
-                this.Search();
+                this.buttonSearch .PerformClick ();
+            }
+        }
+
+        private void FormSelectSupplier_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
+
+        private void textBoxSupplierName_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible == false)
+            {
+                staticPos = this.Location;
+            }
+            else
+            {
+                if (staticPos != new Point(-1, -1))
+                {
+                    this.Location = staticPos;
+                }
+                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+                int id = -1;
+                if (ids.Length > 0)
+                {
+                    id = ids[0];
+                }
+                this.pagerWidget.Search(true, id);
             }
         }
     }

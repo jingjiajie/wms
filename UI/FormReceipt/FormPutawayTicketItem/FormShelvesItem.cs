@@ -21,6 +21,10 @@ namespace WMS.UI.FormReceipt
         private int putawayTicketID;
         WMSEntities wmsEntities = new WMSEntities();
         private Action CallBack = null;
+        private Func<int> JobPersonIDGetter = null;
+        private Func<int> ConfirmIDGetter = null;
+        private int jobPersonID = -1;
+        private int confirmPersonID = -1;
         public FormShelvesItem()
         {
             InitializeComponent();
@@ -58,6 +62,8 @@ namespace WMS.UI.FormReceipt
             WMSEntities wmsEntities = new WMSEntities();
             //this.Controls.Clear();
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.putawayTicketItemKeyName);
+            this.ConfirmIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
+            this.JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
             Label label = new Label();
             label.Text = "上架数量";
             this.tableLayoutPanelProperties.Controls.Add(label);
@@ -94,6 +100,8 @@ namespace WMS.UI.FormReceipt
                         (from s in wmsEntities.PutawayTicketItemView
                          where s.ID == id
                          select s).FirstOrDefault();
+            this.jobPersonID = putawayTicketItemView.JobPersonID == null ? -1 : (int)putawayTicketItemView.JobPersonID;
+            this.confirmPersonID = putawayTicketItemView.ConfirmPersonID == null ? -1 : (int)putawayTicketItemView.ConfirmPersonID;
             if (putawayTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应上架单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -225,6 +233,16 @@ namespace WMS.UI.FormReceipt
                     }
                     else
                     {
+                        if (this.JobPersonIDGetter() != -1)
+                        {
+                            this.jobPersonID = JobPersonIDGetter();
+                        }
+                        if (this.ConfirmIDGetter() != -1)
+                        {
+                            this.confirmPersonID = ConfirmIDGetter();
+                        }
+                        putawayTicketItem.JobPersonID = this.jobPersonID;
+                        putawayTicketItem.ConfirmPersonID = this.confirmPersonID;
                         new Thread(() =>
                         {
 
@@ -473,11 +491,6 @@ namespace WMS.UI.FormReceipt
                     }
 
                 }
-            }
-            catch (EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
             }
             catch (Exception)
             {

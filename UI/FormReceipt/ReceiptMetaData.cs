@@ -20,7 +20,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "供应商编号", Key = "SupplierNumber", Visible = true, Editable = false, Save = false},
             new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true, Save=false},
             new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = false, Save=false},
-            new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true},
+            new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true, GetAllValueToComboBox="ReceiptTicket.Type"},
             new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("待送检","待送检"), new ComboBoxItem("已收货","已收货"), new ComboBoxItem("拒收", "拒收") } },
             new KeyName(){Name = "是否已经生成上架单", Key = "HasPutawayTicket", Visible = true, Editable = false, Save = true},
             new KeyName(){Name = "送货单号（SRM)", Key = "DeliverTicketNoSRM", Visible = true, Editable = true},
@@ -138,7 +138,7 @@ namespace WMS.UI.FormReceipt
         {
             new KeyName{Name = "ID", Key = "ID", Visible = false, Editable = false, Save = true},
             new KeyName{Name = "上架单编号", Key = "No", Visible = true, Editable = false, Save = true},
-            new KeyName{Name = "单据类型", Key = "Type", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "单据类型", Key = "Type", Visible = true, Editable = true, Save = true, GetAllValueToComboBox = "PutawayTicket.Type"},
             new KeyName{Name = "收货单ID", Key = "ReceiptTicketID", Visible = false, Editable = false, Save = true},
             new KeyName{Name = "收货单编号", Key = "ReceiptTicketNo", Visible = true, Editable = false, Save = false},
             new KeyName{Name = "状态", Key = "State", Visible = true, Editable = false, Save = true},

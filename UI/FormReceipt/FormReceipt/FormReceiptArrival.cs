@@ -547,6 +547,7 @@ namespace WMS.UI
                     MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
@@ -556,6 +557,11 @@ namespace WMS.UI
                 }
                 else
                 {
+                    if (receiptTicket.State != "待送检")
+                    {
+                        MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
+                        return;
+                    }
                     FormReceiptSubmissionNew formReceiptSubmissionNew = new FormReceiptSubmissionNew(receiptTicketID, this.userID, FormMode.ADD);
                     formReceiptSubmissionNew.SetCallBack(new Action(() =>
                     {

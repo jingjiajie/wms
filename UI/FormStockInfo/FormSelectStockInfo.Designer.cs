@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSelectStockInfo));
-            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -41,32 +40,12 @@
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.buttonSelect = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // reoGridControlMain
-            // 
-            this.reoGridControlMain.BackColor = System.Drawing.Color.White;
-            this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(5, 4);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.reoGridControlMain.Name = "reoGridControlMain";
-            this.reoGridControlMain.Readonly = true;
-            this.reoGridControlMain.RowHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Script = null;
-            this.reoGridControlMain.SheetTabContextMenuStrip = null;
-            this.reoGridControlMain.SheetTabNewButtonVisible = true;
-            this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 140;
-            this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(764, 430);
-            this.reoGridControlMain.TabIndex = 9;
-            this.reoGridControlMain.Text = "reoGridControl1";
             // 
             // statusStrip1
             // 
@@ -172,6 +151,27 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(774, 476);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
+            // reoGridControlMain
+            // 
+            this.reoGridControlMain.BackColor = System.Drawing.Color.White;
+            this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Location = new System.Drawing.Point(5, 4);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.reoGridControlMain.Name = "reoGridControlMain";
+            this.reoGridControlMain.Readonly = true;
+            this.reoGridControlMain.RowHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Script = null;
+            this.reoGridControlMain.SheetTabContextMenuStrip = null;
+            this.reoGridControlMain.SheetTabNewButtonVisible = true;
+            this.reoGridControlMain.SheetTabVisible = true;
+            this.reoGridControlMain.SheetTabWidth = 140;
+            this.reoGridControlMain.ShowScrollEndSpacing = true;
+            this.reoGridControlMain.Size = new System.Drawing.Size(764, 430);
+            this.reoGridControlMain.TabIndex = 9;
+            this.reoGridControlMain.Text = "reoGridControl1";
+            // 
             // panelPagerWidget
             // 
             this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -208,8 +208,6 @@
         }
 
         #endregion
-
-        private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
@@ -222,5 +220,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelPagerWidget;
+        private unvell.ReoGrid.ReoGridControl reoGridControlMain;
     }
 }
