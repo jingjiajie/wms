@@ -19,6 +19,8 @@ namespace WMS.UI.FormReceipt
         private WMSEntities wmsEntities = new WMSEntities();
         private Action CallBack;
         private int submissionTicketID;
+        private Func<int> JobPersonIDGetter = null;
+        private Func<int> ConfirmPersonIDGetter = null;
         public FormSubmissionItem()
         {
             InitializeComponent();
@@ -49,6 +51,8 @@ namespace WMS.UI.FormReceipt
             WMSEntities wmsEntities = new WMSEntities();
             //this.Controls.Clear();
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.submissionTicketItemKeyName);
+            this.JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
+            this.ConfirmPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
             this.reoGridControlSubmissionItems.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
 
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
@@ -622,6 +626,14 @@ namespace WMS.UI.FormReceipt
             }
 
             Utilities.CopyComboBoxsToProperties(this, submissionTicketItem, ReceiptMetaData.submissionTicketItemKeyName);
+            if (this.JobPersonIDGetter() != -1)
+            {
+                submissionTicketItem.JobPersonID = JobPersonIDGetter();
+            }
+            if (this.ConfirmPersonIDGetter() != -1)
+            {
+                submissionTicketItem.ConfirmPersonID = ConfirmPersonIDGetter();
+            }
             ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
             string sql = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).ToString();
             if (receiptTicketItem != null)
@@ -844,5 +856,9 @@ namespace WMS.UI.FormReceipt
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace WMS.UI.FormReceipt
         private Action CallBack = null;
         private int countRow;
         private int userID;
+        private Func<int> PersonIDGetter = null;
 
         public FormPutawayNew()
         {
@@ -71,6 +72,7 @@ namespace WMS.UI.FormReceipt
         private void InitPanel()
         {
             Utilities.CreateEditPanel(this.tableLayoutPanel2, ReceiptMetaData.putawayTicketKeyName);
+            this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             if (this.formMode == FormMode.ADD)
             {
 
@@ -229,6 +231,7 @@ namespace WMS.UI.FormReceipt
                     putawayTicket.ProjectID = receiptTicket.ProjectID;
                     putawayTicket.WarehouseID = receiptTicket.Warehouse;
                     putawayTicket.State = "待上架";
+                    putawayTicket.PersonID = this.PersonIDGetter();
                     wmsEntities.PutawayTicket.Add(putawayTicket);
                     new Thread(() =>
                     {
@@ -282,6 +285,7 @@ namespace WMS.UI.FormReceipt
                             {
                                 this.Search();
                                 CallBack();
+                                this.Hide();
                             }));
                             MessageBox.Show("成功");
                         }

@@ -24,7 +24,7 @@ namespace WMS.UI.FormReceipt
         private Action CallBack = null;
         private int countRow;
         private int userID;
-
+        private Func<int> PersonIDGetter = null;
         public FormReceiptSubmissionNew()
         {
             InitializeComponent();
@@ -102,6 +102,7 @@ namespace WMS.UI.FormReceipt
         private void InitPanel()
         {
             Utilities.CreateEditPanel(this.tableLayoutPanel2, ReceiptMetaData.submissionTicketKeyName);
+            this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             if (this.formMode == FormMode.ADD)
             {
 
@@ -262,7 +263,19 @@ namespace WMS.UI.FormReceipt
             var worksheet = this.reoGridControlUser.Worksheets[0];
             worksheet.FocusPos = new CellPosition(0, 0);
             WMSEntities wmsEntities = new WMSEntities();
-
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+            if (receiptTicket == null)
+            {
+                MessageBox.Show("该收货单已被删除，送检失败");
+                return;
+            }
+            else
+            {
+                if (receiptTicket.State != "待送检")
+                {
+                    MessageBox.Show("改收货单状态为" + receiptTicket.State + "，无法送检！");
+                }
+            }
             SortedDictionary<int, int> idsAndSubmissionAmount = SelectReceiptTicketItem();
             if (idsAndSubmissionAmount == null)
             {
@@ -289,12 +302,9 @@ namespace WMS.UI.FormReceipt
                 else
                 {
                     Utilities.CopyComboBoxsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName);
-                    ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
-                    if (receiptTicket == null)
-                    {
-                        MessageBox.Show("收货单不存在");
-                        return;
-                    }
+                    submissionTicket.PersonID = this.PersonIDGetter();
+                    //ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+                    
                     
                     submissionTicket.CreateTime = DateTime.Now;
                     submissionTicket.ReceiptTicketID = this.receiptTicketID;
@@ -389,6 +399,7 @@ namespace WMS.UI.FormReceipt
                             {
                                 this.Search();
                                 CallBack();
+                                this.Hide();
                             }));
                             MessageBox.Show("收货单条目送检成功");
                         }
