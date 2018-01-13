@@ -95,12 +95,12 @@ namespace WMS.UI
             //new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false},
             //new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false,Save=false},
             //new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = false,Save=false},
-            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择供应商" ,ImportVisible=true,Import=false,NotNull =true},
+            new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择供应商" ,Import=false,NotNull =true},
             //new KeyName(){Name = "供货商编号", Key = "SupplierNumber" , Visible = true, Editable = true,Save=false,EditPlaceHolder= "自动生成"},
 
             new KeyName(){Key="No",Name="代号",Visible = true, Editable = true},
             new KeyName(){Key="Number",Name="编号", Visible = true, Editable = true},
-            new KeyName(){Key="ComponentName",Name="零件名",Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择零件" ,ImportVisible=true,Import=false ,NotNull =true},
+            new KeyName(){Key="ComponentName",Name="零件名",Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择零件" ,Import=false ,NotNull =true},
 
             new KeyName(){Key="DefaultReceiptUnit",Name="默认收货单位",Visible = true, Editable = true},
             new KeyName(){Key="DefaultReceiptUnitAmount",Name="默认收货单位数量",Visible = true, Editable = true},

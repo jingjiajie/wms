@@ -328,6 +328,54 @@ namespace WMS.UI
                     ComponenViewMetaData.componenkeyNames,
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
+                        for (int i = 0; i < results.Length; i++)
+
+
+                        {
+                            string componentnameimport;
+                            componentnameimport = results[i].Name;
+                            //检查导入列表中是否重名
+                            for (int j = i + 1; j < results.Length; j++)
+
+                            {
+                                if (componentnameimport == results[j].Name)
+                                {
+                                    MessageBox.Show("您输入的零件名" + componentnameimport + "在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                    return false;
+
+                                }
+
+                            }
+
+                            //检查数据库中同名
+                            try
+                            {
+                                var sameNameUsers = (from u in wmsEntities.Supplier
+                                                     where u.Name == componentnameimport
+                                                     select u).ToArray();
+                                if (sameNameUsers.Length > 0)
+                                {
+                                    MessageBox.Show("导入零件失败，已存在同名零件：" + componentnameimport, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return false;
+                                }
+                            }
+                            catch
+                            {
+
+                                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return false;
+                            }
+
+
+                        }
+
+
+
+
+
+
+
                         return true;
                     },
                     () => //参数3：导入完成回调函数

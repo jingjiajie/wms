@@ -488,16 +488,15 @@ namespace WMS.UI
                             componentname = componentnames[i];
                             int importcomponenID=-1;
                             int importsupplierID=-1;
-                            if(results[i] !=null)
-                            {
-                                if (suppliername == null)
+
+                                if (suppliername.Length == 0)
                                 {
                                     MessageBox.Show("第" + (i + 1) + "行供货商名称不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                                     return false;
                                 }
 
-                                if (componentname == null)
+                                if (componentname.Length == 0)
                                 {
                                     MessageBox.Show("第" + (i + 1) + "行零件名称不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -505,10 +504,13 @@ namespace WMS.UI
                                 }
 
 
-                            }
+
+
+
+
                             //检查导入列表中是否重名
-                            for (int j = i+1; j < results.Length; j++)
-                            {
+                            for (int j = i + 1; j < results.Length; j++)
+                                {
 
 
                                     if (suppliernames[j] == suppliername && componentnames[j] == componentname)
@@ -517,62 +519,63 @@ namespace WMS.UI
 
                                         return false;
                                     }
-                                
-                            }
-                            //检查数据库中同名
-                            try
-                            {
+
+                                }
+                                //检查数据库中同名
                                 try
                                 {
-                                    Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == suppliername && s.IsHistory == 0 select s).Single();
-                                    importsupplierID = supplierID.ID;
+                                    try
+                                    {
+                                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == suppliername && s.IsHistory == 0 select s).Single();
+                                        importsupplierID = supplierID.ID;
+                                    }
+                                    catch
+                                    {
+                                        MessageBox.Show("您输入的第" + (i + 1) + "行供货商名称：" + suppliername + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                        return false;
+                                    }
+
+
+                                    try
+                                    {
+                                        DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentname select s).Single();
+                                        importcomponenID = componenID.ID;
+                                    }
+                                    catch
+                                    {
+                                        MessageBox.Show("您输入的第" + (i + 1) + "行零件名称：" + componentname + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                        return false;
+                                    }
+
+                                    var sameNameUsers = (from u in wmsEntities.Supply
+                                                         where u.SupplierID == importsupplierID
+                                                         && u.ComponentID == importcomponenID
+                                                         select u).ToArray();
+                                    if (sameNameUsers.Length > 0)
+                                    {
+                                        MessageBox.Show("导入供应信息失败，已存在同名供应商——零件供货条目：" + suppliername + "——" + componentname, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        return false;
+                                    }
                                 }
                                 catch
                                 {
-                                    MessageBox.Show("您输入的第"+(i+1)+"行供货商名称：" + suppliername + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
+                                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return false;
                                 }
+                                results[i].SupplierID = importsupplierID;
+                                results[i].ComponentID = importcomponenID;
 
-
-                                try
-                                {
-                                    DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentname select s).Single();
-                                    importcomponenID = componenID.ID;
-                                }
-                                catch
-                                {
-                                    MessageBox.Show("您输入的第" + (i+1) + "行零件名称：" + componentname + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                                    return false;
-                                }
-
-                                var sameNameUsers = (from u in wmsEntities.Supply
-                                                     where u.SupplierID == importsupplierID
-                                                     && u.ComponentID == importcomponenID
-                                                     select u).ToArray();
-                                if (sameNameUsers.Length > 0)
-                                {
-                                    MessageBox.Show("导入供应信息失败，已存在同名供应商——零件供货条目：" + suppliername + "——" + componentname , "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    return false;
-                                }
-                            }
-                            catch
-                            {
-
-                                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return false;
-                            }
-
-                            results[i].SupplierID = importsupplierID;
-                            results[i].ComponentID = importcomponenID;
-                            results[i].IsHistory = 0;
-                            results[i].CreateTime = DateTime.Now;
-                            results[i].CreateUserID = this.userID;
-                            results[i].LastUpdateTime = DateTime.Now;
-                            results[i].LastUpdateUserID = this.userID;
-                            results[i].WarehouseID = this.warehouseID;
-                            results[i].ProjectID = this.projectID;
+                                results[i].IsHistory = 0;
+                                results[i].CreateTime = DateTime.Now;
+                                results[i].CreateUserID = this.userID;
+                                results[i].LastUpdateTime = DateTime.Now;
+                                results[i].LastUpdateUserID = this.userID;
+                                results[i].WarehouseID = this.warehouseID;
+                                results[i].ProjectID = this.projectID;
+                            
                         }
 
 
