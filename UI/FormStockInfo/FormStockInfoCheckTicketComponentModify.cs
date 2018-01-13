@@ -207,14 +207,31 @@ namespace WMS.UI
             FormSelectStockInfo.SetSelectFinishedCallback((selectedID) =>
             {
 
-                var stockinfoName = (from s in wmsEntities.StockInfoView
+                wmsEntities = new DataAccess.WMSEntities();
+                WMS.DataAccess.StockInfoView stockinfoName = new DataAccess.StockInfoView();
+                try
+                {
+                    stockinfoName = (from s in wmsEntities.StockInfoView
                                      where s.ID == selectedID
                                      select s).FirstOrDefault();
-                if (stockinfoName.ComponentName == null)
-                {
-                    MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+
                 }
+
+
+                catch
+                {
+                    MessageBox.Show("选择库存信息失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
+
+                }
+                if (stockinfoName.ComponentName == null)
+                    {
+                        MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                
+                
                 //this.supplierID = selectedID;
                 //selectedID = 1;
                 this.stockinfoid = selectedID;

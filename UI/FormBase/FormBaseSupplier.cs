@@ -663,10 +663,22 @@ namespace WMS.UI
 
 
 
+                            results[i].CreateTime = DateTime.Now;
+                            results[i].CreateUserID  = this.userid;
+                            results[i].LastUpdateTime = DateTime.Now;
+                            results[i].LastUpdateUserID = this.userid;
 
 
 
+                            string contractstate = results[i].ContractState;
+                            if(contractstate !="已签合同"&&contractstate !="未签合同"&&contractstate!="")
+                            {
+                                MessageBox.Show("操作失败，合同状态只能填写已签合同或未签合同", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                                return false;
+                            }
 
+
+                        
 
 
 
