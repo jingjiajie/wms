@@ -529,9 +529,19 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                int submissionTicketID;
+                try
+                {
+                    submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 FormSubmissionItem formSubmissionItem = new FormSubmissionItem(submissionTicketID);
                 formSubmissionItem.SetCallBack(new Action(() =>
                 {
@@ -560,9 +570,19 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                int submissionTicketID;
+                try
+                {
+                    submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(submissionTicketID, this.userID, FormMode.ALTER);
                 formAddSubmissionTicket.SetCallBack(new Action(() =>
                 {
@@ -577,11 +597,7 @@ namespace WMS.UI
                 formReceiptArrivalCheck.Show();
                 */
             }
-            catch (EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -624,9 +640,19 @@ namespace WMS.UI
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                int submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                int submissionTicketID;
+                try
+                {
+                    submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
                 if (submissionTicket == null)
                 {
@@ -686,10 +712,6 @@ namespace WMS.UI
                         }
                     }).Start();
                 }
-            }
-            catch (EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择收货单");
             }
             catch (Exception)
             {
