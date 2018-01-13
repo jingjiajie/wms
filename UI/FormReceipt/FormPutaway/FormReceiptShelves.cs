@@ -175,14 +175,25 @@ namespace WMS.UI.FormReceipt
 
         private void toolStripButtonItem_Click(object sender, EventArgs e)
         {
+            /*
             var worksheet = this.reoGridControlUser.Worksheets[0];
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                int putawayTicketID;
+                try
+                {
+                    putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
                 formShelvesItem.SetCallBack(new Action(() =>
                 {
@@ -190,16 +201,12 @@ namespace WMS.UI.FormReceipt
                 }));
                 formShelvesItem.Show();
             }
-            catch(EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
-            }           
+            }    */       
         }
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
@@ -246,10 +253,19 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new EntityCommandExecutionException();
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+                int putawayTicketID;
+                try
+                {
+                    putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
                 FormPutawayModify formPutawayModify = new FormPutawayModify(putawayTicketID);
                 formPutawayModify.SetCallBack(new Action(() =>
                 {
@@ -257,11 +273,7 @@ namespace WMS.UI.FormReceipt
                 }));
                 formPutawayModify.Show();
             }
-            catch(EntityCommandExecutionException)
-            {
-                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -277,10 +289,19 @@ namespace WMS.UI.FormReceipt
             {
                 if (worksheet.SelectionRange.Rows != 1)
                 {
-                    throw new Exception();
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                int putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+                int putawayTicketID;
+                try
+                {
+                    putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
                 if (MessageBox.Show("确定删除该上架单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     try
@@ -300,7 +321,7 @@ namespace WMS.UI.FormReceipt
             }
             catch
             {
-                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
             this.Search(null, null);

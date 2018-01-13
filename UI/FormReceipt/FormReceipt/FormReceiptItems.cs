@@ -19,6 +19,10 @@ namespace WMS.UI
         private FormMode formMode;
         private int receiptTicketID;
         private int componentID;
+        Func<int> JobPersonIDGetter = null;
+        Func<int> ConfirmPersonIDGetter = null;
+        private int jobPersonID = -1;
+        private int confirmPersonID = -1;
         Action callBack = null;
         const string WAIT_CHECK = "待检";
         const string CHECK = "送检中";
@@ -75,6 +79,8 @@ namespace WMS.UI
         {
             InitComponents();
             InitPanel();
+            JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
+            ConfirmPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
             TextBox textBoxComponentNo = (TextBox)this.Controls.Find("textBoxSupplyNo", true)[0];
             textBoxComponentNo.Click += TextBoxComponentNo_Click;
             WMSEntities wmsEntities = new WMSEntities();
@@ -173,6 +179,8 @@ namespace WMS.UI
             {
                 this.componentID = (int)receiptTicketItemView.SupplyID;
             }
+            this.jobPersonID = receiptTicketItemView.JobPersonID == null ? -1 : (int)receiptTicketItemView.JobPersonID;
+            this.confirmPersonID = receiptTicketItemView.ConfirmPersonID == null ? -1 : (int)receiptTicketItemView.ConfirmPersonID;
             Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(receiptTicketItemView, this);
         }
@@ -287,6 +295,8 @@ namespace WMS.UI
                         {
                             receiptTicketItem.UnitCount = 0;
                         }
+                        receiptTicketItem.JobPersonID = JobPersonIDGetter();
+                        receiptTicketItem.ConfirmPersonID = ConfirmPersonIDGetter();
                         
                         wmsEntities.SaveChanges();
 
@@ -361,6 +371,16 @@ namespace WMS.UI
                 }
                 else
                 {
+                    
+                    if (this.ConfirmPersonIDGetter() != -1)
+                    {
+                        receiptTicketItem.ConfirmPersonID = this.ConfirmPersonIDGetter();
+                    }
+                    if (this.JobPersonIDGetter() != -1)
+                    {
+                        receiptTicketItem.JobPersonID = this.JobPersonIDGetter();
+                    }
+                    
                     receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitAmount * receiptTicketItem.UnitCount;
                     new Thread(() =>
                     {

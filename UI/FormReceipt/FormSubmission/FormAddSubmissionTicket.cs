@@ -21,6 +21,8 @@ namespace WMS.UI.FormReceipt
         private FormMode formMode;
         private WMSEntities wmsEntities = new WMSEntities();
         private SubmissionTicket submissionTicket;
+        private Func<int> PersonIDGetter = null;
+        private int personID = -1;
         public FormAddSubmissionTicket()
         {
             InitializeComponent();
@@ -50,6 +52,7 @@ namespace WMS.UI.FormReceipt
         private void FormAddSubmissionTicket_Load(object sender, EventArgs e)
         {
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ReceiptMetaData.submissionTicketKeyName);
+            this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             //this.Controls.Find("textBoxID", true)[0].Text = "0";
             //TextBox textBoxReceiptTicketID = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
             //textBoxReceiptTicketID.Text = receiptTicketID.ToString();
@@ -63,7 +66,9 @@ namespace WMS.UI.FormReceipt
             else
             {
                 this.submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == this.submissionTicketID select st).FirstOrDefault();
-                if (submissionTicket == null)
+                SubmissionTicketView submissionTicketView;
+                submissionTicketView = (from st in wmsEntities.SubmissionTicketView where st.ID == this.submissionTicketID select st).FirstOrDefault();
+                if (submissionTicketView == null)
                 {
                     MessageBox.Show("该送检单已被删除！");
                     CallBack();
@@ -71,8 +76,9 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
-                    Utilities.CopyPropertiesToTextBoxes(submissionTicket, this);
-                    Utilities.CopyPropertiesToComboBoxes(submissionTicket, this);
+                    this.personID = submissionTicket.PersonID == null ? -1 : (int)submissionTicket.PersonID;
+                    Utilities.CopyPropertiesToTextBoxes(submissionTicketView, this);
+                    Utilities.CopyPropertiesToComboBoxes(submissionTicketView, this);
                 }
             }
             
@@ -82,9 +88,44 @@ namespace WMS.UI.FormReceipt
         private void buttonOK_Click(object sender, EventArgs e)
         {
             WMSEntities wmsEntities = new WMSEntities();
+            SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == this.submissionTicketID select st).FirstOrDefault();
+            if (submissionTicket == null)
+            {
+                MessageBox.Show("该送检单已被删除");
+                return;
+            }
+            string errorInfo;
+            if (Utilities.CopyTextBoxTextsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName, out errorInfo) == false || Utilities.CopyComboBoxsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName) == false)
+            {
+                MessageBox.Show(errorInfo + "获取数据数据失败");
+                return;
+            }
+            //this.personID = this.PersonIDGetter();
+            //submissionTicket.PersonID = this.personID == -1 ? this.PersonIDGetter() : this.personID;
+            this.personID = this.PersonIDGetter();
+            submissionTicket.PersonID = this.PersonIDGetter() == -1 ? personID : PersonIDGetter();
+            submissionTicket.LastUpdateUserID = this.userID;
+            submissionTicket.LastUpdateTime = DateTime.Now;
+            new Thread(() => 
+            {
+                wmsEntities.SaveChanges();
+                MessageBox.Show("修改成功");
+                CallBack();
+            }).Start();
+            /*
+            WMSEntities wmsEntities = new WMSEntities();
             if (this.formMode == FormMode.ADD)
             {
                 this.submissionTicket = new SubmissionTicket();
+            }
+            else
+            {
+                this.submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == this.submissionTicketID select st).FirstOrDefault();
+                if (submissionTicket == null)
+                {
+                    MessageBox.Show("该送检单已被删除");
+                    return;
+                }
             }
             string errorInfo;
             if (Utilities.CopyTextBoxTextsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName, out errorInfo) == false)
@@ -95,6 +136,8 @@ namespace WMS.UI.FormReceipt
             else
             {
                 Utilities.CopyComboBoxsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName);
+                submissionTicket.PersonID = this.personID == -1 ? this.PersonIDGetter() : this.personID;
+
                 if (this.formMode == FormMode.ADD)
                 {
                     ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
@@ -112,6 +155,7 @@ namespace WMS.UI.FormReceipt
                 }
                 else if (this.formMode == FormMode.ALTER)
                 {
+                    submissionTicket.PersonID = this.personID == -1 ? this.PersonIDGetter() : this.personID;
                     submissionTicket.LastUpdateUserID = this.userID;
                     submissionTicket.LastUpdateTime = DateTime.Now;
                     new Thread(()=> 
@@ -187,7 +231,7 @@ namespace WMS.UI.FormReceipt
                     }
                 }).Start();
             }
-            CallBack();
+            CallBack();*/
         }
 
         private void buttonOK_MouseEnter(object sender, EventArgs e)
