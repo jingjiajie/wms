@@ -22,6 +22,7 @@ namespace WMS.UI.FormReceipt
         private int warehouseID;
         private int userID;
         private int supplierID;
+        private Func<int> personIDGetter;
 
         public FormReceiptTicketModify()
         {
@@ -64,7 +65,7 @@ namespace WMS.UI.FormReceipt
                 
             }*/
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ReceiptMetaData.receiptNameKeys);
-
+            this.personIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             if (this.formMode == FormMode.ALTER)
             {
                 ReceiptTicketView receiptTicketView = (from s in this.wmsEntities.ReceiptTicketView
@@ -139,8 +140,7 @@ namespace WMS.UI.FormReceipt
         
         private void textBoxSupplierID_Click(object sender, EventArgs e)
         {
-            FormSelectSupplier formSelectSupplier = new FormSelectSupplier();
-            formSelectSupplier.ShowDialog();
+            FormSelectSupplier formSelectSupplier = new FormSelectSupplier();          
             formSelectSupplier.SetSelectFinishCallback(new Action<int>((int ID)=> 
             {
                 //this.Controls.Find("textBoxSupplierNo", true)[0].Text = ID.ToString();
@@ -149,9 +149,12 @@ namespace WMS.UI.FormReceipt
                 if (supplier != null)
                 {
                     this.Controls.Find("textBoxSupplierName", true)[0].Text = supplier.Name;
+                    
                     //this.Controls.Find("textBoxSupplierNo", true)[0].Text
                 }
             }));
+            formSelectSupplier.ShowDialog();
+
         }
 
         private void textBoxSupplierID_TextChanged(object sender, EventArgs e)
@@ -281,6 +284,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.ProjectID = this.projectID;
                     receiptTicket.Warehouse = this.warehouseID;
                     receiptTicket.SupplierID = this.supplierID;
+                    receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.SaveChanges();
                     if (oldState == "待送检")
                     {
@@ -391,6 +395,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.CreateTime = DateTime.Now;
                     receiptTicket.SupplierID = this.supplierID;
                     receiptTicket.HasPutawayTicket = "否";
+                    receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.ReceiptTicket.Add(receiptTicket);
                     wmsEntities.SaveChanges();
 

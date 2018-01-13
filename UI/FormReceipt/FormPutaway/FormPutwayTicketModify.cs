@@ -17,6 +17,7 @@ namespace WMS.UI.FormReceipt
         private int receiptTicketID;
         private int putawayTicketID;
         private Action CallBack = null;
+        private Func<int> PersonIDGetter = null;
         private WMSEntities wmsEntities = new WMSEntities();
         public FormPutwayTicketModify()
         {
@@ -42,8 +43,11 @@ namespace WMS.UI.FormReceipt
             InitComponent();
             if (this.formMode == FormMode.ALTER)
             {
-                PutawayTicketView putawayTicketView = (from pt in wmsEntities.PutawayTicketView where pt.ID == this.putawayTicketID select pt).Single();
-                Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
+                PutawayTicketView putawayTicketView = (from pt in wmsEntities.PutawayTicketView where pt.ID == this.putawayTicketID select pt).FirstOrDefault();
+                if (putawayTicketView != null)
+                {
+                    Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
+                }
             }
             else
             {
@@ -56,6 +60,7 @@ namespace WMS.UI.FormReceipt
         private void InitComponent()
         {
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ReceiptMetaData.putawayTicketKeyName);
+            this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
         }
 
         public void SetCallBack(Action a)
@@ -65,6 +70,33 @@ namespace WMS.UI.FormReceipt
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            WMSEntities wmsEntities = new WMSEntities();
+            PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).FirstOrDefault();
+            if (putawayTicket == null)
+            {
+                MessageBox.Show("该上架单已被删除");
+                return;
+            }
+            string errorInfo;
+            if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo) == false)
+            {
+                MessageBox.Show(errorInfo);
+                return;
+            }
+            else
+            {
+                if (this.PersonIDGetter() != -1)
+                {
+                    putawayTicket.PersonID = PersonIDGetter();
+                }
+                new Thread(() =>
+                {
+                    wmsEntities.SaveChanges();
+                    MessageBox.Show("修改成功");
+                    CallBack();
+                }).Start();
+            }
+            /*
             PutawayTicket putawayTicket;
             if (this.formMode == FormMode.ADD)
             {
@@ -125,7 +157,7 @@ namespace WMS.UI.FormReceipt
             }
 
             this.CallBack();
-            this.Close();
+            this.Close();*/
         }
     }
 }
