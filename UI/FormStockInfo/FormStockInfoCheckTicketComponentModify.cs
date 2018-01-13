@@ -203,7 +203,7 @@ namespace WMS.UI
 
 
         {
-            var FormSelectStockInfo = new FormSelectStockInfo(this.projectID,this.warehouseID);
+            var FormSelectStockInfo = new FormSelectStockInfo(this.projectID,this.warehouseID,this.stockinfoid );
             FormSelectStockInfo.SetSelectFinishedCallback((selectedID) =>
             {
 
