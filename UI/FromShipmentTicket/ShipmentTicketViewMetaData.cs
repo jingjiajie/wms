@@ -31,7 +31,7 @@ namespace WMS.UI
                 new ComboBoxItem(STRING_STATE_ALL_ASSIGNED_JOB)
              } },
             new KeyName(){Key="Station",Name="工位"},
-            new KeyName(){Key="Destination",Name="使用单位"},
+            new KeyName(){Key="Destination",Name="使用单位",Editable=true,GetAllValueToComboBox="ShipmentTicket.Destination"},
             new KeyName(){Key="Factory",Name="出货单位"},
             new KeyName(){Key="ReceivingPersonName",Name="收货人姓名"},
             new KeyName(){Key="ContactAddress",Name="联系地址"},

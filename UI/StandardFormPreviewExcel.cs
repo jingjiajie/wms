@@ -98,7 +98,10 @@ namespace WMS.UI
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "Excel文件|.xlsx";
-            dialog.ShowDialog();
+            if(dialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
             string filePath = dialog.FileName;
             this.reoGridControlMain.Save(filePath);
         }

@@ -15,6 +15,7 @@ namespace WMS.UI
         public Func<string> DefaultValueFunc = null;
         public bool Editable = true;
         public ComboBoxItem[] ComboBoxItems = null;
+        public string GetAllValueToComboBox = null;
         public string EditPlaceHolder = null;
         public bool Save = true;
         public bool ImportVisible = true;

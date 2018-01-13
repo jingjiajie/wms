@@ -102,5 +102,38 @@ namespace WMS.UI
             formPreview.Show();
             this.Close();
         }
+
+        private void buttonZhongDu_Click(object sender, EventArgs e)
+        {
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
+            if (formPreview.SetPatternTable(@"Excel\patternPutOutStorageTicketZhongDu.xlsx") == false)
+            {
+                this.Close();
+                return;
+            }
+            WMSEntities wmsEntities = new WMSEntities();
+            PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
+                                                               where p.ID == this.putOutStorageTicketID
+                                                               select p).FirstOrDefault();
+            PutOutStorageTicketItemView[] putOutStorageTicketTiemViews =
+                (from p in wmsEntities.PutOutStorageTicketItemView
+                 where p.PutOutStorageTicketID == putOutStorageTicketView.ID
+                 select p).ToArray();
+            if (putOutStorageTicketView == null)
+            {
+                MessageBox.Show("出库单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            ShipmentTicketView shipmentTicketView =
+                wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
+                                                    (SELECT ShipmentTicketID FROM JobTicket
+                                                        WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
+
+            formPreview.AddData("putOutStorageTicket", putOutStorageTicketView);
+            formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketTiemViews);
+            formPreview.AddData("shipmentTicket", shipmentTicketView);
+            formPreview.Show();
+            this.Close();
+        }
     }
 }
