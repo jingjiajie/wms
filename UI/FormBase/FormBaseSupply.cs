@@ -56,7 +56,7 @@ namespace WMS.UI
 
         private void FormBaseSupply_Load(object sender, EventArgs e)
         {
-            if(supplierID !=0)
+            if(supplierID !=-1)//改成-1了，刚发现数据库里供应商ID可能为0
             { this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
                 this.toolStripButtonAlter.Enabled  = false;

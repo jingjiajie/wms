@@ -50,6 +50,7 @@ namespace WMS.DataAccess
         public Nullable<int> SupplierID { get; set; }
         public Nullable<int> PersonID { get; set; }
         public string Factory { get; set; }
+        public string Gate { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Warehouse Warehouse { get; set; }

@@ -42,5 +42,6 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ReturnTime { get; set; }
         public string ReturnUnit { get; set; }
         public Nullable<decimal> ReturnUnitAmount { get; set; }
+        public Nullable<int> SupplierID { get; set; }
     }
 }
