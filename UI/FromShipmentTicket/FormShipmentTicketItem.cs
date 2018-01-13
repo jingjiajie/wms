@@ -532,7 +532,18 @@ namespace WMS.UI
             {
                 foreach (int id in ids)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicketItem WHERE ID = @id", new SqlParameter("@id", id));
+                    ShipmentTicketItem item = (from s in wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
+                    if (item == null) continue;
+                    if(item.ScheduledJobAmount > 0)
+                    {
+                        MessageBox.Show("不能删除已分配翻包的零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    decimal? amount = item.ShipmentAmount * item.UnitAmount;
+                    StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
+                    if (stockInfo == null) continue;
+                    stockInfo.ShipmentAreaAmount += amount ?? 0;
+                    this.wmsEntities.ShipmentTicketItem.Remove(item);
                 }
                 this.wmsEntities.SaveChanges();
             }
