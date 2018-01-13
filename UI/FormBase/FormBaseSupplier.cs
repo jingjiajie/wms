@@ -618,7 +618,7 @@ namespace WMS.UI
                 (
                     SupplierMetaData.KeyNames, //参数1：KeyName
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
-                    {
+                    {                 
                         return true;
                     },
                     () => //参数3：导入完成回调函数
