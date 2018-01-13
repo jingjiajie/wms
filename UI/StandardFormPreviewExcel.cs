@@ -20,6 +20,9 @@ namespace WMS.UI
         bool loadFinished = false;
         float defaultPrintScale = 1;
 
+        Dictionary<string, Worksheet> patternTables = new Dictionary<string, Worksheet>();
+        Dictionary<string, Dictionary<string, object>> data = new Dictionary<string, Dictionary<string, object>>();
+
         public StandardFormPreviewExcel(string formTitle,float printScale = 1.0F)
         {
             InitializeComponent();
@@ -47,7 +50,22 @@ namespace WMS.UI
             try
             {
                 this.reoGridControlMain.Worksheets.Clear();
-                this.reoGridControlMain.Worksheets.Add(this.excelGenerator.Generate());
+                foreach(var item in this.patternTables)
+                {
+                    string sheetName = item.Key;
+                    Worksheet patternTable = item.Value;
+                    this.excelGenerator.SetPatternTable(patternTable);
+                    if (this.data.ContainsKey(sheetName))
+                    {
+                        foreach (var datum in this.data[sheetName])
+                        {
+                            this.excelGenerator.AddData(datum.Key, datum.Value);
+                        }
+                    }
+                    Worksheet newWorksheet = this.excelGenerator.Generate();
+                    newWorksheet.Name = sheetName;
+                    this.reoGridControlMain.Worksheets.Add(newWorksheet);
+                }
             }
             catch (Exception ex)
             {
@@ -61,32 +79,45 @@ namespace WMS.UI
             this.SetPrintScale(this.defaultPrintScale);
         }
 
-        public bool SetPatternTable(byte[] patternTableExcelFile)
+        public bool AddPatternTable(string filePath, string sheetName = "sheet1")
         {
+            if (this.patternTables.ContainsKey(sheetName))
+            {
+                return false;
+            }
             ReoGridControl tmpReoGrid = new ReoGridControl();
-            tmpReoGrid.Load(new MemoryStream(patternTableExcelFile), unvell.ReoGrid.IO.FileFormat.Excel2007);
-            this.excelGenerator.SetPatternTable(tmpReoGrid.Worksheets[0]);
+            try
+            {
+                tmpReoGrid.Load(filePath);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("加载Excel文件失败！详细信息：\n" + e.Message);
+                return false;
+            }
+            this.patternTables.Add(sheetName, tmpReoGrid.Worksheets[0]);
             return true;
         }
 
         public bool SetPatternTable(string filePath)
         {
-            ReoGridControl tmpReoGrid = new ReoGridControl();
-            try
-            {
-                tmpReoGrid.Load(filePath);
-            }catch(Exception e)
-            {
-                MessageBox.Show("加载Excel文件失败！详细信息：\n"+e.Message);
-                return false;
-            }
-            this.excelGenerator.SetPatternTable(tmpReoGrid.Worksheets[0]);
-            return true;
+            return this.AddPatternTable(filePath);
         }
 
-        public void AddData<T>(string name, T data)
+        public void AddData<T>(string name, T data,string sheetName = "sheet1")
         {
-            this.excelGenerator.AddData(name,data);
+            if (this.data.ContainsKey(sheetName)==false)
+            {
+                this.data.Add(sheetName, new Dictionary<string, object>());
+            }
+            if (this.data[sheetName].ContainsKey(name) == false)
+            {
+                this.data[sheetName].Add(name, data);
+            }
+            else
+            {
+                this.data[sheetName][name] = data;
+            }
         }
 
         private void StandardFormPreviewExcel_Shown(object sender, EventArgs e)

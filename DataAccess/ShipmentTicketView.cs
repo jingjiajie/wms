@@ -59,5 +59,6 @@ namespace WMS.DataAccess
         public string PersonName { get; set; }
         public string Factory { get; set; }
         public string Destination { get; set; }
+        public string Gate { get; set; }
     }
 }
