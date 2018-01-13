@@ -41,6 +41,7 @@ namespace WMS.DataAccess
         public Nullable<int> PersonID { get; set; }
         public string ReturnTicketNo { get; set; }
         public Nullable<System.DateTime> ReturnTicketTime { get; set; }
+        public Nullable<System.DateTime> ExpectedArriveTime { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Warehouse Warehouse { get; set; }

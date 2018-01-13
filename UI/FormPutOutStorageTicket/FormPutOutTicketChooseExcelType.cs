@@ -135,5 +135,41 @@ namespace WMS.UI
             formPreview.Show();
             this.Close();
         }
+
+        private void buttonMoBiSi_Click(object sender, EventArgs e)
+        {
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
+            WMSEntities wmsEntities = new WMSEntities();
+            PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
+                                                               where p.ID == this.putOutStorageTicketID
+                                                               select p).FirstOrDefault();
+            PutOutStorageTicketItemView[] putOutStorageTicketTiemViews =
+                (from p in wmsEntities.PutOutStorageTicketItemView
+                 where p.PutOutStorageTicketID == putOutStorageTicketView.ID
+                 select p).ToArray();
+            if (putOutStorageTicketView == null)
+            {
+                MessageBox.Show("出库单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            ShipmentTicketView shipmentTicketView =
+                wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
+                                                    (SELECT ShipmentTicketID FROM JobTicket
+                                                        WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
+
+            Supplier[] suppliers = (from s in wmsEntities.Supplier
+                                    where (from item in putOutStorageTicketTiemViews select item.SupplierID).Contains(s.ID)
+                                    select s).ToArray();
+            foreach(Supplier supplier in suppliers)
+            {
+                formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketMoBiSi.xlsx",supplier.Name);
+                formPreview.AddData("ticket", putOutStorageTicketView,supplier.Name);
+                formPreview.AddData("items", (from item in putOutStorageTicketTiemViews where item.SupplierID == supplier.ID select item).ToArray(), supplier.Name);
+                formPreview.AddData("shipmentTicket", shipmentTicketView, supplier.Name);
+                formPreview.AddData("supplier", supplier, supplier.Name);
+            }
+            formPreview.Show();
+            this.Close();
+        }
     }
 }

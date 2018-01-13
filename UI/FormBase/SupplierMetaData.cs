@@ -38,7 +38,7 @@ namespace WMS.UI
                 new ComboBoxItem("未签合同","未签合同"),
                 new ComboBoxItem("已签合同","已签合同"),
             }},
-            new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = false , Editable = false ,ImportVisible=true ,Import=false },
+            new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = false , Editable = false ,ImportVisible=false  },
             new KeyName(){Key="NewestSupplierID",Name="最新供应商信息ID",Visible = false    , Editable = false ,ImportVisible=false  },
             new KeyName(){Key="CreateUserID",Name="创建用户ID",Visible = false , Editable = false,ImportVisible=false },
             new KeyName(){Key="CreateTime",Name="创建时间",Visible = true  , Editable = false ,EditPlaceHolder= "自动填写"},

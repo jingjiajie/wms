@@ -51,5 +51,6 @@ namespace WMS.DataAccess
         public string PersonName { get; set; }
         public string ReturnTicketNo { get; set; }
         public Nullable<System.DateTime> ReturnTicketTime { get; set; }
+        public Nullable<System.DateTime> ExpectedArriveTime { get; set; }
     }
 }
