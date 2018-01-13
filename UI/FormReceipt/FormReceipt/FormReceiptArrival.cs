@@ -170,7 +170,7 @@ namespace WMS.UI
                     int m = ReceiptUtilities.GetFirstColumnIndex(ReceiptMetaData.receiptNameKeys);
 
                     //this.reoGridControl1.Worksheets[0][6, 8] = "32323";
-                    this.reoGridControlUser.Worksheets[0][0, m] = "无查询结果";
+                    this.reoGridControlUser.Worksheets[0][0, m] = "没有查询到符合条件的记录";
                 }
 
             })).Start();
