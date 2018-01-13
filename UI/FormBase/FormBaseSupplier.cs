@@ -244,7 +244,9 @@ namespace WMS.UI
                     try
                     {
                         SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
+                        
                     }
+                    
                     catch (EntityCommandExecutionException)
                     {
                         MessageBox.Show("查询失败，请检查输入条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -618,9 +620,72 @@ namespace WMS.UI
                 (
                     SupplierMetaData.KeyNames, //参数1：KeyName
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
-                    {                 
+                    {
+                        for (int i=0;i<results.Length;i++)
+
+
+                        {
+                            string suppliernameimport;
+                            suppliernameimport = results[i].Name;
+                            //检查导入列表中是否重名
+                            for (int j = i+1; j < results.Length; j++)
+
+                            {
+                                if (suppliernameimport == results[j].Name)
+                                {
+                                    MessageBox.Show("您输入的用户名" + suppliernameimport + "在导入列表中重复","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+
+                                    return false;
+                                    
+                                }
+
+                            }
+
+                            //检查数据库中同名
+                            try
+                            {
+                                var sameNameUsers = (from u in wmsEntities.Supplier
+                                                     where u.Name == suppliernameimport
+                                                     select u).ToArray();
+                                if (sameNameUsers.Length > 0)
+                                {
+                                    MessageBox.Show("导入供应商名失败，已存在同名供应商：" + suppliernameimport, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return false ;
+                                }
+                            }
+                            catch
+                            {
+
+                                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return false ;
+                            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            //历史信息设为0
+                            results[i].IsHistory = 0;
+
+                        }
+
+
+
+
+
                         return true;
-                    },
+                    }, 
                     () => //参数3：导入完成回调函数
                     {
                         this.pagerWidget.Search();

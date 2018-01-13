@@ -20,7 +20,7 @@ namespace WMS.UI
         private Project project = null;
         private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
-        private int supplierid=0;
+        private int supplierid=-1;
         private int setitem;
 
 
@@ -34,8 +34,14 @@ namespace WMS.UI
                          where u.ID == userID
                          select u).Single();
             this.user = user;
-            this.supplierid = Convert.ToInt32(user.SupplierID);
-            
+            if (user.SupplierID != null)
+            {
+                this.supplierid = Convert.ToInt32(user.SupplierID);
+            }
+            else if (user.SupplierID == null)
+            {
+                supplierid = -1;
+            }
 
         }
 
@@ -193,7 +199,7 @@ namespace WMS.UI
                 }));
             }).Start();
 
-            if (this.supplierid != 0)
+            if (this.supplierid != -1)
             {
               
                 FormSupplierRemind a1 = new FormSupplierRemind(this.supplierid );
@@ -224,7 +230,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseSupplier l = new FormBaseSupplier(user.Authority,Convert.ToInt32(this.user.SupplierID),this.user.ID );//实例化子窗口
+                FormBaseSupplier l = new FormBaseSupplier(user.Authority,this.supplierid ,this.user.ID );//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
