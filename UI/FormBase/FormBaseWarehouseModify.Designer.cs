@@ -66,12 +66,12 @@ namespace WMS.UI.FormBase
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 42);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(5, 28);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 29.61263F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70.38737F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(472, 155);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(472, 169);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
             // tableLayoutPanel1
@@ -93,8 +93,8 @@ namespace WMS.UI.FormBase
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 33);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 38);
             this.tableLayoutPanel1.TabIndex = 30;
             // 
             // label1
@@ -106,7 +106,7 @@ namespace WMS.UI.FormBase
             this.label1.Location = new System.Drawing.Point(5, 0);
             this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 33);
+            this.label1.Size = new System.Drawing.Size(82, 38);
             this.label1.TabIndex = 0;
             this.label1.Text = "²Ö¿âÃû³Æ";
             // 
@@ -117,7 +117,7 @@ namespace WMS.UI.FormBase
             this.textBoxName.Location = new System.Drawing.Point(97, 6);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(129, 43);
+            this.textBoxName.Size = new System.Drawing.Size(129, 29);
             this.textBoxName.TabIndex = 1;
             // 
             // label2
@@ -128,7 +128,7 @@ namespace WMS.UI.FormBase
             this.label2.Location = new System.Drawing.Point(236, 0);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 33);
+            this.label2.Size = new System.Drawing.Size(82, 38);
             this.label2.TabIndex = 2;
             this.label2.Text = "²Ö¿âID";
             // 
@@ -139,7 +139,7 @@ namespace WMS.UI.FormBase
             this.textBoxWarehouseID.Location = new System.Drawing.Point(328, 6);
             this.textBoxWarehouseID.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.textBoxWarehouseID.Name = "textBoxWarehouseID";
-            this.textBoxWarehouseID.Size = new System.Drawing.Size(131, 43);
+            this.textBoxWarehouseID.Size = new System.Drawing.Size(131, 29);
             this.textBoxWarehouseID.TabIndex = 2;
             // 
             // tableLayoutPanel3
@@ -151,14 +151,14 @@ namespace WMS.UI.FormBase
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.29415F));
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 49);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 54);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 73F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(466, 102);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(466, 111);
             this.tableLayoutPanel3.TabIndex = 31;
             // 
             // buttonModify
@@ -168,9 +168,11 @@ namespace WMS.UI.FormBase
             this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonModify.FlatAppearance.BorderSize = 0;
+            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonModify.Font = new System.Drawing.Font("ºÚÌå", 10F);
-            this.buttonModify.Location = new System.Drawing.Point(121, 18);
+            this.buttonModify.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.buttonModify.Location = new System.Drawing.Point(121, 23);
             this.buttonModify.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonModify.Name = "buttonModify";
             this.buttonModify.Size = new System.Drawing.Size(212, 65);
@@ -184,7 +186,7 @@ namespace WMS.UI.FormBase
             // 
             // FormBaseWarehouseModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 35F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 203);
             this.Controls.Add(this.groupBoxMain);
