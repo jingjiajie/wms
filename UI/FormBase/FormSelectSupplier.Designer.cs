@@ -187,6 +187,7 @@
             this.Text = "选择供应商";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSelectSupplier_FormClosing);
             this.Load += new System.EventHandler(this.FormSelectSupplier_Load);
+            this.VisibleChanged += new System.EventHandler(this.textBoxSupplierName_VisibleChanged);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

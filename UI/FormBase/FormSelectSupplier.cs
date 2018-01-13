@@ -21,9 +21,10 @@ namespace WMS.UI
         private PagerWidget<SupplierView > pagerWidget = null;
         static Point staticPos = new Point(-1, -1);
 
-        public FormSelectSupplier()
+        public FormSelectSupplier(int supplierid = -1)
         {
             InitializeComponent();
+            this.defaultSupplierID = supplierid;
         }
 
         public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
@@ -55,6 +56,7 @@ namespace WMS.UI
                 try
                 {
                     WMSEntities wmsEntities = new WMSEntities();
+                    
                     this.textBoxSupplierName.Text = (from s in wmsEntities.SupplierView where s.ID == defaultSupplierID select s.Name).FirstOrDefault();
                     this.Search(defaultSupplierID);
 
@@ -105,7 +107,10 @@ namespace WMS.UI
             }
             else
             {
+                //string value = this.textBoxSupplierName.Text;
                 this.pagerWidget.ClearCondition();
+                //this.pagerWidget.AddCondition("供货商名称", value);
+                
                 this.pagerWidget.AddCondition("是否历史信息", "0");
                 this.pagerWidget.Search(false, selectID);
             }
@@ -127,7 +132,7 @@ namespace WMS.UI
                 return;
             }
             this.selectFinishCallback?.Invoke(ids[0]);
-            this.Hide();
+            this.Hide ();
         }
 
       
