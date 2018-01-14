@@ -22,6 +22,7 @@ namespace WMS.UI
         private WMSEntities wmsEntities = new WMSEntities();
         private int supplierid=-1;
         private int setitem;
+        string remindtext="";
 
 
 
@@ -37,13 +38,207 @@ namespace WMS.UI
             if (user.SupplierID != null)
             {
                 this.supplierid = Convert.ToInt32(user.SupplierID);
+                remind();
+
+
             }
             else if (user.SupplierID == null)
             {
                 supplierid = -1;
             }
 
+            
+
+
         }
+
+
+
+
+
+        private void remind()
+        {
+
+        WMSEntities wmsEntities = new WMSEntities();
+        WMS.DataAccess.ComponentView component = null;
+        DateTime contract_enddate;
+
+        int days;
+            StringBuilder sb = new StringBuilder();
+
+            //合同天数
+            Supplier Supplier = new Supplier();
+            try
+            {
+
+                Supplier = (from u in this.wmsEntities.Supplier
+                            where u.ID == supplierid
+                            select u).FirstOrDefault();
+
+                contract_enddate = Convert.ToDateTime(Supplier.EndingTime);
+            }
+            catch
+            {
+
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            days = (contract_enddate-DateTime.Now  ).Days;
+            //库存
+            int[] warringdays = { 3, 5, 10 };
+            int reminedays;
+
+            
+            try
+            {
+
+                var ComponentName = (from u in wmsEntities.StockInfoView
+                                     where u.ReceiptTicketSupplierID == supplierid
+                                     select u.ComponentName).ToArray();
+
+
+                var ShipmentAreaAmount = (from u in wmsEntities.StockInfoView
+                                          where u.ReceiptTicketSupplierID ==
+                                          this.supplierid
+                                          select u.ShipmentAreaAmount).ToArray();
+
+
+
+                var ReceiptTicketNo = (from u in wmsEntities.StockInfoView
+                                       where u.ReceiptTicketSupplierID == supplierid
+                                       select u.SupplyNumber).ToArray();
+
+
+
+
+
+                int[] singlecaramount = new int[ComponentName.Length];
+
+                int[] dailyproduction = new int[ComponentName.Length];
+
+                for (int i = 0; i < ComponentName.Length; i++)
+
+                {
+                    
+                    
+                    string ComponentNamei = ComponentName[i];
+
+                    if (ShipmentAreaAmount[i] == null)
+                    {
+                        continue;
+                    }
+
+                    if (ReceiptTicketNo[i] == null)
+
+                    {
+                        
+                        continue;
+                    }
+
+
+                    try
+                    {
+                        component = (from u in wmsEntities.ComponentView
+                                     where u.Name == ComponentNamei
+                                     select u).FirstOrDefault();
+
+                        if (component == null)
+                        {
+                            
+                            continue;
+                        }
+                        if (component.SingleCarUsageAmount == null)
+                        {
+                            
+                            continue;
+
+                        }
+
+                        singlecaramount[i] = Convert.ToInt32(component.SingleCarUsageAmount);
+
+                        if (component.DailyProduction == null)
+                        {
+                            
+                            continue;
+
+                        }
+
+                        dailyproduction[i] = Convert.ToInt32(component.DailyProduction);
+
+
+                        reminedays = Convert.ToInt32(ShipmentAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
+
+                        if (reminedays < 10)
+                        {
+                            if (reminedays == 0)
+                            {
+                                sb.Append("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n" + "\r\n");
+                            }
+
+                            else
+                            {
+                                sb.Append("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n" + "\r\n");
+                            }
+                        }
+
+                    }
+                    catch
+                    {
+
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+               }
+                this.remindtext  = sb.ToString() ;
+
+
+                
+
+
+
+
+            }
+            catch
+            {
+
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+            if(days<10||remindtext !="")
+
+            {
+
+                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext );
+
+
+
+                a1.Show();
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
 
         public void SetFormClosedCallback(Action callback)
         {
@@ -199,14 +394,14 @@ namespace WMS.UI
                 }));
             }).Start();
 
-            if (this.supplierid != -1)
-            {
+            //if (this.supplierid != -1)
+            //{
               
-                FormSupplierRemind a1 = new FormSupplierRemind(this.supplierid );
-                a1.Show();
+            //    FormSupplierRemind a1 = new FormSupplierRemind(this.supplierid );
+            //    a1.Show();
                 
 
-            }
+            //}
 
 
 

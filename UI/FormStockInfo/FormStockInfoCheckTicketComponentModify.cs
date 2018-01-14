@@ -287,11 +287,16 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            
 
-            
+
+            int tmp = 0;
            DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+           TextBox textBoxRealRejectAreaAmount = (TextBox)this.Controls.Find("textBoxRealRejectAreaAmount", true)[0];
+           TextBox textBoxRealReceiptAreaAmount = (TextBox)this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0];
+           TextBox textBoxRealSubmissionAmount = (TextBox)this.Controls.Find("textBoxRealSubmissionAmount", true)[0];
+           TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
+           TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
 
 
             if (textBoxComponentName.Text == string.Empty)
@@ -300,6 +305,39 @@ namespace WMS.UI
                 MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            if (textBoxRealRejectAreaAmount.Text !=string .Empty&&!int.TryParse(textBoxRealRejectAreaAmount.Text, out tmp))
+            {
+                MessageBox.Show("实际不良品区数量只接受数字类型");
+                return;
+            }
+            if (textBoxRealReceiptAreaAmount.Text != string.Empty && !int.TryParse(textBoxRealReceiptAreaAmount.Text, out tmp))
+            {
+                MessageBox.Show("实际收货区数量只接受数字类型");
+                return;
+            }
+
+            if (textBoxRealSubmissionAmount.Text != string.Empty && !int.TryParse(textBoxRealSubmissionAmount.Text, out tmp))
+            {
+                MessageBox.Show("实际送检数量只接受数字类型");
+                return;
+            }
+
+            if (textBoxRealOverflowAreaAmount.Text != string.Empty && !int.TryParse(textBoxRealOverflowAreaAmount.Text, out tmp))
+            {
+                MessageBox.Show("实际溢库区数量只接受数字类型");
+                return;
+            }
+            if (textBoxRealShipmentAreaAmount.Text != string.Empty && !int.TryParse(textBoxRealShipmentAreaAmount.Text, out tmp))
+            {
+                MessageBox.Show("实际发货区数量只接受数字类型");
+                return;
+            }
+
+
+
+
+
 
 
 
@@ -327,41 +365,7 @@ namespace WMS.UI
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
 
-            ////修改盘点条目，盘点单最后修改时间和用户改变
-            //WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
-            //try
-            //{
-            //      stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
-            //                      where s.ID == this.stockInfoCheckID
-            //                      select s).FirstOrDefault ();
-                
-
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            //    this.Close();
-            //    return;
-            //}
-            //if (stockInfoCheck == null)
-            //{
-            //    MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    this.Close();
-            //    return;
-            //}
-
-            //try
-            //{
-            //    stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
-            //    stockInfoCheck.LastUpdateTime = DateTime.Now;
-            //    wmsEntities.SaveChanges();
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return;
-            //}
+            
 
             this.Search(StockInfoCheckTicketItem.ID);
             
@@ -412,60 +416,7 @@ namespace WMS.UI
 
         private void Search(int selectID=-1)
         {
-           //var worksheet = this.reoGridControlMain .Worksheets[0];
-           // worksheet[0, 0] = "加载中...";
-           // new Thread(new ThreadStart(() =>
-           // {
-           //     WMS.DataAccess.StockInfoCheckTicketItemView[] stockInfoViews = null;
-           //     string sql = "SELECT * FROM StockInfoCheckTicketItemView WHERE 1=1";
-           //     List<SqlParameter> parameters = new List<SqlParameter>();
-           //     if (this.stockInfoCheckID != -1)
-           //     {
-           //         sql += "AND StockInfoCheckTicketID = @StockInfoCheckTicketID ";
-           //         parameters.Add(new SqlParameter("StockInfoCheckTicketID", this.stockInfoCheckID));
-           //     }
-
-
-           //     sql += " ORDER BY ID DESC"; //倒序排序
-           //     stockInfoViews = wmsEntities.Database.SqlQuery<WMS.DataAccess.StockInfoCheckTicketItemView>(sql, parameters.ToArray()).ToArray();
-           //     this.reoGridControlMain .Invoke(new Action(() =>
-           //     {
-                    
-           //         worksheet.DeleteRangeData(RangePosition.EntireRange);
-
-
-           //         if (stockInfoViews.Length == 0)
-           //         {
-           //             worksheet[0, 1] = "没有查询到符合条件的记录";
-           //         }
-                    
-
-           //         if (stockInfoViews.Length > worksheet .RowCount )
-           //         {
-           //             worksheet.AppendRows(stockInfoViews.Length- worksheet.RowCount);
-           //         }
-                   
-           //         this.labelStatus.Text = "盘点单条目";
-                    
-           //             for (int i = 0; i < stockInfoViews.Length; i++)
-           //             {
-           //                 WMS.DataAccess.StockInfoCheckTicketItemView curStockInfoView = stockInfoViews[i];
-           //                 object[] columns = Utilities.GetValuesByPropertieNames(curStockInfoView, (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames select kn.Key).ToArray());
-           //                 for (int j = 0; j < worksheet.Columns; j++)
-           //                 {
-           //                     worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-           //                 }
-           //             }
-           //             if (this.mode == FormMode.CHECK)
-           //             {
-           //                 this.labelStatus.Text = "盘点单条目";
-           //             }
-                    
-
-                   
-           //     }));
-
-           // })).Start();
+           
 
 
 
