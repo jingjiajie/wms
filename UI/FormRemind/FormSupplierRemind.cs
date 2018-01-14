@@ -26,13 +26,14 @@ namespace WMS.UI
         //private TimeSpan days;
         private int days;
         private string remindtext;
-        public FormSupplierRemind(int days ,string remindtext)
+        private int contract_effect;
+        public FormSupplierRemind(int days ,string remindtext,int contract_effect)
         {
             InitializeComponent();
             this.days = days;
             this.remindtext = remindtext;
-            
-
+            this.contract_effect = contract_effect;
+           
             
         }
 
@@ -56,7 +57,7 @@ namespace WMS.UI
             if (days>0&&days <10)
             {
 
-                this.textBoxContractRemind.Text = "您的合同还有" + days + "天就到期了";
+                this.textBoxContractRemind.Text = "您的合同在有效期内，但还有" + days + "天过期";
 
             }
             else if (days < 0)
@@ -65,6 +66,10 @@ namespace WMS.UI
                 this.textBoxContractRemind.Text = "您的合同已经到截止日期";
 
 
+            }
+            else if(days>=0&&this.contract_effect ==1)
+            {
+                this.textBoxContractRemind.Text = "您的合同在有效期内";
             }
 
             if(this.remindtext !=string .Empty )
