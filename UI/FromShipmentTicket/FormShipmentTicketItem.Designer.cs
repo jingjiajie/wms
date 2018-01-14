@@ -31,25 +31,25 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormShipmentTicketItem));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonAlter = new System.Windows.Forms.Button();
+            this.buttonAdd = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonAlter = new System.Windows.Forms.Button();
-            this.buttonAdd = new System.Windows.Forms.Button();
-            this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -66,7 +66,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 230F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 507);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 504);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // panel1
@@ -79,62 +79,47 @@
             this.panel1.Size = new System.Drawing.Size(896, 222);
             this.panel1.TabIndex = 0;
             // 
-            // panel2
+            // tableLayoutPanel2
             // 
-            this.panel2.Controls.Add(this.reoGridControlMain);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(4, 234);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(896, 269);
-            this.panel2.TabIndex = 1;
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelProperties, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(896, 222);
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // reoGridControlMain
+            // tableLayoutPanelProperties
             // 
-            this.reoGridControlMain.BackColor = System.Drawing.Color.White;
-            this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 0);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
-            this.reoGridControlMain.Name = "reoGridControlMain";
-            this.reoGridControlMain.Readonly = true;
-            this.reoGridControlMain.RowHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Script = null;
-            this.reoGridControlMain.SheetTabContextMenuStrip = null;
-            this.reoGridControlMain.SheetTabNewButtonVisible = true;
-            this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 140;
-            this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(896, 269);
-            this.reoGridControlMain.TabIndex = 9;
-            this.reoGridControlMain.Text = "reoGridControl1";
-            
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 507);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 17, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(904, 22);
-            this.statusStrip1.TabIndex = 12;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
-            this.toolStripStatusLabel1.Text = "状态：";
-            // 
-            // labelStatus
-            // 
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(68, 17);
-            this.labelStatus.Text = "查看发货单";
+            this.tableLayoutPanelProperties.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.tableLayoutPanelProperties.ColumnCount = 6;
+            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
+            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
+            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
+            this.tableLayoutPanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelProperties.Font = new System.Drawing.Font("宋体", 9F);
+            this.tableLayoutPanelProperties.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanelProperties.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanelProperties.Name = "tableLayoutPanelProperties";
+            this.tableLayoutPanelProperties.RowCount = 6;
+            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(688, 214);
+            this.tableLayoutPanelProperties.TabIndex = 2;
             // 
             // panel3
             // 
@@ -168,23 +153,6 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(192, 214);
             this.tableLayoutPanel3.TabIndex = 5;
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelProperties, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(896, 222);
-            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // buttonDelete
             // 
@@ -255,39 +223,71 @@
             this.buttonAdd.MouseEnter += new System.EventHandler(this.buttonAdd_MouseEnter);
             this.buttonAdd.MouseLeave += new System.EventHandler(this.buttonAdd_MouseLeave);
             // 
-            // tableLayoutPanelProperties
+            // panel2
             // 
-            this.tableLayoutPanelProperties.BackColor = System.Drawing.SystemColors.InactiveBorder;
-            this.tableLayoutPanelProperties.ColumnCount = 6;
-            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
-            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
-            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
-            this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 19.04762F));
-            this.tableLayoutPanelProperties.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelProperties.Font = new System.Drawing.Font("宋体", 9F);
-            this.tableLayoutPanelProperties.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanelProperties.Margin = new System.Windows.Forms.Padding(4);
-            this.tableLayoutPanelProperties.Name = "tableLayoutPanelProperties";
-            this.tableLayoutPanelProperties.RowCount = 6;
-            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(688, 214);
-            this.tableLayoutPanelProperties.TabIndex = 2;
+            this.panel2.Controls.Add(this.reoGridControlMain);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(4, 234);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(896, 266);
+            this.panel2.TabIndex = 1;
+            // 
+            // reoGridControlMain
+            // 
+            this.reoGridControlMain.BackColor = System.Drawing.Color.White;
+            this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 0);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.reoGridControlMain.Name = "reoGridControlMain";
+            this.reoGridControlMain.Readonly = true;
+            this.reoGridControlMain.RowHeaderContextMenuStrip = null;
+            this.reoGridControlMain.Script = null;
+            this.reoGridControlMain.SheetTabContextMenuStrip = null;
+            this.reoGridControlMain.SheetTabNewButtonVisible = true;
+            this.reoGridControlMain.SheetTabVisible = true;
+            this.reoGridControlMain.SheetTabWidth = 140;
+            this.reoGridControlMain.ShowScrollEndSpacing = true;
+            this.reoGridControlMain.Size = new System.Drawing.Size(896, 266);
+            this.reoGridControlMain.TabIndex = 9;
+            this.reoGridControlMain.Text = "reoGridControl1";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.labelStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 17, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(904, 25);
+            this.statusStrip1.TabIndex = 12;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Text = "状态：";
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(84, 20);
+            this.labelStatus.Text = "查看发货单";
             // 
             // FormShipmentTicketItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 529);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("黑体", 10F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -297,12 +297,12 @@
             this.Load += new System.EventHandler(this.FormShipmentTicketItem_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

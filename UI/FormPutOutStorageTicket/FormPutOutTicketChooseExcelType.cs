@@ -189,5 +189,68 @@ namespace WMS.UI
             formPreview.Show();
             this.Close();
         }
+
+        private void buttonZhongDu_MouseEnter(object sender, EventArgs e)
+        {
+            buttonZhongDu.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonZhongDu_MouseLeave(object sender, EventArgs e)
+        {
+            buttonZhongDu.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonZhongDu_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonZhongDu.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonMoBiSi_MouseEnter(object sender, EventArgs e)
+        {
+            buttonMoBiSi.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonMoBiSi_MouseLeave(object sender, EventArgs e)
+        {
+            buttonMoBiSi.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonMoBiSi_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonMoBiSi.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonCover_MouseEnter(object sender, EventArgs e)
+        {
+            buttonCover.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonCover_MouseLeave(object sender, EventArgs e)
+        {
+            buttonCover.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonCover_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonCover.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
+        private void buttonNormal_MouseLeave(object sender, EventArgs e)
+        {
+            buttonNormal.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonNormal_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonNormal.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonNormal_MouseEnter(object sender, EventArgs e)
+        {
+            buttonNormal.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+
     }
 }
