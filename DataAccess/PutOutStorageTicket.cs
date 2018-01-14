@@ -29,7 +29,6 @@ namespace WMS.DataAccess
         public string OriginalTicketType { get; set; }
         public string ReceiverNo { get; set; }
         public string SortTypeNo { get; set; }
-        public Nullable<System.DateTime> TruckLoadingTime { get; set; }
         public Nullable<System.DateTime> DeliverTime { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }

@@ -11,6 +11,7 @@ using unvell.ReoGrid.CellTypes;
 using System.Data.SqlClient;
 using System.Threading;
 using WMS.DataAccess;
+using unvell.ReoGrid.Events;
 
 namespace WMS.UI.FormReceipt
 {
@@ -19,7 +20,7 @@ namespace WMS.UI.FormReceipt
         private int receiptTicketID;
         private FormMode formMode;
         private int putawayTicketID;
-        private int checkBoxColumn = 1;
+        private int editableColumn = 1;
         private Action CallBack = null;
         private int countRow;
         private int userID;
@@ -58,15 +59,39 @@ namespace WMS.UI.FormReceipt
             //string[] columnNames = (from kn in ReceiptMetaData.itemsKeyName select kn.Name).ToArray();
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            //worksheet.SelectionMode = WorksheetSelectionMode.Cell;
             int n = 0;
-            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length; i++)
+            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length + 1; i++)
             {
-                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[i].Visible;
+                if (i == this.editableColumn)
+                {
+                    worksheet.ColumnHeaders[i].Text = "计划移位数量";
+                    worksheet.ColumnHeaders[i].IsVisible = true;
+                }
+                else
+                {
+                    worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[n].Name;
+                    worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[n].Visible;
+                    n++;
+                }
             }
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
-            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length;
+            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length + 1;
+            worksheet.CellMouseEnter += ClickOnCell;
+        }
+
+        private void ClickOnCell(object sender, CellMouseEventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            var position = e.CellPosition;
+            if ((position.Col != this.editableColumn && position.Row < countRow) || position.Row >= countRow)
+            {
+                worksheet.CreateAndGetCell(position).IsReadOnly = true;
+            }
+            else
+            {
+
+            }
         }
 
         private void InitPanel()
@@ -105,16 +130,25 @@ namespace WMS.UI.FormReceipt
                     //this.labelStatus.Text = "搜索完成";
                     var worksheet = this.reoGridControlUser.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    //int n = 0;
+                    int n = 0;
                     for (int i = 0; i < receiptTicketItemViews.Length; i++)
                     {
                         ReceiptTicketItemView curReceiptTicketItemView = receiptTicketItemViews[i];
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ReceiptMetaData.itemsKeyName select kn.Key).ToArray());
 
                         int m = 0;
-                        for (int j = 0; j < worksheet.Columns - 1; j++)
+                        for (int j = 0; j < worksheet.Columns; j++)
                         {
-                            worksheet[i, j] = columns[j];
+                            if (j == this.editableColumn)
+                            {
+                                //worksheet[i, j]
+
+                            }
+                            else
+                            {
+                                worksheet[i, j] = columns[m];
+                                m++;
+                            }
                         }
                     }
                     /*
@@ -149,39 +183,74 @@ namespace WMS.UI.FormReceipt
             this.CallBack = action;
         }
 
-        private List<int> SelectReceiptTicketItem()
+        private SortedDictionary<int, decimal> SelectReceiptTicketItem()
         {
             //List<ReceiptTicketItem> receiptTicketItems = new List<ReceiptTicketItem>();
+            /*
             WMSEntities wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            List<int> ids = new List<int>();
-            bool result;
+            SortedDictionary<int, decimal> ids = new SortedDictionary<int, decimal>();
+            decimal result;
             for (int i = 0; i < this.countRow; i++)
             {
-                result = (worksheet[i, this.checkBoxColumn] as bool?) ?? false;
-                if (result == true)
+                //result = (worksheet[i, this.editableColumn] as decimal?) ?? -1;
+                string strSubmissionAmount = worksheet[i, this.editableColumn] == null ? null : worksheet[i, this.editableColumn].ToString();
+
+                int id;
+                if (int.TryParse(worksheet[i, 0].ToString(), out id) == false)
                 {
-                    int id;
-                    if (int.TryParse(worksheet[i, 0].ToString(), out id) == false)
+                    MessageBox.Show(worksheet[i, 0].ToString() + "加入失败");
+                }
+                else
+                {
+                    ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
+                    if (receiptTicketItem.State != "已收货")
                     {
-                        MessageBox.Show(worksheet[i, 0].ToString() + "加入失败");
+                        MessageBox.Show(receiptTicketItem.ID + " " + receiptTicketItem.State + " 请先收货");
+                        continue;
                     }
                     else
                     {
-                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
-                        if (receiptTicketItem.State != "已收货")
+                        if (worksheet[i, this.editableColumn] == null)
                         {
-                            MessageBox.Show(receiptTicketItem.ID + " " + receiptTicketItem.State + " 请先收货");
-                            continue;
+                            result = receiptTicketItem.UnitCount == null ? 0 : (int)receiptTicketItem.UnitCount;
                         }
                         else
                         {
-                            ids.Add(receiptTicketItem.ID);
+                            result = (worksheet[i, this.editableColumn] as decimal?) ?? -1;
                         }
+                        ids.Add(receiptTicketItem.ID, result);
+                    }
+                }
+                */
+            List<int> ids = new List<int>();
+            SortedDictionary<int, decimal> idsAndSubmissionAmount = new SortedDictionary<int, decimal>();
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            decimal submissionAmount;
+            for (int i = 0; i < this.countRow; i++)
+            {
+                int id;
+                string strSubmissionAmount = worksheet[i, this.editableColumn] == null ? null : worksheet[i, this.editableColumn].ToString();
+
+
+                if (strSubmissionAmount == null)
+                {
+                    strSubmissionAmount = "0";
+                }
+                else
+                {
+                    if (decimal.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
+                    {
+                        idsAndSubmissionAmount.Add(id, submissionAmount);
+                    }
+                    else
+                    {
+                        MessageBox.Show("送检数量必须为数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return null;
                     }
                 }
             }
-            return ids;
+            return idsAndSubmissionAmount;
         }
 
         private void OK_Click(object sender, EventArgs e)
@@ -204,6 +273,7 @@ namespace WMS.UI.FormReceipt
                 }
             }
             */
+            SortedDictionary<int, decimal> receiptItemPutawayAmount = this.SelectReceiptTicketItem();
             if (this.formMode == FormMode.ADD)
             {
                 PutawayTicket putawayTicket = new PutawayTicket();
@@ -215,7 +285,6 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
-                    
                     ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                     if (receiptTicket == null)
                     {
@@ -240,6 +309,22 @@ namespace WMS.UI.FormReceipt
                             wmsEntities.SaveChanges();
                             putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
                             wmsEntities.SaveChanges();
+                            foreach (KeyValuePair<int ,decimal> ripa in receiptItemPutawayAmount)
+                            {
+                                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == ripa.Key select rti).FirstOrDefault();
+                                if (receiptTicketItem != null)
+                                {
+                                    PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
+                                    putawayTicketItem.ReceiptTicketItemID = receiptTicketItem.ID;
+                                    putawayTicketItem.State = "待上架";
+                                    putawayTicketItem.PutawayTicketID = putawayTicket.ID;
+                                    putawayTicketItem.ScheduledMoveCount = ripa.Value;
+                                    putawayTicketItem.Unit = receiptTicketItem.Unit;
+                                    putawayTicketItem.UnitAmount = receiptTicketItem.UnitAmount;
+                                    wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
+                                }
+                            }
+                            /*
                             foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
                             {
                                 PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
@@ -252,15 +337,15 @@ namespace WMS.UI.FormReceipt
                                     putawayTicketItem.Unit = receiptTicketItem.Unit;
                                     putawayTicketItem.UnitAmount = receiptTicketItem.UnitAmount;
                                 }
-                                /*
-                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
-                                if (stockInfo != null)
-                                {
-                                    stockInfo.ShipmentAreaAmount += stockInfo.OverflowAreaAmount;
-                                    stockInfo.OverflowAreaAmount -= stockInfo.OverflowAreaAmount;
-                                }*/
+                               
+                                //StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                //if (stockInfo != null)
+                                //{
+                                //    stockInfo.ShipmentAreaAmount += stockInfo.OverflowAreaAmount;
+                                //    stockInfo.OverflowAreaAmount -= stockInfo.OverflowAreaAmount;
+                                //}
                                 wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
-                            }
+                            }*/
                             wmsEntities.SaveChanges();
                             /*
                             int count = wmsEntities.Database.SqlQuery<int>(

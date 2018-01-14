@@ -233,7 +233,14 @@ namespace WMS.UI
                             }
                             else
                             {
-                                worksheet[i, j] = columns[j].ToString();
+                                if (columns[j] is DateTime)
+                                {
+                                    worksheet[i, j] = columns[j].ToString();
+                                }
+                                else
+                                {
+                                    worksheet[i, j] = columns[j];
+                                }
                             }
                         }
                         //worksheet[i, worksheet.Columns-1] = new CheckBox();
@@ -335,6 +342,7 @@ namespace WMS.UI
                         wmsEntities.StockInfo.Add(stockInfo);
 
                         wmsEntities.SaveChanges();
+                        MessageBox.Show("添加成功");
                         this.Search();
                     }
                     catch
@@ -420,7 +428,7 @@ namespace WMS.UI
                                 }
                             }
                             wmsEntities.SaveChanges();
-                            
+                            MessageBox.Show("修改成功");
                             this.Search();
                         }
                         catch
@@ -521,6 +529,7 @@ namespace WMS.UI
                         MessageBox.Show("该收货单零件已送检或收货，无法删除");
                         
                     }
+                    MessageBox.Show("删除成功");
                         this.Search();
                 }).Start();
             }

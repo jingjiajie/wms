@@ -147,7 +147,7 @@
             this.MinimizeBox = false;
             this.Name = "FormReceiptSubmissionNew";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormReceiptSubmissionNew";
+            this.Text = "生成送检单";
             this.Load += new System.EventHandler(this.FormReceiptSubmissionNew_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);

@@ -24,9 +24,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string No { get; set; }
         public string HasSelfInspectionReport { get; set; }
-        public string DeliverSubmissionPerson { get; set; }
-        public string ReceivePerson { get; set; }
-        public string SubmissionPerson { get; set; }
+        public Nullable<int> ReceivePersonID { get; set; }
         public string Result { get; set; }
         public string State { get; set; }
         public Nullable<int> LastUpdateUserID { get; set; }
@@ -35,6 +33,8 @@ namespace WMS.DataAccess
         public Nullable<int> WarehouseID { get; set; }
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> PersonID { get; set; }
+        public Nullable<int> SubmissionPersonID { get; set; }
+        public Nullable<int> DeliverSubmissionPersonID { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }

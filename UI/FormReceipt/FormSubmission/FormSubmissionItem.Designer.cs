@@ -45,6 +45,9 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonAllPass = new System.Windows.Forms.Button();
+            this.buttonAllNoPass = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -54,6 +57,7 @@
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
@@ -99,7 +103,7 @@
             this.buttonItemPass.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonItemPass.Location = new System.Drawing.Point(3, 3);
             this.buttonItemPass.Name = "buttonItemPass";
-            this.buttonItemPass.Size = new System.Drawing.Size(182, 64);
+            this.buttonItemPass.Size = new System.Drawing.Size(182, 54);
             this.buttonItemPass.TabIndex = 0;
             this.buttonItemPass.Text = "合格";
             this.buttonItemPass.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -122,7 +126,7 @@
             this.buttonItemNoPass.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonItemNoPass.Location = new System.Drawing.Point(210, 3);
             this.buttonItemNoPass.Name = "buttonItemNoPass";
-            this.buttonItemNoPass.Size = new System.Drawing.Size(182, 64);
+            this.buttonItemNoPass.Size = new System.Drawing.Size(182, 54);
             this.buttonItemNoPass.TabIndex = 1;
             this.buttonItemNoPass.Text = "不合格";
             this.buttonItemNoPass.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -136,16 +140,18 @@
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel3.ColumnCount = 1;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 4;
+            this.tableLayoutPanel3.RowCount = 5;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 94F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(423, 220);
             this.tableLayoutPanel3.TabIndex = 4;
@@ -154,14 +160,14 @@
             // 
             this.tableLayoutPanel4.ColumnCount = 1;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.11284F));
-            this.tableLayoutPanel4.Controls.Add(this.buttonModify, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 116);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 80);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(415, 84);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(415, 60);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // buttonModify
@@ -175,9 +181,9 @@
             this.buttonModify.Font = new System.Drawing.Font("黑体", 10F);
             this.buttonModify.Image = ((System.Drawing.Image)(resources.GetObject("buttonModify.Image")));
             this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(3, 3);
+            this.buttonModify.Location = new System.Drawing.Point(3, 148);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(388, 67);
+            this.buttonModify.Size = new System.Drawing.Size(388, 64);
             this.buttonModify.TabIndex = 2;
             this.buttonModify.Text = "确认修改";
             this.buttonModify.UseVisualStyleBackColor = false;
@@ -194,12 +200,12 @@
             this.tableLayoutPanel5.Controls.Add(this.buttonItemPass, 0, 0);
             this.tableLayoutPanel5.Controls.Add(this.buttonItemNoPass, 1, 0);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(4, 20);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(4, 10);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(415, 86);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(415, 60);
             this.tableLayoutPanel5.TabIndex = 1;
             // 
             // panel3
@@ -299,6 +305,42 @@
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.ColumnCount = 2;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel6.Controls.Add(this.buttonAllPass, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.buttonAllNoPass, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(409, 54);
+            this.tableLayoutPanel6.TabIndex = 0;
+            // 
+            // buttonAllPass
+            // 
+            this.buttonAllPass.Location = new System.Drawing.Point(3, 3);
+            this.buttonAllPass.Name = "buttonAllPass";
+            this.buttonAllPass.Size = new System.Drawing.Size(198, 48);
+            this.buttonAllPass.TabIndex = 0;
+            this.buttonAllPass.Text = "所有条目合格";
+            this.buttonAllPass.UseVisualStyleBackColor = true;
+            this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
+            // 
+            // buttonAllNoPass
+            // 
+            this.buttonAllNoPass.Location = new System.Drawing.Point(207, 3);
+            this.buttonAllNoPass.Name = "buttonAllNoPass";
+            this.buttonAllNoPass.Size = new System.Drawing.Size(199, 48);
+            this.buttonAllNoPass.TabIndex = 1;
+            this.buttonAllNoPass.Text = "所有条目不合格";
+            this.buttonAllNoPass.UseVisualStyleBackColor = true;
+            this.buttonAllNoPass.Click += new System.EventHandler(this.buttonAllNoPass_Click);
+            // 
             // FormSubmissionItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -322,6 +364,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tableLayoutPanel6.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -345,5 +388,8 @@
         private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.Button buttonAllPass;
+        private System.Windows.Forms.Button buttonAllNoPass;
     }
 }

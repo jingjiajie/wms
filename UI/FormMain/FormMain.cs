@@ -303,6 +303,7 @@ namespace WMS.UI
                     s.FormBorderStyle = FormBorderStyle.None;
                     this.panelRight.Controls.Add(s);
                     s.Show();
+                    //treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("送检单管理", true)[0];
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
                 }));
                 l.SetActionTo(1, new Action<string, string>((key, value) =>
@@ -332,6 +333,19 @@ namespace WMS.UI
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                l.SetToPutaway(new Action<string, string>((key, value) =>
+                {
+                    this.panelRight.Controls.Clear();
+                    FormShelvesItem s = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
+                    s.TopLevel = false;
+                    s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    s.FormBorderStyle = FormBorderStyle.None;
+                    //s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    this.panelRight.Controls.Add(s);
+                    s.Show();
+                    //this.treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("上架零件管理", true)[0];
+                    Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                }));
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
@@ -340,7 +354,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();
                 panelRight.Visible = true;
-                FormShelvesItem l = new FormShelvesItem(this.project.ID, this.warehouse.ID);
+                FormShelvesItem l = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, null, null);
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;
                 l.FormBorderStyle = FormBorderStyle.None;

@@ -24,6 +24,7 @@ namespace WMS.UI.FormReceipt
         private int projectID;
         private string key;
         private string value;
+        private Action<string, string> ToPutaway = null;
 
         public FormReceiptShelves()
         {
@@ -38,6 +39,11 @@ namespace WMS.UI.FormReceipt
             this.userID = userID;
             this.value = null;
             this.key = null;
+        }
+
+        public void SetToPutaway(Action<string, string> action)
+        {
+            this.ToPutaway = action;
         }
 
         public FormReceiptShelves(FormMode formMode, int receiptTicketID)
@@ -166,7 +172,7 @@ namespace WMS.UI.FormReceipt
                     int m = ReceiptUtilities.GetFirstColumnIndex(ReceiptMetaData.submissionTicketKeyName);
 
                     //this.reoGridControl1.Worksheets[0][6, 8] = "32323";
-                    this.reoGridControlUser.Worksheets[0][0, m] = "无查询结果";
+                    this.reoGridControlUser.Worksheets[0][0, m] = "没有查询到符合条件的记录";
                 }
 
             })).Start();
@@ -175,6 +181,45 @@ namespace WMS.UI.FormReceipt
 
         private void toolStripButtonItem_Click(object sender, EventArgs e)
         {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                int putawayTicketID;
+                try
+                {
+                    putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                PutawayTicket putawayTicket = (from rt in wmsEntities.PutawayTicket where rt.ID == putawayTicketID select rt).FirstOrDefault();
+                if (putawayTicket == null)
+                {
+                    MessageBox.Show("该收货单不存在");
+                    return;
+                }
+                else
+                {
+                    string key = "PutawayTicketNo";
+                    string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
+                    string value = putawayTicket.No;
+                    ToPutaway(key, value);
+                }
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
             /*
             var worksheet = this.reoGridControlUser.Worksheets[0];
             try
@@ -206,7 +251,7 @@ namespace WMS.UI.FormReceipt
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
-            }    */       
+            }    */
         }
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
@@ -304,9 +349,29 @@ namespace WMS.UI.FormReceipt
                 }                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
                 if (MessageBox.Show("确定删除该上架单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).FirstOrDefault();
+                    if (putawayTicket == null)
+                    {
+                        MessageBox.Show("该上架单已被删除，请刷新查看!");
+                        return;
+                    }
+                    ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == putawayTicket.ReceiptTicketID select rt).FirstOrDefault();
+                    if (receiptTicket != null)
+                    {
+                        receiptTicket.HasPutawayTicket = "否";
+                    }
                     try
                     {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", putawayTicketID));
+                        new Thread(() => 
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", putawayTicketID));
+                            wmsEntities.SaveChanges();
+                            MessageBox.Show("成功");
+                            this.Invoke(new Action(() =>
+                            {
+                                this.Search(this.key, this.value);
+                            }));
+                        }).Start();
                     }
                     catch(EntityException)
                     {
@@ -324,7 +389,6 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            this.Search(null, null);
         }
 
         private void toolStripButtonPrint_Click(object sender, EventArgs e)

@@ -23,11 +23,13 @@ namespace WMS.UI.FormReceipt
         public FormSearch()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         public FormSearch(int supplierID)
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.supplierID = supplierID;
         }
 
