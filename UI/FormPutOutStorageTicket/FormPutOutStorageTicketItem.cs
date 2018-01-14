@@ -230,6 +230,9 @@ namespace WMS.UI
                 MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            decimal oriReturnAmount = putOutStorageTicketItem.ReturnAmount ?? 0;
+            //TODO 返回数量加回库存
+
             if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -238,6 +241,11 @@ namespace WMS.UI
             if (Utilities.CopyComboBoxsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames) == false)
             {
                 MessageBox.Show("内部错误：读取复选框数据失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if(putOutStorageTicketItem.RealAmount < 0 || putOutStorageTicketItem.RealAmount > putOutStorageTicketItem.ScheduledAmount)
+            {
+                MessageBox.Show("实际装车数量必须大于等于0并且小于计划装车数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             int jobPersonID = this.jobPersonGetter();
@@ -249,6 +257,7 @@ namespace WMS.UI
                 try
                 {
                     wmsEntities.SaveChanges();
+                    this.UpdatePutOutStorageTicketStateSync();
                 }
                 catch
                 {
@@ -282,6 +291,7 @@ namespace WMS.UI
                         wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicketItem WHERE ID = @id", new SqlParameter("@id", id));
                     }
                     wmsEntities.SaveChanges();
+                    this.UpdatePutOutStorageTicketStateSync();
                 }
                 catch
                 {
@@ -311,7 +321,7 @@ namespace WMS.UI
 
         private void buttonAllLoad_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("确定要全额装车所有条目吗？（不会改变已经全部装车的条目）", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show("确定要全额装车所有条目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
@@ -320,14 +330,15 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand(
-                        String.Format(@"UPDATE PutOutStorageTicketItem SET State = '{0}',
+                    string sql = String.Format(@"UPDATE PutOutStorageTicketItem SET State = '{0}',
+                                        LoadingTime = '{1}',
                                         RealAmount = ScheduledAmount
-                                        WHERE PutOutStorageTicketID = {1} AND State<>'{2}';",
-                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOAD,
-                                    this.putOutStorageTicketID,
-                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOAD));
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}',TruckLoadingTime='{1}' WHERE ID = {2}", PutOutStorageTicketViewMetaData.STRING_STATE_LOADED,DateTime.Now, this.putOutStorageTicketID));
+                                        WHERE PutOutStorageTicketID = {2} AND RealAmount <> ScheduledAmount;",
+                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED,
+                                    DateTime.Now,
+                                    this.putOutStorageTicketID);
+                    wmsEntities.Database.ExecuteSqlCommand(sql);
+                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));
                     wmsEntities.SaveChanges();
                 }
                 catch
@@ -346,6 +357,7 @@ namespace WMS.UI
             ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
             TextBox textBoxScheduledAmount = (TextBox)this.Controls.Find("textBoxScheduledAmount", true)[0];
             TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
+            TextBox textBoxLoadingTime = (TextBox)this.Controls.Find("textBoxLoadingTime", true)[0];
             if (string.IsNullOrWhiteSpace(textBoxRealAmount.Text))
             {
                 MessageBox.Show("请填写实际装车数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -357,13 +369,21 @@ namespace WMS.UI
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (tmpPutOutStorageTicketItem.RealAmount < tmpPutOutStorageTicketItem.ScheduledAmount)
+            if(tmpPutOutStorageTicketItem.RealAmount == 0)
+            {
+                comboBoxState.SelectedIndex = 0;
+            }
+            else if (tmpPutOutStorageTicketItem.RealAmount < tmpPutOutStorageTicketItem.ScheduledAmount)
             {
                 comboBoxState.SelectedIndex = 1;
             }
             else
             {
                 comboBoxState.SelectedIndex = 2;
+            }
+            if (string.IsNullOrWhiteSpace(textBoxLoadingTime.Text))
+            {
+                textBoxLoadingTime.Text = DateTime.Now.ToString();
             }
             this.buttonModify.PerformClick();
         }
@@ -397,5 +417,44 @@ namespace WMS.UI
         {
             buttonLoad.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
         }
+
+
+        private void UpdatePutOutStorageTicketStateSync()
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            int totalItemCount = wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM PutOutStorageTicketItem WHERE PutOutStorageTicketID = {0}", this.putOutStorageTicketID)).Single();
+            int allfinishedItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM PutOutStorageTicketItem WHERE PutOutStorageTicketID = {0} AND State = '{1}'", this.putOutStorageTicketID, PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)).Single();
+            int unfinishedItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM PutOutStorageTicketItem WHERE PutOutStorageTicketID = {0} AND State = '{1}'", this.putOutStorageTicketID, PutOutStorageTicketItemViewMetaData.STRING_STATE_WAIT_FOR_LOAD)).Single();
+            string putOutStorageTicketState = null;
+            if (unfinishedItemCount == totalItemCount)
+            {
+                putOutStorageTicketState = PutOutStorageTicketViewMetaData.STRING_STATE_NOT_LOADED;
+            }
+            else if (allfinishedItemCount == totalItemCount)
+            {
+                putOutStorageTicketState = PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED;
+            }
+            else
+            {
+                putOutStorageTicketState = PutOutStorageTicketViewMetaData.STRING_STATE_PART_LOADED;
+            }
+
+            try
+            {
+                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", putOutStorageTicketState, this.putOutStorageTicketID));
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("更新出库单状态失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (this.IsDisposed) return;
+            this.Invoke(new Action(() =>
+            {
+                this.putOutStorageTicketStateChangedCallback?.Invoke(this.putOutStorageTicketID);
+            }));
+        }
+
     }
 }

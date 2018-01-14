@@ -473,6 +473,11 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if(this.curStockInfoID == -1)
+            {
+                MessageBox.Show("请选择零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             new Thread(new ThreadStart(() =>
             {
@@ -492,14 +497,48 @@ namespace WMS.UI
                     MessageBox.Show("发货单条目不存在，请重新查询","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                StockInfo oriStockInfo = (from s in wmsEntities.StockInfo where s.ID == shipmentTicketItem.StockInfoID select s).FirstOrDefault();
                 shipmentTicketItem.StockInfoID = this.curStockInfoID;
+                StockInfo newStockInfo = (from s in wmsEntities.StockInfo where s.ID == this.curStockInfoID select s).FirstOrDefault();
+                if(newStockInfo == null)
+                {
+                    MessageBox.Show("零件不存在，请重新选择！","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 shipmentTicketItem.ConfirmPersonID = this.curConfirmPersonID == -1 ? null : (int?)this.curConfirmPersonID;
                 shipmentTicketItem.JobPersonID = this.curJobPersonID == -1 ? null : (int?)this.curJobPersonID;
-
+                decimal? oriShipmentAmount = shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount;
                 if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicketItem, ShipmentTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
                 {
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
+                }
+                if(shipmentTicketItem.ShipmentAmount <= 0)
+                {
+                    MessageBox.Show("发货数量必须大于0！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if(shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount > newStockInfo.ShipmentAreaAmount)
+                {
+                    MessageBox.Show("库存不足！当前库存数量：" + Utilities.DecimalToString(newStockInfo.ShipmentAreaAmount ?? 0) + "个");
+                    return;
+                }
+                decimal? deltaStockAmount = (shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount) - oriShipmentAmount;
+                //把库存数量加回来！
+                if (oriStockInfo != newStockInfo)
+                {
+                    if(oriStockInfo != null)
+                    {
+                        oriStockInfo.ShipmentAreaAmount += oriShipmentAmount ?? 0;
+                    }
+                    if(newStockInfo != null)
+                    {
+                        newStockInfo.ShipmentAreaAmount -= (shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount) ?? 0;
+                    }
+                }
+                else
+                {
+                    newStockInfo.ShipmentAreaAmount -= deltaStockAmount ?? 0;
                 }
 
                 try
@@ -539,6 +578,7 @@ namespace WMS.UI
                         MessageBox.Show("不能删除已分配翻包的零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    //把库存数量加回去
                     decimal? amount = item.ShipmentAmount * item.UnitAmount;
                     StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
                     if (stockInfo == null) continue;

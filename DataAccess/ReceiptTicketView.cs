@@ -67,8 +67,8 @@ namespace WMS.DataAccess
         public string StorageLocation { get; set; }
         public string SupplierNumber { get; set; }
         public string SupplierName { get; set; }
-        public Nullable<int> PostedCount { get; set; }
         public string PersonName { get; set; }
         public string HasPutawayTicket { get; set; }
+        public string HasPosted { get; set; }
     }
 }

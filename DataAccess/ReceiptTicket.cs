@@ -58,7 +58,7 @@ namespace WMS.DataAccess
         public string Number { get; set; }
         public string StorageArea { get; set; }
         public string StorageLocation { get; set; }
-        public Nullable<int> PostedCount { get; set; }
+        public string HasPosted { get; set; }
         public string HasPutawayTicket { get; set; }
     
         public virtual Project Project { get; set; }

@@ -38,10 +38,11 @@ namespace WMS.DataAccess
         public string SupplyNo { get; set; }
         public Nullable<int> JobTicketItemID { get; set; }
         public Nullable<decimal> ReturnAmount { get; set; }
-        public string ReturnReason { get; set; }
         public Nullable<System.DateTime> ReturnTime { get; set; }
         public string ReturnUnit { get; set; }
         public Nullable<decimal> ReturnUnitAmount { get; set; }
         public Nullable<int> SupplierID { get; set; }
+        public string ReturnType { get; set; }
+        public Nullable<System.DateTime> LoadingTime { get; set; }
     }
 }

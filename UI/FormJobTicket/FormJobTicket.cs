@@ -169,7 +169,20 @@ namespace WMS.UI
                 return;
             }
             int jobTicketID = ids[0];
-
+            WMSEntities wmsEntities = new WMSEntities();
+            JobTicket jobTicket = (from j in wmsEntities.JobTicket where j.ID == jobTicketID select j).FirstOrDefault();
+            if(jobTicket == null)
+            {
+                MessageBox.Show("选中作业单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (jobTicket.State != JobTicketViewMetaData.STRING_STATE_ALL_FINISHED)
+            {
+                if (MessageBox.Show("选中作业单未全部完成，确定生成出库单吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) 
+                {
+                    return;
+                }
+            }
             FormPutOutStorageTicketNew form = new FormPutOutStorageTicketNew(jobTicketID, this.userID, this.projectID, this.warehouseID);
             form.SetToPutOutStorageTicketCallback(this.toPutOutStorageTicketCallback);
             form.Show();

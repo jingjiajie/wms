@@ -7,8 +7,9 @@ namespace WMS.UI
 {
     class PutOutStorageTicketViewMetaData
     {
-        public const string STRING_STATE_LOADING = "装车中";
-        public const string STRING_STATE_LOADED = "装车完成";
+        public const string STRING_STATE_NOT_LOADED = "待装车";
+        public const string STRING_STATE_PART_LOADED = "部分装车";
+        public const string STRING_STATE_ALL_LOADED = "全部装车";
         public const string STRING_STATE_DELIVERED = "已发运";
 
         private static KeyName[] keyNames = {
@@ -17,8 +18,8 @@ namespace WMS.UI
             new KeyName(){Key="JobTicketJobTicketNo",Name="关联作业单号",Editable=false,Save=false},
             //new KeyName(){Key="TruckLoadingTicketNo",Name="装车单号",Editable=true},
             new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
-                new ComboBoxItem(STRING_STATE_LOADING),
-                new ComboBoxItem(STRING_STATE_LOADED),
+                new ComboBoxItem(STRING_STATE_PART_LOADED),
+                new ComboBoxItem(STRING_STATE_ALL_LOADED),
                 new ComboBoxItem(STRING_STATE_DELIVERED),
             } },
             new KeyName(){Key="CarNum",Name="车牌号",Editable=true},
@@ -26,7 +27,6 @@ namespace WMS.UI
             //new KeyName(){Key="OriginalTicketType",Name="原始单据类型",Editable=true},
             new KeyName(){Key="ReceiverNo",Name="收货方编码",Editable=true},
             //new KeyName(){Key="SortTypeNo",Name="排序类型编码",Editable=true},
-            new KeyName(){Key="TruckLoadingTime",Name="装车时间",Editable=true,DefaultValueFunc=(()=>DateTime.Now.ToString())},
             new KeyName(){Key="DeliverTime",Name="发运时间"},
             new KeyName(){Key="ExpectedArriveTime",Name="预计到达时间"},
             new KeyName(){Key="ReturnTicketNo",Name="回单号",EditPlaceHolder="回单时填写"},
