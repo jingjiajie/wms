@@ -42,6 +42,29 @@ namespace WMS.UI
         private void FormStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                User user = (from u in wmsEntities.User where u.ID == this.userID select u).FirstOrDefault();
+                if (user == null)
+                {
+                    MessageBox.Show("登录失效，请重新登录！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //如果登录失效，不能查出任何数据。
+                    this.pagerWidget.AddStaticCondition("SupplierID", "-1");
+                    return;
+                }
+                if(user.Supplier != null)
+                {
+                    this.pagerWidget.AddStaticCondition("SupplierID", user.SupplierID.ToString());
+                }
+            }
+            catch
+            {
+                MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //如果加载失败，不能查出任何数据。
+                this.pagerWidget.AddStaticCondition("SupplierID", "-1");
+                return;
+            }
             this.pagerWidget.Search();
         }
 

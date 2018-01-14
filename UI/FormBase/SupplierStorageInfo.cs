@@ -184,6 +184,40 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
+                    
+                        var recipettickets = (from kn in wmsEntities.ReceiptTicket
+                                              where kn.SupplierID == this.supplierid 
+                                              select kn).ToArray();
+                        if(recipettickets.Length >0)
+                        {
+                            MessageBox.Show("删除失败，请先删除与本库存信息相关的收货单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;                            
+                        }
+
+
+                        //var ShipmentTicket = (from kn in wmsEntities.ShipmentTicket
+                        //                      where kn.SupplierID == this.supplierid 
+                        //                      select kn).ToArray();
+                        //if (recipettickets.Length > 0)
+                        //{
+                        //    MessageBox.Show("删除失败，请先删除与本库存信息相关的发货单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //    return;
+                        //}
+                    
+                  
+                }
+                catch
+                {
+                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
+                }
+
+
+
+
+                try
+                {
                     foreach (int id in deleteIDs)
                     {
                         wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SupplierStorageInfo WHERE ID = @SupplierStorageInfoID", new SqlParameter("SupplierStorageInfoID", id));

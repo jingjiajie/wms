@@ -31,6 +31,7 @@ namespace WMS.UI
 
         private void StandardImportForm_Load(object sender, EventArgs e)
         {
+            this.Icon = System.Drawing.Icon.FromHandle(Properties.Resources.add.GetHicon());
             this.InitReoGridImport();
         }
 

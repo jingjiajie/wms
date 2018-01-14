@@ -177,6 +177,7 @@
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(134, 36);
             this.buttonImport.Text = "批量导入";
+            this.buttonImport.Visible = false;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // tableLayoutPanel1
