@@ -62,6 +62,7 @@ namespace WMS.UI
         WMSEntities wmsEntities = new WMSEntities();
         WMS.DataAccess.ComponentView component = null;
         DateTime contract_enddate;
+            DateTime contract_startdate;
 
         int days;
             StringBuilder sb = new StringBuilder();
@@ -76,6 +77,7 @@ namespace WMS.UI
                             select u).FirstOrDefault();
 
                 contract_enddate = Convert.ToDateTime(Supplier.EndingTime);
+                contract_startdate = Convert.ToDateTime(Supplier.StartingTime);
             }
             catch
             {
@@ -86,6 +88,7 @@ namespace WMS.UI
 
 
             days = (contract_enddate-DateTime.Now  ).Days;
+            
             //¿â´æ
             int[] warringdays = { 3, 5, 10 };
             int reminedays;
@@ -208,13 +211,16 @@ namespace WMS.UI
             }
 
 
-            if(days<10||remindtext !="")
+            if(days<10||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now ))
 
             {
+                int contract_effect = 0;
+                if (contract_enddate > DateTime.Now && contract_startdate < DateTime.Now)
+                {
 
-                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext );
-
-
+                     contract_effect = 1;
+                }
+                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext,contract_effect  );
 
                 a1.Show();
 
