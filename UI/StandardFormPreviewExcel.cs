@@ -73,6 +73,7 @@ namespace WMS.UI
                 return;
             }
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            if (worksheet == null) return;
             worksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
             worksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
             loadFinished = true;
@@ -139,12 +140,10 @@ namespace WMS.UI
 
         private void buttonPrint_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlMain.CurrentWorksheet;
-
             System.Drawing.Printing.PrintDocument doc = null;
             try
             {
-                doc = worksheet.CreatePrintSession().PrintDocument;
+                doc = this.reoGridControlMain.CreatePrintSession().PrintDocument;
             }
             catch (Exception ex)
             {

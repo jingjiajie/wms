@@ -199,6 +199,7 @@ namespace WMS.UI
                     return;
                 }
                 shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_PART_ASSIGNED_JOB;
+                newJobTicket.State = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
                 newJobTicket.ShipmentTicketID = shipmentTicket.ID;
                 newJobTicket.ProjectID = this.projectID;
                 newJobTicket.WarehouseID = this.warehouseID;

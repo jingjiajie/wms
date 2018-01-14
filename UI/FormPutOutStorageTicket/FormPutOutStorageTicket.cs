@@ -259,9 +259,14 @@ namespace WMS.UI
                     MessageBox.Show("单据已经发运，请不要重复发运","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_LOADING)
+                if (putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_PART_LOADED)
                 {
                     MessageBox.Show("单据正在装车中，必须全部装车完成才可以发运", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if(putOutStorageTicket.State != PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)
+                {
+                    MessageBox.Show("未装车完成的出库单不能发运！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (MessageBox.Show("确定要发运选中项吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)

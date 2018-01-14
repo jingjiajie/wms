@@ -16,6 +16,8 @@ namespace WMS.UI
         private int putOutStorageTicketID = -1;
         private int userID = -1;
 
+        private Func<int> personIDGetter = null;
+
         private WMSEntities wmsEntities = new WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action addFinishedCallback = null;
@@ -34,6 +36,7 @@ namespace WMS.UI
                 throw new Exception("未设置源库存信息");
             }
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, PutOutStorageTicketViewMetaData.KeyNames);
+            this.personIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             PutOutStorageTicketView putOutStorageTicketView = null;
             try
             {
@@ -78,6 +81,8 @@ namespace WMS.UI
             }
             putOutStorageTicket.LastUpdateUserID = this.userID;
             putOutStorageTicket.LastUpdateTime = DateTime.Now;
+            int personID = this.personIDGetter();
+            putOutStorageTicket.PersonID = personID == -1 ? null : (int?)personID;
 
 
             //开始数据库操作
