@@ -1174,6 +1174,7 @@
           <Property Name="ReceiptTicketItemInventoryDate" Type="datetime" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2400,7 +2401,8 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
 [StockInfoView].[ReceiptTicketItemInventoryDate] AS [ReceiptTicketItemInventoryDate], 
 [StockInfoView].[SupplyNumber] AS [SupplyNumber], 
-[StockInfoView].[SupplyNo] AS [SupplyNo]
+[StockInfoView].[SupplyNo] AS [SupplyNo], 
+[StockInfoView].[SupplierID] AS [SupplierID]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -4096,6 +4098,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemInventoryDate" Type="DateTime" Precision="3" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierID" Type="Int32" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -5852,6 +5855,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoView">
               <MappingFragment StoreEntitySet="StockInfoView">
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="ReceiptTicketItemInventoryDate" ColumnName="ReceiptTicketItemInventoryDate" />
