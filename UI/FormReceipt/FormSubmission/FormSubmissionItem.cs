@@ -659,12 +659,22 @@ namespace WMS.UI.FormReceipt
             {
                 submissionTicketItem.ReturnAmount = submissionTicketItem.SubmissionAmount;
             }
+            /*
+            StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ID == receiptTicketItem.ID select si).FirstOrDefault();
+            if (stockInfo != null)
+            {
+                stockInfo.ReceiptAreaAmount += submissionTicketItem.ReturnAmount - oldBackAmount;
+                stockInfo.SubmissionAmount -= submissionTicketItem.ReturnAmount - oldBackAmount;
+                stockInfo.RejectAreaAmount += submissionTicketItem.RejectAmount - oldRejectAmount;
+            }*/
             new Thread(() =>
             {
                 this.wmsEntities.SaveChanges();
+                this.modifyState(this.submissionTicketID);
                 this.modifyAmount(oldBackAmount, oldRejectAmount, submissionTicketItem.ID);
                 string state = this.modifyState(submissionTicketID);
                 this.Invoke(new Action(this.Search));
+                /*
                 if (state == "合格")
                 {
                     if (MessageBox.Show("是否同时收货（移货到溢货区）", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -774,7 +784,7 @@ namespace WMS.UI.FormReceipt
                         }
                         wmsEntities.SaveChanges();
                     }
-                }
+                }*/
                 CallBack();
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();
@@ -859,6 +869,103 @@ namespace WMS.UI.FormReceipt
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void buttonAllPass_Click(object sender, EventArgs e)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == this.submissionTicketID select st).FirstOrDefault();
+            if (submissionTicket == null)
+            {
+                MessageBox.Show("该送检单已被删除，请刷新后查看！");
+                return;
+            }
+            SubmissionTicketItem[] submissionTicketItems = submissionTicket.SubmissionTicketItem.ToArray();
+            foreach (SubmissionTicketItem sti in submissionTicketItems)
+            {
+                //sti.ArriveAmount = sti.SubmissionAmount;
+                if (sti.RejectAmount == null)
+                {
+                    sti.RejectAmount = 0;
+                }
+                if (sti.ReturnAmount == null)
+                {
+                    sti.ReturnAmount = sti.SubmissionAmount;
+                }
+                sti.State = "合格";
+                sti.ReceiptTicketItem.State = "过检";
+                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == sti.ReceiptTicketItemID select si).FirstOrDefault();
+                if (stockInfo != null)
+                {
+                    stockInfo.ReceiptAreaAmount += stockInfo.SubmissionAmount;
+                    stockInfo.SubmissionAmount -= stockInfo.SubmissionAmount;
+                }
+            }
+            submissionTicket.State = "合格";
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
+            if (receiptTicket != null)
+            {
+                receiptTicket.State = "过检";
+            }
+            new Thread(() =>
+            {
+                wmsEntities.SaveChanges();
+                MessageBox.Show("成功");
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                    CallBack();
+                }));
+            }).Start();
+        }
+
+        private void buttonAllNoPass_Click(object sender, EventArgs e)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+            if (submissionTicket == null)
+            {
+                MessageBox.Show("该送检单已被删除，请刷新后查看！");
+                return;
+            }
+            SubmissionTicketItem[] submissionTicketItems = submissionTicket.SubmissionTicketItem.ToArray();
+            foreach (SubmissionTicketItem sti in submissionTicketItems)
+            {
+                //sti.ArriveAmount = sti.SubmissionAmount;
+                if (sti.RejectAmount == null)
+                {
+                    sti.RejectAmount = 0;
+                }
+                if (sti.ReturnAmount == null)
+                {
+                    sti.ReturnAmount = sti.SubmissionAmount;
+                }
+                sti.State = "不合格";
+                sti.ReceiptTicketItem.State = "未过检";
+                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == sti.ReceiptTicketItemID select si).FirstOrDefault();
+                if (stockInfo != null)
+                {
+                    stockInfo.ReceiptAreaAmount += stockInfo.SubmissionAmount;
+                    stockInfo.SubmissionAmount -= stockInfo.SubmissionAmount;
+                }
+            }
+            submissionTicket.State = "不合格";
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
+            if (receiptTicket != null)
+            {
+                receiptTicket.State = "未过检";
+            }
+            new Thread(() => 
+            {
+                wmsEntities.SaveChanges();
+
+                MessageBox.Show("成功");
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                    CallBack();
+                }));
+            }).Start();
         }
     }
 }

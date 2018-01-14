@@ -530,25 +530,6 @@ namespace WMS.UI
 
                try
                 {
-                    foreach (int id in deleteIDs)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
-                    }
-
-                    wmsEntities.SaveChanges();
-
-
-                    foreach (int Supplyid1 in deleteIDs)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supply WHERE SupplierID = @supplierID", new SqlParameter("supplierID", Supplyid1));
-
-
-                    }
-                    
-                    wmsEntities.SaveChanges();
-
-
-
 
                     foreach (int id in deleteIDs)
                     {
@@ -564,6 +545,38 @@ namespace WMS.UI
                     }
 
                     wmsEntities.SaveChanges();
+
+
+
+                    foreach (int Supplyid1 in deleteIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supply WHERE SupplierID = @supplierID", new SqlParameter("supplierID", Supplyid1));
+
+
+                    }
+
+                    wmsEntities.SaveChanges();
+
+
+
+
+
+
+
+                    foreach (int id in deleteIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
+                    }
+
+                    wmsEntities.SaveChanges();
+
+
+
+
+
+
+
+                    
 
 
 

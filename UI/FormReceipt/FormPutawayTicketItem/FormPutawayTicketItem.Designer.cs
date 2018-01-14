@@ -217,6 +217,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FormPutawayTicketItem";
             this.Text = "FormPutawayTicketItem";
+            this.Load += new System.EventHandler(this.FormPutawayTicketItem_Load);
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
