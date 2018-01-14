@@ -190,12 +190,14 @@
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
           <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="JobTicketItemID" Type="int" />
-          <Property Name="ReturnAmount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ReturnType" Type="nvarchar" MaxLength="64" />
           <Property Name="ReturnTime" Type="datetime" />
-          <Property Name="ReturnUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReturnUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="LoadingTime" Type="datetime" />
+          <Property Name="ReturnQualityAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ReturnQualityUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReturnQualityUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ReturnRejectAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ReturnRejectUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReturnRejectUnitAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="ReceiptTicket">
           <Key>
@@ -448,6 +450,7 @@
           <Property Name="NetArea" Type="decimal" Precision="18" Scale="3" />
           <Property Name="FixedStorageCost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ContractStorageArea" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Code" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="SupplierStorageInfo">
           <Key>
@@ -786,6 +789,8 @@
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="PutOutStorageTicketID" />
+            <PropertyRef Name="ReturnQualityAmount" />
+            <PropertyRef Name="ReturnRejectAmount" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="StockInfoID" Type="int" />
@@ -810,13 +815,15 @@
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
           <Property Name="JobTicketItemID" Type="int" />
-          <Property Name="ReturnAmount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="ReturnTime" Type="datetime" />
-          <Property Name="ReturnUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReturnUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="SupplierID" Type="int" />
-          <Property Name="ReturnType" Type="nvarchar" MaxLength="64" />
           <Property Name="LoadingTime" Type="datetime" />
+          <Property Name="ReturnQualityAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ReturnQualityUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReturnQualityUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ReturnRejectAmount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ReturnRejectUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReturnRejectUnitAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutOutStorageTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1167,6 +1174,7 @@
           <Property Name="ReceiptTicketItemInventoryDate" Type="datetime" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplierID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1302,8 +1310,8 @@
           <Property Name="BankNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ZipCode" Type="nvarchar" MaxLength="64" />
           <Property Name="RecipientName" Type="nvarchar" MaxLength="64" />
-          <Property Name="InvoiceDelayMonth" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="BalanceDelayMonth" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="InvoiceDelayMonth" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="BalanceDelayMonth" Type="decimal" Precision="18" Scale="3" />
           <Property Name="Number" Type="nvarchar" MaxLength="64" />
           <Property Name="ContractState" Type="nvarchar" MaxLength="64" />
           <Property Name="IsHistory" Type="int" />
@@ -1314,11 +1322,12 @@
           <Property Name="CreateTime" Type="datetime" />
           <Property Name="LastUpdateUserID" Type="int" />
           <Property Name="LastUpdateTime" Type="datetime" />
-          <Property Name="NetArea" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="FixedStorageCost" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="ContractStorageArea" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="NetArea" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="FixedStorageCost" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ContractStorageArea" Type="decimal" Precision="18" Scale="3" />
           <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
           <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
+          <Property Name="Code" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SupplyView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2063,13 +2072,15 @@ FROM [dbo].[PutawayTicketView] AS [PutawayTicketView]</DefiningQuery>
 [PutOutStorageTicketItemView].[SupplyNumber] AS [SupplyNumber], 
 [PutOutStorageTicketItemView].[SupplyNo] AS [SupplyNo], 
 [PutOutStorageTicketItemView].[JobTicketItemID] AS [JobTicketItemID], 
-[PutOutStorageTicketItemView].[ReturnAmount] AS [ReturnAmount], 
 [PutOutStorageTicketItemView].[ReturnTime] AS [ReturnTime], 
-[PutOutStorageTicketItemView].[ReturnUnit] AS [ReturnUnit], 
-[PutOutStorageTicketItemView].[ReturnUnitAmount] AS [ReturnUnitAmount], 
 [PutOutStorageTicketItemView].[SupplierID] AS [SupplierID], 
-[PutOutStorageTicketItemView].[ReturnType] AS [ReturnType], 
-[PutOutStorageTicketItemView].[LoadingTime] AS [LoadingTime]
+[PutOutStorageTicketItemView].[LoadingTime] AS [LoadingTime], 
+[PutOutStorageTicketItemView].[ReturnQualityAmount] AS [ReturnQualityAmount], 
+[PutOutStorageTicketItemView].[ReturnQualityUnit] AS [ReturnQualityUnit], 
+[PutOutStorageTicketItemView].[ReturnQualityUnitAmount] AS [ReturnQualityUnitAmount], 
+[PutOutStorageTicketItemView].[ReturnRejectAmount] AS [ReturnRejectAmount], 
+[PutOutStorageTicketItemView].[ReturnRejectUnit] AS [ReturnRejectUnit], 
+[PutOutStorageTicketItemView].[ReturnRejectUnitAmount] AS [ReturnRejectUnitAmount]
 FROM [dbo].[PutOutStorageTicketItemView] AS [PutOutStorageTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutOutStorageTicketView" EntityType="Self.PutOutStorageTicketView" store:Type="Views" store:Schema="dbo">
@@ -2390,7 +2401,8 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
 [StockInfoView].[ReceiptTicketItemInventoryDate] AS [ReceiptTicketItemInventoryDate], 
 [StockInfoView].[SupplyNumber] AS [SupplyNumber], 
-[StockInfoView].[SupplyNo] AS [SupplyNo]
+[StockInfoView].[SupplyNo] AS [SupplyNo], 
+[StockInfoView].[SupplierID] AS [SupplierID]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2529,7 +2541,8 @@ FROM [dbo].[SupplierStorageInfoView] AS [SupplierStorageInfoView]</DefiningQuery
 [SupplierView].[FixedStorageCost] AS [FixedStorageCost], 
 [SupplierView].[ContractStorageArea] AS [ContractStorageArea], 
 [SupplierView].[CreateUserUsername] AS [CreateUserUsername], 
-[SupplierView].[LastUpdateUserUsername] AS [LastUpdateUserUsername]
+[SupplierView].[LastUpdateUserUsername] AS [LastUpdateUserUsername], 
+[SupplierView].[Code] AS [Code]
 FROM [dbo].[SupplierView] AS [SupplierView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SupplyView" EntityType="Self.SupplyView" store:Type="Views" store:Schema="dbo">
@@ -2935,12 +2948,14 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="JobTicketItemID" Type="Int32" />
-          <Property Name="ReturnAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ReturnType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReturnTime" Type="DateTime" Precision="3" />
-          <Property Name="ReturnUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReturnUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="LoadingTime" Type="DateTime" Precision="3" />
+          <Property Name="ReturnQualityAmount" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ReturnQualityUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReturnQualityUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ReturnRejectAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ReturnRejectUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReturnRejectUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="PutOutStorageTicket" Relationship="Self.FK_PutOutStorageTicketItem_PutOutStorageTicket" FromRole="PutOutStorageTicketItem" ToRole="PutOutStorageTicket" />
         </EntityType>
         <EntityType Name="ReceiptTicket">
@@ -3215,6 +3230,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="NetArea" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="FixedStorageCost" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ContractStorageArea" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Code" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReceiptTicket" Relationship="Self.FK_ReceiptTicket_Supplier" FromRole="Supplier" ToRole="ReceiptTicket" />
           <NavigationProperty Name="SupplierStorageInfo" Relationship="Self.FK__SupplierS__Execu__30592A6F" FromRole="Supplier" ToRole="SupplierStorageInfo" />
           <NavigationProperty Name="SupplierStorageInfo1" Relationship="Self.FK__SupplierS__Suppl__2D7CBDC4" FromRole="Supplier" ToRole="SupplierStorageInfo" />
@@ -3552,6 +3568,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Key>
             <PropertyRef Name="ID" />
             <PropertyRef Name="PutOutStorageTicketID" />
+            <PropertyRef Name="ReturnQualityAmount" />
+            <PropertyRef Name="ReturnRejectAmount" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="StockInfoID" Type="Int32" />
@@ -3576,13 +3594,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="JobTicketItemID" Type="Int32" />
-          <Property Name="ReturnAmount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="ReturnTime" Type="DateTime" Precision="3" />
-          <Property Name="ReturnUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReturnUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="SupplierID" Type="Int32" />
-          <Property Name="ReturnType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LoadingTime" Type="DateTime" Precision="3" />
+          <Property Name="ReturnQualityAmount" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ReturnQualityUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReturnQualityUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ReturnRejectAmount" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="ReturnRejectUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReturnRejectUnitAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="PutOutStorageTicketView">
           <Key>
@@ -3917,6 +3937,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemInventoryDate" Type="DateTime" Precision="3" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplierID" Type="Int32" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -4044,8 +4065,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="BankNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ZipCode" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="RecipientName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="InvoiceDelayMonth" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="BalanceDelayMonth" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="InvoiceDelayMonth" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="BalanceDelayMonth" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Number" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ContractState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="IsHistory" Type="Int32" />
@@ -4056,11 +4077,12 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="LastUpdateUserID" Type="Int32" />
           <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
-          <Property Name="NetArea" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="FixedStorageCost" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="ContractStorageArea" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="NetArea" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="FixedStorageCost" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ContractStorageArea" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SupplyView">
           <Key>
@@ -4536,7 +4558,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WMSEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Component" EntityType="Self.Component" />
           <EntitySet Name="JobTicket" EntityType="Self.JobTicket" />
           <EntitySet Name="JobTicketItem" EntityType="Self.JobTicketItem" />
@@ -4703,7 +4725,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="WMSEntities">
+        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="Component">
             <EntityTypeMapping TypeName="WMSModel.Component">
               <MappingFragment StoreEntitySet="Component">
@@ -4897,12 +4919,14 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
                 <ScalarProperty Name="JobTicketItemID" ColumnName="JobTicketItemID" />
-                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
-                <ScalarProperty Name="ReturnType" ColumnName="ReturnType" />
                 <ScalarProperty Name="ReturnTime" ColumnName="ReturnTime" />
-                <ScalarProperty Name="ReturnUnit" ColumnName="ReturnUnit" />
-                <ScalarProperty Name="ReturnUnitAmount" ColumnName="ReturnUnitAmount" />
                 <ScalarProperty Name="LoadingTime" ColumnName="LoadingTime" />
+                <ScalarProperty Name="ReturnQualityAmount" ColumnName="ReturnQualityAmount" />
+                <ScalarProperty Name="ReturnQualityUnit" ColumnName="ReturnQualityUnit" />
+                <ScalarProperty Name="ReturnQualityUnitAmount" ColumnName="ReturnQualityUnitAmount" />
+                <ScalarProperty Name="ReturnRejectAmount" ColumnName="ReturnRejectAmount" />
+                <ScalarProperty Name="ReturnRejectUnit" ColumnName="ReturnRejectUnit" />
+                <ScalarProperty Name="ReturnRejectUnitAmount" ColumnName="ReturnRejectUnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5165,6 +5189,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="NetArea" ColumnName="NetArea" />
                 <ScalarProperty Name="FixedStorageCost" ColumnName="FixedStorageCost" />
                 <ScalarProperty Name="ContractStorageArea" ColumnName="ContractStorageArea" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5517,13 +5542,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
                 <ScalarProperty Name="JobTicketItemID" ColumnName="JobTicketItemID" />
-                <ScalarProperty Name="ReturnAmount" ColumnName="ReturnAmount" />
                 <ScalarProperty Name="ReturnTime" ColumnName="ReturnTime" />
-                <ScalarProperty Name="ReturnUnit" ColumnName="ReturnUnit" />
-                <ScalarProperty Name="ReturnUnitAmount" ColumnName="ReturnUnitAmount" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="ReturnType" ColumnName="ReturnType" />
                 <ScalarProperty Name="LoadingTime" ColumnName="LoadingTime" />
+                <ScalarProperty Name="ReturnQualityAmount" ColumnName="ReturnQualityAmount" />
+                <ScalarProperty Name="ReturnQualityUnit" ColumnName="ReturnQualityUnit" />
+                <ScalarProperty Name="ReturnQualityUnitAmount" ColumnName="ReturnQualityUnitAmount" />
+                <ScalarProperty Name="ReturnRejectAmount" ColumnName="ReturnRejectAmount" />
+                <ScalarProperty Name="ReturnRejectUnit" ColumnName="ReturnRejectUnit" />
+                <ScalarProperty Name="ReturnRejectUnitAmount" ColumnName="ReturnRejectUnitAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5861,6 +5888,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemInventoryDate" ColumnName="ReceiptTicketItemInventoryDate" />
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6008,6 +6036,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ContractStorageArea" ColumnName="ContractStorageArea" />
                 <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
                 <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

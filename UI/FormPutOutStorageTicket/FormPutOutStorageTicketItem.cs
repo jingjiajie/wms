@@ -20,8 +20,14 @@ namespace WMS.UI
 
         private TextBox textBoxUnit = null;
         private TextBox textBoxUnitAmount = null;
-        private TextBox textBoxReturnUnit = null;
-        private TextBox textBoxReturnUnitAmount = null;
+        private TextBox textBoxLoadingTime = null;
+        private TextBox textBoxReturnQualityAmount = null;
+        private TextBox textBoxReturnQualityUnit = null;
+        private TextBox textBoxReturnQualityUnitAmount = null;
+        private TextBox textBoxReturnRejectAmount = null;
+        private TextBox textBoxReturnRejectUnit = null;
+        private TextBox textBoxReturnRejectUnitAmount = null;
+        private TextBox textBoxReturnTime = null;
 
         private Func<int> jobPersonGetter = null;
         private Func<int> confirmPersonGetter = null;
@@ -44,6 +50,15 @@ namespace WMS.UI
         private void FormPutOutStorageTicketItem_Load(object sender, EventArgs e)
         {
             InitComponents();
+            this.textBoxReturnQualityAmount = (TextBox)this.Controls.Find("textBoxReturnQualityAmount", true)[0];
+            this.textBoxReturnQualityUnit = (TextBox)this.Controls.Find("textBoxReturnQualityUnit", true)[0];
+            this.textBoxReturnQualityUnitAmount = (TextBox)this.Controls.Find("textBoxReturnQualityUnitAmount", true)[0];
+            this.textBoxReturnRejectAmount = (TextBox)this.Controls.Find("textBoxReturnRejectAmount", true)[0];
+            this.textBoxReturnRejectUnit = (TextBox)this.Controls.Find("textBoxReturnRejectUnit", true)[0];
+            this.textBoxReturnRejectUnitAmount = (TextBox)this.Controls.Find("textBoxReturnRejectUnitAmount", true)[0];
+            this.textBoxReturnTime = (TextBox)this.Controls.Find("textBoxReturnTime", true)[0];
+            this.textBoxLoadingTime = (TextBox)this.Controls.Find("textBoxLoadingTime", true)[0];
+
             WMSEntities wmsEntities = new WMSEntities();
             PutOutStorageTicket putOutStorageTicket = null;
             try
@@ -62,13 +77,32 @@ namespace WMS.UI
                 this.Close();
                 return;
             }
+            //已发运不能修改装车信息
+            if (putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_DELIVERED)
+            {
+                this.buttonAllLoad.Enabled = false;
+                this.buttonAllLoad.Text = "已发运不能修改装车状态";
+                this.buttonLoad.Enabled = false;
+                this.buttonLoad.Text = "已发运不能修改装车状态";
+                TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
+                textBoxRealAmount.ReadOnly = true;
+                this.textBoxLoadingTime.ReadOnly = true;
+            }
+            else //未发运不能修改退回信息
+            {
+                this.buttonReturn.Text = "发运前不能修改退回信息";
+                this.buttonReturn.Enabled = false;
+                this.textBoxReturnQualityAmount.ReadOnly = true;
+                this.textBoxReturnQualityUnit.ReadOnly = true;
+                this.textBoxReturnQualityUnitAmount.ReadOnly = true;
+                this.textBoxReturnRejectAmount.ReadOnly = true;
+                this.textBoxReturnRejectUnit.ReadOnly = true;
+                this.textBoxReturnRejectUnitAmount.ReadOnly = true;
+            }
             this.jobPersonGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
             this.confirmPersonGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
             this.textBoxUnit = (TextBox)this.Controls.Find("textBoxUnit", true)[0];
             this.textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
-            this.textBoxReturnUnit = (TextBox)this.Controls.Find("textBoxReturnUnit", true)[0];
-            this.textBoxReturnUnitAmount = (TextBox)this.Controls.Find("textBoxReturnUnitAmount", true)[0];
-
             this.Search();
         }
 
@@ -216,22 +250,25 @@ namespace WMS.UI
 
             WMSEntities wmsEntities = new WMSEntities();
             PutOutStorageTicketItem putOutStorageTicketItem = null;
+            StockInfo stockInfo = null;
             try
             {
                 putOutStorageTicketItem = (from p in wmsEntities.PutOutStorageTicketItem where p.ID == id select p).FirstOrDefault();
+                if (putOutStorageTicketItem == null)
+                {
+                    MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                stockInfo = (from s in wmsEntities.StockInfo where s.ID == putOutStorageTicketItem.StockInfoID select s).FirstOrDefault();
             }
             catch
             {
                 MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (putOutStorageTicketItem == null)
-            {
-                MessageBox.Show("出库单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            decimal oriReturnAmount = putOutStorageTicketItem.ReturnAmount ?? 0;
-            //TODO 返回数量加回库存
+
+            decimal oriReturnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1);
+            decimal oriReturnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1);
 
             if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
             {
@@ -248,10 +285,25 @@ namespace WMS.UI
                 MessageBox.Show("实际装车数量必须大于等于0并且小于计划装车数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            decimal? returnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * putOutStorageTicketItem.ReturnQualityUnitAmount;
+            decimal? returnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * putOutStorageTicketItem.ReturnRejectUnitAmount;
+            decimal? deliverAmount = putOutStorageTicketItem.RealAmount * putOutStorageTicketItem.UnitAmount;
+            if (returnQualityAmount + returnRejectAmount > deliverAmount)
+            {
+                MessageBox.Show("正品返回数量与不良品返回数量之和不能超过实际发货数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             int jobPersonID = this.jobPersonGetter();
             int confirmPersonID = this.confirmPersonGetter();
             putOutStorageTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
             putOutStorageTicketItem.ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
+            if(stockInfo != null)
+            {
+                decimal deltaReturnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1) - oriReturnQualityAmount;
+                decimal deltaReturnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount?? 1) - oriReturnRejectAmount;
+                stockInfo.ShipmentAreaAmount += deltaReturnQualityAmount;
+                stockInfo.RejectAreaAmount += deltaReturnRejectAmount;
+            }
             new Thread(() =>
             {
                 try
@@ -271,39 +323,7 @@ namespace WMS.UI
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();
         }
-
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if (ids.Length == 0)
-            {
-                MessageBox.Show("请选择要删除的项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            this.labelStatus.Text = "正在删除...";
-            new Thread(new ThreadStart(()=>
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
-                {
-                    foreach (int id in ids)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutOutStorageTicketItem WHERE ID = @id", new SqlParameter("@id", id));
-                    }
-                    wmsEntities.SaveChanges();
-                    this.UpdatePutOutStorageTicketStateSync();
-                }
-                catch
-                {
-                    MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.Search();
-                MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            })).Start();
-        }
-
+        
         private void buttonModify_MouseEnter(object sender, EventArgs e)
         {
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
@@ -333,10 +353,11 @@ namespace WMS.UI
                     string sql = String.Format(@"UPDATE PutOutStorageTicketItem SET State = '{0}',
                                         LoadingTime = '{1}',
                                         RealAmount = ScheduledAmount
-                                        WHERE PutOutStorageTicketID = {2} AND RealAmount <> ScheduledAmount;",
+                                        WHERE PutOutStorageTicketID = {2} AND (RealAmount <> ScheduledAmount OR State<>'{3}');",
                                     PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED,
                                     DateTime.Now,
-                                    this.putOutStorageTicketID);
+                                    this.putOutStorageTicketID,
+                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED);
                     wmsEntities.Database.ExecuteSqlCommand(sql);
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));
                     wmsEntities.SaveChanges();
@@ -422,6 +443,11 @@ namespace WMS.UI
         private void UpdatePutOutStorageTicketStateSync()
         {
             WMSEntities wmsEntities = new WMSEntities();
+            PutOutStorageTicket putOutStorageTicket = (from p in wmsEntities.PutOutStorageTicket where p.ID == this.putOutStorageTicketID select p).FirstOrDefault();
+            if (putOutStorageTicket == null) return;
+            //已发运的单子不改变已发运状态
+            if (putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_DELIVERED) return;
+            //否则更新装车状态
             int totalItemCount = wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM PutOutStorageTicketItem WHERE PutOutStorageTicketID = {0}", this.putOutStorageTicketID)).Single();
             int allfinishedItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM PutOutStorageTicketItem WHERE PutOutStorageTicketID = {0} AND State = '{1}'", this.putOutStorageTicketID, PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)).Single();
             int unfinishedItemCount = wmsEntities.Database.SqlQuery<int>(String.Format("SELECT COUNT(*) FROM PutOutStorageTicketItem WHERE PutOutStorageTicketID = {0} AND State = '{1}'", this.putOutStorageTicketID, PutOutStorageTicketItemViewMetaData.STRING_STATE_WAIT_FOR_LOAD)).Single();
@@ -456,5 +482,28 @@ namespace WMS.UI
             }));
         }
 
+        private void buttonReturn_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBoxReturnTime.Text))
+            {
+                textBoxReturnTime.Text = DateTime.Now.ToString();
+            }
+            this.buttonModify.PerformClick();
+        }
+
+        private void buttonReturn_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonReturn.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonReturn_MouseEnter(object sender, EventArgs e)
+        {
+            buttonReturn.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonReturn_MouseLeave(object sender, EventArgs e)
+        {
+            buttonReturn.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
     }
 }

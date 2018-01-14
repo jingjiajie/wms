@@ -24,7 +24,7 @@ namespace WMS.UI
                              new ComboBoxItem(STRING_STATE_ALL_FINISHED)
             } },
             new KeyName(){Key="ScheduledAmount",Name="翻包数量",Editable=false,Save=false},
-            new KeyName(){Key="RealAmount",Name="实际翻包数量",DefaultValueFunc=(()=>"0")},
+            new KeyName(){Key="RealAmount",Name="实际翻包数量",NotNegative=true,DefaultValueFunc=(()=>"0")},
             new KeyName(){Key="ScheduledPutOutAmount",Name="已分配出库数量",DefaultValueFunc=(()=>"0"),Editable=false},
             new KeyName(){Key="Unit",Name="单位",Editable=false,Save=false },
             new KeyName(){Key="UnitAmount",Name="单位数量",Editable=false,Save=false },

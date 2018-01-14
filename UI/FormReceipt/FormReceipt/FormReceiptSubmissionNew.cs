@@ -25,6 +25,9 @@ namespace WMS.UI.FormReceipt
         private int countRow;
         private int userID;
         private Func<int> PersonIDGetter = null;
+        private Func<int> SubmissionPersonIDGetter = null;
+        private Func<int> ReceivePersonIDGetter = null;
+        private Func<int> DeliverSubmissionPersonIDGetter = null;
         public FormReceiptSubmissionNew()
         {
             InitializeComponent();
@@ -102,6 +105,9 @@ namespace WMS.UI.FormReceipt
         private void InitPanel()
         {
             Utilities.CreateEditPanel(this.tableLayoutPanel2, ReceiptMetaData.submissionTicketKeyName);
+            this.DeliverSubmissionPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxDeliverSubmissionPersonName", "Name");
+            this.SubmissionPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxSubmissionPersonName", "Name");
+            this.ReceivePersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxReceivePersonName", "Name");
             this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             if (this.formMode == FormMode.ADD)
             {
@@ -273,7 +279,7 @@ namespace WMS.UI.FormReceipt
             {
                 if (receiptTicket.State != "待送检")
                 {
-                    MessageBox.Show("改收货单状态为" + receiptTicket.State + "，无法送检！");
+                    MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
                 }
             }
             SortedDictionary<int, int> idsAndSubmissionAmount = SelectReceiptTicketItem();
@@ -303,6 +309,9 @@ namespace WMS.UI.FormReceipt
                 {
                     Utilities.CopyComboBoxsToProperties(this, submissionTicket, ReceiptMetaData.submissionTicketKeyName);
                     submissionTicket.PersonID = this.PersonIDGetter();
+                    submissionTicket.ReceivePersonID = this.ReceivePersonIDGetter();
+                    submissionTicket.SubmissionPersonID = this.SubmissionPersonIDGetter();
+                    submissionTicket.DeliverSubmissionPersonID = this.DeliverSubmissionPersonIDGetter();
                     //ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                     
                     
@@ -371,9 +380,10 @@ namespace WMS.UI.FormReceipt
                                     submissionTicketItem.SubmissionAmount = vp.Value;
                                     submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
                                     wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
-                                    receiptTicket.State = "送检中";
+                                   
                                 }
                             }
+                            receiptTicket.State = "送检中";
                             wmsEntities.SaveChanges();
                             /*
                             int count = wmsEntities.Database.SqlQuery<int>(

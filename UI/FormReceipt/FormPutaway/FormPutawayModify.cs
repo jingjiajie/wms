@@ -76,6 +76,7 @@ namespace WMS.UI.FormReceipt
                         this.Invoke(new Action(() =>
                         {
                             CallBack();
+                            this.Hide();
                         }));
                     }
                     catch

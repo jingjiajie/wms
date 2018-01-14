@@ -221,8 +221,10 @@ namespace WMS.UI
                     newPutOutStorageTicketItem.RealAmount = 0;
                     newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
                     newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
-                    newPutOutStorageTicketItem.ReturnUnit = jobTicketItem.Unit;
-                    newPutOutStorageTicketItem.ReturnUnitAmount = jobTicketItem.UnitAmount;
+                    newPutOutStorageTicketItem.ReturnQualityUnit = jobTicketItem.Unit;
+                    newPutOutStorageTicketItem.ReturnQualityUnitAmount = jobTicketItem.UnitAmount;
+                    newPutOutStorageTicketItem.ReturnRejectUnit = jobTicketItem.Unit;
+                    newPutOutStorageTicketItem.ReturnRejectUnitAmount = jobTicketItem.UnitAmount;
                     newPutOutStorageTicket.PutOutStorageTicketItem.Add(newPutOutStorageTicketItem);
                 }
                 //生成出库单号
