@@ -177,12 +177,14 @@ namespace WMS.UI
             PutOutStorageTicketItemView[] noSupplierItems = (from item in putOutStorageTicketItemViews
                                                            where item.SupplierID == null
                                                            select item).ToArray();
-
-            formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketMoBiSi.xlsx", "无供应商");
-            formPreview.AddData("ticket", putOutStorageTicketView, "无供应商");
-            formPreview.AddData("items", noSupplierItems, "无供应商");
-            formPreview.AddData("shipmentTicket", shipmentTicketView, "无供应商");
-            formPreview.AddData("supplier", default(Supplier), "无供应商");
+            if (noSupplierItems.Length > 0)
+            {
+                formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketMoBiSi.xlsx", "无供应商");
+                formPreview.AddData("ticket", putOutStorageTicketView, "无供应商");
+                formPreview.AddData("items", noSupplierItems, "无供应商");
+                formPreview.AddData("shipmentTicket", shipmentTicketView, "无供应商");
+                formPreview.AddData("supplier", default(Supplier), "无供应商");
+            }
 
             formPreview.Show();
             this.Close();

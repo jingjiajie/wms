@@ -198,6 +198,14 @@ namespace WMS.UI
                 errorMessage = chineseName + " 不允许为空！";
                 return false;
             }
+            if(keyName.NotNegative && decimal.TryParse(text,out decimal decimalValue))
+            {
+                if(decimalValue < 0)
+                {
+                    errorMessage = chineseName + "不允许为负数！";
+                    return false;
+                }
+            }
             //如果文本框的文字为空，并且数据库字段类型不是字符串型，则赋值为NULL
             if (string.IsNullOrWhiteSpace(text) && originType != typeof(string))
             {

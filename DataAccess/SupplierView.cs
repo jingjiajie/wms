@@ -43,5 +43,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> ContractStorageArea { get; set; }
         public string CreateUserUsername { get; set; }
         public string LastUpdateUserUsername { get; set; }
+        public string Code { get; set; }
     }
 }
