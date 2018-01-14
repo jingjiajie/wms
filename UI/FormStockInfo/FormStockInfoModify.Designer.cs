@@ -32,9 +32,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelTextBoxes = new System.Windows.Forms.TableLayoutPanel();
-            this.label19 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.textBoxRecycleBoxCount = new System.Windows.Forms.TextBox();
             this.textBoxReceivingSpaceAreaCount = new System.Windows.Forms.TextBox();
             this.textBoxPackagingUnit = new System.Windows.Forms.TextBox();
             this.textBoxManufatureDate = new System.Windows.Forms.TextBox();
@@ -45,28 +43,22 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxExpireDate = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBoxShipmentAreaCount = new System.Windows.Forms.TextBox();
             this.textBoxWarehouseArea = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBoxOverflowAreaCount = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxOverflowArea = new System.Windows.Forms.TextBox();
             this.textBoxReceivingSpaceArea = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.textBoxStockDate = new System.Windows.Forms.TextBox();
             this.textBoxTargetStorageLocation = new System.Windows.Forms.TextBox();
             this.textBoxShipmentArea = new System.Windows.Forms.TextBox();
-            this.textBoxPackagingToolCount = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonOK = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.buttonOK = new System.Windows.Forms.Button();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanelTextBoxes.SuspendLayout();
@@ -82,7 +74,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(982, 413);
+            this.groupBox1.Size = new System.Drawing.Size(982, 356);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "库存信息";
@@ -100,8 +92,8 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 108F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(974, 381);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 115F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(974, 324);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
             // tableLayoutPanelTextBoxes
@@ -115,9 +107,7 @@
             this.tableLayoutPanelTextBoxes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanelTextBoxes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanelTextBoxes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.label19, 6, 3);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label17, 6, 1);
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxRecycleBoxCount, 7, 3);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxReceivingSpaceAreaCount, 7, 2);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxPackagingUnit, 7, 1);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxManufatureDate, 7, 0);
@@ -128,31 +118,24 @@
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label4, 0, 1);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxExpireDate, 1, 1);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label5, 2, 1);
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxShipmentAreaCount, 3, 3);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxWarehouseArea, 3, 1);
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.label11, 2, 3);
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxOverflowAreaCount, 1, 3);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label7, 0, 2);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label8, 2, 2);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxOverflowArea, 3, 2);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxReceivingSpaceArea, 1, 2);
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.label10, 0, 3);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label3, 4, 0);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label6, 4, 1);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label9, 4, 2);
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.label12, 4, 3);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxStockDate, 5, 0);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxTargetStorageLocation, 5, 1);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxShipmentArea, 5, 2);
-            this.tableLayoutPanelTextBoxes.Controls.Add(this.textBoxPackagingToolCount, 5, 3);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label16, 6, 0);
             this.tableLayoutPanelTextBoxes.Controls.Add(this.label18, 6, 2);
             this.tableLayoutPanelTextBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTextBoxes.Location = new System.Drawing.Point(3, 4);
             this.tableLayoutPanelTextBoxes.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanelTextBoxes.Name = "tableLayoutPanelTextBoxes";
-            this.tableLayoutPanelTextBoxes.RowCount = 4;
-            this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelTextBoxes.RowCount = 3;
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -160,19 +143,8 @@
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(968, 265);
+            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(968, 201);
             this.tableLayoutPanelTextBoxes.TabIndex = 30;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label19.Location = new System.Drawing.Point(727, 198);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(88, 67);
-            this.label19.TabIndex = 34;
-            this.label19.Text = "回收箱体";
             // 
             // label17
             // 
@@ -184,15 +156,6 @@
             this.label17.Size = new System.Drawing.Size(88, 66);
             this.label17.TabIndex = 32;
             this.label17.Text = "包装单位";
-            // 
-            // textBoxRecycleBoxCount
-            // 
-            this.textBoxRecycleBoxCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxRecycleBoxCount.Location = new System.Drawing.Point(823, 203);
-            this.textBoxRecycleBoxCount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxRecycleBoxCount.Name = "textBoxRecycleBoxCount";
-            this.textBoxRecycleBoxCount.Size = new System.Drawing.Size(141, 29);
-            this.textBoxRecycleBoxCount.TabIndex = 16;
             // 
             // textBoxReceivingSpaceAreaCount
             // 
@@ -292,15 +255,6 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "库区";
             // 
-            // textBoxShipmentAreaCount
-            // 
-            this.textBoxShipmentAreaCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxShipmentAreaCount.Location = new System.Drawing.Point(341, 203);
-            this.textBoxShipmentAreaCount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxShipmentAreaCount.Name = "textBoxShipmentAreaCount";
-            this.textBoxShipmentAreaCount.Size = new System.Drawing.Size(137, 29);
-            this.textBoxShipmentAreaCount.TabIndex = 14;
-            // 
             // textBoxWarehouseArea
             // 
             this.textBoxWarehouseArea.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -309,26 +263,6 @@
             this.textBoxWarehouseArea.Name = "textBoxWarehouseArea";
             this.textBoxWarehouseArea.Size = new System.Drawing.Size(137, 29);
             this.textBoxWarehouseArea.TabIndex = 6;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(245, 198);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(88, 67);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "出库区\r\n库位";
-            // 
-            // textBoxOverflowAreaCount
-            // 
-            this.textBoxOverflowAreaCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxOverflowAreaCount.Location = new System.Drawing.Point(100, 203);
-            this.textBoxOverflowAreaCount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxOverflowAreaCount.Name = "textBoxOverflowAreaCount";
-            this.textBoxOverflowAreaCount.Size = new System.Drawing.Size(137, 29);
-            this.textBoxOverflowAreaCount.TabIndex = 12;
             // 
             // label7
             // 
@@ -370,17 +304,6 @@
             this.textBoxReceivingSpaceArea.Size = new System.Drawing.Size(137, 29);
             this.textBoxReceivingSpaceArea.TabIndex = 9;
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(4, 198);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(88, 67);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "溢库区\r\n数量";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -415,17 +338,6 @@
             this.label9.TabIndex = 16;
             this.label9.Text = "出库区\r\n库位";
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(486, 198);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(88, 67);
-            this.label12.TabIndex = 22;
-            this.label12.Text = "翻包器具数量";
-            // 
             // textBoxStockDate
             // 
             this.textBoxStockDate.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -453,15 +365,6 @@
             this.textBoxShipmentArea.Size = new System.Drawing.Size(137, 29);
             this.textBoxShipmentArea.TabIndex = 11;
             // 
-            // textBoxPackagingToolCount
-            // 
-            this.textBoxPackagingToolCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBoxPackagingToolCount.Location = new System.Drawing.Point(582, 203);
-            this.textBoxPackagingToolCount.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBoxPackagingToolCount.Name = "textBoxPackagingToolCount";
-            this.textBoxPackagingToolCount.Size = new System.Drawing.Size(137, 29);
-            this.textBoxPackagingToolCount.TabIndex = 15;
-            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -484,24 +387,6 @@
             this.label18.TabIndex = 33;
             this.label18.Text = "收货区\r\n数量";
             // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 216F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonOK, 1, 1);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 277);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 3;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 77F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(968, 100);
-            this.tableLayoutPanel3.TabIndex = 31;
-            // 
             // buttonOK
             // 
             this.buttonOK.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_q;
@@ -509,11 +394,13 @@
             this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonOK.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonOK.FlatAppearance.BorderSize = 0;
+            this.buttonOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonOK.Location = new System.Drawing.Point(379, 15);
+            this.buttonOK.Location = new System.Drawing.Point(379, 23);
             this.buttonOK.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(210, 69);
+            this.buttonOK.Size = new System.Drawing.Size(210, 60);
             this.buttonOK.TabIndex = 30;
             this.buttonOK.Text = "修改库存信息";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -522,11 +409,29 @@
             this.buttonOK.MouseEnter += new System.EventHandler(this.buttonOK_MouseEnter);
             this.buttonOK.MouseLeave += new System.EventHandler(this.buttonOK_MouseLeave);
             // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 216F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonOK, 1, 1);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 213);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 3;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(968, 107);
+            this.tableLayoutPanel3.TabIndex = 31;
+            // 
             // FormStockInfoModify
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(982, 413);
+            this.ClientSize = new System.Drawing.Size(982, 356);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -556,12 +461,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxReceiptTicketID;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxPackagingToolCount;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBoxShipmentAreaCount;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBoxOverflowAreaCount;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBoxShipmentArea;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBoxOverflowArea;
@@ -576,16 +475,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBoxStockDate;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox textBoxRecycleBoxCount;
         private System.Windows.Forms.TextBox textBoxReceivingSpaceAreaCount;
         private System.Windows.Forms.TextBox textBoxPackagingUnit;
         private System.Windows.Forms.TextBox textBoxManufatureDate;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label18;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Button buttonOK;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
