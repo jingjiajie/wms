@@ -41,6 +41,7 @@ namespace WMS.DataAccess
         public string Unit { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
         public Nullable<decimal> UnitCount { get; set; }
+        public Nullable<decimal> HasPutwayAmount { get; set; }
     
         public virtual ReceiptTicket ReceiptTicket { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }

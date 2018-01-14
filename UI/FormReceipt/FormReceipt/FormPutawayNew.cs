@@ -235,7 +235,8 @@ namespace WMS.UI.FormReceipt
 
                 if (strSubmissionAmount == null)
                 {
-                    strSubmissionAmount = "0";
+                    //strSubmissionAmount = "0";
+                    continue;
                 }
                 else
                 {
@@ -342,10 +343,28 @@ namespace WMS.UI.FormReceipt
                                     PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
                                     putawayTicketItem.ReceiptTicketItemID = receiptTicketItem.ID;
                                     putawayTicketItem.State = "待上架";
-                                    putawayTicketItem.PutawayTicketID = putawayTicket.ID;
                                     putawayTicketItem.ScheduledMoveCount = ripa.Value;
+                                    if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - putawayTicketItem.ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
+                                    {
+                                        MessageBox.Show("上架失败，计划上架数量过多！");
+                                        return;
+                                    }
+                                    if (receiptTicketItem.HasPutwayAmount == null)
+                                    {
+                                        receiptTicketItem.HasPutwayAmount = 0;
+                                    }
+                                    
+                                    if (putawayTicketItem.ScheduledMoveCount != null)
+                                    {
+                                        receiptTicketItem.HasPutwayAmount += putawayTicketItem.ScheduledMoveCount;
+                                    }
+                                    
+                                    //receiptTicketItem.HasPutwayAmount += putawayTicketItem.ScheduledMoveCount;
+                                    //putawayTicketItem.HasPutawayAmount += ripa.Value;
+                                    putawayTicketItem.PutawayTicketID = putawayTicket.ID;
                                     putawayTicketItem.Unit = receiptTicketItem.Unit;
                                     putawayTicketItem.UnitAmount = receiptTicketItem.UnitAmount;
+                                    //if (putawayTicketItem.UnitCount)
                                     wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
                                 }
                             }
@@ -371,6 +390,23 @@ namespace WMS.UI.FormReceipt
                                 //}
                                 wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
                             }*/
+                            wmsEntities.SaveChanges();
+                            int n = 0;
+                            foreach(ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                            {
+                                if (rti.HasPutwayAmount == rti.UnitCount)
+                                {
+                                    n++;
+                                }
+                            }
+                            if (n == receiptTicket.ReceiptTicketItem.ToArray().Length)
+                            {
+                                receiptTicket.HasPutawayTicket = "是";
+                            }
+                            else
+                            {
+                                receiptTicket.HasPutawayTicket = "部分";
+                            }
                             wmsEntities.SaveChanges();
                             /*
                             int count = wmsEntities.Database.SqlQuery<int>(
@@ -423,6 +459,22 @@ namespace WMS.UI.FormReceipt
         {
             OK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
+        private void OK_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.OK.Focus();
+            this.reoGridControlUser.Worksheets[0].FocusPos = new CellPosition(0, 0);
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            worksheet.EndEdit(new EndEditReason());
+            //worksheet.CreateAndGetCell(worksheet.GetEditingCell()).EndEdit();
+            /*
+            for (int i = 0; i < this.countRow; i++)
+            {
+                worksheet.Cells[i, this.checkBoxColumn].EndEdit();
+            }
+            */
+            //worksheet.EditingCell.EndEdit();
+        }
+    
 
     }
 }

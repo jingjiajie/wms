@@ -271,6 +271,7 @@
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
           <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="HasPutwayAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="ShipmentTicket">
           <Key>
@@ -726,7 +727,7 @@
           <Property Name="SupplyComponentID" Type="int" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyDefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyDefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
@@ -739,8 +740,8 @@
           <Property Name="StockInfoRejectAreaAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ReceiptTicketItemInventoryDate" Type="datetime" />
           <Property Name="ReceiptTicketItemExpiryDate" Type="datetime" />
-          <Property Name="UnitCount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="PutawayAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutawayTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -921,14 +922,15 @@
           <Property Name="ComponentDefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="ComponentDefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ComponentDefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
-          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="Unit" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyID" Type="int" />
           <Property Name="SupplyDefaultReceiptUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyDefaultReceiptUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="SupplyDefaultShipmentUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyDefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="UnitCount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="HasPutwayAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2179,7 +2181,8 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[SupplyDefaultReceiptUnitAmount] AS [SupplyDefaultReceiptUnitAmount], 
 [ReceiptTicketItemView].[SupplyDefaultShipmentUnit] AS [SupplyDefaultShipmentUnit], 
 [ReceiptTicketItemView].[SupplyDefaultShipmentUnitAmount] AS [SupplyDefaultShipmentUnitAmount], 
-[ReceiptTicketItemView].[UnitCount] AS [UnitCount]
+[ReceiptTicketItemView].[UnitCount] AS [UnitCount], 
+[ReceiptTicketItemView].[HasPutwayAmount] AS [HasPutwayAmount]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -3034,6 +3037,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="HasPutwayAmount" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="ReceiptTicket" Relationship="Self.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicketItem" ToRole="ReceiptTicket" />
           <NavigationProperty Name="SubmissionTicketItem" Relationship="Self.FK__Submissio__Recei__0EF836A4" FromRole="ReceiptTicketItem" ToRole="SubmissionTicketItem" />
         </EntityType>
@@ -3509,7 +3513,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplyComponentID" Type="Int32" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyDefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyDefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
@@ -3522,8 +3526,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="StockInfoRejectAreaAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ReceiptTicketItemInventoryDate" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketItemExpiryDate" Type="DateTime" Precision="3" />
-          <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PutawayAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="PutawayAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="PutawayTicketView">
           <Key>
@@ -3696,14 +3700,15 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ComponentDefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ComponentDefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ComponentDefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Unit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyID" Type="Int32" />
           <Property Name="SupplyDefaultReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyDefaultReceiptUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="SupplyDefaultShipmentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyDefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="HasPutwayAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
@@ -5002,6 +5007,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Unit" ColumnName="Unit" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
                 <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
+                <ScalarProperty Name="HasPutwayAmount" ColumnName="HasPutwayAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5654,6 +5660,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplyDefaultShipmentUnit" ColumnName="SupplyDefaultShipmentUnit" />
                 <ScalarProperty Name="SupplyDefaultShipmentUnitAmount" ColumnName="SupplyDefaultShipmentUnitAmount" />
                 <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
+                <ScalarProperty Name="HasPutwayAmount" ColumnName="HasPutwayAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

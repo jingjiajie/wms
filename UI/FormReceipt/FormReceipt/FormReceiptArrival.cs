@@ -486,9 +486,15 @@ namespace WMS.UI
                     MessageBox.Show("该收货单未收货，请先收货!");
                     return;
                 }
+                /*
                 if (receiptTicket.HasPutawayTicket == "是")
                 {
                     MessageBox.Show("该收货单已经生成上架单，点击查看对应上架单按钮查看！");
+                    return;
+                }*/
+                if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)
+                {
+                    MessageBox.Show("没有为该收货单添加收货单条目，无法生成上架单，请添加后重试");
                     return;
                 }
                 FormPutawayNew formPutawayNew = new FormPutawayNew(receiptTicket.ID, this.userID, FormMode.ADD);
@@ -496,6 +502,7 @@ namespace WMS.UI
                 {
                     this.Search(null, null);
                 }));
+
                 formPutawayNew.Show();
                 /*
                 FormPutaway formPutaway = new FormPutaway(receiptTicketID, this.warehouseID, this.projectID, this.userID);
@@ -560,6 +567,11 @@ namespace WMS.UI
                     if (receiptTicket.State != "待送检")
                     {
                         MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
+                        return;
+                    }
+                    if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)
+                    {
+                        MessageBox.Show("没有为该收货单添加收货单条目，无法生成送检单，请添加后重试");
                         return;
                     }
                     FormReceiptSubmissionNew formReceiptSubmissionNew = new FormReceiptSubmissionNew(receiptTicketID, this.userID, FormMode.ADD);

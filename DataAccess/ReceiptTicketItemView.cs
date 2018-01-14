@@ -68,5 +68,6 @@ namespace WMS.DataAccess
         public string SupplyDefaultShipmentUnit { get; set; }
         public Nullable<decimal> SupplyDefaultShipmentUnitAmount { get; set; }
         public Nullable<decimal> UnitCount { get; set; }
+        public Nullable<decimal> HasPutwayAmount { get; set; }
     }
 }

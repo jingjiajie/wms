@@ -136,6 +136,7 @@
             this.OK.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OK_MouseDown);
             this.OK.MouseEnter += new System.EventHandler(this.OK_MouseEnter);
             this.OK.MouseLeave += new System.EventHandler(this.OK_MouseLeave);
+            this.OK.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OK_MouseMove);
             // 
             // FormPutawayNew
             // 

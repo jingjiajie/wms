@@ -510,6 +510,21 @@ namespace WMS.UI
                     s.FormBorderStyle = FormBorderStyle.None;
                     //s.Dock = System.Windows.Forms.DockStyle.Fill;
                     this.panelRight.Controls.Add(s);
+
+                    s.SetToPutaway(new Action<string, string>((key1, value1) =>
+                    {
+                        this.panelRight.Controls.Clear();
+                        FormShelvesItem a = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, key1, value1);
+                        a.TopLevel = false;
+                        a.Dock = System.Windows.Forms.DockStyle.Fill;
+                        a.FormBorderStyle = FormBorderStyle.None;
+                        //s.Dock = System.Windows.Forms.DockStyle.Fill;
+                        this.panelRight.Controls.Add(a);
+                        a.Show();
+                        //this.treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("上架零件管理", true)[0];
+                        Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                    }));
+
                     s.Show();
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
                 }));
