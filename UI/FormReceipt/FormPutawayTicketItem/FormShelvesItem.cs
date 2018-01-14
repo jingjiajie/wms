@@ -28,6 +28,7 @@ namespace WMS.UI.FormReceipt
         private Func<int> ConfirmIDGetter = null;
         private int jobPersonID = -1;
         private int confirmPersonID = -1;
+        private PagerWidget<PutawayTicketItemView> pagerWidget;
         public FormShelvesItem()
         {
             InitializeComponent();
@@ -59,9 +60,16 @@ namespace WMS.UI.FormReceipt
             InitComponents();
             InitPanel();
             WMSEntities wmsEntities = new WMSEntities();
-
+            //pagerWidget = new PagerWidget<PutawayTicketItemView>(this.reoGridControlPutaway, ReceiptMetaData.putawayTicketItemKeyName, projectID, warehouseID);
             Search();
         }
+        /*
+        private void Search(bool savePage = false, int selectID = -1)
+        {
+            this.pagerWidget.ClearCondition();
+            pagerWidget.AddCondition()
+            this.pagerWidget.Search(savePage, selectID);
+        }*/
 
         private void InitPanel()
         {
@@ -70,12 +78,12 @@ namespace WMS.UI.FormReceipt
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.putawayTicketItemKeyName);
             this.ConfirmIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
             this.JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
-            Label label = new Label();
-            label.Text = "上架数量";
-            this.tableLayoutPanelProperties.Controls.Add(label);
-            TextBox textboxPutawayAmount = new TextBox();
-            textboxPutawayAmount.Name = "textboxPutawayAmount";
-            this.tableLayoutPanelProperties.Controls.Add(textboxPutawayAmount);
+            //Label label = new Label();
+            //label.Text = "上架数量";
+            //this.tableLayoutPanelProperties.Controls.Add(label);
+            //TextBox textboxPutawayAmount = new TextBox();
+            //textboxPutawayAmount.Name = "textboxPutawayAmount";
+            //this.tableLayoutPanelProperties.Controls.Add(textboxPutawayAmount);
             //textboxPutawayAmount.Name;
             this.reoGridControlPutaway.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
 
@@ -315,15 +323,57 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
-                    putawayTicketItem.State = "作废";
+                    if (putawayTicketItem.State != "待上架")
+                    {
+                        MessageBox.Show("改上架单状态为" + putawayTicketItem.State + "，无法删除！");
+                        return;
+                    }
                     ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
                     if (receiptTicketItem != null)
                     {
-                        receiptTicketItem.State = "待收货";
+                        receiptTicketItem.HasPutwayAmount -= putawayTicketItem.ScheduledMoveCount;
                     }
                     new Thread(() =>
                     {
                         wmsEntities.SaveChanges();
+                        PutawayTicket putawayTicket = putawayTicketItem.PutawayTicket;
+                        int n = 0;
+                        int m = 0;
+                        foreach (PutawayTicketItem pti in putawayTicket.PutawayTicketItem)
+                        {
+                            ReceiptTicketItem rtii = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
+                            if (rtii != null)
+                            {
+                                if (pti.ScheduledMoveCount == rtii.HasPutwayAmount)
+                                {
+                                    n++;
+                                }
+                                if (rtii.HasPutwayAmount == 0)
+                                {
+                                    m++;
+                                }
+                            }
+                           
+                        }
+                        
+                        if (m == putawayTicket.PutawayTicketItem.Count)
+                        {
+                            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == putawayTicket.ReceiptTicketID select rt).FirstOrDefault();
+                            if (receiptTicket != null)
+                            {
+                                receiptTicket.HasPutawayTicket = "没有生成上架单";
+                            }
+                        }
+                        else
+                        {
+                            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == putawayTicket.ReceiptTicketID select rt).FirstOrDefault();
+                            if (receiptTicket != null)
+                            {
+                                receiptTicket.HasPutawayTicket = "部分生成上架单";
+                            }
+                            wmsEntities.SaveChanges();
+                            wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicketItem WHERE ID = @putawayTicketItemID", new SqlParameter("putawayTicketItemID", putawayTicketItem.ID));
+                        }
                         this.Invoke(new Action(() =>
                         {
                             Search();

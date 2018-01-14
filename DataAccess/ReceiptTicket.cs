@@ -20,7 +20,7 @@ namespace WMS.DataAccess
         }
     
         public int ID { get; set; }
-        public int Warehouse { get; set; }
+        public int WarehouseID { get; set; }
         public string Type { get; set; }
         public string DeliverTicketNoSRM { get; set; }
         public string VoucherSource { get; set; }
@@ -64,6 +64,6 @@ namespace WMS.DataAccess
         public virtual Project Project { get; set; }
         public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }
         public virtual Supplier Supplier { get; set; }
-        public virtual Warehouse Warehouse1 { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

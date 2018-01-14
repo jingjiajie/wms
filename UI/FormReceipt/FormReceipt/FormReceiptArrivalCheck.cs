@@ -276,7 +276,7 @@ namespace WMS.UI.FormReceipt
                     if(receiptTicket != null)
                     {
                         submissionTicket.ProjectID = receiptTicket.ProjectID;
-                        submissionTicket.WarehouseID = receiptTicket.Warehouse;
+                        submissionTicket.WarehouseID = receiptTicket.WarehouseID;
                     }
                     submissionTicket.CreateUserID = this.userID;
                     submissionTicket.LastUpdateUserID = this.userID;

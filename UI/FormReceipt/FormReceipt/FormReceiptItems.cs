@@ -310,7 +310,7 @@ namespace WMS.UI
                         receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitCount * receiptTicketItem.UnitAmount;
                         StockInfo stockInfo = new StockInfo();
                         stockInfo.ProjectID = receiptTicket.ProjectID;
-                        stockInfo.WarehouseID = receiptTicket.Warehouse;
+                        stockInfo.WarehouseID = receiptTicket.WarehouseID;
                         stockInfo.ReceiptTicketItemID = receiptTicketItem.ID;
                         if (receiptTicketItem.State == "待送检" || receiptTicketItem.State == "拒收")
                         {

@@ -321,7 +321,7 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.LastUpdateTime = DateTime.Now;
                     submissionTicket.LastUpdateUserID = this.userID;
                     submissionTicket.ProjectID = receiptTicket.ProjectID;
-                    submissionTicket.WarehouseID = receiptTicket.Warehouse;
+                    submissionTicket.WarehouseID = receiptTicket.WarehouseID;
                     submissionTicket.State = "待检";
                     //////////////////////////// Begin
                     if (string.IsNullOrWhiteSpace(submissionTicket.No))

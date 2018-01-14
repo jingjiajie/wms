@@ -302,7 +302,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.LastUpdateTime = DateTime.Now;
                     receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.ProjectID = this.projectID;
-                    receiptTicket.Warehouse = this.warehouseID;
+                    receiptTicket.WarehouseID = this.warehouseID;
                     receiptTicket.SupplierID = this.supplierID;
                     receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.SaveChanges();
@@ -408,13 +408,13 @@ namespace WMS.UI.FormReceipt
                         return;
                     }
                     receiptTicket.LastUpdateUserID = this.userID;
-                    receiptTicket.Warehouse = this.warehouseID;
+                    receiptTicket.WarehouseID = this.warehouseID;
                     receiptTicket.ProjectID = this.projectID;
                     receiptTicket.CreateUserID = this.userID;
                     receiptTicket.LastUpdateTime = DateTime.Now;
                     receiptTicket.CreateTime = DateTime.Now;
                     receiptTicket.SupplierID = this.supplierID;
-                    receiptTicket.HasPutawayTicket = "否";
+                    receiptTicket.HasPutawayTicket = "没有生成上架单";
                     receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.ReceiptTicket.Add(receiptTicket);
                     wmsEntities.SaveChanges();

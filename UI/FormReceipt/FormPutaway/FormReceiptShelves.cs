@@ -25,6 +25,7 @@ namespace WMS.UI.FormReceipt
         private string key;
         private string value;
         private Action<string, string> ToPutaway = null;
+        private PagerWidget<PutawayTicketView> pagerWidget;
 
         public FormReceiptShelves()
         {
@@ -73,7 +74,20 @@ namespace WMS.UI.FormReceipt
                 this.toolStripComboBoxSelect.SelectedIndex = this.toolStripComboBoxSelect.Items.IndexOf(name);
                 this.toolStripTextBoxSelect.Text = value;
             }
-            Search(key, value);
+            pagerWidget = new PagerWidget<PutawayTicketView>(this.reoGridControlUser, ReceiptMetaData.putawayTicketKeyName, projectID, warehouseID);
+            this.panel1.Controls.Add(pagerWidget);
+            Search();
+            pagerWidget.Show();
+        }
+
+        private void Search(bool savePage = false, int selectID = -1)
+        {
+            this.pagerWidget.ClearCondition();
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            }
+            this.pagerWidget.Search(savePage, selectID);
         }
 
         private void InitComponents()
@@ -258,7 +272,7 @@ namespace WMS.UI.FormReceipt
         {
             if (this.toolStripComboBoxSelect.SelectedIndex == 0)
             {
-                Search(null, null);
+                Search();
             }
             else
             {
@@ -273,7 +287,11 @@ namespace WMS.UI.FormReceipt
                     }
                 }
                 string value = this.toolStripTextBoxSelect.Text;
-                Search(key, value);
+                if (key != null || value != null)
+                {
+                    pagerWidget.AddCondition(key, value);
+                }
+                pagerWidget.Search();
             }
         }
 
@@ -314,7 +332,7 @@ namespace WMS.UI.FormReceipt
                 FormPutawayModify formPutawayModify = new FormPutawayModify(putawayTicketID);
                 formPutawayModify.SetCallBack(new Action(() =>
                 {
-                    this.Search(null, null);
+                    this.Search();
                 }));
                 formPutawayModify.Show();
             }
@@ -324,7 +342,7 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            this.Search(null, null);
+            this.Search();
         }
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
@@ -369,7 +387,11 @@ namespace WMS.UI.FormReceipt
                             MessageBox.Show("成功");
                             this.Invoke(new Action(() =>
                             {
-                                this.Search(this.key, this.value);
+                                if (this.key != null || this.value != null)
+                                {
+                                    pagerWidget.AddCondition(this.key, this.value);
+                                }
+                                pagerWidget.Search();
                             }));
                         }).Start();
                     }

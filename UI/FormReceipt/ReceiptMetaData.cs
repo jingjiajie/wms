@@ -12,7 +12,7 @@ namespace WMS.UI.FormReceipt
         {
             new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false},
             new KeyName(){Name = "项目ID", Key = "ProjectID",Visible = false, Editable = false},
-            new KeyName(){Name = "仓库ID", Key = "Warehouse", Visible = false, Editable = false},
+            new KeyName(){Name = "仓库ID", Key = "WarehouseID", Visible = false, Editable = false},
             new KeyName(){Name = "供应商ID", Key = "SupplierID", Visible = false, Editable = false, Save = true},
             new KeyName(){Name = "单号", Key = "No", Visible = true, Editable = true, EditPlaceHolder = "留空自动生成"},
             new KeyName(){Name = "编号", Key = "Number", Visible = true, Editable = true},

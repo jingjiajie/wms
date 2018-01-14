@@ -204,7 +204,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Warehouse" Type="int" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="Type" Type="nvarchar" MaxLength="64" />
           <Property Name="DeliverTicketNoSRM" Type="nvarchar" MaxLength="64" />
           <Property Name="VoucherSource" Type="nvarchar" MaxLength="64" />
@@ -742,6 +742,7 @@
           <Property Name="ReceiptTicketItemExpiryDate" Type="datetime" />
           <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="PutawayAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutawayTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -892,7 +893,6 @@
           <Property Name="BoxNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ComponentName" Type="nvarchar" MaxLength="64" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
-          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserPassword" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserAuthority" Type="int" />
@@ -931,14 +931,16 @@
           <Property Name="SupplyDefaultShipmentUnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="HasPutwayAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseID" Type="int" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="ReceiptTicketView">
           <Key>
-            <PropertyRef Name="Warehouse" />
             <PropertyRef Name="ID" />
             <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="WarehouseID" />
           </Key>
           <Property Name="VoucherYear" Type="datetime" />
           <Property Name="ReletedVoucherNo" Type="nvarchar" MaxLength="64" />
@@ -965,7 +967,6 @@
           <Property Name="LastUpdateUserID" Type="int" />
           <Property Name="LastUpdateTime" Type="datetime" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
-          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserPassword" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserAuthority" Type="int" />
@@ -976,7 +977,6 @@
           <Property Name="LastUpdateUserAuthority" Type="int" />
           <Property Name="LastUpdateUserAuthorityName" Type="nvarchar" MaxLength="64" />
           <Property Name="LastUpdateUserSupplierID" Type="int" />
-          <Property Name="Warehouse" Type="int" Nullable="false" />
           <Property Name="VoucherNo" Type="nvarchar" MaxLength="64" />
           <Property Name="VoucherSource" Type="nvarchar" MaxLength="64" />
           <Property Name="DeliverTicketNoSRM" Type="nvarchar" MaxLength="64" />
@@ -996,6 +996,8 @@
           <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="HasPutawayTicket" Type="nvarchar" MaxLength="64" />
           <Property Name="HasPosted" Type="nvarchar" MaxLength="64" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1198,7 +1200,6 @@
           <Property Name="SubmissionReceiptTicketID" Type="int" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
           <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
-          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserPassword" Type="nvarchar" MaxLength="64" />
           <Property Name="CreateUserAuthority" Type="int" />
@@ -1210,7 +1211,6 @@
           <Property Name="LastUpdateUserAuthorityName" Type="nvarchar" MaxLength="64" />
           <Property Name="LastUpdateUserSupplierID" Type="int" />
           <Property Name="ComponentName" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketWarehouse" Type="int" />
           <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketSupplierID" Type="int" />
           <Property Name="ReceiptTicketItemState" Type="nvarchar" MaxLength="64" />
@@ -1227,7 +1227,9 @@
           <Property Name="RejectAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
-          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseID" Type="int" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1753,7 +1755,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ReceiptTicket">
-              <PropertyRef Name="Warehouse" />
+              <PropertyRef Name="WarehouseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2008,7 +2010,8 @@ FROM [dbo].[ProjectView] AS [ProjectView]</DefiningQuery>
 [PutawayTicketItemView].[ReceiptTicketItemInventoryDate] AS [ReceiptTicketItemInventoryDate], 
 [PutawayTicketItemView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
 [PutawayTicketItemView].[UnitCount] AS [UnitCount], 
-[PutawayTicketItemView].[PutawayAmount] AS [PutawayAmount]
+[PutawayTicketItemView].[PutawayAmount] AS [PutawayAmount], 
+[PutawayTicketItemView].[WarehouseID] AS [WarehouseID]
 FROM [dbo].[PutawayTicketItemView] AS [PutawayTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutawayTicketView" EntityType="Self.PutawayTicketView" store:Type="Views" store:Schema="dbo">
@@ -2144,7 +2147,6 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[BoxNo] AS [BoxNo], 
 [ReceiptTicketItemView].[ComponentName] AS [ComponentName], 
 [ReceiptTicketItemView].[ProjectName] AS [ProjectName], 
-[ReceiptTicketItemView].[WarehouseName] AS [WarehouseName], 
 [ReceiptTicketItemView].[CreateUserUsername] AS [CreateUserUsername], 
 [ReceiptTicketItemView].[CreateUserPassword] AS [CreateUserPassword], 
 [ReceiptTicketItemView].[CreateUserAuthority] AS [CreateUserAuthority], 
@@ -2182,7 +2184,9 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[SupplyDefaultShipmentUnit] AS [SupplyDefaultShipmentUnit], 
 [ReceiptTicketItemView].[SupplyDefaultShipmentUnitAmount] AS [SupplyDefaultShipmentUnitAmount], 
 [ReceiptTicketItemView].[UnitCount] AS [UnitCount], 
-[ReceiptTicketItemView].[HasPutwayAmount] AS [HasPutwayAmount]
+[ReceiptTicketItemView].[HasPutwayAmount] AS [HasPutwayAmount], 
+[ReceiptTicketItemView].[WarehouseID] AS [WarehouseID], 
+[ReceiptTicketItemView].[WarehouseName] AS [WarehouseName]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -2212,7 +2216,6 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[LastUpdateUserID] AS [LastUpdateUserID], 
 [ReceiptTicketView].[LastUpdateTime] AS [LastUpdateTime], 
 [ReceiptTicketView].[ProjectName] AS [ProjectName], 
-[ReceiptTicketView].[WarehouseName] AS [WarehouseName], 
 [ReceiptTicketView].[CreateUserUsername] AS [CreateUserUsername], 
 [ReceiptTicketView].[CreateUserPassword] AS [CreateUserPassword], 
 [ReceiptTicketView].[CreateUserAuthority] AS [CreateUserAuthority], 
@@ -2223,7 +2226,6 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[LastUpdateUserAuthority] AS [LastUpdateUserAuthority], 
 [ReceiptTicketView].[LastUpdateUserAuthorityName] AS [LastUpdateUserAuthorityName], 
 [ReceiptTicketView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID], 
-[ReceiptTicketView].[Warehouse] AS [Warehouse], 
 [ReceiptTicketView].[VoucherNo] AS [VoucherNo], 
 [ReceiptTicketView].[VoucherSource] AS [VoucherSource], 
 [ReceiptTicketView].[DeliverTicketNoSRM] AS [DeliverTicketNoSRM], 
@@ -2242,7 +2244,9 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[SupplierName] AS [SupplierName], 
 [ReceiptTicketView].[PersonName] AS [PersonName], 
 [ReceiptTicketView].[HasPutawayTicket] AS [HasPutawayTicket], 
-[ReceiptTicketView].[HasPosted] AS [HasPosted]
+[ReceiptTicketView].[HasPosted] AS [HasPosted], 
+[ReceiptTicketView].[WarehouseID] AS [WarehouseID], 
+[ReceiptTicketView].[WarehouseName] AS [WarehouseName]
 FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketItemView" EntityType="Self.ShipmentTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2423,7 +2427,6 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[SubmissionReceiptTicketID] AS [SubmissionReceiptTicketID], 
 [SubmissionTicketItemView].[SupplierName] AS [SupplierName], 
 [SubmissionTicketItemView].[ProjectName] AS [ProjectName], 
-[SubmissionTicketItemView].[WarehouseName] AS [WarehouseName], 
 [SubmissionTicketItemView].[CreateUserUsername] AS [CreateUserUsername], 
 [SubmissionTicketItemView].[CreateUserPassword] AS [CreateUserPassword], 
 [SubmissionTicketItemView].[CreateUserAuthority] AS [CreateUserAuthority], 
@@ -2435,7 +2438,6 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[LastUpdateUserAuthorityName] AS [LastUpdateUserAuthorityName], 
 [SubmissionTicketItemView].[LastUpdateUserSupplierID] AS [LastUpdateUserSupplierID], 
 [SubmissionTicketItemView].[ComponentName] AS [ComponentName], 
-[SubmissionTicketItemView].[ReceiptTicketWarehouse] AS [ReceiptTicketWarehouse], 
 [SubmissionTicketItemView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
 [SubmissionTicketItemView].[ReceiptTicketSupplierID] AS [ReceiptTicketSupplierID], 
 [SubmissionTicketItemView].[ReceiptTicketItemState] AS [ReceiptTicketItemState], 
@@ -2452,7 +2454,9 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[RejectAmount] AS [RejectAmount], 
 [SubmissionTicketItemView].[SupplyNumber] AS [SupplyNumber], 
 [SubmissionTicketItemView].[SupplyNo] AS [SupplyNo], 
-[SubmissionTicketItemView].[UnitAmount] AS [UnitAmount]
+[SubmissionTicketItemView].[UnitAmount] AS [UnitAmount], 
+[SubmissionTicketItemView].[WarehouseID] AS [WarehouseID], 
+[SubmissionTicketItemView].[WarehouseName] AS [WarehouseName]
 FROM [dbo].[SubmissionTicketItemView] AS [SubmissionTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketView" EntityType="Self.SubmissionTicketView" store:Type="Views" store:Schema="dbo">
@@ -2966,7 +2970,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Warehouse" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
           <Property Name="Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="DeliverTicketNoSRM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="VoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3009,7 +3013,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <NavigationProperty Name="Project" Relationship="Self.FK_ReceiptTicket_Project" FromRole="ReceiptTicket" ToRole="Project" />
           <NavigationProperty Name="ReceiptTicketItem" Relationship="Self.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicket" ToRole="ReceiptTicketItem" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_ReceiptTicket_Supplier" FromRole="ReceiptTicket" ToRole="Supplier" />
-          <NavigationProperty Name="Warehouse1" Relationship="Self.FK_ReceiptTicket_Warehouse" FromRole="ReceiptTicket" ToRole="Warehouse" />
+          <NavigationProperty Name="Warehouse" Relationship="Self.FK_ReceiptTicket_Warehouse" FromRole="ReceiptTicket" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="ReceiptTicketItem">
           <Key>
@@ -3528,6 +3532,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="PutawayAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseID" Type="Int32" />
         </EntityType>
         <EntityType Name="PutawayTicketView">
           <Key>
@@ -3670,7 +3675,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="BoxNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ComponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserAuthority" Type="Int32" />
@@ -3709,12 +3713,14 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplyDefaultShipmentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="HasPutwayAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
-            <PropertyRef Name="Warehouse" />
             <PropertyRef Name="ID" />
             <PropertyRef Name="ProjectID" />
+            <PropertyRef Name="WarehouseID" />
           </Key>
           <Property Name="VoucherYear" Type="DateTime" Precision="3" />
           <Property Name="ReletedVoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3741,7 +3747,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateUserID" Type="Int32" />
           <Property Name="LastUpdateTime" Type="DateTime" Precision="3" />
           <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserAuthority" Type="Int32" />
@@ -3752,7 +3757,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateUserAuthority" Type="Int32" />
           <Property Name="LastUpdateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdateUserSupplierID" Type="Int32" />
-          <Property Name="Warehouse" Type="Int32" Nullable="false" />
           <Property Name="VoucherNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="VoucherSource" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="DeliverTicketNoSRM" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3772,6 +3776,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HasPutawayTicket" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HasPosted" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ShipmentTicketItemView">
           <Key>
@@ -3962,7 +3968,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SubmissionReceiptTicketID" Type="Int32" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserPassword" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="CreateUserAuthority" Type="Int32" />
@@ -3974,7 +3979,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="LastUpdateUserAuthorityName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdateUserSupplierID" Type="Int32" />
           <Property Name="ComponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketWarehouse" Type="Int32" />
           <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketSupplierID" Type="Int32" />
           <Property Name="ReceiptTicketItemState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3991,7 +3995,9 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="RejectAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SubmissionTicketView">
           <Key>
@@ -4397,7 +4403,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ReceiptTicket">
-              <PropertyRef Name="Warehouse" />
+              <PropertyRef Name="WarehouseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4939,7 +4945,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicket">
               <MappingFragment StoreEntitySet="ReceiptTicket">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="DeliverTicketNoSRM" ColumnName="DeliverTicketNoSRM" />
                 <ScalarProperty Name="VoucherSource" ColumnName="VoucherSource" />
@@ -5479,6 +5485,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemExpiryDate" ColumnName="ReceiptTicketItemExpiryDate" />
                 <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
                 <ScalarProperty Name="PutawayAmount" ColumnName="PutawayAmount" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5622,7 +5629,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="BoxNo" ColumnName="BoxNo" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
                 <ScalarProperty Name="CreateUserPassword" ColumnName="CreateUserPassword" />
                 <ScalarProperty Name="CreateUserAuthority" ColumnName="CreateUserAuthority" />
@@ -5661,6 +5667,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplyDefaultShipmentUnitAmount" ColumnName="SupplyDefaultShipmentUnitAmount" />
                 <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
                 <ScalarProperty Name="HasPutwayAmount" ColumnName="HasPutwayAmount" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5692,7 +5700,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="LastUpdateUserID" ColumnName="LastUpdateUserID" />
                 <ScalarProperty Name="LastUpdateTime" ColumnName="LastUpdateTime" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
                 <ScalarProperty Name="CreateUserPassword" ColumnName="CreateUserPassword" />
                 <ScalarProperty Name="CreateUserAuthority" ColumnName="CreateUserAuthority" />
@@ -5703,7 +5710,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="LastUpdateUserAuthority" ColumnName="LastUpdateUserAuthority" />
                 <ScalarProperty Name="LastUpdateUserAuthorityName" ColumnName="LastUpdateUserAuthorityName" />
                 <ScalarProperty Name="LastUpdateUserSupplierID" ColumnName="LastUpdateUserSupplierID" />
-                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
                 <ScalarProperty Name="VoucherNo" ColumnName="VoucherNo" />
                 <ScalarProperty Name="VoucherSource" ColumnName="VoucherSource" />
                 <ScalarProperty Name="DeliverTicketNoSRM" ColumnName="DeliverTicketNoSRM" />
@@ -5723,6 +5729,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />
                 <ScalarProperty Name="HasPutawayTicket" ColumnName="HasPutawayTicket" />
                 <ScalarProperty Name="HasPosted" ColumnName="HasPosted" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5915,7 +5923,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SubmissionReceiptTicketID" ColumnName="SubmissionReceiptTicketID" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
-                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />
                 <ScalarProperty Name="CreateUserPassword" ColumnName="CreateUserPassword" />
                 <ScalarProperty Name="CreateUserAuthority" ColumnName="CreateUserAuthority" />
@@ -5927,7 +5934,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="LastUpdateUserAuthorityName" ColumnName="LastUpdateUserAuthorityName" />
                 <ScalarProperty Name="LastUpdateUserSupplierID" ColumnName="LastUpdateUserSupplierID" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
-                <ScalarProperty Name="ReceiptTicketWarehouse" ColumnName="ReceiptTicketWarehouse" />
                 <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
                 <ScalarProperty Name="ReceiptTicketSupplierID" ColumnName="ReceiptTicketSupplierID" />
                 <ScalarProperty Name="ReceiptTicketItemState" ColumnName="ReceiptTicketItemState" />
@@ -5945,6 +5951,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

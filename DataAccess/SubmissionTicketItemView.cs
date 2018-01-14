@@ -27,7 +27,6 @@ namespace WMS.DataAccess
         public Nullable<int> SubmissionReceiptTicketID { get; set; }
         public string SupplierName { get; set; }
         public string ProjectName { get; set; }
-        public string WarehouseName { get; set; }
         public string CreateUserUsername { get; set; }
         public string CreateUserPassword { get; set; }
         public Nullable<int> CreateUserAuthority { get; set; }
@@ -39,7 +38,6 @@ namespace WMS.DataAccess
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
         public string ComponentName { get; set; }
-        public Nullable<int> ReceiptTicketWarehouse { get; set; }
         public string ReceiptTicketNo { get; set; }
         public Nullable<int> ReceiptTicketSupplierID { get; set; }
         public string ReceiptTicketItemState { get; set; }
@@ -57,5 +55,7 @@ namespace WMS.DataAccess
         public string SupplyNumber { get; set; }
         public string SupplyNo { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

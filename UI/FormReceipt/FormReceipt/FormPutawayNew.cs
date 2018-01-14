@@ -299,7 +299,7 @@ namespace WMS.UI.FormReceipt
                     putawayTicket.LastUpdateTime = DateTime.Now;
                     putawayTicket.LastUpdateUserID = this.userID;
                     putawayTicket.ProjectID = receiptTicket.ProjectID;
-                    putawayTicket.WarehouseID = receiptTicket.Warehouse;
+                    putawayTicket.WarehouseID = receiptTicket.WarehouseID;
                     putawayTicket.State = "待上架";
                     putawayTicket.PersonID = this.PersonIDGetter();
                     wmsEntities.PutawayTicket.Add(putawayTicket);
@@ -401,11 +401,11 @@ namespace WMS.UI.FormReceipt
                             }
                             if (n == receiptTicket.ReceiptTicketItem.ToArray().Length)
                             {
-                                receiptTicket.HasPutawayTicket = "是";
+                                receiptTicket.HasPutawayTicket = "全部生成上架单";
                             }
                             else
                             {
-                                receiptTicket.HasPutawayTicket = "部分";
+                                receiptTicket.HasPutawayTicket = "部分生成上架单";
                             }
                             wmsEntities.SaveChanges();
                             /*

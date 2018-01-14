@@ -39,7 +39,6 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserID { get; set; }
         public Nullable<System.DateTime> LastUpdateTime { get; set; }
         public string ProjectName { get; set; }
-        public string WarehouseName { get; set; }
         public string CreateUserUsername { get; set; }
         public string CreateUserPassword { get; set; }
         public Nullable<int> CreateUserAuthority { get; set; }
@@ -50,7 +49,6 @@ namespace WMS.DataAccess
         public Nullable<int> LastUpdateUserAuthority { get; set; }
         public string LastUpdateUserAuthorityName { get; set; }
         public Nullable<int> LastUpdateUserSupplierID { get; set; }
-        public int Warehouse { get; set; }
         public string VoucherNo { get; set; }
         public string VoucherSource { get; set; }
         public string DeliverTicketNoSRM { get; set; }
@@ -70,5 +68,7 @@ namespace WMS.DataAccess
         public string PersonName { get; set; }
         public string HasPutawayTicket { get; set; }
         public string HasPosted { get; set; }
+        public int WarehouseID { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

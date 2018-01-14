@@ -23,7 +23,7 @@ namespace WMS.UI
 
         private string key;
         private string value;
-
+        PagerWidget<SubmissionTicketView> pagerWidget;
         public FormSubmissionManage()
         {
             InitializeComponent();
@@ -57,10 +57,28 @@ namespace WMS.UI
                 string name = (from n in ReceiptMetaData.submissionTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
                 this.comboBoxSelect.SelectedItem = name;
                 this.comboBoxSelect.SelectedIndex = this.comboBoxSelect.Items.IndexOf(name);
-                
+
+            }
+            pagerWidget = new PagerWidget<SubmissionTicketView>(this.reoGridControl1, ReceiptMetaData.submissionTicketKeyName, projectID, warehouseID);
+            if (key != null || value != null)
+            {
+                pagerWidget.AddCondition(key, value);
             }
             this.textBoxSelect.Text = value;
-            Search(key, value);
+            this.panel1.Controls.Add(this.pagerWidget);
+            pagerWidget.Show();
+            this.Search();
+            //Search(key, value);
+        }
+
+        private void Search(bool savePage = false, int selectID = -1)
+        {
+            this.pagerWidget.ClearCondition();
+            if (this.comboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
+            }
+            this.pagerWidget.Search(savePage, selectID);
         }
 
         private void InitComponents()
@@ -175,7 +193,7 @@ namespace WMS.UI
         {
             if (comboBoxSelect.SelectedIndex == 0)
             {
-                Search(null, null);
+                Search();
             }
             else
             {
@@ -190,13 +208,17 @@ namespace WMS.UI
                     }
                 }
                 string value = this.textBoxSelect.Text;
-                Search(key, value);
+                if (key != null && value != null)
+                {
+                    this.pagerWidget.AddCondition(key, value);
+                }
+                Search();
             }
         }
 
         private void buttonPass_Click(object sender, EventArgs e)
         {
-            
+
             WMSEntities wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControl1.Worksheets[0];
             try
@@ -221,7 +243,7 @@ namespace WMS.UI
                 }
                 receiptTicket.State = "已收货";
                 ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
-                foreach(ReceiptTicketItem rti in receiptTicketItems)
+                foreach (ReceiptTicketItem rti in receiptTicketItems)
                 {
                     rti.State = "已收货";
                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
@@ -237,7 +259,14 @@ namespace WMS.UI
                     MessageBox.Show("成功");
                     this.Invoke(new Action(() =>
                     {
-                        this.Search(this.key, this.value);
+                        if (this.key == null || this.value == null)
+                        {
+                            this.Search();
+                        }
+                        else
+                        {
+                            this.Search(this.key, this.value);
+                        }
                     }));
                 }).Start();
                 /*
@@ -427,7 +456,14 @@ namespace WMS.UI
                     MessageBox.Show("成功");
                     this.Invoke(new Action(() =>
                     {
-                        this.Search(this.key, this.value);
+                        if (this.key == null || this.value == null)
+                        {
+                            this.Search();
+                        }
+                        else
+                        {
+                            this.Search(this.key, this.value);
+                        }
                     }));
                 }).Start();
             }
@@ -462,7 +498,7 @@ namespace WMS.UI
                 FormSubmissionItem formSubmissionItem = new FormSubmissionItem(submissionTicketID);
                 formSubmissionItem.SetCallBack(new Action(() =>
                 {
-                    this.Search(null, null);
+                    this.Search();
                 }));
                 formSubmissionItem.Show();
             }
@@ -476,7 +512,7 @@ namespace WMS.UI
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            this.Search(null, null);
+            this.Search();
         }
 
         private void buttonItems_Click(object sender, EventArgs e)
@@ -503,7 +539,7 @@ namespace WMS.UI
                 FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(submissionTicketID, this.userID, FormMode.ALTER);
                 formAddSubmissionTicket.SetCallBack(new Action(() =>
                 {
-                    this.Search(null, null);
+                    this.Search();
                 }));
                 formAddSubmissionTicket.Show();
                 /*
@@ -514,13 +550,13 @@ namespace WMS.UI
                 formReceiptArrivalCheck.Show();
                 */
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            this.Search(null, null);
+            this.Search();
         }
 
         private void comboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -545,10 +581,10 @@ namespace WMS.UI
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
 
-            
+
             if (MessageBox.Show("确认删除，并取消送检？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
-                Search(null, null);
+                Search();
                 return;
             }
             var worksheet = this.reoGridControl1.Worksheets[0];
@@ -574,7 +610,7 @@ namespace WMS.UI
                 if (submissionTicket == null)
                 {
                     MessageBox.Show("此送检单已被删除");
-                    this.Search(null, null);
+                    this.Search();
                     return;
                 }
                 else
@@ -617,10 +653,14 @@ namespace WMS.UI
                                 }
                                 wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ID = @submissionTicketID", new SqlParameter("submissionTicketID", submissionTicket.ID));
                                 wmsEntities.SaveChanges();
-                                this.Search(null, null);
+                                this.Invoke(new Action(() =>
+                                {
+                                    this.Search();
+                                }));
+
                                 //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待送检' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", sti.ReceiptTicketItemID));
                             }
-                            
+
                         }
                         catch
                         {
@@ -635,7 +675,7 @@ namespace WMS.UI
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            Search(null, null);
+            Search();
         }
     }
 }

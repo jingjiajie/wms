@@ -126,15 +126,15 @@ namespace WMS.UI.FormReceipt
                 var wmsEntities = new WMSEntities();
                 //ReceiptTicketView[] receiptTicketViews = null;
                 SubmissionTicketItemView[] submissionTicketItemView = null;
-                try
-                {
+                //try
+                //{
                     submissionTicketItemView = wmsEntities.Database.SqlQuery<SubmissionTicketItemView>("SELECT * FROM SubmissionTicketItemView WHERE SubmissionTicketID=@submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID)).ToArray();
-                }
-                catch
-                {
-                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                    return;
-                }
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                //    return;
+                //}
                 this.reoGridControlSubmissionItems.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -785,7 +785,10 @@ namespace WMS.UI.FormReceipt
                         wmsEntities.SaveChanges();
                     }
                 }*/
-                CallBack();
+                this.Invoke(new Action(() => 
+                {
+                    CallBack();
+                }));
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();
             

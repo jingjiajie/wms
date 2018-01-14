@@ -44,6 +44,7 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -59,7 +60,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 267);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1404, 739);
+            this.panel2.Size = new System.Drawing.Size(1404, 679);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlPutaway
@@ -79,7 +80,7 @@
             this.reoGridControlPutaway.SheetTabVisible = true;
             this.reoGridControlPutaway.SheetTabWidth = 140;
             this.reoGridControlPutaway.ShowScrollEndSpacing = true;
-            this.reoGridControlPutaway.Size = new System.Drawing.Size(1404, 739);
+            this.reoGridControlPutaway.Size = new System.Drawing.Size(1404, 679);
             this.reoGridControlPutaway.TabIndex = 9;
             this.reoGridControlPutaway.Text = "reoGridControlPutaway";
             // 
@@ -258,12 +259,14 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel4, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 264F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1410, 1009);
             this.tableLayoutPanel1.TabIndex = 17;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
@@ -292,6 +295,14 @@
             this.statusStrip1.Size = new System.Drawing.Size(1410, 36);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 952);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1404, 54);
+            this.panel4.TabIndex = 2;
             // 
             // FormShelvesItem
             // 
@@ -336,5 +347,6 @@
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.Panel panel4;
     }
 }

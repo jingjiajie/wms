@@ -133,9 +133,9 @@ namespace WMS.UI.FormReceipt
             {
                 wmsEntities.SaveChanges();
                 MessageBox.Show("修改成功");
-                CallBack();
                 this.Invoke(new Action(() =>
                 {
+                    CallBack();
                     this.Hide();
                 }));
             }).Start();
