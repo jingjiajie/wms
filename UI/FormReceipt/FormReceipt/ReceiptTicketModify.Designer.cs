@@ -107,7 +107,7 @@
             // 
             // FormReceiptTicketModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 35F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(817, 540);
             this.Controls.Add(this.tableLayoutPanelTextBoxes);
@@ -119,7 +119,7 @@
             this.MinimizeBox = false;
             this.Name = "FormReceiptTicketModify";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ReceiptTicketModify";
+            this.Text = "修改收货单";
             this.Load += new System.EventHandler(this.ReceiptTicketModify_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

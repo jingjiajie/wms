@@ -22,7 +22,13 @@ namespace WMS.UI.FormReceipt
         private WMSEntities wmsEntities = new WMSEntities();
         private SubmissionTicket submissionTicket;
         private Func<int> PersonIDGetter = null;
+        private Func<int> ReceivePersonIDGetter = null;
+        private Func<int> SubmissionPersonIDGetter = null;
+        private Func<int> DeliverPersonIDGetter = null;
         private int personID = -1;
+        private int receivePersonID = -1;
+        private int submissionPersonID = -1;
+        private int DeliverPersonID = -1;
         public FormAddSubmissionTicket()
         {
             InitializeComponent();
@@ -53,6 +59,9 @@ namespace WMS.UI.FormReceipt
         {
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, ReceiptMetaData.submissionTicketKeyName);
             this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
+            this.DeliverPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxDeliverSubmissionPersonName", "Name");
+            this.SubmissionPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxSubmissionPersonName", "Name");
+            this.ReceivePersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxReceivePersonName", "Name");
             //this.Controls.Find("textBoxID", true)[0].Text = "0";
             //TextBox textBoxReceiptTicketID = (TextBox)this.Controls.Find("textBoxReceiptTicketID", true)[0];
             //textBoxReceiptTicketID.Text = receiptTicketID.ToString();
@@ -102,8 +111,22 @@ namespace WMS.UI.FormReceipt
             }
             //this.personID = this.PersonIDGetter();
             //submissionTicket.PersonID = this.personID == -1 ? this.PersonIDGetter() : this.personID;
-            this.personID = this.PersonIDGetter();
-            submissionTicket.PersonID = this.PersonIDGetter() == -1 ? personID : PersonIDGetter();
+            if (this.PersonIDGetter() != -1)
+            {
+                submissionTicket.PersonID = PersonIDGetter();
+            }
+            if (this.DeliverPersonIDGetter() != -1)
+            {
+                submissionTicket.DeliverSubmissionPersonID = DeliverPersonIDGetter();
+            }
+            if (this.SubmissionPersonIDGetter() != -1)
+            {
+                submissionTicket.SubmissionPersonID = SubmissionPersonIDGetter();
+            }
+            if (this.ReceivePersonIDGetter() != -1)
+            {
+                submissionTicket.ReceivePersonID = ReceivePersonIDGetter();
+            }
             submissionTicket.LastUpdateUserID = this.userID;
             submissionTicket.LastUpdateTime = DateTime.Now;
             new Thread(() => 
@@ -111,6 +134,10 @@ namespace WMS.UI.FormReceipt
                 wmsEntities.SaveChanges();
                 MessageBox.Show("修改成功");
                 CallBack();
+                this.Invoke(new Action(() =>
+                {
+                    this.Hide();
+                }));
             }).Start();
             /*
             WMSEntities wmsEntities = new WMSEntities();

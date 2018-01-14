@@ -20,20 +20,12 @@ namespace WMS.UI
                   (int)Authority.STOCKINFO
                 | (int)Authority.STOCK_CHECK;
         public const int AUTHORITY_SUPPLIER = //供应商权限
-                  (int)Authority.BASE_COMPONENT_SUPPLIER_SELFONLY
-                | (int)Authority.BASE_PROJECT_SUPPLIER_SELFONLY
+                  (int)Authority.BASE_SUPPLY_SUPPLIER_SELFONLY
                 | (int)Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY
-                | (int)Authority.BASE_USER_SUPPLIER_SELFONLY
-                | (int)Authority.BASE_WAREHOUSE_SUPPLIER_SELFONLY
-                | (int)Authority.DELIVERY_JOB_SUPPLIER_SELFONLY
-                | (int)Authority.DELIVERY_OUTPUT_SUPPLIER_SELFONLY
-                | (int)Authority.DELIVERY_SEND_SUPPLIER_SELFONLY
                 | (int)Authority.RECEIPT_ARRIVAL_SUPPLIER_SELFONLY
-                | (int)Authority.RECEIPT_SHELVES_SUPPLIER_SELFONLY
                 | (int)Authority.SETTLEMENT_SUPPLIER_SELFONLY
                 | (int)Authority.STOCKINFO_SUPPLIER_SELFONLY
-                | (int)Authority.STOCK_CHECK_SUPPLIER_SELFONLY
-                | (int)Authority.SUBMISSION_TICKET_SUPPLIER_SELFONLY;
+            ;
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false,ImportVisible=false},

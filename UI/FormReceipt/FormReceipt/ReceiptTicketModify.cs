@@ -144,8 +144,28 @@ namespace WMS.UI.FormReceipt
             formSelectSupplier.SetSelectFinishCallback(new Action<int>((int ID)=> 
             {
                 //this.Controls.Find("textBoxSupplierNo", true)[0].Text = ID.ToString();
-                this.supplierID = ID;
                 Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();
+                if (supplier == null)
+                {
+                    MessageBox.Show("该供应商已被删除");
+                    return;
+                }
+                else
+                {
+                    if (supplier.EndingTime < DateTime.Now)
+                    {
+                       if (MessageBox.Show("改供货商合同截止日期已过，是否继续？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            this.supplierID = ID;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                this.supplierID = ID;
+                //Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();
                 if (supplier != null)
                 {
                     this.Controls.Find("textBoxSupplierName", true)[0].Text = supplier.Name;

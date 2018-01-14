@@ -65,5 +65,10 @@ namespace WMS.UI.FormReceipt.FormPutawayTicketItem
         {
 
         }
+
+        private void FormPutawayTicketItem_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

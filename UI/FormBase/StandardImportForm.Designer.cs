@@ -44,7 +44,8 @@
             this.buttonImport});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(836, 27);
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(1254, 38);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -53,7 +54,7 @@
             this.buttonImport.Image = global::WMS.UI.Properties.Resources.add;
             this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(93, 24);
+            this.buttonImport.Size = new System.Drawing.Size(134, 35);
             this.buttonImport.Text = "确定导入";
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
@@ -63,28 +64,27 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 27);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 38);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
             this.reoGridControlMain.Script = null;
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 80;
+            this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(836, 409);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1254, 660);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
             // StandardImportForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 436);
+            this.ClientSize = new System.Drawing.Size(1254, 698);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "StandardImportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "导入用户信息";

@@ -17,8 +17,11 @@ namespace WMS.UI.FormReceipt
     {
         private int projectID;
         private int warehouseID;
+        private int userID;
         private int putawayTicketItemID;
         private int putawayTicketID;
+        private string key = null;
+        private string value = null;
         WMSEntities wmsEntities = new WMSEntities();
         private Action CallBack = null;
         private Func<int> JobPersonIDGetter = null;
@@ -36,11 +39,14 @@ namespace WMS.UI.FormReceipt
             this.putawayTicketID = putawayTicketID;
         }
 
-        public FormShelvesItem(int projectID, int warehouseID)
+        public FormShelvesItem(int projectID, int warehouseID, int userID, string key, string value)
         {
             InitializeComponent();
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+            this.userID = userID;
+            this.key = key;
+            this.value = value;
         }
 
         public void SetCallBack(Action action)
@@ -158,20 +164,29 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                     return;
                 }*/
+               
+                PutawayTicketItemView[] putawayTicketItemViews1;
+                if (this.key != null && this.value != null)
+                {
+                    putawayTicketItemViews1 = wmsEntities.Database.SqlQuery<PutawayTicketItemView>(string.Format("SELECT * FROM PutawayTicketItemView WHERE {0}=@value AND PutawayTicketWarehouseID = @warehouseID AND PutawayTicketProjectID = @projectID", key), new SqlParameter[] { new SqlParameter("value", value) ,new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID) }).ToArray();
+                }
+                else
+                {
+                    putawayTicketItemViews1 = wmsEntities.Database.SqlQuery<PutawayTicketItemView>("SELECT * FROM PutawayTicketItemView WHERE PutawayTicketWarehouseID = @warehouseID AND PutawayTicketProjectID = @projectID", new SqlParameter[] { new SqlParameter("warehouseID", this.warehouseID), new SqlParameter("projectID", this.projectID)}).ToArray();
+                }
                 putawayTicketItemView =
-                (from ptiv in wmsEntities.PutawayTicketItemView
+                (from ptiv in putawayTicketItemViews1
                  where ptiv.PutawayTicketProjectID == this.projectID && ptiv.PutawayTicketWarehouseID == this.warehouseID
                  orderby ptiv.StockInfoShipmentAreaAmount / (ptiv.ComponentDailyProduction * ptiv.ComponentSingleCarUsageAmount) ascending,
                  ptiv.ReceiptTicketItemInventoryDate ascending
                  select ptiv).ToArray();
-
-
+                /*
                 string sql = (from ptiv in wmsEntities.PutawayTicketItemView
                               where ptiv.PutawayTicketProjectID == this.projectID && ptiv.PutawayTicketWarehouseID == this.warehouseID
                               orderby ptiv.StockInfoShipmentAreaAmount / (ptiv.ComponentDailyProduction * ptiv.ComponentSingleCarUsageAmount) ascending,
                               ptiv.ReceiptTicketItemInventoryDate ascending
                               select ptiv).ToString();
-                Console.WriteLine(sql);
+                Console.WriteLine(sql);*/
                 this.reoGridControlPutaway.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -389,9 +404,9 @@ namespace WMS.UI.FormReceipt
                             MessageBox.Show("请输入合法的上架数量");
                             return;
                         }*/
-                        if (putawayTicketItem.UnitCount == null)
+                        if (putawayTicketItem.MoveCount == null)
                         {
-                            putawayTicketItem.UnitCount = 0;
+                            putawayTicketItem.MoveCount = 0;
                         }
                         if (putawayTicketItem.UnitAmount == null)
                         {
@@ -402,7 +417,7 @@ namespace WMS.UI.FormReceipt
                             }
                         }
                         
-                        putawayTicketItem.PutawayAmount = putawayTicketItem.UnitAmount * putawayTicketItem.UnitCount;
+                        putawayTicketItem.PutawayAmount = putawayTicketItem.UnitAmount * putawayTicketItem.MoveCount;
                         StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == putawayTicketItem.ReceiptTicketItemID select si).FirstOrDefault();
                         if (stockInfo != null)
                         {
