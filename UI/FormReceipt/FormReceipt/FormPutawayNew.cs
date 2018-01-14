@@ -346,7 +346,7 @@ namespace WMS.UI.FormReceipt
                                     putawayTicketItem.ScheduledMoveCount = ripa.Value;
                                     if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - putawayTicketItem.ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                                     {
-                                        MessageBox.Show("上架失败，计划上架数量过多！");
+                                        MessageBox.Show("上架失败，计划上架数量过多！","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                                         return;
                                     }
                                     if (receiptTicketItem.HasPutwayAmount == null)
