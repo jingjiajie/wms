@@ -76,6 +76,16 @@ namespace WMS.UI
 
 
             
+           
+            
+
+
+            this.InitComponents();
+
+        }
+        private void InitComponents()
+        {
+
             Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
             this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
@@ -86,9 +96,9 @@ namespace WMS.UI
                 try
                 {
 
-                     stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
-                                                                                  where s.ID == this.stockInfoCheckID
-                                                                                  select s).Single();
+                    stockInfoCheckView = (from s in this.wmsEntities.StockInfoCheckTicketView
+                                          where s.ID == this.stockInfoCheckID
+                                          select s).FirstOrDefault();
 
                 }
                 catch
@@ -106,18 +116,20 @@ namespace WMS.UI
 
 
                 Utilities.CopyPropertiesToTextBoxes(stockInfoCheckView, this);
+                if(stockInfoCheckView .PersonID != null)
+                {
+                    this.personid = Convert.ToInt32 ( stockInfoCheckView.PersonID);
+
+                }
+
+
+
             }
 
 
-            this.InitComponents();
+            }
 
-        }
-        private void InitComponents()
-        {
-
-        }
-
-
+        
 
 
 
@@ -144,14 +156,7 @@ namespace WMS.UI
                 this.personid  = selectedID;
                 this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName.Name ;
                 this.personidc = 1;
-               
-                
-
-
-
-
-
-            });
+             });
             FormSelectPerson.Show();
 
 
@@ -173,7 +178,7 @@ namespace WMS.UI
                 {
                     stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
                                       where s.ID == this.stockInfoCheckID
-                                      select s).Single();
+                                      select s).FirstOrDefault ();
                     stockInfoCheck.LastUpdateUserID = Convert.ToString(userID);
                 }
                 catch
@@ -285,7 +290,7 @@ namespace WMS.UI
                 {
                     stockInfoCheck = (from s in this.wmsEntities.StockInfoCheckTicket
                                       where s.ID == this.stockInfoCheckID
-                                      select s).Single();
+                                      select s).FirstOrDefault ();
                     
                    
                 }
@@ -378,10 +383,7 @@ namespace WMS.UI
 
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }
 

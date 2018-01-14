@@ -143,7 +143,7 @@ namespace WMS.UI
             PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
                                                                where p.ID == this.putOutStorageTicketID
                                                                select p).FirstOrDefault();
-            PutOutStorageTicketItemView[] putOutStorageTicketTiemViews =
+            PutOutStorageTicketItemView[] putOutStorageTicketItemViews =
                 (from p in wmsEntities.PutOutStorageTicketItemView
                  where p.PutOutStorageTicketID == putOutStorageTicketView.ID
                  select p).ToArray();
@@ -157,17 +157,35 @@ namespace WMS.UI
                                                     (SELECT ShipmentTicketID FROM JobTicket
                                                         WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
 
+            int[] supplierIDs = (from item in putOutStorageTicketItemViews
+                                 where item.SupplierID != null
+                                 select item.SupplierID.Value).ToArray();
             Supplier[] suppliers = (from s in wmsEntities.Supplier
-                                    where (from item in putOutStorageTicketTiemViews select item.SupplierID).Contains(s.ID)
+                                    where supplierIDs.Contains(s.ID)
                                     select s).ToArray();
+
             foreach(Supplier supplier in suppliers)
             {
                 formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketMoBiSi.xlsx",supplier.Name);
                 formPreview.AddData("ticket", putOutStorageTicketView,supplier.Name);
-                formPreview.AddData("items", (from item in putOutStorageTicketTiemViews where item.SupplierID == supplier.ID select item).ToArray(), supplier.Name);
+                formPreview.AddData("items", (from item in putOutStorageTicketItemViews where item.SupplierID == supplier.ID select item).ToArray(), supplier.Name);
                 formPreview.AddData("shipmentTicket", shipmentTicketView, supplier.Name);
                 formPreview.AddData("supplier", supplier, supplier.Name);
             }
+
+            //没有供应商信息的单独显示一个tab（非正常情况）
+            PutOutStorageTicketItemView[] noSupplierItems = (from item in putOutStorageTicketItemViews
+                                                           where item.SupplierID == null
+                                                           select item).ToArray();
+            if (noSupplierItems.Length > 0)
+            {
+                formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketMoBiSi.xlsx", "无供应商");
+                formPreview.AddData("ticket", putOutStorageTicketView, "无供应商");
+                formPreview.AddData("items", noSupplierItems, "无供应商");
+                formPreview.AddData("shipmentTicket", shipmentTicketView, "无供应商");
+                formPreview.AddData("supplier", default(Supplier), "无供应商");
+            }
+
             formPreview.Show();
             this.Close();
         }

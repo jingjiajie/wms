@@ -380,9 +380,10 @@ namespace WMS.UI.FormReceipt
                                     submissionTicketItem.SubmissionAmount = vp.Value;
                                     submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
                                     wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
-                                    receiptTicket.State = "送检中";
+                                   
                                 }
                             }
+                            receiptTicket.State = "送检中";
                             wmsEntities.SaveChanges();
                             /*
                             int count = wmsEntities.Database.SqlQuery<int>(

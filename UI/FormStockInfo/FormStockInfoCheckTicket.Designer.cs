@@ -216,6 +216,7 @@
             this.reoGridControlMain.Size = new System.Drawing.Size(1093, 374);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
+            this.reoGridControlMain.Click += new System.EventHandler(this.reoGridControlMain_Click);
             // 
             // paperpanel
             // 

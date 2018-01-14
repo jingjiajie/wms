@@ -173,6 +173,7 @@ namespace WMS.UI
                     MessageBox.Show("作业单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                newPutOutStorageTicket.State = PutOutStorageTicketViewMetaData.STRING_STATE_NOT_LOADED;
                 newPutOutStorageTicket.JobTicketID = jobTicket.ID;
                 newPutOutStorageTicket.ProjectID = this.projectID;
                 newPutOutStorageTicket.WarehouseID = this.warehouseID;
@@ -204,9 +205,14 @@ namespace WMS.UI
                         MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    if(newPutOutStorageTicketItem.ScheduledAmount <= 0)
+                    {
+                        MessageBox.Show("行" + (line + 1) + "：计划出库数量必须大于0！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     if (newPutOutStorageTicketItem.ScheduledAmount + (jobTicketItem.ScheduledPutOutAmount ?? 0) > jobTicketItem.RealAmount)
                     {
-                        MessageBox.Show("行" + line + "：计划出库数量不能大于实际翻包完成数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("行" + (line+1) + "：计划出库数量不能大于实际翻包完成数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     jobTicketItem.ScheduledPutOutAmount = (jobTicketItem.ScheduledPutOutAmount ?? 0) + newPutOutStorageTicketItem.ScheduledAmount;
@@ -215,8 +221,10 @@ namespace WMS.UI
                     newPutOutStorageTicketItem.RealAmount = 0;
                     newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
                     newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
-                    newPutOutStorageTicketItem.ReturnUnit = jobTicketItem.Unit;
-                    newPutOutStorageTicketItem.ReturnUnitAmount = jobTicketItem.UnitAmount;
+                    newPutOutStorageTicketItem.ReturnQualityUnit = jobTicketItem.Unit;
+                    newPutOutStorageTicketItem.ReturnQualityUnitAmount = jobTicketItem.UnitAmount;
+                    newPutOutStorageTicketItem.ReturnRejectUnit = jobTicketItem.Unit;
+                    newPutOutStorageTicketItem.ReturnRejectUnitAmount = jobTicketItem.UnitAmount;
                     newPutOutStorageTicket.PutOutStorageTicketItem.Add(newPutOutStorageTicketItem);
                 }
                 //生成出库单号

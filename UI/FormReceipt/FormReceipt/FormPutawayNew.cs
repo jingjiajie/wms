@@ -307,7 +307,32 @@ namespace WMS.UI.FormReceipt
                         try
                         {
                             wmsEntities.SaveChanges();
-                            putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
+                            //putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
+
+                            ////////////////////////////
+                            if (string.IsNullOrWhiteSpace(putawayTicket.No))
+                            {
+                                if (putawayTicket.CreateTime.HasValue == false)
+                                {
+                                    MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                                    return;
+                                }
+
+                                DateTime createDay = new DateTime(putawayTicket.CreateTime.Value.Year, putawayTicket.CreateTime.Value.Month, putawayTicket.CreateTime.Value.Day);
+                                DateTime nextDay = createDay.AddDays(1);
+                                int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.PutawayTicket
+                                                                                      where s.CreateTime >= createDay && s.CreateTime < nextDay
+                                                                                      select s.No).ToArray());
+                                if (maxRankOfToday == -1)
+                                {
+                                    MessageBox.Show("单号生成失败！请手动填写单号");
+                                    return;
+                                }
+                                putawayTicket.No = Utilities.GenerateTicketNo("P", putawayTicket.CreateTime.Value, maxRankOfToday + 1);
+                            }
+
+                            ///////////////////////////////////////////////////////////////
+
                             wmsEntities.SaveChanges();
                             foreach (KeyValuePair<int ,decimal> ripa in receiptItemPutawayAmount)
                             {

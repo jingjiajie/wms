@@ -107,6 +107,8 @@ namespace WMS.UI
             {
 
                 this.pagerWidget.Search(false  ,AddID  );
+                MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
+              
 
             });
             form.Show();
@@ -128,6 +130,9 @@ namespace WMS.UI
                 a1.SetModifyFinishedCallback((AlterID) =>
                 {
                     this.pagerWidget.Search(false ,AlterID  );
+
+                    MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
+                   
                 });
                 a1.Show();
             }
@@ -176,6 +181,7 @@ namespace WMS.UI
                 this.Invoke(new Action(() =>
                 {
                     this.pagerWidget.Search();
+                    this.labelStatus.Text = "搜索完成";
                 }));
             })).Start();
         }
@@ -282,6 +288,11 @@ namespace WMS.UI
            
 
 
+
+        }
+
+        private void reoGridControlMain_Click(object sender, EventArgs e)
+        {
 
         }
     }

@@ -388,7 +388,7 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
 
-
+                //供应商存货删除
                 try
                 {
                     foreach (int id in deleteIDs)
@@ -407,6 +407,7 @@ namespace WMS.UI
 
 
                                 }
+
                                 wmsEntities.SaveChanges();
                             }
                             catch
@@ -426,6 +427,8 @@ namespace WMS.UI
                 }
 
 
+            
+              
 
 
 
@@ -435,7 +438,35 @@ namespace WMS.UI
 
 
 
-                try
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          try
                 {
                     foreach (int id in deleteIDs)
                     {
@@ -453,6 +484,14 @@ namespace WMS.UI
 
 
                                 }
+
+
+                                                          
+
+
+
+
+
                                 wmsEntities.SaveChanges();
                             }
                             catch
@@ -489,19 +528,76 @@ namespace WMS.UI
 
 
 
-                try
+               try
                 {
+
+                    foreach (int id in deleteIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicket WHERE SupplierID = @supplierID", new SqlParameter("supplierID", id));
+                    }
+
+                    wmsEntities.SaveChanges();
+
+
+                    foreach (int id in deleteIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE SupplierID = @supplierID", new SqlParameter("supplierID", id));
+                    }
+
+                    wmsEntities.SaveChanges();
+
+
+
+                    foreach (int Supplyid1 in deleteIDs)
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supply WHERE SupplierID = @supplierID", new SqlParameter("supplierID", Supplyid1));
+
+
+                    }
+
+                    wmsEntities.SaveChanges();
+
+
+
+
+
+
+
                     foreach (int id in deleteIDs)
                     {
                         wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supplier WHERE ID = @supplierID", new SqlParameter("supplierID", id));
                     }
+
                     wmsEntities.SaveChanges();
+
+
+
+
+
+
+
+                    
+
+
+
+
+
                 }
                 catch
                 {
                     MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+
+
+
+
+
+
+
+
+
 
 
                 this.Invoke(new Action(() =>
@@ -673,7 +769,7 @@ namespace WMS.UI
                             string contractstate = results[i].ContractState;
                             if(contractstate !="已签合同"&&contractstate !="未签合同"&&contractstate!="")
                             {
-                                MessageBox.Show("操作失败，合同状态只能填写已签合同或未签合同", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                                MessageBox.Show("操作失败，供应商"+ suppliernameimport+"的合同状态请改为已签合同、未签合同或留空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
                                 return false;
                             }
 

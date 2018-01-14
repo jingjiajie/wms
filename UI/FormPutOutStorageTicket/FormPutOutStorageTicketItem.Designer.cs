@@ -43,6 +43,7 @@
             this.buttonAllLoad = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonReturn = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -69,7 +70,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(898, 303);
+            this.reoGridControlMain.Size = new System.Drawing.Size(898, 263);
             this.reoGridControlMain.TabIndex = 9;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -109,7 +110,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 260F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(904, 529);
             this.tableLayoutPanel1.TabIndex = 13;
@@ -120,7 +121,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(898, 214);
+            this.panel1.Size = new System.Drawing.Size(898, 254);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel2
@@ -136,7 +137,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(898, 214);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(898, 254);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanelProperties
@@ -153,13 +154,14 @@
             this.tableLayoutPanelProperties.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanelProperties.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanelProperties.Name = "tableLayoutPanelProperties";
-            this.tableLayoutPanelProperties.RowCount = 5;
+            this.tableLayoutPanelProperties.RowCount = 6;
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(672, 208);
+            this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(672, 248);
             this.tableLayoutPanelProperties.TabIndex = 0;
             // 
             // panel3
@@ -168,7 +170,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(681, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(214, 208);
+            this.panel3.Size = new System.Drawing.Size(214, 248);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -179,18 +181,20 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonLoad, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonAllLoad, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 3);
+            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 4);
+            this.tableLayoutPanel3.Controls.Add(this.buttonReturn, 1, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 5;
+            this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(214, 208);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(214, 248);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonLoad
@@ -203,7 +207,7 @@
             this.buttonLoad.FlatAppearance.BorderSize = 0;
             this.buttonLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonLoad.Location = new System.Drawing.Point(20, 82);
+            this.buttonLoad.Location = new System.Drawing.Point(20, 77);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(174, 44);
             this.buttonLoad.TabIndex = 2;
@@ -224,7 +228,7 @@
             this.buttonAllLoad.FlatAppearance.BorderSize = 0;
             this.buttonAllLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAllLoad.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAllLoad.Location = new System.Drawing.Point(20, 32);
+            this.buttonAllLoad.Location = new System.Drawing.Point(20, 27);
             this.buttonAllLoad.Name = "buttonAllLoad";
             this.buttonAllLoad.Size = new System.Drawing.Size(174, 44);
             this.buttonAllLoad.TabIndex = 2;
@@ -246,7 +250,7 @@
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModify.Image = global::WMS.UI.Properties.Resources.cancle;
             this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(20, 132);
+            this.buttonModify.Location = new System.Drawing.Point(20, 177);
             this.buttonModify.Name = "buttonModify";
             this.buttonModify.Size = new System.Drawing.Size(174, 44);
             this.buttonModify.TabIndex = 1;
@@ -261,10 +265,31 @@
             // 
             this.panel2.Controls.Add(this.reoGridControlMain);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 223);
+            this.panel2.Location = new System.Drawing.Point(3, 263);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(898, 303);
+            this.panel2.Size = new System.Drawing.Size(898, 263);
             this.panel2.TabIndex = 1;
+            // 
+            // buttonReturn
+            // 
+            this.buttonReturn.BackColor = System.Drawing.Color.White;
+            this.buttonReturn.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB3_q;
+            this.buttonReturn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonReturn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonReturn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonReturn.FlatAppearance.BorderSize = 0;
+            this.buttonReturn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonReturn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonReturn.Location = new System.Drawing.Point(20, 127);
+            this.buttonReturn.Name = "buttonReturn";
+            this.buttonReturn.Size = new System.Drawing.Size(174, 44);
+            this.buttonReturn.TabIndex = 3;
+            this.buttonReturn.Text = "选中项目退回";
+            this.buttonReturn.UseVisualStyleBackColor = false;
+            this.buttonReturn.Click += new System.EventHandler(this.buttonReturn_Click);
+            this.buttonReturn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonReturn_MouseDown);
+            this.buttonReturn.MouseEnter += new System.EventHandler(this.buttonReturn_MouseEnter);
+            this.buttonReturn.MouseLeave += new System.EventHandler(this.buttonReturn_MouseLeave);
             // 
             // FormPutOutStorageTicketItem
             // 
@@ -310,5 +335,6 @@
         private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.Button buttonAllLoad;
+        private System.Windows.Forms.Button buttonReturn;
     }
 }

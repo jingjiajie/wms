@@ -123,7 +123,7 @@ namespace WMS.UI
             }
             else
             {
-                if(staticPos!=new Point(-1, -1))
+                if (staticPos != new Point(-1, -1))
                 {
                     this.Location = staticPos;
                 }
