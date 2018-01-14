@@ -376,7 +376,17 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicketItem SET State = '{0}',RealAmount = ScheduledAmount,HappenTime='{1}' WHERE JobTicketID = {2} AND RealAmount <> ScheduledAmount;", JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED, DateTime.Now.ToString(), this.jobTicketID));
+                    wmsEntities.Database.ExecuteSqlCommand(
+                        String.Format(@"UPDATE JobTicketItem
+                                        SET State = '{0}',
+                                        RealAmount = ScheduledAmount,
+                                        HappenTime='{1}' 
+                                        WHERE JobTicketID = {2} 
+                                        AND (RealAmount <> ScheduledAmount OR State<>'{3}');",
+                                        JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED,
+                                        DateTime.Now.ToString(), 
+                                        this.jobTicketID,
+                                        JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED));
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE JobTicket SET State = '{0}' WHERE ID = {1}", JobTicketViewMetaData.STRING_STATE_ALL_FINISHED, this.jobTicketID));
                     wmsEntities.SaveChanges();
                 }

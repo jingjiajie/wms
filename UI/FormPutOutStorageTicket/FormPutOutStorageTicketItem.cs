@@ -333,10 +333,11 @@ namespace WMS.UI
                     string sql = String.Format(@"UPDATE PutOutStorageTicketItem SET State = '{0}',
                                         LoadingTime = '{1}',
                                         RealAmount = ScheduledAmount
-                                        WHERE PutOutStorageTicketID = {2} AND RealAmount <> ScheduledAmount;",
+                                        WHERE PutOutStorageTicketID = {2} AND (RealAmount <> ScheduledAmount OR State<>'{3}');",
                                     PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED,
                                     DateTime.Now,
-                                    this.putOutStorageTicketID);
+                                    this.putOutStorageTicketID,
+                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED);
                     wmsEntities.Database.ExecuteSqlCommand(sql);
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));
                     wmsEntities.SaveChanges();
