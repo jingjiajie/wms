@@ -135,11 +135,11 @@ namespace WMS.UI
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("΢���ź�", 16.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(51, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(474, 36);
+            this.label1.Size = new System.Drawing.Size(453, 31);
             this.label1.TabIndex = 0;
             this.label1.Text = "��;���WMS��������ϵͳ ���԰汾";
             // 
@@ -161,11 +161,11 @@ namespace WMS.UI
             this.labelUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUsername.AutoSize = true;
             this.labelUsername.BackColor = System.Drawing.Color.Transparent;
-            this.labelUsername.Font = new System.Drawing.Font("΢���ź�", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelUsername.ForeColor = System.Drawing.Color.White;
             this.labelUsername.Location = new System.Drawing.Point(91, 6);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(69, 26);
+            this.labelUsername.Size = new System.Drawing.Size(74, 24);
             this.labelUsername.TabIndex = 1;
             this.labelUsername.Text = "�û���";
             // 
@@ -174,11 +174,11 @@ namespace WMS.UI
             this.labelAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelAuth.AutoSize = true;
             this.labelAuth.BackColor = System.Drawing.Color.Transparent;
-            this.labelAuth.Font = new System.Drawing.Font("΢���ź�", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelAuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelAuth.ForeColor = System.Drawing.Color.White;
             this.labelAuth.Location = new System.Drawing.Point(1, 6);
             this.labelAuth.Name = "labelAuth";
-            this.labelAuth.Size = new System.Drawing.Size(55, 26);
+            this.labelAuth.Size = new System.Drawing.Size(56, 24);
             this.labelAuth.TabIndex = 2;
             this.labelAuth.Text = "Ȩ��:";
             // 
@@ -188,7 +188,7 @@ namespace WMS.UI
             this.panel2.Controls.Add(this.tableLayoutPanel2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(297, 101);
-            this.panel2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panel2.Margin = new System.Windows.Forms.Padding(1);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(465, 38);
             this.panel2.TabIndex = 4;
@@ -210,7 +210,7 @@ namespace WMS.UI
             this.tableLayoutPanel2.Controls.Add(this.label3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -221,12 +221,12 @@ namespace WMS.UI
             // 
             this.comboBoxWarehouse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxWarehouse.Font = new System.Drawing.Font("΢���ź�", 10F);
+            this.comboBoxWarehouse.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
             this.comboBoxWarehouse.Location = new System.Drawing.Point(301, 2);
             this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
-            this.comboBoxWarehouse.Size = new System.Drawing.Size(161, 31);
+            this.comboBoxWarehouse.Size = new System.Drawing.Size(161, 28);
             this.comboBoxWarehouse.TabIndex = 0;
             this.comboBoxWarehouse.SelectedIndexChanged += new System.EventHandler(this.comboBoxWarehouse_SelectedIndexChanged);
             // 
@@ -234,12 +234,12 @@ namespace WMS.UI
             // 
             this.comboBoxProject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBoxProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProject.Font = new System.Drawing.Font("΢���ź�", 10F);
+            this.comboBoxProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.comboBoxProject.FormattingEnabled = true;
             this.comboBoxProject.Location = new System.Drawing.Point(65, 1);
-            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1);
             this.comboBoxProject.Name = "comboBoxProject";
-            this.comboBoxProject.Size = new System.Drawing.Size(165, 31);
+            this.comboBoxProject.Size = new System.Drawing.Size(165, 28);
             this.comboBoxProject.TabIndex = 1;
             this.comboBoxProject.SelectedIndexChanged += new System.EventHandler(this.comboBoxProject_SelectedIndexChanged);
             // 
@@ -248,7 +248,7 @@ namespace WMS.UI
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("΢���ź�", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(234, 0);
             this.label2.Name = "label2";
@@ -261,7 +261,7 @@ namespace WMS.UI
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("΢���ź�", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
@@ -289,7 +289,7 @@ namespace WMS.UI
             this.tableLayoutPanel1.Controls.Add(this.panelRight, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -301,7 +301,7 @@ namespace WMS.UI
             this.panelLeft.Controls.Add(this.treeViewLeft);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLeft.Location = new System.Drawing.Point(1, 1);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(1);
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(198, 397);
             this.panelLeft.TabIndex = 0;
@@ -309,7 +309,7 @@ namespace WMS.UI
             // treeViewLeft
             // 
             this.treeViewLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewLeft.Font = new System.Drawing.Font("΢���ź�", 10F);
+            this.treeViewLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.treeViewLeft.ImageIndex = 1;
             this.treeViewLeft.ImageList = this.imageList1;
             this.treeViewLeft.Location = new System.Drawing.Point(0, 0);
