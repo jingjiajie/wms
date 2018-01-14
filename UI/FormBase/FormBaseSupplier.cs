@@ -394,6 +394,56 @@ namespace WMS.UI
                     foreach (int id in deleteIDs)
                     {
 
+                        try
+                        {
+
+                            var recipettickets = (from kn in wmsEntities.ReceiptTicket
+                                                  where kn.SupplierID == id
+                                                  select kn).ToArray();
+                            if (recipettickets.Length > 0)
+                            {
+                                MessageBox.Show("删除失败，请先删除与本供应商信息相关的收货单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+
+                            //var ShipmentTicket = (from kn in wmsEntities.ShipmentTicket
+                            //                      where kn.SupplierID == id
+                            //                      select kn).ToArray();
+                            //if (recipettickets.Length > 0)
+                            //{
+                            //    MessageBox.Show("删除失败，请先删除与本供应商相关的发货单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //    return;
+                            //}
+
+                            wmsEntities = new WMSEntities();
+                            var Supply = (from kn in wmsEntities.Supply 
+                                                  where kn.SupplierID == id
+                                                  select kn).ToArray();
+                            if (Supply.Length > 0)
+                            {
+                                MessageBox.Show("删除失败，请先删除与本供应商信息相关的供货信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                        }
+                        catch
+                        {
+                            MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+
+                        }
+
+
+
+
+
+
+
+
+
+
+
                         var supplierstorgeid = (from kn in wmsEntities.SupplierStorageInfo
                                                 where kn.SupplierID == id
                                                 select kn.ID).ToArray();
@@ -427,53 +477,17 @@ namespace WMS.UI
                 }
 
 
-            
-              
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          try
+                try
                 {
                     foreach (int id in deleteIDs)
                     {
 
-                        var  supplier_historyid = (from kn in wmsEntities .Supplier  
-                                                       where kn.NewestSupplierID  ==id 
-                                                       select kn.ID ).ToArray();
+                        var supplier_historyid = (from kn in wmsEntities.Supplier
+                                                  where kn.NewestSupplierID == id
+                                                  select kn.ID).ToArray();
                         if (supplier_historyid.Length > 0)
                         {
                             try
@@ -486,12 +500,6 @@ namespace WMS.UI
                                 }
 
 
-                                                          
-
-
-
-
-
                                 wmsEntities.SaveChanges();
                             }
                             catch
@@ -501,67 +509,18 @@ namespace WMS.UI
                             }
                         }
 
-                        }
-                    
+                    }
+
                 }
                 catch
                 {
                     MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-
-
-               
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-               try
+                try
                 {
 
-                    foreach (int id in deleteIDs)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicket WHERE SupplierID = @supplierID", new SqlParameter("supplierID", id));
-                    }
-
-                    wmsEntities.SaveChanges();
-
-
-                    foreach (int id in deleteIDs)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE SupplierID = @supplierID", new SqlParameter("supplierID", id));
-                    }
-
-                    wmsEntities.SaveChanges();
-
-
-
-                    foreach (int Supplyid1 in deleteIDs)
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM Supply WHERE SupplierID = @supplierID", new SqlParameter("supplierID", Supplyid1));
-
-
-                    }
-
-                    wmsEntities.SaveChanges();
-
-
-
-
-
-
+                   
 
                     foreach (int id in deleteIDs)
                     {
@@ -569,16 +528,6 @@ namespace WMS.UI
                     }
 
                     wmsEntities.SaveChanges();
-
-
-
-
-
-
-
-                    
-
-
 
 
 
@@ -604,6 +553,7 @@ namespace WMS.UI
                 {
                     this.pagerWidget.Search();
                     this.labelStatus.Text = "搜索完成";
+                    
                 }));
                 
             })).Start();
