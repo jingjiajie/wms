@@ -42,8 +42,8 @@
             this.buttonLoad = new System.Windows.Forms.Button();
             this.buttonAllLoad = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.buttonReturn = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -80,23 +80,23 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(904, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(904, 25);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(134, 31);
+            this.labelStatus.Size = new System.Drawing.Size(84, 20);
             this.labelStatus.Text = "查看出库单";
             // 
             // tableLayoutPanel1
@@ -261,15 +261,6 @@
             this.buttonModify.MouseEnter += new System.EventHandler(this.buttonModify_MouseEnter);
             this.buttonModify.MouseLeave += new System.EventHandler(this.buttonModify_MouseLeave);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.reoGridControlMain);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 263);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(898, 263);
-            this.panel2.TabIndex = 1;
-            // 
             // buttonReturn
             // 
             this.buttonReturn.BackColor = System.Drawing.Color.White;
@@ -291,14 +282,24 @@
             this.buttonReturn.MouseEnter += new System.EventHandler(this.buttonReturn_MouseEnter);
             this.buttonReturn.MouseLeave += new System.EventHandler(this.buttonReturn_MouseLeave);
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.reoGridControlMain);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 263);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(898, 263);
+            this.panel2.TabIndex = 1;
+            // 
             // FormPutOutStorageTicketItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 529);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("黑体", 10F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;

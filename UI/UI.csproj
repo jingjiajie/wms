@@ -820,6 +820,7 @@
   <ItemGroup>
     <Content Include="20180114034630784_easyicon_net_64.ico" />
     <Content Include="20180114034822833_easyicon_net_128.ico" />
+    <None Include="icon\20180114034630784_easyicon_net_64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

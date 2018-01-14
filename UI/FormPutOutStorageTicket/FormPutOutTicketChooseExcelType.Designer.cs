@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPutOutTicketChooseExcelType));
             this.buttonCover = new System.Windows.Forms.Button();
             this.buttonNormal = new System.Windows.Forms.Button();
             this.buttonMoBiSi = new System.Windows.Forms.Button();
@@ -38,7 +39,11 @@
             // 
             // buttonCover
             // 
+            this.buttonCover.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonCover.BackgroundImage")));
+            this.buttonCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCover.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonCover.FlatAppearance.BorderSize = 0;
+            this.buttonCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCover.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.buttonCover.Location = new System.Drawing.Point(147, 4);
             this.buttonCover.Margin = new System.Windows.Forms.Padding(4);
@@ -48,10 +53,17 @@
             this.buttonCover.Text = "顺义套单";
             this.buttonCover.UseVisualStyleBackColor = true;
             this.buttonCover.Click += new System.EventHandler(this.buttonInner_Click);
+            this.buttonCover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonCover_MouseDown);
+            this.buttonCover.MouseEnter += new System.EventHandler(this.buttonCover_MouseEnter);
+            this.buttonCover.MouseLeave += new System.EventHandler(this.buttonCover_MouseLeave);
             // 
             // buttonNormal
             // 
+            this.buttonNormal.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonNormal.BackgroundImage")));
+            this.buttonNormal.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonNormal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonNormal.FlatAppearance.BorderSize = 0;
+            this.buttonNormal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonNormal.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.buttonNormal.Location = new System.Drawing.Point(4, 4);
             this.buttonNormal.Margin = new System.Windows.Forms.Padding(4);
@@ -61,10 +73,17 @@
             this.buttonNormal.Text = "普通出库单";
             this.buttonNormal.UseVisualStyleBackColor = true;
             this.buttonNormal.Click += new System.EventHandler(this.buttonCover_Click);
+            this.buttonNormal.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonNormal_MouseDown);
+            this.buttonNormal.MouseEnter += new System.EventHandler(this.buttonNormal_MouseEnter);
+            this.buttonNormal.MouseLeave += new System.EventHandler(this.buttonNormal_MouseLeave);
             // 
             // buttonMoBiSi
             // 
+            this.buttonMoBiSi.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonMoBiSi.BackgroundImage")));
+            this.buttonMoBiSi.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonMoBiSi.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonMoBiSi.FlatAppearance.BorderSize = 0;
+            this.buttonMoBiSi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMoBiSi.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.buttonMoBiSi.Location = new System.Drawing.Point(290, 4);
             this.buttonMoBiSi.Margin = new System.Windows.Forms.Padding(4);
@@ -74,10 +93,17 @@
             this.buttonMoBiSi.Text = "摩比斯出库单";
             this.buttonMoBiSi.UseVisualStyleBackColor = true;
             this.buttonMoBiSi.Click += new System.EventHandler(this.buttonMoBiSi_Click);
+            this.buttonMoBiSi.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonMoBiSi_MouseDown);
+            this.buttonMoBiSi.MouseEnter += new System.EventHandler(this.buttonMoBiSi_MouseEnter);
+            this.buttonMoBiSi.MouseLeave += new System.EventHandler(this.buttonMoBiSi_MouseLeave);
             // 
             // buttonZhongDu
             // 
+            this.buttonZhongDu.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_q;
+            this.buttonZhongDu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonZhongDu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonZhongDu.FlatAppearance.BorderSize = 0;
+            this.buttonZhongDu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonZhongDu.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.buttonZhongDu.Location = new System.Drawing.Point(433, 4);
             this.buttonZhongDu.Margin = new System.Windows.Forms.Padding(4);
@@ -87,9 +113,13 @@
             this.buttonZhongDu.Text = "中都出库单";
             this.buttonZhongDu.UseVisualStyleBackColor = true;
             this.buttonZhongDu.Click += new System.EventHandler(this.buttonZhongDu_Click);
+            this.buttonZhongDu.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonZhongDu_MouseDown);
+            this.buttonZhongDu.MouseEnter += new System.EventHandler(this.buttonZhongDu_MouseEnter);
+            this.buttonZhongDu.MouseLeave += new System.EventHandler(this.buttonZhongDu_MouseLeave);
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel1.ColumnCount = 4;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -110,11 +140,12 @@
             // 
             // FormPutOutTicketChooseExcelType
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 35F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(574, 99);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormPutOutTicketChooseExcelType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
