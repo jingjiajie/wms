@@ -389,12 +389,8 @@ namespace WMS.UI
             this.ClientSize = new System.Drawing.Size(1144, 862);
             this.Controls.Add(this.panelFill);
             this.Controls.Add(this.panelTop);
-<<<<<<< HEAD
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-=======
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
->>>>>>> 144fb951b1f836d5f8bec4998405a3992a194fae
             this.Name = "FormMain";
             this.Text = "安途丰达WMS物流管理系统";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
