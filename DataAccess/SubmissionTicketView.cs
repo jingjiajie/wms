@@ -18,7 +18,6 @@ namespace WMS.DataAccess
         public Nullable<int> ReceiptTicketID { get; set; }
         public string No { get; set; }
         public string State { get; set; }
-        public string ReceivePerson { get; set; }
         public string Result { get; set; }
         public Nullable<int> CreateUserID { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
@@ -51,5 +50,7 @@ namespace WMS.DataAccess
         public Nullable<int> DeliverSubmissionPersonID { get; set; }
         public string DeliverSubmissionPersonName { get; set; }
         public string SubmissionPersonName { get; set; }
+        public string ReceivePersonName { get; set; }
+        public Nullable<int> ReceivePersonID { get; set; }
     }
 }
