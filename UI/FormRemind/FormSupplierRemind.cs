@@ -51,7 +51,7 @@ namespace WMS.UI
         {
 
 
-            this.textBoxContractRemind.Text = " 无合同提醒";
+            this.textBoxContractRemind.Text = "您的合同已过审";
             this.textBoxContractRemind.Font = new Font("宋体", 12, FontStyle.Bold);
             this.textBox3.Text = "无库存预警";
             this.textBox3 .Font = new Font("宋体", 12, FontStyle.Bold);
@@ -108,7 +108,7 @@ namespace WMS.UI
                 this.textBoxContractRemind.Text = "您的合同待审核";
 
             }
-            else if(this.contractstate == "已过审"||this.contractstate =="已过期")
+            else if(this.contractstate == "已过审")
             {
 
                 if(this.days<0 )
@@ -116,7 +116,7 @@ namespace WMS.UI
                     this.textBoxContractRemind.Text = "您的合同已到期";
 
                 }
-                if(this.startend ==false )
+                if(this.daysstart == false )
                 {
                     this.textBoxContractRemind.Text = "您的合同未到生效日期";
                 }
