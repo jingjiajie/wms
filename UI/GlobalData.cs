@@ -7,7 +7,10 @@ namespace WMS.UI
 {
     class GlobalData
     {
-        public static int projectID = -1;
-        public static int warehouseID = -1;
+        private static int projectID = -1;
+        private static int warehouseID = -1;
+
+        public static int ProjectID { get => projectID; set => projectID = value; }
+        public static int WarehouseID { get => warehouseID; set => warehouseID = value; }
     }
 }

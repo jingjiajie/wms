@@ -34,8 +34,8 @@ namespace WMS.UI
         public FormSelectStockInfo()
         {
             InitializeComponent();
-            this.projectID = GlobalData.projectID;
-            this.warehouseID = GlobalData.warehouseID;
+            this.projectID = GlobalData.ProjectID;
+            this.warehouseID = GlobalData.WarehouseID;
         }
 
         public void SetSelectFinishedCallback(Action<int> selectFinishedCallback)
