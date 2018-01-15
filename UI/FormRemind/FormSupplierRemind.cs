@@ -27,13 +27,18 @@ namespace WMS.UI
         private int days;
         private string remindtext;
         private int contract_effect;
-        public FormSupplierRemind(int days ,string remindtext,int contract_effect)
+        private string contractstate = "";
+        private  bool startend;
+        private bool  daysstart;
+        public FormSupplierRemind(int days ,string remindtext,int contract_effect,string contractstate,bool startend, bool  daysstart)
         {
             InitializeComponent();
             this.days = days;
             this.remindtext = remindtext;
             this.contract_effect = contract_effect;
-           
+            this.contractstate = contractstate;
+            this.startend = startend;
+            this.daysstart = daysstart;
             
         }
 
@@ -46,38 +51,73 @@ namespace WMS.UI
         {
 
 
-            this.textBoxContractRemind.Text = " 无合同过期提醒";
+            this.textBoxContractRemind.Text = " 您的合同在有效期内";
             this.textBoxContractRemind.Font = new Font("宋体", 12, FontStyle.Bold);
             this.textBox3.Text = "无库存预警";
             this.textBox3 .Font = new Font("宋体", 12, FontStyle.Bold);
             //contractrenmind();
 
             //componentremind();
-
-            if (days>0&&days <10)
+            if (startend == true)
             {
+                if (days > 0 && days < 10)
+                {
 
-                this.textBoxContractRemind.Text = "您的合同在有效期内，但还有" + days + "天过期";
+                    this.textBoxContractRemind.Text = "您的合同在有效期内，但还有" + days + "天过期";
+
+                }
+                else if (days < 0)
+                {
+
+                    this.textBoxContractRemind.Text = "您的合同已经到截止日期";
+
+
+                }
+                else if (days >= 0 && this.contract_effect == 1)
+                {
+                    this.textBoxContractRemind.Text = "您的合同在有效期内";
+                }
+
+
+                if(daysstart==false )
+
+                {
+                    this.textBoxContractRemind.Text = "您的合同未到生效日期";
+                }
 
             }
-            else if (days < 0)
+            else
             {
-
-                this.textBoxContractRemind.Text = "您的合同已经到截止日期";
-
+                this.textBoxContractRemind.Text = "您的合同生效日期或截止日期没填写";
 
             }
-            else if(days>=0&&this.contract_effect ==1)
+
+
+
+
+
+            if (this.contractstate =="待审核"||this.contractstate =="已过期")
             {
-                this.textBoxContractRemind.Text = "您的合同在有效期内";
+
+                this.textBoxContractRemind.AppendText("\r\n" + "您的合同" + this.contractstate);
+
+            }
+            else
+            {
+                this.textBoxContractRemind.AppendText("\r\n" + "您的合同已过审" );
+
             }
 
-            if(this.remindtext !=string .Empty )
+
+            
+
+
+
+
+            if (this.remindtext !=string .Empty )
 
             {
                 this.textBox3.Text = remindtext;
-
-
 
             }
 
