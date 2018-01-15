@@ -25,8 +25,12 @@ namespace WMS.UI
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
+        private Action<int> SetSelectFinishedCallback = null;
+        private   FormSelectStockInfo FormSelectStockInfo = null;
+        
+
         //private Action checkFinishedCallback = null;
-       
+
 
 
 
@@ -85,12 +89,12 @@ namespace WMS.UI
 
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
-            this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfo>(this, "textBoxComponentName", "Name");
-            //this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
+            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
             this.Search();
-
+             
         }
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
         {
@@ -208,10 +212,16 @@ namespace WMS.UI
 
 
         {
-            var FormSelectStockInfo = new FormSelectStockInfo();//this.projectID,this.warehouseID,this.stockinfoid );
-            FormSelectStockInfo.SetSelectFinishedCallback((selectedID) =>
-            {
+            if (this.FormSelectStockInfo == null)
+            { this.FormSelectStockInfo = new FormSelectStockInfo();
 
+            }
+            
+            
+            //this.projectID,this.warehouseID,this.stockinfoid );
+            this.FormSelectStockInfo.SetSelectFinishedCallback((selectedID) =>
+            {
+                 
                 wmsEntities = new DataAccess.WMSEntities();
                 WMS.DataAccess.StockInfoView stockinfoName = new DataAccess.StockInfoView();
                 try
@@ -255,7 +265,7 @@ namespace WMS.UI
 
 
             });
-            FormSelectStockInfo.Show();
+            FormSelectStockInfo.ShowDialog();
 
 
 
