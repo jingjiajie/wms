@@ -378,7 +378,7 @@ namespace WMS.UI
                             //检查数据库中同名
                             try
                             {
-                                var sameNameUsers = (from u in wmsEntities.Supplier
+                                var sameNameUsers = (from u in wmsEntities.Component
                                                      where u.Name == componentnameimport
                                                      select u).ToArray();
                                 if (sameNameUsers.Length > 0)

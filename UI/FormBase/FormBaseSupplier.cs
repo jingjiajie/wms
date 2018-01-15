@@ -26,7 +26,6 @@ namespace WMS.UI
         private string  contractst="";
         private int check_history = 0;
         private int userid = -1;
-       
         private int projectID = -1;
         private int warehouseID = -1;
         
@@ -77,6 +76,11 @@ namespace WMS.UI
                 else if(this.contractst=="已过审")
                 {
                     this.toolStripButtonAlter.Enabled = false;
+                }
+                else if(this.contractst =="已过期")
+                {
+                    this.toolStripButtonAlter.Enabled = false;
+
                 }
 
 
