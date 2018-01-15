@@ -380,6 +380,11 @@ namespace WMS.UI
         {
             this.textBoxUsername.Focus();
         }
+
+        private void labelusername_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

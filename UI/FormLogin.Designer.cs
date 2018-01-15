@@ -62,7 +62,7 @@
             this.labelPsaaword.Location = new System.Drawing.Point(0, 70);
             this.labelPsaaword.Margin = new System.Windows.Forms.Padding(0);
             this.labelPsaaword.Name = "labelPsaaword";
-            this.labelPsaaword.Size = new System.Drawing.Size(160, 70);
+            this.labelPsaaword.Size = new System.Drawing.Size(170, 70);
             this.labelPsaaword.TabIndex = 7;
             this.labelPsaaword.Text = "密   码：";
             this.labelPsaaword.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
@@ -79,9 +79,10 @@
             this.labelusername.Location = new System.Drawing.Point(0, 0);
             this.labelusername.Margin = new System.Windows.Forms.Padding(0);
             this.labelusername.Name = "labelusername";
-            this.labelusername.Size = new System.Drawing.Size(160, 70);
+            this.labelusername.Size = new System.Drawing.Size(170, 70);
             this.labelusername.TabIndex = 6;
             this.labelusername.Text = "用户名：";
+            this.labelusername.Click += new System.EventHandler(this.labelusername_Click);
             this.labelusername.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
             this.labelusername.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
             this.labelusername.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
@@ -90,11 +91,11 @@
             // 
             this.textBoxPassword.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxPassword.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxPassword.Location = new System.Drawing.Point(166, 78);
+            this.textBoxPassword.Location = new System.Drawing.Point(176, 78);
             this.textBoxPassword.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(347, 43);
+            this.textBoxPassword.Size = new System.Drawing.Size(318, 43);
             this.textBoxPassword.TabIndex = 1;
             this.textBoxPassword.UseSystemPasswordChar = true;
             this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPassword_KeyPress);
@@ -104,10 +105,10 @@
             this.textBoxUsername.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxUsername.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxUsername.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxUsername.Location = new System.Drawing.Point(166, 8);
+            this.textBoxUsername.Location = new System.Drawing.Point(176, 8);
             this.textBoxUsername.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(347, 43);
+            this.textBoxUsername.Size = new System.Drawing.Size(318, 43);
             this.textBoxUsername.TabIndex = 0;
             this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             this.textBoxUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
@@ -122,7 +123,7 @@
             this.buttonClosing.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonClosing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClosing.Font = new System.Drawing.Font("微软雅黑", 11F);
-            this.buttonClosing.Location = new System.Drawing.Point(463, 449);
+            this.buttonClosing.Location = new System.Drawing.Point(464, 450);
             this.buttonClosing.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.buttonClosing.Name = "buttonClosing";
             this.buttonClosing.Size = new System.Drawing.Size(176, 58);
@@ -146,7 +147,7 @@
             this.buttonEnter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEnter.Font = new System.Drawing.Font("微软雅黑", 11F);
             this.buttonEnter.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.buttonEnter.Location = new System.Drawing.Point(185, 449);
+            this.buttonEnter.Location = new System.Drawing.Point(184, 450);
             this.buttonEnter.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.buttonEnter.Name = "buttonEnter";
             this.buttonEnter.Size = new System.Drawing.Size(176, 58);
@@ -218,8 +219,8 @@
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 359F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 170F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.labelusername, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 1, 3);
             this.tableLayoutPanel2.Controls.Add(this.labelPsaaword, 0, 1);
@@ -228,14 +229,15 @@
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 3);
             this.tableLayoutPanel2.Controls.Add(this.textBoxUsername, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxPassword, 1, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(137, 142);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(124, 137);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(519, 279);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(530, 280);
             this.tableLayoutPanel2.TabIndex = 16;
             // 
             // comboBoxWarehouse
@@ -244,10 +246,10 @@
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxWarehouse.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
-            this.comboBoxWarehouse.Location = new System.Drawing.Point(166, 218);
-            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.comboBoxWarehouse.Location = new System.Drawing.Point(179, 223);
+            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(9, 13, 9, 13);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
-            this.comboBoxWarehouse.Size = new System.Drawing.Size(347, 43);
+            this.comboBoxWarehouse.Size = new System.Drawing.Size(312, 43);
             this.comboBoxWarehouse.TabIndex = 3;
             // 
             // comboBoxProject
@@ -256,10 +258,10 @@
             this.comboBoxProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxProject.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.comboBoxProject.FormattingEnabled = true;
-            this.comboBoxProject.Location = new System.Drawing.Point(166, 148);
-            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
+            this.comboBoxProject.Location = new System.Drawing.Point(179, 153);
+            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(9, 13, 9, 13);
             this.comboBoxProject.Name = "comboBoxProject";
-            this.comboBoxProject.Size = new System.Drawing.Size(347, 43);
+            this.comboBoxProject.Size = new System.Drawing.Size(312, 43);
             this.comboBoxProject.TabIndex = 2;
             // 
             // label2
@@ -272,7 +274,7 @@
             this.label2.Location = new System.Drawing.Point(0, 140);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(160, 70);
+            this.label2.Size = new System.Drawing.Size(170, 70);
             this.label2.TabIndex = 12;
             this.label2.Text = "项   目：";
             // 
@@ -286,7 +288,7 @@
             this.label3.Location = new System.Drawing.Point(0, 210);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(160, 70);
+            this.label3.Size = new System.Drawing.Size(170, 70);
             this.label3.TabIndex = 13;
             this.label3.Text = "仓   库：";
             // 
@@ -352,6 +354,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.labelClickCount);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
