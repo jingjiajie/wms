@@ -444,6 +444,11 @@ namespace WMS.UI
                     MessageBox.Show("对应收货单已被删除，无法收货");
                     return;
                 }
+                if (receiptTicket.HasPutawayTicket == "全部生成上架单" || receiptTicket.HasPutawayTicket == "部分生成上架单")
+                {
+                    MessageBox.Show("该送检单所对应的收货单已经生成上架单，无法拒收");
+                    return;
+                }
                 receiptTicket.State = "拒收";
                 ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
                 foreach (ReceiptTicketItem rti in receiptTicketItems)

@@ -59,6 +59,22 @@ namespace WMS.UI.FormReceipt
             InitComponents();
             Search();
             InitPanel();
+            WMSEntities wmsEntities = new WMSEntities();
+            User user = (from u in wmsEntities.User where u.ID == userID select u).FirstOrDefault();
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+            if (user != null)
+            {
+                this.Controls.Find("textBoxCreateUserUsername", true)[0].Text = user.Username;
+                this.Controls.Find("textBoxLastUpdateUserUsername", true)[0].Text = user.Username;
+            }
+            if (receiptTicket != null)
+            {
+                this.Controls.Find("textBoxReceiptTicketNo", true)[0].Text = receiptTicket.No;
+            }
+            this.Controls.Find("textBoxState", true)[0].Text = "待检";
+            
+            this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
+            this.Controls.Find("textBoxLastUpdateTime", true)[0].Text = DateTime.Now.ToString();
         }
 
         private void InitComponents()
@@ -85,7 +101,33 @@ namespace WMS.UI.FormReceipt
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
             worksheet.Columns = ReceiptMetaData.itemsKeyName.Length + 1;
             worksheet.CellMouseEnter += ClickOnCell;
+            //worksheet.AfterCellEdit += AfterCellEdit;
         }
+        /*
+        private void AfterCellEdit(object sender, CellAfterEditEventArgs e)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            int row = e.Cell.Position.Row;
+            int id = int.Parse(this.reoGridControlUser.Worksheets[0][row, 0].ToString());
+            ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
+            if (receiptTicketItem != null)
+            {
+                int count;
+                if (int.TryParse(this.reoGridControlUser.Worksheets[0][row, this.checkBoxColumn].ToString(), out count) == false)
+                {
+                    MessageBox.Show("请输入数字！");
+                    return;
+                }
+                if (receiptTicketItem.ReceiviptAmount != null)
+                {
+                    if (count > receiptTicketItem.ReceiviptAmount)
+                    {
+                        MessageBox.Show("送检数量不应大于收货数量");
+                        this.reoGridControlUser.Worksheets[0][e.Cell.Position] = "";
+                    }
+                }
+            }
+        }*/
 
         private void ClickOnCell(object sender, CellMouseEventArgs e)
         {
@@ -158,12 +200,14 @@ namespace WMS.UI.FormReceipt
                                 //TextBox textbox = new TextBox();
                                 //DataGridViewTextBoxCell;
                                 //worksheet[i, m]
-                                m += 2;
+                                //Cell cell = 
+                                worksheet.CreateAndGetCell(i, m).Style.BackColor = Color.AliceBlue;
+                                worksheet[i, j] = "";
                             }
                             else
                             {
                                 //worksheet.CreateAndGetCell(i, m).IsReadOnly = true;
-                                worksheet[i, m] = columns[j];
+                                worksheet[i, j] = columns[m];
                                 m++;
                             }
                         }
@@ -230,6 +274,7 @@ namespace WMS.UI.FormReceipt
                 {
                     if (int.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
                     {
+                        
                         idsAndSubmissionAmount.Add(id, submissionAmount);
                     }
                     else
@@ -293,6 +338,16 @@ namespace WMS.UI.FormReceipt
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == kv.Key select rti).FirstOrDefault();
                 if (receiptTicketItem != null)
                 {
+                    if (receiptTicketItem.ReceiviptAmount < kv.Value)
+                    {
+                        MessageBox.Show("送检数量不应大于收货数量","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        return;
+                    }
+                    if (kv.Value < 0)
+                    {
+                        MessageBox.Show("送检数量不应为负数", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        return;
+                    }
                     receiptTicketItemsAndSubmissionAmount.Add(receiptTicketItem, kv.Value);
                 }
             }

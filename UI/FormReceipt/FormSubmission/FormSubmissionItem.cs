@@ -88,6 +88,15 @@ namespace WMS.UI.FormReceipt
             this.submissionTicketID = int.Parse(submissionTicketItemView.SubmissionTicketID.ToString());
             Utilities.CopyPropertiesToTextBoxes(submissionTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(submissionTicketItemView, this);
+            if (submissionTicketItemView.ReturnAmount == null)
+            {
+                this.Controls.Find("textBoxReturnAmount", true)[0].Text = (submissionTicketItemView.SubmissionAmount == null ? 0 : (decimal)submissionTicketItemView.SubmissionAmount).ToString();
+            }
+            if (submissionTicketItemView.RejectAmount == null)
+            {
+                this.Controls.Find("textBoxRejectAmount", true)[0].Text = "0";
+            }
+            this.Controls.Find("textBoxArriveAmount", true)[0].Enabled = false;
         }
 
         private void ClearTextBoxes()
@@ -161,7 +170,7 @@ namespace WMS.UI.FormReceipt
 
         }
 
-        private void modifyAmount(decimal oldBackAmount, decimal oldRejectAmount, int submissionTicketItemID)
+        private void modifyAmount(decimal oldBackAmount, decimal oldRejectAmount, decimal oldSubmissionAmount,int submissionTicketItemID)
         {
             WMSEntities wmsEntities = new WMSEntities();
             SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ID == submissionTicketItemID select sti).FirstOrDefault();
@@ -178,6 +187,8 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
+                stockInfo.SubmissionAmount += submissionTicketItem.SubmissionAmount - oldSubmissionAmount;
+                stockInfo.ReceiptAreaAmount -= submissionTicketItem.SubmissionAmount - oldSubmissionAmount;
                 stockInfo.ReceiptAreaAmount += submissionTicketItem.ReturnAmount - oldBackAmount;
                 stockInfo.SubmissionAmount -= submissionTicketItem.ReturnAmount - oldBackAmount;
                 stockInfo.RejectAreaAmount += submissionTicketItem.RejectAmount - oldRejectAmount;
@@ -609,6 +620,7 @@ namespace WMS.UI.FormReceipt
             int id = ids[0];
             decimal oldBackAmount;
             decimal oldRejectAmount;
+            decimal oldSubmissionAmount;
             var submissionTicketItem = (from s in this.wmsEntities.SubmissionTicketItem where s.ID == id select s).FirstOrDefault();
 
             if (submissionTicketItem == null)
@@ -618,6 +630,7 @@ namespace WMS.UI.FormReceipt
             }
             submissionTicketItem.SubmissionTicketID = this.submissionTicketID;
             oldBackAmount = submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount;
+            oldSubmissionAmount = submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount;
             oldRejectAmount = submissionTicketItem.RejectAmount == null ? 0 : (decimal)submissionTicketItem.RejectAmount;
             if (Utilities.CopyTextBoxTextsToProperties(this, submissionTicketItem, ReceiptMetaData.submissionTicketItemKeyName, out string errorMessage) == false)
             {
@@ -671,7 +684,7 @@ namespace WMS.UI.FormReceipt
             {
                 this.wmsEntities.SaveChanges();
                 this.modifyState(this.submissionTicketID);
-                this.modifyAmount(oldBackAmount, oldRejectAmount, submissionTicketItem.ID);
+                this.modifyAmount(oldBackAmount, oldRejectAmount, oldSubmissionAmount,submissionTicketItem.ID);
                 string state = this.modifyState(submissionTicketID);
                 this.Invoke(new Action(this.Search));
                 /*

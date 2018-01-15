@@ -82,7 +82,9 @@ namespace WMS.UI
             JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
             ConfirmPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
             TextBox textBoxComponentNo = (TextBox)this.Controls.Find("textBoxSupplyNo", true)[0];
+            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentNo.Click += TextBoxComponentNo_Click;
+            textBoxComponentName.Click += TextBoxComponentNo_Click;
             WMSEntities wmsEntities = new WMSEntities();
             ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == receiptTicketID select rt).FirstOrDefault();
             if (receiptTicketView == null)
@@ -91,7 +93,15 @@ namespace WMS.UI
                 return;
             }
             this.Controls.Find("textBoxState", true)[0].Text = receiptTicketView.State;
+            if (receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.HasPutawayTicket == "全部生成上架单")
+            {
+                MessageBox.Show("该收货单已经生成上架单，无法修改收货单条目");
+                this.buttonAdd.Enabled = false;
+                this.buttonDelete.Enabled = false;
+                this.buttonModify.Enabled = false;
+            }
             Search();
+            
         }
 
         private void TextBoxComponentNo_Click(object sender, EventArgs e)
@@ -131,8 +141,10 @@ namespace WMS.UI
             WMSEntities wmsEntities = new WMSEntities();
             //this.Controls.Clear();
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.itemsKeyName);
+            //this.control
             //this.RefreshTextBoxes();
             this.reoGridControlReceiptItems.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
+            
             
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             //textBoxComponentName.Click += textBoxComponentName_Click;
@@ -161,6 +173,7 @@ namespace WMS.UI
             if (ids.Length == 0)
             {
                 this.receiptTicketItemID = -1;
+                this.buttonAdd.Text = "增加零件条目";
                 return;
             }
             int id = ids[0];
@@ -172,8 +185,10 @@ namespace WMS.UI
             if (receiptTicketItemView == null)
             {
                 MessageBox.Show("系统错误，未找到相应收货单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.buttonAdd.Text = "增加零件条目";
                 return;
             }
+            this.buttonAdd.Text = "复制零件条目";
             this.receiptTicketItemID = int.Parse(receiptTicketItemView.ID.ToString());
             if (receiptTicketItemView.SupplyID != null)
             {

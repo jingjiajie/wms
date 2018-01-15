@@ -23,7 +23,6 @@ namespace WMS.UI.FormReceipt
         private int userID;
         private int supplierID;
         private Func<int> personIDGetter;
-        private string contract;
 
         public FormReceiptTicketModify()
         {
@@ -83,13 +82,9 @@ namespace WMS.UI.FormReceipt
                 {
                     MessageBox.Show("请重新选择供应商");
                 }
-
-                if(this.contract=="已过审" )
+                if (receiptTicketView.HasPutawayTicket == "全部生成上架单" || receiptTicketView.HasPutawayTicket == "部分生成上架单")
                 {
-                  ComboBox  comboxstate=   (ComboBox )this.Controls.Find("comboBoxState", true)[0] ;
-                
-
-                    comboxstate.Enabled = false;
+                    this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 }
                 //this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 //TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserUserID", true)[0];
@@ -145,7 +140,6 @@ namespace WMS.UI.FormReceipt
             //this.Controls.Find("textBoxWarehouse", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
             //this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
             this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierID_Click;
-            
         }
         
         private void textBoxSupplierID_Click(object sender, EventArgs e)
@@ -179,7 +173,7 @@ namespace WMS.UI.FormReceipt
                 if (supplier != null)
                 {
                     this.Controls.Find("textBoxSupplierName", true)[0].Text = supplier.Name;
-                    
+                    this.Controls.Find("textBoxSupplierNumber", true)[0].Text = supplier.Number;
                     //this.Controls.Find("textBoxSupplierNo", true)[0].Text
                 }
             }));
@@ -424,7 +418,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.LastUpdateTime = DateTime.Now;
                     receiptTicket.CreateTime = DateTime.Now;
                     receiptTicket.SupplierID = this.supplierID;
-                    receiptTicket.HasPutawayTicket = "没有生成上架单";
+                    receiptTicket.HasPutawayTicket = "未生成上架单";
                     receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.ReceiptTicket.Add(receiptTicket);
                     wmsEntities.SaveChanges();

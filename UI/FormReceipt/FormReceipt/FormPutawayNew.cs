@@ -51,6 +51,21 @@ namespace WMS.UI.FormReceipt
             InitComponents();
             Search();
             InitPanel();
+            WMSEntities wmsEntities = new WMSEntities();
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+            User user = (from u in wmsEntities.User where u.ID == this.userID select u).FirstOrDefault();
+            if (user != null)
+            {
+                this.Controls.Find("textBoxCreateUserUsername", true)[0].Text = user.Username;
+                this.Controls.Find("textBoxLastUpdateUserUsername", true)[0].Text = user.Username;
+            }
+            if (receiptTicket != null)
+            {
+                this.Controls.Find("textBoxReceiptTicketNo", true)[0].Text = receiptTicket.No;
+            }
+            this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
+            this.Controls.Find("textBoxLastUpdateTime", true)[0].Text = DateTime.Now.ToString();
+            this.Controls.Find("textBoxState", true)[0].Text = "待上架";
         }
 
         private void InitComponents()
@@ -97,6 +112,7 @@ namespace WMS.UI.FormReceipt
         private void InitPanel()
         {
             Utilities.CreateEditPanel(this.tableLayoutPanel2, ReceiptMetaData.putawayTicketKeyName);
+            
             this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             if (this.formMode == FormMode.ADD)
             {
@@ -112,6 +128,7 @@ namespace WMS.UI.FormReceipt
                     return;
                 }
                 Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
+                
             }
         }
 
@@ -242,6 +259,7 @@ namespace WMS.UI.FormReceipt
                 {
                     if (decimal.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
                     {
+                        
                         idsAndSubmissionAmount.Add(id, submissionAmount);
                     }
                     else
@@ -257,6 +275,7 @@ namespace WMS.UI.FormReceipt
         private void OK_Click(object sender, EventArgs e)
         {
             WMSEntities wmsEntities = new WMSEntities();
+            
             /*
             List<int> ids = SelectReceiptTicketItem();
             if (ids.Count == 0)
@@ -292,7 +311,14 @@ namespace WMS.UI.FormReceipt
                         MessageBox.Show("收货单不存在");
                         return;
                     }
-                    receiptTicket.HasPutawayTicket = "是";
+                    if (receiptTicket.HasPutawayTicket == "没有生成上架单")
+                    {
+                        if(MessageBox.Show("生成上架单后，该收货单条目、状态都不能更改，是否继续","提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification) == DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
+                    //receiptTicket.HasPutawayTicket = "是";
                     putawayTicket.CreateTime = DateTime.Now;
                     putawayTicket.ReceiptTicketID = this.receiptTicketID;
                     putawayTicket.CreateUserID = this.userID;
@@ -338,6 +364,11 @@ namespace WMS.UI.FormReceipt
                             foreach (KeyValuePair<int ,decimal> ripa in receiptItemPutawayAmount)
                             {
                                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == ripa.Key select rti).FirstOrDefault();
+                                if (ripa.Value < 0)
+                                {
+                                    MessageBox.Show("计划上架数量不能是负数", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                    return;
+                                }
                                 if (receiptTicketItem != null)
                                 {
                                     PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
@@ -346,7 +377,7 @@ namespace WMS.UI.FormReceipt
                                     putawayTicketItem.ScheduledMoveCount = ripa.Value;
                                     if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - putawayTicketItem.ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                                     {
-                                        MessageBox.Show("上架失败，计划上架数量过多！","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                                         return;
                                     }
                                     if (receiptTicketItem.HasPutwayAmount == null)
