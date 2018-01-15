@@ -229,7 +229,7 @@
             this.tableLayoutPanel2.Controls.Add(this.textBoxUsername, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxPassword, 1, 1);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(91, 89);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 4;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
@@ -352,6 +352,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.labelClickCount);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormLogin";
