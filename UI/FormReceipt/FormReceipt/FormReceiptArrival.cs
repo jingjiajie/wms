@@ -29,6 +29,7 @@ namespace WMS.UI
         private int projectID;
         private int warehouseID;
         private int userID;
+        private int supplierid;
         PagerWidget<ReceiptTicketView> pagerWidget;
 
         private Action<string, string> ToSubmission = null;
@@ -40,12 +41,13 @@ namespace WMS.UI
             InitializeComponent();
         }
 
-        public FormReceiptArrival(int projectID, int warehouseID, int userID)
+        public FormReceiptArrival(int projectID, int warehouseID, int userID,int supplierid)
         {
             InitializeComponent();
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.supplierid = supplierid;
         }
         /// <summary>
         /// form = 0 Submission ; form = 1 Putaway
@@ -93,6 +95,24 @@ namespace WMS.UI
             pagerWidget = new PagerWidget<ReceiptTicketView>(this.reoGridControlUser, ReceiptMetaData.receiptNameKeys, projectID, warehouseID);
             this.panel1.Controls.Add(pagerWidget);
             
+            if(this.supplierid !=-1)
+            {
+
+
+                this.buttonAdd.Enabled = false;
+                this.buttonAlter.Enabled = false;
+                this.buttonDelete.Enabled = false;
+                this.buttonItems.Enabled = false;
+                this.buttonPutaway.Enabled = false;
+                this.buttonPutaway.Enabled = false;
+                this.buttonSelect.Enabled = false;
+                this.ButtonToPutaway.Enabled = false;
+                this.ButtonToSubmission.Enabled = false;
+                this.buttonItemSubmission.Enabled = false;
+               
+            }
+
+
             pagerWidget.Show();
             this.Search();
             //pagerWidget.Show();
@@ -102,6 +122,10 @@ namespace WMS.UI
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
+            if(this.supplierid !=-1)
+            {
+                this.pagerWidget.AddCondition("SupplierID", Convert.ToString(this.supplierid));
+            }
             if (this.comboBoxSelect.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
