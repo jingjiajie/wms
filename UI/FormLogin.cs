@@ -69,17 +69,39 @@ namespace WMS.UI
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            //让窗口透明www
-            this.TransparencyKey = Color.Red;
-            this.BackColor = Color.Red;
-
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                Project[] projects = (from p in wmsEntities.Project select p).ToArray();
+                Warehouse[] warehouses = (from w in wmsEntities.Warehouse select w).ToArray();
+                this.comboBoxProject.Items.AddRange((from p in projects select new ComboBoxItem(p.Name,p)).ToArray());
+                this.comboBoxWarehouse.Items.AddRange((from w in warehouses select new ComboBoxItem(w.Name,w)).ToArray());
+                if(projects.Length == 0)
+                {
+                    MessageBox.Show("系统错误：无可选项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+                else if (warehouses.Length == 0)
+                {
+                    MessageBox.Show("系统错误：无可选仓库", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+                this.comboBoxProject.SelectedIndex = 0;
+                this.comboBoxWarehouse.SelectedIndex = 0;
+            }
+            catch
+            {
+                MessageBox.Show("加载数据失败，请检查网络连接！","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
             this.labelStatus.Text = "";
             this.labelClickCount.Visible = false;
             this.labelClickCount.ForeColor = Color.White;
             this.labelClickCount.Font = new Font("黑体", 12);
             this.CancelButton = buttonClosing;
-            //粗糙圆角www
-            //this.textBox1.Region = new Region(GetRoundRectPath(new RectangleF(0, 0, this.textBox1.Width, this.textBox1.Height), 10f));
         }
 
         //启用双缓冲技术
@@ -155,7 +177,9 @@ namespace WMS.UI
                     this.Invoke(new Action(() =>
                     {
                         this.labelStatus.Text = "";
-                        FormMain formMain = new FormMain(user.ID);
+                        Project project = (this.comboBoxProject.SelectedItem as ComboBoxItem).Value as Project;
+                        Warehouse warehouse = (this.comboBoxWarehouse.SelectedItem as ComboBoxItem).Value as Warehouse;
+                        FormMain formMain = new FormMain(user, project, warehouse);
                         formMain.SetFormClosedCallback(this.Dispose);
                         formMain.Show();
                         this.Hide();
@@ -350,6 +374,10 @@ namespace WMS.UI
             
         }
 
+        private void FormLogin_Activated(object sender, EventArgs e)
+        {
+            this.textBoxUsername.Focus();
+        }
     }
 }
 

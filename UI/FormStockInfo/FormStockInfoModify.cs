@@ -104,6 +104,7 @@ namespace WMS.UI
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)
             {
                 this.modifyFinishedCallback();
+                MessageBox.Show("修改成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }else if(this.mode == FormMode.ADD && this.addFinishedCallback != null)
             {
                 this.addFinishedCallback();

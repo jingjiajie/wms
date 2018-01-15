@@ -33,13 +33,13 @@ namespace WMS.UI
 
         private Action formClosedCallback;
 
-        public FormMain(int userID)
+        public FormMain(User user,Project project,Warehouse warehouse)
         {
             InitializeComponent();
-            User user = (from u in this.wmsEntities.User
-                         where u.ID == userID
-                         select u).Single();
             this.user = user;
+            this.project = project;
+            this.warehouse = warehouse;
+
             if (user.SupplierID != null)
             {
                 this.supplierid = Convert.ToInt32(user.SupplierID);
@@ -403,23 +403,27 @@ namespace WMS.UI
                 {
                     return;
                 }
-                this.Invoke(new Action(()=>
+                this.Invoke(new Action(() =>
                 {
-                    for (int i = 0; i < allWarehouses.Count(); i++)
+                    this.comboBoxWarehouse.Items.AddRange((from w in allWarehouses select new ComboBoxItem(w.Name, w)).ToArray());
+                    for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
                     {
-                        Warehouse warehouse = allWarehouses[i];
-                        comboBoxWarehouse.Items.Add(new ComboBoxItem(warehouse.Name, warehouse));
+                        if (((Warehouse)(((ComboBoxItem)this.comboBoxWarehouse.Items[i]).Value)).ID == this.warehouse.ID)
+                        {
+                            this.comboBoxWarehouse.SelectedIndex = i;
+                            break;
+                        }
                     }
-                    this.comboBoxWarehouse.SelectedIndex = 0;
-                    this.warehouse = allWarehouses[0];
 
-                    for (int i = 0; i < allProjects.Count(); i++)
+                    this.comboBoxProject.Items.AddRange((from p in allProjects select new ComboBoxItem(p.Name, p)).ToArray());
+                    for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
                     {
-                        Project project = allProjects[i];
-                        comboBoxProject.Items.Add(new ComboBoxItem(project.Name, project));
+                        if (((Project)(((ComboBoxItem)this.comboBoxProject.Items[i]).Value)).ID == this.project.ID)
+                        {
+                            this.comboBoxProject.SelectedIndex = i;
+                            break;
+                        }
                     }
-                    this.comboBoxProject.SelectedIndex = 0;
-                    this.project = allProjects[0];
                 }));
             }).Start();
 
