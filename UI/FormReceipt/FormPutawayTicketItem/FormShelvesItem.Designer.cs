@@ -35,16 +35,16 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonFInished = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.buttonDelete = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -168,28 +168,6 @@
             this.buttonModify.MouseEnter += new System.EventHandler(this.buttonModify_MouseEnter);
             this.buttonModify.MouseLeave += new System.EventHandler(this.buttonModify_MouseLeave);
             // 
-            // buttonDelete
-            // 
-            this.buttonDelete.BackColor = System.Drawing.Color.White;
-            this.buttonDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDelete.BackgroundImage")));
-            this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonDelete.FlatAppearance.BorderSize = 0;
-            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonDelete.Image = global::WMS.UI.Properties.Resources.delete;
-            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDelete.Location = new System.Drawing.Point(15, 126);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(278, 56);
-            this.buttonDelete.TabIndex = 0;
-            this.buttonDelete.Text = "删除上架单条目";
-            this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonDelete.UseVisualStyleBackColor = false;
-            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
-            this.buttonDelete.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonDelete_MouseDown);
-            this.buttonDelete.MouseEnter += new System.EventHandler(this.buttonDelete_MouseEnter);
-            this.buttonDelete.MouseLeave += new System.EventHandler(this.buttonDelete_MouseLeave);
-            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tableLayoutPanel3);
@@ -271,6 +249,14 @@
             this.tableLayoutPanel1.TabIndex = 17;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
+            // panel4
+            // 
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 952);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1404, 54);
+            this.panel4.TabIndex = 2;
+            // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
@@ -296,13 +282,27 @@
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // panel4
+            // buttonDelete
             // 
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 952);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1404, 54);
-            this.panel4.TabIndex = 2;
+            this.buttonDelete.BackColor = System.Drawing.Color.White;
+            this.buttonDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDelete.BackgroundImage")));
+            this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonDelete.FlatAppearance.BorderSize = 0;
+            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDelete.Image = global::WMS.UI.Properties.Resources.delete;
+            this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonDelete.Location = new System.Drawing.Point(15, 126);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(278, 56);
+            this.buttonDelete.TabIndex = 0;
+            this.buttonDelete.Text = "删除上架单条目";
+            this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonDelete.UseVisualStyleBackColor = false;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            this.buttonDelete.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonDelete_MouseDown);
+            this.buttonDelete.MouseEnter += new System.EventHandler(this.buttonDelete_MouseEnter);
+            this.buttonDelete.MouseLeave += new System.EventHandler(this.buttonDelete_MouseLeave);
             // 
             // FormShelvesItem
             // 
@@ -334,7 +334,6 @@
 
         private System.Windows.Forms.Panel panel2;
         private unvell.ReoGrid.ReoGridControl reoGridControlPutaway;
-        private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
@@ -348,5 +347,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button buttonDelete;
     }
 }

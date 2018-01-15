@@ -364,19 +364,44 @@ namespace WMS.UI.FormReceipt
                 {
                     MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
-                }                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+                }                
+                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+                
                 if (MessageBox.Show("确定删除该上架单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).FirstOrDefault();
                     if (putawayTicket == null)
                     {
-                        MessageBox.Show("该上架单已被删除，请刷新查看!");
+                        MessageBox.Show("该上架单已被删除，请刷新查看!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                        return;
+                    }
+                    if (putawayTicket.State != "待上架")
+                    {
+                        MessageBox.Show("该上架单已有部分或者全部上架，无法删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
                         return;
                     }
                     ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == putawayTicket.ReceiptTicketID select rt).FirstOrDefault();
-                    if (receiptTicket != null)
+                    PutawayTicketItem[] putawayTicketItems = putawayTicket.PutawayTicketItem.ToArray();
+                    int n = 0;
+                    foreach(PutawayTicketItem pti in putawayTicketItems)
                     {
-                        receiptTicket.HasPutawayTicket = "否";
+                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
+                        if (receiptTicketItem != null)
+                        {
+                            receiptTicketItem.HasPutwayAmount -= pti.ScheduledMoveCount;
+                            if (receiptTicketItem.HasPutwayAmount == 0)
+                            {
+                                n++;
+                            }
+                        }
+                    }
+                    if (n == putawayTicketItems.Length)
+                    {
+                        receiptTicket.HasPutawayTicket = "未生成上架单";
+                    }
+                    else
+                    {
+                        receiptTicket.HasPutawayTicket = "部分生成上架单";
                     }
                     try
                     {

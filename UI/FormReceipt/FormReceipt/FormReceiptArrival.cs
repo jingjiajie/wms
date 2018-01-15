@@ -540,9 +540,9 @@ namespace WMS.UI
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
 
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
-                if (receiptTicket.State != "已收货")
+                if (receiptTicket.State == "拒收")
                 {
-                    MessageBox.Show("该收货单未收货，请先收货!");
+                    MessageBox.Show("该收货单已拒收，不能生成上架单!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
                     return;
                 }
                 /*

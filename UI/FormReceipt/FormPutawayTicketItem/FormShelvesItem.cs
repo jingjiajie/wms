@@ -62,6 +62,7 @@ namespace WMS.UI.FormReceipt
             WMSEntities wmsEntities = new WMSEntities();
             pagerWidget = new PagerWidget<PutawayTicketItemView>(this.reoGridControlPutaway, ReceiptMetaData.putawayTicketItemKeyName, projectID, warehouseID);
             Search();
+            this.RefreshTextBoxes();
         }
         
         private void Search(bool savePage = false, int selectID = -1)
@@ -257,7 +258,7 @@ namespace WMS.UI.FormReceipt
                 if (putawayTicketItem.ScheduledMoveCount != null)
                 {
                     oldPutawayAmount = (decimal)putawayTicketItem.ScheduledMoveCount;
-                    return;
+                    //return;
                 }
                 if (putawayTicketItem == null)
                 {
