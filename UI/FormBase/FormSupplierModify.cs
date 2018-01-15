@@ -118,6 +118,7 @@ namespace WMS.UI
                 return; 
             }
 
+            if(textBoxStartingTime.Text  !=""&&textBoxEndingTime.Text  !="")
             if (Convert.ToDateTime(textBoxStartingTime.Text) >=Convert.ToDateTime(textBoxEndingTime.Text) )
             {
 
