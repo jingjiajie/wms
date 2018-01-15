@@ -77,7 +77,7 @@ namespace WMS.UI
             }
             else if (this.mode == FormMode.ADD)
             {
-                this.Text = "添加发货单";
+                this.Text = "添加供货信息";
                 try
                 {
                     User user = (from u in wmsEntities.User
