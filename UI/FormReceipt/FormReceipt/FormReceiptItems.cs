@@ -106,7 +106,20 @@ namespace WMS.UI
 
         private void TextBoxComponentNo_Click(object sender, EventArgs e)
         {
-            FormSearch formSearch = new FormSearch();
+            WMSEntities wmsEntities1 = new WMSEntities();
+            ReceiptTicket receiptTicket1 = (from rt in wmsEntities1.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+            if (receiptTicket1 == null)
+            {
+                MessageBox.Show("改收货单已被删除，请刷新后重试");
+                return;
+            }
+            if (receiptTicket1.SupplierID == null)
+            {
+                MessageBox.Show("请为该收货单选择供应商");
+                return;
+            }
+            FormSearch formSearch = new FormSearch((int)receiptTicket1.SupplierID, receiptTicket1.ProjectID, receiptTicket1.WarehouseID);
+            
             formSearch.SetSelectFinishCallback(new Action<int>((id) => 
             {
                 WMSEntities wmsEntities = new WMSEntities();

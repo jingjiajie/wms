@@ -319,11 +319,11 @@ namespace WMS.UI
                         MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    //catch (Exception)
-                    //{
-                    //    MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    //    return;
-                    //}
+                    catch (Exception)
+                    { 
+                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
                     //添加分页条件
                     sqlCondition += " ORDER BY "; //倒序排序

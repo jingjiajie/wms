@@ -21,6 +21,7 @@ namespace WMS.UI
         private int userID = -1;
         private int personid = -1;
         private int personidc = 0;
+        private Func<int> PersonIDGetter = null;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
@@ -81,13 +82,14 @@ namespace WMS.UI
 
 
             this.InitComponents();
+            this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, DataAccess.Person>(this, "textBoxPersonName", "Name");
 
         }
         private void InitComponents()
         {
 
             Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
-            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
+            //this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
             {

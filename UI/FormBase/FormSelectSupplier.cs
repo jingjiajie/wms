@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace WMS.UI
 {
-    public partial class FormSelectSupplier : Form  
+    public partial class FormSelectSupplier : Form,IFormSelect
     {
         private Action<int> selectFinishCallback = null;
         private int defaultSupplierID = -1;
@@ -21,16 +21,17 @@ namespace WMS.UI
         private PagerWidget<SupplierView > pagerWidget = null;
         static Point staticPos = new Point(-1, -1);
 
-        public FormSelectSupplier(int supplierid = -1)
+        public FormSelectSupplier()
         {
             InitializeComponent();
-            this.defaultSupplierID = supplierid;
+            //this.defaultSupplierID = supplierid;
         }
 
-        public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
+        public void SetSelectFinishedCallback(Action<int> selectFinishedCallback)
         {
             this.selectFinishCallback = selectFinishedCallback;
         }
+
 
         private void InitComponents()
         {
@@ -172,5 +173,6 @@ namespace WMS.UI
                 this.pagerWidget.Search(true, id);
             }
         }
+
     }
 }

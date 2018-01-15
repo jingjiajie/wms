@@ -157,7 +157,7 @@ namespace WMS.UI.FormReceipt
         private void textBoxSupplierID_Click(object sender, EventArgs e)
         {
             FormSelectSupplier formSelectSupplier = new FormSelectSupplier();          
-            formSelectSupplier.SetSelectFinishCallback(new Action<int>((int ID)=> 
+            formSelectSupplier.SetSelectFinishedCallback(new Action<int>((int ID)=> 
             {
                 //this.Controls.Find("textBoxSupplierNo", true)[0].Text = ID.ToString();
                 Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();

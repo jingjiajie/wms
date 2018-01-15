@@ -35,8 +35,8 @@ namespace WMS.DataAccess
         public string WarehouseName { get; set; }
         public string SupplierName { get; set; }
         public string ComponentName { get; set; }
-        public Nullable<int> PutawayTicketProjectID { get; set; }
-        public Nullable<int> PutawayTicketWarehouseID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
         public string PutawayTicketState { get; set; }
         public Nullable<int> PutawayReceiptTicketID { get; set; }
         public string PutawayTicketNo { get; set; }
@@ -69,6 +69,6 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ReceiptTicketItemExpiryDate { get; set; }
         public Nullable<decimal> UnitCount { get; set; }
         public Nullable<decimal> PutawayAmount { get; set; }
-        public Nullable<int> WarehouseID { get; set; }
+        public Nullable<int> ReceiptTicketWarehouseID { get; set; }
     }
 }
