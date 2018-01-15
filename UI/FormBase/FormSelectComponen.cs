@@ -24,6 +24,8 @@ namespace WMS.UI
         public FormSelectComponen()
         {
             InitializeComponent();
+            this.projectID = GlobalData.projectID;
+            this.warehouseID = GlobalData.warehouseID;
             //this.defaultComponenID = componenid;
         }
 

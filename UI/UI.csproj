@@ -396,6 +396,7 @@
       <DependentUpon>FormStockInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="FromShipmentTicket\ShipmentTicketUtilities.cs" />
+    <Compile Include="GlobalData.cs" />
     <Compile Include="StandardFormPreviewExcel.cs">
       <SubType>Form</SubType>
     </Compile>

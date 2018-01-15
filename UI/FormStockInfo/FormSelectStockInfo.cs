@@ -31,6 +31,13 @@ namespace WMS.UI
             this.warehouseID = warehouseID;
         }
 
+        public FormSelectStockInfo()
+        {
+            InitializeComponent();
+            this.projectID = GlobalData.projectID;
+            this.warehouseID = GlobalData.warehouseID;
+        }
+
         public void SetSelectFinishedCallback(Action<int> selectFinishedCallback)
         {
             this.selectFinishCallback = selectFinishedCallback;

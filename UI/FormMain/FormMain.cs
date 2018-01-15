@@ -720,6 +720,7 @@ namespace WMS.UI
         private void comboBoxProject_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
+            GlobalData.projectID = this.project.ID;
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
         }
@@ -727,6 +728,7 @@ namespace WMS.UI
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
+            GlobalData.warehouseID = this.warehouse.ID;
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
         }
