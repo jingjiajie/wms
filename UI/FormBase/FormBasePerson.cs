@@ -120,6 +120,185 @@ namespace WMS.UI.FormBase
                 return;
             }
             this.labelStatus.Text = "正在删除...";
+
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var call = (from kn in wmsEntities.JobTicketItem
+                                                 where kn.PersonID == id
+                                                 select kn.ID).ToArray();
+                    if (call.Length > 0)
+                    {
+                        MessageBox.Show("删除失败，选择的人员信息被作业单条目引用，需要删除相应作业单信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var call = (from kn in wmsEntities.PutOutStorageTicket
+                                where kn.PersonID == id
+                                select kn.ID).ToArray();
+                    if (call.Length > 0)
+                    {
+                        MessageBox.Show("删除失败，选择的人员信息被出库单引用，需要删除相应出库单信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var call = (from kn in wmsEntities.PutOutStorageTicketItem
+                                where kn.JobPersonID == id
+                                 ||kn.ConfirmPersonID==id
+                                select kn.ID).ToArray();
+                    if (call.Length > 0)
+                    {
+                        MessageBox.Show("删除失败，选择的人员信息被出库单零件条目引用，需要删除相应出库单信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var receiptTicketcall = (from kn in wmsEntities.ReceiptTicket
+                                where kn.PersonID == id
+                                select kn.ID).ToArray();
+                    var putOutStorageTicketItemcall = (from kn in wmsEntities.PutOutStorageTicketItem
+                                where kn.JobPersonID == id
+                                 || kn.ConfirmPersonID == id
+                                select kn.ID).ToArray();
+                    if (receiptTicketcall.Length > 0|| putOutStorageTicketItemcall.Length>0)
+                    {
+                        MessageBox.Show("删除失败，选择的人员信息被收货单引用，需要删除相应收货单信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var submissionTicketcall = (from kn in wmsEntities.SubmissionTicket
+                                where kn.PersonID == id
+                                select kn.ID).ToArray();
+                    var submissionTicketItemcall = (from kn in wmsEntities.SubmissionTicketItem
+                                where kn.JobPersonID == id
+                                ||kn.ConfirmPersonID==id
+                                select kn.ID).ToArray();
+                    if (submissionTicketcall.Length > 0|| submissionTicketItemcall.Length>0)
+                    {
+                        MessageBox.Show("删除失败，选择的人员信息被送检单引用，需要删除相应送检单信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var putawayTicketcall = (from kn in wmsEntities.PutawayTicket
+                                                where kn.PersonID == id
+                                                select kn.ID).ToArray();
+                    var putawayTicketItemcall = (from kn in wmsEntities.PutawayTicketItem
+                                                    where kn.JobPersonID == id
+                                                    || kn.ConfirmPersonID == id
+                                                    select kn.ID).ToArray();
+                    if (putawayTicketcall.Length > 0 || putawayTicketItemcall.Length > 0)
+                    {
+                        MessageBox.Show("删除失败，选择的人员信息被上架单引用，需要删除相应上架单信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var call = (from kn in wmsEntities.StockInfoCheckTicket
+                                where kn.PersonID == id
+                                select kn.ID).ToArray();
+                    if (call.Length > 0)
+                    {
+                        MessageBox.Show("删除失败，选择的人员信息被库存盘点信息引用，需要删除相应库存盘点信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
             new Thread(new ThreadStart(() =>
             {
                 try
