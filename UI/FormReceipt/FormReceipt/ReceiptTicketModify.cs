@@ -23,12 +23,13 @@ namespace WMS.UI.FormReceipt
         private int userID;
         private int supplierID;
         private Func<int> personIDGetter;
+        private string contract;
 
         public FormReceiptTicketModify()
         {
             InitializeComponent();
         }
-        public FormReceiptTicketModify(FormMode formMode, int ID, int projectID, int warehouseID ,int userID)
+        public FormReceiptTicketModify(FormMode formMode, int ID, int projectID, int warehouseID ,int userID,string contract)
         {
             InitializeComponent();
             this.formMode = formMode;
@@ -36,6 +37,7 @@ namespace WMS.UI.FormReceipt
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.contract = contract;
         }
 
         private void ReceiptTicketModify_Load(object sender, EventArgs e)
@@ -80,6 +82,14 @@ namespace WMS.UI.FormReceipt
                 else
                 {
                     MessageBox.Show("请重新选择供应商");
+                }
+
+                if(this.contract=="已过审" )
+                {
+                  ComboBox  comboxstate=   (ComboBox )this.Controls.Find("comboBoxState", true)[0] ;
+                
+
+                    comboxstate.Enabled = false;
                 }
                 //this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 //TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserUserID", true)[0];

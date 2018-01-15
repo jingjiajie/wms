@@ -30,6 +30,7 @@ namespace WMS.UI
         private int warehouseID;
         private int userID;
         private int supplierid;
+        private string contractstate = "";
         PagerWidget<ReceiptTicketView> pagerWidget;
 
         private Action<string, string> ToSubmission = null;
@@ -109,9 +110,23 @@ namespace WMS.UI
                 this.ButtonToPutaway.Enabled = false;
                 this.ButtonToSubmission.Enabled = false;
                 this.buttonItemSubmission.Enabled = false;
-               
+                WMSEntities wmsEntities = new WMSEntities();
+                Supplier supplier = (from u in wmsEntities.Supplier
+                                     where u.ID == this.supplierid
+                                     select u).FirstOrDefault();
+
+                this.contractstate = supplier.ContractState;
             }
 
+            if(this.contractstate =="已过审")
+
+            {
+                this.buttonAdd.Enabled = true;
+                this.buttonAlter.Enabled = true;
+                this.buttonDelete.Enabled = true;
+                this.buttonSelect.Enabled = true;
+                this.buttonItems.Enabled = true;
+            }
 
             pagerWidget.Show();
             this.Search();
@@ -252,7 +267,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID, this.userID);
+            FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID, this.userID,this.contractstate );
             receiptTicketModify.SetModifyFinishedCallback(() =>
             {
                 this.Search();
@@ -294,7 +309,7 @@ namespace WMS.UI
                 }
                 if (count != 0)
                 {
-                    var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID, this.projectID, this.warehouseID, this.userID);
+                    var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID, this.projectID, this.warehouseID, this.userID,this.contractstate );
                     receiptTicketModify.SetModifyFinishedCallback(() =>
                     {
                         this.Search();
