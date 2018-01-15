@@ -162,6 +162,29 @@ namespace WMS.UI
                 MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            //如果被作业单引用了，不能删除
+            try
+            {
+                StringBuilder sbIDArray = new StringBuilder();
+                foreach(int id in deleteIDs)
+                {
+                    sbIDArray.Append(id + ",");
+                }
+                sbIDArray.Length--;
+                int countRef = this.wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM JobTicket WHERE ShipmentTicketID IN ({0})",sbIDArray.ToString())).Single();
+                if (countRef > 0)
+                {
+                    MessageBox.Show("删除失败，不能删除被作业单引用的发货单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查您的网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
             if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;

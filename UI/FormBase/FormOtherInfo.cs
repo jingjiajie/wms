@@ -175,7 +175,7 @@ namespace WMS.UI
                 {
 
                     var call = (from kn in wmsEntities.ReceiptTicket
-                                where kn.WarehouseID == id
+                                where kn.Warehouse.ID == id
                                 select kn.ID).ToArray();
                     if (call.Length > 0)
                     {
