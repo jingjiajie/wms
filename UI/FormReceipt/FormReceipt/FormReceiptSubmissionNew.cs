@@ -341,12 +341,12 @@ namespace WMS.UI.FormReceipt
                 {
                     if (receiptTicketItem.ReceiviptAmount < kv.Value)
                     {
-                        MessageBox.Show("送检数量不应大于收货数量","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        MessageBox.Show("送检数量不应大于收货数量","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     if (kv.Value < 0)
                     {
-                        MessageBox.Show("送检数量不应为负数", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        MessageBox.Show("送检数量不应为负数", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     receiptTicketItemsAndSubmissionAmount.Add(receiptTicketItem, kv.Value);

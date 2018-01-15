@@ -29,6 +29,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> RejectAmount { get; set; }
         public Nullable<decimal> UnitAmount { get; set; }
         public Nullable<decimal> RefuseAmount { get; set; }
+        public Nullable<decimal> Result { get; set; }
     
         public virtual ReceiptTicketItem ReceiptTicketItem { get; set; }
         public virtual SubmissionTicket SubmissionTicket { get; set; }

@@ -120,17 +120,18 @@
             "零件编号",
             "零件名称"});
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(121, 40);
+            this.comboBoxSearchCondition.Size = new System.Drawing.Size(121, 60);
+            this.comboBoxSearchCondition.Click += new System.EventHandler(this.comboBoxSearchCondition_Click);
             // 
             // textBoxSearchContition
             // 
             this.textBoxSearchContition.Name = "textBoxSearchContition";
-            this.textBoxSearchContition.Size = new System.Drawing.Size(200, 40);
+            this.textBoxSearchContition.Size = new System.Drawing.Size(200, 60);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 40);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 60);
             // 
             // buttonSearch
             // 
@@ -146,7 +147,7 @@
             this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
             this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(134, 37);
+            this.buttonSelect.Size = new System.Drawing.Size(134, 57);
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 

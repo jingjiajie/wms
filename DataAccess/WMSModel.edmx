@@ -421,6 +421,7 @@
           <Property Name="RejectAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="RefuseAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Result" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -1234,6 +1235,7 @@
           <Property Name="WarehouseID" Type="int" />
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="RefuseAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Result" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2462,7 +2464,8 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[UnitAmount] AS [UnitAmount], 
 [SubmissionTicketItemView].[WarehouseID] AS [WarehouseID], 
 [SubmissionTicketItemView].[WarehouseName] AS [WarehouseName], 
-[SubmissionTicketItemView].[RefuseAmount] AS [RefuseAmount]
+[SubmissionTicketItemView].[RefuseAmount] AS [RefuseAmount], 
+[SubmissionTicketItemView].[Result] AS [Result]
 FROM [dbo].[SubmissionTicketItemView] AS [SubmissionTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketView" EntityType="Self.SubmissionTicketView" store:Type="Views" store:Schema="dbo">
@@ -3212,6 +3215,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="RejectAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RefuseAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Result" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="ReceiptTicketItem" Relationship="Self.FK__Submissio__Recei__0EF836A4" FromRole="SubmissionTicketItem" ToRole="ReceiptTicketItem" />
           <NavigationProperty Name="SubmissionTicket" Relationship="Self.FK__Submissio__Submi__4D94879B" FromRole="SubmissionTicketItem" ToRole="SubmissionTicket" />
         </EntityType>
@@ -4008,6 +4012,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="WarehouseID" Type="Int32" />
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="RefuseAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Result" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="SubmissionTicketView">
           <Key>
@@ -5180,6 +5185,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="RejectAmount" ColumnName="RejectAmount" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
                 <ScalarProperty Name="RefuseAmount" ColumnName="RefuseAmount" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5967,6 +5973,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="RefuseAmount" ColumnName="RefuseAmount" />
+                <ScalarProperty Name="Result" ColumnName="Result" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -59,7 +59,7 @@ namespace WMS.UI.FormReceipt
         {
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddStaticCondition("IsHistory", "0");
-            if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            if (this.comboBoxSearchCondition.SelectedIndex != -1)
             {
                 
                 this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchContition.Text);
@@ -70,7 +70,7 @@ namespace WMS.UI.FormReceipt
         private void InitComponent()
         {
             this.comboBoxSearchCondition.SelectedIndex = 0;
-
+            //this.comboBoxSearchCondition.Items.Add("零件编号", )
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
@@ -164,6 +164,11 @@ namespace WMS.UI.FormReceipt
                 }
             }
             return ids.ToArray();
+        }
+
+        private void comboBoxSearchCondition_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

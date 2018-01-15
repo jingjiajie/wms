@@ -96,10 +96,10 @@ namespace WMS.UI.FormReceipt
             {
                 this.Controls.Find("textBoxRejectAmount", true)[0].Text = "0";
             }
-            if (submissionTicketItemView.RefuseAmount == null)
-            {
-                this.Controls.Find("textBoxRefuseAmount", true)[0].Text = "0";
-            }
+            //if (submissionTicketItemView.RefuseAmount == null)
+            //{
+            //    this.Controls.Find("textBoxRefuseAmount", true)[0].Text = "0";
+            //}
             this.Controls.Find("textBoxArriveAmount", true)[0].Enabled = false;
         }
 
@@ -712,6 +712,7 @@ namespace WMS.UI.FormReceipt
                 this.modifyAmount(oldBackAmount, oldRejectAmount, oldSubmissionAmount, oldRefuseAmount, submissionTicketItem.ID);
                 string state = this.modifyState(submissionTicketID);
                 this.Invoke(new Action(this.Search));
+                
                 /*
                 if (state == "合格")
                 {
