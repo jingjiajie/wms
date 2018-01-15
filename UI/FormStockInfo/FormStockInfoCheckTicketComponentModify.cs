@@ -91,9 +91,13 @@ namespace WMS.UI
 
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
+
+            TextBox textBoxPersonName =(TextBox )this.Controls.Find("textBoxPersonName", true)[0];
+            textBoxPersonName.BackColor = Color.White;
             //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
             this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
+
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
             this.pagerWidget.ClearCondition();
