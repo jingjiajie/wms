@@ -266,7 +266,37 @@ namespace WMS.UI
             this.labelStatus.Text = "正在删除...";
 
 
-                new Thread(new ThreadStart(() =>
+            try
+            {
+                foreach (int id in deleteIDs)
+                {
+
+                    var receiptTicketItemcall = (from kn in wmsEntities.ReceiptTicketItem
+                                      where kn.SupplyID == id
+                                      select kn.ID).ToArray();
+                    if (receiptTicketItemcall.Length > 0)
+                    {
+                        MessageBox.Show("删除失败，选择的供货信息被收货单引用，需要删除相应收货单信息才能删除。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+
+
+
+
+
+            new Thread(new ThreadStart(() =>
                 {
                     try
                     {

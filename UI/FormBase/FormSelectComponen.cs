@@ -14,12 +14,17 @@ namespace WMS.UI
 {
     public partial class FormSelectComponen : Form
     {
+        private PagerWidget<ComponentView> pagerWidget = null;
         private Action<int> selectFinishCallback = null;
         private int defaultComponenID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
+        static Point staticPos = new Point(-1, -1);
 
-        public FormSelectComponen()
+        public FormSelectComponen(int componenid = -1)
         {
             InitializeComponent();
+            this.defaultComponenID = componenid;
         }
 
         public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
@@ -29,15 +34,11 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            //初始化表格
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < ComponenViewMetaData.KeyNames.Length; i++)
-            {
-                worksheet.ColumnHeaders[i].Text = ComponenViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ComponenViewMetaData.KeyNames[i].Visible;
-            }
-            worksheet.Columns = ComponenViewMetaData.KeyNames.Length; //限制表的长度
+           
+            this.textBoxComponenName.Text = "";
+            this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlMain, ComponenViewMetaData.KeyNames, this.projectID, this.warehouseID);
+            this.panelPagerWidget.Controls.Add(this.pagerWidget);
+            this.pagerWidget.Show();
         }
 
         private void FormSelectComponen_Load(object sender, EventArgs e)
@@ -45,8 +46,25 @@ namespace WMS.UI
             InitComponents();
             if (this.defaultComponenID != -1)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                this.textBoxComponenName.Text = (from s in wmsEntities.ComponentView where s.ID == defaultComponenID select s.Name).FirstOrDefault();
+                try
+                {
+                    WMSEntities wmsEntities = new WMSEntities();
+
+                    this.textBoxComponenName.Text = (from s in wmsEntities.ComponentView where s.ID == defaultComponenID select s.Name).FirstOrDefault();
+                    this.Search(defaultComponenID);
+
+                }
+
+                catch
+                {
+                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+            }
+            else
+            {
                 this.Search();
             }
         }
@@ -56,47 +74,23 @@ namespace WMS.UI
             this.Search();
         }
 
-        private void Search()
+        private void Search(int selectID = -1)
         {
-            string componenName = this.textBoxComponenName.Text;
-            this.labelStatus.Text = "正在搜索...";
-            new Thread(new ThreadStart(() =>
+
+            if (this.textBoxComponenName.Text != "")
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
-                {
-                   
-                    ComponentView[] componenViews = (from s in wmsEntities.ComponentView
-                                                    where s.Name.Contains(componenName)
-                                                    orderby s.Name ascending
-                                                    select s).ToArray();
-                    this.Invoke(new Action(() =>
-                    {
-                        var worksheet = this.reoGridControlMain.Worksheets[0];
-                        worksheet.DeleteRangeData(RangePosition.EntireRange);
-                        for (int i = 0; i < componenViews.Length; i++)
-                        {
-                            ComponentView curComponenView = componenViews[i];
-                            object[] columns = Utilities.GetValuesByPropertieNames(curComponenView, (from kn in ComponenViewMetaData.KeyNames select kn.Key).ToArray());
-                            for (int j = 0; j < worksheet.Columns; j++)
-                            {
-                                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                            }
-                        }
-                        if (componenViews.Length == 0)
-                        {
-                            worksheet[0, 2] = "没有查询到符合条件的记录";
-                        }
-                        this.labelStatus.Text = "搜索完成";
-                    }));
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                
-            })).Start();
+                string value = this.textBoxComponenName.Text;
+                this.pagerWidget.ClearCondition();
+                this.pagerWidget.AddCondition("零件名称", value);
+                this.pagerWidget.Search(false, selectID);
+            }
+            else
+            {
+                this.pagerWidget.ClearCondition();
+                this.pagerWidget.Search(false, selectID);
+            }
+
+
         }
 
         private void buttonSelect_Click(object sender, EventArgs e)
@@ -113,7 +107,7 @@ namespace WMS.UI
                 return;
             }
             this.selectFinishCallback?.Invoke(ids[0]);
-            this.Close();
+            this.Hide();
         }
 
         private void textBoxComponenName_Click(object sender, EventArgs e)
@@ -126,6 +120,33 @@ namespace WMS.UI
             if(e.KeyChar == 13)
             {
                 this.Search();
+            }
+        }
+        private void FormSelectComponen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+        }
+
+        private void textBoxComponenName_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible == false)
+            {
+                staticPos = this.Location;
+            }
+            else
+            {
+                if (staticPos != new Point(-1, -1))
+                {
+                    this.Location = staticPos;
+                }
+                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+                int id = -1;
+                if (ids.Length > 0)
+                {
+                    id = ids[0];
+                }
+                this.pagerWidget.Search(true, id);
             }
         }
     }

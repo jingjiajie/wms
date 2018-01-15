@@ -163,9 +163,36 @@ namespace WMS.UI
             this.labelStatus.Text = "正在删除...";
 
 
-                new Thread(new ThreadStart(() =>
+
+
+            try
+            {
+                foreach (int id in deleteIDs)
                 {
 
+                    var supplycall = (from kn in wmsEntities.Supply
+                                            where kn.ComponentID == id
+                                            select kn.ID).ToArray();
+                    if (supplycall.Length > 0)
+                    {
+                        MessageBox.Show("删除失败，选择的零件被供货信息引用，需要删除响应供货信息才能删除此零件。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+
+                    }
+
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
+
+            new Thread(new ThreadStart(() =>
+                {
                     try
                     {
                         foreach (int id in deleteIDs)
