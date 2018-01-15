@@ -28,6 +28,7 @@ namespace WMS.UI
         private bool startend=true ;
         private  DateTime contract_enddate;
         private  DateTime contract_startdate;
+        private  int reminedays;
 
 
 
@@ -114,7 +115,7 @@ namespace WMS.UI
             
             //库存
             int[] warringdays = { 3, 5, 10 };
-            int reminedays;
+            
 
             
             try
@@ -136,7 +137,9 @@ namespace WMS.UI
                                        where u.ReceiptTicketSupplierID == supplierid
                                        select u.SupplyNumber).ToArray();
 
-
+                var OverflowAreaAmount = (from u in wmsEntities.StockInfoView
+                               where u.ReceiptTicketSupplierID == supplierid
+                               select u.OverflowAreaAmount ).ToArray();
 
 
 
@@ -162,7 +165,13 @@ namespace WMS.UI
                         
                         continue;
                     }
+                    if(OverflowAreaAmount[i]==null)
+                    {
 
+                        continue;
+
+
+                    }
 
                     try
                     {
@@ -194,19 +203,35 @@ namespace WMS.UI
                         dailyproduction[i] = Convert.ToInt32(component.DailyProduction);
 
 
-                        reminedays = Convert.ToInt32(ShipmentAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
+                        reminedays = Convert.ToInt32((ShipmentAreaAmount[i])+ OverflowAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
 
-                        if (reminedays < 10)
+                        if (reminedays < 10||reminedays ==10)
                         {
-                            if (reminedays == 0)
+                            if(reminedays ==10)
+
                             {
-                                sb.Append("您供货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n" + "\r\n");
+                                sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                            }
+                            else if(reminedays ==5)
+                            {
+
+
+                                sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
                             }
 
-                            else
+                            else if (reminedays == 3)
                             {
-                                sb.Append("您供货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n" + "\r\n");
+
+
+                                sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
                             }
+
+
+
+
+
+
+
                         }
 
                     }
@@ -234,7 +259,7 @@ namespace WMS.UI
             }
 
 
-            if(days<10||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now )||this.contractstate =="待审核"||this.contractstate =="已过期"||days_start ==false  )
+            if(days<10||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now )||this.contractstate =="待审核"||this.contractstate =="已过期"||days_start ==false ||reminedays ==10||reminedays ==5||reminedays ==3 )
 
             {
                 int contract_effect = 0;
@@ -720,6 +745,7 @@ namespace WMS.UI
         private void comboBoxProject_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
+            GlobalData.ProjectID = this.project.ID;
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
         }
@@ -727,6 +753,7 @@ namespace WMS.UI
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
+            GlobalData.WarehouseID = this.warehouse.ID;
             this.panelRight.Controls.Clear();
             this.treeViewLeft.SelectedNode = null;
         }

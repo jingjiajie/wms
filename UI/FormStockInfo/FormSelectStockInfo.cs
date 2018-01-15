@@ -23,12 +23,19 @@ namespace WMS.UI
 
         static Point staticPos = new Point(-1, -1);
 
-        public FormSelectStockInfo(int projectID,int warehouseID,int defaultStockInfoID = -1)
+        public FormSelectStockInfo(int projectID, int warehouseID, int defaultStockInfoID = -1)
         {
             InitializeComponent();
             this.defaultStockInfoID = defaultStockInfoID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+        }
+
+        public FormSelectStockInfo()
+        {
+            InitializeComponent();
+            this.projectID = GlobalData.ProjectID;
+            this.warehouseID = GlobalData.WarehouseID;
         }
 
         public void SetSelectFinishedCallback(Action<int> selectFinishedCallback)

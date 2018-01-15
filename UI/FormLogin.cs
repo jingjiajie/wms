@@ -179,6 +179,8 @@ namespace WMS.UI
                         this.labelStatus.Text = "";
                         Project project = (this.comboBoxProject.SelectedItem as ComboBoxItem).Value as Project;
                         Warehouse warehouse = (this.comboBoxWarehouse.SelectedItem as ComboBoxItem).Value as Warehouse;
+                        GlobalData.ProjectID = project.ID;
+                        GlobalData.WarehouseID = warehouse.ID;
                         FormMain formMain = new FormMain(user, project, warehouse);
                         formMain.SetFormClosedCallback(this.Dispose);
                         formMain.Show();
@@ -377,6 +379,11 @@ namespace WMS.UI
         private void FormLogin_Activated(object sender, EventArgs e)
         {
             this.textBoxUsername.Focus();
+        }
+
+        private void labelusername_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

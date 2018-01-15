@@ -21,6 +21,7 @@ namespace WMS.UI
         private int userID = -1;
         private int stockinfoid = -1;
         private int personid = -1;
+        private Func<int> StockIDGetter = null;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
@@ -84,7 +85,8 @@ namespace WMS.UI
 
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
-            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfo>(this, "textBoxComponentName", "Name");
+            //this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
             this.Search();
@@ -206,7 +208,7 @@ namespace WMS.UI
 
 
         {
-            var FormSelectStockInfo = new FormSelectStockInfo(this.projectID,this.warehouseID,this.stockinfoid );
+            var FormSelectStockInfo = new FormSelectStockInfo();//this.projectID,this.warehouseID,this.stockinfoid );
             FormSelectStockInfo.SetSelectFinishedCallback((selectedID) =>
             {
 
