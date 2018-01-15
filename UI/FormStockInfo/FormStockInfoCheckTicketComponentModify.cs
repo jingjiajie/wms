@@ -91,6 +91,7 @@ namespace WMS.UI
             textBoxComponentName.BackColor = Color.White;
             //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
             this.Search();
@@ -100,6 +101,40 @@ namespace WMS.UI
         {
             this.RefreshTextBoxes();
         }
+
+
+        private void textBoxPersonName_Click(object sender, EventArgs e)
+        {
+            var FormSelectPerson = new FormSelectPerson();
+
+
+            FormSelectPerson.SetSelectFinishedCallback((selectedID) =>
+            {
+
+                var PersonName = (from s in wmsEntities.PersonView
+                                  where s.ID == selectedID
+                                  select s).FirstOrDefault();
+                if (PersonName.Name == null)
+                {
+                    MessageBox.Show("选择人员信息失败，人员信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //this.supplierID = selectedID;
+                //selectedID = 1;
+                this.personid = selectedID;
+                this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName.Name;
+                //this.personidc = 1;
+
+
+
+            });
+            FormSelectPerson.Show();
+
+
+        }
+
+
+
 
         private void RefreshTextBoxes()
         {
@@ -116,7 +151,7 @@ namespace WMS.UI
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
                 return;
             }
-            this.buttonAdd.Text = "复制条目";
+            //this.buttonAdd.Text = "复制条目";
             int id = ids[0];
             WMS.DataAccess.StockInfoCheckTicketItemView StockInfoCheckTicketItem = null;
             
@@ -146,6 +181,14 @@ namespace WMS.UI
             {
                 this.stockinfoid = -1;
             }
+            if(StockInfoCheckTicketItem .PersonID !=null)
+            {
+
+                this.personid = StockInfoCheckTicketItem.PersonID.Value ;
+
+            }
+
+
 
 
             //if (StockInfoCheckTicketItem.PersonID  != null)
@@ -395,9 +438,9 @@ namespace WMS.UI
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
             
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
 
-           
-         
+
 
 
 
