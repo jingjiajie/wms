@@ -116,7 +116,30 @@ namespace WMS.UI
                 MessageBox.Show("请选择要删除的项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if(MessageBox.Show("确定要删除选中项吗？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question)!= DialogResult.Yes)
+
+            //如果被出库单引用了，不能删除
+            try
+            {
+                StringBuilder sbIDArray = new StringBuilder();
+                foreach (int id in ids)
+                {
+                    sbIDArray.Append(id + ",");
+                }
+                sbIDArray.Length--;
+                int countRef = this.wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM PutOutStorageTicket WHERE JobTicketID IN ({0})", sbIDArray.ToString())).Single();
+                if (countRef > 0)
+                {
+                    MessageBox.Show("删除失败，不能删除被出库单引用的作业单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查您的网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (MessageBox.Show("确定要删除选中项吗？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question)!= DialogResult.Yes)
             {
                 return;
             }
