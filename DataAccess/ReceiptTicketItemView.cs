@@ -30,7 +30,6 @@ namespace WMS.DataAccess
         public string BoxNo { get; set; }
         public string ComponentName { get; set; }
         public string ProjectName { get; set; }
-        public string WarehouseName { get; set; }
         public string CreateUserUsername { get; set; }
         public string CreateUserPassword { get; set; }
         public Nullable<int> CreateUserAuthority { get; set; }
@@ -68,5 +67,8 @@ namespace WMS.DataAccess
         public string SupplyDefaultShipmentUnit { get; set; }
         public Nullable<decimal> SupplyDefaultShipmentUnitAmount { get; set; }
         public Nullable<decimal> UnitCount { get; set; }
+        public Nullable<decimal> HasPutwayAmount { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

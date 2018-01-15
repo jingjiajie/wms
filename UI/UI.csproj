@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>20180114034822833_easyicon_net_128.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="System" />
@@ -660,6 +663,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormBaseComponent.resx">
       <DependentUpon>FormBaseComponent.cs</DependentUpon>
@@ -812,6 +816,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="icon\add.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="20180114034630784_easyicon_net_64.ico" />
+    <Content Include="20180114034822833_easyicon_net_128.ico" />
+    <None Include="icon\20180114034630784_easyicon_net_64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

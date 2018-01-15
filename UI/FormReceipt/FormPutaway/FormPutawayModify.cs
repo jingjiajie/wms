@@ -62,33 +62,42 @@ namespace WMS.UI.FormReceipt
             //if (putwayTicket)
             if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo) == true)
             {
-                if (this.PersonIDGetter() != -1)
+                if (Utilities.CopyComboBoxsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName) == true)
                 {
-                    putawayTicket.PersonID = this.PersonIDGetter();
-                }
-                //wmsEntities.PutawayTicket.Add(putawayTicket);
-                new Thread(() =>
-                {
-                    try
+                    if (this.PersonIDGetter() != -1)
                     {
-                        wmsEntities.SaveChanges();
-                        MessageBox.Show("成功");
-                        this.Invoke(new Action(() =>
+                        putawayTicket.PersonID = this.PersonIDGetter();
+                    }
+                    //wmsEntities.PutawayTicket.Add(putawayTicket);
+                    new Thread(() =>
+                    {
+                        try
                         {
-                            CallBack();
-                        }));
-                    }
-                    catch
-                    {
-                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                        return;
-                    }
-                }).Start();
+                            wmsEntities.SaveChanges();
+                            MessageBox.Show("成功");
+                            this.Invoke(new Action(() =>
+                            {
+                                CallBack();
+                                this.Hide();
+                            }));
+                        }
+                        catch
+                        {
+                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }).Start();
+                }
+                else
+                {
+                    MessageBox.Show("单据类型读取失败");
+                }
             }
             else
             {
                 MessageBox.Show(errorInfo);
             }
+            
         }
 
         private void buttonOK_MouseEnter(object sender, EventArgs e)

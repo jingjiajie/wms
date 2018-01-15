@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormJobTicketNew));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -143,23 +144,24 @@
             this.tableLayoutEditPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14F));
             this.tableLayoutEditPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutEditPanel.Font = new System.Drawing.Font("黑体", 10F);
-            this.tableLayoutEditPanel.Location = new System.Drawing.Point(3, 34);
+            this.tableLayoutEditPanel.Location = new System.Drawing.Point(3, 23);
             this.tableLayoutEditPanel.Name = "tableLayoutEditPanel";
             this.tableLayoutEditPanel.RowCount = 3;
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutEditPanel.Size = new System.Drawing.Size(962, 137);
+            this.tableLayoutEditPanel.Size = new System.Drawing.Size(962, 148);
             this.tableLayoutEditPanel.TabIndex = 13;
             // 
             // FormJobTicketNew
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Font = new System.Drawing.Font("黑体", 10F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormJobTicketNew";

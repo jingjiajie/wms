@@ -73,6 +73,16 @@ namespace WMS.UI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap _20180114034630784_easyicon_net_64 {
+            get {
+                object obj = ResourceManager.GetObject("20180114034630784_easyicon_net_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap _50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e {
             get {
                 object obj = ResourceManager.GetObject("50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e", resourceCulture);

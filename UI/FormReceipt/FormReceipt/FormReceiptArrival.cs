@@ -14,6 +14,7 @@ using WMS.UI.FormReceipt;
 using System.Data.SqlClient;
 
 
+
 namespace WMS.UI
 {
     public partial class FormReceiptArrival : Form
@@ -28,6 +29,7 @@ namespace WMS.UI
         private int projectID;
         private int warehouseID;
         private int userID;
+        PagerWidget<ReceiptTicketView> pagerWidget;
 
         private Action<string, string> ToSubmission = null;
         private Action<string, string> ToPutaway = null;
@@ -88,7 +90,23 @@ namespace WMS.UI
         private void FormReceiptArrival_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.Search(null, null);
+            pagerWidget = new PagerWidget<ReceiptTicketView>(this.reoGridControlUser, ReceiptMetaData.receiptNameKeys, projectID, warehouseID);
+            this.panel1.Controls.Add(pagerWidget);
+            
+            pagerWidget.Show();
+            this.Search();
+            //pagerWidget.Show();
+            //pagerWidget.Search();
+        }
+
+        private void Search(bool savePage = false, int selectID = -1)
+        {
+            this.pagerWidget.ClearCondition();
+            if (this.comboBoxSelect.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
+            }
+            this.pagerWidget.Search(savePage, selectID);
         }
 
         private void reoGridControlUser_Click(object sender, EventArgs e)
@@ -187,7 +205,7 @@ namespace WMS.UI
 
             if (comboBoxSelect.SelectedIndex == 0)
             {
-                Search(null, null);
+                Search();
             }
             else
             {
@@ -202,7 +220,9 @@ namespace WMS.UI
                     }
                 }
                 string value = this.textBoxSelect.Text;
-                Search(key, value);
+                this.pagerWidget.ClearCondition();
+                this.pagerWidget.AddCondition(key, value);
+                Search();
             }
         }
 
@@ -211,7 +231,7 @@ namespace WMS.UI
             FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID, this.userID);
             receiptTicketModify.SetModifyFinishedCallback(() =>
             {
-                this.Search(null, null);
+                this.Search();
             });
             receiptTicketModify.Show();
         }
@@ -253,7 +273,7 @@ namespace WMS.UI
                     var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID, this.projectID, this.warehouseID, this.userID);
                     receiptTicketModify.SetModifyFinishedCallback(() =>
                     {
-                        this.Search(null, null);
+                        this.Search();
                     });
                     receiptTicketModify.Show();
                 }
@@ -322,7 +342,7 @@ namespace WMS.UI
                     MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                     return;
                 }
-                this.Search(null, null);
+                this.Search();
             })).Start();
         }
 
@@ -359,7 +379,7 @@ namespace WMS.UI
                 //var formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, AllOrPartial.ALL);
                 formAddSubmissionTicket.SetCallBack(() =>
                 {
-                    this.Search(null, null);
+                    this.Search();
                 });
                 formAddSubmissionTicket.Show();
             }
@@ -419,7 +439,7 @@ namespace WMS.UI
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            Search(null, null);
+            Search();
         }
 
         private void buttonItems_Click(object sender, EventArgs e)
@@ -445,7 +465,7 @@ namespace WMS.UI
                 var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 formReceiptTicketIems.SetCallback(() =>
                 {
-                    this.Search(null, null);
+                    this.Search();
                 });
                 formReceiptTicketIems.Show();
             }
@@ -486,16 +506,23 @@ namespace WMS.UI
                     MessageBox.Show("该收货单未收货，请先收货!");
                     return;
                 }
+                /*
                 if (receiptTicket.HasPutawayTicket == "是")
                 {
                     MessageBox.Show("该收货单已经生成上架单，点击查看对应上架单按钮查看！");
+                    return;
+                }*/
+                if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)
+                {
+                    MessageBox.Show("没有为该收货单添加收货单条目，无法生成上架单，请添加后重试");
                     return;
                 }
                 FormPutawayNew formPutawayNew = new FormPutawayNew(receiptTicket.ID, this.userID, FormMode.ADD);
                 formPutawayNew.SetCallBack(new Action(() =>
                 {
-                    this.Search(null, null);
+                    this.Search();
                 }));
+
                 formPutawayNew.Show();
                 /*
                 FormPutaway formPutaway = new FormPutaway(receiptTicketID, this.warehouseID, this.projectID, this.userID);
@@ -512,7 +539,7 @@ namespace WMS.UI
                 formPutwayTicketModify.SetCallBack(() =>
                 {
                     
-                    this.Search(null, null);
+                    this.Search();
                 });
                 formPutwayTicketModify.Show();
                 */
@@ -562,10 +589,15 @@ namespace WMS.UI
                         MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
                         return;
                     }
+                    if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)
+                    {
+                        MessageBox.Show("没有为该收货单添加收货单条目，无法生成送检单，请添加后重试");
+                        return;
+                    }
                     FormReceiptSubmissionNew formReceiptSubmissionNew = new FormReceiptSubmissionNew(receiptTicketID, this.userID, FormMode.ADD);
                     formReceiptSubmissionNew.SetCallBack(new Action(() =>
                     {
-                        this.Search(null, null);
+                        this.Search();
                     }));
                     formReceiptSubmissionNew.Show();
                 }
@@ -573,7 +605,7 @@ namespace WMS.UI
                 FormReceiptArrivalCheck formReceiptArrivalCheck = new FormReceiptArrivalCheck(receiptTicketID, this.userID);
                 formReceiptArrivalCheck.SetNextCallBack(new Action(() =>
                 {
-                    this.Search(null, null);
+                    this.Search();
                 }));
                 formReceiptArrivalCheck.Show();
                 */
@@ -642,7 +674,7 @@ namespace WMS.UI
                         MessageBox.Show("成功");
                         this.Invoke(new Action(() =>
                         {
-                            this.Search(null, null);
+                            this.Search();
                         }));
                     }).Start();
                 }
@@ -710,7 +742,7 @@ namespace WMS.UI
                         MessageBox.Show("成功");
                         this.Invoke(new Action(() =>
                         {
-                            this.Search(null, null);
+                            this.Search();
                         }));
                     }).Start();
                 }
@@ -774,7 +806,7 @@ namespace WMS.UI
                     FormReceiptItem formReceiptItem = new FormReceiptItem(receiptTicketID);
                     formReceiptItem.SetCallBack(new Action(() =>
                     {
-                        this.Search(null, null);
+                        this.Search();
                     }));
                     formReceiptItem.Show();
                 }

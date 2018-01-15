@@ -144,8 +144,28 @@ namespace WMS.UI.FormReceipt
             formSelectSupplier.SetSelectFinishCallback(new Action<int>((int ID)=> 
             {
                 //this.Controls.Find("textBoxSupplierNo", true)[0].Text = ID.ToString();
-                this.supplierID = ID;
                 Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();
+                if (supplier == null)
+                {
+                    MessageBox.Show("该供应商已被删除");
+                    return;
+                }
+                else
+                {
+                    if (supplier.EndingTime < DateTime.Now)
+                    {
+                       if (MessageBox.Show("改供货商合同截止日期已过，是否继续？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            this.supplierID = ID;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
+                }
+                this.supplierID = ID;
+                //Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();
                 if (supplier != null)
                 {
                     this.Controls.Find("textBoxSupplierName", true)[0].Text = supplier.Name;
@@ -282,7 +302,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.LastUpdateTime = DateTime.Now;
                     receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.ProjectID = this.projectID;
-                    receiptTicket.Warehouse = this.warehouseID;
+                    receiptTicket.WarehouseID = this.warehouseID;
                     receiptTicket.SupplierID = this.supplierID;
                     receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.SaveChanges();
@@ -388,13 +408,13 @@ namespace WMS.UI.FormReceipt
                         return;
                     }
                     receiptTicket.LastUpdateUserID = this.userID;
-                    receiptTicket.Warehouse = this.warehouseID;
+                    receiptTicket.WarehouseID = this.warehouseID;
                     receiptTicket.ProjectID = this.projectID;
                     receiptTicket.CreateUserID = this.userID;
                     receiptTicket.LastUpdateTime = DateTime.Now;
                     receiptTicket.CreateTime = DateTime.Now;
                     receiptTicket.SupplierID = this.supplierID;
-                    receiptTicket.HasPutawayTicket = "否";
+                    receiptTicket.HasPutawayTicket = "没有生成上架单";
                     receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.ReceiptTicket.Add(receiptTicket);
                     wmsEntities.SaveChanges();

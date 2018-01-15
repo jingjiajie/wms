@@ -171,7 +171,7 @@
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(252, 61);
             this.buttonAdd.TabIndex = 0;
-            this.buttonAdd.Text = "添加零件条目";
+            this.buttonAdd.Text = "复制/添加零件条目";
             this.buttonAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonAdd.UseVisualStyleBackColor = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);

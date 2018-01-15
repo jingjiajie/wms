@@ -69,5 +69,6 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ReceiptTicketItemExpiryDate { get; set; }
         public Nullable<decimal> UnitCount { get; set; }
         public Nullable<decimal> PutawayAmount { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
     }
 }

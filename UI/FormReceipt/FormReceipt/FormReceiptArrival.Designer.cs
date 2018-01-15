@@ -51,6 +51,7 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPutaway = new System.Windows.Forms.ToolStripButton();
             this.ButtonToPutaway = new System.Windows.Forms.ToolStripButton();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -60,15 +61,17 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlUser, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(2674, 906);
             this.tableLayoutPanel1.TabIndex = 5;
@@ -116,7 +119,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 90;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(2666, 806);
+            this.reoGridControlUser.Size = new System.Drawing.Size(2666, 746);
             this.reoGridControlUser.TabIndex = 10;
             this.reoGridControlUser.Text = "reoGridControl1";
             // 
@@ -277,6 +280,14 @@
             this.ButtonToPutaway.Text = "查看对应上架单";
             this.ButtonToPutaway.Click += new System.EventHandler(this.ButtonToPutaway_Click);
             // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 809);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(2668, 54);
+            this.panel1.TabIndex = 11;
+            // 
             // FormReceiptArrival
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -321,5 +332,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton ButtonToSubmission;
         private System.Windows.Forms.ToolStripButton ButtonToPutaway;
+        private System.Windows.Forms.Panel panel1;
     }
 }

@@ -30,33 +30,33 @@ namespace WMS.UI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("ÓÃ»§¹ÜÀí");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("¹©Ó¦ÉÌ");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Áã¼þ");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("²Ö¿â");
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("»ù±¾ÐÅÏ¢", new System.Windows.Forms.TreeNode[] {
-            treeNode17,
-            treeNode18,
-            treeNode19,
-            treeNode20});
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("µ½»õ¹ÜÀí");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("ÉÏ¼Ü¹ÜÀí");
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("ÊÕ»õ¹ÜÀí", new System.Windows.Forms.TreeNode[] {
-            treeNode22,
-            treeNode23});
-            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("·¢»õµ¥¹ÜÀí");
-            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("×÷Òµµ¥¹ÜÀí");
-            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("³ö¿âµ¥¹ÜÀí");
-            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("·¢»õ¹ÜÀí", new System.Windows.Forms.TreeNode[] {
-            treeNode25,
-            treeNode26,
-            treeNode27});
-            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("¿â´æÐÅÏ¢");
-            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("¿â´æÐÅÏ¢", new System.Windows.Forms.TreeNode[] {
-            treeNode29});
-            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("ËÍ¼ìµ¥");
-            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("ËÍ¼ì¹ÜÀí", new System.Windows.Forms.TreeNode[] {
-            treeNode31});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("ï¿½ï¿½Ó¦ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("ï¿½Ö¿ï¿½");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2,
+            treeNode3,
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("ï¿½Ï¼Ü¹ï¿½ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("ï¿½Õ»ï¿½ï¿½ï¿½ï¿½ï¿½", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½âµ¥ï¿½ï¿½ï¿½ï¿½");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", new System.Windows.Forms.TreeNode[] {
+            treeNode9,
+            treeNode10,
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢", new System.Windows.Forms.TreeNode[] {
+            treeNode13});
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("ï¿½Í¼ìµ¥");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("ï¿½Í¼ï¿½ï¿½ï¿½ï¿½", new System.Windows.Forms.TreeNode[] {
+            treeNode15});
             this.panelTop = new System.Windows.Forms.Panel();
             this.tableLayoutBanner = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -135,13 +135,13 @@ namespace WMS.UI
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 16.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(51, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(474, 36);
+            this.label1.Size = new System.Drawing.Size(453, 31);
             this.label1.TabIndex = 0;
-            this.label1.Text = "°²Í¾·á´ïWMSÎïÁ÷¹ÜÀíÏµÍ³ ²âÊÔ°æ±¾";
+            this.label1.Text = "ï¿½ï¿½Í¾ï¿½ï¿½ï¿½WMSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÍ³ ï¿½ï¿½ï¿½Ô°æ±¾";
             // 
             // panel1
             // 
@@ -161,26 +161,26 @@ namespace WMS.UI
             this.labelUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelUsername.AutoSize = true;
             this.labelUsername.BackColor = System.Drawing.Color.Transparent;
-            this.labelUsername.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelUsername.ForeColor = System.Drawing.Color.White;
             this.labelUsername.Location = new System.Drawing.Point(91, 6);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(69, 26);
+            this.labelUsername.Size = new System.Drawing.Size(74, 24);
             this.labelUsername.TabIndex = 1;
-            this.labelUsername.Text = "ÓÃ»§Ãû";
+            this.labelUsername.Text = "ï¿½Ã»ï¿½ï¿½ï¿½";
             // 
             // labelAuth
             // 
             this.labelAuth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelAuth.AutoSize = true;
             this.labelAuth.BackColor = System.Drawing.Color.Transparent;
-            this.labelAuth.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelAuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelAuth.ForeColor = System.Drawing.Color.White;
             this.labelAuth.Location = new System.Drawing.Point(1, 6);
             this.labelAuth.Name = "labelAuth";
-            this.labelAuth.Size = new System.Drawing.Size(55, 26);
+            this.labelAuth.Size = new System.Drawing.Size(56, 24);
             this.labelAuth.TabIndex = 2;
-            this.labelAuth.Text = "È¨ÏÞ:";
+            this.labelAuth.Text = "È¨ï¿½ï¿½:";
             // 
             // panel2
             // 
@@ -221,12 +221,12 @@ namespace WMS.UI
             // 
             this.comboBoxWarehouse.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxWarehouse.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.comboBoxWarehouse.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
             this.comboBoxWarehouse.Location = new System.Drawing.Point(301, 2);
             this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
-            this.comboBoxWarehouse.Size = new System.Drawing.Size(161, 31);
+            this.comboBoxWarehouse.Size = new System.Drawing.Size(161, 28);
             this.comboBoxWarehouse.TabIndex = 0;
             this.comboBoxWarehouse.SelectedIndexChanged += new System.EventHandler(this.comboBoxWarehouse_SelectedIndexChanged);
             // 
@@ -234,12 +234,12 @@ namespace WMS.UI
             // 
             this.comboBoxProject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBoxProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxProject.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.comboBoxProject.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.comboBoxProject.FormattingEnabled = true;
             this.comboBoxProject.Location = new System.Drawing.Point(65, 1);
             this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1);
             this.comboBoxProject.Name = "comboBoxProject";
-            this.comboBoxProject.Size = new System.Drawing.Size(165, 31);
+            this.comboBoxProject.Size = new System.Drawing.Size(165, 28);
             this.comboBoxProject.TabIndex = 1;
             this.comboBoxProject.SelectedIndexChanged += new System.EventHandler(this.comboBoxProject_SelectedIndexChanged);
             // 
@@ -248,26 +248,26 @@ namespace WMS.UI
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(234, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 38);
             this.label2.TabIndex = 2;
-            this.label2.Text = "²Ö¿â";
+            this.label2.Text = "ï¿½Ö¿ï¿½";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 38);
             this.label3.TabIndex = 3;
-            this.label3.Text = "ÏîÄ¿";
+            this.label3.Text = "ï¿½ï¿½Ä¿";
             // 
             // panelFill
             // 
@@ -309,50 +309,50 @@ namespace WMS.UI
             // treeViewLeft
             // 
             this.treeViewLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewLeft.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
+            this.treeViewLeft.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.treeViewLeft.ImageIndex = 1;
             this.treeViewLeft.ImageList = this.imageList1;
             this.treeViewLeft.Location = new System.Drawing.Point(0, 0);
             this.treeViewLeft.Margin = new System.Windows.Forms.Padding(0);
             this.treeViewLeft.Name = "treeViewLeft";
-            treeNode17.Name = "½Úµã11";
-            treeNode17.Text = "ÓÃ»§¹ÜÀí";
-            treeNode18.Name = "½Úµã12";
-            treeNode18.Text = "¹©Ó¦ÉÌ";
-            treeNode19.Name = "½Úµã13";
-            treeNode19.Text = "Áã¼þ";
-            treeNode20.Name = "½Úµã14";
-            treeNode20.Text = "²Ö¿â";
-            treeNode21.Name = "½Úµã1";
-            treeNode21.Text = "»ù±¾ÐÅÏ¢";
-            treeNode22.Name = "½Úµã21";
-            treeNode22.Text = "µ½»õ¹ÜÀí";
-            treeNode23.Name = "½Úµã22";
-            treeNode23.Text = "ÉÏ¼Ü¹ÜÀí";
-            treeNode24.Name = "½Úµã2";
-            treeNode24.Text = "ÊÕ»õ¹ÜÀí";
-            treeNode25.Name = "½Úµã31";
-            treeNode25.Text = "·¢»õµ¥¹ÜÀí";
-            treeNode26.Name = "½Úµã32";
-            treeNode26.Text = "×÷Òµµ¥¹ÜÀí";
-            treeNode27.Name = "½Úµã33";
-            treeNode27.Text = "³ö¿âµ¥¹ÜÀí";
-            treeNode28.Name = "½Úµã3";
-            treeNode28.Text = "·¢»õ¹ÜÀí";
-            treeNode29.Name = "½Úµã41";
-            treeNode29.Text = "¿â´æÐÅÏ¢";
-            treeNode30.Name = "½Úµã4";
-            treeNode30.Text = "¿â´æÐÅÏ¢";
-            treeNode31.Name = "½Úµã3";
-            treeNode31.Text = "ËÍ¼ìµ¥";
-            treeNode32.Name = "½Úµã2";
-            treeNode32.Text = "ËÍ¼ì¹ÜÀí";
+            treeNode1.Name = "ï¿½Úµï¿½11";
+            treeNode1.Text = "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½";
+            treeNode2.Name = "ï¿½Úµï¿½12";
+            treeNode2.Text = "ï¿½ï¿½Ó¦ï¿½ï¿½";
+            treeNode3.Name = "ï¿½Úµï¿½13";
+            treeNode3.Text = "ï¿½ï¿½ï¿½";
+            treeNode4.Name = "ï¿½Úµï¿½14";
+            treeNode4.Text = "ï¿½Ö¿ï¿½";
+            treeNode5.Name = "ï¿½Úµï¿½1";
+            treeNode5.Text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢";
+            treeNode6.Name = "ï¿½Úµï¿½21";
+            treeNode6.Text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+            treeNode7.Name = "ï¿½Úµï¿½22";
+            treeNode7.Text = "ï¿½Ï¼Ü¹ï¿½ï¿½ï¿½";
+            treeNode8.Name = "ï¿½Úµï¿½2";
+            treeNode8.Text = "ï¿½Õ»ï¿½ï¿½ï¿½ï¿½ï¿½";
+            treeNode9.Name = "ï¿½Úµï¿½31";
+            treeNode9.Text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+            treeNode10.Name = "ï¿½Úµï¿½32";
+            treeNode10.Text = "ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+            treeNode11.Name = "ï¿½Úµï¿½33";
+            treeNode11.Text = "ï¿½ï¿½ï¿½âµ¥ï¿½ï¿½ï¿½ï¿½";
+            treeNode12.Name = "ï¿½Úµï¿½3";
+            treeNode12.Text = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
+            treeNode13.Name = "ï¿½Úµï¿½41";
+            treeNode13.Text = "ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢";
+            treeNode14.Name = "ï¿½Úµï¿½4";
+            treeNode14.Text = "ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢";
+            treeNode15.Name = "ï¿½Úµï¿½3";
+            treeNode15.Text = "ï¿½Í¼ìµ¥";
+            treeNode16.Name = "ï¿½Úµï¿½2";
+            treeNode16.Text = "ï¿½Í¼ï¿½ï¿½ï¿½ï¿½";
             this.treeViewLeft.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode21,
-            treeNode24,
-            treeNode28,
-            treeNode30,
-            treeNode32});
+            treeNode5,
+            treeNode8,
+            treeNode12,
+            treeNode14,
+            treeNode16});
             this.treeViewLeft.SelectedImageIndex = 0;
             this.treeViewLeft.Size = new System.Drawing.Size(198, 397);
             this.treeViewLeft.TabIndex = 0;
@@ -384,9 +384,10 @@ namespace WMS.UI
             this.ClientSize = new System.Drawing.Size(763, 539);
             this.Controls.Add(this.panelFill);
             this.Controls.Add(this.panelTop);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.Name = "FormMain";
-            this.Text = "°²Í¾·á´ïWMSÎïÁ÷¹ÜÀíÏµÍ³";
+            this.Text = "ï¿½ï¿½Í¾ï¿½ï¿½ï¿½WMSï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÍ³";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);

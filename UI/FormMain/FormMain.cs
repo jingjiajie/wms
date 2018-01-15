@@ -62,6 +62,7 @@ namespace WMS.UI
         WMSEntities wmsEntities = new WMSEntities();
         WMS.DataAccess.ComponentView component = null;
         DateTime contract_enddate;
+            DateTime contract_startdate;
 
         int days;
             StringBuilder sb = new StringBuilder();
@@ -76,6 +77,7 @@ namespace WMS.UI
                             select u).FirstOrDefault();
 
                 contract_enddate = Convert.ToDateTime(Supplier.EndingTime);
+                contract_startdate = Convert.ToDateTime(Supplier.StartingTime);
             }
             catch
             {
@@ -86,6 +88,7 @@ namespace WMS.UI
 
 
             days = (contract_enddate-DateTime.Now  ).Days;
+            
             //库存
             int[] warringdays = { 3, 5, 10 };
             int reminedays;
@@ -208,13 +211,16 @@ namespace WMS.UI
             }
 
 
-            if(days<10||remindtext !="")
+            if(days<10||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now ))
 
             {
+                int contract_effect = 0;
+                if (contract_enddate > DateTime.Now && contract_startdate < DateTime.Now)
+                {
 
-                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext );
-
-
+                     contract_effect = 1;
+                }
+                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext,contract_effect  );
 
                 a1.Show();
 
@@ -498,6 +504,7 @@ namespace WMS.UI
                     s.FormBorderStyle = FormBorderStyle.None;
                     this.panelRight.Controls.Add(s);
                     s.Show();
+                    //treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("送检单管理", true)[0];
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
                 }));
                 l.SetActionTo(1, new Action<string, string>((key, value) =>
@@ -509,6 +516,21 @@ namespace WMS.UI
                     s.FormBorderStyle = FormBorderStyle.None;
                     //s.Dock = System.Windows.Forms.DockStyle.Fill;
                     this.panelRight.Controls.Add(s);
+
+                    s.SetToPutaway(new Action<string, string>((key1, value1) =>
+                    {
+                        this.panelRight.Controls.Clear();
+                        FormShelvesItem a = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, key1, value1);
+                        a.TopLevel = false;
+                        a.Dock = System.Windows.Forms.DockStyle.Fill;
+                        a.FormBorderStyle = FormBorderStyle.None;
+                        //s.Dock = System.Windows.Forms.DockStyle.Fill;
+                        this.panelRight.Controls.Add(a);
+                        a.Show();
+                        //this.treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("上架零件管理", true)[0];
+                        Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                    }));
+
                     s.Show();
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
                 }));
@@ -527,6 +549,19 @@ namespace WMS.UI
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
+                l.SetToPutaway(new Action<string, string>((key, value) =>
+                {
+                    this.panelRight.Controls.Clear();
+                    FormShelvesItem s = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
+                    s.TopLevel = false;
+                    s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    s.FormBorderStyle = FormBorderStyle.None;
+                    //s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    this.panelRight.Controls.Add(s);
+                    s.Show();
+                    //this.treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("上架零件管理", true)[0];
+                    Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                }));
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
@@ -535,7 +570,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();
                 panelRight.Visible = true;
-                FormShelvesItem l = new FormShelvesItem(this.project.ID, this.warehouse.ID);
+                FormShelvesItem l = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, null, null);
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;
                 l.FormBorderStyle = FormBorderStyle.None;
