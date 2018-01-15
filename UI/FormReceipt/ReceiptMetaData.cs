@@ -177,7 +177,7 @@ namespace WMS.UI.FormReceipt
             new KeyName{Name = "状态", Key = "State", Visible = true, Editable = false, Save = true},
             //new KeyName{Name = "分配数量", Key = "DistrabuteCount", Visible = true, Editable = true, Save = true},
             //new KeyName{Name = "上架数量", Key = "UnitCount",Visible = true, Editable = true, Save = true},
-            new KeyName{Name = "计划移位数量", Key = "ScheduledMoveCount", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "计划移位数量", Key = "ScheduledMoveCount", Visible = true, Editable = false, Save = true},
             new KeyName{Name = "移位数量", Key = "MoveCount", Visible = true, Editable = true, Save = true},
             new KeyName{Name = "单位", Key = "Unit", Visible = true, Editable = false, Save = true},
             new KeyName{Name = "单位数量", Key = "UnitAmount", Visible = true, Editable = false, Save = true},
@@ -238,7 +238,7 @@ namespace WMS.UI.FormReceipt
 
             new KeyName(){Key="No",Name="代号",Visible = true, Editable = true},
             new KeyName(){Key="Number",Name="编号", Visible = true, Editable = true},
-            new KeyName(){Key="ComponentName",Name="零件名",Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择零件"},
+            new KeyName(){Key="ComponentName",Name="零件名称",Visible = true, Editable = true,Save=false,EditPlaceHolder= "点击选择零件"},
 
             new KeyName(){Key="DefaultReceiptUnit",Name="默认收货单位",Visible = true, Editable = true},
             new KeyName(){Key="DefaultReceiptUnitAmount",Name="默认收货单位数量",Visible = true, Editable = true},

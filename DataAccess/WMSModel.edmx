@@ -708,8 +708,8 @@
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierName" Type="nvarchar" MaxLength="64" />
           <Property Name="ComponentName" Type="nvarchar" MaxLength="64" />
-          <Property Name="PutawayTicketProjectID" Type="int" />
-          <Property Name="PutawayTicketWarehouseID" Type="int" />
+          <Property Name="ProjectID" Type="int" />
+          <Property Name="WarehouseID" Type="int" />
           <Property Name="PutawayTicketState" Type="nvarchar" MaxLength="64" />
           <Property Name="PutawayReceiptTicketID" Type="int" />
           <Property Name="PutawayTicketNo" Type="nvarchar" MaxLength="64" />
@@ -742,7 +742,7 @@
           <Property Name="ReceiptTicketItemExpiryDate" Type="datetime" />
           <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="PutawayAmount" Type="decimal" Precision="18" Scale="3" />
-          <Property Name="WarehouseID" Type="int" />
+          <Property Name="ReceiptTicketWarehouseID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutawayTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1977,8 +1977,8 @@ FROM [dbo].[ProjectView] AS [ProjectView]</DefiningQuery>
 [PutawayTicketItemView].[WarehouseName] AS [WarehouseName], 
 [PutawayTicketItemView].[SupplierName] AS [SupplierName], 
 [PutawayTicketItemView].[ComponentName] AS [ComponentName], 
-[PutawayTicketItemView].[PutawayTicketProjectID] AS [PutawayTicketProjectID], 
-[PutawayTicketItemView].[PutawayTicketWarehouseID] AS [PutawayTicketWarehouseID], 
+[PutawayTicketItemView].[ProjectID] AS [ProjectID], 
+[PutawayTicketItemView].[WarehouseID] AS [WarehouseID], 
 [PutawayTicketItemView].[PutawayTicketState] AS [PutawayTicketState], 
 [PutawayTicketItemView].[PutawayReceiptTicketID] AS [PutawayReceiptTicketID], 
 [PutawayTicketItemView].[PutawayTicketNo] AS [PutawayTicketNo], 
@@ -2011,7 +2011,7 @@ FROM [dbo].[ProjectView] AS [ProjectView]</DefiningQuery>
 [PutawayTicketItemView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
 [PutawayTicketItemView].[UnitCount] AS [UnitCount], 
 [PutawayTicketItemView].[PutawayAmount] AS [PutawayAmount], 
-[PutawayTicketItemView].[WarehouseID] AS [WarehouseID]
+[PutawayTicketItemView].[ReceiptTicketWarehouseID] AS [ReceiptTicketWarehouseID]
 FROM [dbo].[PutawayTicketItemView] AS [PutawayTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutawayTicketView" EntityType="Self.PutawayTicketView" store:Type="Views" store:Schema="dbo">
@@ -3498,8 +3498,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ComponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="PutawayTicketProjectID" Type="Int32" />
-          <Property Name="PutawayTicketWarehouseID" Type="Int32" />
+          <Property Name="ProjectID" Type="Int32" />
+          <Property Name="WarehouseID" Type="Int32" />
           <Property Name="PutawayTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="PutawayReceiptTicketID" Type="Int32" />
           <Property Name="PutawayTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
@@ -3532,7 +3532,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="PutawayAmount" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="ReceiptTicketWarehouseID" Type="Int32" />
         </EntityType>
         <EntityType Name="PutawayTicketView">
           <Key>
@@ -5451,8 +5451,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="ComponentName" ColumnName="ComponentName" />
-                <ScalarProperty Name="PutawayTicketProjectID" ColumnName="PutawayTicketProjectID" />
-                <ScalarProperty Name="PutawayTicketWarehouseID" ColumnName="PutawayTicketWarehouseID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="PutawayTicketState" ColumnName="PutawayTicketState" />
                 <ScalarProperty Name="PutawayReceiptTicketID" ColumnName="PutawayReceiptTicketID" />
                 <ScalarProperty Name="PutawayTicketNo" ColumnName="PutawayTicketNo" />
@@ -5485,7 +5485,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemExpiryDate" ColumnName="ReceiptTicketItemExpiryDate" />
                 <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
                 <ScalarProperty Name="PutawayAmount" ColumnName="PutawayAmount" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="ReceiptTicketWarehouseID" ColumnName="ReceiptTicketWarehouseID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

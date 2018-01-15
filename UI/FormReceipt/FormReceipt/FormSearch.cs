@@ -16,8 +16,11 @@ namespace WMS.UI.FormReceipt
     public partial class FormSearch : Form
     {
         private WMSEntities wmsEntities = new WMSEntities();
+        private int projectID;
+        private int warehouseID;
         private int ComponentID = -1;
         private int supplierID = -1;
+        private PagerWidget<SupplyView> pagerWidget;
         //private Action CallBack = null;
         private Action<int> selectFinishCallback = null;
         public FormSearch()
@@ -26,11 +29,13 @@ namespace WMS.UI.FormReceipt
             this.StartPosition = FormStartPosition.CenterScreen;
         }
 
-        public FormSearch(int supplierID)
+        public FormSearch(int supplierID, int projectID, int warehouseID)
         {
             InitializeComponent();
             this.StartPosition = FormStartPosition.CenterScreen;
             this.supplierID = supplierID;
+            this.projectID = projectID;
+            this.warehouseID = warehouseID;
         }
 
         public void SetSelectFinishCallback(Action<int> selectFinishedCallback)
@@ -42,8 +47,24 @@ namespace WMS.UI.FormReceipt
         {
             InitComponent();
             WMSEntities wmsEntities = new WMSEntities();
+            pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlMain, ReceiptMetaData.componentKeyName, projectID, warehouseID);
+            this.panel1.Controls.Add(pagerWidget);
+            pagerWidget.Show();
             //this.textBoxSearchContition.Text = (from s in wmsEntities.Component where s.s select s.).FirstOrDefault();
-            this.Search();
+            //this.Search();
+            pagerWidget.Search();
+        }
+
+        private void Search(bool savePage = false, int selectID = -1)
+        {
+            this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddStaticCondition("IsHistory", "0");
+            if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            {
+                
+                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchContition.Text);
+            }
+            this.pagerWidget.Search(savePage, selectID);
         }
 
         private void InitComponent()
@@ -60,7 +81,7 @@ namespace WMS.UI.FormReceipt
             }
             worksheet.Columns = ReceiptMetaData.componentKeyName.Length; //限制表的长度
         }
-
+        /*
         private void Search()
         {
             string value = this.textBoxSearchContition.Text;
@@ -106,7 +127,7 @@ namespace WMS.UI.FormReceipt
                     this.labelStatus.Text = "搜索完成";
                 }));
             })).Start();
-        }
+        }*/
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
