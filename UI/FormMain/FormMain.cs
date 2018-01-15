@@ -492,7 +492,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
+                FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID,this.supplierid );//实例化子窗口
                 l.SetActionTo(0, new Action<string, string>((string key, string value) =>
                 {
                     this.panelRight.Controls.Clear();

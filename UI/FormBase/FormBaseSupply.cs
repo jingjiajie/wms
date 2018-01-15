@@ -64,17 +64,20 @@ namespace WMS.UI
 
             if ((this.authority & authority_self) != authority_self)
             {
-                this.contract_change = 0;
+                
                 Supplier supplier = (from u in this.wmsEntities.Supplier
                                      where u.ID == supplierID
-                                     select u).Single();
+                                     select u)  .FirstOrDefault ();
                 this.supplier = supplier;
                 this.contractst = (supplier.ContractState);
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
+                this.buttonImport.Enabled = false;
+
                 if (this.contractst == "待审核")
                 {
                     this.toolStripButtonAlter.Enabled = true ;
+
                 }
 
                 InitSupplys();
@@ -117,6 +120,20 @@ namespace WMS.UI
                 this.toolStripButtonAlter.Enabled = true;
                 this.toolStripComboBoxSelect.Enabled = true;
                 this.buttonImport.Enabled = true;
+                if (this.contractst == "待审核")
+                {
+                    this.toolStripButtonAdd.Enabled = false ;
+                  
+                    this.toolStripComboBoxSelect.Enabled = true;
+                    this.buttonImport.Enabled = false ;
+                }
+                else if(this.contractst == "已过审")
+                {
+                    this.toolStripButtonAdd.Enabled = false;
+                    this.toolStripButtonAlter.Enabled = false;
+                    this.toolStripComboBoxSelect.Enabled = true;
+                    this.buttonImport.Enabled = false;
+                }
             }
 
             this.pagerWidget.ClearCondition();
@@ -151,6 +168,7 @@ namespace WMS.UI
             this.toolStripButtonAlter.Enabled = false;
             this.toolStripComboBoxSelect.Enabled = false;
             this.buttonImport.Enabled = false;
+            this.toolStripComboBoxSelect.SelectedIndex = 0;
             this.buttonSearch.DisplayStyle= ToolStripItemDisplayStyle.Text;
             this.buttonSearch.Text = "全部信息";
             

@@ -23,13 +23,13 @@ namespace WMS.UI
         private int authority_supplierself = Convert.ToInt32(Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY);
         private PagerWidget<SupplierView > pagerWidget = null;
         private Supplier supplier = null;
-        private string  contractst;
+        private string  contractst="";
         private int check_history = 0;
         private int userid = -1;
        
         private int projectID = -1;
         private int warehouseID = -1;
-        private int contract_change = 1;
+        
 
 
         private int id=-1;
@@ -44,14 +44,24 @@ namespace WMS.UI
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
-            
+
+
+
+
+
             if ((this.authority & authority_supplier) != authority_supplier)
             {
-                this.contract_change = 0;
+
+
                 Supplier supplier = (from u in this.wmsEntities.Supplier
                                      where u.ID == id
-                                     select u).Single();
-                this.supplier = supplier;
+                                     select u).FirstOrDefault();
+
+                this.contractst = supplier.ContractState;
+
+
+
+
                 this.contractst = supplier.ContractState;
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
@@ -59,10 +69,16 @@ namespace WMS.UI
                 this.buttonImport.Enabled = false;
                 //this.toolStripButton1.Enabled = false;
                 //this.toolStripButtonSelect.Enabled = false;
-                if (this.contractst =="已过审")
+                if (this.contractst =="待审核")
+                {
+                    this.toolStripButtonAlter.Enabled = true ;
+
+                }
+                else if(this.contractst=="已过审")
                 {
                     this.toolStripButtonAlter.Enabled = false;
                 }
+
 
                 InitSupplier();
              
@@ -122,7 +138,7 @@ namespace WMS.UI
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            var a1  = new FormSupplierModify(-1,-1,this.userid );
+            var a1  = new FormSupplierModify(-1,this.contractst,this.userid );
             
             a1.SetMode(FormMode.ADD);
 
@@ -335,7 +351,7 @@ namespace WMS.UI
                     throw new Exception();
                 }
                 int supplierID  = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var a1= new FormSupplierModify(supplierID, this.contract_change,this.userid );
+                var a1= new FormSupplierModify(supplierID, this.contractst, this.userid );
                 a1.SetModifyFinishedCallback((AlterID) =>
                 {
                     this.pagerWidget.Search(false ,AlterID );

@@ -19,15 +19,16 @@ namespace WMS.UI
         private Action<int>  addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
         private int contract_change;
+        private string contractstate;
         private int userid = -1;
         private int history_save = 0;
       
 
-        public FormSupplierModify(int supplierID = -1,int contract_change=1,int userid=-1)
+        public FormSupplierModify(int supplierID = -1,string contractstate="",int userid=-1)
         {
             InitializeComponent(); 
             this.supplierID = supplierID;
-            this.contract_change = contract_change;
+            this.contractstate = contractstate;
             this.userid = userid;
         }
 
@@ -72,10 +73,15 @@ namespace WMS.UI
                     this.Close();
                     return;
                 }
-                if (this.contract_change == 0)
+                if (this.contractstate == "待审核")
                 {
                     ComboBox ComBoxContractState = (ComboBox)this.Controls.Find("comboBoxContractState", true)[0];
                     ComBoxContractState.Enabled = false;
+                    TextBox textboxstartime = (TextBox)this.Controls.Find("textBoxStartingtime", true)[0];
+                    textboxstartime.Enabled = false;
+                    TextBox textboxendtime = (TextBox)this.Controls.Find("textBoxEndingtime", true)[0];
+                    textboxendtime.Enabled = false;
+
                 }
                 Utilities.CopyPropertiesToTextBoxes(SupplierView, this);
                 Utilities.CopyPropertiesToComboBoxes(SupplierView, this);
@@ -95,7 +101,14 @@ namespace WMS.UI
          
                 DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
 
-           
+            ComboBox ComBoxContractState = (ComboBox)this.Controls.Find("comboBoxContractState", true)[0];
+          if(ComBoxContractState.Text !="已过审"&&ComBoxContractState.Text  !="待审核"&&ComBoxContractState .Text !="已过期")
+            {
+                MessageBox.Show("请选择正确的合同状态", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+                return;
+            }
             TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName", true)[0];
          
             TextBox textBoxName = (TextBox)this.Controls.Find("textBoxName", true)[0];
@@ -164,7 +177,7 @@ namespace WMS.UI
                     {
                         supplier = (from s in this.wmsEntities.Supplier
                                     where s.ID == this.supplierID
-                                    select s).Single();
+                                    select s).FirstOrDefault();
                     }
                     catch
                     {
