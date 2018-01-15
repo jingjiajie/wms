@@ -32,6 +32,7 @@ namespace WMS.UI
 
         private List<Condition> condition = new List<Condition>();
         private List<Condition> staticCondition = new List<Condition>();
+        private List<string> order = new List<string>();
 
         private int RecordCount
         {
@@ -162,10 +163,16 @@ namespace WMS.UI
             return condition;
         }
 
+        public void AddOrderBy(string orderByCondition)
+        {
+            this.order.Add(orderByCondition);
+        }
+
         public void AddCondition(string key,string value)
         {
             this.condition.Add(this.MakeCondition(key,value));
         }
+
 
         public void AddCondition(string sql, params SqlParameter[] parameters)
         {
@@ -319,7 +326,12 @@ namespace WMS.UI
                     //}
 
                     //添加分页条件
-                    sqlCondition += " ORDER BY ID DESC"; //倒序排序
+                    sqlCondition += " ORDER BY "; //倒序排序
+                    foreach (string orderByCondition in this.order)
+                    {
+                        sqlCondition += orderByCondition + ",";
+                    }
+                    sqlCondition += "ID DESC ";
                     if(this.pageSize != -1)
                     {
                         sqlCondition += " OFFSET @offsetRows ROWS FETCH NEXT @pageSize ROWS ONLY";
