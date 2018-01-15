@@ -22,13 +22,14 @@ namespace WMS.UI.FormReceipt
         private int warehouseID;
         private int userID;
         private int supplierID;
+        private string contract;
         private Func<int> personIDGetter;
 
         public FormReceiptTicketModify()
         {
             InitializeComponent();
         }
-        public FormReceiptTicketModify(FormMode formMode, int ID, int projectID, int warehouseID ,int userID)
+        public FormReceiptTicketModify(FormMode formMode, int ID, int projectID, int warehouseID ,int userID,string contract)
         {
             InitializeComponent();
             this.formMode = formMode;
@@ -36,6 +37,7 @@ namespace WMS.UI.FormReceipt
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
+            this.contract = contract;
         }
 
         private void ReceiptTicketModify_Load(object sender, EventArgs e)
@@ -85,6 +87,17 @@ namespace WMS.UI.FormReceipt
                 {
                     this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 }
+
+
+                if (this.contract == "已过审")
+                {
+                    ComboBox comboxstate = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
+
+
+                    comboxstate.Enabled = false;
+                }
+
+
                 //this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 //TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserUserID", true)[0];
                 //textBoxLastUpdateUserID.Text = this.userID.ToString();
@@ -144,7 +157,7 @@ namespace WMS.UI.FormReceipt
         private void textBoxSupplierID_Click(object sender, EventArgs e)
         {
             FormSelectSupplier formSelectSupplier = new FormSelectSupplier();          
-            formSelectSupplier.SetSelectFinishCallback(new Action<int>((int ID)=> 
+            formSelectSupplier.SetSelectFinishedCallback(new Action<int>((int ID)=> 
             {
                 //this.Controls.Find("textBoxSupplierNo", true)[0].Text = ID.ToString();
                 Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();

@@ -361,7 +361,7 @@ namespace WMS.UI.FormBase
             {
                 this.checkBoxAuthoritySupplier.Checked = false; //假设用户直接关闭了选择供应商的窗口，则不选中供应商权限
                 var formSelectSupplier = new FormSelectSupplier();
-                formSelectSupplier.SetSelectFinishCallback((selectedID) =>
+                formSelectSupplier.SetSelectFinishedCallback((selectedID) =>
                 {
                     WMSEntities wmsEntities = new WMSEntities();
                     string supplierName = null;

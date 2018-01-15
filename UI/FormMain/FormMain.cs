@@ -21,8 +21,13 @@ namespace WMS.UI
         private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
         private int supplierid=-1;
+        private string contractstate = "";
         private int setitem;
         string remindtext="";
+        private bool  days_start=true ;
+        private bool startend=true ;
+        private  DateTime contract_enddate;
+        private  DateTime contract_startdate;
 
 
 
@@ -61,8 +66,7 @@ namespace WMS.UI
 
         WMSEntities wmsEntities = new WMSEntities();
         WMS.DataAccess.ComponentView component = null;
-        DateTime contract_enddate;
-            DateTime contract_startdate;
+       
 
         int days;
             StringBuilder sb = new StringBuilder();
@@ -75,9 +79,24 @@ namespace WMS.UI
                 Supplier = (from u in this.wmsEntities.Supplier
                             where u.ID == supplierid
                             select u).FirstOrDefault();
+            
+               contract_enddate = Convert.ToDateTime(Supplier.EndingTime);
+              
+                
+              
+               contract_startdate = Convert.ToDateTime(Supplier.StartingTime);
+                
+                if(Supplier.EndingTime ==null|| Supplier.EndingTime == null)
+                {
 
-                contract_enddate = Convert.ToDateTime(Supplier.EndingTime);
-                contract_startdate = Convert.ToDateTime(Supplier.StartingTime);
+                    startend = false;
+
+
+
+                }
+
+
+                    this.contractstate = Supplier.ContractState;
             }
             catch
             {
@@ -88,6 +107,10 @@ namespace WMS.UI
 
 
             days = (contract_enddate-DateTime.Now  ).Days;
+            if (contract_startdate > DateTime.Now)
+            {
+                days_start = false;
+            }
             
             //库存
             int[] warringdays = { 3, 5, 10 };
@@ -177,12 +200,12 @@ namespace WMS.UI
                         {
                             if (reminedays == 0)
                             {
-                                sb.Append("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n" + "\r\n");
+                                sb.Append("您供货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "已经不足1天的用量了" + "\r\n" + "\r\n");
                             }
 
                             else
                             {
-                                sb.Append("您收货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n" + "\r\n");
+                                sb.Append("您供货单号为" + ReceiptTicketNo[i] + "的零件" + ComponentName[i] + "大约仅可以用" + reminedays + "天" + "\r\n" + "\r\n");
                             }
                         }
 
@@ -211,7 +234,7 @@ namespace WMS.UI
             }
 
 
-            if(days<10||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now ))
+            if(days<10||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now )||this.contractstate =="待审核"||this.contractstate =="已过期"||days_start ==false  )
 
             {
                 int contract_effect = 0;
@@ -220,7 +243,7 @@ namespace WMS.UI
 
                      contract_effect = 1;
                 }
-                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext,contract_effect  );
+                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext,contract_effect ,this.contractstate,startend,this.days_start    );
 
                 a1.Show();
 
@@ -617,7 +640,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                var formBaseStock = new FormStockInfo(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                var formBaseStock = new FormStockInfo(this.user.ID,this.project.ID,this.warehouse.ID,this.supplierid );//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
                 formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏

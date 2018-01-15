@@ -19,14 +19,16 @@ namespace WMS.UI
         private int userID = -1;
         private int projectID = -1;
         private int warehouseID = -1;
+        private int supplierid = -1;
         private PagerWidget<StockInfoView> pagerWidget = null;
 
-        public FormStockInfo(int userID,int projectID,int warehouseID)
+        public FormStockInfo(int userID,int projectID,int warehouseID,int supplierid)
         {
             InitializeComponent();
             this.userID = userID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+            this.supplierid = supplierid;
         }
 
         protected override CreateParams CreateParams
@@ -64,6 +66,10 @@ namespace WMS.UI
                 //如果加载失败，不能查出任何数据。
                 this.pagerWidget.AddStaticCondition("SupplierID", "-1");
                 return;
+            }
+            if(this.supplierid !=-1)
+            {
+                this.buttonAlter.Enabled = false;
             }
             this.pagerWidget.Search();
         }

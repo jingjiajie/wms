@@ -19,6 +19,8 @@ namespace WMS.UI
         private int supplyID = -1;
         private int supplierID = -1;
         private int componenID = -1;
+        private Func<int> SupplierIDGetter = null;
+        private Func<int> ComponenIDGetter = null;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
@@ -57,6 +59,9 @@ namespace WMS.UI
             textboxCreateUserUsername.ReadOnly = true;
             textBoxComponentName.ReadOnly = true;
 
+            this.SupplierIDGetter = Utilities.BindTextBoxSelect<FormSelectSupplier, Supplier>(this, "textBoxSupplierName", "Name");
+            this.ComponenIDGetter = Utilities.BindTextBoxSelect<FormSelectComponen, DataAccess.Component>(this, "textBoxComponentName", "Name");
+
             if (this.mode == FormMode.ALTER)
             {
                
@@ -77,7 +82,7 @@ namespace WMS.UI
             }
             else if (this.mode == FormMode.ADD)
             {
-                this.Text = "添加发货单";
+                this.Text = "添加供货信息";
                 try
                 {
                     User user = (from u in wmsEntities.User
@@ -97,14 +102,14 @@ namespace WMS.UI
                 }
             }
 
-            this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
-            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            //this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
+            //this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
         }
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
            
             var formSelectSupplier = new FormSelectSupplier();
-            formSelectSupplier.SetSelectFinishCallback((selectedID) =>
+            formSelectSupplier.SetSelectFinishedCallback((selectedID) =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 var supplierName = (from s in wmsEntities.SupplierView
@@ -126,7 +131,7 @@ namespace WMS.UI
         {
 
             var formSelectComponent = new FormSelectComponen();
-            formSelectComponent.SetSelectFinishCallback((selectedID) =>
+            formSelectComponent.SetSelectFinishedCallback((selectedID) =>
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 var componenName = (from s in wmsEntities.ComponentView

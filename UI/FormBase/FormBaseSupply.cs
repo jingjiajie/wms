@@ -120,6 +120,7 @@ namespace WMS.UI
                 this.toolStripButtonAlter.Enabled = true;
                 this.toolStripComboBoxSelect.Enabled = true;
                 this.buttonImport.Enabled = true;
+                this.buttonHistorySearch.Visible = true;
                 if (this.contractst == "待审核")
                 {
                     this.toolStripButtonAdd.Enabled = false ;
@@ -171,7 +172,9 @@ namespace WMS.UI
             this.toolStripComboBoxSelect.SelectedIndex = 0;
             this.buttonSearch.DisplayStyle= ToolStripItemDisplayStyle.Text;
             this.buttonSearch.Text = "全部信息";
-            
+            this.buttonHistorySearch.Visible = false;
+
+
 
 
             this.pagerWidget.ClearCondition();
