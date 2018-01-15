@@ -330,6 +330,10 @@ namespace WMS.UI
                         {
                             receiptTicketItem.UnitCount = 0;
                         }
+                        if (receiptTicketItem.RefuseAmount == null)
+                        {
+                            receiptTicketItem.RefuseAmount = 0;
+                        }
                         receiptTicketItem.JobPersonID = JobPersonIDGetter();
                         receiptTicketItem.ConfirmPersonID = ConfirmPersonIDGetter();
                         

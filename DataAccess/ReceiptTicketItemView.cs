@@ -70,5 +70,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> HasPutwayAmount { get; set; }
         public Nullable<int> WarehouseID { get; set; }
         public string WarehouseName { get; set; }
+        public Nullable<decimal> RefuseAmount { get; set; }
     }
 }

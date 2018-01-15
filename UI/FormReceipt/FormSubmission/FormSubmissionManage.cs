@@ -241,17 +241,35 @@ namespace WMS.UI
                     MessageBox.Show("对应收货单已被删除，无法收货");
                     return;
                 }
-                receiptTicket.State = "已收货";
+                
+                //receiptTicket.State = "已收货";
                 ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
+                int n = 0;
                 foreach (ReceiptTicketItem rti in receiptTicketItems)
                 {
-                    rti.State = "已收货";
+                    if (rti.RefuseAmount > 0)
+                    {
+                        rti.State = "部分收货";
+                    }
+                    else
+                    {
+                        rti.State = "已收货";
+                        n++;
+                    }
                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
                     if (stockInfo != null)
                     {
                         stockInfo.OverflowAreaAmount += stockInfo.ReceiptAreaAmount;
                         stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
                     }
+                }
+                if (n == receiptTicketItems.Length)
+                {
+                    receiptTicket.State = "已收货";
+                }
+                else
+                {
+                    receiptTicket.State = "部分收货";
                 }
                 new Thread(() =>
                 {
@@ -441,7 +459,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
                 {
-                    MessageBox.Show("对应收货单已被删除，无法收货");
+                    MessageBox.Show("对应收货单已被删除，无法拒收");
                     return;
                 }
                 if (receiptTicket.HasPutawayTicket == "全部生成上架单" || receiptTicket.HasPutawayTicket == "部分生成上架单")
@@ -453,7 +471,15 @@ namespace WMS.UI
                 ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
                 foreach (ReceiptTicketItem rti in receiptTicketItems)
                 {
+                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                    rti.RefuseAmount += rti.ReceiviptAmount;
+                    rti.UnitCount = 0;
+                    rti.ReceiviptAmount = 0;
                     rti.State = "拒收";
+                    if (stockInfo != null)
+                    {
+                        stockInfo.ReceiptAreaAmount = 0;
+                    }
                 }
                 new Thread(() =>
                 {

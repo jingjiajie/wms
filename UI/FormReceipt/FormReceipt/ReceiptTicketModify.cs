@@ -428,6 +428,7 @@ namespace WMS.UI.FormReceipt
                         MessageBox.Show("状态获取失败。");
                         return;
                     }
+                    
                     receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.WarehouseID = this.warehouseID;
                     receiptTicket.ProjectID = this.projectID;

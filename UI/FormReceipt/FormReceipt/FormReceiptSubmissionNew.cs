@@ -272,6 +272,7 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
+
                     if (int.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
                     {
                         
@@ -279,7 +280,7 @@ namespace WMS.UI.FormReceipt
                     }
                     else
                     {
-                        MessageBox.Show("送检数量必须为数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("送检数量不能为空且必须为数字！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return null;
                     }
                 }

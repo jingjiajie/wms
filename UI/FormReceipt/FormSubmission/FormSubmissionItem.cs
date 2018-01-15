@@ -96,6 +96,10 @@ namespace WMS.UI.FormReceipt
             {
                 this.Controls.Find("textBoxRejectAmount", true)[0].Text = "0";
             }
+            if (submissionTicketItemView.RefuseAmount == null)
+            {
+                this.Controls.Find("textBoxRefuseAmount", true)[0].Text = "0";
+            }
             this.Controls.Find("textBoxArriveAmount", true)[0].Enabled = false;
         }
 
@@ -170,7 +174,7 @@ namespace WMS.UI.FormReceipt
 
         }
 
-        private void modifyAmount(decimal oldBackAmount, decimal oldRejectAmount, decimal oldSubmissionAmount,int submissionTicketItemID)
+        private void modifyAmount(decimal oldBackAmount, decimal oldRejectAmount, decimal oldSubmissionAmount, decimal oldRefuseAmount,int submissionTicketItemID)
         {
             WMSEntities wmsEntities = new WMSEntities();
             SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ID == submissionTicketItemID select sti).FirstOrDefault();
@@ -181,7 +185,8 @@ namespace WMS.UI.FormReceipt
             StockInfo stockInfo = (from si in wmsEntities.StockInfo
                                    where si.ReceiptTicketItemID == submissionTicketItem.ReceiptTicketItemID
                                    select si).FirstOrDefault();
-            if (stockInfo == null)
+            ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
+            if (stockInfo == null && receiptTicketItem != null)
             {
                 return;
             }
@@ -189,9 +194,11 @@ namespace WMS.UI.FormReceipt
             {
                 stockInfo.SubmissionAmount += submissionTicketItem.SubmissionAmount - oldSubmissionAmount;
                 stockInfo.ReceiptAreaAmount -= submissionTicketItem.SubmissionAmount - oldSubmissionAmount;
-                stockInfo.ReceiptAreaAmount += submissionTicketItem.ReturnAmount - oldBackAmount;
+                stockInfo.ReceiptAreaAmount += (submissionTicketItem.ReturnAmount - submissionTicketItem.RejectAmount - submissionTicketItem.RefuseAmount) - (oldBackAmount - oldRejectAmount - oldRefuseAmount);
                 stockInfo.SubmissionAmount -= submissionTicketItem.ReturnAmount - oldBackAmount;
                 stockInfo.RejectAreaAmount += submissionTicketItem.RejectAmount - oldRejectAmount;
+                receiptTicketItem.RefuseAmount += submissionTicketItem.RefuseAmount - oldRefuseAmount;
+                
             }
 
             wmsEntities.SaveChanges();
@@ -621,6 +628,7 @@ namespace WMS.UI.FormReceipt
             decimal oldBackAmount;
             decimal oldRejectAmount;
             decimal oldSubmissionAmount;
+            decimal oldRefuseAmount;
             var submissionTicketItem = (from s in this.wmsEntities.SubmissionTicketItem where s.ID == id select s).FirstOrDefault();
 
             if (submissionTicketItem == null)
@@ -632,6 +640,7 @@ namespace WMS.UI.FormReceipt
             oldBackAmount = submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount;
             oldSubmissionAmount = submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount;
             oldRejectAmount = submissionTicketItem.RejectAmount == null ? 0 : (decimal)submissionTicketItem.RejectAmount;
+            oldRefuseAmount = submissionTicketItem.RefuseAmount == null ? 0 : (decimal)submissionTicketItem.RefuseAmount;
             if (Utilities.CopyTextBoxTextsToProperties(this, submissionTicketItem, ReceiptMetaData.submissionTicketItemKeyName, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -657,11 +666,12 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("返回数量不能大于送检数量", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 return;
             }
+            /*
             if(submissionTicketItem.SubmissionAmount < submissionTicketItem.RejectAmount + submissionTicketItem.ReturnAmount)
             {
                 MessageBox.Show("返回数量为返回发货区数量，不合格品数量会被记入不良品区");
                 return;
-            }
+            }*/
             ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
             string sql = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).ToString();
             if (receiptTicketItem != null)
@@ -699,7 +709,7 @@ namespace WMS.UI.FormReceipt
             {
                 this.wmsEntities.SaveChanges();
                 this.modifyState(this.submissionTicketID);
-                this.modifyAmount(oldBackAmount, oldRejectAmount, oldSubmissionAmount,submissionTicketItem.ID);
+                this.modifyAmount(oldBackAmount, oldRejectAmount, oldSubmissionAmount, oldRefuseAmount, submissionTicketItem.ID);
                 string state = this.modifyState(submissionTicketID);
                 this.Invoke(new Action(this.Search));
                 /*
