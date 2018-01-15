@@ -38,12 +38,14 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonAddAll = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonAlter = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
-            this.buttonAddAll = new System.Windows.Forms.Button();
+            this.panelPager = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -51,6 +53,7 @@
             this.panel2.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -59,23 +62,23 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 550);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 547);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 29, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1032, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1032, 25);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(68, 17);
+            this.labelStatus.Size = new System.Drawing.Size(84, 20);
             this.labelStatus.Text = "添加盘点单";
             // 
             // panel1
@@ -174,6 +177,29 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(192, 197);
             this.tableLayoutPanel4.TabIndex = 6;
             // 
+            // buttonAddAll
+            // 
+            this.buttonAddAll.BackColor = System.Drawing.Color.White;
+            this.buttonAddAll.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAddAll.BackgroundImage")));
+            this.buttonAddAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAddAll.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonAddAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonAddAll.FlatAppearance.BorderSize = 0;
+            this.buttonAddAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddAll.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddAll.Image")));
+            this.buttonAddAll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonAddAll.Location = new System.Drawing.Point(12, 153);
+            this.buttonAddAll.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAddAll.Name = "buttonAddAll";
+            this.buttonAddAll.Size = new System.Drawing.Size(168, 42);
+            this.buttonAddAll.TabIndex = 1;
+            this.buttonAddAll.Text = "添加所有条目";
+            this.buttonAddAll.UseVisualStyleBackColor = false;
+            this.buttonAddAll.Click += new System.EventHandler(this.buttonAddAll_Click);
+            this.buttonAddAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAddAll_MouseDown);
+            this.buttonAddAll.MouseEnter += new System.EventHandler(this.buttonAddAll_MouseEnter);
+            this.buttonAddAll.MouseLeave += new System.EventHandler(this.buttonAddAll_MouseLeave);
+            // 
             // buttonDelete
             // 
             this.buttonDelete.BackColor = System.Drawing.Color.White;
@@ -248,7 +274,7 @@
             this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel5, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -259,8 +285,26 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1032, 550);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1032, 547);
             this.tableLayoutPanel1.TabIndex = 15;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.BackColor = System.Drawing.SystemColors.InactiveBorder;
+            this.tableLayoutPanel5.ColumnCount = 1;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 14.28571F));
+            this.tableLayoutPanel5.Controls.Add(this.panelPager, 0, 1);
+            this.tableLayoutPanel5.Controls.Add(this.reoGridControlMain, 0, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel5.Font = new System.Drawing.Font("宋体", 9F);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(4, 225);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 2;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.10692F));
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.89308F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1024, 318);
+            this.tableLayoutPanel5.TabIndex = 4;
             // 
             // reoGridControlMain
             // 
@@ -268,7 +312,7 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(9, 229);
+            this.reoGridControlMain.Location = new System.Drawing.Point(9, 8);
             this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(9, 8, 9, 8);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
@@ -279,36 +323,23 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 60;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1014, 313);
-            this.reoGridControlMain.TabIndex = 13;
+            this.reoGridControlMain.Size = new System.Drawing.Size(1006, 261);
+            this.reoGridControlMain.TabIndex = 15;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
-            // buttonAddAll
+            // panelPager
             // 
-            this.buttonAddAll.BackColor = System.Drawing.Color.White;
-            this.buttonAddAll.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAddAll.BackgroundImage")));
-            this.buttonAddAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAddAll.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonAddAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonAddAll.FlatAppearance.BorderSize = 0;
-            this.buttonAddAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAddAll.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddAll.Image")));
-            this.buttonAddAll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddAll.Location = new System.Drawing.Point(12, 153);
-            this.buttonAddAll.Margin = new System.Windows.Forms.Padding(4);
-            this.buttonAddAll.Name = "buttonAddAll";
-            this.buttonAddAll.Size = new System.Drawing.Size(168, 42);
-            this.buttonAddAll.TabIndex = 1;
-            this.buttonAddAll.Text = "添加所有条目";
-            this.buttonAddAll.UseVisualStyleBackColor = false;
-            this.buttonAddAll.Click += new System.EventHandler(this.buttonAddAll_Click);
-            this.buttonAddAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAddAll_MouseDown);
-            this.buttonAddAll.MouseEnter += new System.EventHandler(this.buttonAddAll_MouseEnter);
-            this.buttonAddAll.MouseLeave += new System.EventHandler(this.buttonAddAll_MouseLeave);
+            this.panelPager.BackColor = System.Drawing.SystemColors.Control;
+            this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPager.Location = new System.Drawing.Point(0, 277);
+            this.panelPager.Margin = new System.Windows.Forms.Padding(0);
+            this.panelPager.Name = "panelPager";
+            this.panelPager.Size = new System.Drawing.Size(1024, 41);
+            this.panelPager.TabIndex = 16;
             // 
             // FormStockInfoCheckTicketComponentModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1032, 572);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -330,6 +361,7 @@
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel5.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,7 +373,6 @@
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -351,5 +382,8 @@
         private System.Windows.Forms.Button buttonAlter;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonAddAll;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+        private unvell.ReoGrid.ReoGridControl reoGridControlMain;
+        private System.Windows.Forms.Panel panelPager;
     }
 }
