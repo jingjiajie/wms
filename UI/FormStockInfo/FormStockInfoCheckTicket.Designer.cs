@@ -70,7 +70,7 @@
             this.button_additeam});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1099, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(997, 28);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -161,10 +161,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 444);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 381);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1099, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(997, 25);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -193,7 +193,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1099, 416);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(997, 353);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // reoGridControlMain
@@ -213,24 +213,25 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 80;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1093, 374);
+            this.reoGridControlMain.Size = new System.Drawing.Size(991, 311);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
             this.reoGridControlMain.Click += new System.EventHandler(this.reoGridControlMain_Click);
             // 
             // paperpanel
             // 
-            this.paperpanel.Location = new System.Drawing.Point(3, 380);
+            this.paperpanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.paperpanel.Location = new System.Drawing.Point(3, 317);
             this.paperpanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.paperpanel.Name = "paperpanel";
-            this.paperpanel.Size = new System.Drawing.Size(1093, 34);
+            this.paperpanel.Size = new System.Drawing.Size(991, 34);
             this.paperpanel.TabIndex = 5;
             // 
             // FormStockInfoCheckTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1099, 469);
+            this.ClientSize = new System.Drawing.Size(997, 406);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStripTop);
