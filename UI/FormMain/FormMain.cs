@@ -644,7 +644,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                var formBaseStock = new FormStockInfo(this.user.ID,this.project.ID,this.warehouse.ID,this.supplierid );//实例化子窗口
+                var formBaseStock = new FormStockInfo(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
                 formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
