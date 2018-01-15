@@ -83,11 +83,11 @@ namespace WMS.UI.FormReceipt
                 {
                     MessageBox.Show("请重新选择供应商");
                 }
-                if (receiptTicketView.HasPutawayTicket == "全部生成上架单" || receiptTicketView.HasPutawayTicket == "部分生成上架单")
+                if (receiptTicketView.HasPutawayTicket == "全部生成上架单" || receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.State == "送检中")
                 {
                     this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 }
-
+                
 
                 if (this.contract == "已过审")
                 {
@@ -358,7 +358,7 @@ namespace WMS.UI.FormReceipt
                         {
                             if (MessageBox.Show("是否同时将所有条目置为" + receiptTicket.State + "？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                foreach(ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                                foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
                                 {
                                     rti.State = receiptTicket.State;
                                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
@@ -371,6 +371,10 @@ namespace WMS.UI.FormReceipt
                                 }
                             }
                         }
+                    }
+                    else if (oldState == "送检中")
+                    {
+                        receiptTicket.State = "送检中";
                     }
                     else
                     {
@@ -388,7 +392,7 @@ namespace WMS.UI.FormReceipt
                         {
                             if (MessageBox.Show("是否同时将所有零件置为已收货，并将货物移到溢库区？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                foreach(ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                                foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
                                 {
                                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
                                     if (stockInfo == null)
@@ -402,6 +406,7 @@ namespace WMS.UI.FormReceipt
                             }
                         }
                     }
+                    
                     wmsEntities.SaveChanges();
                     //MessageBox.Show("Successful!");
                 }

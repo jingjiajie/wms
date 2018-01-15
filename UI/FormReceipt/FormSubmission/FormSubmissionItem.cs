@@ -647,6 +647,21 @@ namespace WMS.UI.FormReceipt
             {
                 submissionTicketItem.ConfirmPersonID = ConfirmPersonIDGetter();
             }
+            if (submissionTicketItem.SubmissionAmount < submissionTicketItem.RejectAmount)
+            {
+                MessageBox.Show("不合格数量不能大于送检数量", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                return;
+            }
+            if (submissionTicketItem.SubmissionAmount < submissionTicketItem.ReturnAmount)
+            {
+                MessageBox.Show("返回数量不能大于送检数量", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                return;
+            }
+            if(submissionTicketItem.SubmissionAmount < submissionTicketItem.RejectAmount + submissionTicketItem.ReturnAmount)
+            {
+                MessageBox.Show("返回数量为返回发货区数量，不合格品数量会被记入不良品区");
+                return;
+            }
             ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
             string sql = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).ToString();
             if (receiptTicketItem != null)
