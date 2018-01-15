@@ -60,17 +60,11 @@ namespace WMS.UI
             //componentremind();
             if (startend == true)
             {
-                if (days > 0 && days < 10)
-                {
-
-                    this.textBoxContractRemind.Text = "您的合同在有效期内，但还有" + days + "天过期";
-
-                }
-                else if (days < 0)
+            
+                if (days < 0)
                 {
 
                     this.textBoxContractRemind.Text = "您的合同已经到截止日期";
-
 
                 }
                 else if (days >= 0 && this.contract_effect == 1)
@@ -89,7 +83,6 @@ namespace WMS.UI
             else
             {
                 this.textBoxContractRemind.Text = "您的合同生效日期或截止日期没填写";
-
             }
 
 

@@ -259,7 +259,7 @@ namespace WMS.UI
             }
 
 
-            if(days<10||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now )||this.contractstate =="待审核"||this.contractstate =="已过期"||days_start ==false ||reminedays ==10||reminedays ==5||reminedays ==3 )
+            if(days<0||remindtext !=""||(contract_enddate >DateTime.Now&&contract_startdate <DateTime.Now )||this.contractstate =="待审核"||this.contractstate =="已过期"||days_start ==false ||reminedays ==10||reminedays ==5||reminedays ==3 )
 
             {
                 int contract_effect = 0;
