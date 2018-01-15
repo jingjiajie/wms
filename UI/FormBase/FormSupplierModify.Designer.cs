@@ -94,12 +94,12 @@ namespace WMS.UI
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 1);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 23);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 27);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1002, 423);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1002, 419);
             this.tableLayoutPanel2.TabIndex = 31;
             // 
             // tableLayoutPanel1
@@ -156,7 +156,7 @@ namespace WMS.UI
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(996, 330);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(996, 327);
             this.tableLayoutPanel1.TabIndex = 30;
             // 
             // label19
@@ -187,7 +187,7 @@ namespace WMS.UI
             this.textBoxRecipientName.Location = new System.Drawing.Point(847, 166);
             this.textBoxRecipientName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxRecipientName.Name = "textBoxRecipientName";
-            this.textBoxRecipientName.Size = new System.Drawing.Size(145, 25);
+            this.textBoxRecipientName.Size = new System.Drawing.Size(145, 29);
             this.textBoxRecipientName.TabIndex = 16;
             // 
             // textBoxBankName
@@ -196,7 +196,7 @@ namespace WMS.UI
             this.textBoxBankName.Location = new System.Drawing.Point(847, 112);
             this.textBoxBankName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBankName.Name = "textBoxBankName";
-            this.textBoxBankName.Size = new System.Drawing.Size(145, 25);
+            this.textBoxBankName.Size = new System.Drawing.Size(145, 29);
             this.textBoxBankName.TabIndex = 12;
             // 
             // textBoxFullName
@@ -205,7 +205,7 @@ namespace WMS.UI
             this.textBoxFullName.Location = new System.Drawing.Point(847, 58);
             this.textBoxFullName.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxFullName.Name = "textBoxFullName";
-            this.textBoxFullName.Size = new System.Drawing.Size(145, 25);
+            this.textBoxFullName.Size = new System.Drawing.Size(145, 29);
             this.textBoxFullName.TabIndex = 8;
             // 
             // textBoxStartDate
@@ -214,7 +214,7 @@ namespace WMS.UI
             this.textBoxStartDate.Location = new System.Drawing.Point(847, 5);
             this.textBoxStartDate.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStartDate.Name = "textBoxStartDate";
-            this.textBoxStartDate.Size = new System.Drawing.Size(145, 25);
+            this.textBoxStartDate.Size = new System.Drawing.Size(145, 29);
             this.textBoxStartDate.TabIndex = 4;
             // 
             // label1
@@ -234,7 +234,7 @@ namespace WMS.UI
             this.textBoxName.Location = new System.Drawing.Point(103, 5);
             this.textBoxName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(141, 25);
+            this.textBoxName.Size = new System.Drawing.Size(141, 29);
             this.textBoxName.TabIndex = 1;
             // 
             // label2
@@ -254,7 +254,7 @@ namespace WMS.UI
             this.textBoxWarehouseID.Location = new System.Drawing.Point(351, 5);
             this.textBoxWarehouseID.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxWarehouseID.Name = "textBoxWarehouseID";
-            this.textBoxWarehouseID.Size = new System.Drawing.Size(141, 25);
+            this.textBoxWarehouseID.Size = new System.Drawing.Size(141, 29);
             this.textBoxWarehouseID.TabIndex = 2;
             // 
             // label4
@@ -274,7 +274,7 @@ namespace WMS.UI
             this.textBoxEndDate.Location = new System.Drawing.Point(103, 58);
             this.textBoxEndDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxEndDate.Name = "textBoxEndDate";
-            this.textBoxEndDate.Size = new System.Drawing.Size(141, 25);
+            this.textBoxEndDate.Size = new System.Drawing.Size(141, 29);
             this.textBoxEndDate.TabIndex = 5;
             // 
             // label5
@@ -294,7 +294,7 @@ namespace WMS.UI
             this.textBoxBankNo.Location = new System.Drawing.Point(351, 166);
             this.textBoxBankNo.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBankNo.Name = "textBoxBankNo";
-            this.textBoxBankNo.Size = new System.Drawing.Size(141, 25);
+            this.textBoxBankNo.Size = new System.Drawing.Size(141, 29);
             this.textBoxBankNo.TabIndex = 14;
             // 
             // textBoxInvoiceDate
@@ -303,7 +303,7 @@ namespace WMS.UI
             this.textBoxInvoiceDate.Location = new System.Drawing.Point(351, 58);
             this.textBoxInvoiceDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxInvoiceDate.Name = "textBoxInvoiceDate";
-            this.textBoxInvoiceDate.Size = new System.Drawing.Size(141, 25);
+            this.textBoxInvoiceDate.Size = new System.Drawing.Size(141, 29);
             this.textBoxInvoiceDate.TabIndex = 6;
             // 
             // label11
@@ -323,7 +323,7 @@ namespace WMS.UI
             this.textBoxBankAccount.Location = new System.Drawing.Point(103, 166);
             this.textBoxBankAccount.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBankAccount.Name = "textBoxBankAccount";
-            this.textBoxBankAccount.Size = new System.Drawing.Size(141, 25);
+            this.textBoxBankAccount.Size = new System.Drawing.Size(141, 29);
             this.textBoxBankAccount.TabIndex = 12;
             // 
             // label7
@@ -354,7 +354,7 @@ namespace WMS.UI
             this.textBoxAddress.Location = new System.Drawing.Point(351, 112);
             this.textBoxAddress.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxAddress.Name = "textBoxAddress";
-            this.textBoxAddress.Size = new System.Drawing.Size(141, 25);
+            this.textBoxAddress.Size = new System.Drawing.Size(141, 29);
             this.textBoxAddress.TabIndex = 10;
             // 
             // textBoxTaxpayerNumber
@@ -363,7 +363,7 @@ namespace WMS.UI
             this.textBoxTaxpayerNumber.Location = new System.Drawing.Point(103, 112);
             this.textBoxTaxpayerNumber.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxTaxpayerNumber.Name = "textBoxTaxpayerNumber";
-            this.textBoxTaxpayerNumber.Size = new System.Drawing.Size(141, 25);
+            this.textBoxTaxpayerNumber.Size = new System.Drawing.Size(141, 29);
             this.textBoxTaxpayerNumber.TabIndex = 9;
             // 
             // label10
@@ -428,7 +428,7 @@ namespace WMS.UI
             this.textBoxContractNo.Location = new System.Drawing.Point(599, 5);
             this.textBoxContractNo.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxContractNo.Name = "textBoxContractNo";
-            this.textBoxContractNo.Size = new System.Drawing.Size(141, 25);
+            this.textBoxContractNo.Size = new System.Drawing.Size(141, 29);
             this.textBoxContractNo.TabIndex = 3;
             // 
             // textBoxBalanceDate
@@ -437,7 +437,7 @@ namespace WMS.UI
             this.textBoxBalanceDate.Location = new System.Drawing.Point(599, 58);
             this.textBoxBalanceDate.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxBalanceDate.Name = "textBoxBalanceDate";
-            this.textBoxBalanceDate.Size = new System.Drawing.Size(141, 25);
+            this.textBoxBalanceDate.Size = new System.Drawing.Size(141, 29);
             this.textBoxBalanceDate.TabIndex = 7;
             // 
             // textBoxTel
@@ -446,7 +446,7 @@ namespace WMS.UI
             this.textBoxTel.Location = new System.Drawing.Point(599, 112);
             this.textBoxTel.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxTel.Name = "textBoxTel";
-            this.textBoxTel.Size = new System.Drawing.Size(141, 25);
+            this.textBoxTel.Size = new System.Drawing.Size(141, 29);
             this.textBoxTel.TabIndex = 11;
             // 
             // textBoxZipCode
@@ -455,7 +455,7 @@ namespace WMS.UI
             this.textBoxZipCode.Location = new System.Drawing.Point(599, 166);
             this.textBoxZipCode.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxZipCode.Name = "textBoxZipCode";
-            this.textBoxZipCode.Size = new System.Drawing.Size(141, 25);
+            this.textBoxZipCode.Size = new System.Drawing.Size(141, 29);
             this.textBoxZipCode.TabIndex = 15;
             // 
             // label16
@@ -488,13 +488,13 @@ namespace WMS.UI
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 341);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 338);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(996, 79);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(996, 78);
             this.tableLayoutPanel3.TabIndex = 31;
             // 
             // buttonModify
@@ -521,7 +521,7 @@ namespace WMS.UI
             // 
             // FormSupplierModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1010, 451);
             this.Controls.Add(this.groupBox1);

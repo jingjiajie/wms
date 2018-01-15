@@ -33,7 +33,7 @@ namespace WMS.UI
             new KeyName(){Key="ZipCode",Name="邮编",Visible = true, Editable = true},
             new KeyName(){Key="RecipientName",Name="收件人",Visible = true, Editable = true},
             new KeyName(){Key="Number",Name="编号",Visible = true, Editable = true},
-            new KeyName(){Key="ContractState",Name="合同状态",Visible = true, Editable = true,
+            new KeyName(){Key="ContractState",Name="合同状态",Visible = true, Editable = false ,
             ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem("待审核","待审核"),
                 new ComboBoxItem("已过审","已过审"),
