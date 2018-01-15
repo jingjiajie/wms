@@ -22,6 +22,7 @@ namespace WMS.UI.FormReceipt
         private int warehouseID;
         private int userID;
         private int supplierID;
+        private string contract;
         private Func<int> personIDGetter;
 
         public FormReceiptTicketModify()
@@ -86,6 +87,17 @@ namespace WMS.UI.FormReceipt
                 {
                     this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 }
+
+
+                if (this.contract == "已过审")
+                {
+                    ComboBox comboxstate = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
+
+
+                    comboxstate.Enabled = false;
+                }
+
+
                 //this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 //TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserUserID", true)[0];
                 //textBoxLastUpdateUserID.Text = this.userID.ToString();
