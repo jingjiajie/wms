@@ -191,7 +191,7 @@ namespace WMS.UI
             this.panel2.Controls.Add(this.tableLayoutPanel2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(223, 81);
-            this.panel2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panel2.Margin = new System.Windows.Forms.Padding(1);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(348, 30);
             this.panel2.TabIndex = 4;
@@ -213,7 +213,7 @@ namespace WMS.UI
             this.tableLayoutPanel2.Controls.Add(this.label3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -227,7 +227,7 @@ namespace WMS.UI
             this.comboBoxWarehouse.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
             this.comboBoxWarehouse.Location = new System.Drawing.Point(225, 2);
-            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
             this.comboBoxWarehouse.Size = new System.Drawing.Size(121, 27);
             this.comboBoxWarehouse.TabIndex = 0;
@@ -240,7 +240,7 @@ namespace WMS.UI
             this.comboBoxProject.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
             this.comboBoxProject.FormattingEnabled = true;
             this.comboBoxProject.Location = new System.Drawing.Point(49, 1);
-            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1);
             this.comboBoxProject.Name = "comboBoxProject";
             this.comboBoxProject.Size = new System.Drawing.Size(123, 27);
             this.comboBoxProject.TabIndex = 1;
@@ -280,7 +280,7 @@ namespace WMS.UI
             this.panelFill.Controls.Add(this.tableLayoutPanel1);
             this.panelFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFill.Location = new System.Drawing.Point(0, 112);
-            this.panelFill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelFill.Margin = new System.Windows.Forms.Padding(2);
             this.panelFill.Name = "panelFill";
             this.panelFill.Size = new System.Drawing.Size(572, 319);
             this.panelFill.TabIndex = 1;
@@ -294,7 +294,7 @@ namespace WMS.UI
             this.tableLayoutPanel1.Controls.Add(this.panelRight, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -306,7 +306,7 @@ namespace WMS.UI
             this.panelLeft.Controls.Add(this.treeViewLeft);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLeft.Location = new System.Drawing.Point(1, 1);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(1);
             this.panelLeft.Name = "panelLeft";
             this.panelLeft.Size = new System.Drawing.Size(148, 317);
             this.panelLeft.TabIndex = 0;
