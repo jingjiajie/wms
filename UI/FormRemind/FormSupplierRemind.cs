@@ -359,6 +359,25 @@ namespace WMS.UI
             {
                 this.Close();
             }
-        
+
+        private void button1_MouseEnter(object sender, EventArgs e)
+        {
+            button1.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void button1_MouseDown(object sender, MouseEventArgs e)
+        {
+            button1.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

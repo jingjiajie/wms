@@ -166,7 +166,7 @@ namespace WMS.UI
                 MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            this.toolStripButtonSelect.Visible = false;
             this.toolStripComboBoxSelect.Enabled = false;
             this.toolStripComboBoxSelect.SelectedIndex  = 0;
             this.buttonCheck.Enabled = false;
@@ -643,6 +643,7 @@ namespace WMS.UI
                 this.toolStripComboBoxSelect.Enabled = true;
                 this.buttonImport.Enabled = true;
             }
+            this.toolStripButtonSelect.Visible = true;
             this.toolStripButtonAlter.Enabled = true;
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("是否历史信息", "0");
@@ -727,7 +728,13 @@ namespace WMS.UI
                             }
 
 
+                            if(results [i].StartingTime >results [i].EndingTime )
+                            {
+                                MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同生效日期不能大于截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return false;
 
+
+                            }
 
                             results[i].CreateTime = DateTime.Now;
                             results[i].CreateUserID  = this.userid;
@@ -737,13 +744,13 @@ namespace WMS.UI
 
 
                             string contractstate = results[i].ContractState;
-                            if(contractstate !="已签合同"&&contractstate !="未签合同"&&contractstate!="")
+                            if(contractstate !="待审核"&&contractstate !="已过审"&&contractstate!="已过期")
                             {
-                                MessageBox.Show("操作失败，供应商"+ suppliernameimport+"的合同状态请改为已签合同、未签合同或留空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                                MessageBox.Show("操作失败，供应商"+ suppliernameimport+ "的合同状态请改为待审核、已过审或已过期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
                                 return false;
                             }
 
-
+                            
                         
 
 
