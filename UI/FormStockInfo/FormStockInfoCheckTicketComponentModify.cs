@@ -815,12 +815,23 @@ namespace WMS.UI
         private void buttonAddAll_Click(object sender, EventArgs e)
         {
             WMS.DataAccess.StockInfo[] stockinfoall = null;
-            try
+            WMS.DataAccess.StockInfoCheckTicketItem [] StockInfoCheckTicketItemsave = null;
+            
+            try 
             {
                 wmsEntities = new DataAccess.WMSEntities();
-                 stockinfoall = (from kn in wmsEntities.StockInfo
+                stockinfoall = (from kn in wmsEntities.StockInfo
                                  where kn.ProjectID ==this.projectID &&kn.WarehouseID ==this.warehouseID 
                                     select kn).ToArray();
+
+                StockInfoCheckTicketItemsave= (from kn in wmsEntities.StockInfoCheckTicketItem 
+                                           where kn.StockInfoCheckTicketID ==this.stockInfoCheckID 
+                                           select kn).ToArray();
+
+
+
+
+
             }
             catch
             {
@@ -837,7 +848,7 @@ namespace WMS.UI
 
             for (int i=0;i<stockinfoall .Length;i++)
             {
-
+                bool repet = false;
                 var  StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
 
 
@@ -852,6 +863,19 @@ namespace WMS.UI
                     return;
 
                 }
+                for(int j=0;j< StockInfoCheckTicketItemsave.Length;j++)
+                {
+                    if (StockInfoCheckTicketItemsave[j].StockInfoID == stockinfoall[i].ID )
+                    {
+                        repet = true;
+
+
+                   }
+
+                }
+
+                if(repet ==true )
+                { continue; }
 
                 StockInfoCheckTicketItem.StockInfoID = stockinfoall[i].ID;
                 StockInfoCheckTicketItem.PersonID = this.personid;
@@ -862,6 +886,7 @@ namespace WMS.UI
                 StockInfoCheckTicketItem.ExpectedRejectAreaAmount = stockinfoall[i].RejectAreaAmount ;
                 StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
                 StockInfoCheckTicketItem.ExpectedSubmissionAmount = stockinfoall[i].SubmissionAmount;
+
 
                 try
                 {
