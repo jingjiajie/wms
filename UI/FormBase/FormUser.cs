@@ -180,7 +180,7 @@ namespace WMS.UI.FormBase
             }
             if (deleteIDs.Contains(this.userID))
             {
-                MessageBox.Show("登录用户不可删除自己！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("登录用户不可删除自己！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             this.labelStatus.Text = "正在删除...";
@@ -190,6 +190,18 @@ namespace WMS.UI.FormBase
             {
                 try
                 {
+                    int managerUserCount = (from u in wmsEntities.User
+                                            where u.Authority == UserMetaData.AUTHORITY_MANAGER
+                                            select u).Count();
+                    int deleteManagerUserCount = (from u in wmsEntities.User
+                                                  where u.Authority == UserMetaData.AUTHORITY_MANAGER
+                                                  && deleteIDs.Contains(u.ID)
+                                                  select u).Count();
+                    if(deleteManagerUserCount == managerUserCount)
+                    {
+                        MessageBox.Show("删除失败，系统中至少保留一个管理员用户！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     foreach (int id in deleteIDs)
                     {
                         this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM [User] WHERE ID = @userID", new SqlParameter("@userID", id));
