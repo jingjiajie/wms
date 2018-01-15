@@ -72,7 +72,7 @@ namespace WMS.UI
                 this.contractst = (supplier.ContractState);
                 this.toolStripButtonAdd.Enabled = false;
                 this.toolStripButtonDelete.Enabled = false;
-                if (this.contractst == "未签合同")
+                if (this.contractst == "待审核")
                 {
                     this.toolStripButtonAlter.Enabled = true ;
                 }

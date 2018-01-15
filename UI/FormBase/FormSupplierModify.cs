@@ -99,6 +99,44 @@ namespace WMS.UI
             TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxName", true)[0];
          
             TextBox textBoxName = (TextBox)this.Controls.Find("textBoxName", true)[0];
+
+            TextBox textBoxStartingTime = (TextBox)this.Controls.Find("textBoxStartingTime", true)[0];
+            TextBox textBoxEndingTime= (TextBox)this.Controls.Find("textBoxEndingTime", true)[0];
+            
+            if(textBoxStartingTime .Text !=""&&DateTime.TryParse (textBoxStartingTime.Text,out DateTime a) ==false )
+            {
+                MessageBox.Show("请输入正确的合同生效时间", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+                return;
+            }
+            if (textBoxEndingTime.Text != "" && DateTime.TryParse(textBoxEndingTime.Text, out DateTime b) == false)
+            {
+                MessageBox.Show("请输入正确的合同截止时间", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+                return; 
+            }
+
+            if (Convert.ToDateTime(textBoxStartingTime.Text) >=Convert.ToDateTime(textBoxEndingTime.Text) )
+            {
+
+                MessageBox.Show("合同截止日期不能小于或等于合同生效日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+
+                return;
+
+
+
+            }
+
+
+
+
+
+
+
+
             if (this.mode == FormMode.ALTER&&this.history_save ==0)//如果没保存过历史信息，则跳出提示
             {
                 

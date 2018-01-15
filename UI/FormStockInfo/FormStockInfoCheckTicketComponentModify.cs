@@ -79,9 +79,11 @@ namespace WMS.UI
 
 
             }
-
+            
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
-            //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+
+            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+            textBoxComponentName.BackColor = Color.White;
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
@@ -195,6 +197,7 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Visible;
             }
             worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
+            worksheet.RowCount = 10;
            
         }
 
@@ -297,7 +300,7 @@ namespace WMS.UI
            TextBox textBoxRealSubmissionAmount = (TextBox)this.Controls.Find("textBoxRealSubmissionAmount", true)[0];
            TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
            TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
-
+            
 
             if (textBoxComponentName.Text == string.Empty)
             {
@@ -453,6 +456,14 @@ namespace WMS.UI
                     {
                         worksheet[0, 1] = "没有符合条件的记录";
                     }
+
+
+                    if (shipmentTicketItemViews.Length > worksheet.RowCount)
+
+                    {
+                        worksheet.AppendRows(  shipmentTicketItemViews.Length- worksheet.RowCount);
+                    }
+                
                     for (int i = 0; i < shipmentTicketItemViews.Length; i++)
                     {
                         var curShipmentTicketViews = shipmentTicketItemViews[i];
@@ -462,6 +473,13 @@ namespace WMS.UI
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
                         }
                     }
+
+
+
+
+
+
+
                     if (selectID != -1)
                     {
                         Utilities.SelectLineByID(this.reoGridControlMain, selectID);
@@ -735,6 +753,146 @@ namespace WMS.UI
 
 
 
+        }
+
+        private void buttonAdd_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAdd_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAdd_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAdd.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAlter_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAlter_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAlter_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonDelete_MouseEnter(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonDelete_MouseLeave(object sender, EventArgs e)
+        {
+            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonAddAll_Click(object sender, EventArgs e)
+        {
+            WMS.DataAccess.StockInfo[] stockinfoall = null;
+            try
+            {
+                wmsEntities = new DataAccess.WMSEntities();
+                 stockinfoall = (from kn in wmsEntities.StockInfo
+                                 where kn.ProjectID ==this.projectID &&kn.WarehouseID ==this.warehouseID 
+                                    select kn).ToArray();
+            }
+            catch
+            {
+                MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
+            }
+
+            if (stockinfoall.Length ==0)
+            {
+                MessageBox.Show("库存信息为空，无法添加条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            for (int i=0;i<stockinfoall .Length;i++)
+            {
+
+                var  StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
+
+
+                try
+                {
+                    this.wmsEntities.StockInfoCheckTicketItem.Add(StockInfoCheckTicketItem);
+                }
+
+                catch
+                {
+                    MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+
+                }
+
+                StockInfoCheckTicketItem.StockInfoID = stockinfoall[i].ID;
+                StockInfoCheckTicketItem.PersonID = this.personid;
+
+                StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID;
+                StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
+                StockInfoCheckTicketItem.ExpectedReceiptAreaAmount = stockinfoall[i].ReceiptAreaAmount ;
+                StockInfoCheckTicketItem.ExpectedRejectAreaAmount = stockinfoall[i].RejectAreaAmount ;
+                StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
+                StockInfoCheckTicketItem.ExpectedSubmissionAmount = stockinfoall[i].SubmissionAmount;
+
+                try
+                {
+                    wmsEntities.SaveChanges();
+
+                }
+                catch
+                {
+                    MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+
+
+              
+
+            }
+
+            MessageBox.Show("添加所有条目成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            this.Search();
+            if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
+            {
+                this.addFinishedCallback(this.stockInfoCheckID);
+            }
+
+
+
+        }
+
+        private void buttonAddAll_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAddAll_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonAddAll_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
     }
     

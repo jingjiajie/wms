@@ -59,7 +59,7 @@ namespace WMS.UI
                 this.buttonImport.Enabled = false;
                 //this.toolStripButton1.Enabled = false;
                 //this.toolStripButtonSelect.Enabled = false;
-                if (this.contractst =="已签合同")
+                if (this.contractst =="已过审")
                 {
                     this.toolStripButtonAlter.Enabled = false;
                 }
