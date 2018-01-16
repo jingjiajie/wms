@@ -124,7 +124,7 @@ namespace WMS.UI.FormReceipt
                 PutawayTicketView putawayTicketView = (from stv in wmsEntities.PutawayTicketView where stv.ID == this.putawayTicketID select stv).FirstOrDefault();
                 if (putawayTicketView == null)
                 {
-                    MessageBox.Show("找不到此上架单");
+                    MessageBox.Show("找不到此上架单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
@@ -159,7 +159,8 @@ namespace WMS.UI.FormReceipt
                             if (j == this.editableColumn)
                             {
                                 //worksheet[i, j]
-
+                                worksheet.CreateAndGetCell(i, j).Style.BackColor = Color.AliceBlue;
+                                worksheet[i, j] = "0";
                             }
                             else
                             {
@@ -308,7 +309,7 @@ namespace WMS.UI.FormReceipt
                     ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                     if (receiptTicket == null)
                     {
-                        MessageBox.Show("收货单不存在");
+                        MessageBox.Show("收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     if (receiptTicket.HasPutawayTicket == "没有生成上架单")
@@ -341,7 +342,7 @@ namespace WMS.UI.FormReceipt
                             {
                                 if (putawayTicket.CreateTime.HasValue == false)
                                 {
-                                    MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                                    MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return;
                                 }
 
@@ -352,7 +353,7 @@ namespace WMS.UI.FormReceipt
                                                                                       select s.No).ToArray());
                                 if (maxRankOfToday == -1)
                                 {
-                                    MessageBox.Show("单号生成失败！请手动填写单号");
+                                    MessageBox.Show("单号生成失败！请手动填写单号", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return;
                                 }
                                 putawayTicket.No = Utilities.GenerateTicketNo("P", putawayTicket.CreateTime.Value, maxRankOfToday + 1);
@@ -366,7 +367,7 @@ namespace WMS.UI.FormReceipt
                                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == ripa.Key select rti).FirstOrDefault();
                                 if (ripa.Value < 0)
                                 {
-                                    MessageBox.Show("计划上架数量不能是负数", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                    MessageBox.Show("计划上架数量不能是负数", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return;
                                 }
                                 if (receiptTicketItem != null)
@@ -377,7 +378,7 @@ namespace WMS.UI.FormReceipt
                                     putawayTicketItem.ScheduledMoveCount = ripa.Value;
                                     if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - putawayTicketItem.ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                                     {
-                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                                         return;
                                     }
                                     if (receiptTicketItem.HasPutwayAmount == null)
@@ -464,7 +465,7 @@ namespace WMS.UI.FormReceipt
                                 CallBack();
                                 this.Hide();
                             }));
-                            MessageBox.Show("成功");
+                            MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch
                         {

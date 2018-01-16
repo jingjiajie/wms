@@ -363,6 +363,45 @@ namespace WMS.UI
                 {
                     foreach (int id in deleteIDs)
                     {
+                        ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == id select rt).FirstOrDefault();
+                        if (receiptTicket != null)
+                        {
+                            SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ReceiptTicketID == id select st).FirstOrDefault();
+                            PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ReceiptTicketID == id select pt).FirstOrDefault();
+                            ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
+                            int n = 0;
+                            foreach (ReceiptTicketItem rti in receiptTicketItems)
+                            {
+                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                                if (stockInfo != null)
+                                {
+                                    n++;
+                                }
+                            }
+                            int i = 0;
+                            string errorInfo = "该收货单被 ";
+                            if (submissionTicket != null)
+                            {
+                                i++;
+                                errorInfo += "送检单 ";
+                            }
+                            if (putawayTicket != null)
+                            {
+                                i++;
+                                errorInfo += "上架单 ";
+                            }
+                            if (n != 0)
+                            {
+                                i++;
+                                errorInfo += "库存信息 ";
+                            }
+                            errorInfo += "引用，不能删除！";
+                            if (i != 0)
+                            {
+                                MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
                         try
                         {
                             wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicket WHERE ID=@receiptTicketID", new SqlParameter("receiptTicketID", id));
@@ -381,7 +420,10 @@ namespace WMS.UI
                     MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                     return;
                 }
-                this.Search();
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                }));
             })).Start();
         }
 
@@ -625,7 +667,7 @@ namespace WMS.UI
                 {
                     if (receiptTicket.State != "待送检")
                     {
-                        MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
+                        MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)

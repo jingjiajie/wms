@@ -611,6 +611,7 @@ namespace WMS.UI
                     s.FormBorderStyle = FormBorderStyle.None;
                     this.panelRight.Controls.Add(s);
                     s.Show();
+                    SetTreeViewSelectedNodeByText("送检单管理");
                     //treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("送检单管理", true)[0];
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
                 }));
@@ -639,6 +640,7 @@ namespace WMS.UI
                     }));
 
                     s.Show();
+                    SetTreeViewSelectedNodeByText("上架单管理");
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
                 }));
                 l.TopLevel = false;
@@ -666,6 +668,7 @@ namespace WMS.UI
                     //s.Dock = System.Windows.Forms.DockStyle.Fill;
                     this.panelRight.Controls.Add(s);
                     s.Show();
+                    SetTreeViewSelectedNodeByText("上架零件管理");
                     //this.treeViewLeft.SelectedNode = treeViewLeft.Nodes.Find("上架零件管理", true)[0];
                     Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
                 }));

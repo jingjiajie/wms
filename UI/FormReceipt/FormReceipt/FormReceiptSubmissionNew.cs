@@ -202,7 +202,7 @@ namespace WMS.UI.FormReceipt
                                 //worksheet[i, m]
                                 //Cell cell = 
                                 worksheet.CreateAndGetCell(i, m).Style.BackColor = Color.AliceBlue;
-                                worksheet[i, j] = "";
+                                worksheet[i, j] = "0";
                             }
                             else
                             {
@@ -268,7 +268,8 @@ namespace WMS.UI.FormReceipt
 
                 if (strSubmissionAmount == null)
                 {
-                    strSubmissionAmount = "0";
+                    MessageBox.Show("送检数量不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return null;
                 }
                 else
                 {
@@ -328,7 +329,7 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
                 }
             }
-            SortedDictionary<int, int> idsAndSubmissionAmount = SelectReceiptTicketItem();
+            SortedDictionary<int, int> idsAndSubmissionAmount = SelectReceiptTicketItem(); 
             if (idsAndSubmissionAmount == null)
             {
                 return;
@@ -384,7 +385,7 @@ namespace WMS.UI.FormReceipt
                     {
                         if (submissionTicket.CreateTime.HasValue == false)
                         {
-                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号");
+                            MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
 
@@ -395,7 +396,7 @@ namespace WMS.UI.FormReceipt
                                                                               select s.No).ToArray());
                         if (maxRankOfToday == -1)
                         {
-                            MessageBox.Show("单号生成失败！请手动填写单号");
+                            MessageBox.Show("单号生成失败！请手动填写单号", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                         submissionTicket.No = Utilities.GenerateTicketNo("J", submissionTicket.CreateTime.Value, maxRankOfToday + 1);
@@ -417,7 +418,7 @@ namespace WMS.UI.FormReceipt
                                 StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == vp.Key.ID select si).FirstOrDefault();
                                 if (stockInfo == null)
                                 {
-                                    MessageBox.Show("找不到对应的库存信息");
+                                    MessageBox.Show("找不到对应的库存信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                                 else
                                 {
@@ -467,7 +468,7 @@ namespace WMS.UI.FormReceipt
                                 CallBack();
                                 this.Hide();
                             }));
-                            MessageBox.Show("收货单条目送检成功");
+                            MessageBox.Show("收货单条目送检成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch
                         {
