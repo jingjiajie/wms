@@ -63,11 +63,9 @@ namespace WMS.UI.FormReceipt
             InitPanel();
             WMSEntities wmsEntities = new WMSEntities();
             pagerWidget = new PagerWidget<PutawayTicketItemView>(this.reoGridControlPutaway, ReceiptMetaData.putawayTicketItemKeyName, projectID, warehouseID);
+            this.panel4.Controls.Add(pagerWidget);
             pagerWidget.ClearCondition();
-            
             Search();
-
-            
             this.pagerWidget.Show();
             this.RefreshTextBoxes();
         }
@@ -89,6 +87,7 @@ namespace WMS.UI.FormReceipt
             //    pagerWidget.AddCondition("上架单ID", this.putawayTicketID.ToString());
             //}
             this.pagerWidget.Search(savePage, selectID);
+            //this.pagerWidget.Show();
         }
 
         
@@ -145,7 +144,7 @@ namespace WMS.UI.FormReceipt
             }
             this.putawayTicketItemID = int.Parse(putawayTicketItemView.ID.ToString());
             Utilities.CopyPropertiesToTextBoxes(putawayTicketItemView, this);
-            //Utilities.CopyPropertiesToComboBoxes(shipmentTicketItemView, this);
+            Utilities.CopyPropertiesToComboBoxes(putawayTicketItemView, this);
         }
 
         private void ClearTextBoxes()
@@ -292,6 +291,11 @@ namespace WMS.UI.FormReceipt
                     }
                     else
                     {
+                        if (Utilities.CopyComboBoxsToProperties(this, putawayTicketItem,ReceiptMetaData.putawayTicketItemKeyName) == false)
+                        {
+                            MessageBox.Show("下拉框获取失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                         ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
                         if (receiptTicketItem != null)
                         {
@@ -490,6 +494,10 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
+                    if (this.Controls.Find("textBoxOperateTime", true)[0].Text == "")
+                    {
+                        this.Controls.Find("textBoxOperateTime", true)[0].Text = DateTime.Now.ToString();
+                    }
                     string errorInfo;
                     if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicketItem, ReceiptMetaData.putawayTicketItemKeyName, out errorInfo) == false)
                     {
@@ -498,6 +506,11 @@ namespace WMS.UI.FormReceipt
                     }
                     else
                     {
+                        if (Utilities.CopyComboBoxsToProperties(this, putawayTicketItem,ReceiptMetaData.putawayTicketItemKeyName) == false)
+                        {
+                            MessageBox.Show("下拉框获取失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                         /*
                         decimal putawayAmount;
                         if (decimal.TryParse(this.Controls.Find("textboxPutawayAmount", true)[0].Text, out putawayAmount) == false)
@@ -507,7 +520,8 @@ namespace WMS.UI.FormReceipt
                         }*/
                         if (putawayTicketItem.MoveCount == null)
                         {
-                            MessageBox.Show("移位数量不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("实际上架数量不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
                         }
                         ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
                         if (putawayTicketItem.UnitAmount == null)
@@ -520,7 +534,7 @@ namespace WMS.UI.FormReceipt
                         }
                         if (putawayTicketItem.MoveCount > putawayTicketItem.ScheduledMoveCount)
                         {
-                            MessageBox.Show("实际移位数量不能大于计划移位数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("实际上架数量不能大于计划上架数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                         
