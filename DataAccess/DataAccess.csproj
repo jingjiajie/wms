@@ -198,8 +198,8 @@
       <DependentUpon>WMSModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="WMSModel.cs">
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WMSModel.Designer.cs">

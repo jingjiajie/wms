@@ -30,7 +30,7 @@ namespace WMS.UI
              new KeyName(){Key="ExpectedShipmentAreaAmount",Name="账面发货区数量",Editable=false ,Save=true  },
             new KeyName(){Key="RealShipmentAreaAmount",Name="实际发货区数量",Editable=true ,Save=true }
             ,
-            new KeyName(){Key="PersonName",Name="负责人",Editable=false  ,Save=false ,EditPlaceHolder ="自动填写"  }
+            new KeyName(){Key="PersonName",Name="实际盘点人",Editable=false  ,Save=false ,EditPlaceHolder ="点击选择盘点人"  }
             ,
 
         };

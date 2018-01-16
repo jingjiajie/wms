@@ -26,6 +26,7 @@ namespace WMS.UI
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
         //private Action checkFinishedCallback = null;
+        private  FormSelectPerson FormSelectPerson = null;
 
 
 
@@ -77,19 +78,17 @@ namespace WMS.UI
 
 
             
-           
-            
-
+          
 
             this.InitComponents();
-            this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, DataAccess.Person>(this, "textBoxPersonName", "Name");
+            //this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, DataAccess.Person>(this, "textBoxPersonName", "Name");
 
         }
         private void InitComponents()
         {
 
             Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
-            //this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
+            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
             {
@@ -141,7 +140,11 @@ namespace WMS.UI
               
 
         {
-            var FormSelectPerson = new FormSelectPerson ();
+
+            if (FormSelectPerson == null)
+            {
+                FormSelectPerson = new FormSelectPerson();
+            }
             FormSelectPerson.SetSelectFinishedCallback((selectedID) =>
             {
 
@@ -159,7 +162,7 @@ namespace WMS.UI
                 this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName.Name ;
                 this.personidc = 1;
              });
-            FormSelectPerson.Show();
+            FormSelectPerson.ShowDialog ();
 
 
 

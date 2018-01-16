@@ -27,7 +27,8 @@ namespace WMS.UI
         private Action<int> addFinishedCallback = null;
         private Action<int> SetSelectFinishedCallback = null;
         private   FormSelectStockInfo FormSelectStockInfo = null;
-        
+        private PagerWidget<WMS.DataAccess.StockInfoCheckTicketItemView > pagerWidget = null;
+
 
         //private Action checkFinishedCallback = null;
 
@@ -42,6 +43,7 @@ namespace WMS.UI
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.personid = personid;
+            
 
         }
 
@@ -89,17 +91,61 @@ namespace WMS.UI
 
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
+
+            TextBox textBoxPersonName =(TextBox )this.Controls.Find("textBoxPersonName", true)[0];
+            textBoxPersonName.BackColor = Color.White;
             //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
+
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
-            this.Search();
+            this.pagerWidget.ClearCondition();
+           
+            this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert .ToString ( this.stockInfoCheckID ));
+            this.pagerWidget.Search();
+            
+            
              
         }
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
         {
             this.RefreshTextBoxes();
         }
+
+
+        private void textBoxPersonName_Click(object sender, EventArgs e)
+        {
+            var FormSelectPerson = new FormSelectPerson();
+
+
+            FormSelectPerson.SetSelectFinishedCallback((selectedID) =>
+            {
+
+                var PersonName = (from s in wmsEntities.PersonView
+                                  where s.ID == selectedID
+                                  select s).FirstOrDefault();
+                if (PersonName.Name == null)
+                {
+                    MessageBox.Show("选择人员信息失败，人员信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //this.supplierID = selectedID;
+                //selectedID = 1;
+                this.personid = selectedID;
+                this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName.Name;
+                //this.personidc = 1;
+
+
+
+            });
+            FormSelectPerson.Show();
+
+
+        }
+
+
+
 
         private void RefreshTextBoxes()
         {
@@ -116,7 +162,7 @@ namespace WMS.UI
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
                 return;
             }
-            this.buttonAdd.Text = "复制条目";
+            //this.buttonAdd.Text = "复制条目";
             int id = ids[0];
             WMS.DataAccess.StockInfoCheckTicketItemView StockInfoCheckTicketItem = null;
             
@@ -146,6 +192,14 @@ namespace WMS.UI
             {
                 this.stockinfoid = -1;
             }
+            if(StockInfoCheckTicketItem .PersonID !=null)
+            {
+
+                this.personid = StockInfoCheckTicketItem.PersonID.Value ;
+
+            }
+
+
 
 
             //if (StockInfoCheckTicketItem.PersonID  != null)
@@ -188,23 +242,56 @@ namespace WMS.UI
 
         private void InitComponents()
         {
-            string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
-                                           where kn.Visible == true
-                                           select kn.Name).ToArray();
+            //string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
+            //                               where kn.Visible == true
+            //                               select kn.Name).ToArray();
 
-           
-           
-            //初始化表格
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
-            for (int i = 0; i < StockInfoCheckTicksModifyMetaDate.KeyNames.Length; i++)
+
+
+            ////初始化表格
+            //var worksheet = this.reoGridControlMain.Worksheets[0];
+            //worksheet.SelectionMode = unvell.ReoGrid.WorksheetSelectionMode.Row;
+            //for (int i = 0; i < StockInfoCheckTicksModifyMetaDate.KeyNames.Length; i++)
+            //{
+            //    worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Name;
+            //    worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Visible;
+            //}
+            //worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
+            //worksheet.RowCount = 10;
+
+            try
             {
-                worksheet.ColumnHeaders[i].Text = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = StockInfoCheckTicksModifyMetaDate.KeyNames[i].Visible;
+                WMS.DataAccess.WMSEntities wmsEntities = new DataAccess.WMSEntities ();
+                WMS.DataAccess.User user = (from u in wmsEntities.User where u.ID == this.userID select u).FirstOrDefault();
+                if (user == null)
+                {
+                    MessageBox.Show("登录失效，请重新登录！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //如果登录失效，不能查出任何数据。                   
+                    return;
+                }                
             }
-            worksheet.Columns = StockInfoCheckTicksModifyMetaDate.KeyNames.Length;//限制表的长度
-            worksheet.RowCount = 10;
-           
+            catch
+            {
+                MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //如果加载失败，不能查出任何数据。
+                return;
+            }
+            //初始化分页控件
+            this.pagerWidget = new PagerWidget<WMS.DataAccess.StockInfoCheckTicketItemView>(this.reoGridControlMain, StockInfoCheckTicksModifyMetaDate.KeyNames, -1, -1);
+            this.panelPager.Controls.Add(pagerWidget);
+            pagerWidget.Show();
+
+
+
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;
+                return cp;
+            }
         }
 
 
@@ -395,9 +482,9 @@ namespace WMS.UI
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
             
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
-           
-         
+
 
 
 
@@ -431,74 +518,56 @@ namespace WMS.UI
 
         private void Search(int selectID=-1)
         {
-           
-
-
-
-
             this.wmsEntities = new WMS .DataAccess . WMSEntities();
-            var worksheet = this.reoGridControlMain.Worksheets[0];
+            this.pagerWidget.Search(false, selectID);
+            //var worksheet = this.reoGridControlMain.Worksheets[0];
 
-            worksheet[0, 1] = "加载中...";
-            new Thread(new ThreadStart(() => 
-            {
-                WMS.DataAccess.StockInfoCheckTicketItemView[] shipmentTicketItemViews = null;
-                try
-                {
-                    shipmentTicketItemViews = (from s in wmsEntities.StockInfoCheckTicketItemView 
-                                               where s.StockInfoCheckTicketID   == this.stockInfoCheckID 
-                                               orderby s.ID descending
-                                               select s).ToArray();
-                }
-                catch
-                {
-                    MessageBox.Show("查询数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    if (this.IsDisposed == false)
-                    {
-                        this.Invoke(new Action(this.Close));
-                    }
-                    return;
-                }
+            //worksheet[0, 1] = "加载中...";
+            //new Thread(new ThreadStart(() => 
+            //{
+            //    WMS.DataAccess.StockInfoCheckTicketItemView[] shipmentTicketItemViews = null;
+            //    try
+            //    {
+            //        shipmentTicketItemViews = (from s in wmsEntities.StockInfoCheckTicketItemView 
+            //                                   where s.StockInfoCheckTicketID   == this.stockInfoCheckID 
+            //                                   orderby s.ID descending
+            //                                   select s).ToArray();
+            //    }
+            //    catch
+            //    {
+            //        MessageBox.Show("查询数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        if (this.IsDisposed == false)
+            //        {
+            //            this.Invoke(new Action(this.Close));
+            //        }
+            //        return;
+            //    }
 
-                this.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "加载完成";
-                    worksheet.DeleteRangeData(RangePosition.EntireRange);
-                    if (shipmentTicketItemViews.Length == 0)
-                    {
-                        worksheet[0, 1] = "没有符合条件的记录";
-                    }
-
-
-                    if (shipmentTicketItemViews.Length > worksheet.RowCount)
-
-                    {
-                        worksheet.AppendRows(  shipmentTicketItemViews.Length- worksheet.RowCount);
-                    }
-                
-                    for (int i = 0; i < shipmentTicketItemViews.Length; i++)
-                    {
-                        var curShipmentTicketViews = shipmentTicketItemViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curShipmentTicketViews, (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < columns.Length; j++)
-                        {
-                            worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                        }
-                    }
+            //    this.Invoke(new Action(() =>
+            //    {
+            //        this.labelStatus.Text = "加载完成";
+            //        worksheet.DeleteRangeData(RangePosition.EntireRange);
+            //        if (shipmentTicketItemViews.Length == 0)
+            //        {
+            //            worksheet[0, 1] = "没有符合条件的记录";
+            //        }
 
 
+            //        if (shipmentTicketItemViews.Length > worksheet.RowCount)
 
+            //        {
+            //            worksheet.AppendRows(  shipmentTicketItemViews.Length- worksheet.RowCount);
+            //        }
 
-
-
-
-                    if (selectID != -1)
-                    {
-                        Utilities.SelectLineByID(this.reoGridControlMain, selectID);
-                    }
-                    this.Invoke(new Action(this.RefreshTextBoxes));
-                }));
-            })).Start();
+            //        for (int i = 0; i < shipmentTicketItemViews.Length; i++)
+            //        {
+            //            var curShipmentTicketViews = shipmentTicketItemViews[i];
+            //            object[] columns = Utilities.GetValuesByPropertieNames(curShipmentTicketViews, (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames select kn.Key).ToArray());
+            //            for (int j = 0; j < columns.Length; j++)
+            //            {
+            //                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
+            //            }
+            //        }
 
 
 
@@ -506,14 +575,13 @@ namespace WMS.UI
 
 
 
-
-
-
-
-
-
-
-
+            //if (selectID != -1)
+            //{
+            //    Utilities.SelectLineByID(this.reoGridControlMain, selectID);
+            //}
+            //this.Invoke(new Action(this.RefreshTextBoxes));
+            //    }));
+            //})).Start();
 
 
         }

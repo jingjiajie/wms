@@ -259,7 +259,7 @@ namespace WMS.UI
             }
 
 
-            if(days<0||remindtext !=""||this.contractstate =="´ýÉóºË"||this.contractstate =="ÒÑ¹ýÆÚ"||days_start ==false ||reminedays ==10||reminedays ==5||reminedays ==3 )
+            if(days<0||remindtext !=""||this.contractstate =="´ýÉóºË"||days_start ==false ||reminedays ==10||reminedays ==5||reminedays ==3 )
 
             {
                 int contract_effect = 0;

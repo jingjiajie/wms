@@ -30,10 +30,10 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelTextBoxes = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -44,7 +44,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 321F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.buttonOK, 1, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 441);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -74,21 +74,6 @@
             this.buttonOK.MouseEnter += new System.EventHandler(this.buttonOK_MouseEnter);
             this.buttonOK.MouseLeave += new System.EventHandler(this.buttonOK_MouseLeave);
             // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelTextBoxes, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1436, 638);
-            this.tableLayoutPanel2.TabIndex = 0;
-            // 
             // tableLayoutPanelTextBoxes
             // 
             this.tableLayoutPanelTextBoxes.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -103,7 +88,7 @@
             this.tableLayoutPanelTextBoxes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.53918F));
             this.tableLayoutPanelTextBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTextBoxes.Font = new System.Drawing.Font("黑体", 10F);
-            this.tableLayoutPanelTextBoxes.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanelTextBoxes.Location = new System.Drawing.Point(3, 31);
             this.tableLayoutPanelTextBoxes.Name = "tableLayoutPanelTextBoxes";
             this.tableLayoutPanelTextBoxes.RowCount = 4;
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -115,15 +100,28 @@
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(1430, 432);
+            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(1430, 410);
             this.tableLayoutPanelTextBoxes.TabIndex = 4;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.groupBox2.Controls.Add(this.tableLayoutPanelTextBoxes);
+            this.groupBox2.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Location = new System.Drawing.Point(0, 0);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(1436, 638);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "修该送检单";
             // 
             // FormAddSubmissionTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1436, 638);
-            this.Controls.Add(this.tableLayoutPanel2);
+            this.Controls.Add(this.groupBox2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormAddSubmissionTicket";
@@ -131,7 +129,7 @@
             this.Text = "修改送检单";
             this.Load += new System.EventHandler(this.FormAddSubmissionTicket_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel2.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -140,7 +138,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTextBoxes;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

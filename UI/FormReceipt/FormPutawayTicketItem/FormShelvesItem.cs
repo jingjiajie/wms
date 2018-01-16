@@ -18,7 +18,7 @@ namespace WMS.UI.FormReceipt
         private int projectID;
         private int warehouseID;
         private int userID;
-        private int putawayTicketItemID;
+        private int putawayTicketItemID = -1;
         private int putawayTicketID;
         private string key = null;
         private string value = null;
@@ -50,6 +50,8 @@ namespace WMS.UI.FormReceipt
             this.value = value;
         }
 
+       
+
         public void SetCallBack(Action action)
         {
             this.CallBack = action;
@@ -61,15 +63,31 @@ namespace WMS.UI.FormReceipt
             InitPanel();
             WMSEntities wmsEntities = new WMSEntities();
             pagerWidget = new PagerWidget<PutawayTicketItemView>(this.reoGridControlPutaway, ReceiptMetaData.putawayTicketItemKeyName, projectID, warehouseID);
+            pagerWidget.ClearCondition();
+            
             Search();
+
+            
+            this.pagerWidget.Show();
             this.RefreshTextBoxes();
         }
+
+        
         
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
+            if (this.key != null && this.value != null)
+            {
+                pagerWidget.AddCondition(this.key, this.value);
+                pagerWidget.Search();
+            }
             pagerWidget.AddOrderBy("StockInfoShipmentAreaAmount / (ComponentDailyProduction * ComponentSingleCarUsageAmount)");
             pagerWidget.AddOrderBy("ReceiptTicketItemInventoryDate");
+            //if (this.putawayTicketID != -1)
+            //{
+            //    pagerWidget.AddCondition("上架单ID", this.putawayTicketID.ToString());
+            //}
             this.pagerWidget.Search(savePage, selectID);
         }
 
@@ -467,7 +485,7 @@ namespace WMS.UI.FormReceipt
                 oldPutawayAmount = (decimal)putawayTicketItem.PutawayAmount;
                 if (putawayTicketItem == null)
                 {
-                    MessageBox.Show("此上架单条目不存在");
+                    MessageBox.Show("此上架单条目不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
@@ -475,7 +493,7 @@ namespace WMS.UI.FormReceipt
                     string errorInfo;
                     if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicketItem, ReceiptMetaData.putawayTicketItemKeyName, out errorInfo) == false)
                     {
-                        MessageBox.Show(errorInfo);
+                        MessageBox.Show(errorInfo,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     else
@@ -489,7 +507,7 @@ namespace WMS.UI.FormReceipt
                         }*/
                         if (putawayTicketItem.MoveCount == null)
                         {
-                            putawayTicketItem.MoveCount = 0;
+                            MessageBox.Show("移位数量不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
                         if (putawayTicketItem.UnitAmount == null)
@@ -502,9 +520,10 @@ namespace WMS.UI.FormReceipt
                         }
                         if (putawayTicketItem.MoveCount > putawayTicketItem.ScheduledMoveCount)
                         {
-                            MessageBox.Show("实际移位数量不能大于计划移位数量");
+                            MessageBox.Show("实际移位数量不能大于计划移位数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
+                        
 
                         putawayTicketItem.PutawayAmount = putawayTicketItem.UnitAmount * putawayTicketItem.MoveCount;
                         StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == putawayTicketItem.ReceiptTicketItemID select si).FirstOrDefault();

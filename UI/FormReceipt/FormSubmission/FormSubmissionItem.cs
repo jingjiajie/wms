@@ -712,6 +712,7 @@ namespace WMS.UI.FormReceipt
                 this.modifyAmount(oldBackAmount, oldRejectAmount, oldSubmissionAmount, oldRefuseAmount, submissionTicketItem.ID);
                 string state = this.modifyState(submissionTicketID);
                 this.Invoke(new Action(this.Search));
+                
                 /*
                 if (state == "合格")
                 {

@@ -222,10 +222,12 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
-                    string key = "PutawayTicketNo";
+                    string key = "上架单ID";
                     string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
-                    string value = putawayTicket.No;
-                    ToPutaway(key, value);
+                    string value = putawayTicket.ID.ToString();
+                    //ToPutaway(key, value);
+                    FormShelvesItem formShelvesItem = new FormShelvesItem(this.projectID, this.warehouseID, this.userID, "上架单ID", value);
+                    formShelvesItem.Show();
                 }
             }
 

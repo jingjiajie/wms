@@ -35,6 +35,7 @@ namespace WMS.UI
         private void FormSupplierModify_Load(object sender, EventArgs e)
         {
             this.MaximizeBox = false;
+
             if (this.mode == FormMode.ALTER&&this.supplierID == -1)
             { 
                 throw new Exception("未设置源供应商信息");
@@ -45,8 +46,8 @@ namespace WMS.UI
             //this.textBoxSupplierName = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
             //textBoxSupplierName.BackColor = Color.White;
             //textBoxSupplierName.MouseClick += textBoxSupplierName_MouseClick;
-
-
+            ComboBox ComBoxContractState = (ComboBox)this.Controls.Find("comboBoxContractState", true)[0];
+            ComBoxContractState.BackColor = Color.White;
 
 
             if (this.mode == FormMode.ALTER)
@@ -75,7 +76,7 @@ namespace WMS.UI
                 }
                 if (this.contractstate == "待审核")
                 {
-                    ComboBox ComBoxContractState = (ComboBox)this.Controls.Find("comboBoxContractState", true)[0];
+                    
                     ComBoxContractState.Enabled = false;
                     TextBox textboxstartime = (TextBox)this.Controls.Find("textBoxStartingtime", true)[0];
                     textboxstartime.Enabled = false;
