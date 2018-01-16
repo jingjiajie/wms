@@ -148,12 +148,14 @@
             // 
             // toolStripStatusLabel1
             // 
+            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
+            this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(84, 20);
             this.labelStatus.Text = "添加盘点单";
