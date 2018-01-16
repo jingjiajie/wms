@@ -44,8 +44,8 @@
             this.buttonAdd = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.panelPager = new System.Windows.Forms.Panel();
+            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -62,23 +62,23 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 547);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 550);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 29, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1032, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1032, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(84, 20);
+            this.labelStatus.Size = new System.Drawing.Size(68, 17);
             this.labelStatus.Text = "添加盘点单";
             // 
             // panel1
@@ -176,6 +176,7 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(192, 197);
             this.tableLayoutPanel4.TabIndex = 6;
+            this.tableLayoutPanel4.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel4_Paint);
             // 
             // buttonAddAll
             // 
@@ -285,7 +286,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1032, 547);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1032, 550);
             this.tableLayoutPanel1.TabIndex = 15;
             // 
             // tableLayoutPanel5
@@ -303,8 +304,18 @@
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 87.10692F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.89308F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1024, 318);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1024, 321);
             this.tableLayoutPanel5.TabIndex = 4;
+            // 
+            // panelPager
+            // 
+            this.panelPager.BackColor = System.Drawing.SystemColors.Control;
+            this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPager.Location = new System.Drawing.Point(0, 279);
+            this.panelPager.Margin = new System.Windows.Forms.Padding(0);
+            this.panelPager.Name = "panelPager";
+            this.panelPager.Size = new System.Drawing.Size(1024, 42);
+            this.panelPager.TabIndex = 16;
             // 
             // reoGridControlMain
             // 
@@ -323,23 +334,13 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 60;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1006, 261);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1006, 263);
             this.reoGridControlMain.TabIndex = 15;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
-            // panelPager
-            // 
-            this.panelPager.BackColor = System.Drawing.SystemColors.Control;
-            this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(0, 277);
-            this.panelPager.Margin = new System.Windows.Forms.Padding(0);
-            this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(1024, 41);
-            this.panelPager.TabIndex = 16;
-            // 
             // FormStockInfoCheckTicketComponentModify
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1032, 572);
             this.Controls.Add(this.tableLayoutPanel1);

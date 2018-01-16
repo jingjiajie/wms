@@ -572,7 +572,7 @@ namespace WMS.UI
                 this.Invoke(new Action(() =>
                 {
                     this.pagerWidget.Search();
-                    this.labelStatus.Text = "搜索完成";
+                    this.labelStatus.Text = "供应商信息";
                     
                 }));
                 
