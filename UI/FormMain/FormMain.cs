@@ -99,7 +99,7 @@ namespace WMS.UI
 
                     this.contractstate = Supplier.ContractState;
             }
-            catch
+            catch(Exception ex)
             {
 
                 MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -133,25 +133,58 @@ namespace WMS.UI
 
 
 
-                var ReceiptTicketNo = (from u in wmsEntities.StockInfoView
-                                       where u.ReceiptTicketSupplierID == supplierid
-                                       select u.SupplyNumber).ToArray();
+                //var ReceiptTicketNo = (from u in wmsEntities.StockInfoView
+                //                       where u.ReceiptTicketSupplierID == supplierid
+                //                       select u.SupplyNumber).ToArray();
 
                 var OverflowAreaAmount = (from u in wmsEntities.StockInfoView
                                where u.ReceiptTicketSupplierID == supplierid
                                select u.OverflowAreaAmount ).ToArray();
 
+                //List <int> ComponentNameLocation=null;
+                //decimal[] ShipmentAreaAmount1 = null;
+                //decimal[] OverflowAreaAmount1 = null;
+                int a = 0;
 
+                for (int i=0;i<ComponentName.Length;i++)
 
-                int[] singlecaramount = new int[ComponentName.Length];
+                {
+                    if (ComponentName[i] == null)
+                    {
+                        continue;
+                    }
 
-                int[] dailyproduction = new int[ComponentName.Length];
+                    for (int j = i + 1;j<ComponentName.Length;j++)
+                    {
+                        if (ComponentName[i]==ComponentName[j])
+                        {
+                            a++;
+                            //ComponentNameLocation.Add(j);
+                            ComponentName[j] = null;
+                            ShipmentAreaAmount[i] = Convert .ToDecimal ( ShipmentAreaAmount[i]) + Convert .ToDecimal ( ShipmentAreaAmount[j]);
+                            OverflowAreaAmount[i] = Convert.ToDecimal( OverflowAreaAmount[i]) + Convert.ToDecimal( OverflowAreaAmount[j]);                        
+                        }
 
+                     }
+
+                }
+                var ComponentNameLocation1 = new int[a];
+                //ComponentNameLocation1= ComponentNameLocation.ToArray();
+
+                //int[] singlecaramount = new int[ComponentName.Length];
+
+                //int[] dailyproduction = new int[ComponentName.Length];
+                int singlecaramount;
+                int dailyproduction;
                 for (int i = 0; i < ComponentName.Length; i++)
 
                 {
-                    
-                    
+
+                   if(ComponentName[i]==null)
+                    {
+                        continue;
+                    }
+
                     string ComponentNamei = ComponentName[i];
 
                     if (ShipmentAreaAmount[i] == null)
@@ -159,18 +192,10 @@ namespace WMS.UI
                         continue;
                     }
 
-                    if (ReceiptTicketNo[i] == null)
-
-                    {
-                        
-                        continue;
-                    }
+                    
                     if(OverflowAreaAmount[i]==null)
                     {
-
-                        continue;
-
-
+                       continue;
                     }
 
                     try
@@ -178,83 +203,70 @@ namespace WMS.UI
                         component = (from u in wmsEntities.ComponentView
                                      where u.Name == ComponentNamei
                                      select u).FirstOrDefault();
-
                         if (component == null)
                         {
-                            
+
                             continue;
                         }
-                        if (component.SingleCarUsageAmount == null)
+
+
                         {
-                            
-                            continue;
-
-                        }
-
-                        singlecaramount[i] = Convert.ToInt32(component.SingleCarUsageAmount);
-
-                        if (component.DailyProduction == null)
-                        {
-                            
-                            continue;
-
-                        }
-
-                        dailyproduction[i] = Convert.ToInt32(component.DailyProduction);
-
-
-                        reminedays = Convert.ToInt32((ShipmentAreaAmount[i])+ OverflowAreaAmount[i]) / (singlecaramount[i] * dailyproduction[i]);
-
-                        if (reminedays < 10||reminedays ==10)
-                        {
-                            if(reminedays ==10)
-
+                            if (component.SingleCarUsageAmount == null||component .SingleCarUsageAmount ==0)
                             {
-                                sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
-                            }
-                            else if(reminedays ==5)
-                            {
-
-
-                                sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                continue;
                             }
 
-                            else if (reminedays == 3)
+                            singlecaramount = Convert.ToInt32(component.SingleCarUsageAmount);
+
+                            if (component.DailyProduction == null||component .DailyProduction ==0)
                             {
-
-
-                                sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                continue;
                             }
 
+                            dailyproduction = Convert.ToInt32(component.DailyProduction);
 
 
+                            reminedays = Convert.ToInt32((ShipmentAreaAmount[i]) + OverflowAreaAmount[i]) / (singlecaramount * dailyproduction);
+
+                            if (reminedays < 10 || reminedays == 10)
+                            {
+                                if (reminedays == 10)
+
+                                {
+                                    sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                }
+                                else if (reminedays == 5)
+                                {
 
 
+                                    sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                }
 
+                                else if (reminedays == 3)
+                                {
+
+
+                                    sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                }
+
+                            }
 
                         }
-
                     }
                     catch
                     {
 
-                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("操作失败，请检查网络连接222", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                }
                 this.remindtext  = sb.ToString() ;
 
-
-                
-
-
-
-
             }
-            catch
+            catch(Exception ex)
             {
 
-                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("操作失败，请检查网络连接333", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
