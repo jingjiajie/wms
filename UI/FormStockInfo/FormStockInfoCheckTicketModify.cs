@@ -89,7 +89,8 @@ namespace WMS.UI
 
             Utilities.CreateEditPanel(this.tableLayoutPanel3, StockInfoCheckTicketViewMetaData.KeyNames);
             this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
-
+            TextBox textBoxPersonname = (TextBox)this.Controls.Find("textBoxPersonName", true)[0];
+            textBoxPersonname.BackColor = Color.White;
             if (this.mode == FormMode.ALTER || this.mode == FormMode.CHECK)
             {
                 WMS.DataAccess.StockInfoCheckTicketView stockInfoCheckView = new DataAccess.StockInfoCheckTicketView();
