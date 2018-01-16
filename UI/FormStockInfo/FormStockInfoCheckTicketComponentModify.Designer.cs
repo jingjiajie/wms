@@ -194,7 +194,7 @@
             this.buttonAddAll.Name = "buttonAddAll";
             this.buttonAddAll.Size = new System.Drawing.Size(168, 42);
             this.buttonAddAll.TabIndex = 1;
-            this.buttonAddAll.Text = "添加所有条目";
+            this.buttonAddAll.Text = "     添加所有库存条目";
             this.buttonAddAll.UseVisualStyleBackColor = false;
             this.buttonAddAll.Click += new System.EventHandler(this.buttonAddAll_Click);
             this.buttonAddAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAddAll_MouseDown);
