@@ -122,12 +122,12 @@ namespace WMS.UI
             {
 
                 var ComponentName = (from u in wmsEntities.StockInfoView
-                                     where u.ReceiptTicketSupplierID == supplierid
+                                     where u.SupplierID  == supplierid
                                      select u.ComponentName).ToArray();
 
 
                 var ShipmentAreaAmount = (from u in wmsEntities.StockInfoView
-                                          where u.ReceiptTicketSupplierID ==
+                                          where u.SupplierID   ==
                                           this.supplierid
                                           select u.ShipmentAreaAmount).ToArray();
 
@@ -136,7 +136,7 @@ namespace WMS.UI
 
 
                 var OverflowAreaAmount = (from u in wmsEntities.StockInfoView
-                               where u.ReceiptTicketSupplierID == supplierid
+                               where u.SupplierID  == supplierid
                                select u.OverflowAreaAmount ).ToArray();
 
                 
@@ -314,7 +314,7 @@ namespace WMS.UI
             }
 
 
-            if(days<0||remindtext !=""||this.contractstate =="´ýÉóºË"||days_start ==false ||reminedays ==10||reminedays ==5||reminedays ==3 )
+            if(days<0||remindtext !=""||this.contractstate =="´ýÉóºË"||days_start ==false ||reminedays ==10||reminedays <10 )
 
             {
                 int contract_effect = 0;
