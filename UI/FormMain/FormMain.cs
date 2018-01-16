@@ -133,18 +133,13 @@ namespace WMS.UI
 
 
 
-                //var ReceiptTicketNo = (from u in wmsEntities.StockInfoView
-                //                       where u.ReceiptTicketSupplierID == supplierid
-                //                       select u.SupplyNumber).ToArray();
+
 
                 var OverflowAreaAmount = (from u in wmsEntities.StockInfoView
                                where u.ReceiptTicketSupplierID == supplierid
                                select u.OverflowAreaAmount ).ToArray();
 
-                //List <int> ComponentNameLocation=null;
-                //decimal[] ShipmentAreaAmount1 = null;
-                //decimal[] OverflowAreaAmount1 = null;
-                int a = 0;
+                
 
                 for (int i=0;i<ComponentName.Length;i++)
 
@@ -158,8 +153,8 @@ namespace WMS.UI
                     {
                         if (ComponentName[i]==ComponentName[j])
                         {
-                            a++;
-                            //ComponentNameLocation.Add(j);
+                           
+                           
                             ComponentName[j] = null;
                             ShipmentAreaAmount[i] = Convert .ToDecimal ( ShipmentAreaAmount[i]) + Convert .ToDecimal ( ShipmentAreaAmount[j]);
                             OverflowAreaAmount[i] = Convert.ToDecimal( OverflowAreaAmount[i]) + Convert.ToDecimal( OverflowAreaAmount[j]);                        
@@ -168,12 +163,8 @@ namespace WMS.UI
                      }
 
                 }
-                var ComponentNameLocation1 = new int[a];
-                //ComponentNameLocation1= ComponentNameLocation.ToArray();
-
-                //int[] singlecaramount = new int[ComponentName.Length];
-
-                //int[] dailyproduction = new int[ComponentName.Length];
+ 
+                
                 int singlecaramount;
                 int dailyproduction;
                 for (int i = 0; i < ComponentName.Length; i++)
@@ -233,21 +224,73 @@ namespace WMS.UI
                                 if (reminedays == 10)
 
                                 {
-                                    sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                    sb.Append("您的库存" + ComponentName[i] + "只有10天可生产，请您补货" + "\r\n" + "\r\n");
                                 }
+                                else if (reminedays == 9)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足10天生产，请您补货" + "\r\n" + "\r\n");
+                                }
+
+                                else if (reminedays == 8)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足10天生产，请您补货" + "\r\n" + "\r\n");
+                                }
+                                else if (reminedays == 7)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足10天生产，请您补货" + "\r\n" + "\r\n");
+                                }
+                                else if (reminedays == 6)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足10天生产，请您补货" + "\r\n" + "\r\n");
+                                }
+
                                 else if (reminedays == 5)
                                 {
 
 
-                                    sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                    sb.Append("您的库存" + ComponentName[i] + "只有5天可生产，请您补货" + "\r\n" + "\r\n");
+                                }
+
+                                else if (reminedays == 4)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足5天生产，请您补货" + "\r\n" + "\r\n");
                                 }
 
                                 else if (reminedays == 3)
                                 {
 
 
-                                    sb.Append("您的零件" + ComponentName[i] + "已经不足" + reminedays + "日生产，请及时补货" + "\r\n" + "\r\n");
+                                    sb.Append("您的库存" + ComponentName[i] + "只有3天可生产，请您补货" + "\r\n" + "\r\n");
                                 }
+                                else if (reminedays == 2)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足3天生产，请您补货" + "\r\n" + "\r\n");
+                                }
+                                else if (reminedays == 1)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足3天生产，请您补货" + "\r\n" + "\r\n");
+                                }
+                                else if (reminedays == 0)
+                                {
+
+
+                                    sb.Append("您的库存" + ComponentName[i] + "已经不足3天生产，请您补货" + "\r\n" + "\r\n");
+                                }
+
 
                             }
 

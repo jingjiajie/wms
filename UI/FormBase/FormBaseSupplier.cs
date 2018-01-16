@@ -636,15 +636,23 @@ namespace WMS.UI
         {
             if(this.toolStripButton1.Text =="全部信息"&& (this.authority & authority_supplier) == authority_supplier)
             {
-                this.toolStripButton1.Text = "查询";
+                
                 this.toolStripButtonAdd .Enabled = true;
                 
                 this.buttonCheck.Enabled = true;
                 this.toolStripComboBoxSelect.Enabled = true;
                 this.buttonImport.Enabled = true;
+
             }
+
+            this.toolStripButton1.Text = "查询";
             this.toolStripButtonSelect.Visible = true;
-            this.toolStripButtonAlter.Enabled = true;
+            if (this.contractst == "待审核"||this.contractst =="")
+                
+            {
+                this.toolStripButtonAlter.Enabled = true;
+            }
+            
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("是否历史信息", "0");
 
