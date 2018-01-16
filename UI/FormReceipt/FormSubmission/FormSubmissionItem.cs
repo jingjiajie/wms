@@ -69,6 +69,7 @@ namespace WMS.UI.FormReceipt
         private void RefreshTextBoxes()
         {
             this.ClearTextBoxes();
+            WMSEntities wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControlSubmissionItems.Worksheets[0];
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlSubmissionItems);
             if (ids.Length == 0)
@@ -77,7 +78,7 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             int id = ids[0];
-            SubmissionTicketItemView submissionTicketItemView = (from s in this.wmsEntities.SubmissionTicketItemView
+            SubmissionTicketItemView submissionTicketItemView = (from s in wmsEntities.SubmissionTicketItemView
                                                                  where s.ID == id
                                                                  select s).FirstOrDefault();
             if (submissionTicketItemView == null)
@@ -88,11 +89,11 @@ namespace WMS.UI.FormReceipt
             this.submissionTicketID = int.Parse(submissionTicketItemView.SubmissionTicketID.ToString());
             Utilities.CopyPropertiesToTextBoxes(submissionTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(submissionTicketItemView, this);
-            if (submissionTicketItemView.ReturnAmount == null)
+            if (this.Controls.Find("textBoxReturnAmount", true)[0].Text == "")
             {
                 this.Controls.Find("textBoxReturnAmount", true)[0].Text = (submissionTicketItemView.SubmissionAmount == null ? 0 : (decimal)submissionTicketItemView.SubmissionAmount).ToString();
             }
-            if (submissionTicketItemView.RejectAmount == null)
+            if (this.Controls.Find("textBoxRejectAmount", true)[0].Text == "0")
             {
                 this.Controls.Find("textBoxRejectAmount", true)[0].Text = "0";
             }
@@ -139,15 +140,15 @@ namespace WMS.UI.FormReceipt
                 var wmsEntities = new WMSEntities();
                 //ReceiptTicketView[] receiptTicketViews = null;
                 SubmissionTicketItemView[] submissionTicketItemView = null;
-                //try
-                //{
+                try
+                {
                     submissionTicketItemView = wmsEntities.Database.SqlQuery<SubmissionTicketItemView>("SELECT * FROM SubmissionTicketItemView WHERE SubmissionTicketID=@submissionTicketID", new SqlParameter("submissionTicketID", submissionTicketID)).ToArray();
-                //}
-                //catch
-                //{
-                //    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                //    return;
-                //}
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
                 this.reoGridControlSubmissionItems.Invoke(new Action(() =>
                 {
                     this.labelStatus.Text = "搜索完成";
@@ -194,10 +195,10 @@ namespace WMS.UI.FormReceipt
             {
                 stockInfo.SubmissionAmount += submissionTicketItem.SubmissionAmount - oldSubmissionAmount;
                 stockInfo.ReceiptAreaAmount -= submissionTicketItem.SubmissionAmount - oldSubmissionAmount;
-                stockInfo.ReceiptAreaAmount += (submissionTicketItem.ReturnAmount - submissionTicketItem.RejectAmount - submissionTicketItem.RefuseAmount) - (oldBackAmount - oldRejectAmount - oldRefuseAmount);
+                stockInfo.ReceiptAreaAmount += (submissionTicketItem.ReturnAmount - submissionTicketItem.RejectAmount) - (oldBackAmount - oldRejectAmount);
                 stockInfo.SubmissionAmount -= submissionTicketItem.ReturnAmount - oldBackAmount;
                 stockInfo.RejectAreaAmount += submissionTicketItem.RejectAmount - oldRejectAmount;
-                receiptTicketItem.RefuseAmount += submissionTicketItem.RefuseAmount - oldRefuseAmount;
+                //receiptTicketItem.RefuseAmount += submissionTicketItem.RefuseAmount - oldRefuseAmount;
                 
             }
 
@@ -711,7 +712,12 @@ namespace WMS.UI.FormReceipt
                 this.modifyState(this.submissionTicketID);
                 this.modifyAmount(oldBackAmount, oldRejectAmount, oldSubmissionAmount, oldRefuseAmount, submissionTicketItem.ID);
                 string state = this.modifyState(submissionTicketID);
-                this.Invoke(new Action(this.Search));
+                this.Invoke(new Action(()=> 
+                {
+                    this.Search();
+                    CallBack();
+                    this.RefreshTextBoxes();
+                }));
                 
                 /*
                 if (state == "合格")
@@ -827,6 +833,7 @@ namespace WMS.UI.FormReceipt
                 this.Invoke(new Action(() => 
                 {
                     CallBack();
+                    this.RefreshTextBoxes();
                 }));
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();
@@ -952,12 +959,13 @@ namespace WMS.UI.FormReceipt
             new Thread(() =>
             {
                 wmsEntities.SaveChanges();
-                MessageBox.Show("成功");
                 this.Invoke(new Action(() =>
                 {
                     this.Search();
                     CallBack();
                 }));
+                MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }).Start();
         }
 

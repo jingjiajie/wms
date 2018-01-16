@@ -43,6 +43,17 @@ namespace WMS.DataAccess
         public Nullable<decimal> UnitCount { get; set; }
         public Nullable<decimal> HasPutwayAmount { get; set; }
         public Nullable<decimal> RefuseAmount { get; set; }
+        public string RefuseUnit { get; set; }
+        public Nullable<decimal> RefuseUnitAmount { get; set; }
+        public string DisqualifiedUnit { get; set; }
+        public Nullable<decimal> DisqualifiedUnitAmount { get; set; }
+        public string WrongComponentUnit { get; set; }
+        public Nullable<decimal> WrongComponentUnitAmount { get; set; }
+        public Nullable<decimal> RefuseUnitCount { get; set; }
+        public Nullable<decimal> DisqualifiedUnitCount { get; set; }
+        public Nullable<decimal> WrongComponentUnitCount { get; set; }
+        public Nullable<decimal> RealReceiptUnitCount { get; set; }
+        public Nullable<decimal> RealReceiptAmount { get; set; }
     
         public virtual ReceiptTicket ReceiptTicket { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }

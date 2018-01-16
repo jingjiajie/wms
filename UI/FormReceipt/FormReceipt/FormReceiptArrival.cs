@@ -318,7 +318,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    MessageBox.Show("该记录已被其他用户删除");
+                    MessageBox.Show("该记录已被其他用户删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch
@@ -408,7 +408,7 @@ namespace WMS.UI
                         }
                         catch
                         {
-                            MessageBox.Show("该收货单已收货或送检，无法删除");
+                            MessageBox.Show("该收货单已收货或送检，无法删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                         //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicket SET State='作废' WHERE ID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
                         //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State='作废' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", id));
@@ -451,7 +451,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 if (receiptTicket.State == "送检中" || receiptTicket.State == "已收货")
                 {
-                    MessageBox.Show("该收货单" + receiptTicket.State);
+                    MessageBox.Show("该收货单" + receiptTicket.State, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 FormAddSubmissionTicket formAddSubmissionTicket = new FormAddSubmissionTicket(receiptTicketID, this.userID, FormMode.ADD);
@@ -497,7 +497,7 @@ namespace WMS.UI
                 SubmissionTicket submissionTicket = (from sb in wmsEntities.SubmissionTicket where sb.ReceiptTicketID == receiptTicketID && sb.State != STRING_CANCEL select sb).FirstOrDefault();
                 if (submissionTicket == null)
                 {
-                    MessageBox.Show("该收货单没有送检！");
+                    MessageBox.Show("该收货单没有送检！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
@@ -511,7 +511,7 @@ namespace WMS.UI
                     }
                     else
                     {
-                        MessageBox.Show("此收货单并未送检!");
+                        MessageBox.Show("此收货单并未送检!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -595,7 +595,7 @@ namespace WMS.UI
                 }*/
                 if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)
                 {
-                    MessageBox.Show("没有为该收货单添加收货单条目，无法生成上架单，请添加后重试");
+                    MessageBox.Show("没有为该收货单添加收货单条目，无法生成上架单，请添加后重试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 FormPutawayNew formPutawayNew = new FormPutawayNew(receiptTicket.ID, this.userID, FormMode.ADD);
@@ -660,7 +660,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
                 {
-                    MessageBox.Show("找不到此收货单");
+                    MessageBox.Show("找不到此收货单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
@@ -672,7 +672,7 @@ namespace WMS.UI
                     }
                     if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)
                     {
-                        MessageBox.Show("没有为该收货单添加收货单条目，无法生成送检单，请添加后重试");
+                        MessageBox.Show("没有为该收货单添加收货单条目，无法生成送检单，请添加后重试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     FormReceiptSubmissionNew formReceiptSubmissionNew = new FormReceiptSubmissionNew(receiptTicketID, this.userID, FormMode.ADD);
@@ -728,11 +728,11 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 if (receiptTicket.State == "已收货")
                 {
-                    MessageBox.Show("该收货单已收货");
+                    MessageBox.Show("该收货单已收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else if (receiptTicket.State == "送检中")
                 {
-                    MessageBox.Show("该收货单正在送检中");
+                    MessageBox.Show("该收货单正在送检中", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
@@ -752,7 +752,7 @@ namespace WMS.UI
                     new Thread(() =>
                     {
                         wmsEntities.SaveChanges();
-                        MessageBox.Show("成功");
+                        MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         this.Invoke(new Action(() =>
                         {
                             this.Search();
@@ -789,7 +789,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
                 if (receiptTicket.State != "已收货")
                 {
-                    MessageBox.Show("该收货单未收货");
+                    MessageBox.Show("该收货单未收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
@@ -820,7 +820,7 @@ namespace WMS.UI
                     {
                         wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待检' WHERE ReceiptTicketID = @receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID));
                         wmsEntities.SaveChanges();
-                        MessageBox.Show("成功");
+                        MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         this.Invoke(new Action(() =>
                         {
                             this.Search();
@@ -879,7 +879,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
                 {
-                    MessageBox.Show("该收货单不存在");
+                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
@@ -924,7 +924,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
                 {
-                    MessageBox.Show("该收货单不存在");
+                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
@@ -967,7 +967,7 @@ namespace WMS.UI
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
                 {
-                    MessageBox.Show("该收货单不存在");
+                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else

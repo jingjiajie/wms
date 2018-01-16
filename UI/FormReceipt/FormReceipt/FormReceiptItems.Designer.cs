@@ -56,7 +56,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2168, 372);
+            this.panel1.Size = new System.Drawing.Size(968, 244);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -64,7 +64,7 @@
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelProperties, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.panel3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -72,7 +72,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(2168, 372);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(968, 244);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanelProperties
@@ -98,25 +98,25 @@
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(1762, 366);
+            this.tableLayoutPanelProperties.Size = new System.Drawing.Size(742, 238);
             this.tableLayoutPanelProperties.TabIndex = 0;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.tableLayoutPanel3);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(1771, 3);
+            this.panel3.Location = new System.Drawing.Point(751, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(394, 366);
+            this.panel3.Size = new System.Drawing.Size(214, 238);
             this.panel3.TabIndex = 1;
             // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel3.ColumnCount = 3;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 278F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 324F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
             this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 3);
@@ -125,12 +125,12 @@
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 5;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 18F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 88F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 88F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(394, 366);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(214, 238);
             this.tableLayoutPanel3.TabIndex = 4;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
             // 
@@ -146,9 +146,9 @@
             this.buttonModify.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonModify.Image = global::WMS.UI.Properties.Resources.cancle;
             this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(69, 109);
+            this.buttonModify.Location = new System.Drawing.Point(15, 73);
             this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(252, 61);
+            this.buttonModify.Size = new System.Drawing.Size(187, 44);
             this.buttonModify.TabIndex = 1;
             this.buttonModify.Text = "修改零件条目";
             this.buttonModify.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -170,9 +170,9 @@
             this.buttonAdd.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAdd.Location = new System.Drawing.Point(69, 21);
+            this.buttonAdd.Location = new System.Drawing.Point(15, 23);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(252, 61);
+            this.buttonAdd.Size = new System.Drawing.Size(187, 44);
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.Text = "添加零件条目";
             this.buttonAdd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -191,9 +191,9 @@
             this.buttonDelete.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonDelete.Image = global::WMS.UI.Properties.Resources.delete;
             this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDelete.Location = new System.Drawing.Point(69, 197);
+            this.buttonDelete.Location = new System.Drawing.Point(15, 123);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(252, 61);
+            this.buttonDelete.Size = new System.Drawing.Size(187, 44);
             this.buttonDelete.TabIndex = 2;
             this.buttonDelete.Text = "删除零件条目";
             this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -209,8 +209,8 @@
             this.reoGridControlReceiptItems.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlReceiptItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlReceiptItems.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlReceiptItems.Location = new System.Drawing.Point(4, 381);
-            this.reoGridControlReceiptItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.reoGridControlReceiptItems.Location = new System.Drawing.Point(5, 253);
+            this.reoGridControlReceiptItems.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.reoGridControlReceiptItems.Name = "reoGridControlReceiptItems";
             this.reoGridControlReceiptItems.Readonly = true;
             this.reoGridControlReceiptItems.RowHeaderContextMenuStrip = null;
@@ -218,9 +218,9 @@
             this.reoGridControlReceiptItems.SheetTabContextMenuStrip = null;
             this.reoGridControlReceiptItems.SheetTabNewButtonVisible = true;
             this.reoGridControlReceiptItems.SheetTabVisible = true;
-            this.reoGridControlReceiptItems.SheetTabWidth = 140;
+            this.reoGridControlReceiptItems.SheetTabWidth = 163;
             this.reoGridControlReceiptItems.ShowScrollEndSpacing = true;
-            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(2166, 995);
+            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(964, 243);
             this.reoGridControlReceiptItems.TabIndex = 11;
             this.reoGridControlReceiptItems.Text = "reoGridControlRecieptItems";
             // 
@@ -231,10 +231,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1379);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 499);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(2174, 50);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(974, 30);
             this.statusStrip1.TabIndex = 12;
             this.statusStrip1.Text = "statusStrip1";
             this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
@@ -242,13 +242,13 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 45);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 25);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(182, 45);
+            this.labelStatus.Size = new System.Drawing.Size(182, 25);
             this.labelStatus.Text = "查看收货单条目";
             // 
             // tableLayoutPanel1
@@ -263,18 +263,19 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 378F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(2174, 1429);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 529);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // FormReceiptItems
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2174, 1429);
+            this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Font = new System.Drawing.Font("黑体", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

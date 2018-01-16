@@ -273,6 +273,17 @@
           <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="HasPutwayAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="RefuseAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="RefuseUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DisqualifiedUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="WrongComponentUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="ShipmentTicket">
           <Key>
@@ -347,6 +358,10 @@
           <Property Name="ProjectID" Type="int" />
           <Property Name="WarehouseID" Type="int" />
           <Property Name="RejectAreaAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="SupplyID" Type="int" />
+          <Property Name="InventoryDate" Type="datetime" />
+          <Property Name="ManufactureDate" Type="datetime" />
+          <Property Name="ExpiryDate" Type="datetime" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicket">
           <Key>
@@ -401,6 +416,7 @@
           <Property Name="PersonID" Type="int" />
           <Property Name="SubmissionPersonID" Type="int" />
           <Property Name="DeliverSubmissionPersonID" Type="int" />
+          <Property Name="SubmissionDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SubmissionTicketItem">
           <Key>
@@ -937,6 +953,17 @@
           <Property Name="WarehouseID" Type="int" />
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="RefuseAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="RefuseUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="DisqualifiedUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="WrongComponentUnitAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptUnitCount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1183,6 +1210,10 @@
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierID" Type="int" />
+          <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="ManufactureDate" Type="datetime" />
+          <Property Name="InventoryDate" Type="datetime" />
+          <Property Name="SupplyID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1281,6 +1312,7 @@
           <Property Name="SubmissionPersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceivePersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceivePersonID" Type="int" />
+          <Property Name="SubmissionDate" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SupplierStorageInfoView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2193,7 +2225,18 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[HasPutwayAmount] AS [HasPutwayAmount], 
 [ReceiptTicketItemView].[WarehouseID] AS [WarehouseID], 
 [ReceiptTicketItemView].[WarehouseName] AS [WarehouseName], 
-[ReceiptTicketItemView].[RefuseAmount] AS [RefuseAmount]
+[ReceiptTicketItemView].[RefuseAmount] AS [RefuseAmount], 
+[ReceiptTicketItemView].[RefuseUnit] AS [RefuseUnit], 
+[ReceiptTicketItemView].[RefuseUnitAmount] AS [RefuseUnitAmount], 
+[ReceiptTicketItemView].[DisqualifiedUnit] AS [DisqualifiedUnit], 
+[ReceiptTicketItemView].[DisqualifiedUnitAmount] AS [DisqualifiedUnitAmount], 
+[ReceiptTicketItemView].[WrongComponentUnit] AS [WrongComponentUnit], 
+[ReceiptTicketItemView].[WrongComponentUnitAmount] AS [WrongComponentUnitAmount], 
+[ReceiptTicketItemView].[RefuseUnitCount] AS [RefuseUnitCount], 
+[ReceiptTicketItemView].[DisqualifiedUnitCount] AS [DisqualifiedUnitCount], 
+[ReceiptTicketItemView].[WrongComponentUnitCount] AS [WrongComponentUnitCount], 
+[ReceiptTicketItemView].[RealReceiptUnitCount] AS [RealReceiptUnitCount], 
+[ReceiptTicketItemView].[RealReceiptAmount] AS [RealReceiptAmount]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -2416,7 +2459,11 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[ReceiptTicketItemInventoryDate] AS [ReceiptTicketItemInventoryDate], 
 [StockInfoView].[SupplyNumber] AS [SupplyNumber], 
 [StockInfoView].[SupplyNo] AS [SupplyNo], 
-[StockInfoView].[SupplierID] AS [SupplierID]
+[StockInfoView].[SupplierID] AS [SupplierID], 
+[StockInfoView].[ExpiryDate] AS [ExpiryDate], 
+[StockInfoView].[ManufactureDate] AS [ManufactureDate], 
+[StockInfoView].[InventoryDate] AS [InventoryDate], 
+[StockInfoView].[SupplyID] AS [SupplyID]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2507,7 +2554,8 @@ FROM [dbo].[SubmissionTicketItemView] AS [SubmissionTicketItemView]</DefiningQue
 [SubmissionTicketView].[DeliverSubmissionPersonName] AS [DeliverSubmissionPersonName], 
 [SubmissionTicketView].[SubmissionPersonName] AS [SubmissionPersonName], 
 [SubmissionTicketView].[ReceivePersonName] AS [ReceivePersonName], 
-[SubmissionTicketView].[ReceivePersonID] AS [ReceivePersonID]
+[SubmissionTicketView].[ReceivePersonID] AS [ReceivePersonID], 
+[SubmissionTicketView].[SubmissionDate] AS [SubmissionDate]
 FROM [dbo].[SubmissionTicketView] AS [SubmissionTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SupplierStorageInfoView" EntityType="Self.SupplierStorageInfoView" store:Type="Views" store:Schema="dbo">
@@ -3052,6 +3100,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="HasPutwayAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RefuseAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RefuseUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DisqualifiedUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WrongComponentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptAmount" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="ReceiptTicket" Relationship="Self.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicketItem" ToRole="ReceiptTicket" />
           <NavigationProperty Name="SubmissionTicketItem" Relationship="Self.FK__Submissio__Recei__0EF836A4" FromRole="ReceiptTicketItem" ToRole="SubmissionTicketItem" />
         </EntityType>
@@ -3132,6 +3191,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ProjectID" Type="Int32" />
           <Property Name="WarehouseID" Type="Int32" />
           <Property Name="RejectAreaAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="SupplyID" Type="Int32" />
+          <Property Name="InventoryDate" Type="DateTime" Precision="3" />
+          <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Project" Relationship="Self.FK__StockInfo__Proje__00AA174D" FromRole="StockInfo" ToRole="Project" />
           <NavigationProperty Name="Warehouse" Relationship="Self.FK__StockInfo__Wareh__019E3B86" FromRole="StockInfo" ToRole="Warehouse" />
         </EntityType>
@@ -3192,6 +3255,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="PersonID" Type="Int32" />
           <Property Name="SubmissionPersonID" Type="Int32" />
           <Property Name="DeliverSubmissionPersonID" Type="Int32" />
+          <Property Name="SubmissionDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Project" Relationship="Self.FK__Submissio__Proje__7720AD13" FromRole="SubmissionTicket" ToRole="Project" />
           <NavigationProperty Name="SubmissionTicketItem" Relationship="Self.FK__Submissio__Submi__4D94879B" FromRole="SubmissionTicket" ToRole="SubmissionTicketItem" />
           <NavigationProperty Name="Warehouse" Relationship="Self.FK__Submissio__Wareh__762C88DA" FromRole="SubmissionTicket" ToRole="Warehouse" />
@@ -3728,6 +3792,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="WarehouseID" Type="Int32" />
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="RefuseAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RefuseUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="DisqualifiedUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WrongComponentUnitAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RefuseUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="DisqualifiedUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="WrongComponentUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptUnitCount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="RealReceiptAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
@@ -3962,6 +4037,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierID" Type="Int32" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
+          <Property Name="InventoryDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplyID" Type="Int32" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -4056,6 +4135,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SubmissionPersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceivePersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceivePersonID" Type="Int32" />
+          <Property Name="SubmissionDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="SupplierStorageInfoView">
           <Key>
@@ -5030,6 +5110,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
                 <ScalarProperty Name="HasPutwayAmount" ColumnName="HasPutwayAmount" />
                 <ScalarProperty Name="RefuseAmount" ColumnName="RefuseAmount" />
+                <ScalarProperty Name="RefuseUnit" ColumnName="RefuseUnit" />
+                <ScalarProperty Name="RefuseUnitAmount" ColumnName="RefuseUnitAmount" />
+                <ScalarProperty Name="DisqualifiedUnit" ColumnName="DisqualifiedUnit" />
+                <ScalarProperty Name="DisqualifiedUnitAmount" ColumnName="DisqualifiedUnitAmount" />
+                <ScalarProperty Name="WrongComponentUnit" ColumnName="WrongComponentUnit" />
+                <ScalarProperty Name="WrongComponentUnitAmount" ColumnName="WrongComponentUnitAmount" />
+                <ScalarProperty Name="RefuseUnitCount" ColumnName="RefuseUnitCount" />
+                <ScalarProperty Name="DisqualifiedUnitCount" ColumnName="DisqualifiedUnitCount" />
+                <ScalarProperty Name="WrongComponentUnitCount" ColumnName="WrongComponentUnitCount" />
+                <ScalarProperty Name="RealReceiptUnitCount" ColumnName="RealReceiptUnitCount" />
+                <ScalarProperty Name="RealReceiptAmount" ColumnName="RealReceiptAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5107,6 +5198,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="RejectAreaAmount" ColumnName="RejectAreaAmount" />
+                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
+                <ScalarProperty Name="InventoryDate" ColumnName="InventoryDate" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5164,6 +5259,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="SubmissionPersonID" ColumnName="SubmissionPersonID" />
                 <ScalarProperty Name="DeliverSubmissionPersonID" ColumnName="DeliverSubmissionPersonID" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5688,6 +5784,17 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="RefuseAmount" ColumnName="RefuseAmount" />
+                <ScalarProperty Name="RefuseUnit" ColumnName="RefuseUnit" />
+                <ScalarProperty Name="RefuseUnitAmount" ColumnName="RefuseUnitAmount" />
+                <ScalarProperty Name="DisqualifiedUnit" ColumnName="DisqualifiedUnit" />
+                <ScalarProperty Name="DisqualifiedUnitAmount" ColumnName="DisqualifiedUnitAmount" />
+                <ScalarProperty Name="WrongComponentUnit" ColumnName="WrongComponentUnit" />
+                <ScalarProperty Name="WrongComponentUnitAmount" ColumnName="WrongComponentUnitAmount" />
+                <ScalarProperty Name="RefuseUnitCount" ColumnName="RefuseUnitCount" />
+                <ScalarProperty Name="DisqualifiedUnitCount" ColumnName="DisqualifiedUnitCount" />
+                <ScalarProperty Name="WrongComponentUnitCount" ColumnName="WrongComponentUnitCount" />
+                <ScalarProperty Name="RealReceiptUnitCount" ColumnName="RealReceiptUnitCount" />
+                <ScalarProperty Name="RealReceiptAmount" ColumnName="RealReceiptAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5923,6 +6030,10 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="InventoryDate" ColumnName="InventoryDate" />
+                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6018,6 +6129,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SubmissionPersonName" ColumnName="SubmissionPersonName" />
                 <ScalarProperty Name="ReceivePersonName" ColumnName="ReceivePersonName" />
                 <ScalarProperty Name="ReceivePersonID" ColumnName="ReceivePersonID" />
+                <ScalarProperty Name="SubmissionDate" ColumnName="SubmissionDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

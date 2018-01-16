@@ -48,6 +48,8 @@
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.ButtonOutput = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -131,9 +133,11 @@
             this.toolStripSeparator3,
             this.buttonItems,
             this.ButtonDelete,
-            this.toolStripSeparator2,
+            this.toolStripSeparator4,
             this.buttonPass,
-            this.buttonNoPass});
+            this.buttonNoPass,
+            this.toolStripSeparator2,
+            this.ButtonOutput});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -195,6 +199,7 @@
             this.buttonNoPass.Name = "buttonNoPass";
             this.buttonNoPass.Size = new System.Drawing.Size(86, 47);
             this.buttonNoPass.Text = "拒收";
+            this.buttonNoPass.ToolTipText = "拒收";
             this.buttonNoPass.Click += new System.EventHandler(this.buttonNoPass_Click);
             // 
             // toolStripStatusLabel3
@@ -250,6 +255,22 @@
             this.panel1.Size = new System.Drawing.Size(1642, 54);
             this.panel1.TabIndex = 11;
             // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.AutoSize = false;
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(15, 28);
+            // 
+            // ButtonOutput
+            // 
+            this.ButtonOutput.Image = global::WMS.UI.Properties.Resources.check;
+            this.ButtonOutput.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ButtonOutput.Name = "ButtonOutput";
+            this.ButtonOutput.Size = new System.Drawing.Size(144, 47);
+            this.ButtonOutput.Text = "导出/打印";
+            this.ButtonOutput.ToolTipText = "导出/打印";
+            this.ButtonOutput.Click += new System.EventHandler(this.ButtonOutput_Click);
+            // 
             // FormSubmissionManage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -291,5 +312,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton ButtonDelete;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripButton ButtonOutput;
     }
 }

@@ -96,7 +96,15 @@ namespace WMS.UI.FormReceipt
 
                     comboxstate.Enabled = false;
                 }
-
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketView.ID select rt).FirstOrDefault();
+                if (receiptTicket != null)
+                {
+                    if (receiptTicket.ReceiptTicketItem.ToArray().Length != 0)
+                    {
+                        this.Controls.Find("textBoxSupplierName", true)[0].Enabled = false;
+                        this.Controls.Find("textBoxSupplierNumber", true)[0].Enabled = false;
+                    }
+                }
 
                 //this.Controls.Find("comboBoxState", true)[0].Enabled = false;
                 //TextBox textBoxLastUpdateUserID = (TextBox)this.Controls.Find("textBoxLastUpdateUserUserID", true)[0];
@@ -133,6 +141,8 @@ namespace WMS.UI.FormReceipt
                     textBoxWarehouseName.Enabled = false;*/
                 }
                 this.Controls.Find("comboBoxState", true)[0].Text = "待送检";
+                this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierID_Click;
+
                 //this.Controls.Find("textBoxState", true)[0].Enabled = false;
                 //TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
                 //textBoxProjectID.Text = this.projectID.ToString();
@@ -151,7 +161,6 @@ namespace WMS.UI.FormReceipt
             //this.Controls.Find("textBoxProjectID", true)[0].TextChanged += textBoxProjectID_TextChanged;
             //this.Controls.Find("textBoxWarehouse", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
             //this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
-            this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierID_Click;
         }
         
         private void textBoxSupplierID_Click(object sender, EventArgs e)

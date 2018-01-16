@@ -44,7 +44,7 @@ namespace WMS.UI.FormReceipt
 
             if (putawayTicketView == null)
             {
-                MessageBox.Show("找不到该上架单");
+                MessageBox.Show("找不到该上架单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else
@@ -75,7 +75,7 @@ namespace WMS.UI.FormReceipt
                         try
                         {
                             wmsEntities.SaveChanges();
-                            MessageBox.Show("成功");
+                            MessageBox.Show("成功","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Invoke(new Action(() =>
                             {
                                 CallBack();
@@ -91,12 +91,12 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
-                    MessageBox.Show("单据类型读取失败");
+                    MessageBox.Show("单据类型读取失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show(errorInfo);
+                MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
         }

@@ -89,13 +89,13 @@ namespace WMS.UI
             ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == receiptTicketID select rt).FirstOrDefault();
             if (receiptTicketView == null)
             {
-                MessageBox.Show("找不到该收货单!");
+                MessageBox.Show("找不到该收货单!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             this.Controls.Find("textBoxState", true)[0].Text = receiptTicketView.State;
             if (receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.HasPutawayTicket == "全部生成上架单")
             {
-                MessageBox.Show("该收货单已经生成上架单，无法修改收货单条目");
+                MessageBox.Show("该收货单已经生成上架单，无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
                 this.buttonModify.Enabled = false;
@@ -110,12 +110,12 @@ namespace WMS.UI
             ReceiptTicket receiptTicket1 = (from rt in wmsEntities1.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
             if (receiptTicket1 == null)
             {
-                MessageBox.Show("改收货单已被删除，请刷新后重试");
+                MessageBox.Show("改收货单已被删除，请刷新后重试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (receiptTicket1.SupplierID == null)
             {
-                MessageBox.Show("请为该收货单选择供应商");
+                MessageBox.Show("请为该收货单选择供应商", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             FormSearch formSearch = new FormSearch((int)receiptTicket1.SupplierID, receiptTicket1.ProjectID, receiptTicket1.WarehouseID);
@@ -128,11 +128,11 @@ namespace WMS.UI
                 WMS.DataAccess.Supply supply = (from c in wmsEntities.Supply where c.ID == id select c).FirstOrDefault();
                 if (supply == null)
                 {
-                    MessageBox.Show("没有找到该零件");
+                    MessageBox.Show("没有找到该零件", "提示",MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else if (receiptTicket == null)
                 {
-                    MessageBox.Show("没有找到该收货单");
+                    MessageBox.Show("没有找到该收货单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
@@ -311,7 +311,7 @@ namespace WMS.UI
             string errorInfo;
             if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem,ReceiptMetaData.itemsKeyName, out errorInfo) == false)
             {
-                MessageBox.Show(errorInfo);
+                MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -323,7 +323,7 @@ namespace WMS.UI
                         ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                         if (receiptTicket == null)
                         {
-                            MessageBox.Show("该收货单不存在");
+                            MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                         receiptTicketItem.SupplyID = this.componentID;
@@ -366,6 +366,10 @@ namespace WMS.UI
                             {
                                 stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
                             }
+                            stockInfo.ExpiryDate = receiptTicketItem.ExpiryDate;
+                            stockInfo.SupplyID = receiptTicketItem.SupplyID;
+                            stockInfo.InventoryDate = receiptTicketItem.InventoryDate;
+                            stockInfo.ManufactureDate = receiptTicketItem.ManufactureDate;
                         }
                         else if (receiptTicketItem.State == "已收货")
                         {
@@ -384,7 +388,7 @@ namespace WMS.UI
                         wmsEntities.StockInfo.Add(stockInfo);
 
                         wmsEntities.SaveChanges();
-                        MessageBox.Show("添加成功");
+                        MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Search();
                     }
                     catch
@@ -416,7 +420,7 @@ namespace WMS.UI
                 string errorInfo;
                 if(Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == false)
                 {
-                    MessageBox.Show(errorInfo);
+                    MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
