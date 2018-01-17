@@ -93,6 +93,13 @@ namespace WMS.UI
                 return;
             }
             this.Controls.Find("textBoxState", true)[0].Text = receiptTicketView.State;
+            if (receiptTicketView.State != "待收货")
+            {
+                MessageBox.Show("该收货单状态为" + receiptTicketView.State + ",无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.buttonAdd.Enabled = false;
+                this.buttonDelete.Enabled = false;
+                this.buttonModify.Enabled = false;
+            }
             if (receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.HasPutawayTicket == "全部生成上架单")
             {
                 MessageBox.Show("该收货单已经生成上架单，无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);

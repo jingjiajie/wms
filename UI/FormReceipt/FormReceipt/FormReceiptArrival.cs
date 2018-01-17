@@ -866,38 +866,7 @@ namespace WMS.UI
 
         private void toolStripButton3_Click_1(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlUser.Worksheets[0];
-            try
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                if (worksheet.SelectionRange.Rows != 1)
-                {
-                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                int receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
-                if (receiptTicket == null)
-                {
-                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else
-                {
-                    FormReceiptItem formReceiptItem = new FormReceiptItem(receiptTicketID);
-                    formReceiptItem.SetCallBack(new Action(() =>
-                    {
-                        this.Search();
-                    }));
-                    formReceiptItem.Show();
-                }
-            }
-            
-            catch (Exception)
-            {
-                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                return;
-            }
+             
         }
 
         private void ButtonToSubmission_Click(object sender, EventArgs e)
@@ -979,6 +948,195 @@ namespace WMS.UI
                 }
             }
            
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void buttonReceipt_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                int receiptTicketID;
+                try
+                {
+                    receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    if (MessageBox.Show("确认收货？收货后收货单条目将无法更改。", "提问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    {
+                        return;
+                    }
+                    if (receiptTicket.State == "已收货")
+                    {
+                        MessageBox.Show("改收货单已收货，不能重复收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (receiptTicket.State == "送检中")
+                    {
+                        MessageBox.Show("该收货单送送检中，不能收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (receiptTicket.HasPutawayTicket != "未生成上架单")
+                    {
+                        MessageBox.Show("该收货单已经生成上架单，不能收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    ReceiptTicketItem[] receiptTicketItem = receiptTicket.ReceiptTicketItem.ToArray();
+                    if (receiptTicketItem.Length == 0)
+                    {
+                        MessageBox.Show("未给该收货单添加收货单零件，不能收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    int n = 0;
+                    foreach(ReceiptTicketItem rti in receiptTicketItem)
+                    {
+                        if (rti.RefuseAmount == 0)
+                        {
+                            rti.State = "已收货";
+                        }
+                        else
+                        {
+                            rti.State = "部分收货";
+                            n++;
+                        }
+                        StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                        if (stockInfo != null)
+                        {
+                            if (stockInfo.OverflowAreaAmount == null)
+                            {
+                                stockInfo.OverflowAreaAmount = 0;
+                            }
+                            stockInfo.OverflowAreaAmount += stockInfo.ReceiptAreaAmount;
+                            stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
+                        }
+                    }
+                    if (n == 0)
+                    {
+                        receiptTicket.State = "已收货";
+                    }
+                    else
+                    {
+                        receiptTicket.State = "部分收货";
+                    }
+                }
+                new Thread(() => 
+                {
+                    wmsEntities.SaveChanges();
+                    MessageBox.Show("收货成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Invoke(new Action(()=> { this.Search(); }));
+                }).Start();
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void toolStripButton2_Click_1(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                int receiptTicketID;
+                try
+                {
+                    receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    if (MessageBox.Show("确认拒收？拒收后收货单条目将无法更改。", "提问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    {
+                        return;
+                    }
+                    if (receiptTicket.State == "拒收")
+                    {
+                        MessageBox.Show("改收货单已拒收，不能重复收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (receiptTicket.State == "送检中")
+                    {
+                        MessageBox.Show("该收货单送送检中，不能拒收", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (receiptTicket.HasPutawayTicket != "未生成上架单")
+                    {
+                        MessageBox.Show("该收货单已经生成上架单，不能拒收", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    ReceiptTicketItem[] receiptTicketItem = receiptTicket.ReceiptTicketItem.ToArray();
+                    if (receiptTicketItem.Length == 0)
+                    {
+                        MessageBox.Show("未给该收货单添加收货单零件，不能拒收", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    int n = 0;
+                    foreach (ReceiptTicketItem rti in receiptTicketItem)
+                    {
+                        rti.RefuseAmount += rti.ReceiviptAmount;
+                        rti.ReceiviptAmount -= rti.ReceiviptAmount;
+                        rti.RefuseUnitCount = rti.RefuseAmount / rti.RefuseUnitAmount;
+                        StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                        if (stockInfo != null)
+                        {
+                            if (stockInfo.OverflowAreaAmount == null)
+                            {
+                                stockInfo.OverflowAreaAmount = 0;
+                            }
+                            stockInfo.OverflowAreaAmount -= stockInfo.OverflowAreaAmount;
+                            //stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
+                        }
+                    }
+                    receiptTicket.State = "拒收";
+                }
+                new Thread(() =>
+                {
+                    wmsEntities.SaveChanges();
+                    MessageBox.Show("拒收成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Invoke(new Action(() => { this.Search(); }));
+                }).Start();
+            }
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
