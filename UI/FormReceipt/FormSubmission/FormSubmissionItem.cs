@@ -1056,11 +1056,7 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("返回数量不能大于送检数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (submissionTicketItem.ReturnAmount < submissionTicketItem.RejectAmount)
-            {
-                MessageBox.Show("不合格数量不能大于返回数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
 
             ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
             if (submissionTicketItem.RejectAmount == 0)
