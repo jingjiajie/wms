@@ -113,6 +113,7 @@
             this.buttonAllNoPass.TabIndex = 1;
             this.buttonAllNoPass.Text = "所有条目不合格";
             this.buttonAllNoPass.UseVisualStyleBackColor = true;
+            this.buttonAllNoPass.Visible = false;
             this.buttonAllNoPass.Click += new System.EventHandler(this.buttonAllNoPass_Click);
             // 
             // buttonAllPass
@@ -123,6 +124,7 @@
             this.buttonAllPass.TabIndex = 0;
             this.buttonAllPass.Text = "所有条目合格";
             this.buttonAllPass.UseVisualStyleBackColor = true;
+            this.buttonAllPass.Visible = false;
             this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
             // 
             // buttonModify

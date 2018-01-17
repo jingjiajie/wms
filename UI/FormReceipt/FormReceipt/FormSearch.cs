@@ -49,21 +49,20 @@ namespace WMS.UI.FormReceipt
             WMSEntities wmsEntities = new WMSEntities();
             pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlMain, ReceiptMetaData.componentKeyName, projectID, warehouseID);
             this.panel1.Controls.Add(pagerWidget);
-           
+            this.pagerWidget.AddStaticCondition("IsHistory", "0");
+            this.pagerWidget.AddStaticCondition("SupplierID", this.supplierID.ToString());
             pagerWidget.Show();
             //this.textBoxSearchContition.Text = (from s in wmsEntities.Component where s.s select s.).FirstOrDefault();
             //this.Search();
-            this.Search();
+            this.pagerWidget.Search();
         }
 
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
-            this.pagerWidget.AddStaticCondition("IsHistory", "0");
-            this.pagerWidget.AddStaticCondition("SupplierID", this.supplierID.ToString());
+            
             if (this.comboBoxSearchCondition.SelectedIndex != -1)
             {
-                
                 this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchContition.Text);
             }
             this.pagerWidget.Search(savePage, selectID);
