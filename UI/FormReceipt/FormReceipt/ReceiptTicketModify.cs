@@ -22,14 +22,16 @@ namespace WMS.UI.FormReceipt
         private int warehouseID;
         private int userID;
         private int supplierID;
+        private User user;
         private string contract;
         private Func<int> personIDGetter;
+        //WMSEntities wmsEntities = new WMSEntities();
 
         public FormReceiptTicketModify()
         {
             InitializeComponent();
         }
-        public FormReceiptTicketModify(FormMode formMode, int ID, int projectID, int warehouseID ,int userID,string contract)
+        public FormReceiptTicketModify(FormMode formMode, int ID, int projectID, int warehouseID, int userID, string contract)
         {
             InitializeComponent();
             this.formMode = formMode;
@@ -38,6 +40,7 @@ namespace WMS.UI.FormReceipt
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.contract = contract;
+            this.user = (from u in wmsEntities.User where u.ID == userID select u).FirstOrDefault();
         }
 
         private void ReceiptTicketModify_Load(object sender, EventArgs e)
@@ -86,17 +89,23 @@ namespace WMS.UI.FormReceipt
                 }
                 if (receiptTicketView.HasPutawayTicket == "全部生成上架单" || receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.State == "送检中")
                 {
-                    this.Controls.Find("comboBoxState", true)[0].Enabled = false;
+                    this.Controls.Find("textBoxState", true)[0].Enabled = false;
                 }
-                
-
-                if (this.contract == "已过审")
+                if (user != null)
                 {
-                    ComboBox comboxstate = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
+                    if (user.SupplierID != null)
+                    {
 
 
-                    comboxstate.Enabled = false;
+                        //ComboBox comboxstate = (ComboBox)this.Controls.Find("comboBoxState", true)[0];
+                        this.Controls.Find("textBoxState", true)[0].Enabled = false;
+
+                        //comboxstate.Enabled = false;
+
+                    }
                 }
+
+
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketView.ID select rt).FirstOrDefault();
                 if (receiptTicket != null)
                 {
@@ -114,7 +123,7 @@ namespace WMS.UI.FormReceipt
             else
             {
                 this.buttonOK.Text = "添加收货单";
-                
+
                 Warehouse warehouse = (from wh in wmsEntities.Warehouse where wh.ID == this.warehouseID select wh).FirstOrDefault();
                 if (warehouse == null)
                 {
@@ -141,8 +150,21 @@ namespace WMS.UI.FormReceipt
                     textBoxWarehouseName.Text = warehouse.Name;
                     textBoxWarehouseName.Enabled = false;*/
                 }
-                this.Controls.Find("comboBoxState", true)[0].Text = "待收货";
-                this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierID_Click;
+                this.Controls.Find("textBoxState", true)[0].Text = "待收货";
+                if (this.user != null)
+                {
+                    if (this.user.Supplier == null)
+                    {
+                        this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierID_Click;
+                    }
+                    else
+                    {
+                        this.Controls.Find("textBoxSupplierName", true)[0].Text = this.user.Supplier.Name;
+                        this.Controls.Find("textBoxSupplierName", true)[0].Enabled = false;
+                        this.supplierID = (int)this.user.SupplierID;
+                    }
+                }
+
 
                 //this.Controls.Find("textBoxState", true)[0].Enabled = false;
                 //TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
@@ -163,11 +185,11 @@ namespace WMS.UI.FormReceipt
             //this.Controls.Find("textBoxWarehouse", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
             //this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
         }
-        
+
         private void textBoxSupplierID_Click(object sender, EventArgs e)
         {
-            FormSelectSupplier formSelectSupplier = new FormSelectSupplier();          
-            formSelectSupplier.SetSelectFinishedCallback(new Action<int>((int ID)=> 
+            FormSelectSupplier formSelectSupplier = new FormSelectSupplier();
+            formSelectSupplier.SetSelectFinishedCallback(new Action<int>((int ID) =>
             {
                 //this.Controls.Find("textBoxSupplierNo", true)[0].Text = ID.ToString();
                 Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();
@@ -180,7 +202,7 @@ namespace WMS.UI.FormReceipt
                 {
                     if (supplier.EndingTime < DateTime.Now)
                     {
-                       if (MessageBox.Show("改供货商合同截止日期已过，是否继续？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show("改供货商合同截止日期已过，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             this.supplierID = ID;
                         }
@@ -241,7 +263,7 @@ namespace WMS.UI.FormReceipt
             {
 
             }
-            
+
         }
 
         private void textBoxProjectID_TextChanged(object sender, EventArgs e)
@@ -320,7 +342,7 @@ namespace WMS.UI.FormReceipt
                 else
                 {
                     oldState = receiptTicket.State;
-                    if (Utilities.CopyComboBoxsToProperties(this, receiptTicket,ReceiptMetaData.receiptNameKeys) == false)
+                    if (Utilities.CopyComboBoxsToProperties(this, receiptTicket, ReceiptMetaData.receiptNameKeys) == false)
                     {
                         MessageBox.Show("状态获取失败。");
                         return;
@@ -416,7 +438,7 @@ namespace WMS.UI.FormReceipt
                             }
                         }
                     }
-                    
+
                     wmsEntities.SaveChanges();
                     //MessageBox.Show("Successful!");
                 }
@@ -438,7 +460,7 @@ namespace WMS.UI.FormReceipt
                         MessageBox.Show("状态获取失败。");
                         return;
                     }
-                    
+
                     receiptTicket.LastUpdateUserID = this.userID;
                     receiptTicket.WarehouseID = this.warehouseID;
                     receiptTicket.ProjectID = this.projectID;
@@ -505,7 +527,7 @@ namespace WMS.UI.FormReceipt
                     //MessageBox.Show("Successful!");
                 }
             }
-            
+
             modifyFinishedCallback();
             this.Close();
         }

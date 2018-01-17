@@ -32,6 +32,7 @@ namespace WMS.UI
         private int supplierid;
         private string contractstate = "";
         PagerWidget<ReceiptTicketView> pagerWidget;
+        private Supplier supplier;
 
         private Action<string, string> ToSubmission = null;
         private Action<string, string> ToPutaway = null;
@@ -92,14 +93,14 @@ namespace WMS.UI
 
         private void FormReceiptArrival_Load(object sender, EventArgs e)
         {
-            InitComponents();
-            pagerWidget = new PagerWidget<ReceiptTicketView>(this.reoGridControlUser, ReceiptMetaData.receiptNameKeys, projectID, warehouseID);
-            this.panel1.Controls.Add(pagerWidget);
-            
-            if(this.supplierid !=-1)
+            WMSEntities wmsEntities = new WMSEntities();
+            Supplier supplier = (from u in wmsEntities.Supplier
+                                 where u.ID == this.supplierid
+                                 select u).FirstOrDefault();
+            if (supplier != null)
             {
-
-
+                this.contractstate = supplier.ContractState;
+                this.supplier = supplier;
                 this.buttonAdd.Enabled = false;
                 this.buttonAlter.Enabled = false;
                 this.buttonDelete.Enabled = false;
@@ -110,26 +111,37 @@ namespace WMS.UI
                 this.ButtonToPutaway.Enabled = false;
                 this.ButtonToSubmission.Enabled = false;
                 this.buttonItemSubmission.Enabled = false;
-                WMSEntities wmsEntities = new WMSEntities();
-                Supplier supplier = (from u in wmsEntities.Supplier
-                                     where u.ID == this.supplierid
-                                     select u).FirstOrDefault();
+                this.buttonReceipt.Enabled = false;
+                this.toolStripButton2.Enabled = false;
+                if (supplier.StartingTime != null && supplier.EndingTime != null)
+                {
+                    if (supplier.ContractState == "已过审" && supplier.StartingTime < DateTime.Now && supplier.EndingTime > DateTime.Now)
 
-                this.contractstate = supplier.ContractState;
+                    {
+                        this.buttonAdd.Enabled = true;
+                        this.buttonAlter.Enabled = true;
+                        this.buttonDelete.Enabled = true;
+                        this.buttonSelect.Enabled = true;
+                        this.buttonItems.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("您没有权限查看此模块！原因：您的合同未过审或未在有效期内", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("您没有权限查看此模块！原因：没有设置合同起始日期或合同到期日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
-            if(this.contractstate =="已过审")
-
-            {
-                this.buttonAdd.Enabled = true;
-                this.buttonAlter.Enabled = true;
-                this.buttonDelete.Enabled = true;
-                this.buttonSelect.Enabled = true;
-                this.buttonItems.Enabled = true;
-            }
-
+            InitComponents();
+            pagerWidget = new PagerWidget<ReceiptTicketView>(this.reoGridControlUser, ReceiptMetaData.receiptNameKeys, projectID, warehouseID);
+            this.panel1.Controls.Add(pagerWidget);
             pagerWidget.Show();
-            this.Search();
+            this.Search();    
             //pagerWidget.Show();
             //pagerWidget.Search();
         }

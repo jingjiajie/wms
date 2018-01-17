@@ -21,7 +21,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true, Save=false, EditPlaceHolder = "点击添加供应商"},
             new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = false, Save=false},
             new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true, GetAllValueToComboBox="ReceiptTicket.Type"},
-            new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("待收货","待收货"), new ComboBoxItem("已收货","已收货"), new ComboBoxItem("拒收", "拒收") } },
+            new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false},
             new KeyName(){Name = "是否已经生成上架单", Key = "HasPutawayTicket", Visible = true, Editable = false, Save = true, EditPlaceHolder = "自动生成"},
             new KeyName(){Name = "送货单号（SRM)", Key = "DeliverTicketNoSRM", Visible = true, Editable = true},
             new KeyName(){Name = "凭证来源", Key = "VoucherSource", Visible = true, Editable = true},
@@ -93,7 +93,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件" },
             new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true},
             new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true},
-            new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=false,Save=true, NotNegative = true, NotNull = true},
+            new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=false,Save=true, NotNegative = true},
 
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="期待数量", Key="ExpectedAmount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
