@@ -140,7 +140,7 @@ namespace WMS.UI.FormReceipt
                     {
                         putawayTicketView = wmsEntities.Database.SqlQuery<PutawayTicketView>(String.Format("SELECT * FROM PutawayTicketView WHERE {0} = @key AND WarehouseID = @warehouseID AND ProjectID = @projectID ORDER BY ID DESC", key), new SqlParameter[] { new SqlParameter("@key", value), new SqlParameter("@warehouseID", this.warehouseID), new SqlParameter("@projectID", this.projectID) }).ToArray();
                     }
-                    catch(EntityException)
+                    catch (EntityException)
                     {
                         MessageBox.Show("查询的值不合法，请输入正确的值！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
@@ -217,7 +217,7 @@ namespace WMS.UI.FormReceipt
                 PutawayTicket putawayTicket = (from rt in wmsEntities.PutawayTicket where rt.ID == putawayTicketID select rt).FirstOrDefault();
                 if (putawayTicket == null)
                 {
-                    MessageBox.Show("该收货单不存在");
+                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
@@ -338,7 +338,7 @@ namespace WMS.UI.FormReceipt
                 }));
                 formPutawayModify.Show();
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -350,94 +350,184 @@ namespace WMS.UI.FormReceipt
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            try
+            List<int> deleteIDs = new List<int>();
+            for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
             {
-                if (worksheet.SelectionRange.Rows != 1)
-                {
-                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                int putawayTicketID;
                 try
                 {
-                    putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                    int curID = int.Parse(worksheet[i + worksheet.SelectionRange.Row, 0].ToString());
+                    deleteIDs.Add(curID);
                 }
                 catch
                 {
-                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }                
-                //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
-                
-                if (MessageBox.Show("确定删除该上架单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    continue;
+                }
+            }
+            if (deleteIDs.Count == 0)
+            {
+                MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+
+            WMSEntities wmsEntities = new WMSEntities();
+            foreach (int id in deleteIDs)
+            {
+                //if (MessageBox.Show("确定删除该上架单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                //{
+                PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == id select pt).FirstOrDefault();
+                if (putawayTicket == null)
                 {
-                    PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).FirstOrDefault();
-                    if (putawayTicket == null)
+                    MessageBox.Show("该上架单已被删除，请刷新查看!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    return;
+                }
+                //if (putawayTicket.State != "待上架")
+                //{
+                //    MessageBox.Show("该上架单已有部分或者全部上架，无法删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                //    continue;
+                //}
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == putawayTicket.ReceiptTicketID select rt).FirstOrDefault();
+                PutawayTicketItem[] putawayTicketItems = putawayTicket.PutawayTicketItem.ToArray();
+                int n = 0;
+                foreach (PutawayTicketItem pti in putawayTicketItems)
+                {
+                    ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
+                    if (receiptTicketItem != null)
                     {
-                        MessageBox.Show("该上架单已被删除，请刷新查看!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                        return;
-                    }
-                    if (putawayTicket.State != "待上架")
-                    {
-                        MessageBox.Show("该上架单已有部分或者全部上架，无法删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                        return;
-                    }
-                    ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == putawayTicket.ReceiptTicketID select rt).FirstOrDefault();
-                    PutawayTicketItem[] putawayTicketItems = putawayTicket.PutawayTicketItem.ToArray();
-                    int n = 0;
-                    foreach(PutawayTicketItem pti in putawayTicketItems)
-                    {
-                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
-                        if (receiptTicketItem != null)
+                        receiptTicketItem.HasPutwayAmount -= pti.ScheduledMoveCount - pti.MoveCount;
+                        if (receiptTicketItem.HasPutwayAmount == 0)
                         {
-                            receiptTicketItem.HasPutwayAmount -= pti.ScheduledMoveCount;
-                            if (receiptTicketItem.HasPutwayAmount == 0)
-                            {
-                                n++;
-                            }
+                            n++;
                         }
                     }
-                    if (n == putawayTicketItems.Length)
-                    {
-                        receiptTicket.HasPutawayTicket = "未生成上架单";
-                    }
-                    else
-                    {
-                        receiptTicket.HasPutawayTicket = "部分生成上架单";
-                    }
-                    try
-                    {
-                        new Thread(() => 
-                        {
-                            wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", putawayTicketID));
-                            wmsEntities.SaveChanges();
-                            MessageBox.Show("成功");
-                            this.Invoke(new Action(() =>
-                            {
-                                if (this.key != null || this.value != null)
-                                {
-                                    pagerWidget.AddCondition(this.key, this.value);
-                                }
-                                pagerWidget.Search();
-                            }));
-                        }).Start();
-                    }
-                    catch(EntityException)
-                    {
-                        MessageBox.Show("该上架单已被删除!");
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                        return;
-                    }
                 }
+                if (n == putawayTicketItems.Length)
+                {
+                    receiptTicket.HasPutawayTicket = "未生成上架单";
+                }
+                else
+                {
+                    receiptTicket.HasPutawayTicket = "部分生成上架单";
+                }
+                try
+                {
+                    new Thread(() =>
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", id));
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Invoke(new Action(() =>
+                        {
+                            if (this.key != null || this.value != null)
+                            {
+                                pagerWidget.AddCondition(this.key, this.value);
+                            }
+                            pagerWidget.Search();
+                        }));
+                    }).Start();
+                }
+                catch
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
+                //}
+            }
+
+
+            //var worksheet = this.reoGridControlUser.Worksheets[0];
+            //try
+            //{
+            /*
+            if (worksheet.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int putawayTicketID;
+            try
+            {
+                putawayTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
             }
             catch
             {
-                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }  */
+            //FormShelvesItem formShelvesItem = new FormShelvesItem(putawayTicketID);
+            /*
+            if (MessageBox.Show("确定删除该上架单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).FirstOrDefault();
+                if (putawayTicket == null)
+                {
+                    MessageBox.Show("该上架单已被删除，请刷新查看!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    return;
+                }
+                if (putawayTicket.State != "待上架")
+                {
+                    MessageBox.Show("该上架单已有部分或者全部上架，无法删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    return;
+                }
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == putawayTicket.ReceiptTicketID select rt).FirstOrDefault();
+                PutawayTicketItem[] putawayTicketItems = putawayTicket.PutawayTicketItem.ToArray();
+                int n = 0;
+                foreach (PutawayTicketItem pti in putawayTicketItems)
+                {
+                    ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
+                    if (receiptTicketItem != null)
+                    {
+                        receiptTicketItem.HasPutwayAmount -= pti.ScheduledMoveCount;
+                        if (receiptTicketItem.HasPutwayAmount == 0)
+                        {
+                            n++;
+                        }
+                    }
+                }
+                if (n == putawayTicketItems.Length)
+                {
+                    receiptTicket.HasPutawayTicket = "未生成上架单";
+                }
+                else
+                {
+                    receiptTicket.HasPutawayTicket = "部分生成上架单";
+                }
+                try
+                {
+                    new Thread(() =>
+                    {
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", putawayTicketID));
+                        wmsEntities.SaveChanges();
+                        MessageBox.Show("成功");
+                        this.Invoke(new Action(() =>
+                        {
+                            if (this.key != null || this.value != null)
+                            {
+                                pagerWidget.AddCondition(this.key, this.value);
+                            }
+                            pagerWidget.Search();
+                        }));
+                    }).Start();
+                }
+                catch (EntityException)
+                {
+                    MessageBox.Show("该上架单已被删除!");
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                    return;
+                }
             }
+        }
+        catch
+        {
+            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            return;
+        }*/
         }
 
         private void toolStripButtonPrint_Click(object sender, EventArgs e)

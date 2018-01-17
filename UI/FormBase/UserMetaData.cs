@@ -31,9 +31,9 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false,ImportVisible=false},
             new KeyName(){Key="Username",Name="用户名",NotNull=true},
             new KeyName(){Key="Password",Name="密码",Visible=false,NotNull=true},
-            //new KeyName(){Key="Authority",Name="权限",Editable=true},
+            //new KeyName(){Key="Authority",Name="权限",Editable=true,NotNull=true,ImportVisible=false,Import=false},
             new KeyName(){Key="AuthorityName",Name="角色"},
-            new KeyName(){Key="SupplierName",Name="供应商名",Editable=false, Save=false,ImportVisible=false},
+            new KeyName(){Key="SupplierName",Name="供应商名",Editable=false, Save=false,ImportVisible=true,Import=false},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

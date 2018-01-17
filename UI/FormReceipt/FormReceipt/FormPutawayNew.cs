@@ -301,7 +301,7 @@ namespace WMS.UI.FormReceipt
                 string errorInfo;
                 if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo) == false)
                 {
-                    MessageBox.Show(errorInfo);
+                    MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else

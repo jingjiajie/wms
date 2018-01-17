@@ -27,7 +27,7 @@ namespace WMS.UI
             //new KeyName(){Key="OriginalTicketType",Name="原始单据类型",Editable=true},
             new KeyName(){Key="ReceiverNo",Name="收货方编码",Editable=true},
             //new KeyName(){Key="SortTypeNo",Name="排序类型编码",Editable=true},
-            new KeyName(){Key="DeliverTime",Name="发运时间"},
+            new KeyName(){Key="DeliverTime",Name="发运时间",DefaultValueFunc=(()=>DateTime.Now.ToString())},
             new KeyName(){Key="ExpectedArriveTime",Name="预计到达时间"},
             new KeyName(){Key="ReturnTicketNo",Name="回单号",EditPlaceHolder="回单时填写"},
             new KeyName(){Key="ReturnTicketTime",Name="回单时间",EditPlaceHolder="回单时生成"},

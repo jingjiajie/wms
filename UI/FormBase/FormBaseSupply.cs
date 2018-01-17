@@ -52,6 +52,8 @@ namespace WMS.UI
             this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlSupply, SupplyViewMetaData.supplykeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
+
+
         }
 
         private void FormBaseSupply_Load(object sender, EventArgs e)
@@ -294,6 +296,7 @@ namespace WMS.UI
 
                     var receiptTicketItemcall = (from kn in wmsEntities.ReceiptTicketItem
                                       where kn.SupplyID == id
+                                      
                                       select kn.ID).ToArray();
                     if (receiptTicketItemcall.Length > 0)
                     {
@@ -326,6 +329,8 @@ namespace WMS.UI
 
                             var componen_historyid = (from kn in wmsEntities.Supply
                                                       where kn.NewestSupplyID == id
+                                                      &&kn.ProjectID ==this.projectID 
+                                                      &&kn.WarehouseID ==this.warehouseID 
                                                       select kn.ID).ToArray();
                             if (componen_historyid.Length > 0)
                             {

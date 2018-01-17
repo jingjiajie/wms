@@ -50,6 +50,33 @@ namespace WMS.UI.FormReceipt
             this.value = value;
         }
 
+        private void SetTableLayOut()
+        {
+            this.buttonAll.Visible = true;
+
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 300F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+
+            this.tableLayoutPanelProperties.ColumnCount = 6;
+            this.tableLayoutPanelProperties.RowCount = 4;
+            for (int i = 0; i < 3; i++)
+            {
+                this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11F));
+                this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22F));
+                
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            }
+        }
+
        
 
         public void SetCallBack(Action action)
@@ -60,18 +87,25 @@ namespace WMS.UI.FormReceipt
         private void FormShelvesItem_Load(object sender, EventArgs e)
         {
             InitComponents();
+            if (this.key != null && this.value != null)
+            {
+                this.SetTableLayOut();
+            }
             InitPanel();
+            
             WMSEntities wmsEntities = new WMSEntities();
             pagerWidget = new PagerWidget<PutawayTicketItemView>(this.reoGridControlPutaway, ReceiptMetaData.putawayTicketItemKeyName, projectID, warehouseID);
             this.panel4.Controls.Add(pagerWidget);
             pagerWidget.ClearCondition();
-            Search();
+            Search(false, 0);
+            
             this.pagerWidget.Show();
-            this.RefreshTextBoxes();
+            
+            //this.RefreshTextBoxes();
         }
 
-        
-        
+
+
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
@@ -86,7 +120,8 @@ namespace WMS.UI.FormReceipt
             //{
             //    pagerWidget.AddCondition("上架单ID", this.putawayTicketID.ToString());
             //}
-            this.pagerWidget.Search(savePage, selectID);
+            
+            this.pagerWidget.Search(savePage, selectID, (putawayTicket)=> { this.RefreshTextBoxes(); } );
             //this.pagerWidget.Show();
         }
 
@@ -279,14 +314,14 @@ namespace WMS.UI.FormReceipt
                 }
                 if (putawayTicketItem == null)
                 {
-                    MessageBox.Show("错误 无法修改此条目");
+                    MessageBox.Show("错误 无法修改此条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
                     string errorInfo;
                     if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicketItem, ReceiptMetaData.putawayTicketItemKeyName, out errorInfo) == false)
                     {
-                        MessageBox.Show(errorInfo);
+                        MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     else
@@ -320,7 +355,7 @@ namespace WMS.UI.FormReceipt
                             {
                                 this.pagerWidget.Search();
                             }));
-                            MessageBox.Show("成功");
+                            MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
                         }).Start();
@@ -358,13 +393,13 @@ namespace WMS.UI.FormReceipt
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
                 if (putawayTicketItem == null)
                 {
-                    MessageBox.Show("错误 无法修改此条目");
+                    MessageBox.Show("错误 无法修改此条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
                     if (putawayTicketItem.State != "待上架")
                     {
-                        MessageBox.Show("改上架单状态为" + putawayTicketItem.State + "，无法删除！");
+                        MessageBox.Show("改上架单状态为" + putawayTicketItem.State + "，无法删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
@@ -417,7 +452,7 @@ namespace WMS.UI.FormReceipt
                         {
                             this.pagerWidget.Search();
                         }));
-                        MessageBox.Show("成功");
+                        MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }).Start();
                 }
             }
@@ -564,7 +599,7 @@ namespace WMS.UI.FormReceipt
                         {
                             wmsEntities.SaveChanges();
                             this.modifyMode(putawayTicketItem.PutawayTicketID);
-                            MessageBox.Show("上架成功");
+                            MessageBox.Show("上架成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             this.Invoke(new Action(() =>
                             {
                                 this.pagerWidget.Search();
@@ -637,6 +672,48 @@ namespace WMS.UI.FormReceipt
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            if (this.putawayTicketID == -1)
+            {
+                return;
+            }
+            if (MessageBox.Show("是否将此上架单中所有上架单条目上架？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+            PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == this.putawayTicketID select pt).FirstOrDefault();
+            if (putawayTicket == null)
+            {
+                MessageBox.Show("该上架单已被删除，请刷新后查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            PutawayTicketItem[] putawayTicketItems = putawayTicket.PutawayTicketItem.ToArray();
+            foreach(PutawayTicketItem pti in putawayTicketItems)
+            {
+                decimal oldPutawayAmount = pti.MoveCount == null ? 0 : (decimal)pti.MoveCount;
+                pti.MoveCount = pti.ScheduledMoveCount;
+                pti.PutawayAmount = pti.UnitAmount * pti.MoveCount;
+                pti.OperateTime = DateTime.Now.ToString();
+                pti.State = "已上架";
+                //ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
+                
+                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == pti.PutawayTicketID select si).FirstOrDefault();
+                
+                if (stockInfo != null)
+                {
+                    stockInfo.OverflowAreaAmount -= pti.PutawayAmount - oldPutawayAmount;
+                    stockInfo.ShipmentAreaAmount += pti.PutawayAmount - oldPutawayAmount;
+                }
+            }
+            new Thread(() =>
+            {
+                wmsEntities.SaveChanges();
+                MessageBox.Show("上架成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Invoke(new Action(() => 
+                {
+                    Search();
+                }));
+            }).Start();
+            /*
             var worksheet = this.reoGridControlPutaway.Worksheets[0];
             try
             {
@@ -718,29 +795,28 @@ namespace WMS.UI.FormReceipt
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
-            }
+            }*/
         }
 
         private void buttonDelete_MouseEnter(object sender, EventArgs e)
         {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+            //buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
         }
 
         private void buttonDelete_MouseLeave(object sender, EventArgs e)
         {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+            //buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
 
         private void buttonDelete_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+            //buttonDelete.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
         private void buttonModify_MouseEnter(object sender, EventArgs e)
         {
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
         }
-
         private void buttonModify_MouseLeave(object sender, EventArgs e)
         {
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
@@ -769,17 +845,17 @@ namespace WMS.UI.FormReceipt
 
         private void buttonCancel_MouseEnter(object sender, EventArgs e)
         {
-            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_s;
+            buttonAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_s;
         }
 
         private void buttonCancel_MouseLeave(object sender, EventArgs e)
         {
-            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_q;
+            buttonAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB4_q;
         }
 
         private void buttonCancel_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonCancel.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
+            buttonAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_s;
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -788,6 +864,11 @@ namespace WMS.UI.FormReceipt
         }
 
         private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanelProperties_Paint(object sender, PaintEventArgs e)
         {
 
         }

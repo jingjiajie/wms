@@ -19,12 +19,12 @@ namespace WMS.UI
                 new ComboBoxItem("翻包"),
                 new ComboBoxItem("其他")
             } },
-            new KeyName(){Key="JobGroupName",Name="作业组名称"},
             new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_UNFINISHED),
                 new ComboBoxItem(STRING_STATE_ALL_FINISHED),
             } },
-            new KeyName(){Key="PrintedTimes",Name="打印次数",DefaultValueFunc=(()=>"0")},
+            new KeyName(){Key="JobGroupName",Name="作业组名称"},
+            //new KeyName(){Key="PrintedTimes",Name="打印次数",DefaultValueFunc=(()=>"0")},
             new KeyName(){Key="AssignmentArea",Name="作业指派区"},
             new KeyName(){Key="PersonName",Name="责任人",Save=false,EditPlaceHolder="点击选择人员"},
             new KeyName(){Key="CreateUserUsername",Name="创建用户",Editable=false,Save=false},

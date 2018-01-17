@@ -58,6 +58,10 @@ namespace WMS.UI
             textboxLastUpdateUserUsername.ReadOnly = true;
             textboxCreateUserUsername.ReadOnly = true;
             textBoxComponentName.ReadOnly = true;
+            TextBox textBoxSupplierName = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
+            
+            textBoxSupplierName.BackColor = Color.White;
+            textBoxComponentName.BackColor = Color.White;
 
             this.SupplierIDGetter = Utilities.BindTextBoxSelect<FormSelectSupplier, Supplier>(this, "textBoxSupplierName", "Name");
             this.ComponenIDGetter = Utilities.BindTextBoxSelect<FormSelectComponen, DataAccess.Component>(this, "textBoxComponentName", "Name");
@@ -250,6 +254,7 @@ namespace WMS.UI
                                          where u.SupplierID == supplierID
                                          && u.ComponentID== this.componenID
                                             && u.ID != supply.ID && u.IsHistory == 0
+                                            &&u.ProjectID ==this.projectID &&u.WarehouseID ==this.warehouseID  
                                          select u).ToArray();
                     if (sameNameUsers.Length > 0)
                     {

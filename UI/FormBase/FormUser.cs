@@ -251,6 +251,58 @@ namespace WMS.UI.FormBase
                     UserMetaData.KeyNames, //参数1：KeyName
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
+                        WMSEntities wmsEntities = new WMSEntities();
+                        for (int i = 0; i < results.Length; i++)
+                        {
+                            User result = results[i];
+                            int sameNameUserCount = (from u in wmsEntities.User where u.Username == result.Username select u).Count();
+                            if(sameNameUserCount > 0)
+                            {
+                                MessageBox.Show(string.Format("行{0}：已存在同名用户：{1}", i + 1, results[i].Username), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return false;
+                            }
+                            string authorityName = results[i].AuthorityName;
+                            string supplierName = unimportedColumns["SupplierName"][i];
+                            if(string.IsNullOrWhiteSpace(supplierName) == false && authorityName != "供应商")
+                            {
+                                MessageBox.Show(string.Format("行{0}：填写了供应商名称的用户，角色必须为“供应商”！",i+1), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return false;
+                            }
+
+                            if (authorityName == "供应商")
+                            {
+                                if (string.IsNullOrWhiteSpace(supplierName))
+                                {
+                                    MessageBox.Show(string.Format("行{0}：角色为供应商的用户，必须填写供应商名称！", i + 1), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return false;
+                                }
+                                Supplier supplier = (from s in wmsEntities.Supplier where s.Name == supplierName select s).FirstOrDefault();
+                                if (supplier == null)
+                                {
+                                    MessageBox.Show(string.Format("行{0}：找不到名称为{1}的供应商！", i + 1, supplierName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return false;
+                                }
+                                results[i].SupplierID = supplier.ID;
+                                results[i].Authority = UserMetaData.AUTHORITY_SUPPLIER;
+                                break;
+                            }
+                            if (authorityName.Contains("管理员"))
+                            {
+                                results[i].Authority |= UserMetaData.AUTHORITY_MANAGER;
+                            }
+                            if (authorityName.Contains("收货员"))
+                            {
+                                results[i].Authority |= UserMetaData.AUTHORITY_RECEIPT_MANAGER;
+                            }
+                            if (authorityName.Contains("发货员"))
+                            {
+                                results[i].Authority |= UserMetaData.AUTHORITY_SHIPMENT_MANAGER;
+                            }
+                            if (authorityName.Contains("库存管理员"))
+                            {
+                                results[i].Authority |= UserMetaData.AUTHORITY_STOCK_MANAGER;
+                            }
+                        }
                         return true;
                     },
                     () => //参数3：导入完成回调函数

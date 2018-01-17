@@ -106,7 +106,7 @@ namespace WMS.UI.FormReceipt
             //new KeyName(){Name="短缺数量", Key="ShortageAmount",Visible=true,Editable=true,Save=true, NotNegative = true},
             new KeyName(){Name="拒收数量", Key="RefuseAmount", Visible=true,Editable=true,Save=true,NotNegative=true},
             new KeyName(){Name="不合格数量", Key="DisqualifiedAmount",Visible=true,Editable=true,Save=true, NotNegative = true},
-
+            
             new KeyName(){Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},
             new KeyName(){Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
             new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
