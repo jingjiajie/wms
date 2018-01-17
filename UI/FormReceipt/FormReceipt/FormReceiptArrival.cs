@@ -504,7 +504,7 @@ namespace WMS.UI
                     SubmissionTicketItem[] submissionTicketItems = (from sbi in wmsEntities.SubmissionTicketItem where sbi.SubmissionTicketID == submissionTicket.ID select sbi).ToArray();
                     if (receiptTicket.State == "送检中" || receiptTicket.State == "部分送检中")
                     {
-                        receiptTicket.State = "待送检";
+                        receiptTicket.State = "待收货";
                         //submissionTicket.State = STRING_CANCEL;
                         wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ReceiptTicketID=@receiptTicketID", new SqlParameter("receiptTicketID", receiptTicketID));
                         wmsEntities.SaveChanges();
@@ -665,7 +665,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    if (receiptTicket.State != "待送检")
+                    if (receiptTicket.State != "待收货")
                     {
                         MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;

@@ -423,7 +423,7 @@ namespace WMS.UI.FormReceipt
                             {
                                 int count3 = wmsEntities.Database.SqlQuery<int>(
                                 "SELECT COUNT(*) FROM ReceiptTicketItem " +
-                                "WHERE ReceiptTicketID = @receiptTicketID AND State = '待送检'",
+                                "WHERE ReceiptTicketID = @receiptTicketID AND State = '待收货'",
                                 new SqlParameter("receiptTicketID", receiptTicketItem.ReceiptTicketID)).FirstOrDefault();
                                 if (count3 != 0)
                                 {

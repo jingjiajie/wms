@@ -141,7 +141,7 @@ namespace WMS.UI.FormReceipt
                     textBoxWarehouseName.Text = warehouse.Name;
                     textBoxWarehouseName.Enabled = false;*/
                 }
-                this.Controls.Find("comboBoxState", true)[0].Text = "待送检";
+                this.Controls.Find("comboBoxState", true)[0].Text = "待收货";
                 this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierID_Click;
 
                 //this.Controls.Find("textBoxState", true)[0].Enabled = false;
@@ -332,7 +332,7 @@ namespace WMS.UI.FormReceipt
                     receiptTicket.SupplierID = this.supplierID;
                     receiptTicket.PersonID = this.personIDGetter();
                     wmsEntities.SaveChanges();
-                    if (oldState == "待送检")
+                    if (oldState == "待收货")
                     {
                         if (receiptTicket.State == "已收货")
                         {
@@ -364,7 +364,7 @@ namespace WMS.UI.FormReceipt
                     }
                     else if (oldState == "已收货")
                     {
-                        if (receiptTicket.State == "待送检" || receiptTicket.State == "拒收")
+                        if (receiptTicket.State == "待收货" || receiptTicket.State == "拒收")
                         {
                             if (MessageBox.Show("是否同时将所有条目置为" + receiptTicket.State + "？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
@@ -388,9 +388,9 @@ namespace WMS.UI.FormReceipt
                     }
                     else
                     {
-                        if (receiptTicket.State == "待送检")
+                        if (receiptTicket.State == "待收货")
                         {
-                            if (MessageBox.Show("是否同时将所有零件置为待送检？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            if (MessageBox.Show("是否同时将所有零件置为待收货？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
                                 foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
                                 {

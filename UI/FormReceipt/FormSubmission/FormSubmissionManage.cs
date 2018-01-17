@@ -659,14 +659,14 @@ namespace WMS.UI
                                 {
                                     if (receiptTicketItem.ReceiptTicket.State == "送检中" || receiptTicketItem.ReceiptTicket.State == "过检" || receiptTicketItem.ReceiptTicket.State == "未过检")
                                     {
-                                        receiptTicketItem.State = "待送检";
+                                        receiptTicketItem.State = "待收货";
                                         StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
                                         if (stockInfo != null)
                                         {
                                             stockInfo.ReceiptAreaAmount += stockInfo.SubmissionAmount;
                                             stockInfo.SubmissionAmount -= stockInfo.SubmissionAmount;
                                         }
-                                        receiptTicketItem.State = "待送检";
+                                        receiptTicketItem.State = "待收货";
                                     }
                                 }
                             }
@@ -676,7 +676,7 @@ namespace WMS.UI
                             {
                                 if (receiptTicket != null)
                                 {
-                                    receiptTicket.State = "待送检";
+                                    receiptTicket.State = "待收货";
                                 }
                             }
                             else
@@ -690,7 +690,7 @@ namespace WMS.UI
                                 this.Search();
                             }));
 
-                            //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待送检' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", sti.ReceiptTicketItemID));
+                            //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待收货' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", sti.ReceiptTicketItemID));
 
 
                         }

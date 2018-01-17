@@ -369,7 +369,7 @@ namespace WMS.UI
                         stockInfo.ProjectID = receiptTicket.ProjectID;
                         stockInfo.WarehouseID = receiptTicket.WarehouseID;
                         stockInfo.ReceiptTicketItemID = receiptTicketItem.ID;
-                        if (receiptTicketItem.State == "待送检" || receiptTicketItem.State == "拒收")
+                        if (receiptTicketItem.State == "待收货" || receiptTicketItem.State == "拒收")
                         {
                             stockInfo.OverflowAreaAmount = 0;
                             stockInfo.ShipmentAreaAmount = 0;
@@ -463,7 +463,7 @@ namespace WMS.UI
                             }
                             else
                             {
-                                if (receiptTicketItem.State == "待送检" || receiptTicketItem.State == "拒收")
+                                if (receiptTicketItem.State == "待收货" || receiptTicketItem.State == "拒收")
                                 {
                                     stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
                                     stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;

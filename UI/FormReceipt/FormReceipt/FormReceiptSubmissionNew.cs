@@ -324,7 +324,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
-                if (receiptTicket.State != "待送检")
+                if (receiptTicket.State != "待收货")
                 {
                     MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
                 }
