@@ -41,14 +41,14 @@
             this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
-            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.buttonDeliver = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
-            this.panelPagerWidget = new System.Windows.Forms.Panel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonDeliver = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -109,7 +109,7 @@
             this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
@@ -192,31 +192,6 @@
             this.buttonOpen.Text = "查看出库单";
             this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
-            // buttonPreview
-            // 
-            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
-            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(99, 35);
-            this.buttonPreview.Text = "导出/打印";
-            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.AutoSize = false;
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
-            // 
-            // buttonDeliver
-            // 
-            this.buttonDeliver.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeliver.Image")));
-            this.buttonDeliver.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonDeliver.Name = "buttonDeliver";
-            this.buttonDeliver.Size = new System.Drawing.Size(63, 35);
-            this.buttonDeliver.Text = "发运";
-            this.buttonDeliver.ToolTipText = "发运";
-            this.buttonDeliver.Click += new System.EventHandler(this.buttonDeliver_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.AutoSize = false;
@@ -237,24 +212,49 @@
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(63, 24);
+            this.buttonDelete.Size = new System.Drawing.Size(63, 35);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // panelPagerWidget
+            // toolStripSeparator3
             // 
-            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(2, 380);
-            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(1081, 34);
-            this.panelPagerWidget.TabIndex = 13;
+            this.toolStripSeparator3.AutoSize = false;
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(15, 28);
+            // 
+            // buttonDeliver
+            // 
+            this.buttonDeliver.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeliver.Image")));
+            this.buttonDeliver.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonDeliver.Name = "buttonDeliver";
+            this.buttonDeliver.Size = new System.Drawing.Size(63, 35);
+            this.buttonDeliver.Text = "发运";
+            this.buttonDeliver.ToolTipText = "发运";
+            this.buttonDeliver.Click += new System.EventHandler(this.buttonDeliver_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.AutoSize = false;
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(15, 28);
+            // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(99, 35);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            // 
+            // panelPagerWidget
+            // 
+            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPagerWidget.Location = new System.Drawing.Point(2, 380);
+            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(2);
+            this.panelPagerWidget.Name = "panelPagerWidget";
+            this.panelPagerWidget.Size = new System.Drawing.Size(1081, 34);
+            this.panelPagerWidget.TabIndex = 13;
             // 
             // FormPutOutStorageTicket
             // 
