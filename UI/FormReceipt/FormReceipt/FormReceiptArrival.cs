@@ -121,6 +121,7 @@ namespace WMS.UI
                 this.buttonItemSubmission.Enabled = false;
                 this.buttonReceipt.Enabled = false;
                 this.toolStripButton2.Enabled = false;
+                this.buttonPreview.Enabled = false;
                 if (supplier.StartingTime != null && supplier.EndingTime != null)
                 {
                     if (supplier.ContractState == "已过审" && supplier.StartingTime < DateTime.Now && supplier.EndingTime > DateTime.Now)
