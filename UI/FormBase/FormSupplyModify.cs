@@ -134,9 +134,10 @@ namespace WMS.UI
         private void textBoxComponentName_TextChanged(object sender, EventArgs e)
         {
 
+            int a = ComponenIDGetter();
             WMSEntities wmsEntities = new WMSEntities();
                 var componenName = (from s in wmsEntities.ComponentView
-                                    where s.ID == ComponenIDGetter()
+                                    where s.ID == a
                                     select s).FirstOrDefault();
 
                 this.Controls.Find("textBoxDefaultReceiptUnit", true)[0].Text = componenName.DefaultReceiptUnit;
