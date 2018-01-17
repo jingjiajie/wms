@@ -608,6 +608,7 @@ namespace WMS.UI
                                     var sameNameUsers = (from u in wmsEntities.Supply
                                                          where u.SupplierID == importsupplierID
                                                          && u.ComponentID == importcomponenID
+                                                         && u.ProjectID == this.projectID && u.WarehouseID == this.warehouseID
                                                          select u).ToArray();
                                     if (sameNameUsers.Length > 0)
                                     {
