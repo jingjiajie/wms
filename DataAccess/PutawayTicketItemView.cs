@@ -70,5 +70,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> UnitCount { get; set; }
         public Nullable<decimal> PutawayAmount { get; set; }
         public Nullable<int> ReceiptTicketWarehouseID { get; set; }
+        public string ReceiptTicketItemBatchNumber { get; set; }
     }
 }

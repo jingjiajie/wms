@@ -82,5 +82,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> WrongComponentUnitCount { get; set; }
         public Nullable<decimal> RealReceiptUnitCount { get; set; }
         public Nullable<decimal> RealReceiptAmount { get; set; }
+        public string BatchNumber { get; set; }
+        public string PurchaseOrder { get; set; }
     }
 }

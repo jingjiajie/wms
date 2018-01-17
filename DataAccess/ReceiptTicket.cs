@@ -60,6 +60,8 @@ namespace WMS.DataAccess
         public string StorageLocation { get; set; }
         public string HasPosted { get; set; }
         public string HasPutawayTicket { get; set; }
+        public string UseUnit { get; set; }
+        public string ReceiptUnit { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }

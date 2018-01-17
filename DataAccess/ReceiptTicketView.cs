@@ -70,5 +70,7 @@ namespace WMS.DataAccess
         public string HasPosted { get; set; }
         public int WarehouseID { get; set; }
         public string WarehouseName { get; set; }
+        public string UseUnit { get; set; }
+        public string ReceiptUnit { get; set; }
     }
 }
