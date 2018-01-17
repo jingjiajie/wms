@@ -255,6 +255,11 @@ namespace WMS.UI.FormBase
                         for (int i = 0; i < results.Length; i++)
                         {
                             User result = results[i];
+                            if (string.IsNullOrWhiteSpace(result.AuthorityName))
+                            {
+                                MessageBox.Show(string.Format("行{0}：角色不可以为空，必须为管理员，收货员，发货员，库存管理员，供应商中的一项或多项", i + 1), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return false;
+                            }
                             int sameNameUserCount = (from u in wmsEntities.User where u.Username == result.Username select u).Count();
                             if(sameNameUserCount > 0)
                             {
@@ -276,10 +281,10 @@ namespace WMS.UI.FormBase
                                     MessageBox.Show(string.Format("行{0}：角色为供应商的用户，必须填写供应商名称！", i + 1), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return false;
                                 }
-                                Supplier supplier = (from s in wmsEntities.Supplier where s.Name == supplierName select s).FirstOrDefault();
+                                Supplier supplier = (from s in wmsEntities.Supplier where s.Name == supplierName && s.IsHistory==0 select s).FirstOrDefault();
                                 if (supplier == null)
                                 {
-                                    MessageBox.Show(string.Format("行{0}：找不到名称为{1}的供应商！", i + 1, supplierName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show(string.Format("行{0}：找不到名称为\"{1}\"的供应商！", i + 1, supplierName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return false;
                                 }
                                 results[i].SupplierID = supplier.ID;
