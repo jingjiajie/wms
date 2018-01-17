@@ -35,6 +35,7 @@
             this.buttonAllNoPass = new System.Windows.Forms.Button();
             this.buttonAllPass = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
+            this.buttonFinished = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
@@ -43,7 +44,6 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.buttonFinished = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -124,7 +124,6 @@
             this.buttonAllPass.TabIndex = 0;
             this.buttonAllPass.Text = "所有条目合格";
             this.buttonAllPass.UseVisualStyleBackColor = true;
-            this.buttonAllPass.Visible = false;
             this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
             // 
             // buttonModify
@@ -144,10 +143,21 @@
             this.buttonModify.TabIndex = 2;
             this.buttonModify.Text = "确认修改";
             this.buttonModify.UseVisualStyleBackColor = false;
-            this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
+            this.buttonModify.Click += new System.EventHandler(this.buttonFinished_Click);
             this.buttonModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonModify_MouseDown);
             this.buttonModify.MouseEnter += new System.EventHandler(this.buttonModify_MouseEnter);
             this.buttonModify.MouseLeave += new System.EventHandler(this.buttonModify_MouseLeave);
+            // 
+            // buttonFinished
+            // 
+            this.buttonFinished.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonFinished.Location = new System.Drawing.Point(3, -3);
+            this.buttonFinished.Name = "buttonFinished";
+            this.buttonFinished.Size = new System.Drawing.Size(188, 44);
+            this.buttonFinished.TabIndex = 3;
+            this.buttonFinished.Text = "送检完成";
+            this.buttonFinished.UseVisualStyleBackColor = true;
+            this.buttonFinished.Click += new System.EventHandler(this.buttonFinished_Click);
             // 
             // panel3
             // 
@@ -245,17 +255,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(974, 36);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // buttonFinished
-            // 
-            this.buttonFinished.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonFinished.Location = new System.Drawing.Point(3, -3);
-            this.buttonFinished.Name = "buttonFinished";
-            this.buttonFinished.Size = new System.Drawing.Size(188, 44);
-            this.buttonFinished.TabIndex = 3;
-            this.buttonFinished.Text = "送检完成";
-            this.buttonFinished.UseVisualStyleBackColor = true;
-            this.buttonFinished.Click += new System.EventHandler(this.buttonFinished_Click);
             // 
             // FormSubmissionItem
             // 

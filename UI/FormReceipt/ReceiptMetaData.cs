@@ -43,8 +43,8 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "收货库位", Key = "ReceiptStorageLocation", Visible = true, Editable = true},
             new KeyName(){Name = "托盘号", Key = "BoardNo", Visible = true, Editable = true},
             new KeyName(){Name = "收货包装", Key = "ReceiptPackage", Visible = true, Editable = true},
-            new KeyName(){Name = "收货数量", Key = "ReceiptCount", Visible = true, Editable = true},
-            new KeyName(){Name = "移动类型", Key = "MoveType", Visible = true, Editable = true},
+            //new KeyName(){Name = "收货数量", Key = "ReceiptCount", Visible = true, Editable = true},
+            new KeyName(){Name = "移动类型", Key = "MoveType", Visible = true, Editable = true, GetAllValueToComboBox = "ReceiptTicket.MoveType"},
             new KeyName(){Name = "单据来源", Key = "Source", Visible = true, Editable = true},
             new KeyName(){Name = "负责人ID", Key = "PersonID", Visible = false, Editable = false},
             new KeyName(){Name = "负责人", Key = "PersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
@@ -91,10 +91,13 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="零件ID", Key="SupplyID",Visible=false,Editable=false,Save=true},
             new KeyName(){Name="零件编号", Key="SupplyNo", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件"},
             new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件" },
+            new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true},
+            new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true},
+            new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=false,Save=true, NotNegative = true, NotNull = true},
+
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="期待数量", Key="ExpectedAmount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
             new KeyName(){Name="实收数量", Key="RealReceiptUnitCount", Visible=true,Editable=true,Save=true,NotNegative=true,NotNull=true},
-            //new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=true,Save=true, NotNegative = true, NotNull = true},
             new KeyName(){Name="单位名称", Key="Unit",Visible=true,Editable=true,Save=true, NotNull = true},
             new KeyName(){Name="单位数量", Key="UnitAmount",Visible=true,Editable=true,Save=true, NotNegative = true, NotNull = true},
 
@@ -117,8 +120,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="自检不良单位", Key="DisqualifiedUnit", Visible=true,Editable=true,Save=true},
             new KeyName(){Name="自检不良单位数量",Key="DisqualifiedUnitAmount", Visible=true,Editable=true,Save=true, NotNegative=true,NotNull=true},
 
-            new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true},
-            new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true},
+           
             new KeyName(){Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},
             new KeyName(){Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
             new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
@@ -153,7 +155,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
             new KeyName(){Name="确认人", Key = "ConfirmPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
             new KeyName(){Name="备注", Key="Comment",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="库房返回", Key = "Result", Visible=true,Editable=true,Save=true}
+            //new KeyName(){Name="库房返回", Key = "Result", Visible=true,Editable=true,Save=true}
         };
 
         public static KeyName[] putawayTicketKeyName =

@@ -923,6 +923,7 @@ namespace WMS.UI.FormReceipt
 
         private void buttonAllPass_Click(object sender, EventArgs e)
         {
+            
             WMSEntities wmsEntities = new WMSEntities();
             SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == this.submissionTicketID select st).FirstOrDefault();
             if (submissionTicket == null)
@@ -933,32 +934,57 @@ namespace WMS.UI.FormReceipt
             SubmissionTicketItem[] submissionTicketItems = submissionTicket.SubmissionTicketItem.ToArray();
             foreach (SubmissionTicketItem sti in submissionTicketItems)
             {
-                //sti.ArriveAmount = sti.SubmissionAmount;
-                if (sti.RejectAmount == null)
-                {
-                    sti.RejectAmount = 0;
-                }
-                if (sti.ReturnAmount == null)
-                {
-                    sti.ReturnAmount = sti.SubmissionAmount;
-                }
                 sti.State = "合格";
-                sti.ReceiptTicketItem.State = "过检";
-                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == sti.ReceiptTicketItemID select si).FirstOrDefault();
-                if (stockInfo != null)
+                sti.ReturnAmount = sti.SubmissionAmount;
+
+                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
+                if (receiptTicketItem != null)
                 {
-                    stockInfo.ReceiptAreaAmount += stockInfo.SubmissionAmount;
-                    stockInfo.SubmissionAmount -= stockInfo.SubmissionAmount;
+                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == sti.ReceiptTicketItemID select si).FirstOrDefault();
+                    if (stockInfo != null)
+                    {
+                       
+                        stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount + sti.ReturnAmount - sti.SubmissionAmount;
+                        stockInfo.ReceiptAreaAmount = 0;
+                        stockInfo.SubmissionAmount = sti.SubmissionAmount - sti.ReturnAmount;
+                        stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
+                    }
+                    if (receiptTicketItem.RefuseAmount == 0)
+                    {
+                        receiptTicketItem.State = "已收货";
+                    }
+                    else
+                    {
+                        receiptTicketItem.State = "部分收货";
+                    }
                 }
             }
             submissionTicket.State = "合格";
             ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
             if (receiptTicket != null)
             {
-                receiptTicket.State = "过检";
+                receiptTicket.State = "已收货";
             }
             new Thread(() =>
             {
+                wmsEntities.SaveChanges();
+                if (receiptTicket != null)
+                {
+                    int receipt = (from rti in receiptTicket.ReceiptTicketItem where rti.State == "已收货" select rti).ToArray().Length;
+                    int reject = (from rti in receiptTicket.ReceiptTicketItem where rti.State == "拒收" select rti).ToArray().Length;
+                    if (receiptTicket.ReceiptTicketItem.Count == receipt)
+                    {
+                        receiptTicket.State = "已收货";
+                    }
+                    else if (receiptTicket.ReceiptTicketItem.Count == reject)
+                    {
+                        receiptTicket.State = "拒收";
+                    }
+                    else
+                    {
+                        receiptTicket.State = "部分收货";
+                    }
+                }
                 wmsEntities.SaveChanges();
                 this.Invoke(new Action(() =>
                 {

@@ -97,7 +97,9 @@ namespace WMS.UI.FormReceipt
             pagerWidget = new PagerWidget<PutawayTicketItemView>(this.reoGridControlPutaway, ReceiptMetaData.putawayTicketItemKeyName, projectID, warehouseID);
             this.panel4.Controls.Add(pagerWidget);
             pagerWidget.ClearCondition();
-            Search(false, 0);
+            pagerWidget.AddOrderBy("StockInfoShipmentAreaAmount / (ComponentDailyProduction * ComponentSingleCarUsageAmount)");
+            pagerWidget.AddOrderBy("ReceiptTicketItemInventoryDate");
+            Search();
             
             this.pagerWidget.Show();
             
@@ -114,8 +116,7 @@ namespace WMS.UI.FormReceipt
                 pagerWidget.AddCondition(this.key, this.value);
                 pagerWidget.Search();
             }
-            pagerWidget.AddOrderBy("StockInfoShipmentAreaAmount / (ComponentDailyProduction * ComponentSingleCarUsageAmount)");
-            pagerWidget.AddOrderBy("ReceiptTicketItemInventoryDate");
+            
             //if (this.putawayTicketID != -1)
             //{
             //    pagerWidget.AddCondition("上架单ID", this.putawayTicketID.ToString());
@@ -156,6 +157,7 @@ namespace WMS.UI.FormReceipt
 
         private void RefreshTextBoxes()
         {
+            //WMSEntities wmsEntities = new WMSEntities();
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlPutaway.Worksheets[0];
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlPutaway);
@@ -287,6 +289,117 @@ namespace WMS.UI.FormReceipt
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
+            var worksheet = this.reoGridControlPutaway.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                int putawayTicketItemID;
+                try
+                {
+                    putawayTicketItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                decimal oldPutawayAmount = 0;
+                if (putawayTicketItem.PutawayAmount == null)
+                {
+                    if (putawayTicketItem.PutawayAmount == null)
+                    {
+                        putawayTicketItem.PutawayAmount = 0;
+                    }
+                }
+
+                oldPutawayAmount = (decimal)putawayTicketItem.PutawayAmount;
+                if (putawayTicketItem == null)
+                {
+                    MessageBox.Show("此上架单条目不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    string errorInfo;
+                    if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicketItem, ReceiptMetaData.putawayTicketItemKeyName, out errorInfo) == false)
+                    {
+                        MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    else
+                    {
+                        if (Utilities.CopyComboBoxsToProperties(this, putawayTicketItem, ReceiptMetaData.putawayTicketItemKeyName) == false)
+                        {
+                            MessageBox.Show("下拉框获取失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        if (putawayTicketItem.MoveCount == null)
+                        {
+                            MessageBox.Show("实际上架数量不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == putawayTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
+                        if (putawayTicketItem.UnitAmount == null)
+                        {
+                            if (receiptTicketItem != null)
+                            {
+                                putawayTicketItem.UnitAmount = receiptTicketItem.UnitAmount;
+                            }
+
+                        }
+                        if (putawayTicketItem.MoveCount > putawayTicketItem.ScheduledMoveCount)
+                        {
+                            MessageBox.Show("实际上架数量不能大于计划上架数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+
+                        putawayTicketItem.PutawayAmount = putawayTicketItem.UnitAmount * putawayTicketItem.MoveCount;
+                        StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == putawayTicketItem.ReceiptTicketItemID select si).FirstOrDefault();
+                        if (stockInfo != null)
+                        {
+                            stockInfo.OverflowAreaAmount -= putawayTicketItem.PutawayAmount - oldPutawayAmount;
+                            stockInfo.ShipmentAreaAmount += putawayTicketItem.PutawayAmount - oldPutawayAmount;
+                        }
+
+
+                        if (putawayTicketItem.ScheduledMoveCount == putawayTicketItem.MoveCount)
+                        {
+                            putawayTicketItem.State = "已上架";
+                        }
+                        else if (putawayTicketItem.MoveCount == 0)
+                        {
+                            putawayTicketItem.State = "待上架";
+                        }
+                        else
+                        {
+                            putawayTicketItem.State = "部分上架";
+                        }
+                        new Thread(() =>
+                        {
+                            wmsEntities.SaveChanges();
+                            this.modifyMode(putawayTicketItem.PutawayTicketID);
+                            MessageBox.Show("上架成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Invoke(new Action(() =>
+                            {
+                                this.Search();
+                            }));
+                        }).Start();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+            /*
             decimal oldPutawayAmount = 0;
             var worksheet = this.reoGridControlPutaway.Worksheets[0];
             try
@@ -367,7 +480,7 @@ namespace WMS.UI.FormReceipt
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
-            }
+            }*/
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -546,13 +659,7 @@ namespace WMS.UI.FormReceipt
                             MessageBox.Show("下拉框获取失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
-                        /*
-                        decimal putawayAmount;
-                        if (decimal.TryParse(this.Controls.Find("textboxPutawayAmount", true)[0].Text, out putawayAmount) == false)
-                        {
-                            MessageBox.Show("请输入合法的上架数量");
-                            return;
-                        }*/
+                     
                         if (putawayTicketItem.MoveCount == null)
                         {
                             MessageBox.Show("实际上架数量不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -599,68 +706,13 @@ namespace WMS.UI.FormReceipt
                         {
                             wmsEntities.SaveChanges();
                             this.modifyMode(putawayTicketItem.PutawayTicketID);
-                            MessageBox.Show("上架成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("上架成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Invoke(new Action(() =>
                             {
-                                this.pagerWidget.Search();
+                                this.Search();
                             }));
                         }).Start();
-
-
-
-
-                        /*
-                        putawayTicketItem.State = "已上架";
-                        //StockInfo stockInfo = ReceiptUtilities.PutawayTicketItemToStockInfo(putawayTicketItem);
-                        //wmsEntities.StockInfo.Add(stockInfo);
-                        wmsEntities.SaveChanges();
-                        int count = wmsEntities.Database.SqlQuery<int>(
-                        "SELECT COUNT(*) FROM PutawayTicketItem " +
-                        "WHERE PutawayTicketID = @putawayTicketID AND State <> '已上架'",
-                        new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID)).FirstOrDefault();
-
-                        if (count == 0)
-                        {
-                            wmsEntities.Database.ExecuteSqlCommand(
-                                "UPDATE PutawayTicket SET State = '已上架' " +
-                                "WHERE ID = @putawayTicketID",
-                                new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
-                        }
-                        else
-                        {
-                            wmsEntities.Database.ExecuteSqlCommand(
-                                "UPDATE PutawayTicket SET State = '部分上架' " +
-                                "WHERE ID = @putawayTicketID",
-                                new SqlParameter("putawayTicketID", putawayTicketItem.PutawayTicketID));
-                        }
-                        StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == putawayTicketItem.ReceiptTicketItemID select si).FirstOrDefault();
-                        if (stockInfo != null)
-                        {
-                            if (stockInfo.ReceiptAreaAmount != null)
-                            {
-                                int amount = (int)stockInfo.ReceiptAreaAmount;
-                                if (stockInfo.OverflowAreaAmount != null)
-                                {
-                                    stockInfo.OverflowAreaAmount += amount;
-                                }
-                                else
-                                {
-                                    stockInfo.OverflowAreaAmount = amount;
-                                }
-                                stockInfo.ReceiptAreaAmount = 0;
-                            }
-
-                        }
-                        wmsEntities.SaveChanges();
-                        this.Invoke(new Action(() =>
-                        {
-                            this.Search();
-                            CallBack();
-
-                        }));
-                        */
                     }
-
                 }
             }
             catch (Exception)
