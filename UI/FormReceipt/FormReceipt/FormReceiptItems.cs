@@ -569,13 +569,13 @@ namespace WMS.UI
                     {
                         wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ReceiptTicketItemID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", receiptItemID));
                         wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ReceiptTicketItem WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", receiptItemID));
+                        MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch
                     {
                         MessageBox.Show("该收货单零件已送检或收货，无法删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         
                     }
-                    MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Search();
                 }).Start();
             }
