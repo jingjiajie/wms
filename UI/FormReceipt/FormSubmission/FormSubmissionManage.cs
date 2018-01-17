@@ -738,9 +738,24 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+            if (submissionTicket != null)
+            {
+                submissionTicket.PaintTime = DateTime.Now;
+            }
+            
             SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView
                                                                where stv.ID == submissionTicketID
                                                                select stv).FirstOrDefault();
+            try
+            {
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
             SubmissionTicketItemView[] submissionTicketItemView =
                 (from p in wmsEntities.SubmissionTicketItemView
                  where p.SubmissionTicketID == submissionTicketView.ID
@@ -758,7 +773,8 @@ namespace WMS.UI
             formPreview.AddData("SubmissionTicket", submissionTicketView);
             formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             formPreview.Show();
-            this.Close();
+            
+            //this.Close();
         }
     }
 }
