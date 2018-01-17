@@ -45,6 +45,8 @@
             this.toolStripButtonDelete = new System.Windows.Forms.ToolStripButton();
             this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -110,9 +112,11 @@
             this.toolStripButtonSelect,
             this.toolStripSeparator1,
             this.toolStripButtonItem,
-            this.toolStripSeparator3,
+            this.toolStripSeparator2,
             this.toolStripButtonAlter,
-            this.toolStripButtonDelete});
+            this.toolStripButtonDelete,
+            this.toolStripSeparator3,
+            this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -218,6 +222,21 @@
             this.panel1.Size = new System.Drawing.Size(1635, 54);
             this.panel1.TabIndex = 8;
             // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = global::WMS.UI.Properties.Resources.check;
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(144, 45);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.AutoSize = false;
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(15, 25);
+            // 
             // FormReceiptShelves
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -256,5 +275,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
         private unvell.ReoGrid.ReoGridControl reoGridControlUser;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

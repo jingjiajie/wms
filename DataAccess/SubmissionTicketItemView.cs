@@ -59,5 +59,7 @@ namespace WMS.DataAccess
         public string WarehouseName { get; set; }
         public Nullable<decimal> RefuseAmount { get; set; }
         public Nullable<decimal> Result { get; set; }
+        public string ReceiptTicketItemBatchNumber { get; set; }
+        public string ReceiptTicketItemPurchaseOrder { get; set; }
     }
 }

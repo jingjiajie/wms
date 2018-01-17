@@ -244,6 +244,8 @@
           <Property Name="StorageLocation" Type="nvarchar" MaxLength="64" />
           <Property Name="HasPosted" Type="nvarchar" MaxLength="64" />
           <Property Name="HasPutawayTicket" Type="nvarchar" MaxLength="64" />
+          <Property Name="UseUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptUnit" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="ReceiptTicketItem">
           <Key>
@@ -284,6 +286,8 @@
           <Property Name="WrongComponentUnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptUnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="BatchNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="PurchaseOrder" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="ShipmentTicket">
           <Key>
@@ -763,6 +767,7 @@
           <Property Name="UnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="PutawayAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ReceiptTicketWarehouseID" Type="int" />
+          <Property Name="ReceiptTicketItemBatchNumber" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutawayTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -804,6 +809,7 @@
           <Property Name="SupplierNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="PersonID" Type="int" />
           <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutOutStorageTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -965,6 +971,8 @@
           <Property Name="WrongComponentUnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptUnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptAmount" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="BatchNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="PurchaseOrder" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1030,6 +1038,8 @@
           <Property Name="HasPosted" Type="nvarchar" MaxLength="64" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
+          <Property Name="UseUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptUnit" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1268,6 +1278,8 @@
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="RefuseAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="Result" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ReceiptTicketItemBatchNumber" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketItemPurchaseOrder" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2051,7 +2063,8 @@ FROM [dbo].[ProjectView] AS [ProjectView]</DefiningQuery>
 [PutawayTicketItemView].[ReceiptTicketItemExpiryDate] AS [ReceiptTicketItemExpiryDate], 
 [PutawayTicketItemView].[UnitCount] AS [UnitCount], 
 [PutawayTicketItemView].[PutawayAmount] AS [PutawayAmount], 
-[PutawayTicketItemView].[ReceiptTicketWarehouseID] AS [ReceiptTicketWarehouseID]
+[PutawayTicketItemView].[ReceiptTicketWarehouseID] AS [ReceiptTicketWarehouseID], 
+[PutawayTicketItemView].[ReceiptTicketItemBatchNumber] AS [ReceiptTicketItemBatchNumber]
 FROM [dbo].[PutawayTicketItemView] AS [PutawayTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutawayTicketView" EntityType="Self.PutawayTicketView" store:Type="Views" store:Schema="dbo">
@@ -2089,7 +2102,8 @@ FROM [dbo].[PutawayTicketItemView] AS [PutawayTicketItemView]</DefiningQuery>
 [PutawayTicketView].[ReceiptTicketNumber] AS [ReceiptTicketNumber], 
 [PutawayTicketView].[SupplierNumber] AS [SupplierNumber], 
 [PutawayTicketView].[PersonID] AS [PersonID], 
-[PutawayTicketView].[PersonName] AS [PersonName]
+[PutawayTicketView].[PersonName] AS [PersonName], 
+[PutawayTicketView].[WarehouseName] AS [WarehouseName]
 FROM [dbo].[PutawayTicketView] AS [PutawayTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutOutStorageTicketItemView" EntityType="Self.PutOutStorageTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2238,7 +2252,9 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[DisqualifiedUnitCount] AS [DisqualifiedUnitCount], 
 [ReceiptTicketItemView].[WrongComponentUnitCount] AS [WrongComponentUnitCount], 
 [ReceiptTicketItemView].[RealReceiptUnitCount] AS [RealReceiptUnitCount], 
-[ReceiptTicketItemView].[RealReceiptAmount] AS [RealReceiptAmount]
+[ReceiptTicketItemView].[RealReceiptAmount] AS [RealReceiptAmount], 
+[ReceiptTicketItemView].[BatchNumber] AS [BatchNumber], 
+[ReceiptTicketItemView].[PurchaseOrder] AS [PurchaseOrder]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -2298,7 +2314,9 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[HasPutawayTicket] AS [HasPutawayTicket], 
 [ReceiptTicketView].[HasPosted] AS [HasPosted], 
 [ReceiptTicketView].[WarehouseID] AS [WarehouseID], 
-[ReceiptTicketView].[WarehouseName] AS [WarehouseName]
+[ReceiptTicketView].[WarehouseName] AS [WarehouseName], 
+[ReceiptTicketView].[UseUnit] AS [UseUnit], 
+[ReceiptTicketView].[ReceiptUnit] AS [ReceiptUnit]
 FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketItemView" EntityType="Self.ShipmentTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2514,7 +2532,9 @@ FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
 [SubmissionTicketItemView].[WarehouseID] AS [WarehouseID], 
 [SubmissionTicketItemView].[WarehouseName] AS [WarehouseName], 
 [SubmissionTicketItemView].[RefuseAmount] AS [RefuseAmount], 
-[SubmissionTicketItemView].[Result] AS [Result]
+[SubmissionTicketItemView].[Result] AS [Result], 
+[SubmissionTicketItemView].[ReceiptTicketItemBatchNumber] AS [ReceiptTicketItemBatchNumber], 
+[SubmissionTicketItemView].[ReceiptTicketItemPurchaseOrder] AS [ReceiptTicketItemPurchaseOrder]
 FROM [dbo].[SubmissionTicketItemView] AS [SubmissionTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketView" EntityType="Self.SubmissionTicketView" store:Type="Views" store:Schema="dbo">
@@ -3070,6 +3090,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="StorageLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HasPosted" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HasPutawayTicket" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="UseUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="Self.FK_ReceiptTicket_Project" FromRole="ReceiptTicket" ToRole="Project" />
           <NavigationProperty Name="ReceiptTicketItem" Relationship="Self.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicket" ToRole="ReceiptTicketItem" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_ReceiptTicket_Supplier" FromRole="ReceiptTicket" ToRole="Supplier" />
@@ -3114,6 +3136,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="WrongComponentUnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptUnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="BatchNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PurchaseOrder" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReceiptTicket" Relationship="Self.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicketItem" ToRole="ReceiptTicket" />
           <NavigationProperty Name="SubmissionTicketItem" Relationship="Self.FK__Submissio__Recei__0EF836A4" FromRole="ReceiptTicketItem" ToRole="SubmissionTicketItem" />
         </EntityType>
@@ -3613,6 +3637,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="UnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="PutawayAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ReceiptTicketWarehouseID" Type="Int32" />
+          <Property Name="ReceiptTicketItemBatchNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PutawayTicketView">
           <Key>
@@ -3652,6 +3677,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplierNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="PersonID" Type="Int32" />
           <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PutOutStorageTicketItemView">
           <Key>
@@ -3807,6 +3833,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="WrongComponentUnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptUnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RealReceiptAmount" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="BatchNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PurchaseOrder" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
@@ -3870,6 +3898,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="HasPosted" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseID" Type="Int32" Nullable="false" />
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="UseUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ShipmentTicketItemView">
           <Key>
@@ -4096,6 +4126,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="RefuseAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Result" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ReceiptTicketItemBatchNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketItemPurchaseOrder" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SubmissionTicketView">
           <Key>
@@ -5085,6 +5117,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
                 <ScalarProperty Name="HasPosted" ColumnName="HasPosted" />
                 <ScalarProperty Name="HasPutawayTicket" ColumnName="HasPutawayTicket" />
+                <ScalarProperty Name="UseUnit" ColumnName="UseUnit" />
+                <ScalarProperty Name="ReceiptUnit" ColumnName="ReceiptUnit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5126,6 +5160,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="WrongComponentUnitCount" ColumnName="WrongComponentUnitCount" />
                 <ScalarProperty Name="RealReceiptUnitCount" ColumnName="RealReceiptUnitCount" />
                 <ScalarProperty Name="RealReceiptAmount" ColumnName="RealReceiptAmount" />
+                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+                <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5606,6 +5642,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
                 <ScalarProperty Name="PutawayAmount" ColumnName="PutawayAmount" />
                 <ScalarProperty Name="ReceiptTicketWarehouseID" ColumnName="ReceiptTicketWarehouseID" />
+                <ScalarProperty Name="ReceiptTicketItemBatchNumber" ColumnName="ReceiptTicketItemBatchNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5646,6 +5683,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="SupplierNumber" ColumnName="SupplierNumber" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5801,6 +5839,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="WrongComponentUnitCount" ColumnName="WrongComponentUnitCount" />
                 <ScalarProperty Name="RealReceiptUnitCount" ColumnName="RealReceiptUnitCount" />
                 <ScalarProperty Name="RealReceiptAmount" ColumnName="RealReceiptAmount" />
+                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+                <ScalarProperty Name="PurchaseOrder" ColumnName="PurchaseOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5863,6 +5903,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="HasPosted" ColumnName="HasPosted" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="UseUnit" ColumnName="UseUnit" />
+                <ScalarProperty Name="ReceiptUnit" ColumnName="ReceiptUnit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6091,6 +6133,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="RefuseAmount" ColumnName="RefuseAmount" />
                 <ScalarProperty Name="Result" ColumnName="Result" />
+                <ScalarProperty Name="ReceiptTicketItemBatchNumber" ColumnName="ReceiptTicketItemBatchNumber" />
+                <ScalarProperty Name="ReceiptTicketItemPurchaseOrder" ColumnName="ReceiptTicketItemPurchaseOrder" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

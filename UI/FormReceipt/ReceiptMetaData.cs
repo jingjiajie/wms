@@ -130,6 +130,8 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="生产日期", Key="ManufactureDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="物权属性", Key="RealRightProperty",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="批次号", Key="BatchNumber",Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="采购订单", Key="PurchaseOrder", Visible=true,Editable=true,Save=true},
             new KeyName(){Name="箱号", Key="BoxNo",Visible=true,Editable=true,Save=true},
             
             //new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false},

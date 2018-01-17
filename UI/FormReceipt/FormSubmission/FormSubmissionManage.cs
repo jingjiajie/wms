@@ -744,9 +744,7 @@ namespace WMS.UI
                 submissionTicket.PaintTime = DateTime.Now;
             }
             
-            SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView
-                                                               where stv.ID == submissionTicketID
-                                                               select stv).FirstOrDefault();
+
             try
             {
                 wmsEntities.SaveChanges();
@@ -756,6 +754,9 @@ namespace WMS.UI
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
+            SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView
+                                                         where stv.ID == submissionTicketID
+                                                         select stv).FirstOrDefault();
             SubmissionTicketItemView[] submissionTicketItemView =
                 (from p in wmsEntities.SubmissionTicketItemView
                  where p.SubmissionTicketID == submissionTicketView.ID
