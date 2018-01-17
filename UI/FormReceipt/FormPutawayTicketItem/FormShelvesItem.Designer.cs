@@ -59,7 +59,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 223);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1086, 199);
+            this.panel2.Size = new System.Drawing.Size(1086, 240);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlPutaway
@@ -79,7 +79,7 @@
             this.reoGridControlPutaway.SheetTabVisible = true;
             this.reoGridControlPutaway.SheetTabWidth = 163;
             this.reoGridControlPutaway.ShowScrollEndSpacing = true;
-            this.reoGridControlPutaway.Size = new System.Drawing.Size(1086, 199);
+            this.reoGridControlPutaway.Size = new System.Drawing.Size(1086, 240);
             this.reoGridControlPutaway.TabIndex = 9;
             this.reoGridControlPutaway.Text = "reoGridControlPutaway";
             // 
@@ -114,6 +114,8 @@
             this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonModify.FlatAppearance.BorderSize = 0;
+            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModify.Location = new System.Drawing.Point(28, 137);
             this.buttonModify.Name = "buttonModify";
@@ -129,11 +131,13 @@
             // buttonAll
             // 
             this.buttonAll.BackColor = System.Drawing.Color.White;
-            this.buttonAll.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB4_q;
+            this.buttonAll.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
             this.buttonAll.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonAll.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonAll.FlatAppearance.BorderSize = 0;
+            this.buttonAll.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAll.Location = new System.Drawing.Point(28, 77);
             this.buttonAll.Name = "buttonAll";
@@ -155,6 +159,8 @@
             this.buttonFInished.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonFInished.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonFInished.FlatAppearance.BorderSize = 0;
+            this.buttonFInished.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonFInished.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonFInished.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFInished.Location = new System.Drawing.Point(28, 17);
             this.buttonFInished.Name = "buttonFInished";
@@ -178,7 +184,7 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 256F));
@@ -233,6 +239,7 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
@@ -244,29 +251,30 @@
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 220F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 68F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1092, 493);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1092, 504);
             this.tableLayoutPanel1.TabIndex = 17;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // panel4
             // 
+            this.panel4.BackColor = System.Drawing.SystemColors.Control;
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 428);
+            this.panel4.Location = new System.Drawing.Point(3, 469);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1086, 62);
+            this.panel4.Size = new System.Drawing.Size(1086, 32);
             this.panel4.TabIndex = 2;
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(182, 31);
-            this.labelStatus.Text = "查看收货单条目";
+            this.labelStatus.Size = new System.Drawing.Size(114, 20);
+            this.labelStatus.Text = "查看上架单条目";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // statusStrip1
@@ -275,26 +283,27 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1092, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(1092, 25);
             this.statusStrip1.TabIndex = 16;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // FormShelvesItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1092, 529);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("黑体", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormShelvesItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "查看收货单条目";
+            this.Text = "查看上架单条目";
             this.Load += new System.EventHandler(this.FormShelvesItem_Load);
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);

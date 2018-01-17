@@ -903,12 +903,12 @@ namespace WMS.UI.FormReceipt
 
         private void buttonModify_MouseEnter(object sender, EventArgs e)
         {
-            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
         }
 
         private void buttonModify_MouseLeave(object sender, EventArgs e)
         {
-            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+            buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
 
         private void buttonModify_MouseDown(object sender, MouseEventArgs e)
@@ -1209,6 +1209,54 @@ namespace WMS.UI.FormReceipt
                     CallBack();
                 }));
             }).Start();
+        }
+
+        private void buttonFinished_MouseEnter(object sender, EventArgs e)
+        {
+            buttonFinished.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonFinished_MouseLeave(object sender, EventArgs e)
+        {
+            buttonFinished.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonFinished_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonFinished.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
+        private void buttonAllPass_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAllPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAllPass_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAllPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonAllPass_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAllPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+
+
+        private void buttonAllNoPass_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAllNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAllNoPass_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAllNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB1_s;
+        }
+
+        private void buttonAllNoPass_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAllNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
         }
     }
 }

@@ -59,7 +59,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 203);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(968, 287);
+            this.panel2.Size = new System.Drawing.Size(968, 298);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlSubmissionItems
@@ -79,7 +79,7 @@
             this.reoGridControlSubmissionItems.SheetTabVisible = true;
             this.reoGridControlSubmissionItems.SheetTabWidth = 163;
             this.reoGridControlSubmissionItems.ShowScrollEndSpacing = true;
-            this.reoGridControlSubmissionItems.Size = new System.Drawing.Size(968, 287);
+            this.reoGridControlSubmissionItems.Size = new System.Drawing.Size(968, 298);
             this.reoGridControlSubmissionItems.TabIndex = 9;
             this.reoGridControlSubmissionItems.Text = "reoGridControlSubmissionItems";
             // 
@@ -107,6 +107,12 @@
             // 
             // buttonAllNoPass
             // 
+            this.buttonAllNoPass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAllNoPass.BackgroundImage")));
+            this.buttonAllNoPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAllNoPass.FlatAppearance.BorderSize = 0;
+            this.buttonAllNoPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonAllNoPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonAllNoPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAllNoPass.Location = new System.Drawing.Point(3, 97);
             this.buttonAllNoPass.Name = "buttonAllNoPass";
             this.buttonAllNoPass.Size = new System.Drawing.Size(188, 44);
@@ -115,9 +121,18 @@
             this.buttonAllNoPass.UseVisualStyleBackColor = true;
             this.buttonAllNoPass.Visible = false;
             this.buttonAllNoPass.Click += new System.EventHandler(this.buttonAllNoPass_Click);
+            this.buttonAllNoPass.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAllNoPass_MouseDown);
+            this.buttonAllNoPass.MouseEnter += new System.EventHandler(this.buttonAllNoPass_MouseEnter);
+            this.buttonAllNoPass.MouseLeave += new System.EventHandler(this.buttonAllNoPass_MouseLeave);
             // 
             // buttonAllPass
             // 
+            this.buttonAllPass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAllPass.BackgroundImage")));
+            this.buttonAllPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAllPass.FlatAppearance.BorderSize = 0;
+            this.buttonAllPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonAllPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonAllPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAllPass.Location = new System.Drawing.Point(3, 47);
             this.buttonAllPass.Name = "buttonAllPass";
             this.buttonAllPass.Size = new System.Drawing.Size(188, 44);
@@ -125,14 +140,19 @@
             this.buttonAllPass.Text = "所有条目合格";
             this.buttonAllPass.UseVisualStyleBackColor = true;
             this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
+            this.buttonAllPass.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAllPass_MouseDown);
+            this.buttonAllPass.MouseEnter += new System.EventHandler(this.buttonAllPass_MouseEnter);
+            this.buttonAllPass.MouseLeave += new System.EventHandler(this.buttonAllPass_MouseLeave);
             // 
             // buttonModify
             // 
             this.buttonModify.BackColor = System.Drawing.Color.White;
-            this.buttonModify.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonModify.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
             this.buttonModify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonModify.FlatAppearance.BorderSize = 0;
+            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModify.Font = new System.Drawing.Font("黑体", 10F);
             this.buttonModify.Image = ((System.Drawing.Image)(resources.GetObject("buttonModify.Image")));
@@ -150,7 +170,13 @@
             // 
             // buttonFinished
             // 
+            this.buttonFinished.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonFinished.BackgroundImage")));
+            this.buttonFinished.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonFinished.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonFinished.FlatAppearance.BorderSize = 0;
+            this.buttonFinished.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonFinished.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonFinished.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFinished.Location = new System.Drawing.Point(3, -3);
             this.buttonFinished.Name = "buttonFinished";
             this.buttonFinished.Size = new System.Drawing.Size(188, 44);
@@ -158,6 +184,9 @@
             this.buttonFinished.Text = "送检完成";
             this.buttonFinished.UseVisualStyleBackColor = true;
             this.buttonFinished.Click += new System.EventHandler(this.buttonFinished_Click);
+            this.buttonFinished.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonFinished_MouseDown);
+            this.buttonFinished.MouseEnter += new System.EventHandler(this.buttonFinished_MouseEnter);
+            this.buttonFinished.MouseLeave += new System.EventHandler(this.buttonFinished_MouseLeave);
             // 
             // panel3
             // 
@@ -170,6 +199,7 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
@@ -227,20 +257,20 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 493);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 504);
             this.tableLayoutPanel1.TabIndex = 15;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(182, 31);
+            this.labelStatus.Size = new System.Drawing.Size(114, 20);
             this.labelStatus.Text = "查看收货单条目";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // statusStrip1
@@ -249,26 +279,28 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(974, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(974, 25);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // FormSubmissionItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Font = new System.Drawing.Font("黑体", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSubmissionItem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "查看明细";
+            this.Text = "查看送检单";
             this.Load += new System.EventHandler(this.FormSubmissionItem_Load);
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
