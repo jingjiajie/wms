@@ -31,13 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSubmissionItem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.reoGridControlSubmissionItems = new unvell.ReoGrid.ReoGridControl();
-            this.buttonItemPass = new System.Windows.Forms.Button();
-            this.buttonItemNoPass = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonModify = new System.Windows.Forms.Button();
-            this.buttonAllPass = new System.Windows.Forms.Button();
             this.buttonAllNoPass = new System.Windows.Forms.Button();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonAllPass = new System.Windows.Forms.Button();
+            this.buttonModify = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
@@ -46,9 +43,9 @@
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.buttonFinished = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -86,61 +83,15 @@
             this.reoGridControlSubmissionItems.TabIndex = 9;
             this.reoGridControlSubmissionItems.Text = "reoGridControlSubmissionItems";
             // 
-            // buttonItemPass
-            // 
-            this.buttonItemPass.BackColor = System.Drawing.Color.White;
-            this.buttonItemPass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonItemPass.BackgroundImage")));
-            this.buttonItemPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonItemPass.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonItemPass.FlatAppearance.BorderSize = 0;
-            this.buttonItemPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonItemPass.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonItemPass.Image = ((System.Drawing.Image)(resources.GetObject("buttonItemPass.Image")));
-            this.buttonItemPass.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonItemPass.Location = new System.Drawing.Point(3, 3);
-            this.buttonItemPass.Name = "buttonItemPass";
-            this.buttonItemPass.Size = new System.Drawing.Size(86, 32);
-            this.buttonItemPass.TabIndex = 0;
-            this.buttonItemPass.Text = "合格";
-            this.buttonItemPass.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonItemPass.UseVisualStyleBackColor = false;
-            this.buttonItemPass.Click += new System.EventHandler(this.buttonItemPass_Click);
-            this.buttonItemPass.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonItemPass_MouseDown);
-            this.buttonItemPass.MouseEnter += new System.EventHandler(this.buttonItemPass_MouseEnter);
-            this.buttonItemPass.MouseLeave += new System.EventHandler(this.buttonItemPass_MouseLeave);
-            // 
-            // buttonItemNoPass
-            // 
-            this.buttonItemNoPass.BackColor = System.Drawing.Color.White;
-            this.buttonItemNoPass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonItemNoPass.BackgroundImage")));
-            this.buttonItemNoPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonItemNoPass.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonItemNoPass.FlatAppearance.BorderSize = 0;
-            this.buttonItemNoPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonItemNoPass.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonItemNoPass.Image = ((System.Drawing.Image)(resources.GetObject("buttonItemNoPass.Image")));
-            this.buttonItemNoPass.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonItemNoPass.Location = new System.Drawing.Point(95, 3);
-            this.buttonItemNoPass.Name = "buttonItemNoPass";
-            this.buttonItemNoPass.Size = new System.Drawing.Size(86, 32);
-            this.buttonItemNoPass.TabIndex = 1;
-            this.buttonItemNoPass.Text = "不合格";
-            this.buttonItemNoPass.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonItemNoPass.UseVisualStyleBackColor = false;
-            this.buttonItemNoPass.Click += new System.EventHandler(this.buttonItemNoPass_Click);
-            this.buttonItemNoPass.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonItemNoPass_MouseDown);
-            this.buttonItemNoPass.MouseEnter += new System.EventHandler(this.buttonItemNoPass_MouseEnter);
-            this.buttonItemNoPass.MouseLeave += new System.EventHandler(this.buttonItemNoPass_MouseLeave);
-            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.Controls.Add(this.buttonAllNoPass, 0, 3);
-            this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel5, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.buttonAllPass, 0, 2);
             this.tableLayoutPanel3.Controls.Add(this.buttonModify, 0, 4);
+            this.tableLayoutPanel3.Controls.Add(this.buttonFinished, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -153,6 +104,26 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(194, 188);
             this.tableLayoutPanel3.TabIndex = 4;
+            // 
+            // buttonAllNoPass
+            // 
+            this.buttonAllNoPass.Location = new System.Drawing.Point(3, 97);
+            this.buttonAllNoPass.Name = "buttonAllNoPass";
+            this.buttonAllNoPass.Size = new System.Drawing.Size(188, 44);
+            this.buttonAllNoPass.TabIndex = 1;
+            this.buttonAllNoPass.Text = "所有条目不合格";
+            this.buttonAllNoPass.UseVisualStyleBackColor = true;
+            this.buttonAllNoPass.Click += new System.EventHandler(this.buttonAllNoPass_Click);
+            // 
+            // buttonAllPass
+            // 
+            this.buttonAllPass.Location = new System.Drawing.Point(3, 47);
+            this.buttonAllPass.Name = "buttonAllPass";
+            this.buttonAllPass.Size = new System.Drawing.Size(188, 44);
+            this.buttonAllPass.TabIndex = 0;
+            this.buttonAllPass.Text = "所有条目合格";
+            this.buttonAllPass.UseVisualStyleBackColor = true;
+            this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
             // 
             // buttonModify
             // 
@@ -175,42 +146,6 @@
             this.buttonModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonModify_MouseDown);
             this.buttonModify.MouseEnter += new System.EventHandler(this.buttonModify_MouseEnter);
             this.buttonModify.MouseLeave += new System.EventHandler(this.buttonModify_MouseLeave);
-            // 
-            // buttonAllPass
-            // 
-            this.buttonAllPass.Location = new System.Drawing.Point(3, 47);
-            this.buttonAllPass.Name = "buttonAllPass";
-            this.buttonAllPass.Size = new System.Drawing.Size(188, 44);
-            this.buttonAllPass.TabIndex = 0;
-            this.buttonAllPass.Text = "所有条目合格";
-            this.buttonAllPass.UseVisualStyleBackColor = true;
-            this.buttonAllPass.Click += new System.EventHandler(this.buttonAllPass_Click);
-            // 
-            // buttonAllNoPass
-            // 
-            this.buttonAllNoPass.Location = new System.Drawing.Point(3, 97);
-            this.buttonAllNoPass.Name = "buttonAllNoPass";
-            this.buttonAllNoPass.Size = new System.Drawing.Size(188, 44);
-            this.buttonAllNoPass.TabIndex = 1;
-            this.buttonAllNoPass.Text = "所有条目不合格";
-            this.buttonAllNoPass.UseVisualStyleBackColor = true;
-            this.buttonAllNoPass.Click += new System.EventHandler(this.buttonAllNoPass_Click);
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.buttonItemPass, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.buttonItemNoPass, 1, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(5, 0);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(184, 38);
-            this.tableLayoutPanel5.TabIndex = 1;
             // 
             // panel3
             // 
@@ -309,6 +244,17 @@
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // buttonFinished
+            // 
+            this.buttonFinished.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonFinished.Location = new System.Drawing.Point(3, -3);
+            this.buttonFinished.Name = "buttonFinished";
+            this.buttonFinished.Size = new System.Drawing.Size(188, 44);
+            this.buttonFinished.TabIndex = 3;
+            this.buttonFinished.Text = "送检完成";
+            this.buttonFinished.UseVisualStyleBackColor = true;
+            this.buttonFinished.Click += new System.EventHandler(this.buttonFinished_Click);
+            // 
             // FormSubmissionItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
@@ -325,7 +271,6 @@
             this.Load += new System.EventHandler(this.FormSubmissionItem_Load);
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -341,8 +286,6 @@
 
         private System.Windows.Forms.Panel panel2;
         private unvell.ReoGrid.ReoGridControl reoGridControlSubmissionItems;
-        private System.Windows.Forms.Button buttonItemPass;
-        private System.Windows.Forms.Button buttonItemNoPass;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -353,8 +296,8 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Button buttonModify;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Button buttonAllPass;
         private System.Windows.Forms.Button buttonAllNoPass;
+        private System.Windows.Forms.Button buttonFinished;
     }
 }

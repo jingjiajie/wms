@@ -870,34 +870,34 @@ namespace WMS.UI.FormReceipt
 
         private void buttonItemPass_MouseEnter(object sender, EventArgs e)
         {
-            buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+            //buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
         }
 
         private void buttonItemPass_MouseLeave(object sender, EventArgs e)
         {
-            buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+            //buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
 
         private void buttonItemPass_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+            //buttonItemPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
 
 
         private void buttonItemNoPass_MouseEnter(object sender, EventArgs e)
         {
-            buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+            //buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
         }
 
         private void buttonItemNoPass_MouseLeave(object sender, EventArgs e)
         {
-            buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+            //buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
 
         private void buttonItemNoPass_MouseDown(object sender, MouseEventArgs e)
         {
-            buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+            //buttonItemNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
         private void buttonModify_MouseEnter(object sender, EventArgs e)
@@ -1016,6 +1016,11 @@ namespace WMS.UI.FormReceipt
                     CallBack();
                 }));
             }).Start();
+        }
+
+        private void buttonFinished_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
