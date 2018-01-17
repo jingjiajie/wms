@@ -50,6 +50,7 @@ namespace WMS.UI.FormReceipt
             else
             {
                 Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
+                Utilities.CopyPropertiesToComboBoxes(putawayTicketView, this);
             }
         }
 

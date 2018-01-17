@@ -241,7 +241,7 @@ namespace WMS.UI
                     MessageBox.Show("对应收货单已被删除，无法收货");
                     return;
                 }
-                
+
                 //receiptTicket.State = "已收货";
                 ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
                 int n = 0;
@@ -669,28 +669,29 @@ namespace WMS.UI
                                         receiptTicketItem.State = "待送检";
                                     }
                                 }
-                                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
-
-                                if (receiptTicket.State == "送检中" || receiptTicket.State == "过检" || receiptTicket.State == "未过检")
-                                {
-                                    if (receiptTicket != null)
-                                    {
-                                        receiptTicket.State = "待送检";
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show("该送检单对应收货单已收货或上架，无法改变收货单状态，但删除送检单成功。");
-                                }
-                                wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ID = @submissionTicketID", new SqlParameter("submissionTicketID", submissionTicket.ID));
-                                wmsEntities.SaveChanges();
-                                this.Invoke(new Action(() =>
-                                {
-                                    this.Search();
-                                }));
-
-                                //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待送检' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", sti.ReceiptTicketItemID));
                             }
+                            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
+
+                            if (receiptTicket.State == "送检中" || receiptTicket.State == "过检" || receiptTicket.State == "未过检")
+                            {
+                                if (receiptTicket != null)
+                                {
+                                    receiptTicket.State = "待送检";
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("该送检单对应收货单已收货或上架，无法改变收货单状态，但删除送检单成功。");
+                            }
+                            wmsEntities.Database.ExecuteSqlCommand("DELETE FROM SubmissionTicket WHERE ID = @submissionTicketID", new SqlParameter("submissionTicketID", submissionTicket.ID));
+                            wmsEntities.SaveChanges();
+                            this.Invoke(new Action(() =>
+                            {
+                                this.Search();
+                            }));
+
+                            //wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '待送检' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", sti.ReceiptTicketItemID));
+
 
                         }
                         catch

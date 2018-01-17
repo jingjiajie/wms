@@ -627,7 +627,7 @@ namespace WMS.UI
                 {
                     WMSEntities wmsEntities = new WMSEntities();
                     TSelectObject selectedObject = wmsEntities.Database.SqlQuery<TSelectObject>(string.Format("SELECT * FROM {0} WHERE ID = {1}",typeof(TSelectObject).Name,id)).FirstOrDefault();
-                    if (selectedObject == null)
+                    if (selectedObject  == null)
                     {
                         MessageBox.Show("选中项目不存在，请重新选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;

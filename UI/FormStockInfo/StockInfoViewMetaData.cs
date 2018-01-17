@@ -18,9 +18,9 @@ namespace WMS.UI
             new KeyName(){Key="ShipmentAreaAmount",Name="发货区数量"},
             new KeyName(){Key="RejectAreaAmount",Name="不良品区数量"},
             new KeyName(){Key="ReceiptTicketNo",Name="收货单号",Editable=false,Save=false},
-            new KeyName(){Key="ReceiptTicketItemInventoryDate",Name="存货日期",Editable=false,Save=false},
-            new KeyName(){Key="ReceiptTicketItemManufactureDate",Name="生产日期",Editable=false,Save=false},
-            new KeyName(){Key="ReceiptTicketItemExpiryDate",Name="失效日期",Editable=false,Save=false},
+            new KeyName(){Key="InventoryDate",Name="存货日期",Editable=false,Save=false},
+            new KeyName(){Key="ManufactureDate",Name="生产日期",Editable=false,Save=false},
+            new KeyName(){Key="ExpiryDate",Name="失效日期",Editable=false,Save=false},
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }

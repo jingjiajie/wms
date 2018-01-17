@@ -139,10 +139,13 @@ namespace WMS.UI
                     this.ClearTextBoxes();
 
                     this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
+                    this.Controls.Find("textBoxUnit", true)[0].Text = supply.DefaultReceiptUnit;
+                    this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.DefaultReceiptUnitAmount.ToString();
                     this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
                     this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
                     this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.Component.DefaultReceiptUnitAmount.ToString();
                     this.Controls.Find("textBoxUnit", true)[0].Text = supply.Component.DefaultReceiptUnit;
+                    this.Controls.Find("textBoxInventoryDate", true)[0].Text = DateTime.Now.ToString();
                 }
                 
             }));
@@ -170,6 +173,11 @@ namespace WMS.UI
             try
             {
                 this.RefreshTextBoxes();
+                TextBox textBox = this.Controls.Find("textBoxInventoryDate", true)[0] as TextBox;
+                if (textBox.Text == null)
+                {
+                    textBox.Text = DateTime.Now.ToString();
+                }
             }
             catch
             {
@@ -209,8 +217,10 @@ namespace WMS.UI
             }
             this.jobPersonID = receiptTicketItemView.JobPersonID == null ? -1 : (int)receiptTicketItemView.JobPersonID;
             this.confirmPersonID = receiptTicketItemView.ConfirmPersonID == null ? -1 : (int)receiptTicketItemView.ConfirmPersonID;
+            
             Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(receiptTicketItemView, this);
+           
         }
 
         private void ClearTextBoxes()
@@ -460,7 +470,7 @@ namespace WMS.UI
                                 }
                             }
                             wmsEntities.SaveChanges();
-                            MessageBox.Show("修改成功");
+                            MessageBox.Show("修改成功","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Search();
                         }
                         catch
@@ -519,7 +529,7 @@ namespace WMS.UI
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).Single();
                 if (receiptTicketItem.State == "送检中")
                 {
-                    MessageBox.Show("该条目已送检");
+                    MessageBox.Show("该条目已送检", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 }
                 else
                 { 
@@ -527,7 +537,7 @@ namespace WMS.UI
                     wmsEntities.Database.ExecuteSqlCommand("UPDATE ReceiptTicketItem SET State = '送检中' WHERE ID = @receiptTicketItemID", new SqlParameter("receiptTicketItemID", receiptTicketItem.ID));
                     wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
                     wmsEntities.SaveChanges();
-                    MessageBox.Show("成功");
+                    MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception)
@@ -558,10 +568,10 @@ namespace WMS.UI
                     }
                     catch
                     {
-                        MessageBox.Show("该收货单零件已送检或收货，无法删除");
+                        MessageBox.Show("该收货单零件已送检或收货，无法删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         
                     }
-                    MessageBox.Show("删除成功");
+                    MessageBox.Show("删除成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Search();
                 }).Start();
             }

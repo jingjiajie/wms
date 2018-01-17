@@ -470,6 +470,7 @@ namespace WMS.UI
             
 
             this.Search(StockInfoCheckTicketItem.ID);
+            this.labelStatus.Text = "盘点单条目";
             
 
 
@@ -632,6 +633,7 @@ namespace WMS.UI
             })).Start();
 
             this.Search();
+            this.labelStatus.Text = "盘点单条目";
 
 
             //WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
@@ -946,7 +948,7 @@ namespace WMS.UI
                 { continue; }
 
                 StockInfoCheckTicketItem.StockInfoID = stockinfoall[i].ID;
-                StockInfoCheckTicketItem.PersonID = this.personid;
+                //StockInfoCheckTicketItem.PersonID = this.personid;
 
                 StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID;
                 StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
@@ -998,6 +1000,11 @@ namespace WMS.UI
         private void buttonAddAll_MouseLeave(object sender, EventArgs e)
         {
             buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
     

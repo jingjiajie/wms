@@ -226,8 +226,8 @@ namespace WMS.UI
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxWarehouse.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
-            this.comboBoxWarehouse.Location = new System.Drawing.Point(450, 3);
-            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.comboBoxWarehouse.Location = new System.Drawing.Point(450, 4);
+            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
             this.comboBoxWarehouse.Size = new System.Drawing.Size(242, 43);
             this.comboBoxWarehouse.TabIndex = 0;
@@ -280,7 +280,7 @@ namespace WMS.UI
             this.panelFill.Controls.Add(this.tableLayoutPanel1);
             this.panelFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFill.Location = new System.Drawing.Point(0, 224);
-            this.panelFill.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.panelFill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelFill.Name = "panelFill";
             this.panelFill.Size = new System.Drawing.Size(1144, 638);
             this.panelFill.TabIndex = 1;

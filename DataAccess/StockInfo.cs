@@ -23,6 +23,10 @@ namespace WMS.DataAccess
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
         public Nullable<decimal> RejectAreaAmount { get; set; }
+        public Nullable<int> SupplyID { get; set; }
+        public Nullable<System.DateTime> InventoryDate { get; set; }
+        public Nullable<System.DateTime> ManufactureDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Warehouse Warehouse { get; set; }

@@ -35,6 +35,7 @@ namespace WMS.DataAccess
         public Nullable<int> PersonID { get; set; }
         public Nullable<int> SubmissionPersonID { get; set; }
         public Nullable<int> DeliverSubmissionPersonID { get; set; }
+        public Nullable<System.DateTime> SubmissionDate { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ICollection<SubmissionTicketItem> SubmissionTicketItem { get; set; }

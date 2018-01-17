@@ -52,5 +52,6 @@ namespace WMS.DataAccess
         public string SubmissionPersonName { get; set; }
         public string ReceivePersonName { get; set; }
         public Nullable<int> ReceivePersonID { get; set; }
+        public Nullable<System.DateTime> SubmissionDate { get; set; }
     }
 }
