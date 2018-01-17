@@ -146,6 +146,15 @@ namespace WMS.UI
                     this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.Component.DefaultReceiptUnitAmount.ToString();
                     this.Controls.Find("textBoxUnit", true)[0].Text = supply.Component.DefaultReceiptUnit;
                     this.Controls.Find("textBoxInventoryDate", true)[0].Text = DateTime.Now.ToString();
+
+                    this.Controls.Find("textBoxWrongComponentUnit", true)[0].Text = "个";
+                    this.Controls.Find("textBoxWrongComponentUnitAmount", true)[0].Text = "1";
+
+                    this.Controls.Find("textBoxRefuseUnit", true)[0].Text = "个";
+                    this.Controls.Find("textBoxRefuseUnitAmount", true)[0].Text = "1";
+
+                    this.Controls.Find("textBoxDisqualifiedUnit", true)[0].Text = "个";
+                    this.Controls.Find("textBoxDisqualifiedUnitAmount", true)[0].Text = "1";
                 }
                 
             }));
@@ -328,28 +337,34 @@ namespace WMS.UI
                         }
                         receiptTicketItem.SupplyID = this.componentID;
                         receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
-                        if (receiptTicketItem.Unit == "")
-                        {
-                            receiptTicketItem.Unit = "个";
-                        }
-                        if (receiptTicketItem.UnitAmount == null)
-                        {
-                            receiptTicketItem.UnitAmount = 1;
-                        }
-                        if (receiptTicketItem.UnitCount == null)
-                        {
-                            receiptTicketItem.UnitCount = 0;
-                        }
-                        if (receiptTicketItem.RefuseAmount == null)
-                        {
-                            receiptTicketItem.RefuseAmount = 0;
-                        }
+                        //if (receiptTicketItem.Unit == "")
+                        //{
+                        //    receiptTicketItem.Unit = "个";
+                        //}
+                        //if (receiptTicketItem.UnitAmount == null)
+                        //{
+                        //    receiptTicketItem.UnitAmount = 1;
+                        //}
+                        //if (receiptTicketItem.UnitCount == null)
+                        //{
+                        //    receiptTicketItem.UnitCount = 0;
+                        //}
+                        //if (receiptTicketItem.RefuseAmount == null)
+                        //{
+                        //    receiptTicketItem.RefuseAmount = 0;
+                        //}
                         receiptTicketItem.JobPersonID = JobPersonIDGetter();
                         receiptTicketItem.ConfirmPersonID = ConfirmPersonIDGetter();
                         
                         wmsEntities.SaveChanges();
-
-                        receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitCount * receiptTicketItem.UnitAmount;
+                        receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
+                        receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
+                        receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
+                        receiptTicketItem.WrongComponentAmount = receiptTicketItem.WrongComponentUnitAmount * receiptTicketItem.WrongComponentUnitCount;
+                        receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount - receiptTicketItem.DisqualifiedAmount - receiptTicketItem.RefuseAmount - receiptTicketItem.WrongComponentAmount;
+                        receiptTicketItem.ShortageAmount = receiptTicketItem.ExpectedAmount - receiptTicketItem.RealReceiptAmount;
+                        receiptTicketItem.UnitCount = receiptTicketItem.ReceiviptAmount / receiptTicketItem.UnitAmount;
+                        //receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitCount * receiptTicketItem.UnitAmount;
                         StockInfo stockInfo = new StockInfo();
                         stockInfo.ProjectID = receiptTicket.ProjectID;
                         stockInfo.WarehouseID = receiptTicket.WarehouseID;

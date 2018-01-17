@@ -32,8 +32,10 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonOK = new System.Windows.Forms.Button();
             this.GroupBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
             this.GroupBox.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelTextBoxes
@@ -50,7 +52,7 @@
             this.tableLayoutPanelTextBoxes.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanelTextBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTextBoxes.Font = new System.Drawing.Font("黑体", 10F);
-            this.tableLayoutPanelTextBoxes.Location = new System.Drawing.Point(3, 39);
+            this.tableLayoutPanelTextBoxes.Location = new System.Drawing.Point(2, 3);
             this.tableLayoutPanelTextBoxes.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tableLayoutPanelTextBoxes.Name = "tableLayoutPanelTextBoxes";
             this.tableLayoutPanelTextBoxes.RowCount = 10;
@@ -64,8 +66,9 @@
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 8.333333F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37F));
-            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(811, 498);
+            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(807, 193);
             this.tableLayoutPanelTextBoxes.TabIndex = 0;
+            this.tableLayoutPanelTextBoxes.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanelTextBoxes_Paint);
             // 
             // tableLayoutPanel1
             // 
@@ -75,16 +78,16 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 214F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.65398F));
             this.tableLayoutPanel1.Controls.Add(this.buttonOK, 1, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Font = new System.Drawing.Font("黑体", 10F);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 421);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 202);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.02772F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 58.39171F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.58057F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(811, 116);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(807, 293);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // buttonOK
@@ -95,10 +98,10 @@
             this.buttonOK.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonOK.FlatAppearance.BorderSize = 0;
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonOK.Location = new System.Drawing.Point(302, 29);
+            this.buttonOK.Location = new System.Drawing.Point(300, 70);
             this.buttonOK.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(210, 61);
+            this.buttonOK.Size = new System.Drawing.Size(210, 165);
             this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -110,8 +113,7 @@
             // GroupBox
             // 
             this.GroupBox.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.GroupBox.Controls.Add(this.tableLayoutPanel1);
-            this.GroupBox.Controls.Add(this.tableLayoutPanelTextBoxes);
+            this.GroupBox.Controls.Add(this.tableLayoutPanel2);
             this.GroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupBox.Location = new System.Drawing.Point(0, 0);
             this.GroupBox.Name = "GroupBox";
@@ -119,6 +121,21 @@
             this.GroupBox.TabIndex = 2;
             this.GroupBox.TabStop = false;
             this.GroupBox.Text = "创建收货单";
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelTextBoxes, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 39);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(811, 498);
+            this.tableLayoutPanel2.TabIndex = 2;
             // 
             // FormReceiptTicketModify
             // 
@@ -137,6 +154,7 @@
             this.Load += new System.EventHandler(this.ReceiptTicketModify_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.GroupBox.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -147,5 +165,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.GroupBox GroupBox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

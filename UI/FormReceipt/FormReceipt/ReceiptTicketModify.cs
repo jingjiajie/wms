@@ -70,6 +70,7 @@ namespace WMS.UI.FormReceipt
             this.personIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             if (this.formMode == FormMode.ALTER)
             {
+                this.buttonOK.Text = "修改收货单";
                 ReceiptTicketView receiptTicketView = (from s in this.wmsEntities.ReceiptTicketView
                                                        where s.ID == this.ID
                                                        select s).Single();
@@ -112,7 +113,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
-                
+                this.buttonOK.Text = "添加收货单";
                 
                 Warehouse warehouse = (from wh in wmsEntities.Warehouse where wh.ID == this.warehouseID select wh).FirstOrDefault();
                 if (warehouse == null)
@@ -522,6 +523,11 @@ namespace WMS.UI.FormReceipt
         private void buttonOK_MouseDown(object sender, MouseEventArgs e)
         {
             buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void tableLayoutPanelTextBoxes_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
