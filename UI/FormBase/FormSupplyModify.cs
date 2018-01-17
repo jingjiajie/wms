@@ -107,7 +107,7 @@ namespace WMS.UI
             }
 
             //this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
-            //this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            this.Controls.Find("textBoxComponentName", true)[0].TextChanged += textBoxComponentName_TextChanged;
         }
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
@@ -130,6 +130,22 @@ namespace WMS.UI
             });
             formSelectSupplier.Show();
             
+        }
+        private void textBoxComponentName_TextChanged(object sender, EventArgs e)
+        {
+
+            int a = ComponenIDGetter();
+            WMSEntities wmsEntities = new WMSEntities();
+                var componenName = (from s in wmsEntities.ComponentView
+                                    where s.ID == a
+                                    select s).FirstOrDefault();
+
+                this.Controls.Find("textBoxDefaultReceiptUnit", true)[0].Text = componenName.DefaultReceiptUnit;
+                this.Controls.Find("textBoxDefaultReceiptUnitAmount", true)[0].Text = Convert.ToString(componenName.DefaultReceiptUnitAmount);
+                this.Controls.Find("textBoxDefaultShipmentUnit", true)[0].Text = componenName.DefaultShipmentUnit;
+                this.Controls.Find("textBoxDefaultShipmentUnitAmount", true)[0].Text = Convert.ToString(componenName.DefaultShipmentUnitAmount);
+
+
         }
         private void textBoxComponentName_Click(object sender, EventArgs e)
         {
