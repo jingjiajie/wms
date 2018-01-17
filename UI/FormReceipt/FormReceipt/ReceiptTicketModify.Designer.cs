@@ -93,11 +93,13 @@
             // 
             // buttonOK
             // 
-            this.buttonOK.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_s;
+            this.buttonOK.BackgroundImage = global::WMS.UI.Properties.Resources.bottonB2_q;
             this.buttonOK.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonOK.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonOK.FlatAppearance.BorderSize = 0;
+            this.buttonOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOK.Location = new System.Drawing.Point(382, 17);
             this.buttonOK.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -125,6 +127,7 @@
             // 
             // tableLayoutPanel2
             // 
+            this.tableLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanelTextBoxes, 0, 0);

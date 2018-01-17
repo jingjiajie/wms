@@ -39,8 +39,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonSelect = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
+            this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -52,23 +52,23 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 373);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 469);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(662, 22);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 11, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(883, 25);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(56, 17);
+            this.labelStatus.Size = new System.Drawing.Size(69, 20);
             this.labelStatus.Text = "选择零件";
             // 
             // toolStrip1
@@ -85,20 +85,20 @@
             this.buttonSelect});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(662, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(883, 28);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(68, 25);
+            this.toolStripLabel1.Size = new System.Drawing.Size(84, 25);
             this.toolStripLabel1.Text = "零件名称：";
             // 
             // textBoxComponenName
             // 
             this.textBoxComponenName.Name = "textBoxComponenName";
-            this.textBoxComponenName.Size = new System.Drawing.Size(102, 28);
+            this.textBoxComponenName.Size = new System.Drawing.Size(135, 28);
             this.textBoxComponenName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxComponenName_KeyPress);
             this.textBoxComponenName.Click += new System.EventHandler(this.textBoxComponenName_Click);
             this.textBoxComponenName.VisibleChanged += new System.EventHandler(this.textBoxComponenName_VisibleChanged);
@@ -108,7 +108,7 @@
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(56, 25);
+            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
@@ -123,7 +123,7 @@
             this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
             this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(80, 25);
+            this.buttonSelect.Size = new System.Drawing.Size(93, 25);
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
@@ -135,12 +135,22 @@
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 28);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(662, 345);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(883, 441);
             this.tableLayoutPanel1.TabIndex = 16;
+            // 
+            // panelPagerWidget
+            // 
+            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPagerWidget.Location = new System.Drawing.Point(3, 405);
+            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelPagerWidget.Name = "panelPagerWidget";
+            this.panelPagerWidget.Size = new System.Drawing.Size(877, 34);
+            this.panelPagerWidget.TabIndex = 16;
             // 
             // reoGridControlMain
             // 
@@ -148,8 +158,8 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(2, 2);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(2);
+            this.reoGridControlMain.Location = new System.Drawing.Point(3, 2);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -157,30 +167,22 @@
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 70;
+            this.reoGridControlMain.SheetTabWidth = 93;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(658, 311);
+            this.reoGridControlMain.Size = new System.Drawing.Size(877, 399);
             this.reoGridControlMain.TabIndex = 15;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
-            // panelPagerWidget
-            // 
-            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(2, 317);
-            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(2);
-            this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(658, 26);
-            this.panelPagerWidget.TabIndex = 16;
-            // 
             // FormSelectComponen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(662, 395);
+            this.ClientSize = new System.Drawing.Size(883, 494);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSelectComponen";

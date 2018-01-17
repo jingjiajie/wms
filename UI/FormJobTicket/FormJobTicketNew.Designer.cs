@@ -104,6 +104,8 @@
             this.buttonOK.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonOK.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonOK.FlatAppearance.BorderSize = 0;
+            this.buttonOK.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonOK.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOK.Font = new System.Drawing.Font("黑体", 10F);
             this.buttonOK.Location = new System.Drawing.Point(397, 3);
