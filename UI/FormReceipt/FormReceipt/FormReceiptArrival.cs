@@ -608,6 +608,11 @@ namespace WMS.UI
                     MessageBox.Show("该收货单已经生成上架单，点击查看对应上架单按钮查看！");
                     return;
                 }*/
+                if (receiptTicket.State == "待收货")
+                {
+                    MessageBox.Show("生成上架单前请先收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)
                 {
                     MessageBox.Show("没有为该收货单添加收货单条目，无法生成上架单，请添加后重试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -999,6 +1004,11 @@ namespace WMS.UI
                 }
                 else
                 {
+                    if (receiptTicket.State == "拒收")
+                    {
+                        MessageBox.Show("该收货单已经拒收，无法重新收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     if (MessageBox.Show("确认收货？收货后收货单条目将无法更改。", "提问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
                         return;
@@ -1100,7 +1110,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    if (MessageBox.Show("确认拒收？拒收后收货单条目将无法更改。", "提问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    if (MessageBox.Show("确认拒收？拒收后收货单条目将无法更改。且无法重新收货。", "提问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
                         return;
                     }
