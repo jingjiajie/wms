@@ -32,17 +32,16 @@ namespace WMS.UI.FormReceipt
         public FormShelvesItem()
         {
             InitializeComponent();
+            InitComponents();
         }
 
-        public FormShelvesItem(int putawayTicketID)
+        public FormShelvesItem(int putawayTicketID):this()
         {
-            InitializeComponent();
             this.putawayTicketID = putawayTicketID;
         }
 
-        public FormShelvesItem(int projectID, int warehouseID, int userID, string key, string value)
+        public FormShelvesItem(int projectID, int warehouseID, int userID, string key, string value):this()
         {
-            InitializeComponent();
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
@@ -65,7 +64,7 @@ namespace WMS.UI.FormReceipt
             {
                 this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 11F));
                 this.tableLayoutPanelProperties.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 22F));
-                
+
             }
             for (int i = 0; i < 6; i++)
             {
@@ -75,9 +74,9 @@ namespace WMS.UI.FormReceipt
             {
                 this.tableLayoutPanelProperties.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             }
+
         }
 
-       
 
         public void SetCallBack(Action action)
         {
@@ -86,13 +85,19 @@ namespace WMS.UI.FormReceipt
 
         private void FormShelvesItem_Load(object sender, EventArgs e)
         {
-            InitComponents();
             if (this.key != null && this.value != null)
             {
                 this.SetTableLayOut();
             }
-            InitPanel();
-            
+            new Thread(()=> {
+                if (this.IsDisposed) return;
+                this.Invoke(new Action(()=>
+                {
+                    this.tableLayoutPanelProperties.Visible = false;
+                    InitPanel();
+                    this.tableLayoutPanelProperties.Visible = true;
+                }));
+            }).Start();
             WMSEntities wmsEntities = new WMSEntities();
             pagerWidget = new PagerWidget<PutawayTicketItemView>(this.reoGridControlPutaway, ReceiptMetaData.putawayTicketItemKeyName, projectID, warehouseID);
             this.panel4.Controls.Add(pagerWidget);
@@ -130,7 +135,7 @@ namespace WMS.UI.FormReceipt
 
         private void InitPanel()
         {
-            WMSEntities wmsEntities = new WMSEntities();
+            //WMSEntities wmsEntities = new WMSEntities();
             //this.Controls.Clear();
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ReceiptMetaData.putawayTicketItemKeyName);
             this.ConfirmIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");

@@ -95,7 +95,7 @@
             this.textBoxPassword.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(318, 43);
+            this.textBoxPassword.Size = new System.Drawing.Size(348, 43);
             this.textBoxPassword.TabIndex = 1;
             this.textBoxPassword.UseSystemPasswordChar = true;
             this.textBoxPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPassword_KeyPress);
@@ -108,7 +108,7 @@
             this.textBoxUsername.Location = new System.Drawing.Point(176, 8);
             this.textBoxUsername.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(318, 43);
+            this.textBoxUsername.Size = new System.Drawing.Size(348, 43);
             this.textBoxUsername.TabIndex = 0;
             this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
             this.textBoxUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxUsername_KeyPress);
@@ -249,7 +249,7 @@
             this.comboBoxWarehouse.Location = new System.Drawing.Point(179, 223);
             this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(9, 13, 9, 13);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
-            this.comboBoxWarehouse.Size = new System.Drawing.Size(312, 43);
+            this.comboBoxWarehouse.Size = new System.Drawing.Size(342, 43);
             this.comboBoxWarehouse.TabIndex = 3;
             // 
             // comboBoxProject
@@ -261,7 +261,7 @@
             this.comboBoxProject.Location = new System.Drawing.Point(179, 153);
             this.comboBoxProject.Margin = new System.Windows.Forms.Padding(9, 13, 9, 13);
             this.comboBoxProject.Name = "comboBoxProject";
-            this.comboBoxProject.Size = new System.Drawing.Size(312, 43);
+            this.comboBoxProject.Size = new System.Drawing.Size(342, 43);
             this.comboBoxProject.TabIndex = 2;
             // 
             // label2
