@@ -312,6 +312,7 @@ namespace WMS.UI
         public static void CreateEditPanel(TableLayoutPanel tableLayoutPanel, KeyName[] keyNames)
         {
             //初始化属性编辑框
+            tableLayoutPanel.SuspendLayout();
             tableLayoutPanel.Controls.Clear();
             for (int i = 0; i < keyNames.Length; i++)
             {
@@ -450,6 +451,7 @@ namespace WMS.UI
                 }
             }
             FillTextBoxDefaultValues(tableLayoutPanel, keyNames);
+            tableLayoutPanel.ResumeLayout();
         }
 
         public static int[] GetSelectedIDs(ReoGridControl reoGridControl)

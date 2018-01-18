@@ -103,6 +103,7 @@ namespace WMS.UI.FormBase
                 {
                     this.labelStatus.Text = "搜索完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    worksheet.Rows = userViews.Length < 10 ? 10 : userViews.Length;
                     if (userViews.Length == 0)
                     {
                         worksheet[0, 1] = "没有查询到符合条件的记录";
