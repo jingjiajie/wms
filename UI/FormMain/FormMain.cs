@@ -299,7 +299,7 @@ namespace WMS.UI
                     catch
                     {
 
-                        MessageBox.Show("操作失败，请检查网络连接222", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                }
@@ -309,12 +309,12 @@ namespace WMS.UI
             catch(Exception ex)
             {
 
-                MessageBox.Show("操作失败，请检查网络连接333", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
 
-            if(days<0||remindtext !=""||this.contractstate =="待审核"||days_start ==false ||reminedays ==10||reminedays <10 )
+            if(days<0||remindtext !=""||this.contractstate =="待审核"||days_start ==false )//||reminedays ==10||reminedays <10 )
 
             {
                 int contract_effect = 0;
