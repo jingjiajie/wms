@@ -540,6 +540,8 @@ namespace WMS.UI
                         {
                             string suppliername;
                             string componentname;
+                            string no;
+                            no = results[i].No;
                             suppliername = suppliernames[i];
                             componentname = componentnames[i];
                             int importcomponenID=-1;
@@ -558,25 +560,38 @@ namespace WMS.UI
 
                                     return false;
                                 }
+                            if (results[i].No.Length == 0)
+                            {
+                                MessageBox.Show("第" + (i + 1) + "行代号不能为空！请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                return false;
+                            }
 
 
 
 
 
 
-                            //检查导入列表中是否重名
-                            for (int j = i + 1; j < results.Length; j++)
+                                //检查导入列表中是否重名
+                                for (int j = i + 1; j < results.Length; j++)
                                 {
 
 
-                                    if (suppliernames[j] == suppliername && componentnames[j] == componentname)
+
+                                    if (results[i].No== results[j].No)
                                     {
-                                        MessageBox.Show("您输入的供货商——零件：" + suppliername + "——" + componentname + "条目在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        MessageBox.Show("您输入的代号：" + results[i].No + "条目在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                                         return false;
                                     }
+                                //if (suppliernames[j] == suppliername && componentnames[j] == componentname)
+                                //{
+                                //    MessageBox.Show("您输入的供货商——零件：" + suppliername + "——" + componentname + "条目在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                                }
+                                //    return false;
+                                //}
+
+                            }
                                 //检查数据库中同名
                                 try
                                 {
@@ -605,14 +620,26 @@ namespace WMS.UI
                                         return false;
                                     }
 
-                                    var sameNameUsers = (from u in wmsEntities.Supply
+                                var sameNameUser = (from u in wmsEntities.Supply
+                                                     where 
+                                                     u.No == no
+                                                     && u.ProjectID == this.projectID && u.WarehouseID == this.warehouseID
+                                                     select u).ToArray();
+                                if (sameNameUser.Length > 0)
+                                {
+                                    MessageBox.Show("导入供应信息失败，已存在相同代号供货条目："  + no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return false;
+                                }
+
+                                var sameNameUsers = (from u in wmsEntities.Supply
                                                          where u.SupplierID == importsupplierID
                                                          && u.ComponentID == importcomponenID
+                                                         && u.No == no
                                                          && u.ProjectID == this.projectID && u.WarehouseID == this.warehouseID
                                                          select u).ToArray();
                                     if (sameNameUsers.Length > 0)
                                     {
-                                        MessageBox.Show("导入供应信息失败，已存在同名供应商——零件供货条目：" + suppliername + "——" + componentname, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        MessageBox.Show("导入供应信息失败，已存在同名供应商——零件——代号供货条目：" + suppliername + "——" + componentname+"——"+no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                         return false;
                                     }
                                 }

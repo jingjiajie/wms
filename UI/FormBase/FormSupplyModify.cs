@@ -267,14 +267,15 @@ namespace WMS.UI
                 try
                 {
                     var sameNameUsers = (from u in wmsEntities.Supply
-                                         where u.SupplierID == supplierID
-                                         && u.ComponentID== this.componenID
+                                         where 
+                                        
+                                         u.No==textBoxNo.Text
                                             && u.ID != supply.ID && u.IsHistory == 0
                                             &&u.ProjectID ==this.projectID &&u.WarehouseID ==this.warehouseID  
                                          select u).ToArray();
                     if (sameNameUsers.Length > 0)
                     {
-                        MessageBox.Show("修改供应信息失败，已存在同名供应商——零件供货条目：" + textBoxSupplierName.Text+"——"+ textBoxComponentName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("修改供应信息失败，已存在相同代号条目：" + textBoxNo.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
@@ -284,6 +285,27 @@ namespace WMS.UI
                     MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                //try
+                //{
+                //    var sameNameUsers = (from u in wmsEntities.Supply
+                //                         where u.SupplierID == supplierID
+                //                         && u.ComponentID == this.componenID
+                //                         && u.No == textBoxNo.Text
+                //                            && u.ID != supply.ID && u.IsHistory == 0
+                //                            && u.ProjectID == this.projectID && u.WarehouseID == this.warehouseID
+                //                         select u).ToArray();
+                //    if (sameNameUsers.Length > 0)
+                //    {
+                //        MessageBox.Show("修改供应信息失败，已存在同名供应商——零件供货条目：" + textBoxSupplierName.Text + "——" + textBoxComponentName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //        return;
+                //    }
+                //}
+                //catch
+                //{
+
+                //    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    return;
+                //}
 
 
                 if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
@@ -346,13 +368,14 @@ namespace WMS.UI
                 try
                 {
                     var sameNameUsers = (from u in wmsEntities.Supply
-                                         where u.SupplierID == supplierID
-                                         && u.ComponentID == this.componenID
+                                         where 
+                                         
+                                          u.No == textBoxNo.Text
                                          && u.ProjectID == this.projectID && u.WarehouseID == this.warehouseID
                                          select u).ToArray();
                     if (sameNameUsers.Length > 0)
                     {
-                        MessageBox.Show("修改供应信息失败，已存在同名供应商——零件供货条目：" + textBoxSupplierName.Text + "——" + textBoxComponentName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("修改供应信息失败，已存在相同代号条目：" + textBoxNo.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
