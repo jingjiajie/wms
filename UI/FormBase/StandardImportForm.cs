@@ -220,7 +220,7 @@ namespace WMS.UI
             }
             else
             {
-                this.reoGridControlMain.ImeMode = ImeMode.NoControl;
+                this.reoGridControlMain.ImeMode = 0;
             }
         }
 
