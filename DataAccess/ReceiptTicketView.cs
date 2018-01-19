@@ -72,5 +72,7 @@ namespace WMS.DataAccess
         public string WarehouseName { get; set; }
         public string UseUnit { get; set; }
         public string ReceiptUnit { get; set; }
+        public string Comment { get; set; }
+        public string RefuseComment { get; set; }
     }
 }

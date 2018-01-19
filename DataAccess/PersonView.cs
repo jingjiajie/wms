@@ -19,5 +19,7 @@ namespace WMS.DataAccess
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
         public string Position { get; set; }
+        public string ProjectName { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

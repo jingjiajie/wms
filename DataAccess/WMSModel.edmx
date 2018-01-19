@@ -249,6 +249,8 @@
           <Property Name="HasPutawayTicket" Type="nvarchar" MaxLength="64" />
           <Property Name="UseUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="64" />
+          <Property Name="RefuseComment" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="ReceiptTicketItem">
           <Key>
@@ -699,11 +701,13 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="64" />
           <Property Name="ProjectID" Type="int" />
           <Property Name="WarehouseID" Type="int" />
           <Property Name="Position" Type="nvarchar" MaxLength="64" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="64" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ProjectView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1051,6 +1055,8 @@
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="UseUnit" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="64" />
+          <Property Name="RefuseComment" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2014,7 +2020,9 @@ FROM [dbo].[PackageUnitView] AS [PackageUnitView]</DefiningQuery>
 [PersonView].[Name] AS [Name], 
 [PersonView].[ProjectID] AS [ProjectID], 
 [PersonView].[WarehouseID] AS [WarehouseID], 
-[PersonView].[Position] AS [Position]
+[PersonView].[Position] AS [Position], 
+[PersonView].[ProjectName] AS [ProjectName], 
+[PersonView].[WarehouseName] AS [WarehouseName]
 FROM [dbo].[PersonView] AS [PersonView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ProjectView" EntityType="Self.ProjectView" store:Type="Views" store:Schema="dbo">
@@ -2334,7 +2342,9 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[WarehouseID] AS [WarehouseID], 
 [ReceiptTicketView].[WarehouseName] AS [WarehouseName], 
 [ReceiptTicketView].[UseUnit] AS [UseUnit], 
-[ReceiptTicketView].[ReceiptUnit] AS [ReceiptUnit]
+[ReceiptTicketView].[ReceiptUnit] AS [ReceiptUnit], 
+[ReceiptTicketView].[Comment] AS [Comment], 
+[ReceiptTicketView].[RefuseComment] AS [RefuseComment]
 FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketItemView" EntityType="Self.ShipmentTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -3277,6 +3287,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="HasPutawayTicket" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="UseUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RefuseComment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="WMSModel.FK_ReceiptTicket_Project" FromRole="ReceiptTicket" ToRole="Project" />
           <NavigationProperty Name="ReceiptTicketItem" Relationship="WMSModel.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicket" ToRole="ReceiptTicketItem" />
           <NavigationProperty Name="Supplier" Relationship="WMSModel.FK_ReceiptTicket_Supplier" FromRole="ReceiptTicket" ToRole="Supplier" />
@@ -3755,11 +3767,13 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ProjectID" Type="Int32" />
           <Property Name="WarehouseID" Type="Int32" />
           <Property Name="Position" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProjectView">
           <Key>
@@ -4093,6 +4107,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="UseUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="RefuseComment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ShipmentTicketItemView">
           <Key>
@@ -4897,7 +4913,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -5113,6 +5129,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicket">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicket">
               <MappingFragment StoreEntitySet="ReceiptTicket">
+                <ScalarProperty Name="RefuseComment" ColumnName="RefuseComment" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="ReceiptUnit" ColumnName="ReceiptUnit" />
                 <ScalarProperty Name="UseUnit" ColumnName="UseUnit" />
                 <ScalarProperty Name="HasPutawayTicket" ColumnName="HasPutawayTicket" />
@@ -5611,6 +5629,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="PersonView">
             <EntityTypeMapping TypeName="WMSModel.PersonView">
               <MappingFragment StoreEntitySet="PersonView">
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
                 <ScalarProperty Name="Position" ColumnName="Position" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
@@ -5892,6 +5912,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ReceiptTicketView">
             <EntityTypeMapping TypeName="WMSModel.ReceiptTicketView">
               <MappingFragment StoreEntitySet="ReceiptTicketView">
+                <ScalarProperty Name="RefuseComment" ColumnName="RefuseComment" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="ReceiptUnit" ColumnName="ReceiptUnit" />
                 <ScalarProperty Name="UseUnit" ColumnName="UseUnit" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
