@@ -22,6 +22,9 @@ namespace WMS.UI
             new KeyName(){Key="DefaultReceiptUnitAmount",Name="默认收货单位数量",Visible = true, Editable = true},
             new KeyName(){Key="DefaultShipmentUnit",Name="默认发货单位",Visible = true, Editable = true},
             new KeyName(){Key="DefaultShipmentUnitAmount",Name="默认发货单位数量",Visible = true, Editable = true},
+            new KeyName(){Key="DefaultSubmissionAmount",Name="默认送检数量",Visible = true, Editable = true},
+            new KeyName(){Key="SafetyStock",Name="安全库存数量",Visible = true, Editable = true},
+            new KeyName(){Key="ValidPeriod",Name="有效期限（天）",Visible = true, Editable = true},
 
             new KeyName(){Key="PhotoIndex",Name="照片索引",Visible = true, Editable = true},
             new KeyName(){Key="ContainerNo",Name="容器号",Visible = true, Editable = true},
