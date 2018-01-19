@@ -26,16 +26,16 @@ namespace WMS.UI
         //private TimeSpan days;
         private int days;
         private string remindtext;
-        private int contract_effect;
+        
         private string contractstate = "";
         private  bool startend;
         private bool  daysstart;
-        public FormSupplierRemind(int days ,string remindtext,int contract_effect,string contractstate,bool startend, bool  daysstart)
+        public FormSupplierRemind(int days ,string remindtext,string contractstate,bool startend, bool  daysstart)
         {
             InitializeComponent();
             this.days = days;
             this.remindtext = remindtext;
-            this.contract_effect = contract_effect;
+            
             this.contractstate = contractstate;
             this.startend = startend;
             this.daysstart = daysstart;
