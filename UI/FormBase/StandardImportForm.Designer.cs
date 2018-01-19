@@ -45,7 +45,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(1254, 38);
+            this.toolStripTop.Size = new System.Drawing.Size(998, 38);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -65,26 +65,27 @@
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
             this.reoGridControlMain.Location = new System.Drawing.Point(0, 38);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
             this.reoGridControlMain.Script = null;
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 120;
+            this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1254, 660);
+            this.reoGridControlMain.Size = new System.Drawing.Size(998, 659);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
             // StandardImportForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1254, 698);
+            this.ClientSize = new System.Drawing.Size(998, 697);
             this.Controls.Add(this.reoGridControlMain);
             this.Controls.Add(this.toolStripTop);
+            this.Font = new System.Drawing.Font("黑体", 10F);
             this.Name = "StandardImportForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "导入用户信息";

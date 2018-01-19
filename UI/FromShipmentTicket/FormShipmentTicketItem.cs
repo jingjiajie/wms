@@ -30,6 +30,8 @@ namespace WMS.UI
         private TextBox textBoxComponentName = null;
         private FormSelectStockInfo formSelectStockInfo = null;
 
+        private StandardImportForm<ShipmentTicketItem> standardImportForm = null;
+
         private KeyName[] visibleColumns = (from kn in ShipmentTicketItemViewMetaData.KeyNames
                                             where kn.Visible == true
                                             select kn).ToArray();
@@ -642,6 +644,133 @@ namespace WMS.UI
         private void buttonAlter_MouseDown(object sender, MouseEventArgs e)
         {
             buttonAlter.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
-        }      
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            this.standardImportForm = new StandardImportForm<ShipmentTicketItem>(
+                ShipmentTicketItemViewMetaData.KeyNames,
+                importItemHandler,
+                null,
+                "导入发货单条目"
+                );
+            standardImportForm.Show();
+        }
+
+        private bool importItemHandler(ShipmentTicketItem[] results,Dictionary<string,string[]> unimportedColumns)
+        {
+            List<ShipmentTicketItem> realImportList = new List<ShipmentTicketItem>(); //真正要导入的ShipmentTicketItem（有的一个result项可能对应多个导入项）
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                for (int i = 0; i < results.Length; i++)
+                {
+                    string componentName = unimportedColumns["ComponentName"][i];
+                    string jobPersonName = unimportedColumns["JobPersonName"][i];
+                    string confirmPersonName = unimportedColumns["ConfirmPersonName"][i];
+                    DataAccess.Component component = (from c in wmsEntities.Component where c.Name == componentName select c).FirstOrDefault();
+                    if (component == null)
+                    {
+                        MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, componentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    StockInfoView[] stockInfoViews = (from s in wmsEntities.StockInfoView
+                                                      where s.ComponentName == componentName
+                                                            && s.ShipmentAreaAmount > 0
+                                                      orderby s.InventoryDate ascending
+                                                      select s).ToArray();
+                    int jobPersonID = -1;
+                    int confirmPersonID = -1;
+                    //搜索作业人名
+                    if (string.IsNullOrWhiteSpace(jobPersonName) == false)
+                    {
+                        Person jobPerson = (from p in wmsEntities.Person where p.Name == jobPersonName select p).FirstOrDefault();
+                        if (jobPerson == null)
+                        {
+                            MessageBox.Show(string.Format("行{0}：作业人员\"{1}\"不存在！", i + 1, jobPersonName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
+                        jobPersonID = jobPerson.ID;
+                    }
+                    //搜索确认人名
+                    if (string.IsNullOrWhiteSpace(confirmPersonName) == false)
+                    {
+                        Person confirmPerson = (from p in wmsEntities.Person where p.Name == confirmPersonName select p).FirstOrDefault();
+                        if (confirmPerson == null)
+                        {
+                            MessageBox.Show(string.Format("行{0}：确认人员\"{1}\"不存在！", i + 1, confirmPersonName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
+                        confirmPersonID = confirmPerson.ID;
+                    }
+
+                    decimal stockAmount = stockInfoViews.Sum((stockInfoView) => stockInfoView.ShipmentAreaAmount) ?? 0;
+                    if (stockAmount < results[i].ShipmentAmount * results[i].UnitAmount)
+                    {
+                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存数：{2}）", i + 1, componentName, Utilities.DecimalToString(stockAmount)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    results[i].ShipmentTicketID = this.shipmentTicketID;
+                    results[i].JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
+                    results[i].ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
+                    decimal curAmount = 0;
+                    for (int j = 0; j < stockInfoViews.Length; j++)
+                    {
+                        ShipmentTicketItem newItem = new ShipmentTicketItem();
+                        Utilities.CopyProperties(results[i], newItem);
+                        newItem.StockInfoID = stockInfoViews[j].ID;
+                        //当前StockInfo的数量小于要发货的数量
+                        if (curAmount + stockInfoViews[j].ShipmentAreaAmount < results[i].ShipmentAmount)
+                        {
+                            newItem.ShipmentAmount = stockInfoViews[j].ShipmentAreaAmount;
+                            realImportList.Add(newItem);
+                            curAmount += newItem.ShipmentAmount.Value;
+                        }
+                        else //当前StockInfo数量大于等于需要发货的数量
+                        {
+                            newItem.ShipmentAmount = results[i].ShipmentAmount - curAmount;
+                            realImportList.Add(newItem);
+                            curAmount += newItem.ShipmentAmount.Value;
+                            break;
+                        }
+                    }
+                }
+
+                foreach (ShipmentTicketItem item in realImportList)
+                {
+                    //增肌条目，扣除库存
+                    StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
+                    stockInfo.ShipmentAreaAmount -= item.ShipmentAmount;
+                    wmsEntities.ShipmentTicketItem.Add(item);
+                }
+                wmsEntities.SaveChanges();
+                this.Search();
+                MessageBox.Show("导入成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.standardImportForm.Close();
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return false;
+        }
+
+        private void buttonImport_MouseEnter(object sender, EventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonImport_MouseLeave(object sender, EventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonImport_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
     }
 }

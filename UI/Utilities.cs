@@ -673,5 +673,14 @@ namespace WMS.UI
                 return null;
             }
         }
+
+        public static void CopyProperties<T>(T srcObject,T targetObject)
+        {
+            foreach(PropertyInfo property in srcObject.GetType().GetProperties())
+            {
+                object srcValue = property.GetValue(srcObject,null);
+                property.SetValue(targetObject, srcValue, null);
+            }
+        }
     }
 }
