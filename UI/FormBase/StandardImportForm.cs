@@ -16,14 +16,14 @@ namespace WMS.UI
 {
     public partial class StandardImportForm<TargetClass> : Form where TargetClass:class,new()
     {
-        private KeyName[] keyNames = null;
+        private KeyName[] importVisibleKeyNames = null;
         private Func<TargetClass[],Dictionary<string,string[]>,bool> importListener = null;
         private Action importFinishedCallback = null;
 
         public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback,string formTitle = "导入信息")
         {
             InitializeComponent();
-            this.keyNames = keyNames;
+            this.importVisibleKeyNames = (from kn in keyNames where kn.ImportVisible == true select kn).ToArray(); ;
             this.importListener = importHandler;
             this.importFinishedCallback = importFinishedCallback;
             this.Text = formTitle;
@@ -31,6 +31,7 @@ namespace WMS.UI
 
         private void StandardImportForm_Load(object sender, EventArgs e)
         {
+            this.comboBoxImeMode.SelectedIndex = 0;
             this.Icon = System.Drawing.Icon.FromHandle(Properties.Resources._20180114034630784_easyicon_net_64.GetHicon());
             this.InitReoGridImport();
         }
@@ -40,7 +41,7 @@ namespace WMS.UI
             FormLoading formLoading = new FormLoading("正在导入，请稍后...");
             formLoading.Show();
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            TargetClass[] newObjs = this.MakeObjectByReoGridImport<TargetClass>(this.reoGridControlMain, this.keyNames, out string errorMessage);
+            TargetClass[] newObjs = this.MakeObjectByReoGridImport<TargetClass>(out string errorMessage);
             if (newObjs == null)
             {
                 formLoading.Close();
@@ -54,12 +55,12 @@ namespace WMS.UI
                 return;
             }
             Dictionary<string, string[]> unImportedColumns = new Dictionary<string, string[]>();
-            for(int i = 0; i < this.keyNames.Length; i++)
+            for(int i = 0; i < this.importVisibleKeyNames.Length; i++)
             {
                 //如果在导入窗口中可见的列设置为不导入，则加入未导入列表中
-                if(this.keyNames[i].ImportVisible == true && this.keyNames[i].Import == false)
+                if(this.importVisibleKeyNames[i].Import == false)
                 {
-                    unImportedColumns.Add(this.keyNames[i].Key, this.GetColumn(i, newObjs.Length));
+                    unImportedColumns.Add(this.importVisibleKeyNames[i].Key, this.GetColumn(i, newObjs.Length));
                 }
             }
             if (this.importListener(newObjs, unImportedColumns) == false)
@@ -135,25 +136,25 @@ namespace WMS.UI
         {
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            for (int i = 0; i < keyNames.Length; i++)
+            
+            for (int i = 0; i < importVisibleKeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = keyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = keyNames[i].ImportVisible;
+                worksheet.ColumnHeaders[i].Text = importVisibleKeyNames[i].Name;
             }
-            worksheet.Columns = keyNames.Length; //限制表的长度
+            worksheet.Columns = importVisibleKeyNames.Length; //限制表的长度
         }
 
-        private T[] MakeObjectByReoGridImport<T>(ReoGridControl reoGridControl, KeyName[] keyNames, out string errorMessage) where T : new()
+        private T[] MakeObjectByReoGridImport<T>(out string errorMessage) where T : new()
         {
-            var worksheet = reoGridControl.Worksheets[0];
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
             List<T> result = new List<T>();
-            string[] propertyNames = (from kn in keyNames
+            string[] propertyNames = (from kn in importVisibleKeyNames
                                       select kn.Key).ToArray();
             //遍历行
             for (int line = 0; line < worksheet.Rows; line++)
             {
                 //如果是空行，则跳过
-                if (IsEmptyLine(reoGridControl, line))
+                if (IsEmptyLine(this.reoGridControlMain, line))
                 {
                     continue;
                 }
@@ -161,10 +162,10 @@ namespace WMS.UI
                 T newObj = new T();
                 result.Add(newObj);
                 //遍历列
-                for (int col = 0; col < keyNames.Length; col++)
+                for (int col = 0; col < importVisibleKeyNames.Length; col++)
                 {
                     //如果字段对导入不可见，或者可见但不导入，则跳过
-                    if (keyNames[col].ImportVisible == false || keyNames[col].Import == false)
+                    if (importVisibleKeyNames[col].Import == false)
                     {
                         continue;
                     }
@@ -179,7 +180,7 @@ namespace WMS.UI
                     {
                         cellString = curCell.Data.ToString();
                     }
-                    if (Utilities.CopyTextToProperty(cellString, propertyNames[col], newObj, keyNames, out errorMessage) == false)
+                    if (Utilities.CopyTextToProperty(cellString, propertyNames[col], newObj, importVisibleKeyNames, out errorMessage) == false)
                     {
                         errorMessage = string.Format("行{0}：{1}", line + 1, errorMessage);
                         return null;
@@ -208,9 +209,47 @@ namespace WMS.UI
 
         private void reoGridControlMain_KeyDown(object sender, KeyEventArgs e)
         {
+
+        }
+
+        private void comboBoxImeMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.comboBoxImeMode.SelectedIndex == 0)
+            {
+                this.reoGridControlMain.ImeMode = ImeMode.On;
+            }
+            else
+            {
+                this.reoGridControlMain.ImeMode = ImeMode.NoControl;
+            }
+        }
+
+        private void reoGridControlMain_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            if (worksheet.SelectionRange.IsSingleCell == false) return;
+            if (e.Control) return;
+            Keys[] dontEditkeys = new Keys[]
+            {
+                Keys.ControlKey,
+                Keys.ShiftKey,
+                Keys.Menu,
+                Keys.CapsLock,
+                Keys.LWin,
+                Keys.RWin,
+                Keys.Tab,
+                Keys.Escape,
+                Keys.Up,
+                Keys.Down,
+                Keys.Left,
+                Keys.Right,
+                Keys.PageDown,
+                Keys.PageUp
+            };
+            if (dontEditkeys.Contains(e.KeyCode)) return;
             if (worksheet.IsEditing == false)
             {
+                worksheet[worksheet.SelectionRange.StartPos] = "";
                 worksheet.StartEdit();
             }
         }

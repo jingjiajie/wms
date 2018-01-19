@@ -31,6 +31,8 @@
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.buttonImport = new System.Windows.Forms.ToolStripButton();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
+            this.comboBoxImeMode = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,11 +43,13 @@
             this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.buttonImport});
+            this.buttonImport,
+            this.toolStripSeparator1,
+            this.comboBoxImeMode});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(998, 38);
+            this.toolStripTop.Size = new System.Drawing.Size(998, 39);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -54,7 +58,7 @@
             this.buttonImport.Image = global::WMS.UI.Properties.Resources.add;
             this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(134, 35);
+            this.buttonImport.Size = new System.Drawing.Size(134, 36);
             this.buttonImport.Text = "确定导入";
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
@@ -63,8 +67,9 @@
             this.reoGridControlMain.BackColor = System.Drawing.Color.White;
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlMain.ImeMode = System.Windows.Forms.ImeMode.On;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(0, 38);
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 39);
             this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -74,10 +79,28 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 140;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(998, 659);
+            this.reoGridControlMain.Size = new System.Drawing.Size(998, 658);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
             this.reoGridControlMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reoGridControlMain_KeyDown);
+            this.reoGridControlMain.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.reoGridControlMain_PreviewKeyDown);
+            // 
+            // comboBoxImeMode
+            // 
+            this.comboBoxImeMode.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.comboBoxImeMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxImeMode.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.comboBoxImeMode.Items.AddRange(new object[] {
+            "默认中文输入",
+            "默认英文输入"});
+            this.comboBoxImeMode.Name = "comboBoxImeMode";
+            this.comboBoxImeMode.Size = new System.Drawing.Size(121, 39);
+            this.comboBoxImeMode.SelectedIndexChanged += new System.EventHandler(this.comboBoxImeMode_SelectedIndexChanged);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
             // 
             // StandardImportForm
             // 
@@ -103,5 +126,7 @@
         private System.Windows.Forms.ToolStrip toolStripTop;
         private System.Windows.Forms.ToolStripButton buttonImport;
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
+        private System.Windows.Forms.ToolStripComboBox comboBoxImeMode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
