@@ -24,7 +24,7 @@ namespace WMS.UI
         private string contractstate = "";
         private int setitem;
         string remindtext="";
-        private bool  days_start=true ;
+        private bool  contract_effect=true ;
         private bool startend=true ;
         private  DateTime contract_enddate;
         private  DateTime contract_startdate;
@@ -110,7 +110,7 @@ namespace WMS.UI
             days = (contract_enddate-DateTime.Now  ).Days;
             if (contract_startdate > DateTime.Now)
             {
-                days_start = false;
+                contract_effect = false;
             }
             
             //库存
@@ -313,17 +313,32 @@ namespace WMS.UI
                 return;
             }
 
-
-            if(days<0||remindtext !=""||this.contractstate =="待审核"||days_start ==false )//||reminedays ==10||reminedays <10 )
+            //供应商合同日期为空 合同状态为空
+            if (Supplier.StartingTime==null)
 
             {
-                int contract_effect = 0;
-                if (contract_enddate > DateTime.Now && contract_startdate < DateTime.Now)
-                {
+                this.contract_effect = true;
+            }
 
-                     contract_effect = 1;
-                }
-                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext,contract_effect ,this.contractstate,startend,this.days_start    );
+
+            if (Supplier .EndingTime ==null)
+
+            {
+
+                days = 1;
+            }
+
+
+
+            
+
+            ///
+
+            if(days<0||remindtext !=""||this.contractstate =="待审核"|| contract_effect == false )//||reminedays ==10||reminedays <10 )
+
+            {
+
+                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext,this.contractstate,startend,this.contract_effect);
 
                 a1.Show();
 
