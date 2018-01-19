@@ -205,5 +205,14 @@ namespace WMS.UI
             }
             return true;
         }
+
+        private void reoGridControlMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            if (worksheet.IsEditing == false)
+            {
+                worksheet.StartEdit();
+            }
+        }
     }
 }

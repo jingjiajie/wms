@@ -77,6 +77,7 @@
             this.reoGridControlMain.Size = new System.Drawing.Size(998, 659);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
+            this.reoGridControlMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.reoGridControlMain_KeyDown);
             // 
             // StandardImportForm
             // 
