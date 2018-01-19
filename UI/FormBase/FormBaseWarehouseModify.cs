@@ -13,18 +13,20 @@ namespace WMS.UI.FormBase
 {
     public partial class FormBaseWarehouseModify : Form
     {
-        private int setitem = -1;
+        private int setItem = -1;
+        const int WAREHOUSE_MODIFY = 0;
+        const int PackageUnit_MODIFY = 1;
         private int modifyID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public FormBaseWarehouseModify(int setitem, int modifyID = -1)
+        public FormBaseWarehouseModify(int setItem, int modifyID = -1)
         {
             InitializeComponent();
             this.modifyID = modifyID;
-            this.setitem = setitem;
+            this.setItem = setItem;
         }
 
         private void FormBaseWarehouseModify_Load(object sender, EventArgs e)
@@ -34,7 +36,7 @@ namespace WMS.UI.FormBase
                 throw new Exception("未设置源库存信息");
             }
             this.tableLayoutPanel1.Controls.Clear();
-            if (this.setitem == 0)
+            if (this.setItem == WAREHOUSE_MODIFY)
             {
                 for (int i = 1; i < BaseWarehouseMetaData.KeyNames.Length; i++)
                 {
@@ -65,7 +67,7 @@ namespace WMS.UI.FormBase
                     }
                 }
             }
-            if (setitem == 1)
+            if (setItem == PackageUnit_MODIFY)
             {
                 for (int i = 1; i < BasePackageUnitMetaData.KeyNames.Length; i++)
                 {
@@ -111,7 +113,7 @@ namespace WMS.UI.FormBase
         public void SetMode(FormMode mode)
         {
             this.mode = mode;
-            if (setitem == 0)
+            if (setItem == WAREHOUSE_MODIFY)
             {
                 if (mode == FormMode.ALTER)
                 {
@@ -126,7 +128,7 @@ namespace WMS.UI.FormBase
                     this.groupBoxMain.Text = "添加仓库信息";
                 }
             }
-            if (setitem == 1)
+            if (setItem == PackageUnit_MODIFY)
             {
                 if (mode == FormMode.ALTER)
                 {
@@ -151,7 +153,7 @@ namespace WMS.UI.FormBase
                 MessageBox.Show("名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (setitem == 0)
+            if (setItem == WAREHOUSE_MODIFY)
             {
                 Warehouse warehouse = null;
 
@@ -256,7 +258,7 @@ namespace WMS.UI.FormBase
                 }
 
             }
-            if (setitem == 1)
+            if (setItem == PackageUnit_MODIFY)
             {
                 PackageUnit packageUnit = null;
 

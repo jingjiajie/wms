@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="84df2cabc2a541e1ae02f7d5c1206708" Name="Diagram1">
+      <Diagram DiagramId="a5281619a0804f74b336593b4fba69bf" Name="Diagram1">
         <EntityTypeShape EntityType="WMSModel.Component" Width="1.5" PointX="11.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WMSModel.JobTicket" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="WMSModel.JobTicketItem" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />

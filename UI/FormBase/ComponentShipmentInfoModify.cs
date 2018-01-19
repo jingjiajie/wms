@@ -17,23 +17,25 @@ namespace WMS.UI
         private int ID = -1;
         private int supplierID = -1;
         private int userID = -1;
-        private int setitem = -1;
+        private int setItem = -1;
+        const int SUPPLY_SHIPMENT = 0;
+        const int COMPONENT_SHIPMENTINFO = 1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
         private FormMode mode = FormMode.ALTER;
 
-        public ComponentShipmentInfoModify(int userID, int setitem, int ID = -1)
+        public ComponentShipmentInfoModify(int userID, int setItem, int ID = -1)
         {
             InitializeComponent();
-            this.setitem = setitem;
+            this.setItem = setItem;
             this.ID = ID;
             this.userID = userID;
         }
         
         private void ComponentShipmentInfoModify_Load(object sender, EventArgs e)
         {
-            if (this.setitem == 0)
+            if (this.setItem == SUPPLY_SHIPMENT)
             {
                 if (this.mode == FormMode.ALTER && this.ID == -1)
                 {
@@ -49,7 +51,7 @@ namespace WMS.UI
                     {
                         DataAccess.Supply supply = (from s in this.wmsEntities.Supply
                                                     where s.ID == this.ID
-                                                    select s).Single();
+                                                    select s).FirstOrDefault();
                         Utilities.CopyPropertiesToTextBoxes(supply, this);
                     }
                     catch (Exception)
@@ -61,7 +63,7 @@ namespace WMS.UI
 
                 }
             }
-            if (this.setitem == 1)
+            if (this.setItem == COMPONENT_SHIPMENTINFO)
             {
                 if (this.mode == FormMode.ALTER && this.ID == -1)
                 {
@@ -77,7 +79,7 @@ namespace WMS.UI
                     {
                         DataAccess.Component componen = (from s in this.wmsEntities.Component
                                                          where s.ID == this.ID
-                                                         select s).Single();
+                                                         select s).FirstOrDefault();
                         Utilities.CopyPropertiesToTextBoxes(componen, this);
                     }
                     catch (Exception)
@@ -106,7 +108,7 @@ namespace WMS.UI
         private void buttonOK_Click(object sender, EventArgs e)
         {
 
-            if (this.setitem == 0)
+            if (this.setItem == SUPPLY_SHIPMENT)
             {
                 DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
 
@@ -127,7 +129,7 @@ namespace WMS.UI
                     {
                         supply = (from s in this.wmsEntities.Supply
                                   where s.ID == this.ID
-                                  select s).Single();
+                                  select s).FirstOrDefault();
                     }
                     catch
                     {
@@ -166,7 +168,7 @@ namespace WMS.UI
                         {
                             supply = (from s in this.wmsEntities.Supply
                                       where s.ID == this.ID
-                                      select s).Single();
+                                      select s).FirstOrDefault();
                         }
                         catch
                         {
@@ -207,7 +209,7 @@ namespace WMS.UI
                 }
             }
 
-            if (this.setitem == 1)
+            if (this.setItem == COMPONENT_SHIPMENTINFO)
             {
                 DataAccess.Component componen = null;
                 if (this.mode == FormMode.ALTER)
@@ -217,7 +219,7 @@ namespace WMS.UI
                     {
                         componen = (from s in this.wmsEntities.Component
                                     where s.ID == this.ID
-                                    select s).Single();
+                                    select s).FirstOrDefault();
                     }
                     catch
                     {
