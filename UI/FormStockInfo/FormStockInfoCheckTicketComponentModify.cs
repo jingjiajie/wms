@@ -88,6 +88,15 @@ namespace WMS.UI
             }
             
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            
+
+
+
+
+
+
+
+
 
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
@@ -107,13 +116,32 @@ namespace WMS.UI
 
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
+            
             this.pagerWidget.ClearCondition();
-           
+            additiontextbocdeffrence();
             this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert .ToString ( this.stockInfoCheckID ));
             this.pagerWidget.Search();
             
             
              
+        }
+        private void additiontextbocdeffrence()
+        {
+            Label label = new Label();
+            label.Text = "盘点差异值";
+            label.Dock = DockStyle.Fill;
+            label.Font = new Font("微软雅黑", 10);
+            label.AutoSize = true;
+            tableLayoutPanel2.Controls.Add(label);
+
+
+            TextBox textBox = new TextBox();
+            textBox.Text = "自动填写";
+            textBox.Font = new Font("微软雅黑", 10);
+            textBox.Dock = DockStyle.Fill;
+            textBox.ForeColor = Color.DarkGray;
+            textBox.ReadOnly = true;
+            tableLayoutPanel2.Controls.Add(textBox);
         }
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
         {
@@ -159,6 +187,7 @@ namespace WMS.UI
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            
             if (ids.Length == 0)
             {
 
@@ -167,6 +196,7 @@ namespace WMS.UI
                 
                 //为编辑框填写默认值
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
+
                 return;
             }
             //this.buttonAdd.Text = "复制条目";
@@ -221,10 +251,11 @@ namespace WMS.UI
 
 
 
-
+            //TextBox textbox1 = (TextBox)this.Controls.Find("textBox", true)[0];
 
             Utilities.CopyPropertiesToTextBoxes(StockInfoCheckTicketItem, this);
             Utilities.CopyPropertiesToComboBoxes(StockInfoCheckTicketItem, this);
+
         }
 
         private void ClearTextBoxes()

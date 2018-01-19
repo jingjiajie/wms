@@ -17,19 +17,13 @@ namespace WMS.UI
             new KeyName(){Key="RealReceiptAreaAmount",Name="实际收货区数量",Editable=true  ,Save=true  },
             new KeyName(){Key="ExpectedSubmissionAmount",Name="账面送检数量",Editable=false ,Save=true  },
             new KeyName(){Key="RealSubmissionAmount",Name="实际送检数量",Editable=true  ,Save=true  },
-
-
-
-
-
             new KeyName(){Key="ExcpetedOverflowAreaAmount",Name="账面溢库区数量",Editable=false ,Save=true  },
-           
-
             new KeyName(){Key="RealOverflowAreaAmount",Name="实际溢库区数量",Editable=true ,Save=true }
             ,
              new KeyName(){Key="ExpectedShipmentAreaAmount",Name="账面发货区数量",Editable=false ,Save=true  },
             new KeyName(){Key="RealShipmentAreaAmount",Name="实际发货区数量",Editable=true ,Save=true }
             ,
+            
             new KeyName(){Key="PersonName",Name="实际盘点人",Editable=false  ,Save=false ,EditPlaceHolder ="点击选择盘点人"  }
             ,
 
