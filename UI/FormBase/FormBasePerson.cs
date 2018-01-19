@@ -69,7 +69,7 @@ namespace WMS.UI.FormBase
             formBasePersonModify.Show();
         }
 
-
+        
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlPerson.Worksheets[0];
@@ -344,6 +344,11 @@ namespace WMS.UI.FormBase
                 this.toolStripTextBoxSelect.Enabled = true;
                 this.toolStripTextBoxSelect.BackColor = Color.White;
             }
+        }
+
+        private void checkBoxOnlyThisProAndWare_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
