@@ -75,5 +75,8 @@ namespace WMS.DataAccess
         public Nullable<decimal> ComponentSingleCarUsageAmount { get; set; }
         public string CreateUserUsername { get; set; }
         public string LastUpdateUserUsername { get; set; }
+        public Nullable<decimal> DefaultSubmissionAmount { get; set; }
+        public Nullable<decimal> ValidPeriod { get; set; }
+        public Nullable<decimal> SafetyStock { get; set; }
     }
 }
