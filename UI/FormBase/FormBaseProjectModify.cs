@@ -50,7 +50,7 @@ namespace WMS.UI.FormBase
                 {
                     Project Project = (from s in this.wmsEntities.Project
                                        where s.ID == this.projectID
-                                       select s).Single();
+                                       select s).FirstOrDefault();
                     Utilities.CopyPropertiesToTextBoxes(Project, this);
                 }
                 catch (Exception)
@@ -111,7 +111,7 @@ namespace WMS.UI.FormBase
                 {
                     project = (from s in this.wmsEntities.Project
                                where s.ID == this.projectID
-                               select s).Single();
+                               select s).FirstOrDefault();
                 }
                 catch
                 {

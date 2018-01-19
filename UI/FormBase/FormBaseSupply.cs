@@ -515,8 +515,8 @@ namespace WMS.UI
         private void buttonImport_Click(object sender, EventArgs e)
         {
             //创建导入窗口
-            StandardImportForm<DataAccess.Supply> formImport =
-                new StandardImportForm<DataAccess.Supply>
+            StandardImportForm<Supply> formImport =
+                new StandardImportForm<Supply>
                 (
                     //参数1：KeyName
                     SupplyViewMetaData.importsupplykeyNames,
@@ -597,7 +597,7 @@ namespace WMS.UI
                                 {
                                     try
                                     {
-                                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == suppliername && s.IsHistory == 0 select s).Single();
+                                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == suppliername && s.IsHistory == 0 select s).FirstOrDefault();
                                         importsupplierID = supplierID.ID;
                                     }
                                     catch
@@ -610,7 +610,7 @@ namespace WMS.UI
 
                                     try
                                     {
-                                        DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentname select s).Single();
+                                        DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentname select s).FirstOrDefault();
                                         importcomponenID = componenID.ID;
                                     }
                                     catch

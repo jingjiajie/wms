@@ -50,7 +50,7 @@ namespace WMS.UI.FormBase
                 {
                     Person Person = (from s in this.wmsEntities.Person
                                        where s.ID == this.personID
-                                       select s).Single();
+                                       select s).FirstOrDefault();
                     Utilities.CopyPropertiesToTextBoxes(Person, this);
                 }
                 catch (Exception)
@@ -111,7 +111,7 @@ namespace WMS.UI.FormBase
                 {
                     person = (from s in this.wmsEntities.Person
                                where s.ID == this.personID
-                               select s).Single();
+                               select s).FirstOrDefault();
                 }
                 catch
                 {

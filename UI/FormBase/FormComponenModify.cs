@@ -52,7 +52,7 @@ namespace WMS.UI
                 {
                     ComponentView componenView = (from s in this.wmsEntities.ComponentView
                                                   where s.ID == this.componenID
-                                                  select s).Single();
+                                                  select s).FirstOrDefault();
                     Utilities.CopyPropertiesToTextBoxes(componenView, this);
                 }
                 catch (Exception)
@@ -86,7 +86,7 @@ namespace WMS.UI
                 {
                     componen = (from s in this.wmsEntities.Component
                                        where s.ID == this.componenID
-                                       select s).Single();
+                                       select s).FirstOrDefault();
                 }
                 catch
                 {

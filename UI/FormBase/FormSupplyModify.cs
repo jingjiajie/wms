@@ -48,12 +48,11 @@ namespace WMS.UI
             Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, SupplyViewMetaData.supplykeyNames);
             TextBox textboxsuppliername = (TextBox)this.Controls.Find("textBoxSupplierName", true)[0];
 
-            //TextBox textboxsuppliernumber = (TextBox)this.Controls.Find("textBoxSupplierNumber", true)[0];
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             TextBox textboxLastUpdateUserUsername = (TextBox)this.Controls.Find("textBoxLastUpdateUserUsername", true)[0];
             this.textboxCreateUserUsername = (TextBox)this.Controls.Find("textBoxCreateUserUsername", true)[0];
             textboxsuppliername.ReadOnly = true;
-            //textboxsuppliernumber.ReadOnly = true;
+
 
             textboxLastUpdateUserUsername.ReadOnly = true;
             textboxCreateUserUsername.ReadOnly = true;
@@ -73,7 +72,7 @@ namespace WMS.UI
                 {
                     SupplyView supplyView = (from s in this.wmsEntities.SupplyView
                                                   where s.ID == this.supplyID
-                                                  select s).Single();
+                                                  select s).FirstOrDefault();
                     Utilities.CopyPropertiesToTextBoxes(supplyView, this);
                 }
                 catch (Exception)
@@ -107,7 +106,7 @@ namespace WMS.UI
             }
 
             //this.Controls.Find("textBoxSupplierName", true)[0].Click += textBoxSupplierName_Click;
-            this.Controls.Find("textBoxComponentName", true)[0].TextChanged += textBoxComponentName_TextChanged;
+            //this.Controls.Find("textBoxComponentName", true)[0].TextChanged += textBoxComponentName_TextChanged;
         }
         private void textBoxSupplierName_Click(object sender, EventArgs e)
         {
@@ -176,7 +175,7 @@ namespace WMS.UI
         
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
+            DialogResult messageBoxResult = DialogResult.No;//设置对话框的返回值
             var textBoxSupplierName = this.Controls.Find("textBoxSupplierName", true)[0];
             var textBoxNo = this.Controls.Find("textBoxNo", true)[0];
             var textBoxComponentName = this.Controls.Find("textBoxComponentName", true)[0];
@@ -186,7 +185,7 @@ namespace WMS.UI
             {
 
 
-                MsgBoxResult = MessageBox.Show("是否要保留历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+                messageBoxResult = MessageBox.Show("是否要保留历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
 
                 MessageBoxDefaultButton.Button2);
             }
@@ -205,7 +204,7 @@ namespace WMS.UI
                 string componentName = textBoxComponentName.Text;
                 try
                 {
-                    DataAccess.Component componenID1 = (from s in this.wmsEntities.Component where s.Name == componentName select s).Single();
+                    DataAccess.Component componenID1 = (from s in this.wmsEntities.Component where s.Name == componentName select s).FirstOrDefault();
 
                     this.componenID = componenID1.ID;
                 }
@@ -226,7 +225,7 @@ namespace WMS.UI
                 string supplierName = textBoxSupplierName.Text;
                 try
                 {
-                    Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName && s.IsHistory == 0 select s).Single();
+                    Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName && s.IsHistory == 0 select s).FirstOrDefault();
 
                     this.supplierID = supplierID.ID;
                 }
@@ -244,7 +243,7 @@ namespace WMS.UI
             //    MessageBox.Show("请输入正确的供应商名称！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //    return;
             //}
-            DataAccess.Supply supply = null;
+            Supply supply = null;
             if (this.mode == FormMode.ALTER)
             {
 
@@ -252,7 +251,7 @@ namespace WMS.UI
                 {
                     supply = (from s in this.wmsEntities.Supply
                                        where s.ID == this.supplyID
-                                       select s).Single();
+                                       select s).FirstOrDefault();
                 }
                 catch
                 {
@@ -308,7 +307,7 @@ namespace WMS.UI
                 //}
 
 
-                if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
+                if (messageBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）
                 {
                     //新建零件保留历史信息
                     this.wmsEntities.Supply.Add(supply);
@@ -348,7 +347,7 @@ namespace WMS.UI
                     {
                         supply = (from s in this.wmsEntities.Supply
                                     where s.ID == this.supplyID
-                                    select s).Single();
+                                    select s).FirstOrDefault();
                     }
                     catch
                     {
@@ -393,7 +392,7 @@ namespace WMS.UI
             }
 
             //把选择零件的默认包装信息存进供应表
-            DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.ID == this.componenID select s).Single();
+            DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.ID == this.componenID select s).FirstOrDefault();
             PropertyInfo[] proAs = componenID.GetType().GetProperties();
             PropertyInfo[] proBs = supply.GetType().GetProperties();
             for (int i = 0; i < proAs.Length; i++)
