@@ -519,8 +519,8 @@ namespace WMS.UI
 
         private void Search(int selectID=-1)
         {
-            this.wmsEntities = new WMS .DataAccess . WMSEntities();
-            this.pagerWidget.Search(false, selectID);
+           this.pagerWidget.Search(false, selectID);
+            this.labelStatus.Text = "盘点单条目";
             //var worksheet = this.reoGridControlMain.Worksheets[0];
 
             //worksheet[0, 1] = "加载中...";
@@ -589,15 +589,15 @@ namespace WMS.UI
 
         
 
-        private void buttonfinish_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void buttonDelete_Click_1(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
+            new Thread(new ThreadStart(() =>
+            {
+                var worksheet = this.reoGridControlMain.Worksheets[0];
+
             List<int> deleteIDs = new List<int>();
+
             for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
             {
                 try
@@ -631,9 +631,14 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 
             })).Start();
-
-            this.Search();
+            this.Invoke(new Action(() =>
+            {
+                this.pagerWidget.Search();
+            //this.Search();
             this.labelStatus.Text = "盘点单条目";
+            }));
+
+            //this.labelStatus.Text = "盘点单条目";
 
 
             //WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
@@ -672,12 +677,12 @@ namespace WMS.UI
             //    return;
             //}
 
-           if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
+            if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
             {
                 this.addFinishedCallback(this.stockInfoCheckID);
             }
 
-
+            })).Start();
         }
 
        
