@@ -159,23 +159,11 @@
     <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.Designer.cs">
       <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormPutawayTicketItem\FormPutawayTicketItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormPutawayTicketItem\FormPutawayTicketItem.Designer.cs">
-      <DependentUpon>FormPutawayTicketItem.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.Designer.cs">
       <DependentUpon>FormPutOutTicketChooseExcelType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormAddPutawayItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormAddPutawayItem.Designer.cs">
-      <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\FormReceipt\FormAddSubmissionItem.cs">
       <SubType>Form</SubType>
@@ -189,12 +177,6 @@
     <Compile Include="FormReceipt\FormSubmission\FormAddSubmissionTicket.Designer.cs">
       <DependentUpon>FormAddSubmissionTicket.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormPutaway.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormPutaway.Designer.cs">
-      <DependentUpon>FormPutaway.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormReceipt\FormPutaway\FormPutawayModify.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,12 +188,6 @@
     </Compile>
     <Compile Include="FormReceipt\FormReceipt\FormPutawayNew.Designer.cs">
       <DependentUpon>FormPutawayNew.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormReceipt\FormPutaway\FormPutwayTicketModify.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormPutaway\FormPutwayTicketModify.Designer.cs">
-      <DependentUpon>FormPutwayTicketModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormJobTicket\FormJobTicketModify.cs">
       <SubType>Form</SubType>
@@ -277,12 +253,6 @@
     <Compile Include="FormJobTicket\FormJobTicketItem.Designer.cs">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptItem.Designer.cs">
-      <DependentUpon>FormReceiptItem.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormReceipt\FormReceipt\FormReceiptSubmissionNew.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -316,12 +286,6 @@
     <Compile Include="FormStockInfo\FormSelectStockInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReceipt\FormSubmissionTicketItemModify.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormSubmissionTicketItemModify.Designer.cs">
-      <DependentUpon>FormSubmissionTicketItemModify.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormReceipt\ReceiptUtilities.cs" />
     <Compile Include="FormStockInfo\FormSelectStockInfo.Designer.cs">
       <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
@@ -339,24 +303,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FormReceiptArrival.resx</DependentUpon>
     </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptArrivalCheck.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormReceipt\FormReceiptArrivalCheck.Designer.cs">
-      <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormMain\FormMainMetaData.cs" />
     <Compile Include="FormReceipt\FormReceipt\FormReceiptItems.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormReceipt\FormReceipt\FormReceiptItems.Designer.cs">
       <DependentUpon>FormReceiptItems.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormReceipt\FormRecieptItemsModify.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormReceipt\FormRecieptItemsModify.Designer.cs">
-      <DependentUpon>FormRecieptItemsModify.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReceipt\ReceiptMetaData.cs" />
     <Compile Include="FormReceipt\FormReceipt\ReceiptTicketModify.cs">
@@ -554,14 +506,8 @@
     <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.resx">
       <DependentUpon>FormPutOutStorageTicketNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormPutawayTicketItem\FormPutawayTicketItem.resx">
-      <DependentUpon>FormPutawayTicketItem.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutTicketChooseExcelType.resx">
       <DependentUpon>FormPutOutTicketChooseExcelType.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormAddPutawayItem.resx">
-      <DependentUpon>FormAddPutawayItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceipt\FormAddSubmissionItem.resx">
       <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
@@ -569,17 +515,11 @@
     <EmbeddedResource Include="FormReceipt\FormSubmission\FormAddSubmissionTicket.resx">
       <DependentUpon>FormAddSubmissionTicket.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormPutaway.resx">
-      <DependentUpon>FormPutaway.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutaway\FormPutawayModify.resx">
       <DependentUpon>FormPutawayModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceipt\FormPutawayNew.resx">
       <DependentUpon>FormPutawayNew.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormPutaway\FormPutwayTicketModify.resx">
-      <DependentUpon>FormPutwayTicketModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketModify.resx">
       <DependentUpon>FormJobTicketModify.cs</DependentUpon>
@@ -611,9 +551,6 @@
     <EmbeddedResource Include="FormJobTicket\FormJobTicketItem.resx">
       <DependentUpon>FormJobTicketItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormReceiptItem.resx">
-      <DependentUpon>FormReceiptItem.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceipt\FormReceiptSubmissionNew.resx">
       <DependentUpon>FormReceiptSubmissionNew.cs</DependentUpon>
     </EmbeddedResource>
@@ -632,20 +569,11 @@
     <EmbeddedResource Include="FormStockInfo\FormSelectStockInfo.resx">
       <DependentUpon>FormSelectStockInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormSubmissionTicketItemModify.resx">
-      <DependentUpon>FormSubmissionTicketItemModify.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormReceipt\FormReceiptArrivalCheck.resx">
-      <DependentUpon>FormReceiptArrivalCheck.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceipt\FormReceiptItems.resx">
       <DependentUpon>FormReceiptItems.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormReceipt\FormRecieptItemsModify.resx">
-      <DependentUpon>FormRecieptItemsModify.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceipt\ReceiptTicketModify.resx">
       <DependentUpon>ReceiptTicketModify.cs</DependentUpon>
