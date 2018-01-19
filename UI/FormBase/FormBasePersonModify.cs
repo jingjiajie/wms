@@ -14,6 +14,8 @@ namespace WMS.UI.FormBase
     public partial class FormBasePersonModify : Form
     {
         private int personID = -1;
+        private int projectID = -1;
+        private int warehouseID = -1;
         private WMSEntities wmsEntities = new WMSEntities();
         private Action<int> modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
@@ -32,26 +34,49 @@ namespace WMS.UI.FormBase
             {
                 throw new Exception("未设置源库存信息");
             }
-            this.tableLayoutPanel1.Controls.Clear();
-            for (int i = 1; i < BasePersonMetaData.KeyNames.Length; i++)
-            {
-                KeyName curKeyName = BasePersonMetaData.KeyNames[i];
-                Label label = new Label();
-                label.Text = curKeyName.Name;
-                this.tableLayoutPanel1.Controls.Add(label);
-
-                TextBox textBox = new TextBox();
-                textBox.Name = "textBox" + curKeyName.Key;
-                this.tableLayoutPanel1.Controls.Add(textBox);
-            }
+            Utilities.CreateEditPanel(this.tableLayoutPanelTextBoxes, BasePersonMetaData.KeyNames);
+            TextBox textboxProjectName = (TextBox)this.Controls.Find("textBoxProjectName", true)[0];
+            TextBox textboxWarehouseName = (TextBox)this.Controls.Find("textBoxWarehouseName", true)[0];
             if (this.mode == FormMode.ALTER)
+            {
+
+                try
+                {
+                    PersonView personView = (from s in this.wmsEntities.PersonView
+                                             where s.ID == this.personID
+                                             select s).FirstOrDefault();
+                    Utilities.CopyPropertiesToTextBoxes(personView, this);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+            }
+            if (this.mode == FormMode.ADD)
             {
                 try
                 {
-                    Person Person = (from s in this.wmsEntities.Person
-                                       where s.ID == this.personID
-                                       select s).FirstOrDefault();
-                    Utilities.CopyPropertiesToTextBoxes(Person, this);
+                    var projectName = (from s in this.wmsEntities.ProjectView
+                                   where s.ID == GlobalData.ProjectID
+                                   select s.Name).FirstOrDefault();
+                    textboxProjectName.Text = projectName;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+                try
+                {
+                    var warehouseName = (from s in this.wmsEntities.WarehouseView
+                                   where s.ID == GlobalData.WarehouseID
+                                   select s.Name).FirstOrDefault();
+                    textboxWarehouseName.Text = warehouseName;
                 }
                 catch (Exception)
                 {
@@ -96,11 +121,75 @@ namespace WMS.UI.FormBase
         private void buttonModify_Click(object sender, EventArgs e)
         {
             var textBoxName = this.Controls.Find("textBoxName", true)[0];
+            TextBox textboxProjectName = (TextBox)this.Controls.Find("textBoxProjectName", true)[0];
+            TextBox textboxWarehouseName = (TextBox)this.Controls.Find("textBoxWarehouseName", true)[0];
             if (textBoxName.Text == string.Empty)
             {
                 MessageBox.Show("人员名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+
+
+            Project project = null;
+            if (textboxProjectName.Text == string.Empty)
+            {
+                MessageBox.Show("项目名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                string projectName = textboxProjectName.Text;
+                try
+                {
+                     project = (from s in this.wmsEntities.Project where s.Name == projectName select s).FirstOrDefault();
+
+                    this.projectID = project.ID;
+                }
+                catch
+                {
+                    if (project == null)
+                    {
+                        MessageBox.Show("输入的项目不存在，请重新确认后出入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+            }
+
+
+
+            Warehouse warehouse = null;
+            if (textboxWarehouseName.Text == string.Empty)
+            {
+                MessageBox.Show("仓库名称不能为空！", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                string warehouseName = textboxWarehouseName.Text;
+                try
+                {
+                    warehouse = (from s in this.wmsEntities.Warehouse where s.Name == warehouseName select s).FirstOrDefault();
+
+                    this.warehouseID = warehouse.ID;
+                }
+                catch
+                {
+                    if (warehouse == null)
+                    {
+                        MessageBox.Show("输入仓库不存在，请重新确认后出入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+            }
+
+
 
             Person person = null;
 
@@ -165,11 +254,20 @@ namespace WMS.UI.FormBase
                 person = new Person();
                 this.wmsEntities.Person.Add(person);
             }
+
+            person.WarehouseID = this.warehouseID;
+            person.ProjectID = this.projectID;
+
+
             //开始数据库操作
             if (Utilities.CopyTextBoxTextsToProperties(this, person, BasePersonMetaData.KeyNames, out string errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+            else
+            {
+                Utilities.CopyComboBoxsToProperties(this, person, BasePersonMetaData.KeyNames);
             }
             try
             {

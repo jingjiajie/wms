@@ -42,9 +42,26 @@ namespace WMS.UI.FormBase
         private void FormBasePerson_Load(object sender, EventArgs e)
         {
             InitComponents();
-            this.pagerWidget.Search();
+            this.Search();
         }
 
+        private void Search()
+        {
+            if (this.checkBoxOnlyThisProAndWare.Checked == true)
+            {
+                this.pagerWidget.AddCondition("ProjectID", Convert.ToString(GlobalData.ProjectID));
+                this.pagerWidget.AddCondition("WarehouseID", Convert.ToString(GlobalData.WarehouseID));
+            }
+            else
+            {
+                this.pagerWidget.ClearCondition();
+                if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+                {
+                    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+                }
+            }
+            this.pagerWidget.Search();
+        }
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
@@ -53,7 +70,7 @@ namespace WMS.UI.FormBase
             {
                 this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
             }
-            this.pagerWidget.Search();
+            this.Search();
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -316,7 +333,7 @@ namespace WMS.UI.FormBase
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(() =>
                 {
-                    this.pagerWidget.Search();
+                    this.Search();
                     MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             })).Start();
@@ -348,7 +365,7 @@ namespace WMS.UI.FormBase
 
         private void checkBoxOnlyThisProAndWare_CheckedChanged(object sender, EventArgs e)
         {
-
+            this.Search();
         }
     }
 }
