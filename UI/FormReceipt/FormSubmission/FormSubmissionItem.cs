@@ -947,7 +947,7 @@ namespace WMS.UI.FormReceipt
                         stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount + sti.ReturnAmount - sti.SubmissionAmount;
                         stockInfo.ReceiptAreaAmount = 0;
                         stockInfo.SubmissionAmount = sti.SubmissionAmount - sti.ReturnAmount;
-                        stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
+                        //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
                     }
                     if (receiptTicketItem.RefuseAmount == 0)
                     {
@@ -1102,7 +1102,7 @@ namespace WMS.UI.FormReceipt
                         stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount + submissionTicketItem.ReturnAmount - submissionTicketItem.SubmissionAmount;
                         stockInfo.ReceiptAreaAmount = 0;
                         stockInfo.SubmissionAmount = submissionTicketItem.SubmissionAmount - submissionTicketItem.ReturnAmount;
-                        stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
+                        //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
                     }
                     if (receiptTicketItem.RefuseAmount == 0)
                     {
@@ -1130,7 +1130,7 @@ namespace WMS.UI.FormReceipt
                         stockInfo.OverflowAreaAmount = 0;
                         stockInfo.ReceiptAreaAmount = 0;
                         stockInfo.SubmissionAmount = submissionTicketItem.SubmissionAmount - submissionTicketItem.ReturnAmount;
-                        stockInfo.RejectAreaAmount = submissionTicketItem.ReturnAmount + receiptTicketItem.ReceiviptAmount - submissionTicketItem.SubmissionAmount + receiptTicketItem.DisqualifiedAmount; 
+                        stockInfo.RejectAreaAmount = receiptTicketItem.ReceiviptAmount - submissionTicketItem.SubmissionAmount + submissionTicketItem.ReturnAmount;
                     }
                     receiptTicketItem.State = "拒收";
                 }
@@ -1151,7 +1151,7 @@ namespace WMS.UI.FormReceipt
                         stockInfo.OverflowAreaAmount = 0;
                         stockInfo.ReceiptAreaAmount = 0;
                         stockInfo.SubmissionAmount = submissionTicketItem.SubmissionAmount - submissionTicketItem.ReturnAmount;
-                        stockInfo.RejectAreaAmount = submissionTicketItem.ReturnAmount + receiptTicketItem.ReceiviptAmount - submissionTicketItem.SubmissionAmount + receiptTicketItem.DisqualifiedAmount;
+                        stockInfo.RejectAreaAmount = receiptTicketItem.ReceiviptAmount - submissionTicketItem.SubmissionAmount + submissionTicketItem.ReturnAmount;
                     }
                     receiptTicketItem.State = "拒收";
                 }

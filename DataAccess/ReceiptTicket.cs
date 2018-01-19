@@ -62,6 +62,8 @@ namespace WMS.DataAccess
         public string HasPutawayTicket { get; set; }
         public string UseUnit { get; set; }
         public string ReceiptUnit { get; set; }
+        public string Comment { get; set; }
+        public string RefuseComment { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual ICollection<ReceiptTicketItem> ReceiptTicketItem { get; set; }

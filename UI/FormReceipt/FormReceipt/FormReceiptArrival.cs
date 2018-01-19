@@ -1004,11 +1004,6 @@ namespace WMS.UI
                 }
                 else
                 {
-                    if (receiptTicket.State == "拒收")
-                    {
-                        MessageBox.Show("该收货单已经拒收，无法重新收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
                     if (MessageBox.Show("确认收货？收货后收货单条目将无法更改。", "提问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
                         return;
@@ -1053,8 +1048,8 @@ namespace WMS.UI
                             {
                                 stockInfo.OverflowAreaAmount = 0;
                             }
-                            stockInfo.OverflowAreaAmount += stockInfo.ReceiptAreaAmount;
-                            stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
+                            stockInfo.OverflowAreaAmount = stockInfo.ReceiptAreaAmount + rti.RefuseAmount;
+                            stockInfo.ReceiptAreaAmount = 0;
                         }
                     }
                     if (n == 0)
@@ -1139,7 +1134,7 @@ namespace WMS.UI
                     foreach (ReceiptTicketItem rti in receiptTicketItem)
                     {
                         rti.RefuseAmount += rti.ReceiviptAmount;
-                        rti.ReceiviptAmount -= rti.ReceiviptAmount;
+                        rti.ReceiviptAmount = 0;
                         rti.RefuseUnitCount = rti.RefuseAmount / rti.RefuseUnitAmount;
                         StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
                         if (stockInfo != null)
@@ -1148,7 +1143,8 @@ namespace WMS.UI
                             {
                                 stockInfo.OverflowAreaAmount = 0;
                             }
-                            stockInfo.OverflowAreaAmount -= stockInfo.OverflowAreaAmount;
+                            stockInfo.OverflowAreaAmount = 0;
+                            stockInfo.ReceiptAreaAmount = 0;
                             //stockInfo.ReceiptAreaAmount -= stockInfo.ReceiptAreaAmount;
                         }
                     }

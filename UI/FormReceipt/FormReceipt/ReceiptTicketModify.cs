@@ -40,7 +40,15 @@ namespace WMS.UI.FormReceipt
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.contract = contract;
-            this.user = (from u in wmsEntities.User where u.ID == userID select u).FirstOrDefault();
+            try
+            {
+                this.user = (from u in wmsEntities.User where u.ID == userID select u).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void ReceiptTicketModify_Load(object sender, EventArgs e)
