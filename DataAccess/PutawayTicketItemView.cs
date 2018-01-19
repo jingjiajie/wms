@@ -27,9 +27,6 @@ namespace WMS.DataAccess
         public string OperateTime { get; set; }
         public Nullable<decimal> ReceiptTicketItemExpectedAmount { get; set; }
         public Nullable<decimal> ReceiptTicketItemReceiviptAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemWrongComponentAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemShortageAmount { get; set; }
-        public Nullable<decimal> ReceiptTicketItemDisqualifiedAmount { get; set; }
         public Nullable<int> ReceiptTicketSupplierID { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }

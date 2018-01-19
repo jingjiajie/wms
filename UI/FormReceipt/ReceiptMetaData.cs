@@ -96,7 +96,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=false,Save=true, NotNegative = true},
 
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="期待数量", Key="ExpectedAmount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
+            new KeyName(){Name="订单数量", Key="ExpectedUnitCount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
             new KeyName(){Name="实收数量", Key="RealReceiptUnitCount", Visible=true,Editable=true,Save=true,NotNegative=true,NotNull=true},
             new KeyName(){Name="单位名称", Key="Unit",Visible=true,Editable=true,Save=true, NotNull = true},
             new KeyName(){Name="单位数量", Key="UnitAmount",Visible=true,Editable=true,Save=true, NotNegative = true, NotNull = true},
@@ -105,20 +105,20 @@ namespace WMS.UI.FormReceipt
             //new KeyName(){Name="期待包装数量", Key="ExpectedPackageAmount",Visible=true,Editable=true,Save=true, NotNegative = true},
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
             //new KeyName(){Name="错件数", Key="WrongComponentAmount",Visible=true,Editable=true,Save=true, NotNegative =true},
-            new KeyName(){Name="错件数", Key="WrongComponentUnitCount", Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true},
-            new KeyName(){Name="错件单位",Key="WrongComponentUnit", Visible=true,Editable=true,Save=true,NotNull=true},
-            new KeyName(){Name="错件单位数量",Key="WrongComponentUnitAmount",Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true},
+            //new KeyName(){Name="错件数", Key="WrongComponentUnitCount", Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true},
+            //new KeyName(){Name="错件单位",Key="WrongComponentUnit", Visible=true,Editable=true,Save=true,NotNull=true},
+            //new KeyName(){Name="错件单位数量",Key="WrongComponentUnitAmount",Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true},
             //new KeyName(){Name="短缺数量", Key="ShortageAmount",Visible=true,Editable=true,Save=true, NotNegative = true},
 
             //new KeyName(){Name="拒收数量", Key="RefuseAmount", Visible=true,Editable=true,Save=true,NotNegative=true},
             new KeyName(){Name="拒收数量", Key="RefuseUnitCount",Visible=true,Editable=true,Save=true, NotNull=true,NotNegative=true},
             new KeyName(){Name="拒收单位", Key="RefuseUnit",Visible=true,Editable=true,Save=true, NotNull = true},
             new KeyName(){Name="拒收单位数量", Key="RefuseUnitAmount",Visible=true, Editable=true,Save=true,NotNull=true},
-
+            new KeyName(){Name="拒收备注", Key="RefuseComment",Visible=true,Editable=true,Save=true},
             //new KeyName(){Name="不合格数量", Key="DisqualifiedAmount",Visible=true,Editable=true,Save=true, NotNegative = true},
-            new KeyName(){Name="自检不良数量", Key="DisqualifiedUnitCount",Visible=true,Editable=true,Save=true,NotNegative = true,NotNull=true},
-            new KeyName(){Name="自检不良单位", Key="DisqualifiedUnit", Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="自检不良单位数量",Key="DisqualifiedUnitAmount", Visible=true,Editable=true,Save=true, NotNegative=true,NotNull=true},
+            //new KeyName(){Name="自检不良数量", Key="DisqualifiedUnitCount",Visible=true,Editable=true,Save=true,NotNegative = true,NotNull=true},
+            //new KeyName(){Name="自检不良单位", Key="DisqualifiedUnit", Visible=true,Editable=true,Save=true},
+            //new KeyName(){Name="自检不良单位数量",Key="DisqualifiedUnitAmount", Visible=true,Editable=true,Save=true, NotNegative=true,NotNull=true},
 
            
             new KeyName(){Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},
@@ -133,7 +133,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="批次号", Key="BatchNumber",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="采购订单", Key="PurchaseOrder", Visible=true,Editable=true,Save=true},
             new KeyName(){Name="箱号", Key="BoxNo",Visible=true,Editable=true,Save=true},
-            
+            new KeyName(){Name="备注", Key="Comment", Visible=true,Editable=true,Save=true},
             //new KeyName(){Name="零件名称", Key="ComponentName", Visible=false,Editable=false,Save=false},
         };
 

@@ -88,9 +88,25 @@ namespace WMS.UI
             }
             
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            
+
+
+
+
+
+
+
+
 
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
+
+
+
+
+
+
+
 
             TextBox textBoxPersonName =(TextBox )this.Controls.Find("textBoxPersonName", true)[0];
             textBoxPersonName.BackColor = Color.White;
@@ -100,13 +116,32 @@ namespace WMS.UI
 
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
+            
             this.pagerWidget.ClearCondition();
-           
+            additiontextbocdeffrence();
             this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert .ToString ( this.stockInfoCheckID ));
             this.pagerWidget.Search();
             
             
              
+        }
+        private void additiontextbocdeffrence()
+        {
+            Label label = new Label();
+            label.Text = "盘点差异值";
+            label.Dock = DockStyle.Fill;
+            label.Font = new Font("微软雅黑", 10);
+            label.AutoSize = true;
+            tableLayoutPanel2.Controls.Add(label);
+
+
+            TextBox textBox = new TextBox();
+            textBox.Text = "自动填写";
+            textBox.Font = new Font("微软雅黑", 10);
+            textBox.Dock = DockStyle.Fill;
+            textBox.ForeColor = Color.DarkGray;
+            textBox.ReadOnly = true;
+            tableLayoutPanel2.Controls.Add(textBox);
         }
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
         {
@@ -152,6 +187,7 @@ namespace WMS.UI
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            
             if (ids.Length == 0)
             {
 
@@ -160,6 +196,7 @@ namespace WMS.UI
                 
                 //为编辑框填写默认值
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
+
                 return;
             }
             //this.buttonAdd.Text = "复制条目";
@@ -214,10 +251,11 @@ namespace WMS.UI
 
 
 
-
+            //TextBox textbox1 = (TextBox)this.Controls.Find("textBox", true)[0];
 
             Utilities.CopyPropertiesToTextBoxes(StockInfoCheckTicketItem, this);
             Utilities.CopyPropertiesToComboBoxes(StockInfoCheckTicketItem, this);
+
         }
 
         private void ClearTextBoxes()
@@ -346,8 +384,14 @@ namespace WMS.UI
                 this.Controls.Find("textBoxExpectedRejectAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.RejectAreaAmount );
                 this.Controls.Find("textBoxExpectedReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount  );
                 this.Controls.Find("textBoxExpectedSubmissionAmount", true)[0].Text = Convert.ToString(stockinfoName.SubmissionAmount );
-               
 
+                
+               this.Controls.Find("textBoxRealRejectAreaAmount", true)[0].Text =Convert .ToString(stockinfoName.RejectAreaAmount);
+                this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount);
+                this.Controls.Find("textBoxRealSubmissionAmount", true)[0].Text=Convert .ToString (stockinfoName .SubmissionAmount) ;
+                this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount) ;
+                this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+                TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
 
 
 
@@ -391,7 +435,7 @@ namespace WMS.UI
         {
 
 
-            int tmp = 0;
+            decimal  tmp = 0;
            DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
            TextBox textBoxRealRejectAreaAmount = (TextBox)this.Controls.Find("textBoxRealRejectAreaAmount", true)[0];
@@ -399,7 +443,10 @@ namespace WMS.UI
            TextBox textBoxRealSubmissionAmount = (TextBox)this.Controls.Find("textBoxRealSubmissionAmount", true)[0];
            TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
            TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
-            
+           
+
+
+
 
             if (textBoxComponentName.Text == string.Empty)
             {
@@ -408,35 +455,35 @@ namespace WMS.UI
                 return;
             }
 
-            if (textBoxRealRejectAreaAmount.Text !=string .Empty&&!int.TryParse(textBoxRealRejectAreaAmount.Text, out tmp))
+            if (textBoxRealRejectAreaAmount.Text !=string .Empty&&!decimal.TryParse(textBoxRealRejectAreaAmount.Text, out tmp))
             {
                 MessageBox.Show("实际不良品区数量只接受数字类型");
                 return;
             }
-            if (textBoxRealReceiptAreaAmount.Text != string.Empty && !int.TryParse(textBoxRealReceiptAreaAmount.Text, out tmp))
+            if (textBoxRealReceiptAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealReceiptAreaAmount.Text, out tmp))
             {
                 MessageBox.Show("实际收货区数量只接受数字类型");
                 return;
             }
 
-            if (textBoxRealSubmissionAmount.Text != string.Empty && !int.TryParse(textBoxRealSubmissionAmount.Text, out tmp))
+            if (textBoxRealSubmissionAmount.Text != string.Empty && !decimal.TryParse(textBoxRealSubmissionAmount.Text, out tmp))
             {
                 MessageBox.Show("实际送检数量只接受数字类型");
                 return;
             }
 
-            if (textBoxRealOverflowAreaAmount.Text != string.Empty && !int.TryParse(textBoxRealOverflowAreaAmount.Text, out tmp))
+            if (textBoxRealOverflowAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealOverflowAreaAmount.Text, out tmp))
             {
                 MessageBox.Show("实际溢库区数量只接受数字类型");
                 return;
             }
-            if (textBoxRealShipmentAreaAmount.Text != string.Empty && !int.TryParse(textBoxRealShipmentAreaAmount.Text, out tmp))
+            if (textBoxRealShipmentAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealShipmentAreaAmount.Text, out tmp))
             {
                 MessageBox.Show("实际发货区数量只接受数字类型");
                 return;
             }
 
-
+            
 
 
 
@@ -519,8 +566,8 @@ namespace WMS.UI
 
         private void Search(int selectID=-1)
         {
-            this.wmsEntities = new WMS .DataAccess . WMSEntities();
-            this.pagerWidget.Search(false, selectID);
+           this.pagerWidget.Search(false, selectID);
+            this.labelStatus.Text = "盘点单条目";
             //var worksheet = this.reoGridControlMain.Worksheets[0];
 
             //worksheet[0, 1] = "加载中...";
@@ -589,15 +636,15 @@ namespace WMS.UI
 
         
 
-        private void buttonfinish_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void buttonDelete_Click_1(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlMain.Worksheets[0];
+            new Thread(new ThreadStart(() =>
+            {
+                var worksheet = this.reoGridControlMain.Worksheets[0];
+
             List<int> deleteIDs = new List<int>();
+
             for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
             {
                 try
@@ -631,9 +678,14 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 
             })).Start();
-
-            this.Search();
+            this.Invoke(new Action(() =>
+            {
+                this.pagerWidget.Search();
+            //this.Search();
             this.labelStatus.Text = "盘点单条目";
+            }));
+
+            //this.labelStatus.Text = "盘点单条目";
 
 
             //WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
@@ -672,12 +724,12 @@ namespace WMS.UI
             //    return;
             //}
 
-           if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
+            if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
             {
                 this.addFinishedCallback(this.stockInfoCheckID);
             }
 
-
+            })).Start();
         }
 
        
@@ -939,7 +991,6 @@ namespace WMS.UI
                     {
                         repet = true;
 
-
                    }
 
                 }
@@ -956,6 +1007,12 @@ namespace WMS.UI
                 StockInfoCheckTicketItem.ExpectedRejectAreaAmount = stockinfoall[i].RejectAreaAmount ;
                 StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
                 StockInfoCheckTicketItem.ExpectedSubmissionAmount = stockinfoall[i].SubmissionAmount;
+                StockInfoCheckTicketItem.RealOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
+                StockInfoCheckTicketItem.RealReceiptAreaAmount = stockinfoall[i].ReceiptAreaAmount;
+                StockInfoCheckTicketItem.RealRejectAreaAmount = stockinfoall[i].RejectAreaAmount;
+                StockInfoCheckTicketItem.RealShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
+                StockInfoCheckTicketItem.RealSubmissionAmount = stockinfoall[i].SubmissionAmount;
+
 
 
                 try
