@@ -1078,6 +1078,9 @@
           <Property Name="UnitAmount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="SupplyNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplyNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="StockInfoInventoryDate" Type="datetime" />
+          <Property Name="StockInfoManufactureDate" Type="datetime" />
+          <Property Name="StockInfoExpiryDate" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2348,7 +2351,10 @@ FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
 [ShipmentTicketItemView].[ScheduledJobAmount] AS [ScheduledJobAmount], 
 [ShipmentTicketItemView].[UnitAmount] AS [UnitAmount], 
 [ShipmentTicketItemView].[SupplyNumber] AS [SupplyNumber], 
-[ShipmentTicketItemView].[SupplyNo] AS [SupplyNo]
+[ShipmentTicketItemView].[SupplyNo] AS [SupplyNo], 
+[ShipmentTicketItemView].[StockInfoInventoryDate] AS [StockInfoInventoryDate], 
+[ShipmentTicketItemView].[StockInfoManufactureDate] AS [StockInfoManufactureDate], 
+[ShipmentTicketItemView].[StockInfoExpiryDate] AS [StockInfoExpiryDate]
 FROM [dbo].[ShipmentTicketItemView] AS [ShipmentTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketView" EntityType="Self.ShipmentTicketView" store:Type="Views" store:Schema="dbo">
@@ -4095,6 +4101,9 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="UnitAmount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="SupplyNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplyNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="StockInfoInventoryDate" Type="DateTime" Precision="3" />
+          <Property Name="StockInfoManufactureDate" Type="DateTime" Precision="3" />
+          <Property Name="StockInfoExpiryDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="ShipmentTicketView">
           <Key>
@@ -4860,7 +4869,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -5908,6 +5917,9 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ShipmentTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.ShipmentTicketItemView">
               <MappingFragment StoreEntitySet="ShipmentTicketItemView">
+                <ScalarProperty Name="StockInfoExpiryDate" ColumnName="StockInfoExpiryDate" />
+                <ScalarProperty Name="StockInfoManufactureDate" ColumnName="StockInfoManufactureDate" />
+                <ScalarProperty Name="StockInfoInventoryDate" ColumnName="StockInfoInventoryDate" />
                 <ScalarProperty Name="SupplyNo" ColumnName="SupplyNo" />
                 <ScalarProperty Name="SupplyNumber" ColumnName="SupplyNumber" />
                 <ScalarProperty Name="UnitAmount" ColumnName="UnitAmount" />
