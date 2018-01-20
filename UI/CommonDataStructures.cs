@@ -13,6 +13,7 @@ namespace WMS.UI
         public bool Visible = true;
         public bool NotNull = false;
         public bool NotNegative = false;
+        public Func<object,object> Translator = null;
         public Func<string> DefaultValueFunc = null;
         public bool Editable = true;
         public ComboBoxItem[] ComboBoxItems = null;

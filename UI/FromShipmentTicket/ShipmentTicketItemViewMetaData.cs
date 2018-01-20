@@ -10,14 +10,16 @@ namespace WMS.UI
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false,ImportVisible=false,Import=false},
+            new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称",Visible=false,Editable=false,Save=false,ImportVisible=true,Import=false },
             new KeyName(){Key="SupplyNo",Name="零件代号",Editable=false,Save=false,ImportVisible=false },
-            new KeyName(){Key="ComponentName",Name="零件",Save=false,EditPlaceHolder="点击选择库存零件",Import=false},
+            new KeyName(){Key="ComponentName",Name="零件",Save=false,EditPlaceHolder="点击选择库存零件",ImportVisible=false,Import=false},
             new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false,EditPlaceHolder="请选择零件",ImportVisible=false},
 
             new KeyName(){Key="ShipmentAmount",Name="发货数量",NotNull=true,NotNegative=true,EditPlaceHolder="必填项"},
             new KeyName(){Key="ScheduledJobAmount",Name="已分配翻包数量",Editable=false,Save=false,DefaultValueFunc=(()=>"0"),ImportVisible=false,Import=false},
             new KeyName(){Key="Unit",Name="单位",NotNull=true,NotNegative=true},
             new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,NotNegative=true},
+            new KeyName(){Key="StockInfoInventoryDate",Name="存货时间",Editable=false,Save=false,ImportVisible=false,Import=false},
             //new KeyName(){Key="OnlineTime",Name="上线时间",DefaultValueFunc=(()=>DateTime.Now.ToString()) },
             //new KeyName(){Key="RequirePackageNo",Name="需求包裹编号"},
             //new KeyName(){Key="TargetPlace",Name="落点地址"},

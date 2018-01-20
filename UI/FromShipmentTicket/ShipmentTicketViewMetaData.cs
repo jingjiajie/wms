@@ -41,7 +41,9 @@ namespace WMS.UI
             new KeyName(){Key="Description",Name="描述"},
             new KeyName(){Key="DeliveryTicketNo",Name="配送单号"},
             new KeyName(){Key="OuterPhysicalDistributionPath",Name="外物流路线"},
-            new KeyName(){Key="Emergency",Name="是否紧急",Editable=false,ComboBoxItems=new ComboBoxItem[]{
+            new KeyName(){Key="Emergency",Name="是否紧急",Editable=false,
+                Translator =Translator.BoolTranslator,
+                ComboBoxItems =new ComboBoxItem[]{
                 new ComboBoxItem("否",0),
                 new ComboBoxItem("是",1),
             } },
