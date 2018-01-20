@@ -26,7 +26,7 @@ namespace WMS.UI
             new KeyName(){Key="RealAmount",Name="实际装车数量",NotNegative=true},
             //new KeyName(){Key="ExceedStockAmount",Name="超库存数量",Editable=true},
             new KeyName(){Key="Unit",Name="单位",Editable=false,Save=false },
-            new KeyName(){Key="UnitAmount",Name="单位数量",Editable=false,Save=false,NotNegative=true},
+            new KeyName(){Key="UnitAmount",Name="单位数量",Editable=false,Save=false,Positive=true},
             new KeyName(){Key="LoadingTime",Name="装车时间",Editable=true,EditPlaceHolder="装车时生成"},
             new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false,EditPlaceHolder="点击选择人员"},
             new KeyName(){Key="ReturnQualityAmount",Name="正品退回数量",EditPlaceHolder="退回时填写",NotNull=true,NotNegative=true},

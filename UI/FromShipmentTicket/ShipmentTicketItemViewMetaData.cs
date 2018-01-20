@@ -17,8 +17,8 @@ namespace WMS.UI
 
             new KeyName(){Key="ShipmentAmount",Name="发货数量",NotNull=true,Positive=true,EditPlaceHolder="必填项"},
             new KeyName(){Key="ScheduledJobAmount",Name="已分配翻包数量",Editable=false,Save=false,DefaultValueFunc=(()=>"0"),ImportVisible=false,Import=false},
-            new KeyName(){Key="Unit",Name="单位",NotNull=true,NotNegative=true},
-            new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,NotNegative=true},
+            new KeyName(){Key="Unit",Name="单位",NotNull=true},
+            new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,Positive=true},
             new KeyName(){Key="StockInfoInventoryDate",Name="存货时间",Editable=false,Save=false,ImportVisible=false,Import=false},
             //new KeyName(){Key="OnlineTime",Name="上线时间",DefaultValueFunc=(()=>DateTime.Now.ToString()) },
             //new KeyName(){Key="RequirePackageNo",Name="需求包裹编号"},

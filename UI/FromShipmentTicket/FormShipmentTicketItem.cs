@@ -741,6 +741,8 @@ namespace WMS.UI
                     //增加条目，扣除库存
                     StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
                     stockInfo.ShipmentAreaAmount -= item.ShipmentAmount;
+                    //设置发货单条目初始信息
+                    item.ScheduledJobAmount = 0;
                     wmsEntities.ShipmentTicketItem.Add(item);
                 }
                 wmsEntities.SaveChanges();

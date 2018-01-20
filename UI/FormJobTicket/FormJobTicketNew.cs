@@ -28,14 +28,20 @@ namespace WMS.UI
 
         private static KeyName[] newJobTicketKeyNames =
         {
-            new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称",Import=false},
-            new KeyName(){Key="ScheduleJobAmount",Name="计划翻包数量"}
+            new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称"},
+            new KeyName(){Key="ScheduleJobAmount",Name="计划翻包数量",NotNull=true,Positive=true},
+            new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,Positive=true}
         };
 
         class NewJobTicketItemData
         {
-            public string SupplyNoOrComponentName;
-            public decimal ScheduleJobAmount;
+            private string supplyNoOrComponentName;
+            private decimal scheduleJobAmount;
+            private decimal unitAmount;
+
+            public string SupplyNoOrComponentName { get => supplyNoOrComponentName; set => supplyNoOrComponentName = value; }
+            public decimal ScheduleJobAmount { get => scheduleJobAmount; set => scheduleJobAmount = value; }
+            public decimal UnitAmount { get => unitAmount; set => unitAmount = value; }
         }
 
         private StandardImportForm<NewJobTicketItemData> standardImportForm = null;
@@ -315,59 +321,111 @@ namespace WMS.UI
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            //this.standardImportForm = new StandardImportForm<NewJobTicketItemData>(
-            //    newJobTicketKeyNames,
-            //    importHandler,
-            //    null,
-            //    "导入作业单条目"
-            //    );
-            //this.standardImportForm.Show();
+            this.standardImportForm = new StandardImportForm<NewJobTicketItemData>(
+                newJobTicketKeyNames,
+                importHandler,
+                null,
+                "导入作业单条目"
+                );
+            this.standardImportForm.Show();
         }
 
-        //private bool importHandler(NewJobTicketItemData[] results,Dictionary<string,string[]> unimportedColumns)
-        //{
-            //List<Tuple<int, int>> idAndAmountList = new List<Tuple<int, int>>();
-            //try
-            //{
-            //    WMSEntities wmsEntities = new WMSEntities();
-            //    ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView where s.ShipmentTicketID == this.shipmentTicketID select s).ToArray();
-            //    for(int i = 0; i < results.Length; i++)
-            //    {
-            //        string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
-            //        Supply supply = (from s in wmsEntities.Supply where s.No == supplyNoOrComponentName select s).FirstOrDefault();
-            //        DataAccess.Component component = null;
-            //        if (supply == null)
-            //        {
-            //            component = (from c in wmsEntities.Component where c.Name == supplyNoOrComponentName select c).FirstOrDefault();
-            //            if (component == null)
-            //            {
-            //                MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, supplyNoOrComponentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //                return false;
-            //            }
-            //        }
-            //        ShipmentTicketItemView[] selectedItems = null;
-            //        if (supply != null)
-            //        {
-            //            selectedItems = (from s in wmsEntities.ShipmentTicketItemView
-            //                              where s.SupplyNo == supplyNoOrComponentName
-            //                              orderby s.InventoryDate ascending
-            //                              select s).ToArray();
-            //        }
-            //        else if (component != null)
-            //        {
-            //            stockInfoViews = (from s in wmsEntities.StockInfoView
-            //                              where s.ComponentName == componentName
-            //                                    && s.ShipmentAreaAmount > 0
-            //                              orderby s.InventoryDate ascending
-            //                              select s).ToArray();
-            //        }
-            //    }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("操作失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    return false;
-            //}
-        //}
+        private bool importHandler(NewJobTicketItemData[] results, Dictionary<string, string[]> unimportedColumns)
+        {
+            List<Tuple<int, decimal>> idAndAmountList = new List<Tuple<int, decimal>>();
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView where s.ShipmentTicketID == this.shipmentTicketID select s).ToArray();
+                for (int i = 0; i < results.Length; i++)
+                {
+                    string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
+                    decimal scheduleAmountNoUnit = results[i].ScheduleJobAmount * results[i].UnitAmount;
+                    Supply supply = (from s in wmsEntities.Supply where s.No == supplyNoOrComponentName select s).FirstOrDefault();
+                    DataAccess.Component component = null;
+                    if (supply == null)
+                    {
+                        component = (from c in wmsEntities.Component where c.Name == supplyNoOrComponentName select c).FirstOrDefault();
+                        if (component == null)
+                        {
+                            MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, supplyNoOrComponentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
+                    }
+                    ShipmentTicketItemView[] selectedItems = null;
+                    if (supply != null)
+                    {
+                        selectedItems = (from s in wmsEntities.ShipmentTicketItemView
+                                         where s.ShipmentTicketID == this.shipmentTicketID
+                                         && (s.ScheduledJobAmount ?? 0) < s.ShipmentAmount
+                                         && s.SupplyNo == supplyNoOrComponentName
+                                         orderby s.StockInfoInventoryDate ascending
+                                         select s).ToArray();
+                    }
+                    else if (component != null)
+                    {
+                        selectedItems = (from s in wmsEntities.ShipmentTicketItemView
+                                          where s.ShipmentTicketID == this.shipmentTicketID
+                                          && (s.ScheduledJobAmount ?? 0) < s.ShipmentAmount
+                                          && s.ComponentName == supplyNoOrComponentName
+                                          orderby s.StockInfoInventoryDate ascending
+                                          select s).ToArray();
+                    }
+                    decimal totalStockAmountNoUnit = selectedItems.Sum((item) => (item.ShipmentAmount - (item.ScheduledJobAmount ?? 0)) * (item.UnitAmount ?? 1)) ?? 0;
+                    if(scheduleAmountNoUnit > totalStockAmountNoUnit)
+                    {
+                        MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}", i + 1, totalStockAmountNoUnit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    decimal curAmountNoUnit = 0;
+                    for (int j = 0; j < selectedItems.Length; j++)
+                    {
+                        decimal curItemRestAmount = (selectedItems[j].ShipmentAmount - (selectedItems[j].ScheduledJobAmount ?? 0)) ?? 0;
+                        //当前项的剩余数量（不带单位）
+                        decimal curItemRestAmountNoUnit = curItemRestAmount * (selectedItems[j].UnitAmount ?? 1);
+                        //当前项的剩余数量小于要分配的数量
+                        if (curAmountNoUnit + curItemRestAmountNoUnit < scheduleAmountNoUnit)
+                        {
+                            idAndAmountList.Add(new Tuple<int, decimal>(selectedItems[j].ID, curItemRestAmount));
+                            curAmountNoUnit += curItemRestAmountNoUnit;
+                        }
+                        else //当前项的剩余数量大于等于要分配的数量
+                        {
+                            idAndAmountList.Add(new Tuple<int, decimal>(selectedItems[j].ID, ((scheduleAmountNoUnit - curAmountNoUnit) / selectedItems[i].UnitAmount ?? 1)));
+                            curAmountNoUnit = scheduleAmountNoUnit;
+                            break;
+                        }
+                    }
+                }
+                this.CheckItemsAndFillScheduleAmountByIDs(idAndAmountList);
+                this.standardImportForm.Close();
+                MessageBox.Show("导入成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void CheckItemsAndFillScheduleAmountByIDs(List<Tuple<int,decimal>> idAndAmountList)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            for(int i = 0; i < this.validRows; i++)
+            {
+                if(int.TryParse(worksheet[i, 0].ToString(), out int id) == false)
+                {
+                    continue;
+                }
+                Tuple<int, decimal> item = (from t in idAndAmountList where t.Item1 == id select t).FirstOrDefault();
+                if(item == null)
+                {
+                    continue;
+                }
+                worksheet[i, 1] = true;
+                worksheet[i, 2] = item.Item2;
+            }
+        }
     }
 }
