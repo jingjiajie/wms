@@ -79,7 +79,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1283, 402);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1374, 345);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // reoGridControlUser
@@ -99,7 +99,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 80;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1277, 304);
+            this.reoGridControlUser.Size = new System.Drawing.Size(1368, 247);
             this.reoGridControlUser.TabIndex = 10;
             this.reoGridControlUser.Text = "reoGridControl1";
             // 
@@ -134,7 +134,7 @@
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1283, 31);
+            this.toolStripTop.Size = new System.Drawing.Size(1374, 31);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -274,7 +274,7 @@
             this.buttonPutaway.Image = ((System.Drawing.Image)(resources.GetObject("buttonPutaway.Image")));
             this.buttonPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPutaway.Name = "buttonPutaway";
-            this.buttonPutaway.Size = new System.Drawing.Size(108, 47);
+            this.buttonPutaway.Size = new System.Drawing.Size(108, 28);
             this.buttonPutaway.Text = "生成上架单";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonMakePutaway_Click);
             // 
@@ -283,7 +283,7 @@
             this.ButtonToPutaway.Image = global::WMS.UI.Properties.Resources.find;
             this.ButtonToPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonToPutaway.Name = "ButtonToPutaway";
-            this.ButtonToPutaway.Size = new System.Drawing.Size(138, 47);
+            this.ButtonToPutaway.Size = new System.Drawing.Size(138, 28);
             this.ButtonToPutaway.Text = "查看对应上架单";
             this.ButtonToPutaway.Click += new System.EventHandler(this.ButtonToPutaway_Click);
             // 
@@ -298,7 +298,7 @@
             this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
             this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(99, 47);
+            this.buttonPreview.Size = new System.Drawing.Size(99, 24);
             this.buttonPreview.Text = "导出/打印";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
@@ -309,10 +309,10 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lableStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 377);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 320);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1283, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(1374, 25);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -331,17 +331,17 @@
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 341);
+            this.panel1.Location = new System.Drawing.Point(3, 284);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1277, 34);
+            this.panel1.Size = new System.Drawing.Size(1368, 34);
             this.panel1.TabIndex = 11;
             // 
             // FormReceiptArrival
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 402);
+            this.ClientSize = new System.Drawing.Size(1374, 345);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FormReceiptArrival";
