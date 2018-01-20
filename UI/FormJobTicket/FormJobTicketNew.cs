@@ -26,6 +26,20 @@ namespace WMS.UI
         private int[] editableColumns = new int[] { 1, 2 };
         private int validRows = 0;
 
+        private static KeyName[] newJobTicketKeyNames =
+        {
+            new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称",Import=false},
+            new KeyName(){Key="ScheduleJobAmount",Name="计划翻包数量"}
+        };
+
+        class NewJobTicketItemData
+        {
+            public string SupplyNoOrComponentName;
+            public decimal ScheduleJobAmount;
+        }
+
+        private StandardImportForm<NewJobTicketItemData> standardImportForm = null;
+
         public void SetToJobTicketCallback(Action<string> callback)
         {
             this.toJobTicketCallback = callback;
@@ -289,5 +303,71 @@ namespace WMS.UI
         {
             buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
+
+        private void buttonSelectAll_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            for(int i = 0; i < this.validRows; i++)
+            {
+                worksheet[i, 1] = true;
+            }
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            //this.standardImportForm = new StandardImportForm<NewJobTicketItemData>(
+            //    newJobTicketKeyNames,
+            //    importHandler,
+            //    null,
+            //    "导入作业单条目"
+            //    );
+            //this.standardImportForm.Show();
+        }
+
+        //private bool importHandler(NewJobTicketItemData[] results,Dictionary<string,string[]> unimportedColumns)
+        //{
+            //List<Tuple<int, int>> idAndAmountList = new List<Tuple<int, int>>();
+            //try
+            //{
+            //    WMSEntities wmsEntities = new WMSEntities();
+            //    ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView where s.ShipmentTicketID == this.shipmentTicketID select s).ToArray();
+            //    for(int i = 0; i < results.Length; i++)
+            //    {
+            //        string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
+            //        Supply supply = (from s in wmsEntities.Supply where s.No == supplyNoOrComponentName select s).FirstOrDefault();
+            //        DataAccess.Component component = null;
+            //        if (supply == null)
+            //        {
+            //            component = (from c in wmsEntities.Component where c.Name == supplyNoOrComponentName select c).FirstOrDefault();
+            //            if (component == null)
+            //            {
+            //                MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, supplyNoOrComponentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //                return false;
+            //            }
+            //        }
+            //        ShipmentTicketItemView[] selectedItems = null;
+            //        if (supply != null)
+            //        {
+            //            selectedItems = (from s in wmsEntities.ShipmentTicketItemView
+            //                              where s.SupplyNo == supplyNoOrComponentName
+            //                              orderby s.InventoryDate ascending
+            //                              select s).ToArray();
+            //        }
+            //        else if (component != null)
+            //        {
+            //            stockInfoViews = (from s in wmsEntities.StockInfoView
+            //                              where s.ComponentName == componentName
+            //                                    && s.ShipmentAreaAmount > 0
+            //                              orderby s.InventoryDate ascending
+            //                              select s).ToArray();
+            //        }
+            //    }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("操作失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return false;
+            //}
+        //}
     }
 }
