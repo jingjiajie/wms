@@ -15,7 +15,7 @@ namespace WMS.UI
             new KeyName(){Key="ComponentName",Name="零件",Save=false,EditPlaceHolder="点击选择库存零件",ImportVisible=false,Import=false},
             new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false,EditPlaceHolder="请选择零件",ImportVisible=false},
 
-            new KeyName(){Key="ShipmentAmount",Name="发货数量",NotNull=true,NotNegative=true,EditPlaceHolder="必填项"},
+            new KeyName(){Key="ShipmentAmount",Name="发货数量",NotNull=true,Positive=true,EditPlaceHolder="必填项"},
             new KeyName(){Key="ScheduledJobAmount",Name="已分配翻包数量",Editable=false,Save=false,DefaultValueFunc=(()=>"0"),ImportVisible=false,Import=false},
             new KeyName(){Key="Unit",Name="单位",NotNull=true,NotNegative=true},
             new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,NotNegative=true},

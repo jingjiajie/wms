@@ -16,7 +16,6 @@ namespace WMS.UI
     public partial class FormShipmentTicketItem : Form
     {
         private int shipmentTicketID = -1;
-        private WMSEntities wmsEntities = new WMSEntities();
         Action shipmentTicketStateChangedCallback = null;
         private int projectID = -1;
         private int warehouseID = -1;
@@ -54,6 +53,7 @@ namespace WMS.UI
             ShipmentTicket shipmentTicket = null;
             try
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 shipmentTicket = (from s in wmsEntities.ShipmentTicket where s.ID == shipmentTicketID select s).FirstOrDefault();
             }
             catch
@@ -172,11 +172,12 @@ namespace WMS.UI
                     }
                     new Thread(new ThreadStart(() =>
                     {
+                        WMSEntities wmsEntities = new WMSEntities();
                         StockInfoView stockInfoView = null;
                         Supply supply = null;
                         try
                         {
-                            stockInfoView = (from s in this.wmsEntities.StockInfoView
+                            stockInfoView = (from s in wmsEntities.StockInfoView
                                              where s.ID == selectedStockInfoID
                                              select s).FirstOrDefault();
                             supply = wmsEntities.Database.SqlQuery<Supply>(String.Format("SELECT * FROM Supply WHERE ID = (SELECT SupplyID FROM ReceiptTicketItem AS RI WHERE RI.ID = {0})",stockInfoView.ReceiptTicketItemID)).FirstOrDefault();
@@ -245,7 +246,8 @@ namespace WMS.UI
             ShipmentTicketItemView shipmentTicketItemView = null;
             try
             {
-                var tmp = (from s in this.wmsEntities.ShipmentTicketItemView
+                WMSEntities wmsEntities = new WMSEntities();
+                var tmp = (from s in wmsEntities.ShipmentTicketItemView
                            where s.ID == id
                            select s);
                 shipmentTicketItemView = tmp.FirstOrDefault();
@@ -275,7 +277,7 @@ namespace WMS.UI
 
         private void Search(int selectID = -1)
         {
-            this.wmsEntities = new WMSEntities();
+            WMSEntities wmsEntities = new WMSEntities();
             var worksheet = this.reoGridControlMain.Worksheets[0];
 
             worksheet[0, 1] = "加载中...";
@@ -339,14 +341,15 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(() =>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
                     //将状态置为已完成
                     foreach (int id in selectedIDs)
                     {
-                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
+                        wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_FINISHED, id));
                     }
-                    this.wmsEntities.SaveChanges();
+                    wmsEntities.SaveChanges();
                 }
                 catch
                 {
@@ -362,8 +365,8 @@ namespace WMS.UI
                     {
                         try
                         {
-                            this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.shipmentTicketID));
-                            this.wmsEntities.SaveChanges();
+                            wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicket SET State = '{0}' WHERE ID = {1}", STRING_FINISHED, this.shipmentTicketID));
+                            wmsEntities.SaveChanges();
                         }
                         catch
                         {
@@ -382,35 +385,7 @@ namespace WMS.UI
             })).Start();
 
         }
-
-        private void buttonUnfinish_Click(object sender, EventArgs e)
-        {
-            const string STRING_UNFINISHED = "未完成";
-            int[] selectedIDs = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if (selectedIDs.Length == 0)
-            {
-                MessageBox.Show("请选择您要操作的条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            new Thread(new ThreadStart(() =>
-            {
-                try
-                {
-                    foreach (int id in selectedIDs)
-                    {
-                        this.wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE ShipmentTicketItem SET State = '{0}' WHERE ID = {1};", STRING_UNFINISHED, id));
-                    }
-                    this.wmsEntities.SaveChanges();
-                }
-                catch
-                {
-                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.Invoke(new Action<int>(this.Search));
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
-        }
+        
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
@@ -438,6 +413,7 @@ namespace WMS.UI
             }
             new Thread(new ThreadStart(()=>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
                     //扣除库存数量
@@ -455,8 +431,8 @@ namespace WMS.UI
                         return;
                     }
                     stockInfo.ShipmentAreaAmount -= shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount;
-                    this.wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
-                    this.wmsEntities.SaveChanges();
+                    wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
+                    wmsEntities.SaveChanges();
                 }
                 catch
                 {
@@ -487,11 +463,12 @@ namespace WMS.UI
 
             new Thread(new ThreadStart(() =>
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 int id = ids[0];
                 ShipmentTicketItem shipmentTicketItem = null;
                 try
                 {
-                    shipmentTicketItem = (from s in this.wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
+                    shipmentTicketItem = (from s in wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
                 }
                 catch
                 {
@@ -513,7 +490,7 @@ namespace WMS.UI
                 }
                 shipmentTicketItem.ConfirmPersonID = this.curConfirmPersonID == -1 ? null : (int?)this.curConfirmPersonID;
                 shipmentTicketItem.JobPersonID = this.curJobPersonID == -1 ? null : (int?)this.curJobPersonID;
-                decimal? oriShipmentAmount = shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount;
+                decimal oriShipmentAmount = shipmentTicketItem.ShipmentAmount * (shipmentTicketItem.UnitAmount ?? 1) ?? 0;
                 if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicketItem, ShipmentTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
                 {
                     MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -524,18 +501,18 @@ namespace WMS.UI
                     MessageBox.Show("发货数量必须大于0！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if(shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount > newStockInfo.ShipmentAreaAmount)
+                decimal? deltaStockAmount = (shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount) - oriShipmentAmount;
+                if (deltaStockAmount > newStockInfo.ShipmentAreaAmount)
                 {
-                    MessageBox.Show("库存不足！当前库存数量：" + Utilities.DecimalToString(newStockInfo.ShipmentAreaAmount ?? 0) + "个");
+                    MessageBox.Show("库存不足！当前库存数量：" + Utilities.DecimalToString(newStockInfo.ShipmentAreaAmount ?? 0) + "个", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                decimal? deltaStockAmount = (shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount) - oriShipmentAmount;
                 //把库存数量加回来！
                 if (oriStockInfo != newStockInfo)
                 {
                     if(oriStockInfo != null)
                     {
-                        oriStockInfo.ShipmentAreaAmount += oriShipmentAmount ?? 0;
+                        oriStockInfo.ShipmentAreaAmount += oriShipmentAmount;
                     }
                     if(newStockInfo != null)
                     {
@@ -549,7 +526,7 @@ namespace WMS.UI
 
                 try
                 {
-                    this.wmsEntities.SaveChanges();
+                    wmsEntities.SaveChanges();
                 }
                 catch
                 {
@@ -575,6 +552,7 @@ namespace WMS.UI
             }
             try
             {
+                WMSEntities wmsEntities = new WMSEntities();
                 foreach (int id in ids)
                 {
                     ShipmentTicketItem item = (from s in wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
@@ -589,9 +567,9 @@ namespace WMS.UI
                     StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
                     if (stockInfo == null) continue;
                     stockInfo.ShipmentAreaAmount += amount ?? 0;
-                    this.wmsEntities.ShipmentTicketItem.Remove(item);
+                    wmsEntities.ShipmentTicketItem.Remove(item);
                 }
-                this.wmsEntities.SaveChanges();
+                wmsEntities.SaveChanges();
             }
             catch
             {

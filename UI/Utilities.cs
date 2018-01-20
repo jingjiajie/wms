@@ -198,11 +198,20 @@ namespace WMS.UI
                 errorMessage = chineseName + " 不允许为空！";
                 return false;
             }
-            if(keyName.NotNegative && decimal.TryParse(text,out decimal decimalValue))
+            decimal decimalValue;
+            if(keyName.NotNegative && decimal.TryParse(text,out decimalValue))
             {
                 if(decimalValue < 0)
                 {
                     errorMessage = chineseName + "不允许为负数！";
+                    return false;
+                }
+            }
+            if (keyName.Positive && decimal.TryParse(text, out decimalValue))
+            {
+                if (decimalValue <= 0)
+                {
+                    errorMessage = chineseName + "必须大于0！";
                     return false;
                 }
             }
