@@ -1144,10 +1144,9 @@ namespace WMS.UI
             buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
 
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-    }
+
+
+    } 
     
 }
