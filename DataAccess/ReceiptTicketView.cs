@@ -75,5 +75,6 @@ namespace WMS.DataAccess
         public string Comment { get; set; }
         public string RefuseComment { get; set; }
         public Nullable<int> HasSubmission { get; set; }
+        public Nullable<System.DateTime> ReceiptDate { get; set; }
     }
 }

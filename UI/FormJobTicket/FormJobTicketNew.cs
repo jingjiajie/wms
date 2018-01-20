@@ -154,7 +154,7 @@ namespace WMS.UI
                 worksheet.Cells[i, 2].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
                 decimal defaultScheduledJobAmount = (cur.ShipmentAmount - (cur.ScheduledJobAmount ?? 0)) ?? 0; //计划翻包数量默认等于发货数量-已经计划翻包过的数量
                 worksheet[i, 2] = Utilities.DecimalToString(defaultScheduledJobAmount < 0 ? 0 : defaultScheduledJobAmount);
-                object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in ShipmentTicketItemViewMetaData.KeyNames select kn.Key).ToArray());
+                object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in ShipmentTicketItemViewMetaData.KeyNames where kn.Visible==true || kn.Key=="ID" select kn.Key).ToArray());
                 int offsetColumn = 0;
                 for (int j = 0; j < columns.Length; j++)
                 {

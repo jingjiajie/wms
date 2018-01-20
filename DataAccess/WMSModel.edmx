@@ -252,6 +252,7 @@
           <Property Name="Comment" Type="nvarchar" MaxLength="64" />
           <Property Name="RefuseComment" Type="nvarchar" MaxLength="64" />
           <Property Name="HasSubmission" Type="int" />
+          <Property Name="ReceiptDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ReceiptTicketItem">
           <Key>
@@ -972,6 +973,7 @@
           <Property Name="Comment" Type="nvarchar" MaxLength="64" />
           <Property Name="ExpectedUnitCount" Type="decimal" Precision="18" Scale="3" />
           <Property Name="RefuseComment" Type="nchar" MaxLength="10" />
+          <Property Name="DefaultSubmissionAmount" Type="decimal" Precision="18" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ReceiptTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1042,6 +1044,7 @@
           <Property Name="Comment" Type="nvarchar" MaxLength="64" />
           <Property Name="RefuseComment" Type="nvarchar" MaxLength="64" />
           <Property Name="HasSubmission" Type="int" />
+          <Property Name="ReceiptDate" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2255,7 +2258,8 @@ FROM [dbo].[PutOutStorageTicketView] AS [PutOutStorageTicketView]</DefiningQuery
 [ReceiptTicketItemView].[PurchaseOrder] AS [PurchaseOrder], 
 [ReceiptTicketItemView].[Comment] AS [Comment], 
 [ReceiptTicketItemView].[ExpectedUnitCount] AS [ExpectedUnitCount], 
-[ReceiptTicketItemView].[RefuseComment] AS [RefuseComment]
+[ReceiptTicketItemView].[RefuseComment] AS [RefuseComment], 
+[ReceiptTicketItemView].[DefaultSubmissionAmount] AS [DefaultSubmissionAmount]
 FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ReceiptTicketView" EntityType="Self.ReceiptTicketView" store:Type="Views" store:Schema="dbo">
@@ -2320,7 +2324,8 @@ FROM [dbo].[ReceiptTicketItemView] AS [ReceiptTicketItemView]</DefiningQuery>
 [ReceiptTicketView].[ReceiptUnit] AS [ReceiptUnit], 
 [ReceiptTicketView].[Comment] AS [Comment], 
 [ReceiptTicketView].[RefuseComment] AS [RefuseComment], 
-[ReceiptTicketView].[HasSubmission] AS [HasSubmission]
+[ReceiptTicketView].[HasSubmission] AS [HasSubmission], 
+[ReceiptTicketView].[ReceiptDate] AS [ReceiptDate]
 FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketItemView" EntityType="Self.ShipmentTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -3105,6 +3110,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Comment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="RefuseComment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HasSubmission" Type="Int32" />
+          <Property Name="ReceiptDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Project" Relationship="Self.FK_ReceiptTicket_Project" FromRole="ReceiptTicket" ToRole="Project" />
           <NavigationProperty Name="ReceiptTicketItem" Relationship="Self.FK__ReceiptTi__Recei__1B9317B3" FromRole="ReceiptTicket" ToRole="ReceiptTicketItem" />
           <NavigationProperty Name="Supplier" Relationship="Self.FK_ReceiptTicket_Supplier" FromRole="ReceiptTicket" ToRole="Supplier" />
@@ -3841,6 +3847,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Comment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ExpectedUnitCount" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RefuseComment" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DefaultSubmissionAmount" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="ReceiptTicketView">
           <Key>
@@ -3909,6 +3916,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="Comment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="RefuseComment" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="HasSubmission" Type="Int32" />
+          <Property Name="ReceiptDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="ShipmentTicketItemView">
           <Key>
@@ -5137,6 +5145,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="RefuseComment" ColumnName="RefuseComment" />
                 <ScalarProperty Name="HasSubmission" ColumnName="HasSubmission" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5852,6 +5861,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="ExpectedUnitCount" ColumnName="ExpectedUnitCount" />
                 <ScalarProperty Name="RefuseComment" ColumnName="RefuseComment" />
+                <ScalarProperty Name="DefaultSubmissionAmount" ColumnName="DefaultSubmissionAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5919,6 +5929,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="RefuseComment" ColumnName="RefuseComment" />
                 <ScalarProperty Name="HasSubmission" ColumnName="HasSubmission" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -677,6 +677,7 @@ namespace WMS.UI
                                 if (receiptTicket != null)
                                 {
                                     receiptTicket.State = "待收货";
+                                    receiptTicket.HasSubmission = 0;
                                 }
                             }
                             else

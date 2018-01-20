@@ -32,8 +32,8 @@ namespace WMS.UI
 
         private StandardImportForm<ShipmentTicketItem> standardImportForm = null;
 
-        private KeyName[] visibleColumns = (from kn in ShipmentTicketItemViewMetaData.KeyNames
-                                            where kn.Visible == true
+        private KeyName[] usedKeyNames = (from kn in ShipmentTicketItemViewMetaData.KeyNames
+                                            where kn.Visible == true || kn.Key == "ID"
                                             select kn).ToArray();
 
         public FormShipmentTicketItem(int shipmentTicketID,int projectID,int warehouseID)
@@ -79,14 +79,14 @@ namespace WMS.UI
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
 
-            for (int i = 0; i < ShipmentTicketItemViewMetaData.KeyNames.Length; i++)
+            for (int i = 0; i < usedKeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = ShipmentTicketItemViewMetaData.KeyNames[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ShipmentTicketItemViewMetaData.KeyNames[i].Visible;
+                worksheet.ColumnHeaders[i].Text = usedKeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = usedKeyNames[i].Visible;
             }
-            worksheet.Columns = ShipmentTicketItemViewMetaData.KeyNames.Length; //限制表的长度
+            worksheet.Columns = usedKeyNames.Length; //限制表的长度
 
-            Utilities.CreateEditPanel(this.tableLayoutPanelProperties, ShipmentTicketItemViewMetaData.KeyNames);
+            Utilities.CreateEditPanel(this.tableLayoutPanelProperties, usedKeyNames);
 
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
 
@@ -237,7 +237,7 @@ namespace WMS.UI
                 this.curConfirmPersonID = -1;
                 this.curJobPersonID = -1;
                 //为编辑框填写默认值
-                Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, ShipmentTicketItemViewMetaData.KeyNames);
+                Utilities.FillTextBoxDefaultValues(this.tableLayoutPanelProperties, usedKeyNames);
                 return;
             }
             this.buttonAdd.Text = "复制条目";
@@ -245,9 +245,10 @@ namespace WMS.UI
             ShipmentTicketItemView shipmentTicketItemView = null;
             try
             {
-                shipmentTicketItemView = (from s in this.wmsEntities.ShipmentTicketItemView
-                                          where s.ID == id
-                                          select s).FirstOrDefault();
+                var tmp = (from s in this.wmsEntities.ShipmentTicketItemView
+                           where s.ID == id
+                           select s);
+                shipmentTicketItemView = tmp.FirstOrDefault();
             }
             catch
             {
@@ -309,7 +310,10 @@ namespace WMS.UI
                     for (int i = 0; i < shipmentTicketItemViews.Length; i++)
                     {
                         var curShipmentTicketViews = shipmentTicketItemViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curShipmentTicketViews, (from kn in ShipmentTicketItemViewMetaData.KeyNames select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(
+                            curShipmentTicketViews,
+                            (from kn in usedKeyNames where(kn.Visible == true || kn.Key=="ID") select kn.Key).ToArray()
+                            );
                         for (int j = 0; j < columns.Length; j++)
                         {
                             worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
@@ -665,20 +669,38 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 for (int i = 0; i < results.Length; i++)
                 {
-                    string componentName = unimportedColumns["ComponentName"][i];
+                    string supplyNo = unimportedColumns["SupplyNoOrComponentName"][i];
+                    string componentName = unimportedColumns["SupplyNoOrComponentName"][i];
                     string jobPersonName = unimportedColumns["JobPersonName"][i];
                     string confirmPersonName = unimportedColumns["ConfirmPersonName"][i];
-                    DataAccess.Component component = (from c in wmsEntities.Component where c.Name == componentName select c).FirstOrDefault();
-                    if (component == null)
+                    Supply supply = (from s in wmsEntities.Supply where s.No == supplyNo select s).FirstOrDefault();
+                    DataAccess.Component component = null;
+                    if (supply == null)
                     {
-                        MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, componentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
+                        component = (from c in wmsEntities.Component where c.Name == componentName select c).FirstOrDefault();
+                        if (component == null)
+                        {
+                            MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, componentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
                     }
-                    StockInfoView[] stockInfoViews = (from s in wmsEntities.StockInfoView
-                                                      where s.ComponentName == componentName
-                                                            && s.ShipmentAreaAmount > 0
-                                                      orderby s.InventoryDate ascending
-                                                      select s).ToArray();
+                    StockInfoView[] stockInfoViews = null;
+                    if(supply != null)
+                    {
+                        stockInfoViews = (from s in wmsEntities.StockInfoView
+                                          where s.SupplyNo == supplyNo
+                                                && s.ShipmentAreaAmount > 0
+                                          orderby s.InventoryDate ascending
+                                          select s).ToArray();
+                    }
+                    else if (component != null)
+                    {
+                        stockInfoViews = (from s in wmsEntities.StockInfoView
+                                          where s.ComponentName == componentName
+                                                && s.ShipmentAreaAmount > 0
+                                          orderby s.InventoryDate ascending
+                                          select s).ToArray();
+                    }
                     int jobPersonID = -1;
                     int confirmPersonID = -1;
                     //搜索作业人名
@@ -738,7 +760,7 @@ namespace WMS.UI
 
                 foreach (ShipmentTicketItem item in realImportList)
                 {
-                    //增肌条目，扣除库存
+                    //增加条目，扣除库存
                     StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
                     stockInfo.ShipmentAreaAmount -= item.ShipmentAmount;
                     wmsEntities.ShipmentTicketItem.Add(item);

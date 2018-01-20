@@ -367,19 +367,27 @@ namespace WMS.UI
                     for (int i = 0; i < results.Length; i++)
                     {
                         TargetClass cur = results[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(cur, (from kn in keyNames select kn.Key).ToArray());
+                        KeyName[] usedKeyNames = (from kn in keyNames where kn.Visible == true || kn.Key == "ID" select kn).ToArray();
+                        object[] columns = Utilities.GetValuesByPropertieNames(cur,(from kn in usedKeyNames select kn.Key).ToArray());
                         for (int j = 0; j < columns.Length; j++)
                         {
                             if (columns[j] == null) continue;
                             worksheet.Cells[i, j].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
                             string text = null;
-                            if (columns[j] is decimal || columns[j] is decimal?)
+                            if (usedKeyNames[j].Translator != null)
                             {
-                                text = Utilities.DecimalToString((decimal)columns[j]);
+                                text = usedKeyNames[j].Translator(columns[j]).ToString();
                             }
                             else
                             {
-                                text = columns[j].ToString();
+                                if (columns[j] is decimal || columns[j] is decimal?)
+                                {
+                                    text = Utilities.DecimalToString((decimal)columns[j]);
+                                }
+                                else
+                                {
+                                    text = columns[j].ToString();
+                                }
                             }
                             worksheet[i, j] = text;
                         }

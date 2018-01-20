@@ -139,7 +139,9 @@ namespace WMS.UI
             
             for (int i = 0; i < importVisibleKeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = importVisibleKeyNames[i].Name;
+                string text = importVisibleKeyNames[i].Name;
+                worksheet.ColumnHeaders[i].Text = text;
+                worksheet.ColumnHeaders[i].Width = (ushort)(text.Length * 10 + 30);
             }
             worksheet.Columns = importVisibleKeyNames.Length; //限制表的长度
         }

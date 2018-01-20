@@ -574,12 +574,20 @@ namespace WMS.UI
             }
         }
 
+        /// <summary>
+        /// 初始化ReoGrid表格，注意：只会保留KeyName中Visible=true的列和"ID"列！
+        /// </summary>
+        /// <param name="reoGrid"></param>
+        /// <param name="keyNames"></param>
+        /// <param name="selectionMode"></param>
         public static void InitReoGrid(ReoGridControl reoGrid, KeyName[] keyNames, WorksheetSelectionMode selectionMode = WorksheetSelectionMode.Row)
         {
             //初始化表格
             reoGrid.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = reoGrid.Worksheets[0];
             worksheet.SelectionMode = selectionMode;
+
+            keyNames = (from kn in keyNames where kn.Visible == true || kn.Key == "ID" select kn).ToArray();
             for (int i = 0; i < keyNames.Length; i++)
             {
                 worksheet.ColumnHeaders[i].Text = keyNames[i].Name;
@@ -680,6 +688,26 @@ namespace WMS.UI
             {
                 object srcValue = property.GetValue(srcObject,null);
                 property.SetValue(targetObject, srcValue, null);
+            }
+        }
+    }
+
+    class Translator
+    {
+        public static object BoolTranslator(object value)
+        {
+            int intValue = value as int? ?? -1;
+            if ((intValue == 0 || intValue == 1) == false)
+            {
+                throw new Exception("BoolTranslator只接受整数0/1！");
+            }
+            if (intValue == 0)
+            {
+                return "否";
+            }
+            else
+            {
+                return "是";
             }
         }
     }

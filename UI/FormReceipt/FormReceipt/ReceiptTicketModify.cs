@@ -160,6 +160,10 @@ namespace WMS.UI.FormReceipt
                     textBoxWarehouseName.Text = warehouse.Name;
                     textBoxWarehouseName.Enabled = false;*/
                 }
+                ComboBox comboBoxHasSubmission = (ComboBox)this.Controls.Find("comboBoxHasSubmission", true)[0];
+                comboBoxHasSubmission.Text = "否";
+                this.Controls.Find("textBoxReceiptDate", true)[0].Text = DateTime.Now.ToString();
+                comboBoxHasSubmission.Enabled = false;
                 this.Controls.Find("textBoxState", true)[0].Text = "待收货";
                 if (this.user != null)
                 {
