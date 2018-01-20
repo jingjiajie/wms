@@ -1101,6 +1101,7 @@ namespace WMS.UI.FormReceipt
                         stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount + submissionTicketItem.RejectAmount;*/
                         stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount + submissionTicketItem.ReturnAmount - submissionTicketItem.SubmissionAmount;
                         stockInfo.ReceiptAreaAmount = 0;
+                        stockInfo.RejectAreaAmount = 0;
                         stockInfo.SubmissionAmount = submissionTicketItem.SubmissionAmount - submissionTicketItem.ReturnAmount;
                         //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
                     }

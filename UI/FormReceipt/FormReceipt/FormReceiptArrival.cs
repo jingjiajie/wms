@@ -1008,6 +1008,11 @@ namespace WMS.UI
                     {
                         return;
                     }
+                    if (receiptTicket.HasSubmission == 1)
+                    {
+                        MessageBox.Show("该条目已经送检无法直接收货，请对该收货单所对应的送检单进行收货操作。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     if (receiptTicket.State == "已收货")
                     {
                         MessageBox.Show("改收货单已收货，不能重复收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1107,6 +1112,11 @@ namespace WMS.UI
                 {
                     if (MessageBox.Show("确认拒收？拒收后收货单条目将无法更改。且无法重新收货。", "提问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                     {
+                        return;
+                    }
+                    if (receiptTicket.HasSubmission == 1)
+                    {
+                        MessageBox.Show("该条目已经送检无法直接收货，请对该收货单所对应的送检单进行收货操作。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     if (receiptTicket.State == "拒收")

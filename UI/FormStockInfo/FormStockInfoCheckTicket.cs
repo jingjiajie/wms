@@ -295,5 +295,56 @@ namespace WMS.UI
         {
 
         }
+
+        private void buttonPreview_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain .Worksheets[0];
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("盘点单预览");
+            if (formPreview.SetPatternTable(@"Excel\StockInfoCheckTicket.xlsx") == false)
+            {
+                this.Close();
+                return;
+            }
+            WMSEntities wmsEntities = new WMSEntities();
+            if (worksheet.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项进行预览", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int stockInfoCheckID;
+            try
+            {
+                stockInfoCheckID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            StockInfoCheckTicketView StockInfoCheckTicketView = (from stv in wmsEntities.StockInfoCheckTicketView  
+                                                   where stv.ID == stockInfoCheckID
+                                                   select stv).FirstOrDefault();
+
+            StockInfoCheckTicketItemView [] StockInfoCheckTicketItemView =
+                (from p in wmsEntities.StockInfoCheckTicketItemView 
+                 where p.StockInfoCheckTicketID  == StockInfoCheckTicketView.ID
+                 select p).ToArray();
+            if (StockInfoCheckTicketView == null)
+            {
+                MessageBox.Show("盘点单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+           
+            if (StockInfoCheckTicketView != null)
+            {
+                formPreview.AddData("StockInfoCheckTicket", StockInfoCheckTicketView);
+            }
+            formPreview.AddData("StockInfoCheckTicketItem", StockInfoCheckTicketItemView);
+            
+            
+            formPreview.Show();
+        }
     }
 }

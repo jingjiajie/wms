@@ -22,5 +22,14 @@ namespace WMS.UI.FormBase
             new KeyName(){Key="WarehouseName",Name="所在仓库名称",Visible=true,Editable=true,Save=false},
         };
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
+
+
+        private static KeyName[] positionKeyNames = {
+            new KeyName(){Key="Receipt",Name="收货"},
+            new KeyName(){Key="Shipment",Name="发货"},
+            new KeyName(){Key="StockInfo",Name="库存管理"},
+            new KeyName(){Key="Settlement",Name= "结算"},
+        };
+        public static KeyName[] PositionKeyNames { get => positionKeyNames; set => positionKeyNames = value; }
     }
 }

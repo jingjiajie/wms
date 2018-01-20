@@ -46,6 +46,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.paperpanel = new System.Windows.Forms.Panel();
+            this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -67,7 +68,8 @@
             this.buttonAlter,
             this.buttonDelete,
             this.toolStripSeparator2,
-            this.button_additeam});
+            this.button_additeam,
+            this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Size = new System.Drawing.Size(997, 28);
@@ -227,6 +229,15 @@
             this.paperpanel.Size = new System.Drawing.Size(991, 34);
             this.paperpanel.TabIndex = 5;
             // 
+            // buttonPreview
+            // 
+            this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
+            this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPreview.Name = "buttonPreview";
+            this.buttonPreview.Size = new System.Drawing.Size(99, 25);
+            this.buttonPreview.Text = "导出/打印";
+            this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
+            // 
             // FormStockInfoCheckTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -268,5 +279,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.Panel paperpanel;
+        private System.Windows.Forms.ToolStripButton buttonPreview;
     }
 }

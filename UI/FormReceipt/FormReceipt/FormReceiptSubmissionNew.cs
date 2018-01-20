@@ -70,6 +70,7 @@ namespace WMS.UI.FormReceipt
             if (receiptTicket != null)
             {
                 this.Controls.Find("textBoxReceiptTicketNo", true)[0].Text = receiptTicket.No;
+                this.Controls.Find("textBoxSubmissionDate", true)[0].Text = receiptTicket.ReceiptDate.ToString();
             }
             this.Controls.Find("textBoxState", true)[0].Text = "待检";
             
@@ -190,7 +191,7 @@ namespace WMS.UI.FormReceipt
                     {
                         ReceiptTicketItemView curReceiptTicketItemView = receiptTicketItemViews[i];
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ReceiptMetaData.itemsKeyName select kn.Key).ToArray());
-
+                        
                         int m = 0;
                         for (int j = 0; j < worksheet.Columns - 1; j++)
                         {
@@ -202,7 +203,7 @@ namespace WMS.UI.FormReceipt
                                 //worksheet[i, m]
                                 //Cell cell = 
                                 worksheet.CreateAndGetCell(i, m).Style.BackColor = Color.AliceBlue;
-                                worksheet[i, j] = "0";
+                                worksheet[i, j] = curReceiptTicketItemView.DefaultSubmissionAmount;
                             }
                             else
                             {
@@ -370,8 +371,8 @@ namespace WMS.UI.FormReceipt
                     submissionTicket.SubmissionPersonID = this.SubmissionPersonIDGetter();
                     submissionTicket.DeliverSubmissionPersonID = this.DeliverSubmissionPersonIDGetter();
                     //ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
-                    
-                    
+
+                    submissionTicket.SubmissionDate = receiptTicket.ReceiptDate;
                     submissionTicket.CreateTime = DateTime.Now;
                     submissionTicket.ReceiptTicketID = this.receiptTicketID;
                     submissionTicket.CreateUserID = this.userID;
@@ -440,6 +441,7 @@ namespace WMS.UI.FormReceipt
                                    
                                 }
                             }
+                            receiptTicket.HasSubmission = 1;
                             receiptTicket.State = "送检中";
                             wmsEntities.SaveChanges();
                             /*

@@ -216,11 +216,13 @@ namespace WMS.UI.FormBase
                 {
                     var sameNamePerson = (from u in wmsEntities.Person
                                              where u.Name == textBoxName.Text
+                                             &&u.ProjectID==this.projectID
+                                             &&u.WarehouseID==this.warehouseID
                                                 && u.ID != person.ID
                                              select u).ToArray();
                     if (sameNamePerson.Length > 0)
                     {
-                        MessageBox.Show("修改人员名失败，已存在同名人员：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("修改人员名失败，"+ textboxWarehouseName.Text+"仓库"+ textboxProjectName .Text+ "项目中已存在同名人员：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
@@ -238,10 +240,12 @@ namespace WMS.UI.FormBase
                 {
                     var sameNamePerson = (from u in wmsEntities.Person
                                           where u.Name == textBoxName.Text
+                                          && u.ProjectID == this.projectID
+                                             && u.WarehouseID == this.warehouseID
                                           select u).ToArray();
                     if (sameNamePerson.Length > 0)
                     {
-                        MessageBox.Show("修改人员名失败，已存在同名人员：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("修改人员名失败，" + textboxWarehouseName.Text + "仓库" + textboxProjectName.Text + "项目中已存在同名人员：" + textBoxName.Text, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
