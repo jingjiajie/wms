@@ -78,5 +78,6 @@ namespace WMS.DataAccess
         public string Comment { get; set; }
         public Nullable<decimal> ExpectedUnitCount { get; set; }
         public string RefuseComment { get; set; }
+        public Nullable<decimal> DefaultSubmissionAmount { get; set; }
     }
 }

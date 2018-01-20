@@ -41,6 +41,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
+            this.checkBoxOnlyThisProAndWare = new System.Windows.Forms.CheckBox();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripComboBoxSelectPosition = new System.Windows.Forms.ToolStripComboBox();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -52,23 +55,23 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 471);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 375);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 11, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(861, 25);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 8, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(646, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(44, 17);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(69, 20);
+            this.labelStatus.Size = new System.Drawing.Size(56, 17);
             this.labelStatus.Text = "选择人员";
             // 
             // toolStrip1
@@ -78,6 +81,8 @@
             this.toolStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel2,
+            this.toolStripComboBoxSelectPosition,
             this.toolStripLabel1,
             this.textBoxPersonName,
             this.buttonSearch,
@@ -85,20 +90,20 @@
             this.buttonSelect});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(861, 28);
+            this.toolStrip1.Size = new System.Drawing.Size(646, 28);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(84, 25);
+            this.toolStripLabel1.Size = new System.Drawing.Size(67, 25);
             this.toolStripLabel1.Text = "人员名称：";
             // 
             // textBoxPersonName
             // 
             this.textBoxPersonName.Name = "textBoxPersonName";
-            this.textBoxPersonName.Size = new System.Drawing.Size(135, 28);
+            this.textBoxPersonName.Size = new System.Drawing.Size(102, 28);
             this.textBoxPersonName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxPersonName_KeyPress);
             this.textBoxPersonName.Click += new System.EventHandler(this.textBoxPersonName_Click);
             this.textBoxPersonName.VisibleChanged += new System.EventHandler(this.textBoxPersonName_VisbleChanged);
@@ -108,7 +113,7 @@
             this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
             this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
+            this.buttonSearch.Size = new System.Drawing.Size(55, 25);
             this.buttonSearch.Text = "查询";
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
@@ -123,7 +128,7 @@
             this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
             this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(93, 25);
+            this.buttonSelect.Size = new System.Drawing.Size(79, 25);
             this.buttonSelect.Text = "确认选择";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
@@ -135,21 +140,20 @@
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 28);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(861, 443);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(646, 347);
             this.tableLayoutPanel1.TabIndex = 16;
             // 
             // panelPagerWidget
             // 
             this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(3, 407);
-            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelPagerWidget.Location = new System.Drawing.Point(2, 319);
+            this.panelPagerWidget.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(855, 34);
+            this.panelPagerWidget.Size = new System.Drawing.Size(642, 26);
             this.panelPagerWidget.TabIndex = 17;
             // 
             // reoGridControlMain
@@ -158,8 +162,8 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(3, 2);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reoGridControlMain.Location = new System.Drawing.Point(2, 2);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -167,22 +171,50 @@
             this.reoGridControlMain.SheetTabContextMenuStrip = null;
             this.reoGridControlMain.SheetTabNewButtonVisible = true;
             this.reoGridControlMain.SheetTabVisible = true;
-            this.reoGridControlMain.SheetTabWidth = 93;
+            this.reoGridControlMain.SheetTabWidth = 70;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(855, 401);
+            this.reoGridControlMain.Size = new System.Drawing.Size(642, 313);
             this.reoGridControlMain.TabIndex = 15;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
+            // checkBoxOnlyThisProAndWare
+            // 
+            this.checkBoxOnlyThisProAndWare.AutoSize = true;
+            this.checkBoxOnlyThisProAndWare.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.checkBoxOnlyThisProAndWare.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBoxOnlyThisProAndWare.Checked = true;
+            this.checkBoxOnlyThisProAndWare.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOnlyThisProAndWare.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.checkBoxOnlyThisProAndWare.Location = new System.Drawing.Point(497, 4);
+            this.checkBoxOnlyThisProAndWare.Name = "checkBoxOnlyThisProAndWare";
+            this.checkBoxOnlyThisProAndWare.Size = new System.Drawing.Size(139, 19);
+            this.checkBoxOnlyThisProAndWare.TabIndex = 17;
+            this.checkBoxOnlyThisProAndWare.Text = "仅查看当前项目/仓库";
+            this.checkBoxOnlyThisProAndWare.UseVisualStyleBackColor = false;
+            this.checkBoxOnlyThisProAndWare.CheckedChanged += new System.EventHandler(this.checkBoxOnlyThisProAndWare_CheckedChanged);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(43, 25);
+            this.toolStripLabel2.Text = "岗位：";
+            // 
+            // toolStripComboBoxSelectPosition
+            // 
+            this.toolStripComboBoxSelectPosition.Name = "toolStripComboBoxSelectPosition";
+            this.toolStripComboBoxSelectPosition.Size = new System.Drawing.Size(121, 28);
+            // 
             // FormSelectPerson
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(861, 496);
+            this.ClientSize = new System.Drawing.Size(646, 397);
+            this.Controls.Add(this.checkBoxOnlyThisProAndWare);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSelectPerson";
@@ -213,5 +245,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.Panel panelPagerWidget;
+        private System.Windows.Forms.CheckBox checkBoxOnlyThisProAndWare;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelectPosition;
     }
 }

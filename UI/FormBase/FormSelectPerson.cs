@@ -9,12 +9,15 @@ using System.Windows.Forms;
 using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
+using WMS.UI.FormBase;
 
 namespace WMS.UI
 {
     public partial class FormSelectPerson : Form,IFormSelect
     {
         private PagerWidget<PersonView> pagerWidget = null;
+        private int selectPosition =0;
+
         private int defaultPersonID = -1;
         private int projectID = -1;
         private int warehouseID = -1;
@@ -34,6 +37,16 @@ namespace WMS.UI
 
         private void InitComponents()
         {
+            string[] visibleColumnNames = (from kn in BasePersonMetaData.PositionKeyNames
+                                           where kn.Visible == true
+                                           select kn.Name).ToArray();
+
+            //初始化
+            this.toolStripComboBoxSelectPosition.Items.Add("无");
+            this.toolStripComboBoxSelectPosition.Items.AddRange(visibleColumnNames);
+            this.toolStripComboBoxSelectPosition.SelectedIndex = selectPosition;
+
+
             this.textBoxPersonName.Text = "";
             this.pagerWidget = new PagerWidget<PersonView>(this.reoGridControlMain, FormBase.BasePersonMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPagerWidget.Controls.Add(this.pagerWidget);
@@ -73,16 +86,27 @@ namespace WMS.UI
 
         private void Search(int selectID = -1)
         {
+            this.pagerWidget.ClearCondition();
+            if (this.checkBoxOnlyThisProAndWare.Checked == true)
+            {
+                this.pagerWidget.AddCondition("ProjectID", Convert.ToString(GlobalData.ProjectID));
+                this.pagerWidget.AddCondition("WarehouseID", Convert.ToString(GlobalData.WarehouseID));
+            }
+            if (this.toolStripComboBoxSelectPosition.SelectedIndex != 0)
+            {
+                this.pagerWidget.AddCondition("Position", this.toolStripComboBoxSelectPosition.SelectedItem.ToString());
+            }
+
+
             if (this.textBoxPersonName.Text != "")
             {
                 string value = this.textBoxPersonName.Text;
-                this.pagerWidget.ClearCondition();
+
                 this.pagerWidget.AddCondition("人员姓名", value);
                 this.pagerWidget.Search(false, selectID);
             }
             else
             {
-                this.pagerWidget.ClearCondition();
                 this.pagerWidget.Search(false, selectID);
             }
         }
@@ -145,6 +169,11 @@ namespace WMS.UI
                 }
                 this.pagerWidget.Search(true, id);
             }
+        }
+
+        private void checkBoxOnlyThisProAndWare_CheckedChanged(object sender, EventArgs e)
+        {
+            this.Search();
         }
     }
 }

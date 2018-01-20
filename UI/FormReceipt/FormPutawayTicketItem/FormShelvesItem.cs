@@ -121,6 +121,11 @@ namespace WMS.UI.FormReceipt
                 pagerWidget.AddCondition(this.key, this.value);
                 pagerWidget.Search();
             }
+            else
+            {
+                //pagerWidget.AddCondition("状态", "待上架");
+                //pagerWidget.AddCondition("状态", "部分上架");
+            }
             
             //if (this.putawayTicketID != -1)
             //{

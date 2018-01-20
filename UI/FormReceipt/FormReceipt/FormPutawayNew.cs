@@ -160,7 +160,7 @@ namespace WMS.UI.FormReceipt
                             {
                                 //worksheet[i, j]
                                 worksheet.CreateAndGetCell(i, j).Style.BackColor = Color.AliceBlue;
-                                worksheet[i, j] = "0";
+                                //worksheet[i, j] = "0";
                             }
                             else
                             {
@@ -299,6 +299,11 @@ namespace WMS.UI.FormReceipt
             {
                 PutawayTicket putawayTicket = new PutawayTicket();
                 string errorInfo;
+                if (receiptItemPutawayAmount.Count == 0)
+                {
+                    MessageBox.Show("至少选中一条上架！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorInfo) == false)
                 {
                     MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
