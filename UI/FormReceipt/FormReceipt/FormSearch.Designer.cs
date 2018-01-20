@@ -117,8 +117,8 @@
             // 
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.Items.AddRange(new object[] {
-            "零件编号",
-            "零件名称"});
+            "编号",
+            "零件名"});
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
             this.comboBoxSearchCondition.Size = new System.Drawing.Size(82, 38);
             this.comboBoxSearchCondition.Click += new System.EventHandler(this.comboBoxSearchCondition_Click);

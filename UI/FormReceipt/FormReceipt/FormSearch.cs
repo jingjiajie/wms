@@ -75,12 +75,12 @@ namespace WMS.UI.FormReceipt
             //初始化表格
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            for (int i = 0; i < ReceiptMetaData.componentKeyName.Length; i++)
+            for (int i = 0; i < SupplyViewMetaData.supplykeyNames.Length; i++)
             {
-                worksheet.ColumnHeaders[i].Text = ReceiptMetaData.componentKeyName[i].Name;
-                worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.componentKeyName[i].Visible;
+                worksheet.ColumnHeaders[i].Text = SupplyViewMetaData.supplykeyNames[i].Name;
+                worksheet.ColumnHeaders[i].IsVisible = SupplyViewMetaData.supplykeyNames[i].Visible;
             }
-            worksheet.Columns = ReceiptMetaData.componentKeyName.Length; //限制表的长度
+            worksheet.Columns = SupplyViewMetaData.supplykeyNames.Length; //限制表的长度
         }
         /*
         private void Search()

@@ -82,6 +82,8 @@ namespace WMS.UI.FormReceipt
             if (this.formMode == FormMode.ALTER)
             {
                 this.buttonOK.Text = "修改收货单";
+                this.Text = "修改收货单";
+                this.GroupBox.Text = "修改收货单";
                 ReceiptTicketView receiptTicketView = (from s in this.wmsEntities.ReceiptTicketView
                                                        where s.ID == this.ID
                                                        select s).Single();
@@ -208,9 +210,9 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
-                    if (supplier.EndingTime < DateTime.Now)
+                    if (supplier.ContractState == "待审核" || supplier.ContractState == "过截止的日期")
                     {
-                        if (MessageBox.Show("改供货商合同截止日期已过，是否继续？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if (MessageBox.Show("该供应商的状态为“待审核”或“过截止的日期”，是否继续添加？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             this.supplierID = ID;
                         }

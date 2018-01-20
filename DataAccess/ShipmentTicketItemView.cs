@@ -44,5 +44,8 @@ namespace WMS.DataAccess
         public Nullable<decimal> UnitAmount { get; set; }
         public string SupplyNumber { get; set; }
         public string SupplyNo { get; set; }
+        public Nullable<System.DateTime> StockInfoInventoryDate { get; set; }
+        public Nullable<System.DateTime> StockInfoManufactureDate { get; set; }
+        public Nullable<System.DateTime> StockInfoExpiryDate { get; set; }
     }
 }

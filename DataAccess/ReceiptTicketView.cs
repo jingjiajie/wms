@@ -74,5 +74,6 @@ namespace WMS.DataAccess
         public string ReceiptUnit { get; set; }
         public string Comment { get; set; }
         public string RefuseComment { get; set; }
+        public Nullable<int> HasSubmission { get; set; }
     }
 }
