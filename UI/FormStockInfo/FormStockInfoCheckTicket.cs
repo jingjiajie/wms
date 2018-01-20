@@ -343,6 +343,7 @@ namespace WMS.UI
             }
             formPreview.AddData("StockInfoCheckTicketItem", StockInfoCheckTicketItemView);
             
+            
             formPreview.Show();
         }
     }
