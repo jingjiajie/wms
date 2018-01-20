@@ -42,7 +42,7 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
-            this.personid = personid;
+            //this.personid = personid;
             
 
         }
@@ -477,7 +477,7 @@ namespace WMS.UI
                 this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount) ;
                 this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
                 TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
-
+                this.Controls.Find("textBoxPersonName", true)[0].Text = "";
 
 
             });
