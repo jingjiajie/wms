@@ -47,18 +47,15 @@ namespace WMS.UI.FormBase
 
         private void Search()
         {
+            this.pagerWidget.ClearCondition();
             if (this.checkBoxOnlyThisProAndWare.Checked == true)
             {
                 this.pagerWidget.AddCondition("ProjectID", Convert.ToString(GlobalData.ProjectID));
                 this.pagerWidget.AddCondition("WarehouseID", Convert.ToString(GlobalData.WarehouseID));
             }
-            else
+            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             {
-                this.pagerWidget.ClearCondition();
-                if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-                {
-                    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
-                }
+                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
             }
             this.pagerWidget.Search();
         }
