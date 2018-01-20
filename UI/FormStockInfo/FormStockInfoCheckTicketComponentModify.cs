@@ -42,7 +42,7 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
-            this.personid = personid;
+            //this.personid = personid;
             
 
         }
@@ -114,18 +114,40 @@ namespace WMS.UI
             this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
             this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
+
+
+            this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
+            this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
+            this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
+            this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
+
+
+
+
+
+
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
             
             this.pagerWidget.ClearCondition();
-            additiontextbocdeffrence();
+            additionTextboxdiffrence();
             this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert .ToString ( this.stockInfoCheckID ));
             this.pagerWidget.Search();
             
             
              
         }
-        private void additiontextbocdeffrence()
+
+
+
+
+
+
+
+
+
+
+        private void additionTextboxdiffrence()
         {
             Label label = new Label();
             label.Text = "盘点差异值";
@@ -136,13 +158,70 @@ namespace WMS.UI
 
 
             TextBox textBox = new TextBox();
-            textBox.Text = "自动填写";
+
+            //textBox.Text = "自动填写";
             textBox.Font = new Font("微软雅黑", 10);
             textBox.Dock = DockStyle.Fill;
-            textBox.ForeColor = Color.DarkGray;
+            textBox.Name = "textBoxDifference";
+
+            //textBox.ForeColor = Color.DarkGray ;
             textBox.ReadOnly = true;
             tableLayoutPanel2.Controls.Add(textBox);
         }
+
+
+
+
+        private void textBoxExcpetedOverflowAreaAmount_TextChanged(object sender, EventArgs e)
+        {
+            //string a = "";
+            //foreach (Control control in this.tableLayoutPanel2.Controls)
+            //{
+            //    if (control is TextBox)
+            //    {
+            //        TextBox textBox = control as TextBox;
+            //        a = a + textBox.Name;
+            //        a = a + "   ";
+
+            //    }
+            //}
+
+
+
+
+
+
+
+            TextBox textBoxExcpetedOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0];
+            TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
+            TextBox textBoxExpectedShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0];
+            TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
+
+            TextBox textBoxtDifference = (TextBox)this.Controls.Find("textBoxDifference", true)[0];
+
+            if (textBoxExcpetedOverflowAreaAmount.Text != "" && textBoxRealOverflowAreaAmount.Text != "" && textBoxExpectedShipmentAreaAmount.Text !="" && textBoxRealShipmentAreaAmount.Text != "")
+
+                
+
+
+            {
+                decimal  ExcpetedOverflowAreaAmount = Convert.ToDecimal (textBoxExcpetedOverflowAreaAmount.Text);
+               decimal  ExpectedShipmentAreaAmount = Convert.ToDecimal (textBoxExpectedShipmentAreaAmount.Text);
+                decimal  RealOverflowAreaAmount= Convert.ToDecimal (textBoxRealOverflowAreaAmount.Text);
+                decimal  RealShipmentAreaAmount = Convert.ToDecimal (textBoxRealShipmentAreaAmount.Text);
+
+
+                textBoxtDifference.Text = (ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount).ToString();
+
+
+            }
+
+
+
+
+
+        }
+
         private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
         {
             this.RefreshTextBoxes();
@@ -278,6 +357,12 @@ namespace WMS.UI
 
 
 
+
+
+
+
+
+
         private void InitComponents()
         {
             //string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
@@ -392,7 +477,7 @@ namespace WMS.UI
                 this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount) ;
                 this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
                 TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
-
+                this.Controls.Find("textBoxPersonName", true)[0].Text = "";
 
 
             });
@@ -527,10 +612,10 @@ namespace WMS.UI
             {
                 this.addFinishedCallback(this.stockInfoCheckID);
             }
-            Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
+            //Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
             
-            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
-            this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
+            //this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            //this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
 
 
@@ -1059,10 +1144,9 @@ namespace WMS.UI
             buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
 
-        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-    }
+
+
+    } 
     
 }
