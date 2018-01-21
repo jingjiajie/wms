@@ -142,7 +142,7 @@ namespace WMS.UI
               
 
         {
-            BasePersonMetaData.DefaultPosition = BasePersonMetaData.defaultPosition_StockInfo;
+            BasePersonMetaData.DEFAULTPOSITION = Convert.ToInt32( BasePersonMetaData.POSITION.POSITION_STOCKINFO);
             if (FormSelectPerson == null)
             {
                 FormSelectPerson = new FormSelectPerson();
