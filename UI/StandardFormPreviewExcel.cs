@@ -65,6 +65,10 @@ namespace WMS.UI
                     Worksheet newWorksheet = this.excelGenerator.Generate();
                     newWorksheet.Name = sheetName;
                     this.reoGridControlMain.Worksheets.Add(newWorksheet);
+                    for (int i = 0; i < newWorksheet.Columns; i++)
+                    {
+                        newWorksheet.AutoFitColumnWidth(i);
+                    }
                 }
             }
             catch (Exception ex)
