@@ -182,7 +182,14 @@ namespace EMacro
                     try
                     {
                         var result = jsEngine.Execute(writeCommand.JsExpr).GetCompletionValue();
-                        exprResult = result.ToString();
+                        if (result.IsNull())
+                        {
+                            exprResult = "";
+                        }
+                        else
+                        {
+                            exprResult = result.ToString();
+                        }
                     }
                     catch (Exception e)
                     {
