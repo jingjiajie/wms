@@ -28,6 +28,7 @@ namespace WMS.UI.FormReceipt
         private Func<int> SubmissionPersonIDGetter = null;
         private Func<int> ReceivePersonIDGetter = null;
         private Func<int> DeliverSubmissionPersonIDGetter = null;
+        private KeyName[] ItemKeyName;
         public FormReceiptSubmissionNew()
         {
             InitializeComponent();
@@ -56,6 +57,7 @@ namespace WMS.UI.FormReceipt
 
         private void FormReceiptSubmissionNew_Load(object sender, EventArgs e)
         {
+            this.ItemKeyName = (from kn in ReceiptMetaData.itemsKeyName where kn.Key != "Component" select kn).ToArray();
             InitComponents();
             Search();
             InitPanel();
@@ -86,7 +88,7 @@ namespace WMS.UI.FormReceipt
             var worksheet = this.reoGridControlUser.Worksheets[0];
             //worksheet.SelectionMode = WorksheetSelectionMode.Cell;
             int n = 0;
-            for (int i = 0; i < ReceiptMetaData.itemsKeyName.Length + 1; i++)
+            for (int i = 0; i < ItemKeyName.Length + 1; i++)
             {
                 if (i == this.checkBoxColumn)
                 {
@@ -94,13 +96,13 @@ namespace WMS.UI.FormReceipt
                 }
                 else
                 {
-                    worksheet.ColumnHeaders[i].Text = ReceiptMetaData.itemsKeyName[n].Name;
-                    worksheet.ColumnHeaders[i].IsVisible = ReceiptMetaData.itemsKeyName[n].Visible;
+                    worksheet.ColumnHeaders[i].Text = ItemKeyName[n].Name;
+                    worksheet.ColumnHeaders[i].IsVisible = ItemKeyName[n].Visible;
                     n++;
                 }
             }
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
-            worksheet.Columns = ReceiptMetaData.itemsKeyName.Length + 1;
+            worksheet.Columns = ItemKeyName.Length + 1;
             worksheet.CellMouseEnter += ClickOnCell;
             //worksheet.AfterCellEdit += AfterCellEdit;
         }
@@ -190,7 +192,7 @@ namespace WMS.UI.FormReceipt
                     for (int i = 0; i < receiptTicketItemViews.Length; i++)
                     {
                         ReceiptTicketItemView curReceiptTicketItemView = receiptTicketItemViews[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ReceiptMetaData.itemsKeyName select kn.Key).ToArray());
+                        object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ItemKeyName select kn.Key).ToArray());
                         
                         int m = 0;
                         for (int j = 0; j < worksheet.Columns - 1; j++)

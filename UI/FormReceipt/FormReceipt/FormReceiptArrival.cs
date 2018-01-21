@@ -116,6 +116,7 @@ namespace WMS.UI
                 this.buttonPutaway.Enabled = false;
                 this.buttonPutaway.Enabled = false;
                 //this.buttonSelect.Enabled = false;
+                this.buttonReceiptCancel.Enabled = false;
                 this.ButtonToPutaway.Enabled = false;
                 this.ButtonToSubmission.Enabled = false;
                 this.buttonItemSubmission.Enabled = false;

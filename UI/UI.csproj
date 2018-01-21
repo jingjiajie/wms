@@ -171,6 +171,12 @@
     <Compile Include="FormReceipt\FormReceipt\FormAddSubmissionItem.Designer.cs">
       <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormReceipt\FormImport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormReceipt\FormImport.Designer.cs">
+      <DependentUpon>FormImport.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormSubmission\FormAddSubmissionTicket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -511,6 +517,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormReceipt\FormAddSubmissionItem.resx">
       <DependentUpon>FormAddSubmissionItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormReceipt\FormImport.resx">
+      <DependentUpon>FormImport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSubmission\FormAddSubmissionTicket.resx">
       <DependentUpon>FormAddSubmissionTicket.cs</DependentUpon>

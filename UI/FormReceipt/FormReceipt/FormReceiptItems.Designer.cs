@@ -34,14 +34,16 @@
             this.tableLayoutPanelProperties = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonModify = new System.Windows.Forms.Button();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonModify = new System.Windows.Forms.Button();
+            this.buttonImport = new System.Windows.Forms.Button();
             this.reoGridControlReceiptItems = new unvell.ReoGrid.ReoGridControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -117,49 +119,26 @@
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel3.ColumnCount = 3;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 12F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 324F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 2);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 0F));
             this.tableLayoutPanel3.Controls.Add(this.buttonAdd, 1, 1);
-            this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 3);
+            this.tableLayoutPanel3.Controls.Add(this.buttonDelete, 1, 4);
+            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 1, 3);
+            this.tableLayoutPanel3.Controls.Add(this.buttonImport, 1, 2);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Font = new System.Drawing.Font("宋体", 9F);
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 5;
+            this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.99813F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(214, 274);
             this.tableLayoutPanel3.TabIndex = 4;
             this.tableLayoutPanel3.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel3_Paint);
-            // 
-            // buttonModify
-            // 
-            this.buttonModify.AutoSize = true;
-            this.buttonModify.BackColor = System.Drawing.Color.White;
-            this.buttonModify.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonModify.BackgroundImage")));
-            this.buttonModify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.buttonModify.FlatAppearance.BorderSize = 0;
-            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonModify.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonModify.Image = global::WMS.UI.Properties.Resources.cancle;
-            this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(15, 102);
-            this.buttonModify.Name = "buttonModify";
-            this.buttonModify.Size = new System.Drawing.Size(187, 45);
-            this.buttonModify.TabIndex = 1;
-            this.buttonModify.Text = "修改零件条目";
-            this.buttonModify.UseVisualStyleBackColor = false;
-            this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
-            this.buttonModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonModify_MouseDown);
-            this.buttonModify.MouseEnter += new System.EventHandler(this.buttonModify_MouseEnter);
-            this.buttonModify.MouseLeave += new System.EventHandler(this.buttonModify_MouseLeave);
             // 
             // buttonAdd
             // 
@@ -167,6 +146,7 @@
             this.buttonAdd.BackColor = System.Drawing.Color.White;
             this.buttonAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAdd.BackgroundImage")));
             this.buttonAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonAdd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.buttonAdd.FlatAppearance.BorderSize = 0;
             this.buttonAdd.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -177,7 +157,7 @@
             this.buttonAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonAdd.Location = new System.Drawing.Point(15, 23);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(187, 45);
+            this.buttonAdd.Size = new System.Drawing.Size(196, 53);
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.Text = "添加零件条目";
             this.buttonAdd.UseVisualStyleBackColor = false;
@@ -190,6 +170,7 @@
             // 
             this.buttonDelete.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonDelete.BackgroundImage")));
             this.buttonDelete.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonDelete.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonDelete.FlatAppearance.BorderSize = 0;
             this.buttonDelete.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonDelete.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
@@ -197,9 +178,9 @@
             this.buttonDelete.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.buttonDelete.Image = global::WMS.UI.Properties.Resources.delete;
             this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDelete.Location = new System.Drawing.Point(15, 181);
+            this.buttonDelete.Location = new System.Drawing.Point(15, 200);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(187, 44);
+            this.buttonDelete.Size = new System.Drawing.Size(196, 53);
             this.buttonDelete.TabIndex = 2;
             this.buttonDelete.Text = "删除零件条目";
             this.buttonDelete.UseVisualStyleBackColor = true;
@@ -207,6 +188,43 @@
             this.buttonDelete.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonDelete_MouseDown);
             this.buttonDelete.MouseEnter += new System.EventHandler(this.buttonDelete_MouseEnter);
             this.buttonDelete.MouseLeave += new System.EventHandler(this.buttonDelete_MouseLeave);
+            // 
+            // buttonModify
+            // 
+            this.buttonModify.AutoSize = true;
+            this.buttonModify.BackColor = System.Drawing.Color.White;
+            this.buttonModify.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonModify.BackgroundImage")));
+            this.buttonModify.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonModify.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonModify.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonModify.FlatAppearance.BorderSize = 0;
+            this.buttonModify.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonModify.Font = new System.Drawing.Font("微软雅黑", 10.125F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonModify.Image = global::WMS.UI.Properties.Resources.cancle;
+            this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonModify.Location = new System.Drawing.Point(15, 141);
+            this.buttonModify.Name = "buttonModify";
+            this.buttonModify.Size = new System.Drawing.Size(196, 53);
+            this.buttonModify.TabIndex = 1;
+            this.buttonModify.Text = "修改零件条目";
+            this.buttonModify.UseVisualStyleBackColor = false;
+            this.buttonModify.Click += new System.EventHandler(this.buttonModify_Click);
+            this.buttonModify.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonModify_MouseDown);
+            this.buttonModify.MouseEnter += new System.EventHandler(this.buttonModify_MouseEnter);
+            this.buttonModify.MouseLeave += new System.EventHandler(this.buttonModify_MouseLeave);
+            // 
+            // buttonImport
+            // 
+            this.buttonImport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonImport.Location = new System.Drawing.Point(15, 82);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(196, 53);
+            this.buttonImport.TabIndex = 3;
+            this.buttonImport.Text = "批量导入";
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // reoGridControlReceiptItems
             // 
@@ -225,9 +243,10 @@
             this.reoGridControlReceiptItems.SheetTabVisible = true;
             this.reoGridControlReceiptItems.SheetTabWidth = 163;
             this.reoGridControlReceiptItems.ShowScrollEndSpacing = true;
-            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(964, 207);
+            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(964, 147);
             this.reoGridControlReceiptItems.TabIndex = 11;
             this.reoGridControlReceiptItems.Text = "reoGridControlRecieptItems";
+            this.reoGridControlReceiptItems.Click += new System.EventHandler(this.reoGridControlReceiptItems_Click_1);
             // 
             // statusStrip1
             // 
@@ -248,14 +267,14 @@
             // 
             this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 25);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(114, 25);
+            this.labelStatus.Size = new System.Drawing.Size(182, 25);
             this.labelStatus.Text = "查看收货单条目";
             // 
             // tableLayoutPanel1
@@ -264,21 +283,31 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.reoGridControlReceiptItems, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 286F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 529);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 442);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(968, 54);
+            this.panel2.TabIndex = 13;
+            // 
             // FormReceiptItems
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -319,5 +348,7 @@
         private System.Windows.Forms.ToolStripStatusLabel labelStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonImport;
+        private System.Windows.Forms.Panel panel2;
     }
 }

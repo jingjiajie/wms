@@ -57,8 +57,5 @@ namespace WMS.DataAccess
         public string SupplierName { get; set; }
         public Nullable<int> PersonID { get; set; }
         public string PersonName { get; set; }
-        public string Factory { get; set; }
-        public string Destination { get; set; }
-        public string Gate { get; set; }
     }
 }

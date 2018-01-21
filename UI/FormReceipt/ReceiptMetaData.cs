@@ -89,14 +89,15 @@ namespace WMS.UI.FormReceipt
 
         public static KeyName[] itemsKeyName =
         {
-            new KeyName(){Name="ID", Key="ID",Visible=false,Editable=false,Save=true},
-            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=false,Save=true},
-            new KeyName(){Name="零件ID", Key="SupplyID",Visible=false,Editable=false,Save=true},
-            new KeyName(){Name="零件编号", Key="SupplyNo", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件"},
-            new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件" },
-            new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true},
-            new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true},
-            new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=false,Save=true, NotNegative = true},
+            new KeyName(){Name="ID", Key="ID",Visible=false,Editable=false,Save=true, ImportVisible = false,Import = false},
+            new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=false,Save=true, ImportVisible = false,Import = false},
+            new KeyName(){Name="零件ID", Key="SupplyID",Visible=false,Editable=false,Save=true, ImportVisible = false,Import = true},
+            new KeyName(){Name="零件编号/名称", Key="Component", Visible=false,Editable=false,Save=false,ImportVisible=true,Import=false},
+            new KeyName(){Name="零件编号", Key="SupplyNo", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件", ImportVisible = false,Import = false},
+            new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件" ,ImportVisible = false, Import = false},
+            new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true,ImportVisible = false ,Import = false},
+            new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true, Import = false, ImportVisible =false},
+            new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=false,Save=true, NotNegative = true,ImportVisible = false, Import = false},
 
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="订单数量", Key="ExpectedUnitCount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
@@ -125,10 +126,10 @@ namespace WMS.UI.FormReceipt
 
             new KeyName(){Name="生产日期", Key="ManufactureDate", Visible=true,Editable=true,Save=true},
             new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},
-            new KeyName(){Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
-            new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
-            new KeyName(){Name="确认人", Key = "ConfirmPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
+            new KeyName(){Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true, ImportVisible = false, Import = false},
+            new KeyName(){Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员", Import = false},
+            new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true, ImportVisible = false, Import = false},
+            new KeyName(){Name="确认人", Key = "ConfirmPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员", Import = false},
             new KeyName(){Name="厂商批号", Key="ManufactureNo",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="存货日期", Key="InventoryDate",Visible=true,Editable=true,Save=true, NotNull = true},
             new KeyName(){Name="生产日期", Key="ManufactureDate",Visible=true,Editable=true,Save=true},

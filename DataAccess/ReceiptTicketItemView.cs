@@ -79,5 +79,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> ExpectedUnitCount { get; set; }
         public string RefuseComment { get; set; }
         public Nullable<decimal> DefaultSubmissionAmount { get; set; }
+        public Nullable<int> ProjectID { get; set; }
     }
 }
