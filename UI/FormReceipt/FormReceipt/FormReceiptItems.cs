@@ -31,6 +31,7 @@ namespace WMS.UI
         private int warehouseID = -1;
         ReceiptTicketView ReceiptTicketView;
         PagerWidget<ReceiptTicketItemView> pagerWidget;
+        private StandardImportForm<ReceiptTicketItem> standardImportForm = null;
 
         public FormReceiptItems()
         {
@@ -692,14 +693,16 @@ namespace WMS.UI
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            StandardImportForm<ReceiptTicketItem> standardImportForm = new StandardImportForm<ReceiptTicketItem>(ReceiptMetaData.itemsKeyName, importItemHandler, importFinishedCallback, "导入收货单条目");
-            standardImportForm.ShowDialog();
+            this.standardImportForm = new StandardImportForm<ReceiptTicketItem>(ReceiptMetaData.itemsKeyName, importItemHandler, importFinishedCallback, "导入收货单条目");
+            this.standardImportForm.ShowDialog();
         }
 
         private bool importItemHandler(ReceiptTicketItem[] results, Dictionary<string, string[]> unimportedColumns)
         {
             WMSEntities wmsEntities = new WMSEntities();
             string[] supplyNoNames = (from s in unimportedColumns where s.Key == "Component"  select s.Value).FirstOrDefault();
+            string[] jobPersonNames = (from s in unimportedColumns where s.Key == "JobPersonName" select s.Value).FirstOrDefault();
+            string[] confirmPersonNames = (from s in unimportedColumns where s.Key == "ConfirmPersonName" select s.Value).FirstOrDefault();
             for (int i = 0; i < results.Length; i++)
             {
                 string supplyNoName = supplyNoNames[i];
@@ -711,7 +714,7 @@ namespace WMS.UI
                 SupplyView supplyViewNo = (from sv in wmsEntities.SupplyView where sv.No == supplyNoName && sv.SupplierID == this.ReceiptTicketView.SupplierID select sv).FirstOrDefault();
                 if (supplyViewNo == null)
                 {
-                    SupplyView[] supplyViewName = (from sv in wmsEntities.SupplyView where sv.ComponentName == supplyNoNames[i] && sv.SupplierID == this.ReceiptTicketView.SupplierID select sv).ToArray();
+                    SupplyView[] supplyViewName = (from sv in wmsEntities.SupplyView where sv.ComponentName == supplyNoName && sv.SupplierID == this.ReceiptTicketView.SupplierID select sv).ToArray();
                     if (supplyViewName.Length == 0)
                     {
                         MessageBox.Show("第" + (i + 1).ToString() + "行中，无法无法找到该供应商提供的该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -731,7 +734,37 @@ namespace WMS.UI
                 {
                     results[i].SupplyID = supplyViewNo.ID;
                 }
-                
+                string jobPersonName = jobPersonNames[i];
+                string confirmPersonName = confirmPersonNames[i];
+                if (jobPersonName == "")
+                {
+                    results[i].JobPersonID = -1;
+                }
+                else
+                {
+                    PersonView personView = (from p in wmsEntities.PersonView where p.Name == jobPersonName select p).FirstOrDefault();
+                    if (personView == null)
+                    {
+                        MessageBox.Show("第" + (i + 1).ToString() + "中，没有“" + jobPersonName + "”这个人", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    results[i].JobPersonID = personView.ID;
+                }
+                if (confirmPersonName == null)
+                {
+                    results[i].ConfirmPersonID = -1;
+                }
+                else
+                {
+                    PersonView personView = (from p in wmsEntities.PersonView where p.Name == confirmPersonName select p).FirstOrDefault();
+                    if (personView == null)
+                    {
+                        MessageBox.Show("第" + (i + 1).ToString() + "中，没有“" + confirmPersonName + "”这个人", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    results[i].ConfirmPersonID = personView.ID;
+                }
+
                 results[i].ReceiptTicketID = this.receiptTicketID;
                 results[i].State = "待收货";
                 results[i].RefuseAmount = results[i].RefuseUnitAmount * results[i].RefuseUnitCount;
@@ -778,6 +811,13 @@ namespace WMS.UI
                     wmsEntities.StockInfo.Add(stockInfo);
                 }
                 wmsEntities.SaveChanges();
+                this.Invoke(new Action(() => 
+                {
+                    this.Search();
+                    MessageBox.Show("导入成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.standardImportForm.Close();
+                }));
+               
             }).Start();
             
 
@@ -787,7 +827,8 @@ namespace WMS.UI
 
         private void importFinishedCallback()
         {
-            this.Search();
+            
+
         }
 
         private void reoGridControlReceiptItems_Click_1(object sender, EventArgs e)
