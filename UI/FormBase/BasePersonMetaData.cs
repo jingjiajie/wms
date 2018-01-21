@@ -5,19 +5,20 @@ using System.Text;
 
 namespace WMS.UI.FormBase
 {
+    public enum Position
+    {
+        POSITION_NULL,
+        RECEIPT ,
+        SHIPMENT ,
+        STOCKINFO ,
+        SETTLEMENT ,
+
+    };
     class BasePersonMetaData
     {
-        private static int defaultPosition = -1;
-        public static int DEFAULTPOSITION { get => defaultPosition; set => defaultPosition = value; }
+        public static Position defaultPosition = Position.SHIPMENT;
 
-        public enum POSITION
-        {
-            POSITION_RECEIPT =1,
-            POSITION_SHIPMENT =2,
-            POSITION_STOCKINFO =3,
-            POSITION_SETTLEMENT =4,
 
-        };
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false},
