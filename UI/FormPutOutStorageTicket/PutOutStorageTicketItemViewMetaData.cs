@@ -29,6 +29,7 @@ namespace WMS.UI
             new KeyName(){Key="UnitAmount",Name="单位数量",Editable=false,Save=false,Positive=true},
             new KeyName(){Key="LoadingTime",Name="装车时间",Editable=true,EditPlaceHolder="装车时生成"},
             new KeyName(){Key="JobPersonName",Name="实际作业人员",Save=false,EditPlaceHolder="点击选择人员"},
+            new KeyName(){Key="Comment",Name="备注",EditPlaceHolder="填写备注"},
             new KeyName(){Key="ReturnQualityAmount",Name="正品退回数量",EditPlaceHolder="退回时填写",NotNull=true,NotNegative=true},
             new KeyName(){Key="ReturnQualityUnit",Name="正品退回单位",EditPlaceHolder="退回时填写",NotNull=true},
             new KeyName(){Key="ReturnQualityUnitAmount",Name="正品退回单位数量",EditPlaceHolder="退回时填写",NotNull=true,NotNegative=true},

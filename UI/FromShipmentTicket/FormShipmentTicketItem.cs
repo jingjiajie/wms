@@ -667,6 +667,8 @@ namespace WMS.UI
                     {
                         stockInfoViews = (from s in wmsEntities.StockInfoView
                                           where s.SupplyNo == supplyNo
+                                                && s.ProjectID == this.projectID
+                                                && s.WarehouseID == this.warehouseID
                                                 && s.ShipmentAreaAmount > 0
                                           orderby s.InventoryDate ascending
                                           select s).ToArray();
@@ -675,6 +677,8 @@ namespace WMS.UI
                     {
                         stockInfoViews = (from s in wmsEntities.StockInfoView
                                           where s.ComponentName == componentName
+                                                && s.ProjectID == this.projectID
+                                                && s.WarehouseID == this.warehouseID
                                                 && s.ShipmentAreaAmount > 0
                                           orderby s.InventoryDate ascending
                                           select s).ToArray();

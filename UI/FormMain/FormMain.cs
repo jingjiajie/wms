@@ -51,13 +51,67 @@ namespace WMS.UI
             else if (user.SupplierID == null)
             {
                 supplierid = -1;
+                remindSupply();
+
             }
 
-            
+            //FormSupplyRemind a1 = new FormSupplyRemind();
+            //a1.Show();
 
 
         }
+        
+        private void remindSupply()
+        {
+            //存货有效期
+            WMSEntities wmsEntities = new WMSEntities();
+            SupplyView[] SupplyView = null;
+            StockInfoView[] StockInfoView = null;
+            
+            StringBuilder sb = new StringBuilder();
 
+            SupplyView = (from u in wmsEntities.SupplyView
+                          select u).ToArray();
+
+            StockInfoView = (from u in wmsEntities.StockInfoView
+                             select u).ToArray();
+
+            for(int i=0;i<StockInfoView .Length;i++)
+            {
+                //找到每个零件的保质期
+                string ComponentName = StockInfoView[i].ComponentName;
+                string SupplierName = StockInfoView[i].SupplierName;
+                string SupplyNo = StockInfoView[i].SupplyNo;
+                if(ComponentName ==null||SupplierName ==null||SupplyNo ==null|| StockInfoView[i].InventoryDate==null)
+                {
+
+                    continue;
+                }
+                DateTime InventoryDate = Convert.ToDateTime(StockInfoView[i].InventoryDate);
+                var SafetyDate1 = (from u in wmsEntities.SupplyView
+                                  where u.ComponentName == ComponentName &&
+                                  u.SupplierName == SupplierName &&
+                                  u.No == SupplyNo
+                                  select u).FirstOrDefault();
+
+                //到期日期
+                if(SafetyDate1 .ValidPeriod ==null)
+                {
+                    continue;
+                }
+                var SafetyDate = InventoryDate.AddDays( Convert.ToDouble ( SafetyDate1.ValidPeriod));
+                
+                if(SafetyDate <=DateTime .Now )
+                {
+
+                    sb.Append(SupplierName +"  "+ ComponentName +"  "+SupplyNo +"  "+"存货日期"+" "+InventoryDate + "\r\n" + "\r\n");
+                      
+                }
+
+
+            }
+
+        }
 
 
 
@@ -66,7 +120,7 @@ namespace WMS.UI
         {
 
         WMSEntities wmsEntities = new WMSEntities();
-        WMS.DataAccess.ComponentView component = null;
+        ComponentView component = null;
        
 
         int days;
@@ -388,8 +442,8 @@ namespace WMS.UI
                     MakeTreeNode("上架零件管理"),
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
-                    MakeTreeNode("发货单管理"),
-                    MakeTreeNode("作业单管理"),
+                    MakeTreeNode("工作任务单管理"),
+                    MakeTreeNode("翻包作业单管理"),
                     MakeTreeNode("出库单管理"),
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
@@ -703,7 +757,7 @@ namespace WMS.UI
                 l.Show();
             }
 
-            if (treeViewLeft.SelectedNode.Text == "发货单管理")
+            if (treeViewLeft.SelectedNode.Text == "工作任务单管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
@@ -715,7 +769,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formShipmentTicket);
                 formShipmentTicket.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "作业单管理")
+            if (treeViewLeft.SelectedNode.Text == "翻包作业单管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;

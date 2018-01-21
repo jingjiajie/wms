@@ -131,7 +131,6 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(812, 197);
             this.tableLayoutPanel2.TabIndex = 3;
-
             // 
             // panel3
             // 
@@ -177,7 +176,6 @@
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(192, 197);
             this.tableLayoutPanel4.TabIndex = 6;
-
             // 
             // buttonAddAll
             // 
@@ -355,6 +353,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "添加盘点单";
             this.Load += new System.EventHandler(this.FormStockCheckModify_Load);
+
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);

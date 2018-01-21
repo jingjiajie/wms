@@ -5,6 +5,15 @@ using System.Text;
 
 namespace WMS.UI.FormBase
 {
+    public enum Position
+    {
+        POSITION_NULL,
+        RECEIPT ,
+        SHIPMENT ,
+        STOCKINFO ,
+        SETTLEMENT ,
+
+    };
     class BasePersonMetaData
     {
 

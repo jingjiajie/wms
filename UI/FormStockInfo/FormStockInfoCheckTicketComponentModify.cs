@@ -42,8 +42,14 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
-            //this.personid = personid;
-            
+            //var worksheet = this.reoGridControlMain.Worksheets[0];
+
+            //worksheet.SelectionRange = new RangePosition("A2:B2");
+            //worksheet.SelectionRange = new RangePosition("A1:B1");
+
+
+          
+
 
         }
 
@@ -88,26 +94,8 @@ namespace WMS.UI
             }
             
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
-            
-
-
-
-
-
-
-
-
-
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
-
-
-
-
-
-
-
-
             TextBox textBoxPersonName =(TextBox )this.Controls.Find("textBoxPersonName", true)[0];
             textBoxPersonName.BackColor = Color.White;
             //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
@@ -128,14 +116,15 @@ namespace WMS.UI
 
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
+           
             
-            this.pagerWidget.ClearCondition();
-            additionTextboxdiffrence();
-            this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert .ToString ( this.stockInfoCheckID ));
-            this.pagerWidget.Search();
+            additionTextboxDiffrence();
+
+            this.Search();
             
-            
-             
+
+
+
         }
 
 
@@ -147,7 +136,7 @@ namespace WMS.UI
 
 
 
-        private void additionTextboxdiffrence()
+        private void additionTextboxDiffrence()
         {
             Label label = new Label();
             label.Text = "盘点差异值";
@@ -185,13 +174,6 @@ namespace WMS.UI
 
             //    }
             //}
-
-
-
-
-
-
-
             TextBox textBoxExcpetedOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0];
             TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
             TextBox textBoxExpectedShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0];
@@ -211,7 +193,7 @@ namespace WMS.UI
                 decimal  RealShipmentAreaAmount = Convert.ToDecimal (textBoxRealShipmentAreaAmount.Text);
 
 
-                textBoxtDifference.Text = (ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount).ToString();
+                textBoxtDifference.Text =( -(ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount)).ToString();
 
 
             }
@@ -265,6 +247,7 @@ namespace WMS.UI
         {
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
+
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             
             if (ids.Length == 0)
@@ -651,8 +634,13 @@ namespace WMS.UI
 
         private void Search(int selectID=-1)
         {
-           this.pagerWidget.Search(false, selectID);
+            this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert.ToString(this.stockInfoCheckID));
+            this.pagerWidget.Search(false, selectID, (stockInfoCheckTicketItem) => { this.RefreshTextBoxes(); });
             this.labelStatus.Text = "盘点单条目";
+
+
+
             //var worksheet = this.reoGridControlMain.Worksheets[0];
 
             //worksheet[0, 1] = "加载中...";
@@ -1021,42 +1009,44 @@ namespace WMS.UI
 
         private void buttonAddAll_Click(object sender, EventArgs e)
         {
-            WMS.DataAccess.StockInfo[] stockinfoall = null;
-            WMS.DataAccess.StockInfoCheckTicketItem [] StockInfoCheckTicketItemsave = null;
+
+
+
             
-            try 
+            WMS.DataAccess.StockInfo[] stockinfoall = null;
+            WMS.DataAccess.StockInfoCheckTicketItem[] StockInfoCheckTicketItemsave = null;
+            FormLoading a1 = new FormLoading("正在添加，请稍后...");
+            a1.Show();
+            try
             {
                 wmsEntities = new DataAccess.WMSEntities();
                 stockinfoall = (from kn in wmsEntities.StockInfo
-                                 where kn.ProjectID ==this.projectID &&kn.WarehouseID ==this.warehouseID 
-                                    select kn).ToArray();
+                                where kn.ProjectID == this.projectID && kn.WarehouseID == this.warehouseID
+                                select kn).ToArray();
 
-                StockInfoCheckTicketItemsave= (from kn in wmsEntities.StockInfoCheckTicketItem 
-                                           where kn.StockInfoCheckTicketID ==this.stockInfoCheckID 
-                                           select kn).ToArray();
-
-
-
-
-
+                    StockInfoCheckTicketItemsave = (from kn in wmsEntities.StockInfoCheckTicketItem
+                                                    where kn.StockInfoCheckTicketID == this.stockInfoCheckID
+                                                    select kn).ToArray();
             }
             catch
             {
-                MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    a1.Close();
+                    MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
 
             }
 
-            if (stockinfoall.Length ==0)
+            if (stockinfoall.Length == 0)
             {
-                MessageBox.Show("库存信息为空，无法添加条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    a1.Close();
+                    MessageBox.Show("库存信息为空，无法添加条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            for (int i=0;i<stockinfoall .Length;i++)
+            for (int i = 0; i < stockinfoall.Length; i++)
             {
                 bool repet = false;
-                var  StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
+                var StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
 
 
                 try
@@ -1066,30 +1056,30 @@ namespace WMS.UI
 
                 catch
                 {
+                    a1.Close();
                     MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
 
                 }
-                for(int j=0;j< StockInfoCheckTicketItemsave.Length;j++)
+                for (int j = 0; j < StockInfoCheckTicketItemsave.Length; j++)
                 {
-                    if (StockInfoCheckTicketItemsave[j].StockInfoID == stockinfoall[i].ID )
+                    if (StockInfoCheckTicketItemsave[j].StockInfoID == stockinfoall[i].ID)
                     {
                         repet = true;
 
-                   }
+                    }
 
                 }
 
-                if(repet ==true )
+                if (repet == true)
                 { continue; }
 
                 StockInfoCheckTicketItem.StockInfoID = stockinfoall[i].ID;
                 //StockInfoCheckTicketItem.PersonID = this.personid;
-
                 StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID;
                 StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
-                StockInfoCheckTicketItem.ExpectedReceiptAreaAmount = stockinfoall[i].ReceiptAreaAmount ;
-                StockInfoCheckTicketItem.ExpectedRejectAreaAmount = stockinfoall[i].RejectAreaAmount ;
+                StockInfoCheckTicketItem.ExpectedReceiptAreaAmount = stockinfoall[i].ReceiptAreaAmount;
+                StockInfoCheckTicketItem.ExpectedRejectAreaAmount = stockinfoall[i].RejectAreaAmount;
                 StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
                 StockInfoCheckTicketItem.ExpectedSubmissionAmount = stockinfoall[i].SubmissionAmount;
                 StockInfoCheckTicketItem.RealOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
@@ -1097,9 +1087,6 @@ namespace WMS.UI
                 StockInfoCheckTicketItem.RealRejectAreaAmount = stockinfoall[i].RejectAreaAmount;
                 StockInfoCheckTicketItem.RealShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
                 StockInfoCheckTicketItem.RealSubmissionAmount = stockinfoall[i].SubmissionAmount;
-
-
-
                 try
                 {
                     wmsEntities.SaveChanges();
@@ -1107,25 +1094,22 @@ namespace WMS.UI
                 }
                 catch
                 {
+                    a1.Close();
                     MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-
-
-              
-
             }
-
-            MessageBox.Show("添加所有条目成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             this.Search();
+            
+            MessageBox.Show("添加所有条目成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            a1.Close();
             if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
             {
                 this.addFinishedCallback(this.stockInfoCheckID);
             }
-
-
+            
+            //})).Start();
+            
 
         }
 
@@ -1143,8 +1127,6 @@ namespace WMS.UI
         {
             buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
-
-
 
 
     } 
