@@ -7,10 +7,10 @@ namespace WMS.UI.FormBase
 {
     class BasePersonMetaData
     {
-        public const int defaultPosition_Receipt = 1;
-        public const int defaultPosition_Shipment = 2;
-        public const int defaultPosition_StockInfo = 3;
-        public const int defaultPosition_Settlement = 4;
+        public const int defaultPosition_Receipt = 1;//收货
+        public const int defaultPosition_Shipment = 2;//发货
+        public const int defaultPosition_StockInfo = 3;//库存管理
+        public const int defaultPosition_Settlement = 4;//结算
 
         private static int defaultPosition = -1;
         public static int DefaultPosition { get => defaultPosition; set => defaultPosition = value; }
