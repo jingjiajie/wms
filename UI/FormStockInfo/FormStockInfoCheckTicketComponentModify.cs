@@ -636,11 +636,10 @@ namespace WMS.UI
         {
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert.ToString(this.stockInfoCheckID));
-            this.pagerWidget.Search(false, selectID);
+            this.pagerWidget.Search(false, selectID, (stockInfoCheckTicketItem) => { this.RefreshTextBoxes(); });
             this.labelStatus.Text = "盘点单条目";
 
 
-            this.Invoke(new Action(this.RefreshTextBoxes));
 
             //var worksheet = this.reoGridControlMain.Worksheets[0];
 
@@ -816,7 +815,7 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            this.RefreshTextBoxes();
+
 
 
             new Thread(new ThreadStart(() =>
