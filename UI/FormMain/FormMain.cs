@@ -61,15 +61,39 @@ namespace WMS.UI
         
         private void remindSupply()
         {
-
+            //存货有效期
             WMSEntities wmsEntities = new WMSEntities();
             SupplyView[] SupplyView = null;
+            StockInfoView[] StockInfoView = null;
+            
             StringBuilder sb = new StringBuilder();
 
             SupplyView = (from u in wmsEntities.SupplyView
                           select u).ToArray();
 
-         
+            StockInfoView = (from u in wmsEntities.StockInfoView
+                             select u).ToArray();
+
+            for(int i=0;i<StockInfoView .Length;i++)
+            {
+                //找到每个零件的保质期
+                string ComponentName = StockInfoView[i].ComponentName;
+                string SupplierName = StockInfoView[i].SupplierName;
+                string SupplyNo = StockInfoView[i].SupplyNo;
+                DateTime InventoryDate = Convert.ToDateTime(StockInfoView[i].InventoryDate);
+                var SafetyDate1 = (from u in wmsEntities.SupplyView
+                                  where u.ComponentName == ComponentName &&
+                                  u.SupplierName == SupplierName &&
+                                  u.No == SupplyNo
+                                  select u).FirstOrDefault();
+
+                //到期日期
+                var SafetyDate = InventoryDate.AddDays( Convert.ToDouble ( SafetyDate1.ValidPeriod));
+
+
+
+
+            }
 
         }
 
