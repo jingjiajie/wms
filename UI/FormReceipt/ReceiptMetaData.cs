@@ -123,7 +123,8 @@ namespace WMS.UI.FormReceipt
             //new KeyName(){Name="自检不良单位", Key="DisqualifiedUnit", Visible=true,Editable=true,Save=true},
             //new KeyName(){Name="自检不良单位数量",Key="DisqualifiedUnitAmount", Visible=true,Editable=true,Save=true, NotNegative=true,NotNull=true},
 
-           
+            new KeyName(){Name="生产日期", Key="ManufactureDate", Visible=true,Editable=true,Save=true},
+            new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},
             new KeyName(){Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
             new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
