@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using unvell.ReoGrid;
 using System.Threading;
 using System.Data.SqlClient;
+using WMS.UI.FormBase;
 
 namespace WMS.UI
 {
@@ -141,7 +142,7 @@ namespace WMS.UI
               
 
         {
-
+            BasePersonMetaData.DefaultPosition = BasePersonMetaData.defaultPosition_StockInfo;
             if (FormSelectPerson == null)
             {
                 FormSelectPerson = new FormSelectPerson();

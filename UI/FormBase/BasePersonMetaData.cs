@@ -7,6 +7,13 @@ namespace WMS.UI.FormBase
 {
     class BasePersonMetaData
     {
+        public const int defaultPosition_Receipt = 1;
+        public const int defaultPosition_Shipment = 2;
+        public const int defaultPosition_StockInfo = 3;
+        public const int defaultPosition_Settlement = 4;
+
+        private static int defaultPosition = -1;
+        public static int DefaultPosition { get => defaultPosition; set => defaultPosition = value; }
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false},
