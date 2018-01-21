@@ -25,13 +25,13 @@ namespace WMS.UI
         private void FormSupplyRemind_Load(object sender, EventArgs e)
         {
             double a = 0.35;
-            this.Top = 25;
+            this.Top = 0;//25
             this.Left = (int)(a * Screen.PrimaryScreen.Bounds.Width);
-            this.Width = 200;
-            this.Height = 75;
+            this.Width = 400;
+            this.Height = 100;//75
             this.textBox1.Text = "";
-          
-
+            this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
+            this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑色
 
         }
 
