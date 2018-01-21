@@ -65,8 +65,26 @@ namespace WMS.UI
             this.InitComponents();
         }
 
+        private void BindButtonStyle(Button button)
+        {
+            button.MouseEnter += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+            };
+            button.MouseLeave += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+            };
+            button.MouseDown += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+            };
+        }
+
         private void InitComponents()
         {
+            BindButtonStyle(this.buttonSelectAll);
+            BindButtonStyle(this.buttonImport);
             Utilities.InitReoGrid(this.reoGridControlMain, ShipmentTicketItemViewMetaData.KeyNames,WorksheetSelectionMode.Cell);
             this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = this.reoGridControlMain.Worksheets[0];

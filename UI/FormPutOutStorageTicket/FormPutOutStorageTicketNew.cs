@@ -63,6 +63,22 @@ namespace WMS.UI
             this.warehouseID = warehouseID;
         }
 
+        private void BindButtonStyle(Button button)
+        {
+            button.MouseEnter += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+            };
+            button.MouseLeave += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+            };
+            button.MouseDown += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+            };
+        }
+
         private void FormPutOutStorageTicketNew_Load(object sender, EventArgs e)
         {
             this.InitComponents();
@@ -104,6 +120,8 @@ namespace WMS.UI
 
         private void InitComponents()
         {
+            BindButtonStyle(this.buttonImport);
+            BindButtonStyle(this.buttonSelectAll);
             this.reoGridControlMain.SetSettings(unvell.ReoGrid.WorkbookSettings.View_ShowSheetTabControl, false);
             this.pagerWidget = new PagerWidget<JobTicketItemView>(this.reoGridControlMain, JobTicketItemViewMetaData.KeyNames);
             this.pagerWidget.SetPageSize(-1);
