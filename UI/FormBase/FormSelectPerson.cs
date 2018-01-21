@@ -15,6 +15,7 @@ namespace WMS.UI
 {
     public partial class FormSelectPerson : Form,IFormSelect
     {
+        public static Position DefaultPosition = Position.SHIPMENT;
         private PagerWidget<PersonView> pagerWidget = null;
         private int selectPosition =0;
 
@@ -26,7 +27,7 @@ namespace WMS.UI
 
         public FormSelectPerson()
         {
-            selectPosition = Convert.ToInt32(BasePersonMetaData.DefaultPosition);
+            selectPosition = Convert.ToInt32(FormSelectPerson.DefaultPosition);
             InitializeComponent();
             //this.defaultPersonID = personid;
         }

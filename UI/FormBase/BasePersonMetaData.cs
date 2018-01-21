@@ -16,7 +16,6 @@ namespace WMS.UI.FormBase
     };
     class BasePersonMetaData
     {
-        public static Position DefaultPosition = Position.SHIPMENT;
 
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false},
