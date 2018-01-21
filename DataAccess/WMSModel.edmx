@@ -367,6 +367,7 @@
           <Property Name="InventoryDate" Type="datetime" />
           <Property Name="ManufactureDate" Type="datetime" />
           <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicket">
           <Key>
@@ -1230,6 +1231,7 @@
           <Property Name="ManufactureDate" Type="datetime" />
           <Property Name="InventoryDate" Type="datetime" />
           <Property Name="SupplyID" Type="int" />
+          <Property Name="Expr1" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2492,7 +2494,8 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[ExpiryDate] AS [ExpiryDate], 
 [StockInfoView].[ManufactureDate] AS [ManufactureDate], 
 [StockInfoView].[InventoryDate] AS [InventoryDate], 
-[StockInfoView].[SupplyID] AS [SupplyID]
+[StockInfoView].[SupplyID] AS [SupplyID], 
+[StockInfoView].[Expr1] AS [Expr1]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -3235,6 +3238,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="InventoryDate" Type="DateTime" Precision="3" />
           <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Project" Relationship="Self.FK__StockInfo__Proje__00AA174D" FromRole="StockInfo" ToRole="Project" />
           <NavigationProperty Name="Warehouse" Relationship="Self.FK__StockInfo__Wareh__019E3B86" FromRole="StockInfo" ToRole="Warehouse" />
         </EntityType>
@@ -4092,6 +4096,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="InventoryDate" Type="DateTime" Precision="3" />
           <Property Name="SupplyID" Type="Int32" />
+          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -5264,6 +5269,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="InventoryDate" ColumnName="InventoryDate" />
                 <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6107,6 +6113,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
                 <ScalarProperty Name="InventoryDate" ColumnName="InventoryDate" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

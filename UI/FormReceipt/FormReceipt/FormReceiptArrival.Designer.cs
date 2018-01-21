@@ -44,7 +44,7 @@
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.buttonReject = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonItemSubmission = new System.Windows.Forms.ToolStripButton();
             this.ButtonToSubmission = new System.Windows.Forms.ToolStripButton();
@@ -57,6 +57,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -72,14 +73,14 @@
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1374, 345);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(2061, 552);
             this.tableLayoutPanel1.TabIndex = 5;
             // 
             // reoGridControlUser
@@ -88,8 +89,8 @@
             this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(3, 33);
-            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reoGridControlUser.Location = new System.Drawing.Point(4, 53);
+            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlUser.Name = "reoGridControlUser";
             this.reoGridControlUser.Readonly = true;
             this.reoGridControlUser.RowHeaderContextMenuStrip = null;
@@ -97,11 +98,12 @@
             this.reoGridControlUser.SheetTabContextMenuStrip = null;
             this.reoGridControlUser.SheetTabNewButtonVisible = true;
             this.reoGridControlUser.SheetTabVisible = true;
-            this.reoGridControlUser.SheetTabWidth = 80;
+            this.reoGridControlUser.SheetTabWidth = 120;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1368, 247);
+            this.reoGridControlUser.Size = new System.Drawing.Size(2053, 395);
             this.reoGridControlUser.TabIndex = 10;
             this.reoGridControlUser.Text = "reoGridControl1";
+            this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click_1);
             // 
             // toolStripTop
             // 
@@ -123,7 +125,8 @@
             this.buttonDelete,
             this.toolStripSeparator3,
             this.buttonReceipt,
-            this.toolStripButton2,
+            this.buttonReceiptCancel,
+            this.buttonReject,
             this.toolStripSeparator4,
             this.buttonItemSubmission,
             this.ButtonToSubmission,
@@ -134,7 +137,8 @@
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1374, 31);
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Size = new System.Drawing.Size(2061, 50);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -142,27 +146,27 @@
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 28);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 47);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // comboBoxSelect
             // 
             this.comboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSelect.Name = "comboBoxSelect";
-            this.comboBoxSelect.Size = new System.Drawing.Size(151, 31);
+            this.comboBoxSelect.Size = new System.Drawing.Size(224, 50);
             this.comboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelect_SelectedIndexChanged_1);
             // 
             // textBoxSelect
             // 
             this.textBoxSelect.Name = "textBoxSelect";
-            this.textBoxSelect.Size = new System.Drawing.Size(200, 31);
+            this.textBoxSelect.Size = new System.Drawing.Size(298, 50);
             // 
             // buttonSelect
             // 
             this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
             this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(63, 28);
+            this.buttonSelect.Size = new System.Drawing.Size(86, 47);
             this.buttonSelect.Text = "查询";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
@@ -177,7 +181,7 @@
             this.buttonItems.Image = global::WMS.UI.Properties.Resources.find;
             this.buttonItems.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonItems.Name = "buttonItems";
-            this.buttonItems.Size = new System.Drawing.Size(123, 28);
+            this.buttonItems.Size = new System.Drawing.Size(182, 47);
             this.buttonItems.Text = "查看零件条目";
             this.buttonItems.ToolTipText = "查看零件条目";
             this.buttonItems.Click += new System.EventHandler(this.buttonItems_Click);
@@ -193,7 +197,7 @@
             this.buttonAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonAdd.Image")));
             this.buttonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(63, 28);
+            this.buttonAdd.Size = new System.Drawing.Size(86, 47);
             this.buttonAdd.Text = "添加";
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
@@ -202,7 +206,7 @@
             this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
             this.buttonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(63, 28);
+            this.buttonAlter.Size = new System.Drawing.Size(86, 47);
             this.buttonAlter.Text = "修改";
             this.buttonAlter.Click += new System.EventHandler(this.buttonAlter_Click);
             // 
@@ -211,7 +215,7 @@
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(63, 28);
+            this.buttonDelete.Size = new System.Drawing.Size(86, 47);
             this.buttonDelete.Text = "删除";
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
@@ -226,18 +230,19 @@
             this.buttonReceipt.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceipt.Image")));
             this.buttonReceipt.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonReceipt.Name = "buttonReceipt";
-            this.buttonReceipt.Size = new System.Drawing.Size(63, 28);
+            this.buttonReceipt.Size = new System.Drawing.Size(86, 47);
             this.buttonReceipt.Text = "收货";
             this.buttonReceipt.Click += new System.EventHandler(this.buttonReceipt_Click);
             // 
-            // toolStripButton2
+            // buttonReject
             // 
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(63, 28);
-            this.toolStripButton2.Text = "拒收";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click_1);
+            this.buttonReject.Image = ((System.Drawing.Image)(resources.GetObject("buttonReject.Image")));
+            this.buttonReject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReject.Name = "buttonReject";
+            this.buttonReject.Size = new System.Drawing.Size(86, 47);
+            this.buttonReject.Text = "拒收";
+            this.buttonReject.Visible = false;
+            this.buttonReject.Click += new System.EventHandler(this.toolStripButton2_Click_1);
             // 
             // toolStripSeparator4
             // 
@@ -250,7 +255,7 @@
             this.buttonItemSubmission.Image = ((System.Drawing.Image)(resources.GetObject("buttonItemSubmission.Image")));
             this.buttonItemSubmission.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonItemSubmission.Name = "buttonItemSubmission";
-            this.buttonItemSubmission.Size = new System.Drawing.Size(108, 28);
+            this.buttonItemSubmission.Size = new System.Drawing.Size(158, 47);
             this.buttonItemSubmission.Text = "生成送检单";
             this.buttonItemSubmission.Click += new System.EventHandler(this.buttonReceiptCancel_Click);
             // 
@@ -259,7 +264,7 @@
             this.ButtonToSubmission.Image = global::WMS.UI.Properties.Resources.find;
             this.ButtonToSubmission.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonToSubmission.Name = "ButtonToSubmission";
-            this.ButtonToSubmission.Size = new System.Drawing.Size(138, 28);
+            this.ButtonToSubmission.Size = new System.Drawing.Size(206, 47);
             this.ButtonToSubmission.Text = "查看对应送检单";
             this.ButtonToSubmission.Click += new System.EventHandler(this.ButtonToSubmission_Click);
             // 
@@ -274,7 +279,7 @@
             this.buttonPutaway.Image = ((System.Drawing.Image)(resources.GetObject("buttonPutaway.Image")));
             this.buttonPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPutaway.Name = "buttonPutaway";
-            this.buttonPutaway.Size = new System.Drawing.Size(108, 28);
+            this.buttonPutaway.Size = new System.Drawing.Size(158, 35);
             this.buttonPutaway.Text = "生成上架单";
             this.buttonPutaway.Click += new System.EventHandler(this.buttonMakePutaway_Click);
             // 
@@ -283,7 +288,7 @@
             this.ButtonToPutaway.Image = global::WMS.UI.Properties.Resources.find;
             this.ButtonToPutaway.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ButtonToPutaway.Name = "ButtonToPutaway";
-            this.ButtonToPutaway.Size = new System.Drawing.Size(138, 28);
+            this.ButtonToPutaway.Size = new System.Drawing.Size(206, 35);
             this.ButtonToPutaway.Text = "查看对应上架单";
             this.ButtonToPutaway.Click += new System.EventHandler(this.ButtonToPutaway_Click);
             // 
@@ -298,7 +303,7 @@
             this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
             this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(99, 24);
+            this.buttonPreview.Size = new System.Drawing.Size(144, 35);
             this.buttonPreview.Text = "导出/打印";
             this.buttonPreview.Click += new System.EventHandler(this.buttonPreview_Click);
             // 
@@ -309,41 +314,50 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.lableStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 320);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 512);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1374, 25);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 14, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(2061, 40);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 35);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // lableStatus
             // 
             this.lableStatus.Name = "lableStatus";
-            this.lableStatus.Size = new System.Drawing.Size(69, 20);
+            this.lableStatus.Size = new System.Drawing.Size(110, 35);
             this.lableStatus.Text = "到货管理";
             // 
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 284);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Location = new System.Drawing.Point(4, 454);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1368, 34);
+            this.panel1.Size = new System.Drawing.Size(2053, 55);
             this.panel1.TabIndex = 11;
+            // 
+            // buttonReceiptCancel
+            // 
+            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
+            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
+            this.buttonReceiptCancel.Size = new System.Drawing.Size(134, 47);
+            this.buttonReceiptCancel.Text = "取消收货";
+            this.buttonReceiptCancel.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // FormReceiptArrival
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1374, 345);
+            this.ClientSize = new System.Drawing.Size(2061, 552);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "FormReceiptArrival";
             this.Text = "FormReceiptArrival";
             this.Load += new System.EventHandler(this.FormReceiptArrival_Load);
@@ -384,8 +398,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton buttonReceipt;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton buttonReject;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton buttonPreview;
+        private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
     }
 }

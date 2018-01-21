@@ -120,7 +120,7 @@ namespace WMS.UI
                 this.ButtonToSubmission.Enabled = false;
                 this.buttonItemSubmission.Enabled = false;
                 this.buttonReceipt.Enabled = false;
-                this.toolStripButton2.Enabled = false;
+                this.buttonReject.Enabled = false;
                 this.buttonPreview.Enabled = false;
                 if (supplier.StartingTime != null && supplier.EndingTime != null)
                 {
@@ -1034,17 +1034,26 @@ namespace WMS.UI
                         MessageBox.Show("未给该收货单添加收货单零件，不能收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    int n = 0;
+                    int countReceipt = 0;
+                    int countReject = 0;
                     foreach(ReceiptTicketItem rti in receiptTicketItem)
                     {
                         if (rti.RefuseAmount == 0)
                         {
                             rti.State = "已收货";
+                            countReceipt++;
                         }
                         else
                         {
-                            rti.State = "部分收货";
-                            n++;
+                            if (rti.RealReceiptAmount == 0)
+                            {
+                                rti.State = "拒收";
+                                countReject++;
+                            }
+                            else
+                            {
+                                rti.State = "部分收货";
+                            } 
                         }
                         StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
                         if (stockInfo != null)
@@ -1053,13 +1062,17 @@ namespace WMS.UI
                             {
                                 stockInfo.OverflowAreaAmount = 0;
                             }
-                            stockInfo.OverflowAreaAmount = stockInfo.ReceiptAreaAmount + rti.RefuseAmount;
+                            stockInfo.OverflowAreaAmount = stockInfo.ReceiptAreaAmount;
                             stockInfo.ReceiptAreaAmount = 0;
                         }
                     }
-                    if (n == 0)
+                    if (countReceipt == receiptTicketItem.Length)
                     {
                         receiptTicket.State = "已收货";
+                    }
+                    else if (countReject == receiptTicketItem.Length)
+                    {
+                        receiptTicket.State = "拒收";
                     }
                     else
                     {
@@ -1223,6 +1236,71 @@ namespace WMS.UI
             formPreview.AddData("ReceiptTicketItem", receiptTicketItemView);
             //formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             formPreview.Show();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlUser.Worksheets[0];
+            WMSEntities wmsEntities = new WMSEntities();
+            if (worksheet.SelectionRange.Rows != 1)
+            {
+                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            int receiptTicketID;
+            try
+            {
+                receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+            }
+            catch
+            {
+                MessageBox.Show("请选择一项取消收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
+            if (receiptTicket == null)
+            {
+                MessageBox.Show("该收货单不存在，可能已被删除，请刷新查看。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (receiptTicket.HasSubmission == 1)
+            {
+                MessageBox.Show("该收货单已经送检，不能取消收货！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
+            foreach(ReceiptTicketItem rti in receiptTicketItems)
+            {
+                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
+                if (stockInfo != null)
+                {
+                    stockInfo.ReceiptAreaAmount = rti.ReceiviptAmount;
+                    stockInfo.OverflowAreaAmount = 0;
+                }
+                //rti.RealReceiptAmount += rti.RefuseAmount;
+                rti.ReceiviptAmount = rti.RealReceiptAmount;
+                rti.RealReceiptUnitCount = rti.RealReceiptAmount / rti.UnitAmount;
+                rti.UnitCount = rti.ReceiviptAmount / rti.UnitAmount;
+                //rti.RefuseUnitCount = 0;
+                //rti.RefuseAmount = 0;
+                rti.State = "待收货";
+            }
+            receiptTicket.State = "待收货";
+
+            new Thread(()=> 
+            {
+                wmsEntities.SaveChanges();
+                MessageBox.Show("取消收货成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Invoke(new Action(() =>
+                {
+                    this.Search();
+                }));
+            }).Start();
+        }
+
+        private void reoGridControlUser_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

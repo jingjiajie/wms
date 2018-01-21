@@ -54,7 +54,7 @@ namespace WMS.UI.FormReceipt
             this.JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
             this.ConfirmPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
             this.reoGridControlSubmissionItems.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
-
+            this.Controls.Find("comboBoxState", true)[0].Enabled = false;
             //TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             //textBoxComponentName.Click += textBoxComponentName_Click;
             //textBoxComponentName.ReadOnly = true;
@@ -936,7 +936,7 @@ namespace WMS.UI.FormReceipt
             {
                 sti.State = "合格";
                 sti.ReturnAmount = sti.SubmissionAmount;
-
+                sti.RejectAmount = 0;
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
                 if (receiptTicketItem != null)
                 {
@@ -946,6 +946,8 @@ namespace WMS.UI.FormReceipt
                        
                         stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount + sti.ReturnAmount - sti.SubmissionAmount;
                         stockInfo.ReceiptAreaAmount = 0;
+                        stockInfo.RejectAreaAmount = 0;
+                        //stockInfo.ReceiptAreaAmount = 0;
                         stockInfo.SubmissionAmount = sti.SubmissionAmount - sti.ReturnAmount;
                         //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
                     }
@@ -1082,6 +1084,12 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("返回数量不能大于送检数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (submissionTicketItem.SubmissionAmount < submissionTicketItem.RejectAmount)
+            {
+                MessageBox.Show("不合格数量不能大于送检数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            
             
 
             ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItem.ReceiptTicketItemID select rti).FirstOrDefault();
