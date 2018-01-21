@@ -35,10 +35,10 @@
             this.buttonOK = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutEditPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonImport = new System.Windows.Forms.Button();
             this.buttonSelectAll = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.tableLayoutPanelMain.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -61,7 +61,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 105;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(964, 217);
+            this.reoGridControlMain.Size = new System.Drawing.Size(964, 227);
             this.reoGridControlMain.TabIndex = 12;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -80,7 +80,7 @@
             this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             this.tableLayoutPanelMain.RowCount = 4;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanelMain.Size = new System.Drawing.Size(974, 529);
@@ -164,21 +164,22 @@
             // 
             // tableLayoutPanel1
             // 
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel1.ColumnCount = 5;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.buttonImport, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonSelectAll, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 229);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 239);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 60);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 50);
             this.tableLayoutPanel1.TabIndex = 17;
             // 
             // buttonImport
@@ -191,9 +192,9 @@
             this.buttonImport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonImport.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonImport.Location = new System.Drawing.Point(540, 3);
+            this.buttonImport.Location = new System.Drawing.Point(535, 3);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(194, 54);
+            this.buttonImport.Size = new System.Drawing.Size(174, 44);
             this.buttonImport.TabIndex = 1;
             this.buttonImport.Text = "批量导入";
             this.buttonImport.UseVisualStyleBackColor = true;
@@ -209,9 +210,9 @@
             this.buttonSelectAll.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonSelectAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSelectAll.Font = new System.Drawing.Font("黑体", 10F);
-            this.buttonSelectAll.Location = new System.Drawing.Point(240, 3);
+            this.buttonSelectAll.Location = new System.Drawing.Point(265, 3);
             this.buttonSelectAll.Name = "buttonSelectAll";
-            this.buttonSelectAll.Size = new System.Drawing.Size(194, 54);
+            this.buttonSelectAll.Size = new System.Drawing.Size(174, 44);
             this.buttonSelectAll.TabIndex = 2;
             this.buttonSelectAll.Text = "全选";
             this.buttonSelectAll.UseVisualStyleBackColor = true;

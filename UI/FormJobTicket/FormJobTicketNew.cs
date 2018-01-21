@@ -28,7 +28,7 @@ namespace WMS.UI
 
         private static KeyName[] newJobTicketKeyNames =
         {
-            new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称"},
+            new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称",NotNull=true},
             new KeyName(){Key="ScheduleJobAmount",Name="计划翻包数量",NotNull=true,Positive=true},
             new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,Positive=true}
         };
@@ -65,8 +65,26 @@ namespace WMS.UI
             this.InitComponents();
         }
 
+        private void BindButtonStyle(Button button)
+        {
+            button.MouseEnter += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+            };
+            button.MouseLeave += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+            };
+            button.MouseDown += (obj, e) =>
+            {
+                button.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+            };
+        }
+
         private void InitComponents()
         {
+            BindButtonStyle(this.buttonSelectAll);
+            BindButtonStyle(this.buttonImport);
             Utilities.InitReoGrid(this.reoGridControlMain, ShipmentTicketItemViewMetaData.KeyNames,WorksheetSelectionMode.Cell);
             this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = this.reoGridControlMain.Worksheets[0];
@@ -310,13 +328,30 @@ namespace WMS.UI
             buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
+        private enum SelectButtonMode { SELECT_ALL,SELECT_NONE};
+        SelectButtonMode selectButtonMode = SelectButtonMode.SELECT_ALL;
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
-            for(int i = 0; i < this.validRows; i++)
+            if (selectButtonMode == SelectButtonMode.SELECT_ALL)
             {
-                worksheet[i, 1] = true;
+                this.buttonSelectAll.Text = "全不选";
+                selectButtonMode = SelectButtonMode.SELECT_NONE;
+                for (int i = 0; i < this.validRows; i++)
+                {
+                    worksheet[i, 1] = true;
+                }
             }
+            else
+            {
+                this.buttonSelectAll.Text = "全选";
+                selectButtonMode = SelectButtonMode.SELECT_ALL;
+                for (int i = 0; i < this.validRows; i++)
+                {
+                    worksheet[i, 1] = false;
+                }
+            }
+
         }
 
         private void buttonImport_Click(object sender, EventArgs e)

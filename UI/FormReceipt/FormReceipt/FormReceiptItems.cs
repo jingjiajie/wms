@@ -342,27 +342,11 @@ namespace WMS.UI
                         }
                         receiptTicketItem.SupplyID = this.componentID;
                         receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
-                        //if (receiptTicketItem.Unit == "")
-                        //{
-                        //    receiptTicketItem.Unit = "个";
-                        //}
-                        //if (receiptTicketItem.UnitAmount == null)
-                        //{
-                        //    receiptTicketItem.UnitAmount = 1;
-                        //}
-                        //if (receiptTicketItem.UnitCount == null)
-                        //{
-                        //    receiptTicketItem.UnitCount = 0;
-                        //}
-                        //if (receiptTicketItem.RefuseAmount == null)
-                        //{
-                        //    receiptTicketItem.RefuseAmount = 0;
-                        //}
                         receiptTicketItem.JobPersonID = JobPersonIDGetter();
                         receiptTicketItem.ConfirmPersonID = ConfirmPersonIDGetter();
 
                         wmsEntities.SaveChanges();
-                        receiptTicketItem.ExpectedAmount = receiptTicketItem.ExpectedAmount * receiptTicketItem.UnitAmount;
+                        receiptTicketItem.ExpectedAmount = receiptTicketItem.ExpectedUnitCount * receiptTicketItem.UnitAmount;
                         receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
                         //receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
                         receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
@@ -381,7 +365,7 @@ namespace WMS.UI
                         stockInfo.ProjectID = receiptTicket.ProjectID;
                         stockInfo.WarehouseID = receiptTicket.WarehouseID;
                         stockInfo.ReceiptTicketItemID = receiptTicketItem.ID;
-
+                        stockInfo.ReceiptTicketNo = receiptTicketItem.ReceiptTicket.No;
                         stockInfo.OverflowAreaAmount = 0;
                         stockInfo.ShipmentAreaAmount = 0;
                         stockInfo.SubmissionAmount = 0;
@@ -438,7 +422,7 @@ namespace WMS.UI
                     return;
                 }
                 int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                int oldRejectAreaAmount;
+                //int oldRejectAreaAmount;
                 int oldReceiptAreaAmount;
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).FirstOrDefault();
                 oldReceiptAreaAmount = receiptTicketItem.ReceiviptAmount == null ? 0 : (int)receiptTicketItem.ReceiviptAmount;
@@ -461,14 +445,17 @@ namespace WMS.UI
                         receiptTicketItem.JobPersonID = this.JobPersonIDGetter();
                     }
 
-                    receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitAmount * receiptTicketItem.UnitCount;
+                    //receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitAmount * receiptTicketItem.UnitCount;
                     new Thread(() =>
                     {
                         try
                         {
                             receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
+                            receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
                             //receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
                             receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
+                            receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
+                            receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
                             //receiptTicketItem.WrongComponentAmount = receiptTicketItem.WrongComponentUnitAmount * receiptTicketItem.WrongComponentUnitCount;
                             //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount - receiptTicketItem.RefuseAmount;
                             if (receiptTicketItem.ReceiviptAmount < 0)
@@ -478,7 +465,7 @@ namespace WMS.UI
                                 return;
                             }
                             //receiptTicketItem.ShortageAmount = receiptTicketItem.ExpectedAmount - receiptTicketItem.RealReceiptAmount;
-                            receiptTicketItem.UnitCount = receiptTicketItem.ReceiviptAmount / receiptTicketItem.UnitAmount;
+                            //receiptTicketItem.UnitCount = receiptTicketItem.ReceiviptAmount / receiptTicketItem.UnitAmount;
 
                             receiptTicketItem.SupplyID = this.componentID;
                             StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
