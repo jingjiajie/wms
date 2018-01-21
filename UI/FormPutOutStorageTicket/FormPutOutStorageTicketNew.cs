@@ -28,6 +28,27 @@ namespace WMS.UI
 
         private Action<string,string> toPutOutStorageTicketCallback = null;
 
+        private static KeyName[] newPutOutStorageTicketKeyNames =
+        {
+            new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称",NotNull=true},
+            new KeyName(){Key="SchedulePutOutAmount",Name="计划装车数量",NotNull=true,Positive=true},
+            new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,Positive=true}
+        };
+
+        class NewPutOutStorageTicketItemData
+        {
+            private string supplyNoOrComponentName;
+            private decimal schedulePutOutAmount;
+            private decimal unitAmount;
+
+            public string SupplyNoOrComponentName { get => supplyNoOrComponentName; set => supplyNoOrComponentName = value; }
+            public decimal UnitAmount { get => unitAmount; set => unitAmount = value; }
+            public decimal SchedulePutOutAmount { get => schedulePutOutAmount; set => schedulePutOutAmount = value; }
+        }
+
+        private StandardImportForm<NewPutOutStorageTicketItemData> standardImportForm = null;
+
+
         public void SetToPutOutStorageTicketCallback(Action<string,string> callback)
         {
             this.toPutOutStorageTicketCallback = callback;
@@ -269,6 +290,141 @@ namespace WMS.UI
         private void buttonOK_MouseDown(object sender, MouseEventArgs e)
         {
             buttonOK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private enum SelectButtonMode { SELECT_ALL, SELECT_NONE };
+        SelectButtonMode selectButtonMode = SelectButtonMode.SELECT_ALL;
+        private void buttonSelectAll_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            if (selectButtonMode == SelectButtonMode.SELECT_ALL)
+            {
+                this.buttonSelectAll.Text = "全不选";
+                selectButtonMode = SelectButtonMode.SELECT_NONE;
+                for (int i = 0; i < this.validRows; i++)
+                {
+                    worksheet[i, 1] = true;
+                }
+            }
+            else
+            {
+                this.buttonSelectAll.Text = "全选";
+                selectButtonMode = SelectButtonMode.SELECT_ALL;
+                for (int i = 0; i < this.validRows; i++)
+                {
+                    worksheet[i, 1] = false;
+                }
+            }
+
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            this.standardImportForm = new StandardImportForm<NewPutOutStorageTicketItemData>(
+                newPutOutStorageTicketKeyNames,
+                importHandler,
+                null,
+                "导入出库单条目"
+                );
+            this.standardImportForm.Show();
+        }
+
+        private bool importHandler(NewPutOutStorageTicketItemData[] results, Dictionary<string, string[]> unimportedColumns)
+        {
+            List<Tuple<int, decimal>> idAndAmountList = new List<Tuple<int, decimal>>();
+            try
+            {
+                WMSEntities wmsEntities = new WMSEntities();
+                JobTicketItemView[] jobTicketItemViews = (from j in wmsEntities.JobTicketItemView where j.JobTicketID == this.jobTicketID select j).ToArray();
+                for (int i = 0; i < results.Length; i++)
+                {
+                    string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
+                    decimal scheduleAmountNoUnit = results[i].SchedulePutOutAmount * results[i].UnitAmount;
+                    Supply supply = (from s in wmsEntities.Supply where s.No == supplyNoOrComponentName select s).FirstOrDefault();
+                    DataAccess.Component component = null;
+                    if (supply == null)
+                    {
+                        component = (from c in wmsEntities.Component where c.Name == supplyNoOrComponentName select c).FirstOrDefault();
+                        if (component == null)
+                        {
+                            MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, supplyNoOrComponentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
+                    }
+                    JobTicketItemView[] selectedItems = null;
+                    if (supply != null)
+                    {
+                        selectedItems = (from s in wmsEntities.JobTicketItemView
+                                         where s.JobTicketID == this.jobTicketID
+                                         && (s.ScheduledPutOutAmount ?? 0) < s.ScheduledAmount
+                                         && s.SupplyNo == supplyNoOrComponentName
+                                         orderby s.StockInfoInventoryDate ascending
+                                         select s).ToArray();
+                    }
+                    else if (component != null)
+                    {
+                        selectedItems = (from s in wmsEntities.JobTicketItemView
+                                         where s.JobTicketID == this.jobTicketID
+                                         && (s.ScheduledPutOutAmount ?? 0) < s.ScheduledAmount
+                                         && s.ComponentName == supplyNoOrComponentName
+                                         orderby s.StockInfoInventoryDate ascending
+                                         select s).ToArray();
+                    }
+                    decimal totalStockAmountNoUnit = selectedItems.Sum((item) => (item.ScheduledAmount - (item.ScheduledPutOutAmount ?? 0)) * (item.UnitAmount ?? 1)) ?? 0;
+                    if (scheduleAmountNoUnit > totalStockAmountNoUnit)
+                    {
+                        MessageBox.Show(string.Format("行{0}：翻包作业单剩余待分配翻包数量不足，剩余量：{1}", i + 1, totalStockAmountNoUnit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    decimal curAmountNoUnit = 0;
+                    for (int j = 0; j < selectedItems.Length; j++)
+                    {
+                        decimal curItemRestAmount = (selectedItems[j].ScheduledAmount - (selectedItems[j].ScheduledPutOutAmount ?? 0)) ?? 0;
+                        //当前项的剩余数量（不带单位）
+                        decimal curItemRestAmountNoUnit = curItemRestAmount * (selectedItems[j].UnitAmount ?? 1);
+                        //当前项的剩余数量小于要分配的数量
+                        if (curAmountNoUnit + curItemRestAmountNoUnit < scheduleAmountNoUnit)
+                        {
+                            idAndAmountList.Add(new Tuple<int, decimal>(selectedItems[j].ID, curItemRestAmount));
+                            curAmountNoUnit += curItemRestAmountNoUnit;
+                        }
+                        else //当前项的剩余数量大于等于要分配的数量
+                        {
+                            idAndAmountList.Add(new Tuple<int, decimal>(selectedItems[j].ID, ((scheduleAmountNoUnit - curAmountNoUnit) / selectedItems[i].UnitAmount ?? 1)));
+                            curAmountNoUnit = scheduleAmountNoUnit;
+                            break;
+                        }
+                    }
+                }
+                this.CheckItemsAndFillScheduleAmountByIDs(idAndAmountList);
+                this.standardImportForm.Close();
+                MessageBox.Show("导入成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        private void CheckItemsAndFillScheduleAmountByIDs(List<Tuple<int, decimal>> idAndAmountList)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            for (int i = 0; i < this.validRows; i++)
+            {
+                if (int.TryParse(worksheet[i, 0].ToString(), out int id) == false)
+                {
+                    continue;
+                }
+                Tuple<int, decimal> item = (from t in idAndAmountList where t.Item1 == id select t).FirstOrDefault();
+                if (item == null)
+                {
+                    continue;
+                }
+                worksheet[i, 1] = true;
+                worksheet[i, 2] = item.Item2;
+            }
         }
     }
 }

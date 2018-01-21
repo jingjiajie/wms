@@ -46,5 +46,9 @@ namespace WMS.DataAccess
         public decimal ReturnRejectAmount { get; set; }
         public string ReturnRejectUnit { get; set; }
         public Nullable<decimal> ReturnRejectUnitAmount { get; set; }
+        public string StockInfoReceiptTicketNo { get; set; }
+        public Nullable<System.DateTime> StockInfoExpiryDate { get; set; }
+        public Nullable<System.DateTime> StockInfoManufactureDate { get; set; }
+        public Nullable<System.DateTime> StockInfoInventoryDate { get; set; }
     }
 }
