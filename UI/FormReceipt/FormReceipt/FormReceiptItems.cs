@@ -365,7 +365,7 @@ namespace WMS.UI
                         stockInfo.ProjectID = receiptTicket.ProjectID;
                         stockInfo.WarehouseID = receiptTicket.WarehouseID;
                         stockInfo.ReceiptTicketItemID = receiptTicketItem.ID;
-
+                        stockInfo.ReceiptTicketNo = receiptTicketItem.ReceiptTicket.No;
                         stockInfo.OverflowAreaAmount = 0;
                         stockInfo.ShipmentAreaAmount = 0;
                         stockInfo.SubmissionAmount = 0;
