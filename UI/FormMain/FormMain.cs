@@ -58,7 +58,20 @@ namespace WMS.UI
 
 
         }
+        
+        private void remindSupply()
+        {
 
+            WMSEntities wmsEntities = new WMSEntities();
+            SupplyView[] SupplyView = null;
+            StringBuilder sb = new StringBuilder();
+
+            SupplyView = (from u in wmsEntities.SupplyView
+                          select u).ToArray();
+
+         
+
+        }
 
 
 
@@ -67,7 +80,7 @@ namespace WMS.UI
         {
 
         WMSEntities wmsEntities = new WMSEntities();
-        WMS.DataAccess.ComponentView component = null;
+        ComponentView component = null;
        
 
         int days;
