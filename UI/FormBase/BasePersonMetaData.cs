@@ -16,7 +16,7 @@ namespace WMS.UI.FormBase
     };
     class BasePersonMetaData
     {
-        public static Position defaultPosition = Position.SHIPMENT;
+        public static Position DefaultPosition = Position.SHIPMENT;
 
 
 

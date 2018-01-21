@@ -26,7 +26,7 @@ namespace WMS.UI
 
         public FormSelectPerson()
         {
-            selectPosition = Convert.ToInt32(BasePersonMetaData.defaultPosition);
+            selectPosition = Convert.ToInt32(BasePersonMetaData.DefaultPosition);
             InitializeComponent();
             //this.defaultPersonID = personid;
         }
