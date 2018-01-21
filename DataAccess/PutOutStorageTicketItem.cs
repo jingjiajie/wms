@@ -34,6 +34,7 @@ namespace WMS.DataAccess
         public decimal ReturnRejectAmount { get; set; }
         public string ReturnRejectUnit { get; set; }
         public Nullable<decimal> ReturnRejectUnitAmount { get; set; }
+        public string Comment { get; set; }
     
         public virtual PutOutStorageTicket PutOutStorageTicket { get; set; }
     }

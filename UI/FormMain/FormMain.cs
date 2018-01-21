@@ -426,8 +426,8 @@ namespace WMS.UI
                     MakeTreeNode("上架零件管理"),
                     }),
                 MakeTreeNode("发货管理",new TreeNode[]{
-                    MakeTreeNode("发货单管理"),
-                    MakeTreeNode("作业单管理"),
+                    MakeTreeNode("工作任务单管理"),
+                    MakeTreeNode("翻包作业单管理"),
                     MakeTreeNode("出库单管理"),
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
@@ -741,7 +741,7 @@ namespace WMS.UI
                 l.Show();
             }
 
-            if (treeViewLeft.SelectedNode.Text == "发货单管理")
+            if (treeViewLeft.SelectedNode.Text == "工作任务单管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
@@ -753,7 +753,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formShipmentTicket);
                 formShipmentTicket.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "作业单管理")
+            if (treeViewLeft.SelectedNode.Text == "翻包作业单管理")
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;

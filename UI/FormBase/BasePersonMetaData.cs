@@ -18,8 +18,6 @@ namespace WMS.UI.FormBase
     {
         public static Position DefaultPosition = Position.SHIPMENT;
 
-
-
         private static KeyName[] keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false},
             new KeyName(){Key="Name",Name="»À‘±–’√˚",Visible=true,Editable=true},

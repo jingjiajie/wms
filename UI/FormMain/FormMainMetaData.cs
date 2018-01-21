@@ -22,8 +22,8 @@ namespace WMS.UI
             MakeItem("上架单管理",Authority.RECEIPT_SHELVES),
             MakeItem("上架零件管理",Authority.RECEIPT_SHELVES),
 
-            MakeItem("发货单管理",Authority.DELIVERY_SEND,Authority.DELIVERY_SEND_SUPPLIER_SELFONLY),
-            MakeItem("作业单管理",Authority.DELIVERY_JOB,Authority.DELIVERY_JOB_SUPPLIER_SELFONLY),
+            MakeItem("工作任务单管理",Authority.DELIVERY_SEND,Authority.DELIVERY_SEND_SUPPLIER_SELFONLY),
+            MakeItem("翻包作业单管理",Authority.DELIVERY_JOB,Authority.DELIVERY_JOB_SUPPLIER_SELFONLY),
             MakeItem("出库单管理",Authority.DELIVERY_OUTPUT,Authority.DELIVERY_OUTPUT_SUPPLIER_SELFONLY),
         
             MakeItem("库存信息",Authority.STOCKINFO,Authority.STOCKINFO_SUPPLIER_SELFONLY),

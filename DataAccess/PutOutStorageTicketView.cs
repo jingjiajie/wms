@@ -51,5 +51,8 @@ namespace WMS.DataAccess
         public string ReturnTicketNo { get; set; }
         public Nullable<System.DateTime> ReturnTicketTime { get; set; }
         public Nullable<System.DateTime> ExpectedArriveTime { get; set; }
+        public string Destination { get; set; }
+        public string Factory { get; set; }
+        public string Gate { get; set; }
     }
 }
