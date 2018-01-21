@@ -53,7 +53,8 @@ namespace WMS.UI
                 supplierid = -1;
             }
 
-            
+            //FormSupplyRemind a1 = new FormSupplyRemind();
+            //a1.Show ();
 
 
         }

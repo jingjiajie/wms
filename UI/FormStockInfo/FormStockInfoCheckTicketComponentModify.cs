@@ -42,8 +42,14 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
-            //this.personid = personid;
-            
+            //var worksheet = this.reoGridControlMain.Worksheets[0];
+
+            //worksheet.SelectionRange = new RangePosition("A2:B2");
+            //worksheet.SelectionRange = new RangePosition("A1:B1");
+
+
+          
+
 
         }
 
@@ -88,26 +94,8 @@ namespace WMS.UI
             }
             
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
-            
-
-
-
-
-
-
-
-
-
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.BackColor = Color.White;
-
-
-
-
-
-
-
-
             TextBox textBoxPersonName =(TextBox )this.Controls.Find("textBoxPersonName", true)[0];
             textBoxPersonName.BackColor = Color.White;
             //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
@@ -128,14 +116,15 @@ namespace WMS.UI
 
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();
+           
             
-            this.pagerWidget.ClearCondition();
             additionTextboxdiffrence();
-            this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert .ToString ( this.stockInfoCheckID ));
-            this.pagerWidget.Search();
+
+            this.Search();
             
-            
-             
+
+
+
         }
 
 
@@ -185,13 +174,6 @@ namespace WMS.UI
 
             //    }
             //}
-
-
-
-
-
-
-
             TextBox textBoxExcpetedOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0];
             TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
             TextBox textBoxExpectedShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0];
@@ -211,7 +193,7 @@ namespace WMS.UI
                 decimal  RealShipmentAreaAmount = Convert.ToDecimal (textBoxRealShipmentAreaAmount.Text);
 
 
-                textBoxtDifference.Text = (ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount).ToString();
+                textBoxtDifference.Text =( -(ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount)).ToString();
 
 
             }
@@ -265,6 +247,7 @@ namespace WMS.UI
         {
             this.ClearTextBoxes();
             var worksheet = this.reoGridControlMain.Worksheets[0];
+
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
             
             if (ids.Length == 0)
@@ -651,8 +634,13 @@ namespace WMS.UI
 
         private void Search(int selectID=-1)
         {
-           this.pagerWidget.Search(false, selectID);
+            this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("StockInfoCheckTicketID", Convert.ToString(this.stockInfoCheckID));
+            this.pagerWidget.Search(false, selectID);
             this.labelStatus.Text = "盘点单条目";
+
+
+            this.Invoke(new Action(this.RefreshTextBoxes));
             //var worksheet = this.reoGridControlMain.Worksheets[0];
 
             //worksheet[0, 1] = "加载中...";
@@ -827,7 +815,7 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            this.RefreshTextBoxes();
 
 
             new Thread(new ThreadStart(() =>
