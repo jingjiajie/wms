@@ -34,7 +34,7 @@ namespace WMS.UI
             new KeyName(){Key="Type",Name="机型区分",Visible = true, Editable = true},
             new KeyName(){Key="Size",Name="尺寸（大件/小件）",Visible = true, Editable = true},
             new KeyName(){Key="Category",Name="分类",Visible = true, Editable = true},
-            new KeyName(){Key="GroupPrincipal",Name="分组负责人",Visible = true, Editable = true},
+            //new KeyName(){Key="GroupPrincipal",Name="分组负责人",Visible = true, Editable = true},
             new KeyName(){Key="Charge1",Name="物流服务费1",Visible = true, Editable = true},
             new KeyName(){Key="Charge2",Name="物流服务费2",Visible = true, Editable = true},
 
@@ -121,7 +121,7 @@ namespace WMS.UI
             new KeyName(){Key="Type",Name="机型区分",Visible = true, Editable = true},
             new KeyName(){Key="Size",Name="尺寸（大件/小件）",Visible = true, Editable = true},
             new KeyName(){Key="Category",Name="分类",Visible = true, Editable = true},
-            new KeyName(){Key="GroupPrincipal",Name="分组负责人",Visible = true, Editable = true},
+            //new KeyName(){Key="GroupPrincipal",Name="分组负责人",Visible = true, Editable = true},
             new KeyName(){Key="Charge1",Name="物流服务费1",Visible = true, Editable = true},
             new KeyName(){Key="Charge2",Name="物流服务费2",Visible = true, Editable = true},
 
