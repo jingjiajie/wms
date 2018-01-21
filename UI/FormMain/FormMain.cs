@@ -51,6 +51,8 @@ namespace WMS.UI
             else if (user.SupplierID == null)
             {
                 supplierid = -1;
+                remindSupply();
+
             }
 
             //FormSupplyRemind a1 = new FormSupplyRemind();
@@ -80,6 +82,11 @@ namespace WMS.UI
                 string ComponentName = StockInfoView[i].ComponentName;
                 string SupplierName = StockInfoView[i].SupplierName;
                 string SupplyNo = StockInfoView[i].SupplyNo;
+                if(ComponentName ==null||SupplierName ==null||SupplyNo ==null|| StockInfoView[i].InventoryDate==null)
+                {
+
+                    continue;
+                }
                 DateTime InventoryDate = Convert.ToDateTime(StockInfoView[i].InventoryDate);
                 var SafetyDate1 = (from u in wmsEntities.SupplyView
                                   where u.ComponentName == ComponentName &&
@@ -88,9 +95,18 @@ namespace WMS.UI
                                   select u).FirstOrDefault();
 
                 //到期日期
+                if(SafetyDate1 .ValidPeriod ==null)
+                {
+                    continue;
+                }
                 var SafetyDate = InventoryDate.AddDays( Convert.ToDouble ( SafetyDate1.ValidPeriod));
+                
+                if(SafetyDate <=DateTime .Now )
+                {
 
-
+                    sb.Append(SupplierName +"  "+ ComponentName +"  "+SupplyNo +"  "+"存货日期"+" "+InventoryDate + "\r\n" + "\r\n");
+                      
+                }
 
 
             }
