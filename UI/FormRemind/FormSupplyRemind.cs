@@ -16,7 +16,8 @@ namespace WMS.UI
     {
         string remind;
 
-        StringBuilder sb = new StringBuilder();       
+        public  StringBuilder  sb = new StringBuilder();
+        
         public FormSupplyRemind()
         {
             InitializeComponent();
@@ -42,17 +43,16 @@ namespace WMS.UI
             //MessageBox.Show("执行了一次程序");
         }
 
-        private void remindSupply()
+        public   void remindSupply()
         {
             //存货有效期
             WMSEntities wmsEntities = new WMSEntities();
-            SupplyView[] SupplyView = null;
+            
             StockInfoView[] StockInfoView = null;
             
             
 
-            SupplyView = (from u in wmsEntities.SupplyView
-                          select u).ToArray();
+            
 
             StockInfoView = (from u in wmsEntities.StockInfoView
                              select u).ToArray();
@@ -94,8 +94,41 @@ namespace WMS.UI
 
         }
 
+        private void remindStock()
+        {
+            //WMSEntities wmsEntities = new WMSEntities();
+            //SupplyView[] SupplyView = null;
 
-        private void TextDeliver()
+            //SupplyView = (from u in wmsEntities.SupplyView
+            //              select u).ToArray();
+
+
+            //for(int i=0;i<SupplyView .Length;i++)
+            //{
+
+            //    string ComponentName = SupplyView[i].ComponentName;
+            //    string SuppllierName = SupplyView[i].SupplierName;
+            //    string SupplyNo = SupplyView[i].No;
+
+
+
+
+            //}
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+        public   void TextDeliver()
         {
 
             this.textBox1.Text = sb.ToString();
