@@ -22,7 +22,8 @@ namespace WMS.UI
         private int warehouseID = -1;
 
         private Func<int> personIDGetter = null;
-        private volatile int validRows = 0;
+        private int validRows { get => jobTicketItemViews == null ? 0 : jobTicketItemViews.Length; }
+        private JobTicketItemView[] jobTicketItemViews = null;
 
         private int[] editableColumns = new int[] { 1, 2 };
 
@@ -132,7 +133,7 @@ namespace WMS.UI
             this.pagerWidget.AddStaticCondition("JobTicketID", this.jobTicketID.ToString());
             this.pagerWidget.Search(false,-1,(results)=>
             {
-                this.validRows = results.Length;
+                this.jobTicketItemViews = results;
 
                 if (this.IsDisposed) return;
                 this.Invoke(new Action(() =>
@@ -315,12 +316,23 @@ namespace WMS.UI
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            int[] unselectableIDs = (from j in this.jobTicketItemViews
+                                     where j.ScheduledPutOutAmount >= j.RealAmount
+                                     select j.ID).ToArray();
             if (selectButtonMode == SelectButtonMode.SELECT_ALL)
             {
                 this.buttonSelectAll.Text = "全不选";
                 selectButtonMode = SelectButtonMode.SELECT_NONE;
                 for (int i = 0; i < this.validRows; i++)
                 {
+                    if(int.TryParse(worksheet[i,0].ToString(),out int id) == false)
+                    {
+                        continue;
+                    }
+                    if (unselectableIDs.Contains(id))
+                    {
+                        continue;
+                    }
                     worksheet[i, 1] = true;
                 }
             }
@@ -330,6 +342,10 @@ namespace WMS.UI
                 selectButtonMode = SelectButtonMode.SELECT_ALL;
                 for (int i = 0; i < this.validRows; i++)
                 {
+                    if(worksheet[i,1] as bool? != true)
+                    {
+                        continue;
+                    }
                     worksheet[i, 1] = false;
                 }
             }

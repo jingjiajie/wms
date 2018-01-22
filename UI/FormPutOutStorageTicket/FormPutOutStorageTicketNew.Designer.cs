@@ -61,7 +61,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 105;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(964, 187);
+            this.reoGridControlMain.Size = new System.Drawing.Size(964, 217);
             this.reoGridControlMain.TabIndex = 12;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -81,9 +81,9 @@
             this.tableLayoutPanelMain.RowCount = 4;
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 240F));
             this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanelMain.Size = new System.Drawing.Size(974, 529);
+            this.tableLayoutPanelMain.Size = new System.Drawing.Size(974, 579);
             this.tableLayoutPanelMain.TabIndex = 2;
             // 
             // tableLayoutPanel3
@@ -97,7 +97,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.24154F));
             this.tableLayoutPanel3.Controls.Add(this.buttonOK, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 472);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 522);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
@@ -130,9 +130,9 @@
             this.groupBox1.Controls.Add(this.tableLayoutEditPanel);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Font = new System.Drawing.Font("黑体", 10F);
-            this.groupBox1.Location = new System.Drawing.Point(3, 252);
+            this.groupBox1.Location = new System.Drawing.Point(3, 282);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(968, 214);
+            this.groupBox1.Size = new System.Drawing.Size(968, 234);
             this.groupBox1.TabIndex = 16;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "出库单信息";
@@ -153,13 +153,13 @@
             this.tableLayoutEditPanel.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutEditPanel.Location = new System.Drawing.Point(3, 34);
             this.tableLayoutEditPanel.Name = "tableLayoutEditPanel";
-            this.tableLayoutEditPanel.RowCount = 4;
-            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutEditPanel.Size = new System.Drawing.Size(962, 177);
+            this.tableLayoutEditPanel.RowCount = 5;
+            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutEditPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutEditPanel.Size = new System.Drawing.Size(962, 197);
             this.tableLayoutEditPanel.TabIndex = 13;
             // 
             // tableLayoutPanel1
@@ -174,7 +174,7 @@
             this.tableLayoutPanel1.Controls.Add(this.buttonSelectAll, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonImport, 3, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 199);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 229);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
@@ -218,7 +218,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(974, 529);
+            this.ClientSize = new System.Drawing.Size(974, 579);
             this.Controls.Add(this.tableLayoutPanelMain);
             this.Font = new System.Drawing.Font("黑体", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
