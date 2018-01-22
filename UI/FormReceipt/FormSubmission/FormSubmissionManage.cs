@@ -721,65 +721,36 @@ namespace WMS.UI
 
         private void ButtonOutput_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControl1.Worksheets[0];
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("送检单预览");
-            if (formPreview.SetPatternTable(@"Excel\SubmissionTicket.xlsx") == false)
-            {
-                this.Close();
-                return;
-            }
-            WMSEntities wmsEntities = new WMSEntities();
-            if (worksheet.SelectionRange.Rows != 1)
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            int submissionTicketID;
             try
             {
-                submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-            }
-            catch
-            {
-                MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
-            if (submissionTicket != null)
-            {
-                submissionTicket.PaintTime = DateTime.Now;
-            }
-            
-
-            try
-            {
-                wmsEntities.SaveChanges();
+                WMSEntities wmsEntities = new WMSEntities();
+                var worksheet = this.reoGridControl1.Worksheets[0];
+                int submissionTicketID;
+                try
+                {
+                    submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+                if (submissionTicket == null)
+                {
+                    MessageBox.Show("找不到该送检单，可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                FormSubmissionChooseExcelType formSubmissionChooseExcelType = new FormSubmissionChooseExcelType(submissionTicket);
+                formSubmissionChooseExcelType.Show();
             }
             catch
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView
-                                                         where stv.ID == submissionTicketID
-                                                         select stv).FirstOrDefault();
-            SubmissionTicketItemView[] submissionTicketItemView =
-                (from p in wmsEntities.SubmissionTicketItemView
-                 where p.SubmissionTicketID == submissionTicketView.ID
-                 select p).ToArray();
-            if (submissionTicketView == null)
-            {
-                MessageBox.Show("送检单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            ReceiptTicketView receiptTicketView = (from rtv in wmsEntities.ReceiptTicketView where rtv.ID == submissionTicketView.ReceiptTicketID select rtv).FirstOrDefault();
-            if (receiptTicketView != null)
-            {
-                formPreview.AddData("ReceiptTicket", receiptTicketView);
-            }
-            formPreview.AddData("SubmissionTicket", submissionTicketView);
-            formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
-            formPreview.Show();
+
+            
             
             //this.Close();
         }
