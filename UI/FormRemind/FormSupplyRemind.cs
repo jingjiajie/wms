@@ -39,6 +39,7 @@ namespace WMS.UI
         {
             this.sb = new StringBuilder();
             remindSupply();
+            remindStock();
             TextDeliver();
             //MessageBox.Show("执行了一次程序");
         }
@@ -96,24 +97,59 @@ namespace WMS.UI
 
         private void remindStock()
         {
-            //WMSEntities wmsEntities = new WMSEntities();
-            //SupplyView[] SupplyView = null;
-
-            //SupplyView = (from u in wmsEntities.SupplyView
-            //              select u).ToArray();
-
-
-            //for(int i=0;i<SupplyView .Length;i++)
-            //{
-
-            //    string ComponentName = SupplyView[i].ComponentName;
-            //    string SuppllierName = SupplyView[i].SupplierName;
-            //    string SupplyNo = SupplyView[i].No;
+            WMSEntities wmsEntities = new WMSEntities();
+            SupplyView[] SupplyView = null;
+            decimal  amount=0;
+            SupplyView = (from u in wmsEntities.SupplyView
+                          select u).ToArray();
 
 
+            for (int i = 0; i < SupplyView.Length; i++)
+            {
+
+                string ComponentName = SupplyView[i].ComponentName;
+                string SupplierName = SupplyView[i].SupplierName;
+                string SupplyNo = SupplyView[i].No;
+                decimal SaftyStock;
+                StockInfoView[] stockInfo = null;
+                if(SupplyView [i].SafetyStock ==null)
+                {
 
 
-            //}
+
+
+                    continue;
+
+
+
+                }
+
+                 stockInfo = (from kn in wmsEntities.StockInfoView
+                                 where kn.ComponentName == ComponentName &&
+                                 kn.SupplierName == SupplierName &&
+                                 kn.SupplyNo == SupplyNo
+                                 select kn).ToArray();
+                if(stockInfo ==null)
+                {
+                    continue;
+                }
+                SaftyStock = Convert .ToDecimal ( SupplyView[i].SafetyStock);
+
+                for(int j=0;j<stockInfo.Length;j++)
+
+                {
+                    amount = Convert .ToDecimal ( stockInfo[j].OverflowAreaAmount) +Convert .ToDecimal ( stockInfo[j].ShipmentAreaAmount);
+
+                }
+
+                if(amount < SaftyStock)
+                {
+                    sb.Append(SupplierName + "  " + ComponentName +"  "+ SupplyNo +"  " + "库存量" + "  " + amount + "已小于安全库存" + "   " + SaftyStock + "\r\n" + "\r\n");
+
+                }
+
+
+            }
 
 
 
@@ -171,6 +207,7 @@ namespace WMS.UI
             this.ShowInTaskbar = false;///使窗体不显示在任务栏
             this.sb = new StringBuilder();
             remindSupply();
+            remindStock();
             TextDeliver();
 
 
