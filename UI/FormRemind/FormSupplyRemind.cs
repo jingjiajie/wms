@@ -38,13 +38,13 @@ namespace WMS.UI
         private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             this.sb = new StringBuilder();
-            remindSupply();
-            remindStock();
+            RemindSupply();
+            RemindStock();
             TextDeliver();
             //MessageBox.Show("执行了一次程序");
         }
 
-        public   void remindSupply()
+        public   void RemindSupply()
         {
             //存货有效期
             WMSEntities wmsEntities = new WMSEntities();
@@ -103,7 +103,7 @@ namespace WMS.UI
 
         }
 
-        public  void remindStock()
+        public  void RemindStock()
         {
             WMSEntities wmsEntities = new WMSEntities();
             SupplyView[] SupplyView = null;
@@ -183,7 +183,7 @@ namespace WMS.UI
 
 
 
-        public   void TextDeliver()
+        public void TextDeliver()
         {
 
             this.textBox1.Text = sb.ToString();
@@ -234,8 +234,8 @@ namespace WMS.UI
             this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
             this.ShowInTaskbar = false;///使窗体不显示在任务栏
             this.sb = new StringBuilder();
-            remindSupply();
-            remindStock();
+            RemindSupply();
+            RemindStock();
             TextDeliver();
 
 
