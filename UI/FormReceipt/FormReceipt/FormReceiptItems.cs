@@ -86,7 +86,7 @@ namespace WMS.UI
             InitComponents();
             InitPanel();
             WMSEntities wmsEntities = new WMSEntities();
-            
+
             ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == receiptTicketID select rt).FirstOrDefault();
             if (receiptTicketView == null)
             {
@@ -105,7 +105,7 @@ namespace WMS.UI
             TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentNo.Click += TextBoxComponentNo_Click;
             textBoxComponentName.Click += TextBoxComponentNo_Click;
-            
+
             this.Controls.Find("textBoxState", true)[0].Text = receiptTicketView.State;
             if (receiptTicketView.State != "待收货")
             {
@@ -122,15 +122,79 @@ namespace WMS.UI
                 this.buttonModify.Enabled = false;
             }
             Search();
-
+            TextBox textBoxRealReceiptUnitCount = (TextBox)Controls.Find("textBoxRealReceiptUnitCount", true)[0];
+            TextBox textBoxRefuseUnitCount = (TextBox)Controls.Find("textBoxRefuseUnitCount", true)[0];
+            //textBoxRealReceiptUnitCount.TextChanged += textBoxRealReceiptUnitCount_TextChanged;
+            TextBox textBoxExpectedUnitCount = (TextBox)Controls.Find("textBoxExpectedUnitCount", true)[0];
+            textBoxExpectedUnitCount.TextChanged += textBoxExpectedUnitCount_TextChanged;
         }
+
+        private void textBoxExpectedUnitCount_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBoxExpectUnitCount = (TextBox)sender;
+            TextBox textBoxRealReceiptUnitCount = (TextBox)this.Controls.Find("textBoxRealReceiptUnitCount", true)[0];
+            TextBox textBoxRefuseUnitCount = (TextBox)this.Controls.Find("textBoxRefuseUnitCount", true)[0];
+            TextBox textBoxRefuseUnitAmount = (TextBox)this.Controls.Find("textBoxRefuseUnitAmount", true)[0];
+            TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+            string strExpectUnitCount = textBoxExpectUnitCount.Text;
+            string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
+            string strRefuseUnitCount = textBoxRefuseUnitCount.Text;
+            string strRefuseUnitAmount = textBoxRefuseUnitAmount.Text;
+            string strUnitAmount = textBoxUnitAmount.Text;
+            decimal expectUnitCount;
+            decimal realReceiptUnitCount;
+            decimal refuseUnitCount;
+            decimal refuseUnitAmount;
+            decimal unitAmount;
+            if (decimal.TryParse(strExpectUnitCount, out expectUnitCount) && decimal.TryParse(strRefuseUnitCount, out refuseUnitCount) && decimal.TryParse(strRefuseUnitAmount, out refuseUnitAmount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
+            {
+                if (unitAmount > 0 && expectUnitCount >= 0 && refuseUnitCount >= 0 && refuseUnitAmount >= 0)
+                {
+                    realReceiptUnitCount = (expectUnitCount * unitAmount - refuseUnitCount * refuseUnitAmount) / unitAmount;
+                    
+                    textBoxRealReceiptUnitCount.Text = realReceiptUnitCount.ToString();
+                    
+                }
+            }
+        }
+
+        /*
+        private void textBoxRealReceiptUnitCount_TextChanged(object sender, EventArgs e)
+        {
+            TextBox textBoxRealReceiptUnitCount = (TextBox)sender;
+            TextBox textBoxExpectUnitCount = (TextBox)this.Controls.Find("textBoxExpectedUnitCount", true)[0];
+            TextBox textBoxRefuseUnitCount = (TextBox)this.Controls.Find("textBoxRefuseUnitCount", true)[0];
+            TextBox textBoxRefuseUnitAmount = (TextBox)this.Controls.Find("textBoxRefuseUnitAmount", true)[0];
+            TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+            string strExpectUnitCount = textBoxExpectUnitCount.Text;
+            string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
+            string strRefuseUnitCount = textBoxRefuseUnitCount.Text;
+            string strRefuseUnitAmount = textBoxRefuseUnitAmount.Text;
+            string strUnitAmount = textBoxUnitAmount.Text;
+            decimal expectUnitCount;
+            decimal realReceiptUnitCount;
+            decimal refuseUnitCount;
+            decimal refuseUnitAmount;
+            decimal unitAmount;
+            if (decimal.TryParse(strExpectUnitCount, out expectUnitCount) && decimal.TryParse(strRealReceiptUnitCount, out realReceiptUnitCount) && decimal.TryParse(strRefuseUnitAmount, out refuseUnitAmount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
+            {
+                if (unitAmount > 0 && expectUnitCount >= 0 && realReceiptUnitCount >= 0 && refuseUnitAmount >= 0)
+                {
+                    refuseUnitCount = (expectUnitCount - realReceiptUnitCount) / unitAmount;
+                    if (strRefuseUnitCount == "")
+                    {
+                        textBoxRefuseUnitCount.Text = refuseUnitCount.ToString();
+                    }
+                }
+            }
+        }*/
 
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("ReceiptTicketID", this.receiptTicketID.ToString());
-            
-            this.pagerWidget.Search(savePage, selectID, new Action<ReceiptTicketItemView[]>((r)=> 
+
+            this.pagerWidget.Search(savePage, selectID, new Action<ReceiptTicketItemView[]>((r) =>
             {
                 this.RefreshTextBoxes();
             }));
@@ -179,7 +243,7 @@ namespace WMS.UI
 
                     //this.Controls.Find("textBoxWrongComponentUnit", true)[0].Text = "个";
                     //this.Controls.Find("textBoxWrongComponentUnitAmount", true)[0].Text = "1";
-
+                    this.Controls.Find("textBoxRefuseUnitCount", true)[0].Text = "0";
                     this.Controls.Find("textBoxRefuseUnit", true)[0].Text = "个";
                     this.Controls.Find("textBoxRefuseUnitAmount", true)[0].Text = "1.000";
 
@@ -397,7 +461,7 @@ namespace WMS.UI
                         stockInfo.RejectAreaAmount = 0;
                         stockInfo.SubmissionAmount = 0;
                         stockInfo.ReceiptAreaAmount = 0;
-                        
+
                         if (receiptTicketItem.ReceiviptAmount != null)
                         {
                             stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
@@ -705,7 +769,7 @@ namespace WMS.UI
         private bool importItemHandler(ReceiptTicketItem[] results, Dictionary<string, string[]> unimportedColumns)
         {
             WMSEntities wmsEntities = new WMSEntities();
-            string[] supplyNoNames = (from s in unimportedColumns where s.Key == "Component"  select s.Value).FirstOrDefault();
+            string[] supplyNoNames = (from s in unimportedColumns where s.Key == "Component" select s.Value).FirstOrDefault();
             string[] jobPersonNames = (from s in unimportedColumns where s.Key == "JobPersonName" select s.Value).FirstOrDefault();
             string[] confirmPersonNames = (from s in unimportedColumns where s.Key == "ConfirmPersonName" select s.Value).FirstOrDefault();
             for (int i = 0; i < results.Length; i++)
@@ -789,7 +853,7 @@ namespace WMS.UI
                 }
                 wmsEntities.ReceiptTicketItem.Add(results[i]);
             }
-            new Thread(() => 
+            new Thread(() =>
             {
                 wmsEntities.SaveChanges();
                 for (int i = 0; i < results.Length; i++)
@@ -816,15 +880,15 @@ namespace WMS.UI
                     wmsEntities.StockInfo.Add(stockInfo);
                 }
                 wmsEntities.SaveChanges();
-                this.Invoke(new Action(() => 
+                this.Invoke(new Action(() =>
                 {
                     this.Search();
                     MessageBox.Show("导入成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.standardImportForm.Close();
                 }));
-               
+
             }).Start();
-            
+
 
 
             return false;
@@ -832,7 +896,7 @@ namespace WMS.UI
 
         private void importFinishedCallback()
         {
-            
+
 
         }
 
