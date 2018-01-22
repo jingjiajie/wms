@@ -226,7 +226,7 @@ namespace WMS.UI.FormReceipt
             this.CallBack = action;
         }
 
-        private SortedDictionary<int, int> SelectReceiptTicketItem()
+        private SortedDictionary<int, decimal> SelectReceiptTicketItem()
         {
             /*
             //List<ReceiptTicketItem> receiptTicketItems = new List<ReceiptTicketItem>();
@@ -260,9 +260,9 @@ namespace WMS.UI.FormReceipt
                 }
             }*/
             List<int> ids = new List<int>();
-            SortedDictionary<int, int> idsAndSubmissionAmount = new SortedDictionary<int, int>();
+            SortedDictionary<int, decimal> idsAndSubmissionAmount = new SortedDictionary<int, decimal>();
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            int submissionAmount;
+            decimal submissionAmount;
             for (int i = 0; i < this.countRow; i++)
             {
                 int id;
@@ -277,7 +277,7 @@ namespace WMS.UI.FormReceipt
                 else
                 {
 
-                    if (int.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
+                    if (decimal.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
                     {
                         
                         idsAndSubmissionAmount.Add(id, submissionAmount);
@@ -332,13 +332,13 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
                 }
             }
-            SortedDictionary<int, int> idsAndSubmissionAmount = SelectReceiptTicketItem(); 
+            SortedDictionary<int, decimal> idsAndSubmissionAmount = SelectReceiptTicketItem(); 
             if (idsAndSubmissionAmount == null)
             {
                 return;
             }
-            Dictionary<ReceiptTicketItem, int> receiptTicketItemsAndSubmissionAmount = new Dictionary<ReceiptTicketItem, int>();
-            foreach (KeyValuePair<int, int> kv in idsAndSubmissionAmount)
+            Dictionary<ReceiptTicketItem, decimal> receiptTicketItemsAndSubmissionAmount = new Dictionary<ReceiptTicketItem, decimal>();
+            foreach (KeyValuePair<int, decimal> kv in idsAndSubmissionAmount)
             {
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == kv.Key select rti).FirstOrDefault();
                 if (receiptTicketItem != null)
@@ -415,7 +415,7 @@ namespace WMS.UI.FormReceipt
                             //submissionTicket.No = Utilities.GenerateTicketNo()
 
                             wmsEntities.SaveChanges();
-                            foreach (KeyValuePair<ReceiptTicketItem, int> vp in receiptTicketItemsAndSubmissionAmount)
+                            foreach (KeyValuePair<ReceiptTicketItem, decimal> vp in receiptTicketItemsAndSubmissionAmount)
                             {
                                 SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
                                 StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == vp.Key.ID select si).FirstOrDefault();
