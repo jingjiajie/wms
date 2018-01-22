@@ -519,10 +519,24 @@ namespace WMS.UI
                     MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                int receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                int receiptItemID;
+                try
+                {
+                    receiptItemID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 //int oldRejectAreaAmount;
                 int oldReceiptAreaAmount;
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).FirstOrDefault();
+                if (receiptTicketItem == null)
+                {
+                    MessageBox.Show("找不到该收货单条目，可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 oldReceiptAreaAmount = receiptTicketItem.ReceiviptAmount == null ? 0 : (int)receiptTicketItem.ReceiviptAmount;
                 //oldRejectAreaAmount = receiptTicketItem.DisqualifiedAmount == null ? 0 : (int)receiptTicketItem.DisqualifiedAmount;
                 string errorInfo;
@@ -554,13 +568,24 @@ namespace WMS.UI
                             //receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
                             receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
                             receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
+                            receiptTicketItem.ExpectedAmount = receiptTicketItem.ExpectedUnitCount * receiptTicketItem.UnitAmount;
                             //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
                             //receiptTicketItem.WrongComponentAmount = receiptTicketItem.WrongComponentUnitAmount * receiptTicketItem.WrongComponentUnitCount;
                             //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount - receiptTicketItem.RefuseAmount;
                             if (receiptTicketItem.ReceiviptAmount < 0)
                             {
 
-                                MessageBox.Show("拒收数不能大于订单数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("实际收货数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            if (receiptTicketItem.RefuseAmount < 0)
+                            {
+                                MessageBox.Show("拒收数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            if (receiptTicketItem.ExpectedAmount < 0)
+                            {
+                                MessageBox.Show("订单数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return;
                             }
                             //receiptTicketItem.ShortageAmount = receiptTicketItem.ExpectedAmount - receiptTicketItem.RealReceiptAmount;

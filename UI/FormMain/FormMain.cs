@@ -903,7 +903,7 @@ namespace WMS.UI
             {
                
                     
-                    a1.Show();
+                   // a1.Show();
                
             }
         }
