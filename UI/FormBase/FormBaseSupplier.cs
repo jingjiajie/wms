@@ -39,7 +39,7 @@ namespace WMS.UI
             this.authority = authority;
             this.id = supplierid;
             this.userid = userid;
-        } 
+        }
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
@@ -51,56 +51,65 @@ namespace WMS.UI
             if ((this.authority & authority_supplier) != authority_supplier)
             {
 
-
-                Supplier supplier = (from u in this.wmsEntities.Supplier
-                                     where u.ID == id
-                                     select u).FirstOrDefault();
-
-                this.contractst = supplier.ContractState;
-
-
-
-
-                this.contractst = supplier.ContractState;
-                this.toolStripButtonAdd.Enabled = false;
-                this.toolStripButtonDelete.Enabled = false;
-                this.buttonCheck.Enabled = false;
-                this.buttonImport.Enabled = false;
-                //this.toolStripButton1.Enabled = false;
-                //this.toolStripButtonSelect.Enabled = false;
-                if (this.contractst =="待审核")
+                try
                 {
-                    this.toolStripButtonAlter.Enabled = true ;
+                    Supplier supplier = (from u in this.wmsEntities.Supplier
+                                         where u.ID == id
+                                         select u).FirstOrDefault();
 
+                    this.contractst = supplier.ContractState;
+
+
+
+
+                    this.contractst = supplier.ContractState;
+                    this.toolStripButtonAdd.Enabled = false;
+                    this.toolStripButtonDelete.Enabled = false;
+                    this.buttonCheck.Enabled = false;
+                    this.buttonImport.Enabled = false;
+                    //this.toolStripButton1.Enabled = false;
+                    //this.toolStripButtonSelect.Enabled = false;
+                    if (this.contractst == "待审核")
+                    {
+                        this.toolStripButtonAlter.Enabled = true;
+
+                    }
+                    else if (this.contractst == "已过审")
+                    {
+                        this.toolStripButtonAlter.Enabled = false;
+                    }
+                    else if (this.contractst == "已过期")
+                    {
+                        this.toolStripButtonAlter.Enabled = false;
+
+                    }
+
+
+                    InitSupplier();
+
+                    this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+                    this.pagerWidget.AddCondition("是否历史信息", "0");
+                    this.pagerWidget.Search();
+
+
+
+                    if ((this.authority & authority_supplier) == authority_supplier)
+                    {
+
+
+                        InitSupplier();
+                        this.pagerWidget.AddCondition("是否历史信息", "0");
+                        this.pagerWidget.Search();
+                    }
                 }
-                else if(this.contractst=="已过审")
+                catch
                 {
-                    this.toolStripButtonAlter.Enabled = false;
-                }
-                else if(this.contractst =="已过期")
-                {
-                    this.toolStripButtonAlter.Enabled = false;
-
+                    MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-
-                InitSupplier();
-             
-                this.pagerWidget.AddCondition("ID",Convert.ToString(id));
-                this.pagerWidget.AddCondition("是否历史信息", "0");
-                this.pagerWidget.Search();
 
             }
-            if ((this.authority & authority_supplier) == authority_supplier)
-            {
-                
-
-                InitSupplier();
-                this.pagerWidget.AddCondition("是否历史信息", "0");
-                this.pagerWidget.Search();
-            }
-
-
         }
         protected override CreateParams CreateParams
         {
@@ -114,18 +123,26 @@ namespace WMS.UI
 
         private void InitSupplier ()
         {
-          
-            this.wmsEntities.Database.Connection.Open();
+            try
+            {
+                this.wmsEntities.Database.Connection.Open();
 
-            string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
-                                           where kn.Visible == true
-                                           select kn.Name).ToArray();
+                string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
+                                               where kn.Visible == true
+                                               select kn.Name).ToArray();
 
-            //初始化查询框
-            this.toolStripComboBoxSelect.Items.Add("无");
-            this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
 
+                //初始化查询框
+                this.toolStripComboBoxSelect.Items.Add("无");
+                this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
+                this.toolStripComboBoxSelect.SelectedIndex = 0;
+            }
+            catch
+            {
+                MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
+                return;
+            }
             //初始化分页控件
             this.pagerWidget = new PagerWidget<SupplierView>(this.reoGridControlUser, SupplierMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
