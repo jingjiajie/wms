@@ -29,6 +29,7 @@ namespace WMS.UI
         private  DateTime contract_enddate;
         private  DateTime contract_startdate;
         private  int reminedays;
+        FormSupplyRemind a1 =null;
         //FormSupplyRemind a1 = null;
 
 
@@ -879,15 +880,31 @@ namespace WMS.UI
             }
             return null;
         }
+ 
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
             if (user.SupplierID == null)
             {
-                FormSupplyRemind a1 = new FormSupplyRemind();
-
-
+                a1 = new FormSupplyRemind();
                 a1.Show();
+            }
+        }
+
+        private void FormMain_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized&&a1!=null)
+            {
+              
+                    a1.Hide();
+               
+            }
+            else
+            {
+               
+                    
+                    a1.Show();
+               
             }
         }
     }
