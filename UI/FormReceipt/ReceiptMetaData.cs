@@ -331,6 +331,14 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = false , Editable = false ,ImportVisible=true ,NotNull =true },
         };
 
+        public static KeyName[] importPutawayTicket =
+        {
+            new KeyName(){Name = "零件名称/编号", Key = "Component", ImportVisible = true, Import = false},
+            new KeyName(){Name = "计划上架数量(单位)", Key = "ScheduledMoveCount", ImportVisible = true, Import = true},
+            new KeyName(){Name = "作业人", Key = "JobPersonName", ImportVisible = true, Import =false},
+            new KeyName(){Name = "确认人", Key = "ConfirmPersonName", ImportVisible = true, Import = false}
+        };
+
 
     }
 }

@@ -222,6 +222,7 @@ namespace WMS.UI
                 this.componentID = id;
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                 WMS.DataAccess.Supply supply = (from c in wmsEntities.Supply where c.ID == id select c).FirstOrDefault();
+
                 if (supply == null)
                 {
                     MessageBox.Show("没有找到该零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -232,6 +233,7 @@ namespace WMS.UI
                 }
                 else
                 {
+                    
                     this.ClearTextBoxes();
 
                     this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
@@ -429,11 +431,17 @@ namespace WMS.UI
                             MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
+                        ReceiptTicketItem receiptTicketItem1 = (from rti in wmsEntities.ReceiptTicketItem where rti.ReceiptTicketID == this.receiptTicketID && rti.SupplyID == this.componentID select rti).FirstOrDefault();
+                        if (receiptTicketItem1 != null)
+                        {
+                            MessageBox.Show("该收货单中已包含该零件，不能重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                         receiptTicketItem.SupplyID = this.componentID;
                         receiptTicketItem.ReceiptTicketID = this.receiptTicketID;
                         receiptTicketItem.JobPersonID = JobPersonIDGetter();
                         receiptTicketItem.ConfirmPersonID = ConfirmPersonIDGetter();
-
+                        //ReceiptTicketItemView 
                         wmsEntities.SaveChanges();
                         receiptTicketItem.ExpectedAmount = receiptTicketItem.ExpectedUnitCount * receiptTicketItem.UnitAmount;
                         receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
@@ -772,6 +780,7 @@ namespace WMS.UI
             string[] supplyNoNames = (from s in unimportedColumns where s.Key == "Component" select s.Value).FirstOrDefault();
             string[] jobPersonNames = (from s in unimportedColumns where s.Key == "JobPersonName" select s.Value).FirstOrDefault();
             string[] confirmPersonNames = (from s in unimportedColumns where s.Key == "ConfirmPersonName" select s.Value).FirstOrDefault();
+            List<int> supplyIDs = new List<int>();
             for (int i = 0; i < results.Length; i++)
             {
                 string supplyNoName = supplyNoNames[i];
@@ -803,9 +812,29 @@ namespace WMS.UI
                 {
                     results[i].SupplyID = supplyViewNo.ID;
                 }
+                if (results[i].SupplyID == null)
+                {
+                    MessageBox.Show("第" + (i + 1) + "行，无法找到该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                ReceiptTicketItem result = results[i];
+                int supplyIDCur = (int)results[i].SupplyID;
+                int count = (from s in supplyIDs where s == supplyIDCur select s).ToArray().Length;
+                supplyIDs.Add((int)results[i].SupplyID);
+                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ReceiptTicketID == this.receiptTicketID && rti.SupplyID == supplyIDCur select rti).FirstOrDefault();
+                if (count != 0 || receiptTicketItem != null)
+                {
+                    MessageBox.Show( "第" + (i+1).ToString() + "行，零件在该收货单被添加过，不能重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                if (result.UnitAmount <= 0 || result.RefuseUnitAmount <= 0)
+                {
+                    MessageBox.Show("第" + (i + 1) + "行中，单位数量和拒收单位数量必须大于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
                 string jobPersonName = jobPersonNames[i];
                 string confirmPersonName = confirmPersonNames[i];
-                if (jobPersonName == "")
+                if (jobPersonName == "" || jobPersonName == null)
                 {
                     results[i].JobPersonID = -1;
                 }

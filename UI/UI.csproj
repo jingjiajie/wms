@@ -277,6 +277,12 @@
     <Compile Include="FormReceipt\FormPutawayTicketItem\FormShelvesItem.Designer.cs">
       <DependentUpon>FormShelvesItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReceipt\FormSubmission\FormSubmissionChooseExcelType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReceipt\FormSubmission\FormSubmissionChooseExcelType.Designer.cs">
+      <DependentUpon>FormSubmissionChooseExcelType.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReceipt\FormSubmission\FormSubmissionItem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -574,6 +580,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormPutawayTicketItem\FormShelvesItem.resx">
       <DependentUpon>FormShelvesItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReceipt\FormSubmission\FormSubmissionChooseExcelType.resx">
+      <DependentUpon>FormSubmissionChooseExcelType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReceipt\FormSubmission\FormSubmissionItem.resx">
       <DependentUpon>FormSubmissionItem.cs</DependentUpon>
