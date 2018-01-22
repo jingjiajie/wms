@@ -14,6 +14,11 @@ namespace WMS.DataAccess
     
     public partial class Supply
     {
+        public Supply()
+        {
+            this.StockInfoCheckTicketItem = new HashSet<StockInfoCheckTicketItem>();
+        }
+    
         public int ID { get; set; }
         public Nullable<int> ProjectID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
@@ -73,5 +78,6 @@ namespace WMS.DataAccess
         public Nullable<decimal> SafetyStock { get; set; }
     
         public virtual Component Component { get; set; }
+        public virtual ICollection<StockInfoCheckTicketItem> StockInfoCheckTicketItem { get; set; }
     }
 }

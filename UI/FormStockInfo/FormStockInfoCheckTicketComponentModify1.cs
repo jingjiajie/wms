@@ -179,7 +179,7 @@ namespace WMS.UI
                 
                         }
             this.stockinfoid = ids[0];
-            StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
+            //TODO StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
             
             TextBox textBoxOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxOverflowAreaAmount",true)[0];
             TextBox textBoxShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxShipmentAreaAmount", true)[0];
