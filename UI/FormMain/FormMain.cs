@@ -29,6 +29,7 @@ namespace WMS.UI
         private  DateTime contract_enddate;
         private  DateTime contract_startdate;
         private  int reminedays;
+        FormSupplyRemind a1 =null;
         //FormSupplyRemind a1 = null;
 
 
@@ -51,22 +52,13 @@ namespace WMS.UI
             else if (user.SupplierID == null)
             {
                 supplierid = -1;
-                //remindSupply();
-                //FormSupplyRemind a1 = new FormSupplyRemind();
                 
-                // //a1.MdiParent = this;
-                //a1.Show();
+                
 
             }
 
 
-            //System.Timers.Timer timer = new System.Timers.Timer();
-            //timer.Enabled = true;
-            //timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
-            //timer.Start();
-            //timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer1_Elapsed);
-
-            //remindSupply();
+            
 
 
 
@@ -74,65 +66,7 @@ namespace WMS.UI
         }
 
 
-        //private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        //{
-        //    remindSupply();
-        //    MessageBox.Show("执行了一次程序");
-        //}
-
-
-        //private void remindSupply()
-        //{
-        //    //存货有效期
-        //    WMSEntities wmsEntities = new WMSEntities();
-        //    SupplyView[] SupplyView = null;
-        //    StockInfoView[] StockInfoView = null;
-            
-        //    StringBuilder sb = new StringBuilder();
-
-        //    SupplyView = (from u in wmsEntities.SupplyView
-        //                  select u).ToArray();
-
-        //    StockInfoView = (from u in wmsEntities.StockInfoView
-        //                     select u).ToArray();
-
-        //    for(int i=0;i<StockInfoView .Length;i++)
-        //    {
-        //        //找到每个零件的保质期
-        //        string ComponentName = StockInfoView[i].ComponentName;
-        //        string SupplierName = StockInfoView[i].SupplierName;
-        //        string SupplyNo = StockInfoView[i].SupplyNo;
-        //        if(ComponentName ==null||SupplierName ==null||SupplyNo ==null|| StockInfoView[i].InventoryDate==null)
-        //        {
-
-        //            continue;
-        //        }
-        //        DateTime InventoryDate = Convert.ToDateTime(StockInfoView[i].InventoryDate);
-        //        var SafetyDate1 = (from u in wmsEntities.SupplyView
-        //                          where u.ComponentName == ComponentName &&
-        //                          u.SupplierName == SupplierName &&
-        //                          u.No == SupplyNo
-        //                          select u).FirstOrDefault();
-
-        //        //到期日期
-        //        if(SafetyDate1.ValidPeriod ==null)
-        //        {
-        //            continue;
-        //        }
-        //        var SafetyDate = InventoryDate.AddDays( Convert.ToDouble ( SafetyDate1.ValidPeriod));
-                
-        //        if(SafetyDate <=DateTime .Now )
-        //        {
-
-        //            sb.Append(SupplierName +"  "+ ComponentName +"  "+SupplyNo +"  "+"存货日期"+" "+InventoryDate + "\r\n" + "\r\n");
-                      
-        //        }
-
-        //    }
-        //    FormSupplyRemind a1 = new FormSupplyRemind(sb.ToString());
-        //    a1.Show();
-
-        //}
+       
 
 
 
@@ -945,6 +879,33 @@ namespace WMS.UI
                 }
             }
             return null;
+        }
+ 
+
+        private void FormMain_Shown(object sender, EventArgs e)
+        {
+            if (user.SupplierID == null)
+            {
+                a1 = new FormSupplyRemind();
+                a1.Show();
+            }
+        }
+
+        private void FormMain_SizeChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized&&a1!=null)
+            {
+              
+                    a1.Hide();
+               
+            }
+            else
+            {
+               
+                    
+                    a1.Show();
+               
+            }
         }
     }
 }

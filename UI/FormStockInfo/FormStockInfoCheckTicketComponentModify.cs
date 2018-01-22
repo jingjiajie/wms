@@ -297,7 +297,7 @@ namespace WMS.UI
                 this.personid = StockInfoCheckTicketItem.PersonID.Value ;
 
             }
-
+            
 
 
 
