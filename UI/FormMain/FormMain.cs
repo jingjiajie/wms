@@ -882,10 +882,13 @@ namespace WMS.UI
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            FormSupplyRemind a1 = new FormSupplyRemind();
+            if (user.SupplierID == null)
+            {
+                FormSupplyRemind a1 = new FormSupplyRemind();
 
 
-            a1.Show();
+                a1.Show();
+            }
         }
     }
 }

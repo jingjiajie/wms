@@ -103,7 +103,7 @@ namespace WMS.UI
 
         }
 
-        private void remindStock()
+        public  void remindStock()
         {
             WMSEntities wmsEntities = new WMSEntities();
             SupplyView[] SupplyView = null;
@@ -188,7 +188,7 @@ namespace WMS.UI
 
             this.textBox1.Text = sb.ToString();
             //MessageBox.Show("4646");
-            if(this.textBox1 .Text =="刷新失败,请检查网络连接")
+            if (this.textBox1 .Text =="刷新失败,请检查网络连接")
             {
                 this.textBox1.ForeColor = Color.Red;
                 

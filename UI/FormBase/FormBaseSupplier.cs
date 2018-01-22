@@ -46,13 +46,13 @@ namespace WMS.UI
 
 
 
-
-
-            if ((this.authority & authority_supplier) != authority_supplier)
+            try
             {
 
-                try
+                if ((this.authority & authority_supplier) != authority_supplier)
                 {
+
+
                     Supplier supplier = (from u in this.wmsEntities.Supplier
                                          where u.ID == id
                                          select u).FirstOrDefault();
@@ -78,11 +78,11 @@ namespace WMS.UI
                     {
                         this.toolStripButtonAlter.Enabled = false;
                     }
-                    else if (this.contractst == "已过期")
-                    {
-                        this.toolStripButtonAlter.Enabled = false;
+                    //else if (this.contractst == "已过期")
+                    //{
+                    //    this.toolStripButtonAlter.Enabled = false;
 
-                    }
+                    //}
 
 
                     InitSupplier();
@@ -90,26 +90,29 @@ namespace WMS.UI
                     this.pagerWidget.AddCondition("ID", Convert.ToString(id));
                     this.pagerWidget.AddCondition("是否历史信息", "0");
                     this.pagerWidget.Search();
-
-
-
-                    if ((this.authority & authority_supplier) == authority_supplier)
-                    {
-
-
-                        InitSupplier();
-                        this.pagerWidget.AddCondition("是否历史信息", "0");
-                        this.pagerWidget.Search();
-                    }
                 }
-                catch
+
+
+                if ((this.authority & authority_supplier) == authority_supplier)
                 {
-                    MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+
+
+                    InitSupplier();
+                    this.pagerWidget.AddCondition("是否历史信息", "0");
+                    this.pagerWidget.Search();
                 }
 
 
             }
+
+            catch
+            {
+                MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+
         }
         protected override CreateParams CreateParams
         {
@@ -799,11 +802,16 @@ namespace WMS.UI
                     () => //参数3：导入完成回调函数
                     {
                         this.pagerWidget.Search();
+
                     }
                 );
 
             //显示导入窗口
             formImport.Show();
+            //FormSupplyRemind a1 = new FormSupplyRemind();
+            //a1.remindSupply();
+            //a1.remindStock();
+            //a1.TextDeliver();
         }
     }
     
