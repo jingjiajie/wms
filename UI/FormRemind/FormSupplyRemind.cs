@@ -27,7 +27,7 @@ namespace WMS.UI
 
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Enabled = true;
-            timer.Interval = 10000;//执行间隔时间,单位为毫秒  一千分之一
+            timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
             timer.Start();
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer1_Elapsed);
 
