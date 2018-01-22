@@ -129,7 +129,11 @@ namespace WMS.UI
         {
             this.pagerWidget.ClearCondition();
             this.pagerWidget.AddCondition("ReceiptTicketID", this.receiptTicketID.ToString());
-            this.pagerWidget.Search(savePage, selectID);
+            
+            this.pagerWidget.Search(savePage, selectID, new Action<ReceiptTicketItemView[]>((r)=> 
+            {
+                this.RefreshTextBoxes();
+            }));
         }
 
         private void TextBoxComponentNo_Click(object sender, EventArgs e)
@@ -473,11 +477,12 @@ namespace WMS.UI
                         try
                         {
                             receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
+                            receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
                             receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
                             //receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
                             receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
                             receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
-                            receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
+                            //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
                             //receiptTicketItem.WrongComponentAmount = receiptTicketItem.WrongComponentUnitAmount * receiptTicketItem.WrongComponentUnitCount;
                             //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount - receiptTicketItem.RefuseAmount;
                             if (receiptTicketItem.ReceiviptAmount < 0)
