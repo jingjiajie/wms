@@ -52,10 +52,10 @@ namespace WMS.UI
             {
                 supplierid = -1;
                 //remindSupply();
-                FormSupplyRemind a1 = new FormSupplyRemind();
+                //FormSupplyRemind a1 = new FormSupplyRemind();
                 
-                 //a1.MdiParent = this;
-                a1.Show();
+                // //a1.MdiParent = this;
+                //a1.Show();
 
             }
 
