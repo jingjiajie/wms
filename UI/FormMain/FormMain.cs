@@ -893,19 +893,19 @@ namespace WMS.UI
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized&&a1!=null)
-            {
+            //if (this.WindowState == FormWindowState.Minimized&&a1!=null)
+            //{
               
-                    a1.Hide();
+            //        a1.Hide();
                
-            }
-            else
-            {
+            //}
+            //else
+            //{
                
                     
-                    a1.Show();
+            //        a1.Show();
                
-            }
+            //}
         }
     }
 }

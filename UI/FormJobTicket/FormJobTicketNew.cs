@@ -24,7 +24,8 @@ namespace WMS.UI
 
         private Action<string> toJobTicketCallback = null;
         private int[] editableColumns = new int[] { 1, 2 };
-        private int validRows = 0;
+        private int validRows { get => shipmentTicketItems == null ? 0 : shipmentTicketItems.Length; }
+        private ShipmentTicketItemView[] shipmentTicketItems = null;
 
         private static KeyName[] newJobTicketKeyNames =
         {
@@ -163,7 +164,7 @@ namespace WMS.UI
             ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView
                                                                 where s.ShipmentTicketID == this.shipmentTicketID
                                                                 select s).ToArray();
-            validRows = shipmentTicketItemViews.Length;
+            this.shipmentTicketItems = shipmentTicketItemViews;
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.DeleteRangeData(RangePosition.EntireRange);
             worksheet.Rows = (shipmentTicketItemViews.Length < 10 ? 10 : shipmentTicketItemViews.Length);
@@ -333,12 +334,23 @@ namespace WMS.UI
         private void buttonSelectAll_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            int[] unselectableIDs = (from s in this.shipmentTicketItems
+                                     where s.ScheduledJobAmount >= s.ShipmentAmount
+                                     select s.ID).ToArray();
             if (selectButtonMode == SelectButtonMode.SELECT_ALL)
             {
                 this.buttonSelectAll.Text = "全不选";
                 selectButtonMode = SelectButtonMode.SELECT_NONE;
                 for (int i = 0; i < this.validRows; i++)
                 {
+                    if (int.TryParse(worksheet[i, 0].ToString(), out int id) == false)
+                    {
+                        continue;
+                    }
+                    if (unselectableIDs.Contains(id))
+                    {
+                        continue;
+                    }
                     worksheet[i, 1] = true;
                 }
             }
@@ -348,7 +360,10 @@ namespace WMS.UI
                 selectButtonMode = SelectButtonMode.SELECT_ALL;
                 for (int i = 0; i < this.validRows; i++)
                 {
-                    worksheet[i, 1] = false;
+                    if (worksheet[i, 1] as bool? == true)
+                    {
+                        worksheet[i, 1] = false;
+                    }
                 }
             }
 
