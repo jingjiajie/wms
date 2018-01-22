@@ -20,22 +20,22 @@ namespace WMS.UI
         private Project project = null;
         private Warehouse warehouse = null;
         private WMSEntities wmsEntities = new WMSEntities();
-        private int supplierid=-1;
+        private int supplierid = -1;
         private string contractstate = "";
         private int setitem;
-        string remindtext="";
-        private bool  contract_effect=true ;
-        private bool startend=true ;
-        private  DateTime contract_enddate;
-        private  DateTime contract_startdate;
-        private  int reminedays;
-        FormSupplyRemind a1 =null;
+        string remindtext = "";
+        private bool contract_effect = true;
+        private bool startend = true;
+        private DateTime contract_enddate;
+        private DateTime contract_startdate;
+        private int reminedays;
+        FormSupplyRemind FormSupplyRemind = null;
         //FormSupplyRemind a1 = null;
 
 
         private Action formClosedCallback;
 
-        public FormMain(User user,Project project,Warehouse warehouse)
+        public FormMain(User user, Project project, Warehouse warehouse)
         {
             InitializeComponent();
             this.user = user;
@@ -52,13 +52,13 @@ namespace WMS.UI
             else if (user.SupplierID == null)
             {
                 supplierid = -1;
-                
-                
+
+
 
             }
 
 
-            
+
 
 
 
@@ -66,7 +66,7 @@ namespace WMS.UI
         }
 
 
-       
+
 
 
 
@@ -74,11 +74,11 @@ namespace WMS.UI
         private void remind()
         {
 
-        WMSEntities wmsEntities = new WMSEntities();
-        ComponentView component = null;
-       
+            WMSEntities wmsEntities = new WMSEntities();
+            ComponentView component = null;
 
-        int days;
+
+            int days;
             StringBuilder sb = new StringBuilder();
 
             //合同天数
@@ -89,14 +89,14 @@ namespace WMS.UI
                 Supplier = (from u in this.wmsEntities.Supplier
                             where u.ID == supplierid
                             select u).FirstOrDefault();
-            
-               contract_enddate = Convert.ToDateTime(Supplier.EndingTime);
-              
-                
-              
-               contract_startdate = Convert.ToDateTime(Supplier.StartingTime);
-                
-                if(Supplier.EndingTime ==null|| Supplier.EndingTime == null)
+
+                contract_enddate = Convert.ToDateTime(Supplier.EndingTime);
+
+
+
+                contract_startdate = Convert.ToDateTime(Supplier.StartingTime);
+
+                if (Supplier.EndingTime == null || Supplier.EndingTime == null)
                 {
 
                     startend = false;
@@ -106,9 +106,9 @@ namespace WMS.UI
                 }
 
 
-                    this.contractstate = Supplier.ContractState;
+                this.contractstate = Supplier.ContractState;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -116,27 +116,27 @@ namespace WMS.UI
             }
 
 
-            days = (contract_enddate-DateTime.Now  ).Days;
+            days = (contract_enddate - DateTime.Now).Days;
             if (contract_startdate > DateTime.Now)
             {
                 contract_effect = false;
             }
-            
+
             //库存
             int[] warringdays = { 3, 5, 10 };
-            
 
-            
+
+
             try
             {
 
                 var ComponentName = (from u in wmsEntities.StockInfoView
-                                     where u.SupplierID  == supplierid
+                                     where u.SupplierID == supplierid
                                      select u.ComponentName).ToArray();
 
 
                 var ShipmentAreaAmount = (from u in wmsEntities.StockInfoView
-                                          where u.SupplierID   ==
+                                          where u.SupplierID ==
                                           this.supplierid
                                           select u.ShipmentAreaAmount).ToArray();
 
@@ -145,12 +145,12 @@ namespace WMS.UI
 
 
                 var OverflowAreaAmount = (from u in wmsEntities.StockInfoView
-                               where u.SupplierID  == supplierid
-                               select u.OverflowAreaAmount ).ToArray();
+                                          where u.SupplierID == supplierid
+                                          select u.OverflowAreaAmount).ToArray();
 
-                
 
-                for (int i=0;i<ComponentName.Length;i++)
+
+                for (int i = 0; i < ComponentName.Length; i++)
 
                 {
                     if (ComponentName[i] == null)
@@ -158,29 +158,29 @@ namespace WMS.UI
                         continue;
                     }
 
-                    for (int j = i + 1;j<ComponentName.Length;j++)
+                    for (int j = i + 1; j < ComponentName.Length; j++)
                     {
-                        if (ComponentName[i]==ComponentName[j])
+                        if (ComponentName[i] == ComponentName[j])
                         {
-                           
-                           
+
+
                             ComponentName[j] = null;
-                            ShipmentAreaAmount[i] = Convert .ToDecimal ( ShipmentAreaAmount[i]) + Convert .ToDecimal ( ShipmentAreaAmount[j]);
-                            OverflowAreaAmount[i] = Convert.ToDecimal( OverflowAreaAmount[i]) + Convert.ToDecimal( OverflowAreaAmount[j]);                        
+                            ShipmentAreaAmount[i] = Convert.ToDecimal(ShipmentAreaAmount[i]) + Convert.ToDecimal(ShipmentAreaAmount[j]);
+                            OverflowAreaAmount[i] = Convert.ToDecimal(OverflowAreaAmount[i]) + Convert.ToDecimal(OverflowAreaAmount[j]);
                         }
 
-                     }
+                    }
 
                 }
- 
-                
+
+
                 int singlecaramount;
                 int dailyproduction;
                 for (int i = 0; i < ComponentName.Length; i++)
 
                 {
 
-                   if(ComponentName[i]==null)
+                    if (ComponentName[i] == null)
                     {
                         continue;
                     }
@@ -192,10 +192,10 @@ namespace WMS.UI
                         continue;
                     }
 
-                    
-                    if(OverflowAreaAmount[i]==null)
+
+                    if (OverflowAreaAmount[i] == null)
                     {
-                       continue;
+                        continue;
                     }
 
                     try
@@ -211,14 +211,14 @@ namespace WMS.UI
 
 
                         {
-                            if (component.SingleCarUsageAmount == null||component .SingleCarUsageAmount ==0)
+                            if (component.SingleCarUsageAmount == null || component.SingleCarUsageAmount == 0)
                             {
                                 continue;
                             }
 
                             singlecaramount = Convert.ToInt32(component.SingleCarUsageAmount);
 
-                            if (component.DailyProduction == null||component .DailyProduction ==0)
+                            if (component.DailyProduction == null || component.DailyProduction == 0)
                             {
                                 continue;
                             }
@@ -311,11 +311,11 @@ namespace WMS.UI
                         MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-               }
-                this.remindtext  = sb.ToString() ;
+                }
+                this.remindtext = sb.ToString();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
                 MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -323,14 +323,14 @@ namespace WMS.UI
             }
 
             //供应商合同日期为空 合同状态为空
-            if (Supplier.StartingTime==null)
+            if (Supplier.StartingTime == null)
 
             {
                 this.contract_effect = true;
             }
 
 
-            if (Supplier .EndingTime ==null)
+            if (Supplier.EndingTime == null)
 
             {
 
@@ -339,15 +339,15 @@ namespace WMS.UI
 
 
 
-            
+
 
             ///
 
-            if(days<0||remindtext !=""||this.contractstate =="待审核"|| contract_effect == false )//||reminedays ==10||reminedays <10 )
+            if (days < 0 || remindtext != "" || this.contractstate == "待审核" || contract_effect == false)//||reminedays ==10||reminedays <10 )
 
             {
 
-                FormSupplierRemind a1 = new FormSupplierRemind(days,this.remindtext,this.contractstate,startend,this.contract_effect);
+                FormSupplierRemind a1 = new FormSupplierRemind(days, this.remindtext, this.contractstate, startend, this.contract_effect);
 
                 a1.Show();
 
@@ -422,13 +422,14 @@ namespace WMS.UI
             var searchResult = (from fa in FormMainMetaData.FunctionAuthorities
                                 where fa.FunctionName == funcName
                                 select fa.Authorities).FirstOrDefault();
-            if (searchResult == null) {
+            if (searchResult == null)
+            {
                 return true;
             }
             Authority[] authorities = searchResult;
-            foreach(Authority authority in authorities)
+            foreach (Authority authority in authorities)
             {
-                if(((int)authority & this.user.Authority) == (int)authority)
+                if (((int)authority & this.user.Authority) == (int)authority)
                 {
                     return true;
                 }
@@ -488,7 +489,7 @@ namespace WMS.UI
 
             //刷新顶部
             this.labelUsername.Text = this.user.Username;
-            this.labelAuth.Text = this.user.AuthorityName+" :";
+            this.labelAuth.Text = this.user.AuthorityName + " :";
 
             //窗体大小根据显示屏改变
             int DeskWidth = Screen.PrimaryScreen.WorkingArea.Width;
@@ -496,7 +497,7 @@ namespace WMS.UI
             this.Width = Convert.ToInt32(DeskWidth * 0.8);
             this.Height = Convert.ToInt32(DeskHeight * 0.8);
 
-            new Thread(()=>
+            new Thread(() =>
             {
                 //下拉栏显示仓库
                 WMSEntities wms = new WMSEntities();
@@ -533,10 +534,10 @@ namespace WMS.UI
 
             //if (this.supplierid != -1)
             //{
-              
+
             //    FormSupplierRemind a1 = new FormSupplierRemind(this.supplierid );
             //    a1.Show();
-                
+
 
             //}
 
@@ -551,7 +552,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormUser l = new FormUser(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                FormUser l = new FormUser(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -562,7 +563,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormBaseSupplier l = new FormBaseSupplier(user.Authority,this.supplierid ,this.user.ID );//实例化子窗口
+                FormBaseSupplier l = new FormBaseSupplier(user.Authority, this.supplierid, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -623,7 +624,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID,this.supplierid );//实例化子窗口
+                FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID, this.supplierid);//实例化子窗口
                 l.SetActionTo(0, new Action<string, string>((string key, string value) =>
                 {
                     this.panelRight.Controls.Clear();
@@ -673,7 +674,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-          
+
             if (treeViewLeft.SelectedNode.Text == "上架单管理")
             {
                 this.panelRight.Controls.Clear();//清空
@@ -716,7 +717,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormShipmentTicket formShipmentTicket = new FormShipmentTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                FormShipmentTicket formShipmentTicket = new FormShipmentTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 formShipmentTicket.SetToJobTicketCallback(this.ToJobTicketCallback);
                 formShipmentTicket.TopLevel = false;
                 formShipmentTicket.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -728,7 +729,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormJobTicket l = new FormJobTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                FormJobTicket l = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 l.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -740,7 +741,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                FormPutOutStorageTicket l = new FormPutOutStorageTicket(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                FormPutOutStorageTicket l = new FormPutOutStorageTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
                 l.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -751,7 +752,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                var formBaseStock = new FormStockInfo(this.user.ID,this.project.ID,this.warehouse.ID);//实例化子窗口
+                var formBaseStock = new FormStockInfo(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
                 formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -762,7 +763,7 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 panelRight.Visible = true;
-                var formBaseStock = new FormStockInfoCheckTicket(this.project .ID ,this.warehouse .ID ,this.user.ID);//实例化子窗口
+                var formBaseStock = new FormStockInfoCheckTicket(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
                 formBaseStock.FormBorderStyle = FormBorderStyle.None;//没有标题栏
@@ -795,7 +796,7 @@ namespace WMS.UI
             }));
         }
 
-        private void ToPutOutStorageTicketCallback(string condition,string jobTicketNo)
+        private void ToPutOutStorageTicketCallback(string condition, string jobTicketNo)
         {
             if (this.IsDisposed) return;
             this.Invoke(new Action(() =>
@@ -850,8 +851,8 @@ namespace WMS.UI
 
         private void SetTreeViewSelectedNodeByText(string text)
         {
-            TreeNode node = this.FindTreeNodeByText(this.treeViewLeft.Nodes,text);
-            if(node == null)
+            TreeNode node = this.FindTreeNodeByText(this.treeViewLeft.Nodes, text);
+            if (node == null)
             {
                 throw new Exception("树形框中不包含节点：" + text);
             }
@@ -860,51 +861,57 @@ namespace WMS.UI
             this.treeViewLeft.AfterSelect += this.treeViewLeft_AfterSelect;
         }
 
-        private TreeNode FindTreeNodeByText(TreeNodeCollection nodes,string text)
+        private TreeNode FindTreeNodeByText(TreeNodeCollection nodes, string text)
         {
-            if(nodes.Count == 0)
+            if (nodes.Count == 0)
             {
                 return null;
             }
             foreach (TreeNode curNode in nodes)
             {
-                if(curNode.Text == text)
+                if (curNode.Text == text)
                 {
                     return curNode;
                 }
-                TreeNode foundNode = FindTreeNodeByText(curNode.Nodes,text);
-                if(foundNode != null)
+                TreeNode foundNode = FindTreeNodeByText(curNode.Nodes, text);
+                if (foundNode != null)
                 {
                     return foundNode;
                 }
             }
             return null;
         }
- 
+
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
             if (user.SupplierID == null)
             {
-                a1 = new FormSupplyRemind();
-                a1.Show();
+                FormSupplyRemind = new FormSupplyRemind();
+                FormSupplyRemind.Show();
             }
         }
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized&&a1!=null)
+            if (FormSupplyRemind != null)
             {
-              
-                    a1.Hide();
-               
-            }
-            else
-            {
-               
-                    
-                   // a1.Show();
-               
+
+
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+
+                    FormSupplyRemind.Hide();
+
+                }
+                else
+                {
+
+
+                    FormSupplyRemind.Show();
+
+                }
+
             }
         }
     }
