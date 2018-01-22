@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using unvell.ReoGrid;
 using System.Threading;
 using System.Data.SqlClient;
+using WMS.DataAccess;
 
 namespace WMS.UI
 {
@@ -26,7 +27,7 @@ namespace WMS.UI
         private Action modifyFinishedCallback = null;
         private Action<int> addFinishedCallback = null;
         private Action<int> SetSelectFinishedCallback = null;
-        private   FormSelectStockInfo FormSelectStockInfo = null;
+        private FormSelectSupply FormSelectSupply = null;
         private PagerWidget<WMS.DataAccess.StockInfoCheckTicketItemView > pagerWidget = null;
 
 
@@ -42,10 +43,7 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
-            //var worksheet = this.reoGridControlMain.Worksheets[0];
 
-            //worksheet.SelectionRange = new RangePosition("A2:B2");
-            //worksheet.SelectionRange = new RangePosition("A1:B1");
 
 
           
@@ -94,12 +92,12 @@ namespace WMS.UI
             }
             
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
-            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-            textBoxComponentName.BackColor = Color.White;
+            TextBox textBoxSupplyNo = (TextBox)this.Controls.Find("textBoxSupplyNo", true)[0];
+            textBoxSupplyNo.BackColor = Color.White;
             TextBox textBoxPersonName =(TextBox )this.Controls.Find("textBoxPersonName", true)[0];
             textBoxPersonName.BackColor = Color.White;
             //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
-            this.Controls.Find("textBoxComponentName", true)[0].Click += textBoxComponentName_Click;
+            this.Controls.Find("textBoxSupplyNo", true)[0].Click += textBoxSupplyNo_Click;
             this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
 
 
@@ -401,25 +399,25 @@ namespace WMS.UI
         }
 
 
-        private void textBoxComponentName_Click(object sender, EventArgs e)
+        private void textBoxSupplyNo_Click(object sender, EventArgs e)
 
 
         {
-            if (this.FormSelectStockInfo == null)
-            { this.FormSelectStockInfo = new FormSelectStockInfo();
+            if (this.FormSelectSupply == null)
+            { this.FormSelectSupply = new FormSelectSupply();
 
             }
             
             
             //this.projectID,this.warehouseID,this.stockinfoid );
-            this.FormSelectStockInfo.SetSelectFinishedCallback((selectedID) =>
+            this.FormSelectSupply.SetSelectFinishedCallback((selectedID) =>
             {
                  
-                wmsEntities = new DataAccess.WMSEntities();
-                WMS.DataAccess.StockInfoView stockinfoName = new DataAccess.StockInfoView();
+                wmsEntities = new WMSEntities();
+                SupplyView SupplyView = new SupplyView();
                 try
                 {
-                    stockinfoName = (from s in wmsEntities.StockInfoView
+                    SupplyView = (from s in wmsEntities.SupplyView
                                      where s.ID == selectedID
                                      select s).FirstOrDefault();
 
@@ -433,7 +431,7 @@ namespace WMS.UI
 
 
                 }
-                if (stockinfoName.ComponentName == null)
+                if (SupplyView.No  == null)
                     {
                         MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
@@ -443,28 +441,30 @@ namespace WMS.UI
                 //this.supplierID = selectedID;
                 //selectedID = 1;
                 this.stockinfoid = selectedID;
-                this.Controls.Find("textBoxComponentName", true)[0].Text = stockinfoName.ComponentName;
-                this.Controls.Find("textBoxSupplierName", true)[0].Text = stockinfoName.SupplierName;
-                this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
-                this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+                this.Controls.Find("textBoxComponentName", true)[0].Text = SupplyView.ComponentName;
+                this.Controls.Find("textBoxSupplierName", true)[0].Text = SupplyView.SupplierName;
+                this.Controls.Find("textBoxSupplyNo", true)[0].Text = SupplyView.No ;
+                this.Controls.Find("textBoxSupplyNumber", true)[0].Text = SupplyView.Number ;
+                // this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
+                // this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
 
 
-                this.Controls.Find("textBoxExpectedRejectAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.RejectAreaAmount );
-                this.Controls.Find("textBoxExpectedReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount  );
-                this.Controls.Find("textBoxExpectedSubmissionAmount", true)[0].Text = Convert.ToString(stockinfoName.SubmissionAmount );
+                // this.Controls.Find("textBoxExpectedRejectAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.RejectAreaAmount );
+                // this.Controls.Find("textBoxExpectedReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount  );
+                // this.Controls.Find("textBoxExpectedSubmissionAmount", true)[0].Text = Convert.ToString(stockinfoName.SubmissionAmount );
 
-                
-               this.Controls.Find("textBoxRealRejectAreaAmount", true)[0].Text =Convert .ToString(stockinfoName.RejectAreaAmount);
-                this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount);
-                this.Controls.Find("textBoxRealSubmissionAmount", true)[0].Text=Convert .ToString (stockinfoName .SubmissionAmount) ;
-                this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount) ;
-                this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+
+                //this.Controls.Find("textBoxRealRejectAreaAmount", true)[0].Text =Convert .ToString(stockinfoName.RejectAreaAmount);
+                // this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount);
+                // this.Controls.Find("textBoxRealSubmissionAmount", true)[0].Text=Convert .ToString (stockinfoName .SubmissionAmount) ;
+                // this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount) ;
+                // this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
                 TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
                 this.Controls.Find("textBoxPersonName", true)[0].Text = "";
 
 
             });
-            FormSelectStockInfo.ShowDialog();
+            FormSelectSupply.ShowDialog();
 
 
 
@@ -1127,7 +1127,7 @@ namespace WMS.UI
         {
             buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
-        
+
 
     } 
     
