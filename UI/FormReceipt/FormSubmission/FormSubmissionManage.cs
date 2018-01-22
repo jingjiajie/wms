@@ -646,6 +646,11 @@ namespace WMS.UI
                 }
                 else
                 {
+                    if (submissionTicket.State != "待检")
+                    {
+                        MessageBox.Show("该送检单状态为" + submissionTicket.State + "，不能删除送检单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
                     new Thread(() =>
                     {
                         try

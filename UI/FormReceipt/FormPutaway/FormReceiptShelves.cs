@@ -557,7 +557,7 @@ namespace WMS.UI.FormReceipt
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("上架单预览");
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("上架单预览", (float)0.9);
             if (formPreview.SetPatternTable(@"Excel\PutawayTicket.xlsx") == false)
             {
                 this.Close();

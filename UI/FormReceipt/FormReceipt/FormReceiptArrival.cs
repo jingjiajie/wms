@@ -1192,7 +1192,7 @@ namespace WMS.UI
         private void buttonPreview_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("收货单预览");
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("收货单预览", (float)0.9);
             if (formPreview.SetPatternTable(@"Excel\ReceiptTicket.xlsx") == false)
             {
                 this.Close();
