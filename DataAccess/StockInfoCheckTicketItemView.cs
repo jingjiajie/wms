@@ -15,26 +15,26 @@ namespace WMS.DataAccess
     public partial class StockInfoCheckTicketItemView
     {
         public int ID { get; set; }
-        public Nullable<int> StockInfoID { get; set; }
-        public Nullable<decimal> ExcpetedOverflowAreaAmount { get; set; }
-        public Nullable<decimal> ExpectedShipmentAreaAmount { get; set; }
-        public Nullable<decimal> RealOverflowAreaAmount { get; set; }
-        public Nullable<decimal> RealShipmentAreaAmount { get; set; }
-        public string SupplierName { get; set; }
         public Nullable<int> StockInfoCheckTicketID { get; set; }
-        public string ComponentName { get; set; }
-        public string SupplierNumber { get; set; }
+        public Nullable<int> SupplyID { get; set; }
         public Nullable<decimal> ExpectedRejectAreaAmount { get; set; }
         public Nullable<decimal> RealRejectAreaAmount { get; set; }
         public Nullable<decimal> ExpectedReceiptAreaAmount { get; set; }
         public Nullable<decimal> RealReceiptAreaAmount { get; set; }
         public Nullable<decimal> ExpectedSubmissionAmount { get; set; }
         public Nullable<decimal> RealSubmissionAmount { get; set; }
+        public Nullable<decimal> ExcpetedOverflowAreaAmount { get; set; }
+        public Nullable<decimal> RealOverflowAreaAmount { get; set; }
+        public Nullable<decimal> ExpectedShipmentAreaAmount { get; set; }
+        public Nullable<decimal> RealShipmentAreaAmount { get; set; }
         public Nullable<int> PersonID { get; set; }
-        public string PersonName { get; set; }
         public string ProjectName { get; set; }
         public string WarehouseName { get; set; }
-        public string SupplyNumber { get; set; }
+        public string SupplierName { get; set; }
+        public string SupplierNumber { get; set; }
+        public string ComponentName { get; set; }
+        public string PersonName { get; set; }
         public string SupplyNo { get; set; }
+        public string SupplyNumber { get; set; }
     }
 }

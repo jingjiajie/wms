@@ -15,7 +15,6 @@ namespace WMS.DataAccess
     public partial class StockInfoCheckTicketItem
     {
         public int ID { get; set; }
-        public Nullable<int> StockInfoID { get; set; }
         public Nullable<decimal> ExcpetedOverflowAreaAmount { get; set; }
         public Nullable<decimal> ExpectedShipmentAreaAmount { get; set; }
         public Nullable<decimal> RealOverflowAreaAmount { get; set; }
@@ -28,7 +27,9 @@ namespace WMS.DataAccess
         public Nullable<decimal> ExpectedSubmissionAmount { get; set; }
         public Nullable<decimal> RealSubmissionAmount { get; set; }
         public Nullable<int> PersonID { get; set; }
+        public Nullable<int> SupplyID { get; set; }
     
         public virtual StockInfoCheckTicket StockInfoCheckTicket { get; set; }
+        public virtual Supply Supply { get; set; }
     }
 }

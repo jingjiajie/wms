@@ -283,14 +283,14 @@ namespace WMS.UI
                 MessageBox.Show("系统错误，未找到相应盘点单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (StockInfoCheckTicketItem.StockInfoID != null)
+            /*TODO if (StockInfoCheckTicketItem.StockInfoID != null)
             {
                 this.stockinfoid  = StockInfoCheckTicketItem.StockInfoID.Value;
             }
             else
             {
                 this.stockinfoid = -1;
-            }
+            }*/
             if(StockInfoCheckTicketItem .PersonID !=null)
             {
 
@@ -566,7 +566,7 @@ namespace WMS.UI
 
 
 
-            StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
+            //TODO StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
             StockInfoCheckTicketItem.PersonID = this.personid;
             
 
@@ -841,7 +841,7 @@ namespace WMS.UI
            
                
                 StockInfoCheckTicketItem.PersonID  = this.personid == -1 ? null : (int?)this.personid;
-                StockInfoCheckTicketItem.StockInfoID = this.stockinfoid == -1 ? null : (int?)this.stockinfoid;
+                //TODO StockInfoCheckTicketItem.StockInfoID = this.stockinfoid == -1 ? null : (int?)this.stockinfoid;
 
 
 
@@ -1063,18 +1063,18 @@ namespace WMS.UI
                 }
                 for (int j = 0; j < StockInfoCheckTicketItemsave.Length; j++)
                 {
-                    if (StockInfoCheckTicketItemsave[j].StockInfoID == stockinfoall[i].ID)
+                    /*TODO if (StockInfoCheckTicketItemsave[j].StockInfoID == stockinfoall[i].ID)
                     {
                         repet = true;
 
-                    }
+                    }*/
 
                 }
 
                 if (repet == true)
                 { continue; }
 
-                StockInfoCheckTicketItem.StockInfoID = stockinfoall[i].ID;
+                //TODO StockInfoCheckTicketItem.StockInfoID = stockinfoall[i].ID;
                 //StockInfoCheckTicketItem.PersonID = this.personid;
                 StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID;
                 StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
@@ -1127,7 +1127,7 @@ namespace WMS.UI
         {
             buttonAddAll.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
         }
-
+        
 
     } 
     
