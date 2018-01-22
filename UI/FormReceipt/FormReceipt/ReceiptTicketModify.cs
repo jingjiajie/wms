@@ -178,7 +178,7 @@ namespace WMS.UI.FormReceipt
                         this.supplierID = (int)this.user.SupplierID;
                     }
                 }
-
+               
 
                 //this.Controls.Find("textBoxState", true)[0].Enabled = false;
                 //TextBox textBoxProjectID = (TextBox)this.Controls.Find("textBoxProjectID", true)[0];
@@ -199,6 +199,8 @@ namespace WMS.UI.FormReceipt
             //this.Controls.Find("textBoxWarehouse", true)[0].TextChanged += textBoxWarehouseID_TextChanged;
             //this.Controls.Find("textBoxSupplierID", true)[0].TextChanged += textBoxSupplierID_TextChanged;
         }
+
+        
 
         private void textBoxSupplierID_Click(object sender, EventArgs e)
         {
