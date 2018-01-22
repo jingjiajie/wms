@@ -144,7 +144,7 @@ namespace WMS.UI
 
                 if(amount < SaftyStock)
                 {
-                    sb.Append(SupplierName + "  " + ComponentName +"  "+ SupplyNo +"  " + "库存量" + "  " + amount + "已小于安全库存" + "   " + SaftyStock + "\r\n" + "\r\n");
+                    sb.Append(SupplierName + "  " + ComponentName +"  "+ SupplyNo +"  " + "库存量" + "  " + amount +"  "+ "已小于安全库存" + "   " + SaftyStock + "\r\n" + "\r\n");
 
                 }
 
