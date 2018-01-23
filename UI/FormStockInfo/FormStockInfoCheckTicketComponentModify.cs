@@ -253,7 +253,7 @@ namespace WMS.UI
 
                 this.buttonAdd.Text = "添加条目";
                 this.supplyID  = -1;
-                
+                this.personid = -1;
                 //为编辑框填写默认值
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
 
@@ -454,9 +454,9 @@ namespace WMS.UI
                 StockInfoView[] stockinfo = null;
                 decimal ExcpetedOverflowAreaAmount=0;
                 decimal ExpectedShipmentAreaAmount=0;
-                decimal textBoxExpectedRejectAreaAmount = 0;
-                decimal textBoxExpectedReceiptAreaAmount = 0;
-                decimal textBoxExpectedSubmissionAmount = 0;
+                decimal ExpectedRejectAreaAmount = 0;
+                decimal ExpectedReceiptAreaAmount = 0;
+                decimal ExpectedSubmissionAmount = 0;
                 stockinfo = (from kn in wmsEntities.StockInfoView
                              where kn.SupplyNo == supplyNO
                              select kn).ToArray();
@@ -464,27 +464,31 @@ namespace WMS.UI
 
 
                 {
-
+                    ExcpetedOverflowAreaAmount = ExcpetedOverflowAreaAmount+Convert .ToDecimal ( stockinfo[i].OverflowAreaAmount);
+                    ExpectedShipmentAreaAmount = ExpectedShipmentAreaAmount + Convert.ToDecimal(stockinfo[i].ShipmentAreaAmount);
+                    ExpectedRejectAreaAmount = ExpectedRejectAreaAmount + Convert.ToDecimal(stockinfo[i].RejectAreaAmount);
+                    ExpectedReceiptAreaAmount = ExpectedReceiptAreaAmount + Convert.ToDecimal(stockinfo[i].ReceiptAreaAmount);
+                    ExpectedSubmissionAmount = ExpectedSubmissionAmount + Convert.ToDecimal(stockinfo[i].SubmissionAmount);
 
                 }
 
 
 
 
-                // this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
-                // this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+                this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = ExcpetedOverflowAreaAmount.ToString ();
+                this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = ExpectedShipmentAreaAmount.ToString ();
 
 
-                // this.Controls.Find("textBoxExpectedRejectAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.RejectAreaAmount );
-                // this.Controls.Find("textBoxExpectedReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount  );
-                // this.Controls.Find("textBoxExpectedSubmissionAmount", true)[0].Text = Convert.ToString(stockinfoName.SubmissionAmount );
+                this.Controls.Find("textBoxExpectedRejectAreaAmount", true)[0].Text = ExpectedRejectAreaAmount.ToString ();
+                this.Controls.Find("textBoxExpectedReceiptAreaAmount", true)[0].Text = ExpectedReceiptAreaAmount.ToString ();
+                this.Controls.Find("textBoxExpectedSubmissionAmount", true)[0].Text = ExpectedSubmissionAmount.ToString ();
 
 
-                //this.Controls.Find("textBoxRealRejectAreaAmount", true)[0].Text =Convert .ToString(stockinfoName.RejectAreaAmount);
-                // this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ReceiptAreaAmount);
-                // this.Controls.Find("textBoxRealSubmissionAmount", true)[0].Text=Convert .ToString (stockinfoName .SubmissionAmount) ;
-                // this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount) ;
-                // this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
+                this.Controls.Find("textBoxRealRejectAreaAmount", true)[0].Text = ExpectedRejectAreaAmount.ToString();
+                this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0].Text = ExpectedReceiptAreaAmount.ToString();
+                this.Controls.Find("textBoxRealSubmissionAmount", true)[0].Text = ExpectedSubmissionAmount.ToString();
+                this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = ExcpetedOverflowAreaAmount.ToString();
+                this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = ExpectedShipmentAreaAmount.ToString();
                 TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
                 this.Controls.Find("textBoxPersonName", true)[0].Text = "";
 
