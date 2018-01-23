@@ -94,8 +94,6 @@ namespace WMS.UI
 
         private void FormReceiptArrival_Load(object sender, EventArgs e)
         {
-
-
             InitComponents();
             pagerWidget = new PagerWidget<ReceiptTicketView>(this.reoGridControlUser, ReceiptMetaData.receiptNameKeys, projectID, warehouseID);
             this.panel1.Controls.Add(pagerWidget);
@@ -113,7 +111,7 @@ namespace WMS.UI
                 this.buttonAdd.Enabled = false;
                 this.buttonAlter.Enabled = false;
                 this.buttonDelete.Enabled = false;
-                this.buttonItems.Enabled = false;
+                //this.buttonItems.Enabled = false;
                 this.buttonPutaway.Enabled = false;
                 this.buttonPutaway.Enabled = false;
                 //this.buttonSelect.Enabled = false;
@@ -125,8 +123,7 @@ namespace WMS.UI
                 this.buttonReject.Enabled = false;
                 this.buttonPreview.Enabled = false;
 
-                if (supplier.ContractState == "已过审")
-
+                if (supplier.ContractState == "已过审" && supplier.EndingTime > DateTime.Now)
                 {
                     this.buttonAdd.Enabled = true;
                     this.buttonAlter.Enabled = true;
@@ -136,7 +133,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    MessageBox.Show("您没有权限操作此模块！原因：您的合同未过审", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("您没有权限操作此模块！原因：您的合同未过审或已过截止日期！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -554,7 +551,7 @@ namespace WMS.UI
                     MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
+                var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID, this.userID);
                 formReceiptTicketIems.SetCallback(() =>
                 {
                     this.Search();

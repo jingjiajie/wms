@@ -15,6 +15,7 @@ namespace WMS.UI
 {
     public partial class FormReceiptItems : Form
     {
+        private int userID;
         private bool realReceiptAmountRefreshMark;
         private int receiptTicketItemID;
         private FormMode formMode;
@@ -44,12 +45,13 @@ namespace WMS.UI
             callBack = action;
         }
 
-        public FormReceiptItems(FormMode formMode, int receiptTicketID)
+        public FormReceiptItems(FormMode formMode, int receiptTicketID, int userID)
         {
             InitializeComponent();
             this.formMode = formMode;
             this.receiptTicketID = receiptTicketID;
             this.realReceiptAmountRefreshMark = false;
+            this.userID = userID;
             FormSelectPerson.DefaultPosition = FormBase.Position.RECEIPT;
         }
 
@@ -124,7 +126,7 @@ namespace WMS.UI
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
                 this.buttonModify.Enabled = false;
-                this.buttonModify.Enabled = false;
+                this.buttonImport.Enabled = false;
             }
 
             Search();
@@ -136,6 +138,21 @@ namespace WMS.UI
             textBoxExpectedUnitCount.TextChanged += textBoxExpectedUnitCount_TextChanged;
             textBoxRealReceiptUnitCount.TextChanged += textBoxRealReceiptUnitCount_TextChanged;
             textBoxUnitAmount.TextChanged += textBoxUnitAmount_TextChanged;
+            User user = (from u in wmsEntities.User where u.ID == this.userID select u).FirstOrDefault();
+            if (user != null)
+            {
+                Supplier supplier = user.Supplier;
+                if (supplier != null)
+                {
+                    if (supplier.EndingTime < DateTime.Now)
+                    {
+                        this.buttonAdd.Enabled = false;
+                        this.buttonDelete.Enabled = false;
+                        this.buttonModify.Enabled = false;
+                        this.buttonImport.Enabled = false;
+                    }
+                }
+            }
         }
 
         private void textBoxUnitAmount_TextChanged(object sender, EventArgs e)
