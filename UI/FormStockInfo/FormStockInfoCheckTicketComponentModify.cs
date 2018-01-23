@@ -1061,8 +1061,11 @@ namespace WMS.UI
 
             SupplyView [] SupplyAll = null;
             StockInfoCheckTicketItemView[] StockInfoCheckTicketItemsave = null;
-            FormLoading a1 = new FormLoading("正在添加，请稍后...");
-            a1.Show();
+            FormLoading FormLoading = new FormLoading("正在添加，请稍后...");
+            this.Invoke(new Action   (() => {
+ 
+                FormLoading.Show(); }));
+            
             try
             {
                 wmsEntities = new DataAccess.WMSEntities();
@@ -1076,7 +1079,7 @@ namespace WMS.UI
             }
             catch
             {
-                    a1.Close();
+                FormLoading.Close();
                     MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
 
@@ -1084,7 +1087,7 @@ namespace WMS.UI
 
             if( SupplyAll.Length == 0)
             {
-                    a1.Close();
+                FormLoading.Close();
                     MessageBox.Show("供货信息为空，无法添加条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -1102,7 +1105,7 @@ namespace WMS.UI
 
                 catch
                 {
-                    a1.Close();
+                    FormLoading.Close();
                     MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
 
@@ -1163,7 +1166,7 @@ namespace WMS.UI
                 }
                 catch
                 {
-                    a1.Close();
+                    FormLoading.Close();
                     MessageBox.Show("添加所有条目操作失败，请检查网络连接111", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -1174,7 +1177,7 @@ namespace WMS.UI
                 }
                 catch
                 {
-                    a1.Close();
+                    FormLoading.Close();
                     MessageBox.Show("添加所有条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
@@ -1182,7 +1185,7 @@ namespace WMS.UI
             this.Search();
             
             MessageBox.Show("添加所有条目成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            a1.Close();
+            FormLoading.Close();
             if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
             {
                 this.addFinishedCallback(this.stockInfoCheckID);
