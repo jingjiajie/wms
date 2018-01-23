@@ -125,8 +125,8 @@ namespace WMS.UI
             new KeyName(){Key="Charge1",Name="物流服务费1",Visible = true, Editable = true},
             new KeyName(){Key="Charge2",Name="物流服务费2",Visible = true, Editable = true},
 
-            new KeyName(){Name = "创建用户", Key = "CreateUserUsername" , Visible = true, Editable = false,Save=false,EditPlaceHolder= "自动生成",ImportVisible=true,Import=false},
-            new KeyName(){Name = "创建时间", Key = "CreateTime" , Visible = true,Editable=true,DefaultValueFunc=(()=>DateTime.Now.ToString()),ImportVisible=true,Import=false},
+            //new KeyName(){Name = "创建用户", Key = "CreateUserUsername" , Visible = true, Editable = false,Save=false,EditPlaceHolder= "自动生成",ImportVisible=true,Import=false},
+            //new KeyName(){Name = "创建时间", Key = "CreateTime" , Visible = true,Editable=true,DefaultValueFunc=(()=>DateTime.Now.ToString()),ImportVisible=true,Import=false},
             new KeyName(){Name = "最后修改用户", Key = "LastUpdateUserUsername" , Visible = true, Editable = false,Save=false,EditPlaceHolder= "自动生成",ImportVisible=false},
             new KeyName(){Name = "最后修改时间", Key = "LastUpdateTime" , Visible = true, Editable = false,Save=false,EditPlaceHolder= "自动生成",ImportVisible=false},
             new KeyName(){Name = "最新供货信息ID", Key = "NewestSupplyID" ,Visible = false    , Editable = false ,ImportVisible=false  },
