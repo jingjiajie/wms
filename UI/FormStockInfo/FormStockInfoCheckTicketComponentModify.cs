@@ -1143,11 +1143,11 @@ namespace WMS.UI
                                  select kn).ToArray();
                     for (int j = 0; j < stockinfo.Length; j++)
                     {
-                        ExcpetedOverflowAreaAmount = ExcpetedOverflowAreaAmount + Convert.ToDecimal(stockinfo[i].OverflowAreaAmount);
-                        ExpectedShipmentAreaAmount = ExpectedShipmentAreaAmount + Convert.ToDecimal(stockinfo[i].ShipmentAreaAmount);
-                        ExpectedRejectAreaAmount = ExpectedRejectAreaAmount + Convert.ToDecimal(stockinfo[i].RejectAreaAmount);
-                        ExpectedReceiptAreaAmount = ExpectedReceiptAreaAmount + Convert.ToDecimal(stockinfo[i].ReceiptAreaAmount);
-                        ExpectedSubmissionAmount = ExpectedSubmissionAmount + Convert.ToDecimal(stockinfo[i].SubmissionAmount);
+                        ExcpetedOverflowAreaAmount = ExcpetedOverflowAreaAmount + Convert.ToDecimal(stockinfo[j].OverflowAreaAmount);
+                        ExpectedShipmentAreaAmount = ExpectedShipmentAreaAmount + Convert.ToDecimal(stockinfo[j].ShipmentAreaAmount);
+                        ExpectedRejectAreaAmount = ExpectedRejectAreaAmount + Convert.ToDecimal(stockinfo[j].RejectAreaAmount);
+                        ExpectedReceiptAreaAmount = ExpectedReceiptAreaAmount + Convert.ToDecimal(stockinfo[j].ReceiptAreaAmount);
+                        ExpectedSubmissionAmount = ExpectedSubmissionAmount + Convert.ToDecimal(stockinfo[j].SubmissionAmount);
 
                     }
                     StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = ExcpetedOverflowAreaAmount;
