@@ -596,7 +596,7 @@ namespace WMS.UI.FormReceipt
                     }
                     results[i].JobPersonID = personView.ID;
                 }
-                if (confirmPersonName == null)
+                if (confirmPersonName == "" || confirmPersonName == null)
                 {
                     results[i].ConfirmPersonID = -1;
                 }
@@ -625,6 +625,11 @@ namespace WMS.UI.FormReceipt
                 if (results[i].ScheduledMoveCount != null)
                 {
                     receiptTicketItem.HasPutwayAmount += results[i].ScheduledMoveCount;
+                }
+                else
+                {
+                    MessageBox.Show("第" + (i + 1) + "行中，没有填写计划上架数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
                 }
 
                 //receiptTicketItem.HasPutwayAmount += putawayTicketItem.ScheduledMoveCount;
@@ -666,7 +671,7 @@ namespace WMS.UI.FormReceipt
             this.Invoke(new Action(() =>
             {
                 this.Search();
-                MessageBox.Show("导入成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("导入成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.standardImportForm.Close();
                 CallBack();
             }));

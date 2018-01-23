@@ -43,7 +43,7 @@ namespace WMS.UI
             InitializeComponent();
         }
 
-        public FormReceiptArrival(int projectID, int warehouseID, int userID,int supplierid)
+        public FormReceiptArrival(int projectID, int warehouseID, int userID, int supplierid)
         {
             InitializeComponent();
             this.projectID = projectID;
@@ -93,7 +93,7 @@ namespace WMS.UI
 
         private void FormReceiptArrival_Load(object sender, EventArgs e)
         {
-            
+
 
             InitComponents();
             pagerWidget = new PagerWidget<ReceiptTicketView>(this.reoGridControlUser, ReceiptMetaData.receiptNameKeys, projectID, warehouseID);
@@ -123,28 +123,22 @@ namespace WMS.UI
                 this.buttonReceipt.Enabled = false;
                 this.buttonReject.Enabled = false;
                 this.buttonPreview.Enabled = false;
-                if (supplier.StartingTime != null && supplier.EndingTime != null)
-                {
-                    if (supplier.ContractState == "已过审" && supplier.StartingTime < DateTime.Now && supplier.EndingTime > DateTime.Now)
 
-                    {
-                        this.buttonAdd.Enabled = true;
-                        this.buttonAlter.Enabled = true;
-                        this.buttonDelete.Enabled = true;
-                        this.buttonSelect.Enabled = true;
-                        this.buttonItems.Enabled = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("您没有权限操作此模块！原因：您的合同未过审或未在有效期内", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                if (supplier.ContractState == "已过审")
+
+                {
+                    this.buttonAdd.Enabled = true;
+                    this.buttonAlter.Enabled = true;
+                    this.buttonDelete.Enabled = true;
+                    this.buttonSelect.Enabled = true;
+                    this.buttonItems.Enabled = true;
                 }
                 else
                 {
-                    MessageBox.Show("您没有权限操作此模块！原因：没有设置合同起始日期或合同到期日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("您没有权限操作此模块！原因：您的合同未过审", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
             }
             //pagerWidget.Show();
             //pagerWidget.Search();
@@ -153,7 +147,7 @@ namespace WMS.UI
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
-            if(this.supplierid !=-1)
+            if (this.supplierid != -1)
             {
                 this.pagerWidget.AddCondition("SupplierID", Convert.ToString(this.supplierid));
             }
@@ -283,7 +277,7 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID, this.userID,this.contractstate );
+            FormReceiptTicketModify receiptTicketModify = new FormReceiptTicketModify(FormMode.ADD, -1, this.projectID, this.warehouseID, this.userID, this.contractstate);
             receiptTicketModify.SetModifyFinishedCallback(() =>
             {
                 this.Search();
@@ -294,7 +288,7 @@ namespace WMS.UI
         private void buttonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            
+
             try
             {
                 if (worksheet.SelectionRange.Rows != 1)
@@ -325,7 +319,7 @@ namespace WMS.UI
                 }
                 if (count != 0)
                 {
-                    var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID, this.projectID, this.warehouseID, this.userID,this.contractstate );
+                    var receiptTicketModify = new FormReceiptTicketModify(FormMode.ALTER, receiptTicketID, this.projectID, this.warehouseID, this.userID, this.contractstate);
                     receiptTicketModify.SetModifyFinishedCallback(() =>
                     {
                         this.Search();
@@ -676,7 +670,7 @@ namespace WMS.UI
                     MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                
+
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
@@ -712,7 +706,7 @@ namespace WMS.UI
                 formReceiptArrivalCheck.Show();
                 */
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -781,7 +775,7 @@ namespace WMS.UI
                     }).Start();
                 }
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -849,7 +843,7 @@ namespace WMS.UI
                     }).Start();
                 }
             }
-           
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -887,7 +881,7 @@ namespace WMS.UI
 
         private void toolStripButton3_Click_1(object sender, EventArgs e)
         {
-             
+
         }
 
         private void ButtonToSubmission_Click(object sender, EventArgs e)
@@ -925,7 +919,7 @@ namespace WMS.UI
                     ToSubmission(key, value);
                 }
             }
-            
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -968,7 +962,7 @@ namespace WMS.UI
                     ToPutaway(key, value);
                 }
             }
-           
+
             catch (Exception)
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
@@ -1037,7 +1031,7 @@ namespace WMS.UI
                     }
                     int countReceipt = 0;
                     int countReject = 0;
-                    foreach(ReceiptTicketItem rti in receiptTicketItem)
+                    foreach (ReceiptTicketItem rti in receiptTicketItem)
                     {
                         if (rti.RefuseAmount == 0)
                         {
@@ -1054,7 +1048,7 @@ namespace WMS.UI
                             else
                             {
                                 rti.State = "部分收货";
-                            } 
+                            }
                         }
                         StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
                         if (stockInfo != null)
@@ -1080,11 +1074,11 @@ namespace WMS.UI
                         receiptTicket.State = "部分收货";
                     }
                 }
-                new Thread(() => 
+                new Thread(() =>
                 {
                     wmsEntities.SaveChanges();
                     MessageBox.Show("收货成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Invoke(new Action(()=> { this.Search(); }));
+                    this.Invoke(new Action(() => { this.Search(); }));
                 }).Start();
             }
 
@@ -1214,12 +1208,12 @@ namespace WMS.UI
                 MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            
+
 
             ReceiptTicketView receiptTicketView = (from stv in wmsEntities.ReceiptTicketView
-                                                         where stv.ID == receiptTicketID
-                                                      select stv).FirstOrDefault();
-            
+                                                   where stv.ID == receiptTicketID
+                                                   select stv).FirstOrDefault();
+
             ReceiptTicketItemView[] receiptTicketItemView =
                 (from p in wmsEntities.ReceiptTicketItemView
                  where p.ReceiptTicketID == receiptTicketView.ID
@@ -1270,7 +1264,7 @@ namespace WMS.UI
                 return;
             }
             ReceiptTicketItem[] receiptTicketItems = receiptTicket.ReceiptTicketItem.ToArray();
-            foreach(ReceiptTicketItem rti in receiptTicketItems)
+            foreach (ReceiptTicketItem rti in receiptTicketItems)
             {
                 StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == rti.ID select si).FirstOrDefault();
                 if (stockInfo != null)
@@ -1288,7 +1282,7 @@ namespace WMS.UI
             }
             receiptTicket.State = "待收货";
 
-            new Thread(()=> 
+            new Thread(() =>
             {
                 wmsEntities.SaveChanges();
                 MessageBox.Show("取消收货成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);

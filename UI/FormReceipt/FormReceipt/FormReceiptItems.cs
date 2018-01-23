@@ -15,6 +15,7 @@ namespace WMS.UI
 {
     public partial class FormReceiptItems : Form
     {
+        private bool realReceiptAmountRefreshMark;
         private int receiptTicketItemID;
         private FormMode formMode;
         private int receiptTicketID;
@@ -48,6 +49,7 @@ namespace WMS.UI
             InitializeComponent();
             this.formMode = formMode;
             this.receiptTicketID = receiptTicketID;
+            this.realReceiptAmountRefreshMark = false;
         }
 
         private bool SubmissionTicketIsExist()
@@ -131,29 +133,37 @@ namespace WMS.UI
 
         private void textBoxExpectedUnitCount_TextChanged(object sender, EventArgs e)
         {
-            TextBox textBoxExpectUnitCount = (TextBox)sender;
-            TextBox textBoxRealReceiptUnitCount = (TextBox)this.Controls.Find("textBoxRealReceiptUnitCount", true)[0];
-            TextBox textBoxRefuseUnitCount = (TextBox)this.Controls.Find("textBoxRefuseUnitCount", true)[0];
-            TextBox textBoxRefuseUnitAmount = (TextBox)this.Controls.Find("textBoxRefuseUnitAmount", true)[0];
-            TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
-            string strExpectUnitCount = textBoxExpectUnitCount.Text;
-            string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
-            string strRefuseUnitCount = textBoxRefuseUnitCount.Text;
-            string strRefuseUnitAmount = textBoxRefuseUnitAmount.Text;
-            string strUnitAmount = textBoxUnitAmount.Text;
-            decimal expectUnitCount;
-            decimal realReceiptUnitCount;
-            decimal refuseUnitCount;
-            decimal refuseUnitAmount;
-            decimal unitAmount;
-            if (decimal.TryParse(strExpectUnitCount, out expectUnitCount) && decimal.TryParse(strRefuseUnitCount, out refuseUnitCount) && decimal.TryParse(strRefuseUnitAmount, out refuseUnitAmount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
-            {
-                if (unitAmount > 0 && expectUnitCount >= 0 && refuseUnitCount >= 0 && refuseUnitAmount >= 0)
+            if (this.realReceiptAmountRefreshMark == true)
+            { 
+                TextBox textBoxExpectUnitCount = (TextBox)sender;
+                TextBox textBoxRealReceiptUnitCount = (TextBox)this.Controls.Find("textBoxRealReceiptUnitCount", true)[0];
+                TextBox textBoxRefuseUnitCount = (TextBox)this.Controls.Find("textBoxRefuseUnitCount", true)[0];
+                TextBox textBoxRefuseUnitAmount = (TextBox)this.Controls.Find("textBoxRefuseUnitAmount", true)[0];
+                TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+                string strExpectUnitCount = textBoxExpectUnitCount.Text;
+                string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
+                string strRefuseUnitCount = textBoxRefuseUnitCount.Text;
+                string strRefuseUnitAmount = textBoxRefuseUnitAmount.Text;
+                string strUnitAmount = textBoxUnitAmount.Text;
+                decimal expectUnitCount;
+                decimal realReceiptUnitCount;
+                decimal refuseUnitCount;
+                decimal refuseUnitAmount;
+                decimal unitAmount;
+                if (decimal.TryParse(strExpectUnitCount, out expectUnitCount) && decimal.TryParse(strRefuseUnitCount, out refuseUnitCount) && decimal.TryParse(strRefuseUnitAmount, out refuseUnitAmount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
                 {
-                    realReceiptUnitCount = (expectUnitCount * unitAmount - refuseUnitCount * refuseUnitAmount) / unitAmount;
-                    
-                    textBoxRealReceiptUnitCount.Text = realReceiptUnitCount.ToString();
-                    
+                    if (unitAmount > 0 && expectUnitCount >= 0 && refuseUnitCount >= 0 && refuseUnitAmount >= 0)
+                    {
+                        realReceiptUnitCount = (expectUnitCount * unitAmount - refuseUnitCount * refuseUnitAmount) / unitAmount;
+                        if (realReceiptUnitCount >= 0)
+                        {
+                            textBoxRealReceiptUnitCount.Text = realReceiptUnitCount.ToString();
+                        }
+                        else
+                        {
+                            textBoxRealReceiptUnitCount.Text = "0";
+                        }
+                    }
                 }
             }
         }
@@ -235,7 +245,7 @@ namespace WMS.UI
                 {
                     
                     this.ClearTextBoxes();
-
+                    this.realReceiptAmountRefreshMark = true;
                     this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
                     this.Controls.Find("textBoxUnit", true)[0].Text = supply.DefaultReceiptUnit;
                     this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.DefaultReceiptUnitAmount.ToString();
@@ -283,6 +293,7 @@ namespace WMS.UI
                 {
                     textBox.Text = DateTime.Now.ToString();
                 }
+               
             }
             catch
             {
@@ -294,6 +305,7 @@ namespace WMS.UI
         private void RefreshTextBoxes()
         {
             this.ClearTextBoxes();
+            this.realReceiptAmountRefreshMark = false;
             var worksheet = this.reoGridControlReceiptItems.Worksheets[0];
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlReceiptItems);
             if (ids.Length == 0)
@@ -314,7 +326,7 @@ namespace WMS.UI
                 this.buttonAdd.Text = "增加零件条目";
                 return;
             }
-            this.buttonAdd.Text = "复制零件条目";
+            //this.buttonAdd.Text = "复制零件条目";
             this.receiptTicketItemID = int.Parse(receiptTicketItemView.ID.ToString());
             if (receiptTicketItemView.SupplyID != null)
             {
@@ -326,6 +338,7 @@ namespace WMS.UI
             Utilities.CopyPropertiesToTextBoxes(receiptTicketItemView, this);
             Utilities.CopyPropertiesToComboBoxes(receiptTicketItemView, this);
 
+            return;
         }
 
         private void ClearTextBoxes()
@@ -447,7 +460,7 @@ namespace WMS.UI
                         receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
                         //receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
                         receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
-                        receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptAmount;
+                        receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
                         //receiptTicketItem.WrongComponentAmount = receiptTicketItem.WrongComponentUnitAmount * receiptTicketItem.WrongComponentUnitCount;
                         //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount - receiptTicketItem.DisqualifiedAmount - receiptTicketItem.RefuseAmount - receiptTicketItem.WrongComponentAmount;
                         if (receiptTicketItem.ReceiviptAmount < 0)
@@ -820,7 +833,7 @@ namespace WMS.UI
                     SupplyView[] supplyViewName = (from sv in wmsEntities.SupplyView where sv.ComponentName == supplyNoName && sv.SupplierID == this.ReceiptTicketView.SupplierID select sv).ToArray();
                     if (supplyViewName.Length == 0)
                     {
-                        MessageBox.Show("第" + (i + 1).ToString() + "行中，无法无法找到该供应商提供的该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("第" + (i + 1).ToString() + "行中，无法找到该供应商提供的该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     else if (supplyViewName.Length > 1)
@@ -873,7 +886,7 @@ namespace WMS.UI
                     }
                     results[i].JobPersonID = personView.ID;
                 }
-                if (confirmPersonName == null)
+                if (confirmPersonName == "" || confirmPersonName == null)
                 {
                     results[i].ConfirmPersonID = -1;
                 }
@@ -937,7 +950,7 @@ namespace WMS.UI
                 this.Invoke(new Action(() =>
                 {
                     this.Search();
-                    MessageBox.Show("导入成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("导入成功!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.standardImportForm.Close();
                 }));
 

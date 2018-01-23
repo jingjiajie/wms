@@ -97,7 +97,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件" ,ImportVisible = false, Import = false},
             new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true,ImportVisible = false ,Import = false},
             new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true, Import = false, ImportVisible =false},
-            new KeyName(){Name="收货数量", Key="UnitCount", Visible=true,Editable=false,Save=true, NotNegative = true,ImportVisible = false, Import = false},
+            new KeyName(){Name="收货数量", Key="ReceiviptAmount", Visible=true,Editable=false,Save=true, NotNegative = true,ImportVisible = false, Import = false},
 
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="订单数量", Key="ExpectedUnitCount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
