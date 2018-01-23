@@ -20,7 +20,7 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
         private int userID = -1;
-        private int stockinfoid = -1;
+        private int supplyID = -1;
         private int personid = -1;
         private Func<int> StockIDGetter = null;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
@@ -252,7 +252,7 @@ namespace WMS.UI
             {
 
                 this.buttonAdd.Text = "添加条目";
-                this.stockinfoid = -1;
+                this.supplyID  = -1;
                 
                 //为编辑框填写默认值
                 Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
@@ -281,14 +281,14 @@ namespace WMS.UI
                 MessageBox.Show("系统错误，未找到相应盘点单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            /*TODO if (StockInfoCheckTicketItem.StockInfoID != null)
+             if (StockInfoCheckTicketItem.SupplyID  != null)
             {
-                this.stockinfoid  = StockInfoCheckTicketItem.StockInfoID.Value;
+                this.supplyID  = StockInfoCheckTicketItem.SupplyID .Value;
             }
             else
             {
-                this.stockinfoid = -1;
-            }*/
+                this.supplyID  = -1;
+            }
             if(StockInfoCheckTicketItem .PersonID !=null)
             {
 
@@ -296,7 +296,8 @@ namespace WMS.UI
 
             }
             
-
+            else
+            { this.personid = -1; }
 
 
             //if (StockInfoCheckTicketItem.PersonID  != null)
@@ -440,11 +441,36 @@ namespace WMS.UI
                 
                 //this.supplierID = selectedID;
                 //selectedID = 1;
-                this.stockinfoid = selectedID;
+                this.supplyID  = selectedID;
                 this.Controls.Find("textBoxComponentName", true)[0].Text = SupplyView.ComponentName;
                 this.Controls.Find("textBoxSupplierName", true)[0].Text = SupplyView.SupplierName;
                 this.Controls.Find("textBoxSupplyNo", true)[0].Text = SupplyView.No ;
-                this.Controls.Find("textBoxSupplyNumber", true)[0].Text = SupplyView.Number ;
+                //this.Controls.Find("textBoxSupplyNumber", true)[0].Text = SupplyView.Number ;
+
+                wmsEntities = new WMSEntities();
+
+                string supplyNO = SupplyView.No ;
+
+                StockInfoView[] stockinfo = null;
+                decimal ExcpetedOverflowAreaAmount=0;
+                decimal ExpectedShipmentAreaAmount=0;
+                decimal textBoxExpectedRejectAreaAmount = 0;
+                decimal textBoxExpectedReceiptAreaAmount = 0;
+                decimal textBoxExpectedSubmissionAmount = 0;
+                stockinfo = (from kn in wmsEntities.StockInfoView
+                             where kn.SupplyNo == supplyNO
+                             select kn).ToArray();
+                for(int i=0;i<stockinfo.Length;i++)
+
+
+                {
+
+
+                }
+
+
+
+
                 // this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.OverflowAreaAmount);
                 // this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].Text = Convert.ToString(stockinfoName.ShipmentAreaAmount);
 
@@ -506,20 +532,21 @@ namespace WMS.UI
             decimal  tmp = 0;
            DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
-           TextBox textBoxRealRejectAreaAmount = (TextBox)this.Controls.Find("textBoxRealRejectAreaAmount", true)[0];
+            TextBox textBoxSupplyNo = (TextBox)this.Controls.Find("textBoxSupplyNo", true)[0];
+            TextBox textBoxRealRejectAreaAmount = (TextBox)this.Controls.Find("textBoxRealRejectAreaAmount", true)[0];
            TextBox textBoxRealReceiptAreaAmount = (TextBox)this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0];
            TextBox textBoxRealSubmissionAmount = (TextBox)this.Controls.Find("textBoxRealSubmissionAmount", true)[0];
            TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
            TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
-           
+            
 
 
 
 
-            if (textBoxComponentName.Text == string.Empty)
+            if (textBoxSupplyNo.Text == string.Empty)
             {
 
-                MessageBox.Show("请选择零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择供货信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -566,7 +593,7 @@ namespace WMS.UI
 
 
 
-            //TODO StockInfoCheckTicketItem.StockInfoID = this.stockinfoid;
+             StockInfoCheckTicketItem.SupplyID  = this.supplyID ;
             StockInfoCheckTicketItem.PersonID = this.personid;
             
 
@@ -841,7 +868,7 @@ namespace WMS.UI
            
                
                 StockInfoCheckTicketItem.PersonID  = this.personid == -1 ? null : (int?)this.personid;
-                //TODO StockInfoCheckTicketItem.StockInfoID = this.stockinfoid == -1 ? null : (int?)this.stockinfoid;
+                 StockInfoCheckTicketItem.SupplyID  = this.supplyID  == -1 ? null : (int?)this.supplyID ;
 
 
 

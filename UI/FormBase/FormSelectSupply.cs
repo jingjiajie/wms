@@ -46,13 +46,12 @@ namespace WMS.UI
         private void InitComponents()
         {
             
-            this.comboBoxSearchCondition.Items.Add("无");
-            this.comboBoxSearchCondition.Items.Add("编号");
-            this.comboBoxSearchCondition.Items.Add("代号");
-            this.comboBoxSearchCondition.SelectedIndex = 3;
+            
             this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlMain, SupplyViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPagerWidget.Controls.Add(this.pagerWidget);
             this.pagerWidget.Show();
+            this.comboBoxSearchCondition.SelectedIndex  = 0;
+
         }
 
         private void FormJobTicketSelectStockInfo_Load(object sender, EventArgs e)
@@ -70,21 +69,27 @@ namespace WMS.UI
 
         private void Search(bool savePage = false, int selectID = -1, Action<SupplyView[]> callback = null)
         {
-            this.pagerWidget.Search();
-            //if (this.comboBoxSearchCondition.SelectedItem.ToString() != "无")
-            //{
-            //    string value = this.textBoxSearchContition.Text;
-            //    string key = this.comboBoxSearchCondition.SelectedItem.ToString();
 
-            //    this.pagerWidget.ClearCondition();
-            //    this.pagerWidget.AddCondition(key, value);
-            //    this.pagerWidget.Search(savePage, selectID, callback);
-            //}
-            //else
-            //{
-            //    this.pagerWidget.ClearCondition();
-            //    this.pagerWidget.Search(savePage, selectID, callback);
-            //}
+            
+            string key = "";
+            string value = this.textBoxSearchContition.Text;
+            if (this.comboBoxSearchCondition.SelectedItem.ToString() == "供货零件编号")
+            {
+
+                key = "编号";
+
+            }
+            else
+            {
+                key = "零件名";
+            }
+               
+
+               this.pagerWidget.ClearCondition();
+               this.pagerWidget.AddCondition(key, value);
+               this.pagerWidget.Search(savePage, selectID, callback);
+            
+
 
         }
 
