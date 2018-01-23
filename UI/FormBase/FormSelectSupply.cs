@@ -73,19 +73,20 @@ namespace WMS.UI
             
             string key = "";
             string value = this.textBoxSearchContition.Text;
-            if (this.comboBoxSearchCondition.SelectedItem.ToString() == "供货零件编号")
+            this.pagerWidget.ClearCondition();
+            if (this.comboBoxSearchCondition.SelectedItem.ToString() == "供货零件代号")
             {
 
-                key = "编号";
+                key = "代号";
 
-            }
+            } 
             else
             {
                 key = "零件名";
             }
                
 
-               this.pagerWidget.ClearCondition();
+               
                this.pagerWidget.AddCondition(key, value);
                this.pagerWidget.Search(savePage, selectID, callback);
             
