@@ -50,6 +50,7 @@ namespace WMS.UI
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.supplierid = supplierid;
+            FormSelectPerson.DefaultPosition = FormBase.Position.RECEIPT;
         }
         /// <summary>
         /// form = 0 Submission ; form = 1 Putaway

@@ -50,6 +50,7 @@ namespace WMS.UI
             this.formMode = formMode;
             this.receiptTicketID = receiptTicketID;
             this.realReceiptAmountRefreshMark = false;
+            FormSelectPerson.DefaultPosition = FormBase.Position.RECEIPT;
         }
 
         private bool SubmissionTicketIsExist()
@@ -115,6 +116,7 @@ namespace WMS.UI
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
                 this.buttonModify.Enabled = false;
+                this.buttonImport.Enabled = false;
             }
             if (receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.HasPutawayTicket == "全部生成上架单")
             {
@@ -122,48 +124,114 @@ namespace WMS.UI
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
                 this.buttonModify.Enabled = false;
+                this.buttonModify.Enabled = false;
             }
+
             Search();
             TextBox textBoxRealReceiptUnitCount = (TextBox)Controls.Find("textBoxRealReceiptUnitCount", true)[0];
             TextBox textBoxRefuseUnitCount = (TextBox)Controls.Find("textBoxRefuseUnitCount", true)[0];
             //textBoxRealReceiptUnitCount.TextChanged += textBoxRealReceiptUnitCount_TextChanged;
             TextBox textBoxExpectedUnitCount = (TextBox)Controls.Find("textBoxExpectedUnitCount", true)[0];
+            TextBox textBoxUnitAmount = (TextBox)Controls.Find("textBoxUnitAmount", true)[0];
             textBoxExpectedUnitCount.TextChanged += textBoxExpectedUnitCount_TextChanged;
+            textBoxRealReceiptUnitCount.TextChanged += textBoxRealReceiptUnitCount_TextChanged;
+            textBoxUnitAmount.TextChanged += textBoxUnitAmount_TextChanged;
+        }
+
+        private void textBoxUnitAmount_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox textBoxRealReceiptUnitCount = (TextBox)this.Controls.Find("textBoxRealReceiptUnitCount", true)[0];
+                TextBox textBoxUnitAmount = (TextBox)sender;
+                TextBox textBoxReceiviptAmount = (TextBox)this.Controls.Find("textBoxReceiviptAmount", true)[0];
+                string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
+                string strUnitAmount = textBoxUnitAmount.Text;
+                decimal realReceiptUnitCount;
+                decimal unitAmount;
+                decimal receiviptAmount = -1;
+                if (decimal.TryParse(strRealReceiptUnitCount, out realReceiptUnitCount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
+                {
+                    receiviptAmount = realReceiptUnitCount * unitAmount;
+                }
+                if (receiviptAmount >= 0)
+                {
+                    textBoxReceiviptAmount.Text = receiviptAmount.ToString();
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void textBoxRealReceiptUnitCount_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+                TextBox textBoxRealReceiptUnitCount = (TextBox)sender;
+                TextBox textBoxReceiviptAmount = (TextBox)this.Controls.Find("textBoxReceiviptAmount", true)[0];
+                string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
+                string strUnitAmount = textBoxUnitAmount.Text;
+                decimal realReceiptUnitCount;
+                decimal unitAmount;
+                decimal receiviptAmount = -1;
+                if (decimal.TryParse(strRealReceiptUnitCount, out realReceiptUnitCount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
+                {
+                    receiviptAmount = realReceiptUnitCount * unitAmount;
+                }
+                if (receiviptAmount >= 0)
+                {
+                    textBoxReceiviptAmount.Text = receiviptAmount.ToString();
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         private void textBoxExpectedUnitCount_TextChanged(object sender, EventArgs e)
         {
             if (this.realReceiptAmountRefreshMark == true)
-            { 
-                TextBox textBoxExpectUnitCount = (TextBox)sender;
-                TextBox textBoxRealReceiptUnitCount = (TextBox)this.Controls.Find("textBoxRealReceiptUnitCount", true)[0];
-                TextBox textBoxRefuseUnitCount = (TextBox)this.Controls.Find("textBoxRefuseUnitCount", true)[0];
-                TextBox textBoxRefuseUnitAmount = (TextBox)this.Controls.Find("textBoxRefuseUnitAmount", true)[0];
-                TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
-                string strExpectUnitCount = textBoxExpectUnitCount.Text;
-                string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
-                string strRefuseUnitCount = textBoxRefuseUnitCount.Text;
-                string strRefuseUnitAmount = textBoxRefuseUnitAmount.Text;
-                string strUnitAmount = textBoxUnitAmount.Text;
-                decimal expectUnitCount;
-                decimal realReceiptUnitCount;
-                decimal refuseUnitCount;
-                decimal refuseUnitAmount;
-                decimal unitAmount;
-                if (decimal.TryParse(strExpectUnitCount, out expectUnitCount) && decimal.TryParse(strRefuseUnitCount, out refuseUnitCount) && decimal.TryParse(strRefuseUnitAmount, out refuseUnitAmount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
+            {
+                try
                 {
-                    if (unitAmount > 0 && expectUnitCount >= 0 && refuseUnitCount >= 0 && refuseUnitAmount >= 0)
+                    TextBox textBoxExpectUnitCount = (TextBox)sender;
+                    TextBox textBoxRealReceiptUnitCount = (TextBox)this.Controls.Find("textBoxRealReceiptUnitCount", true)[0];
+                    TextBox textBoxRefuseUnitCount = (TextBox)this.Controls.Find("textBoxRefuseUnitCount", true)[0];
+                    TextBox textBoxRefuseUnitAmount = (TextBox)this.Controls.Find("textBoxRefuseUnitAmount", true)[0];
+                    TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+                    string strExpectUnitCount = textBoxExpectUnitCount.Text;
+                    string strRealReceiptUnitCount = textBoxRealReceiptUnitCount.Text;
+                    string strRefuseUnitCount = textBoxRefuseUnitCount.Text;
+                    string strRefuseUnitAmount = textBoxRefuseUnitAmount.Text;
+                    string strUnitAmount = textBoxUnitAmount.Text;
+                    decimal expectUnitCount;
+                    decimal realReceiptUnitCount;
+                    decimal refuseUnitCount;
+                    decimal refuseUnitAmount;
+                    decimal unitAmount;
+                    if (decimal.TryParse(strExpectUnitCount, out expectUnitCount) && decimal.TryParse(strRefuseUnitCount, out refuseUnitCount) && decimal.TryParse(strRefuseUnitAmount, out refuseUnitAmount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
                     {
-                        realReceiptUnitCount = (expectUnitCount * unitAmount - refuseUnitCount * refuseUnitAmount) / unitAmount;
-                        if (realReceiptUnitCount >= 0)
+                        if (unitAmount > 0 && expectUnitCount >= 0 && refuseUnitCount >= 0 && refuseUnitAmount >= 0)
                         {
-                            textBoxRealReceiptUnitCount.Text = realReceiptUnitCount.ToString();
-                        }
-                        else
-                        {
-                            textBoxRealReceiptUnitCount.Text = "0";
+                            realReceiptUnitCount = (expectUnitCount * unitAmount - refuseUnitCount * refuseUnitAmount) / unitAmount;
+                            if (realReceiptUnitCount >= 0)
+                            {
+                                textBoxRealReceiptUnitCount.Text = realReceiptUnitCount.ToString();
+                            }
+                            else
+                            {
+                                textBoxRealReceiptUnitCount.Text = "0";
+                            }
                         }
                     }
+                }
+                catch
+                {
+
                 }
             }
         }
@@ -243,7 +311,7 @@ namespace WMS.UI
                 }
                 else
                 {
-                    
+
                     this.ClearTextBoxes();
                     this.realReceiptAmountRefreshMark = true;
                     this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
@@ -293,7 +361,7 @@ namespace WMS.UI
                 {
                     textBox.Text = DateTime.Now.ToString();
                 }
-               
+
             }
             catch
             {
@@ -862,7 +930,7 @@ namespace WMS.UI
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ReceiptTicketID == this.receiptTicketID && rti.SupplyID == supplyIDCur select rti).FirstOrDefault();
                 if (count != 0 || receiptTicketItem != null)
                 {
-                    MessageBox.Show( "第" + (i+1).ToString() + "行，零件在该收货单被添加过，不能重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("第" + (i + 1).ToString() + "行，零件在该收货单被添加过，不能重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
                 if (result.UnitAmount <= 0 || result.RefuseUnitAmount <= 0)

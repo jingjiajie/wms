@@ -47,6 +47,7 @@ namespace WMS.UI
             this.userID = userID;
             this.key = key;
             this.value = value;
+            FormSelectPerson.DefaultPosition = FormBase.Position.RECEIPT;
         }
 
         private void FormSubmissionManage_Load(object sender, EventArgs e)

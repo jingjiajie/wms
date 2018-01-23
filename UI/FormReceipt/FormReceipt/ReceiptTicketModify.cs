@@ -40,6 +40,7 @@ namespace WMS.UI.FormReceipt
             this.warehouseID = warehouseID;
             this.userID = userID;
             this.contract = contract;
+            FormSelectPerson.DefaultPosition = FormBase.Position.RECEIPT;
             try
             {
                 this.user = (from u in wmsEntities.User where u.ID == userID select u).FirstOrDefault();

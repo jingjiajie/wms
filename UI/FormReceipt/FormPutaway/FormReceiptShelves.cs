@@ -62,6 +62,7 @@ namespace WMS.UI.FormReceipt
             this.userID = userID;
             this.key = key;
             this.value = value;
+            FormSelectPerson.DefaultPosition = FormBase.Position.RECEIPT;
         }
 
         private void FormReceiptShelves_Load(object sender, EventArgs e)
@@ -419,20 +420,8 @@ namespace WMS.UI.FormReceipt
                 }
                 try
                 {
-                    new Thread(() =>
-                    {
-                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", id));
-                        wmsEntities.SaveChanges();
-                        MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Invoke(new Action(() =>
-                        {
-                            if (this.key != null || this.value != null)
-                            {
-                                pagerWidget.AddCondition(this.key, this.value);
-                            }
-                            pagerWidget.Search();
-                        }));
-                    }).Start();
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM PutawayTicket WHERE ID = @putawayTicketID", new SqlParameter("putawayTicketID", id));
+                    
                 }
                 catch
                 {
@@ -441,8 +430,27 @@ namespace WMS.UI.FormReceipt
                 }
                 //}
             }
-
-
+            MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                new Thread(() =>
+                {
+                    wmsEntities.SaveChanges();
+                    this.Invoke(new Action(() =>
+                    {
+                        if (this.key != null || this.value != null)
+                        {
+                            pagerWidget.AddCondition(this.key, this.value);
+                        }
+                        pagerWidget.Search();
+                    }));
+                }).Start();
+            }
+            catch
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
             //var worksheet = this.reoGridControlUser.Worksheets[0];
             //try
             //{
