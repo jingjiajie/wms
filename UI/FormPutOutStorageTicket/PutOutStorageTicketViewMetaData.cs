@@ -18,6 +18,7 @@ namespace WMS.UI
             new KeyName(){Key="JobTicketJobTicketNo",Name="关联作业单号",Editable=false,Save=false},
             //new KeyName(){Key="TruckLoadingTicketNo",Name="装车单号",Editable=true},
             new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
+                new ComboBoxItem(STRING_STATE_NOT_LOADED),
                 new ComboBoxItem(STRING_STATE_PART_LOADED),
                 new ComboBoxItem(STRING_STATE_ALL_LOADED),
                 new ComboBoxItem(STRING_STATE_DELIVERED),

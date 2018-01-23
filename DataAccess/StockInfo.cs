@@ -28,6 +28,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ManufactureDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public string ReceiptTicketNo { get; set; }
+        public decimal ScheduledShipmentAmount { get; set; }
     
         public virtual Project Project { get; set; }
         public virtual Warehouse Warehouse { get; set; }

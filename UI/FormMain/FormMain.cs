@@ -792,7 +792,7 @@ namespace WMS.UI
                 formJobTicket.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
                 formJobTicket.SetSearchCondition("ShipmentTicketNo", shipmentTicketNo);
                 this.LoadSubWindow(formJobTicket);
-                this.SetTreeViewSelectedNodeByText("作业单管理");
+                this.SetTreeViewSelectedNodeByText("翻包作业单管理");
             }));
         }
 

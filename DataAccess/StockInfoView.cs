@@ -35,7 +35,6 @@ namespace WMS.DataAccess
         public string ReceiptTicketItemState { get; set; }
         public Nullable<int> ReceiptTicketItemReceiptTicketID { get; set; }
         public string ReceiptTicketState { get; set; }
-        public string ReceiptTicketNo { get; set; }
         public string ReceiptTicketNumber { get; set; }
         public string SupplierNumber { get; set; }
         public Nullable<System.DateTime> ReceiptTicketItemManufactureDate { get; set; }
@@ -48,6 +47,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> ManufactureDate { get; set; }
         public Nullable<System.DateTime> InventoryDate { get; set; }
         public Nullable<int> SupplyID { get; set; }
-        public string Expr1 { get; set; }
+        public string ReceiptTicketNo { get; set; }
+        public decimal ScheduledShipmentAmount { get; set; }
     }
 }

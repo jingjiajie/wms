@@ -369,6 +369,7 @@
           <Property Name="ManufactureDate" Type="datetime" />
           <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ScheduledShipmentAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
         </EntityType>
         <EntityType Name="StockInfoCheckTicket">
           <Key>
@@ -1208,6 +1209,7 @@
         <EntityType Name="StockInfoView">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="ScheduledShipmentAmount" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="ReceiptTicketItemID" Type="int" />
@@ -1230,7 +1232,6 @@
           <Property Name="ReceiptTicketItemState" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketItemReceiptTicketID" Type="int" />
           <Property Name="ReceiptTicketState" Type="nvarchar" MaxLength="64" />
-          <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="SupplierNumber" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketItemManufactureDate" Type="datetime" />
@@ -1243,7 +1244,8 @@
           <Property Name="ManufactureDate" Type="datetime" />
           <Property Name="InventoryDate" Type="datetime" />
           <Property Name="SupplyID" Type="int" />
-          <Property Name="Expr1" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ScheduledShipmentAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2517,7 +2519,6 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[ReceiptTicketItemState] AS [ReceiptTicketItemState], 
 [StockInfoView].[ReceiptTicketItemReceiptTicketID] AS [ReceiptTicketItemReceiptTicketID], 
 [StockInfoView].[ReceiptTicketState] AS [ReceiptTicketState], 
-[StockInfoView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
 [StockInfoView].[ReceiptTicketNumber] AS [ReceiptTicketNumber], 
 [StockInfoView].[SupplierNumber] AS [SupplierNumber], 
 [StockInfoView].[ReceiptTicketItemManufactureDate] AS [ReceiptTicketItemManufactureDate], 
@@ -2530,7 +2531,8 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[ManufactureDate] AS [ManufactureDate], 
 [StockInfoView].[InventoryDate] AS [InventoryDate], 
 [StockInfoView].[SupplyID] AS [SupplyID], 
-[StockInfoView].[Expr1] AS [Expr1]
+[StockInfoView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
+[StockInfoView].[ScheduledShipmentAmount] AS [ScheduledShipmentAmount]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -3444,6 +3446,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduledShipmentAmount" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
           <NavigationProperty Name="Project" Relationship="WMSModel.FK__StockInfo__Proje__00AA174D" FromRole="StockInfo" ToRole="Project" />
           <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK__StockInfo__Wareh__019E3B86" FromRole="StockInfo" ToRole="Warehouse" />
         </EntityType>
@@ -4279,6 +4282,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
         <EntityType Name="StockInfoView">
           <Key>
             <PropertyRef Name="ID" />
+            <PropertyRef Name="ScheduledShipmentAmount" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="ReceiptTicketItemID" Type="Int32" />
@@ -4301,7 +4305,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketItemState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketItemReceiptTicketID" Type="Int32" />
           <Property Name="ReceiptTicketState" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SupplierNumber" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketItemManufactureDate" Type="DateTime" Precision="3" />
@@ -4314,7 +4317,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="InventoryDate" Type="DateTime" Precision="3" />
           <Property Name="SupplyID" Type="Int32" />
-          <Property Name="Expr1" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ScheduledShipmentAmount" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -4956,7 +4960,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -5325,6 +5329,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfo">
             <EntityTypeMapping TypeName="WMSModel.StockInfo">
               <MappingFragment StoreEntitySet="StockInfo">
+                <ScalarProperty Name="ScheduledShipmentAmount" ColumnName="ScheduledShipmentAmount" />
                 <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
@@ -6159,7 +6164,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoView">
               <MappingFragment StoreEntitySet="StockInfoView">
-                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="ScheduledShipmentAmount" ColumnName="ScheduledShipmentAmount" />
+                <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
                 <ScalarProperty Name="InventoryDate" ColumnName="InventoryDate" />
                 <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
@@ -6172,7 +6178,6 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="ReceiptTicketItemManufactureDate" ColumnName="ReceiptTicketItemManufactureDate" />
                 <ScalarProperty Name="SupplierNumber" ColumnName="SupplierNumber" />
                 <ScalarProperty Name="ReceiptTicketNumber" ColumnName="ReceiptTicketNumber" />
-                <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
                 <ScalarProperty Name="ReceiptTicketState" ColumnName="ReceiptTicketState" />
                 <ScalarProperty Name="ReceiptTicketItemReceiptTicketID" ColumnName="ReceiptTicketItemReceiptTicketID" />
                 <ScalarProperty Name="ReceiptTicketItemState" ColumnName="ReceiptTicketItemState" />

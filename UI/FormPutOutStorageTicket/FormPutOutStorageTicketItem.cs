@@ -267,8 +267,10 @@ namespace WMS.UI
                 return;
             }
 
+            decimal oriRealAmount = putOutStorageTicketItem.RealAmount ?? 0;
             decimal oriReturnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1);
             decimal oriReturnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1);
+            string oriState = putOutStorageTicketItem.State;
 
             if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
             {
@@ -285,6 +287,7 @@ namespace WMS.UI
                 MessageBox.Show("实际装车数量必须大于等于0并且小于计划装车数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            decimal deltaRealAmount = (putOutStorageTicketItem.RealAmount ?? 0) - oriRealAmount;
             decimal? returnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * putOutStorageTicketItem.ReturnQualityUnitAmount;
             decimal? returnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * putOutStorageTicketItem.ReturnRejectUnitAmount;
             decimal? deliverAmount = putOutStorageTicketItem.RealAmount * putOutStorageTicketItem.UnitAmount;
@@ -297,10 +300,14 @@ namespace WMS.UI
             int confirmPersonID = this.confirmPersonGetter();
             putOutStorageTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
             putOutStorageTicketItem.ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
-            if(stockInfo != null)
+            if (stockInfo != null)
             {
+                //更新发货区，已分配发货数量
+                stockInfo.ShipmentAreaAmount -= deltaRealAmount;
+                stockInfo.ScheduledShipmentAmount -= deltaRealAmount;
+                //更新退回数量
                 decimal deltaReturnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1) - oriReturnQualityAmount;
-                decimal deltaReturnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount?? 1) - oriReturnRejectAmount;
+                decimal deltaReturnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1) - oriReturnRejectAmount;
                 stockInfo.ShipmentAreaAmount += deltaReturnQualityAmount;
                 stockInfo.RejectAreaAmount += deltaReturnRejectAmount;
             }
@@ -350,15 +357,23 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 try
                 {
-                    string sql = String.Format(@"UPDATE PutOutStorageTicketItem SET State = '{0}',
-                                        LoadingTime = '{1}',
-                                        RealAmount = ScheduledAmount
-                                        WHERE PutOutStorageTicketID = {2} AND (RealAmount <> ScheduledAmount OR State<>'{3}');",
-                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED,
-                                    DateTime.Now,
-                                    this.putOutStorageTicketID,
-                                    PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED);
-                    wmsEntities.Database.ExecuteSqlCommand(sql);
+                    PutOutStorageTicketItem[] items = (from p in wmsEntities.PutOutStorageTicketItem
+                                                     where p.PutOutStorageTicketID == this.putOutStorageTicketID
+                                                     && (p.RealAmount != p.ScheduledAmount || p.State != PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)
+                                                     select p).ToArray();
+                    for(int i = 0; i < items.Length; i++)
+                    {
+                        PutOutStorageTicketItem item = items[i];
+                        item.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED;
+                        item.LoadingTime = DateTime.Now;
+                        item.RealAmount = items[i].ScheduledAmount;
+                        StockInfo stockInfo = (from s in wmsEntities.StockInfo
+                                               where s.ID == item.StockInfoID
+                                               select s).FirstOrDefault();
+                        stockInfo.ShipmentAreaAmount -= item.RealAmount;
+                        stockInfo.ScheduledShipmentAmount -= item.RealAmount ?? 0;
+                    }
+
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));
                     wmsEntities.SaveChanges();
                 }

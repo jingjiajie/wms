@@ -213,7 +213,6 @@ namespace WMS.UI
                     MessageBox.Show("作业单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                newPutOutStorageTicket.State = PutOutStorageTicketViewMetaData.STRING_STATE_NOT_LOADED;
                 newPutOutStorageTicket.JobTicketID = jobTicket.ID;
                 newPutOutStorageTicket.ProjectID = this.projectID;
                 newPutOutStorageTicket.WarehouseID = this.warehouseID;
