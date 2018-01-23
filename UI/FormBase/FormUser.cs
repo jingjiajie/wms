@@ -290,21 +290,20 @@ namespace WMS.UI.FormBase
                                 }
                                 results[i].SupplierID = supplier.ID;
                                 results[i].Authority = UserMetaData.AUTHORITY_SUPPLIER;
-                                break;
                             }
-                            if (authorityName.Contains("管理员"))
+                            else if (authorityName.Contains("管理员"))
                             {
                                 results[i].Authority |= UserMetaData.AUTHORITY_MANAGER;
                             }
-                            if (authorityName.Contains("收货员"))
+                            else if (authorityName.Contains("收货员"))
                             {
                                 results[i].Authority |= UserMetaData.AUTHORITY_RECEIPT_MANAGER;
                             }
-                            if (authorityName.Contains("发货员"))
+                            else if (authorityName.Contains("发货员"))
                             {
                                 results[i].Authority |= UserMetaData.AUTHORITY_SHIPMENT_MANAGER;
                             }
-                            if (authorityName.Contains("库存管理员"))
+                            else if (authorityName.Contains("库存管理员"))
                             {
                                 results[i].Authority |= UserMetaData.AUTHORITY_STOCK_MANAGER;
                             }

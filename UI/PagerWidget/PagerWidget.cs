@@ -20,7 +20,6 @@ namespace WMS.UI
             public string Sql = null;
             public List<SqlParameter> Parameters = new List<SqlParameter>();
         }
-        private bool shown = false;
         private int pageSize = 50;
         private int curPage = 0;
         private int totalPage = 1;
@@ -62,13 +61,14 @@ namespace WMS.UI
                     throw new Exception(string.Format("目标页{0}不可小于第一页！", value + 1, TotalPage));
                 }
                 curPage = value;
-                if (this.shown && !this.IsDisposed)
+                try
                 {
-                    this.Invoke(new Action(()=>
-                    {
-                        this.textBoxPage.Text = (curPage + 1).ToString();
-                        this.labelPage.Text = string.Format("{0}/{1}页", curPage + 1, TotalPage);
-                    }));
+                    this.textBoxPage.Text = (curPage + 1).ToString();
+                    this.labelPage.Text = string.Format("{0}/{1}页", curPage + 1, TotalPage);
+                }
+                catch
+                {
+                    //Do nothing
                 }
             }
         }
@@ -83,12 +83,12 @@ namespace WMS.UI
                 {
                     CurPage = totalPage - 1;
                 }
-                if (this.shown && !this.IsDisposed)
-                {
-                    this.Invoke(new Action(()=>
-                    {
+                try { 
                         this.labelPage.Text = string.Format("{0}/{1}页", CurPage + 1, totalPage);
-                    }));
+                }
+                catch
+                {
+                    //Do nothing
                 }
             }
         }
@@ -400,7 +400,7 @@ namespace WMS.UI
 
         private void PagerWidget_Shown(object sender, EventArgs e)
         {
-            this.shown = true;
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
