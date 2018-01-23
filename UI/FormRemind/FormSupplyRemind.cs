@@ -59,6 +59,11 @@ namespace WMS.UI
                 StockInfoView = (from u in wmsEntities.StockInfoView
                                  select u).ToArray();
 
+                if(StockInfoView ==null)
+                {
+                    return;
+                }
+
                 for (int i = 0; i < StockInfoView.Length; i++)
                 {
                     //找到每个零件的保质期
@@ -114,7 +119,10 @@ namespace WMS.UI
                 SupplyView = (from u in wmsEntities.SupplyView
                               select u).ToArray();
 
-
+                if(SupplyView ==null)
+                {
+                    return;
+                }
                 for (int i = 0; i < SupplyView.Length; i++)
                 {
 

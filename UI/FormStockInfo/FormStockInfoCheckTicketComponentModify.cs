@@ -215,21 +215,28 @@ namespace WMS.UI
 
             FormSelectPerson.SetSelectFinishedCallback((selectedID) =>
             {
-
-                var PersonName = (from s in wmsEntities.PersonView
-                                  where s.ID == selectedID
-                                  select s).FirstOrDefault();
-                if (PersonName.Name == null)
+                try
                 {
-                    MessageBox.Show("选择人员信息失败，人员信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    var PersonName = (from s in wmsEntities.PersonView
+                                      where s.ID == selectedID
+                                      select s).FirstOrDefault();
+                    if (PersonName.Name == null)
+                    {
+                        MessageBox.Show("选择人员信息失败，人员信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    //this.supplierID = selectedID;
+                    //selectedID = 1;
+                    this.personid = selectedID;
+                    this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName.Name;
+                    //this.personidc = 1;
                 }
-                //this.supplierID = selectedID;
-                //selectedID = 1;
-                this.personid = selectedID;
-                this.Controls.Find("textBoxPersonName", true)[0].Text = PersonName.Name;
-                //this.personidc = 1;
+                catch
+                {
+                    MessageBox.Show("选择人员失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
 
+                }
 
 
             });
@@ -266,7 +273,7 @@ namespace WMS.UI
 
             try
             {
-                WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
+                WMSEntities wmsEntities = new WMSEntities();
                 StockInfoCheckTicketItem = (from s in wmsEntities.StockInfoCheckTicketItemView
                                             where s.ID == id
                                             select s).FirstOrDefault();
@@ -457,9 +464,17 @@ namespace WMS.UI
                 decimal ExpectedRejectAreaAmount = 0;
                 decimal ExpectedReceiptAreaAmount = 0;
                 decimal ExpectedSubmissionAmount = 0;
-                stockinfo = (from kn in wmsEntities.StockInfoView
-                             where kn.SupplyNo == supplyNO
-                             select kn).ToArray();
+                try
+                {
+                    stockinfo = (from kn in wmsEntities.StockInfoView
+                                 where kn.SupplyNo == supplyNO
+                                 select kn).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("选择供货信息失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 for(int i=0;i<stockinfo.Length;i++)
 
 
@@ -1043,19 +1058,19 @@ namespace WMS.UI
 
 
 
-            
-            WMS.DataAccess.StockInfo[] stockinfoall = null;
-            WMS.DataAccess.StockInfoCheckTicketItem[] StockInfoCheckTicketItemsave = null;
+
+            SupplyView [] SupplyAll = null;
+            StockInfoCheckTicketItemView[] StockInfoCheckTicketItemsave = null;
             FormLoading a1 = new FormLoading("正在添加，请稍后...");
             a1.Show();
             try
             {
                 wmsEntities = new DataAccess.WMSEntities();
-                stockinfoall = (from kn in wmsEntities.StockInfo
-                                where kn.ProjectID == this.projectID && kn.WarehouseID == this.warehouseID
+                SupplyAll = (from kn in wmsEntities.SupplyView 
+                                //where kn.ProjectID == this.projectID && kn.WarehouseID == this.warehouseID
                                 select kn).ToArray();
 
-                    StockInfoCheckTicketItemsave = (from kn in wmsEntities.StockInfoCheckTicketItem
+                  StockInfoCheckTicketItemsave = (from kn in wmsEntities.StockInfoCheckTicketItemView
                                                     where kn.StockInfoCheckTicketID == this.stockInfoCheckID
                                                     select kn).ToArray();
             }
@@ -1067,17 +1082,17 @@ namespace WMS.UI
 
             }
 
-            if (stockinfoall.Length == 0)
+            if( SupplyAll.Length == 0)
             {
                     a1.Close();
-                    MessageBox.Show("库存信息为空，无法添加条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("供货信息为空，无法添加条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            for (int i = 0; i < stockinfoall.Length; i++)
+            for (int i = 0; i < SupplyAll.Length; i++)
             {
                 bool repet = false;
-                var StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
+                var StockInfoCheckTicketItem = new StockInfoCheckTicketItem();
 
 
                 try
@@ -1094,30 +1109,64 @@ namespace WMS.UI
                 }
                 for (int j = 0; j < StockInfoCheckTicketItemsave.Length; j++)
                 {
-                    /*TODO if (StockInfoCheckTicketItemsave[j].StockInfoID == stockinfoall[i].ID)
+                    if (StockInfoCheckTicketItemsave[j].SupplyID == SupplyAll [i].ID)
                     {
                         repet = true;
+                        break;
 
-                    }*/
+                    }
 
                 }
 
                 if (repet == true)
                 { continue; }
 
-                //TODO StockInfoCheckTicketItem.StockInfoID = stockinfoall[i].ID;
+                 StockInfoCheckTicketItem.SupplyID  = SupplyAll[i].ID;
                 //StockInfoCheckTicketItem.PersonID = this.personid;
                 StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID;
-                StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
-                StockInfoCheckTicketItem.ExpectedReceiptAreaAmount = stockinfoall[i].ReceiptAreaAmount;
-                StockInfoCheckTicketItem.ExpectedRejectAreaAmount = stockinfoall[i].RejectAreaAmount;
-                StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
-                StockInfoCheckTicketItem.ExpectedSubmissionAmount = stockinfoall[i].SubmissionAmount;
-                StockInfoCheckTicketItem.RealOverflowAreaAmount = stockinfoall[i].OverflowAreaAmount;
-                StockInfoCheckTicketItem.RealReceiptAreaAmount = stockinfoall[i].ReceiptAreaAmount;
-                StockInfoCheckTicketItem.RealRejectAreaAmount = stockinfoall[i].RejectAreaAmount;
-                StockInfoCheckTicketItem.RealShipmentAreaAmount = stockinfoall[i].ShipmentAreaAmount;
-                StockInfoCheckTicketItem.RealSubmissionAmount = stockinfoall[i].SubmissionAmount;
+
+                string supplyNO = SupplyAll [i].No;
+                if(supplyNO == "")
+                {
+                    continue;
+                }
+                StockInfoView[] stockinfo = null;
+                decimal ExcpetedOverflowAreaAmount = 0;
+                decimal ExpectedShipmentAreaAmount = 0;
+                decimal ExpectedRejectAreaAmount = 0;
+                decimal ExpectedReceiptAreaAmount = 0;
+                decimal ExpectedSubmissionAmount = 0;
+                try
+                {
+                    stockinfo = (from kn in wmsEntities.StockInfoView
+                                 where kn.SupplyNo == supplyNO
+                                 select kn).ToArray();
+                    for (int j = 0; j < stockinfo.Length; j++)
+                    {
+                        ExcpetedOverflowAreaAmount = ExcpetedOverflowAreaAmount + Convert.ToDecimal(stockinfo[i].OverflowAreaAmount);
+                        ExpectedShipmentAreaAmount = ExpectedShipmentAreaAmount + Convert.ToDecimal(stockinfo[i].ShipmentAreaAmount);
+                        ExpectedRejectAreaAmount = ExpectedRejectAreaAmount + Convert.ToDecimal(stockinfo[i].RejectAreaAmount);
+                        ExpectedReceiptAreaAmount = ExpectedReceiptAreaAmount + Convert.ToDecimal(stockinfo[i].ReceiptAreaAmount);
+                        ExpectedSubmissionAmount = ExpectedSubmissionAmount + Convert.ToDecimal(stockinfo[i].SubmissionAmount);
+
+                    }
+                    StockInfoCheckTicketItem.ExcpetedOverflowAreaAmount = ExcpetedOverflowAreaAmount;
+                    StockInfoCheckTicketItem.ExpectedReceiptAreaAmount = ExpectedReceiptAreaAmount;
+                    StockInfoCheckTicketItem.ExpectedRejectAreaAmount = ExpectedRejectAreaAmount;
+                    StockInfoCheckTicketItem.ExpectedShipmentAreaAmount = ExpectedShipmentAreaAmount;
+                    StockInfoCheckTicketItem.ExpectedSubmissionAmount = ExpectedSubmissionAmount;
+                    StockInfoCheckTicketItem.RealOverflowAreaAmount = ExcpetedOverflowAreaAmount;
+                    StockInfoCheckTicketItem.RealReceiptAreaAmount = ExpectedReceiptAreaAmount;
+                    StockInfoCheckTicketItem.RealRejectAreaAmount = ExpectedRejectAreaAmount;
+                    StockInfoCheckTicketItem.RealShipmentAreaAmount = ExpectedShipmentAreaAmount;
+                    StockInfoCheckTicketItem.RealSubmissionAmount = ExpectedSubmissionAmount;
+                }
+                catch
+                {
+                    a1.Close();
+                    MessageBox.Show("添加所有条目操作失败，请检查网络连接111", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 try
                 {
                     wmsEntities.SaveChanges();
