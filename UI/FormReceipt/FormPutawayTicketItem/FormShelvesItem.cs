@@ -720,6 +720,10 @@ namespace WMS.UI.FormReceipt
                             this.Invoke(new Action(() =>
                             {
                                 this.Search();
+                                if (CallBack != null)
+                                {
+                                    CallBack();
+                                }
                             }));
                         }).Start();
                     }
@@ -734,6 +738,12 @@ namespace WMS.UI.FormReceipt
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            int putawayTicketID;
+            if (int.TryParse(this.value, out putawayTicketID) == false)
+            {
+                MessageBox.Show("system error!", "error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (this.putawayTicketID == -1)
             {
                 return;
@@ -742,7 +752,8 @@ namespace WMS.UI.FormReceipt
             {
                 return;
             }
-            PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == this.putawayTicketID select pt).FirstOrDefault();
+            
+            PutawayTicket putawayTicket = (from pt in wmsEntities.PutawayTicket where pt.ID == putawayTicketID select pt).FirstOrDefault();
             if (putawayTicket == null)
             {
                 MessageBox.Show("该上架单已被删除，请刷新后查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -751,14 +762,14 @@ namespace WMS.UI.FormReceipt
             PutawayTicketItem[] putawayTicketItems = putawayTicket.PutawayTicketItem.ToArray();
             foreach(PutawayTicketItem pti in putawayTicketItems)
             {
-                decimal oldPutawayAmount = pti.MoveCount == null ? 0 : (decimal)pti.MoveCount;
+                decimal oldPutawayAmount = (pti.MoveCount == null ? 0 : (decimal)pti.MoveCount) * (pti.UnitAmount == null ? 1 : (decimal)pti.UnitAmount);
                 pti.MoveCount = pti.ScheduledMoveCount;
                 pti.PutawayAmount = pti.UnitAmount * pti.MoveCount;
                 pti.OperateTime = DateTime.Now.ToString();
                 pti.State = "已上架";
                 //ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
                 
-                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == pti.PutawayTicketID select si).FirstOrDefault();
+                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == pti.ReceiptTicketItemID select si).FirstOrDefault();
                 
                 if (stockInfo != null)
                 {
@@ -766,6 +777,7 @@ namespace WMS.UI.FormReceipt
                     stockInfo.ShipmentAreaAmount += pti.PutawayAmount - oldPutawayAmount;
                 }
             }
+            putawayTicket.State = "已上架";
             new Thread(() =>
             {
                 wmsEntities.SaveChanges();
@@ -773,6 +785,7 @@ namespace WMS.UI.FormReceipt
                 this.Invoke(new Action(() => 
                 {
                     Search();
+                    CallBack();
                 }));
             }).Start();
             /*

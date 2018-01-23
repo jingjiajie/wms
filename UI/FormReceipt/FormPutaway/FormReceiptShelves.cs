@@ -227,6 +227,10 @@ namespace WMS.UI.FormReceipt
                     string value = putawayTicket.ID.ToString();
                     //ToPutaway(key, value);
                     FormShelvesItem formShelvesItem = new FormShelvesItem(this.projectID, this.warehouseID, this.userID, "上架单ID", value);
+                    formShelvesItem.SetCallBack(new Action(()=> 
+                    {
+                        this.Search();
+                    }));
                     formShelvesItem.Show();
                 }
             }
@@ -397,7 +401,8 @@ namespace WMS.UI.FormReceipt
                     ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
                     if (receiptTicketItem != null)
                     {
-                        receiptTicketItem.HasPutwayAmount -= pti.ScheduledMoveCount - pti.MoveCount;
+                        
+                        receiptTicketItem.HasPutwayAmount -= (pti.ScheduledMoveCount == null ? 0 : pti.ScheduledMoveCount) - (pti.MoveCount == null ? 0 : pti.MoveCount);
                         if (receiptTicketItem.HasPutwayAmount == 0)
                         {
                             n++;

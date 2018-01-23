@@ -251,6 +251,7 @@ namespace WMS.UI.FormReceipt
                     }
                 }
                 */
+            WMSEntities wmsEntities = new WMSEntities();
             List<int> ids = new List<int>();
             SortedDictionary<int, decimal> idsAndSubmissionAmount = new SortedDictionary<int, decimal>();
             var worksheet = this.reoGridControlUser.Worksheets[0];
@@ -270,7 +271,23 @@ namespace WMS.UI.FormReceipt
                 {
                     if (decimal.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
                     {
-                        
+                        if (submissionAmount <= 0)
+                        {
+                            MessageBox.Show("上架数量必须大于0！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return null;
+                        }
+                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == id select rti).FirstOrDefault();
+                        if (receiptTicketItem == null)
+                        {
+                            MessageBox.Show("该收货单中，某收货单条目未找到，可能已被删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return null;
+                        }
+                        if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - submissionAmount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
+                        {
+                            MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                            return null;
+                        }
+
                         idsAndSubmissionAmount.Add(id, submissionAmount);
                     }
                     else
@@ -305,6 +322,10 @@ namespace WMS.UI.FormReceipt
             }
             */
             SortedDictionary<int, decimal> receiptItemPutawayAmount = this.SelectReceiptTicketItem();
+            if (receiptItemPutawayAmount == null)
+            {
+                return;
+            }
             if (this.formMode == FormMode.ADD)
             {
                 PutawayTicket putawayTicket = new PutawayTicket();
