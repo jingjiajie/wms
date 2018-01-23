@@ -10,6 +10,8 @@ using unvell.ReoGrid;
 using System.Threading;
 using WMS.DataAccess;
 using System.Data.SqlClient;
+using unvell.ReoGrid.CellTypes;
+using System.Reflection;
 
 namespace WMS.UI
 {
@@ -32,6 +34,8 @@ namespace WMS.UI
         private List<Condition> condition = new List<Condition>();
         private List<Condition> staticCondition = new List<Condition>();
         private List<string> order = new List<string>();
+
+        private Dictionary<int, bool> selectedIDs = new Dictionary<int, bool>();
 
         private int RecordCount
         {
@@ -93,10 +97,14 @@ namespace WMS.UI
             }
         }
 
+        private Mode mode = Mode.NORMAL;
+
         public int ProjectID { get => projectID; set => projectID = value; }
         public int WarehouseID { get => warehouseID; set => warehouseID = value; }
 
-        public PagerWidget(ReoGridControl reoGridControl, KeyName[] keyNames, int defaultProjectID = -1, int defaultWarehouseID = -1)
+        public enum Mode { NORMAL,MULTISELECT}
+
+        public PagerWidget(ReoGridControl reoGridControl, KeyName[] keyNames, int defaultProjectID = -1, int defaultWarehouseID = -1,Mode mode= Mode.NORMAL)
         {
             InitializeComponent();
             this.TopLevel = false;
@@ -108,6 +116,13 @@ namespace WMS.UI
             this.keyNames = keyNames;
 
             Utilities.InitReoGrid(this.reoGrid,this.keyNames);
+            this.mode = mode;
+            if(this.mode == Mode.MULTISELECT)
+            {
+                var worksheet = this.reoGrid.CurrentWorksheet;
+                worksheet.InsertColumns(1, 1);
+                worksheet.ColumnHeaders[1].Text = "选择";
+            }
         }
 
         public void SetPageSize(int pageSize)
@@ -166,6 +181,11 @@ namespace WMS.UI
         public void AddOrderBy(string orderByCondition)
         {
             this.order.Add(orderByCondition);
+        }
+
+        public void ClearOrderBy()
+        {
+            this.order.Clear();
         }
 
         public void AddCondition(string key,string value)
@@ -263,8 +283,10 @@ namespace WMS.UI
             }
         }
 
+        private bool enableCheckEvent = false;
         public void Search(bool savePage = false, int selectID = -1,Action<TargetClass[]> searchFinishedCallback=null)
         {
+            enableCheckEvent = false;
             if(savePage == false)
             {
                 this.CurPage = 0;
@@ -317,11 +339,13 @@ namespace WMS.UI
                     catch (EntityCommandExecutionException)
                     {
                         MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        enableCheckEvent = true;
                         return;
                     }
                     catch (Exception)
                     { 
                         MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        enableCheckEvent = true;
                         return;
                     }
 
@@ -347,15 +371,18 @@ namespace WMS.UI
                     catch (EntityCommandExecutionException)
                     {
                         MessageBox.Show("查询失败，请检查输入查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        enableCheckEvent = true;
                         return;
                     }
                     catch (Exception)
                     {
                         MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        enableCheckEvent = true;
                         return;
                     }
                     wmsEntities.Database.Connection.Close();
                 }
+                //查询完成
                 this.reoGrid.Invoke(new Action(() =>
                 {
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
@@ -369,10 +396,12 @@ namespace WMS.UI
                         TargetClass cur = results[i];
                         KeyName[] usedKeyNames = (from kn in keyNames where kn.Visible == true || kn.Key == "ID" select kn).ToArray();
                         object[] columns = Utilities.GetValuesByPropertieNames(cur,(from kn in usedKeyNames select kn.Key).ToArray());
-                        for (int j = 0; j < columns.Length; j++)
+                        for (int j = 0, col = 0; j < columns.Length; j++, col++)
                         {
+                            //多选模式则空出第一列，放置选择框
+                            if (j == 1 && this.mode == Mode.MULTISELECT) col++;
                             if (columns[j] == null) continue;
-                            worksheet.Cells[i, j].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
+                            worksheet.Cells[i, col].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
                             string text = null;
                             if (usedKeyNames[j].Translator != null)
                             {
@@ -389,11 +418,42 @@ namespace WMS.UI
                                     text = columns[j].ToString();
                                 }
                             }
-                            worksheet[i, j] = text;
+                            worksheet[i, col] = text;
                         }
                     }
                     Utilities.SelectLineByID(this.reoGrid,selectID);
+                    if(this.mode == Mode.MULTISELECT)
+                    {
+                        PropertyInfo propertyID = typeof(TargetClass).GetProperty("ID");
+                        if(propertyID == null)
+                        {
+                            throw new Exception("在分页控件中使用多选功能，目标类型"+typeof(TargetClass).Name+"必须具有ID属性！");
+                        }
+                        this.Invoke(new Action(()=>
+                        {
+                            for(int i = 0; i < results.Length; i++)
+                            {
+                                CheckBoxCell checkBoxCell = new CheckBoxCell();
+                                worksheet[i, 1] = checkBoxCell;
+                                int id = (int)propertyID.GetValue(results[i],null);
+                                if (this.selectedIDs.ContainsKey(id)) checkBoxCell.IsChecked = true;
+                                checkBoxCell.CheckChanged += (obj, e) =>
+                                {
+                                    if (enableCheckEvent == false) return;
+                                    if(checkBoxCell.IsChecked && this.selectedIDs.ContainsKey(id)==false)
+                                    {
+                                        this.selectedIDs.Add(id, true);
+                                    }
+                                    else if(checkBoxCell.IsChecked==false && this.selectedIDs.ContainsKey(id))
+                                    {
+                                        this.selectedIDs.Remove(id);
+                                    }
+                                };
+                            }
+                        }));
+                    }
                     searchFinishedCallback?.Invoke(results);
+                    enableCheckEvent = true;
                 }));
             })).Start();
         }
@@ -406,6 +466,11 @@ namespace WMS.UI
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public int[] GetSelectedIDs()
+        {
+            return this.selectedIDs.Keys.ToArray();
         }
     }
 }
