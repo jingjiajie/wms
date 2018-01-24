@@ -55,6 +55,9 @@ namespace WMS.UI
 
         private void InitComponents()
         {
+            //设置人员选择默认岗位为发货员
+            FormSelectPerson.DefaultPosition = FormBase.Position.SHIPMENT;
+
             string[] visibleColumnNames = (from kn in ShipmentTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();

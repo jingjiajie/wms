@@ -382,7 +382,29 @@ namespace WMS.UI
 
         private bool importHandler(NewJobTicketItemData[] results, Dictionary<string, string[]> unimportedColumns)
         {
-            List<Tuple<int, decimal>> idAndAmountList = new List<Tuple<int, decimal>>();
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            Dictionary<int, decimal> checkedIDAndAmount = new Dictionary<int, decimal>();
+            for(int i = 0; i < this.validRows; i++)
+            {
+                if((worksheet[i,1] as bool? ?? false)==false)
+                {
+                    continue;
+                }
+                int id = int.Parse(worksheet[i, 0].ToString());
+                if (decimal.TryParse(worksheet[i, 2] == null ? "" : worksheet[i, 2].ToString(), out decimal amount) == false)
+                {
+                    amount = 0;
+                }
+                if (checkedIDAndAmount.ContainsKey(id))
+                {
+                    checkedIDAndAmount[id] += amount;
+                }
+                else
+                {
+                    checkedIDAndAmount.Add(id, amount);
+                }
+            }
+            Dictionary<int, decimal> idAndAmount = new Dictionary<int, decimal>();
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
@@ -402,52 +424,98 @@ namespace WMS.UI
                             return false;
                         }
                     }
-                    ShipmentTicketItemView[] selectedItems = null;
+                    List<ShipmentTicketItemView> selectedItems = null;
                     if (supply != null)
                     {
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
-                                         && (s.ScheduledJobAmount ?? 0) < s.ShipmentAmount
                                          && s.SupplyNo == supplyNoOrComponentName
                                          orderby s.StockInfoInventoryDate ascending
-                                         select s).ToArray();
+                                         select s).ToList();
                     }
                     else if (component != null)
                     {
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
-                                          where s.ShipmentTicketID == this.shipmentTicketID
-                                          && (s.ScheduledJobAmount ?? 0) < s.ShipmentAmount
-                                          && s.ComponentName == supplyNoOrComponentName
-                                          orderby s.StockInfoInventoryDate ascending
-                                          select s).ToArray();
+                                         where s.ShipmentTicketID == this.shipmentTicketID
+                                         && s.ComponentName == supplyNoOrComponentName
+                                         orderby s.StockInfoInventoryDate ascending
+                                         select s).ToList();
                     }
-                    decimal totalStockAmountNoUnit = selectedItems.Sum((item) => (item.ShipmentAmount - (item.ScheduledJobAmount ?? 0)) * (item.UnitAmount ?? 1)) ?? 0;
+                    selectedItems.RemoveAll((item) =>
+                    {
+                        decimal restAmount = item.ShipmentAmount - (item.ScheduledJobAmount ?? 0) ?? 0;
+                        if (idAndAmount.ContainsKey(item.ID))
+                        {
+                            restAmount -= idAndAmount[item.ID];
+                        }
+                        if (checkedIDAndAmount.ContainsKey(item.ID))
+                        {
+                            restAmount -= checkedIDAndAmount[item.ID];
+                        }
+                        return restAmount <= 0;
+                    });
+                    decimal totalStockAmountNoUnit = selectedItems.Sum((item) =>
+                    {
+                        decimal amount = (item.ShipmentAmount - (item.ScheduledJobAmount ?? 0)) * (item.UnitAmount ?? 1) ?? 0;
+                        if (idAndAmount.ContainsKey(item.ID))
+                        {
+                            amount -= idAndAmount[item.ID] * (item.UnitAmount ?? 1);
+                        }
+                        if (checkedIDAndAmount.ContainsKey(item.ID))
+                        {
+                            amount -= checkedIDAndAmount[item.ID] * (item.UnitAmount ?? 1);
+                        }
+                        return amount;
+                    });
                     if(scheduleAmountNoUnit > totalStockAmountNoUnit)
                     {
                         MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}", i + 1, totalStockAmountNoUnit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     decimal curAmountNoUnit = 0;
-                    for (int j = 0; j < selectedItems.Length; j++)
+                    for (int j = 0; j < selectedItems.Count; j++)
                     {
                         decimal curItemRestAmount = (selectedItems[j].ShipmentAmount - (selectedItems[j].ScheduledJobAmount ?? 0)) ?? 0;
+                        if (idAndAmount.ContainsKey(selectedItems[j].ID))
+                        {
+                            curItemRestAmount -= idAndAmount[selectedItems[j].ID];
+                        }
+                        if (checkedIDAndAmount.ContainsKey(selectedItems[j].ID))
+                        {
+                            curItemRestAmount -= checkedIDAndAmount[selectedItems[j].ID] * (selectedItems[j].UnitAmount ?? 1);
+                        }
                         //当前项的剩余数量（不带单位）
                         decimal curItemRestAmountNoUnit = curItemRestAmount * (selectedItems[j].UnitAmount ?? 1);
                         //当前项的剩余数量小于要分配的数量
                         if (curAmountNoUnit + curItemRestAmountNoUnit < scheduleAmountNoUnit)
                         {
-                            idAndAmountList.Add(new Tuple<int, decimal>(selectedItems[j].ID, curItemRestAmount));
+                            if (idAndAmount.ContainsKey(selectedItems[j].ID))
+                            {
+                                idAndAmount[selectedItems[j].ID] += curItemRestAmount;
+                            }
+                            else
+                            {
+                                idAndAmount.Add(selectedItems[j].ID, curItemRestAmount);
+                            }
                             curAmountNoUnit += curItemRestAmountNoUnit;
                         }
                         else //当前项的剩余数量大于等于要分配的数量
                         {
-                            idAndAmountList.Add(new Tuple<int, decimal>(selectedItems[j].ID, ((scheduleAmountNoUnit - curAmountNoUnit) / selectedItems[i].UnitAmount ?? 1)));
+                            decimal amount = ((scheduleAmountNoUnit - curAmountNoUnit) / selectedItems[j].UnitAmount ?? 1);
+                            if (idAndAmount.ContainsKey(selectedItems[j].ID))
+                            {
+                                idAndAmount[selectedItems[j].ID] += amount;
+                            }
+                            else
+                            {
+                                idAndAmount.Add(selectedItems[j].ID,amount);
+                            }
                             curAmountNoUnit = scheduleAmountNoUnit;
                             break;
                         }
                     }
                 }
-                this.CheckItemsAndFillScheduleAmountByIDs(idAndAmountList);
+                this.CheckItemsAndFillScheduleAmountByIDs(idAndAmount);
                 this.standardImportForm.Close();
                 MessageBox.Show("导入成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
@@ -459,7 +527,7 @@ namespace WMS.UI
             }
         }
 
-        private void CheckItemsAndFillScheduleAmountByIDs(List<Tuple<int,decimal>> idAndAmountList)
+        private void CheckItemsAndFillScheduleAmountByIDs(Dictionary<int,decimal> idAndAmount)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             for(int i = 0; i < this.validRows; i++)
@@ -468,13 +536,19 @@ namespace WMS.UI
                 {
                     continue;
                 }
-                Tuple<int, decimal> item = (from t in idAndAmountList where t.Item1 == id select t).FirstOrDefault();
-                if(item == null)
-                {
-                    continue;
-                }
+                if (idAndAmount.ContainsKey(id) == false) continue;
+                decimal amount = idAndAmount[id];
+                bool oriChecked = worksheet[i, 1] as bool? ?? false;
                 worksheet[i, 1] = true;
-                worksheet[i, 2] = item.Item2;
+                //如果之前没点击，则覆盖数量。否则累加数量
+                if (oriChecked && decimal.TryParse(worksheet[i, 2].ToString(), out decimal oriAmount))
+                {
+                    worksheet[i, 2] =  amount + oriAmount;
+                }
+                else
+                {
+                    worksheet[i, 2] = amount;
+                }
             }
         }
     }
