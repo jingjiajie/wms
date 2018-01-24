@@ -83,19 +83,27 @@ namespace WMS.UI
             string key = "";
             string value = this.textBoxSearchContition.Text;
             this.pagerWidget.ClearCondition();
-            if (this.comboBoxSearchCondition.SelectedItem.ToString() == "供货零件代号")
+            if (this.comboBoxSearchCondition.SelectedItem.ToString() == "无")
             {
-
-                key = "代号";
-
+                this.pagerWidget.AddCondition("是否历史信息", "0");
+                this.pagerWidget.Search(savePage, selectID, callback);
             }
             else
             {
-                key = "零件名";
+                if (this.comboBoxSearchCondition.SelectedItem.ToString() == "供货零件代号")
+                {
+
+                    key = "代号";
+
+                }
+                else
+                {
+                    key = "零件名";
+                }
+                this.pagerWidget.AddCondition("是否历史信息", "0");
+                this.pagerWidget.AddCondition(key, value);
+                this.pagerWidget.Search(savePage, selectID, callback);
             }
-            this.pagerWidget.AddCondition("是否历史信息", "0");
-            this.pagerWidget.AddCondition(key, value);
-            this.pagerWidget.Search(savePage, selectID, callback);
         }
 
         private void buttonSelect_Click(object sender, EventArgs e)

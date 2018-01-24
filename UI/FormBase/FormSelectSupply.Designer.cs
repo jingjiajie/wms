@@ -101,7 +101,8 @@
             // 
             this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.comboBoxSearchCondition.Items.AddRange(new object[] {            
+            this.comboBoxSearchCondition.Items.AddRange(new object[] {  
+                "无",
             "供货零件代号"
             ,"零件名"});
             this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";

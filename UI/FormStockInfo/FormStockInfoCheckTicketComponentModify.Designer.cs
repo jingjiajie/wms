@@ -38,6 +38,7 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonBatchAdd = new System.Windows.Forms.Button();
             this.buttonAddAll = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonAlter = new System.Windows.Forms.Button();
@@ -161,7 +162,8 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.buttonAddAll, 1, 4);
+            this.tableLayoutPanel4.Controls.Add(this.buttonBatchAdd, 1, 4);
+            this.tableLayoutPanel4.Controls.Add(this.buttonAddAll, 1, 5);
             this.tableLayoutPanel4.Controls.Add(this.buttonDelete, 1, 3);
             this.tableLayoutPanel4.Controls.Add(this.buttonAlter, 1, 2);
             this.tableLayoutPanel4.Controls.Add(this.buttonAdd, 1, 1);
@@ -169,15 +171,39 @@
             this.tableLayoutPanel4.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 6;
+            this.tableLayoutPanel4.RowCount = 7;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(192, 197);
             this.tableLayoutPanel4.TabIndex = 6;
+            // 
+            // buttonBatchAdd
+            // 
+            this.buttonBatchAdd.BackColor = System.Drawing.Color.White;
+            this.buttonBatchAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonBatchAdd.BackgroundImage")));
+            this.buttonBatchAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonBatchAdd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonBatchAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.buttonBatchAdd.FlatAppearance.BorderSize = 0;
+            this.buttonBatchAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBatchAdd.Image = ((System.Drawing.Image)(resources.GetObject("buttonBatchAdd.Image")));
+            this.buttonBatchAdd.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonBatchAdd.Location = new System.Drawing.Point(12, 123);
+            this.buttonBatchAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonBatchAdd.Name = "buttonBatchAdd";
+            this.buttonBatchAdd.Size = new System.Drawing.Size(168, 32);
+            this.buttonBatchAdd.TabIndex = 2;
+            this.buttonBatchAdd.Text = "   批量添加条目";
+            this.buttonBatchAdd.UseVisualStyleBackColor = false;
+            this.buttonBatchAdd.Click += new System.EventHandler(this.buttonBatchAdd_Click);
+            this.buttonBatchAdd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonBatchAdd_MouseDown);
+            this.buttonBatchAdd.MouseEnter += new System.EventHandler(this.buttonBatchAdd_MouseEnter);
+            this.buttonBatchAdd.MouseLeave += new System.EventHandler(this.buttonBatchAdd_MouseLeave);
             // 
             // buttonAddAll
             // 
@@ -190,10 +216,10 @@
             this.buttonAddAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAddAll.Image = ((System.Drawing.Image)(resources.GetObject("buttonAddAll.Image")));
             this.buttonAddAll.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAddAll.Location = new System.Drawing.Point(12, 153);
+            this.buttonAddAll.Location = new System.Drawing.Point(12, 163);
             this.buttonAddAll.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAddAll.Name = "buttonAddAll";
-            this.buttonAddAll.Size = new System.Drawing.Size(168, 42);
+            this.buttonAddAll.Size = new System.Drawing.Size(168, 32);
             this.buttonAddAll.TabIndex = 1;
             this.buttonAddAll.Text = "     添加所有库存条目";
             this.buttonAddAll.UseVisualStyleBackColor = false;
@@ -213,10 +239,10 @@
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDelete.Image = ((System.Drawing.Image)(resources.GetObject("buttonDelete.Image")));
             this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonDelete.Location = new System.Drawing.Point(12, 103);
+            this.buttonDelete.Location = new System.Drawing.Point(12, 83);
             this.buttonDelete.Margin = new System.Windows.Forms.Padding(4);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(168, 42);
+            this.buttonDelete.Size = new System.Drawing.Size(168, 32);
             this.buttonDelete.TabIndex = 4;
             this.buttonDelete.Text = "删除条目";
             this.buttonDelete.UseVisualStyleBackColor = false;
@@ -236,10 +262,10 @@
             this.buttonAlter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAlter.Image = ((System.Drawing.Image)(resources.GetObject("buttonAlter.Image")));
             this.buttonAlter.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonAlter.Location = new System.Drawing.Point(12, 53);
+            this.buttonAlter.Location = new System.Drawing.Point(12, 43);
             this.buttonAlter.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAlter.Name = "buttonAlter";
-            this.buttonAlter.Size = new System.Drawing.Size(168, 42);
+            this.buttonAlter.Size = new System.Drawing.Size(168, 32);
             this.buttonAlter.TabIndex = 1;
             this.buttonAlter.Text = "修改条目";
             this.buttonAlter.UseVisualStyleBackColor = false;
@@ -262,7 +288,7 @@
             this.buttonAdd.Location = new System.Drawing.Point(12, 3);
             this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(168, 42);
+            this.buttonAdd.Size = new System.Drawing.Size(168, 32);
             this.buttonAdd.TabIndex = 0;
             this.buttonAdd.Text = "添加条目";
             this.buttonAdd.UseVisualStyleBackColor = false;
@@ -387,5 +413,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.Panel panelPager;
+        private System.Windows.Forms.Button buttonBatchAdd;
     }
 }
