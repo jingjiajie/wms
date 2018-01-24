@@ -131,7 +131,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true, ImportVisible = false, Import = false},
             new KeyName(){Name="确认人", Key = "ConfirmPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员", Import = false},
             new KeyName(){Name="厂商批号", Key="ManufactureNo",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="存货日期", Key="InventoryDate",Visible=true,Editable=true,Save=true, NotNull = true},
+            new KeyName(){Name="存货日期", Key="InventoryDate",Visible=true,Editable=true,Save=true, NotNull = false},
             new KeyName(){Name="生产日期", Key="ManufactureDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="失效日期", Key="ExpiryDate",Visible=true,Editable=true,Save=true},
             new KeyName(){Name="物权属性", Key="RealRightProperty",Visible=true,Editable=true,Save=true},

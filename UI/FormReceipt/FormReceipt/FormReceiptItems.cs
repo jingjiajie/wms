@@ -518,6 +518,11 @@ namespace WMS.UI
             }
             else
             {
+                if (receiptTicketItem.InventoryDate == null)
+                {
+                    MessageBox.Show("存货日期不能为空！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 wmsEntities.ReceiptTicketItem.Add(receiptTicketItem);
                 new Thread(() =>
                 {
@@ -985,7 +990,10 @@ namespace WMS.UI
                     }
                     results[i].ConfirmPersonID = personView.ID;
                 }
-
+                if (results[i].InventoryDate == null)
+                {
+                    results[i].InventoryDate = DateTime.Now;
+                }
                 results[i].ReceiptTicketID = this.receiptTicketID;
                 results[i].State = "待收货";
                 results[i].RefuseAmount = results[i].RefuseUnitAmount * results[i].RefuseUnitCount;

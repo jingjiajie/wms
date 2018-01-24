@@ -32,7 +32,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.reoGridControlSubmissionItems = new unvell.ReoGrid.ReoGridControl();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonAllNoPass = new System.Windows.Forms.Button();
             this.buttonAllPass = new System.Windows.Forms.Button();
             this.buttonModify = new System.Windows.Forms.Button();
             this.buttonFinished = new System.Windows.Forms.Button();
@@ -59,7 +58,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 203);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(968, 298);
+            this.panel2.Size = new System.Drawing.Size(968, 287);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlSubmissionItems
@@ -79,7 +78,7 @@
             this.reoGridControlSubmissionItems.SheetTabVisible = true;
             this.reoGridControlSubmissionItems.SheetTabWidth = 163;
             this.reoGridControlSubmissionItems.ShowScrollEndSpacing = true;
-            this.reoGridControlSubmissionItems.Size = new System.Drawing.Size(968, 298);
+            this.reoGridControlSubmissionItems.Size = new System.Drawing.Size(968, 287);
             this.reoGridControlSubmissionItems.TabIndex = 9;
             this.reoGridControlSubmissionItems.Text = "reoGridControlSubmissionItems";
             // 
@@ -88,42 +87,21 @@
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.InactiveBorder;
             this.tableLayoutPanel3.ColumnCount = 1;
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Controls.Add(this.buttonAllNoPass, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.buttonAllPass, 0, 2);
-            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 0, 4);
+            this.tableLayoutPanel3.Controls.Add(this.buttonModify, 0, 3);
             this.tableLayoutPanel3.Controls.Add(this.buttonFinished, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 6;
+            this.tableLayoutPanel3.RowCount = 5;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(194, 188);
             this.tableLayoutPanel3.TabIndex = 4;
-            // 
-            // buttonAllNoPass
-            // 
-            this.buttonAllNoPass.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("buttonAllNoPass.BackgroundImage")));
-            this.buttonAllNoPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.buttonAllNoPass.FlatAppearance.BorderSize = 0;
-            this.buttonAllNoPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.buttonAllNoPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.buttonAllNoPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAllNoPass.Location = new System.Drawing.Point(3, 97);
-            this.buttonAllNoPass.Name = "buttonAllNoPass";
-            this.buttonAllNoPass.Size = new System.Drawing.Size(188, 44);
-            this.buttonAllNoPass.TabIndex = 1;
-            this.buttonAllNoPass.Text = "所有条目不合格";
-            this.buttonAllNoPass.UseVisualStyleBackColor = true;
-            this.buttonAllNoPass.Visible = false;
-            this.buttonAllNoPass.Click += new System.EventHandler(this.buttonAllNoPass_Click);
-            this.buttonAllNoPass.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonAllNoPass_MouseDown);
-            this.buttonAllNoPass.MouseEnter += new System.EventHandler(this.buttonAllNoPass_MouseEnter);
-            this.buttonAllNoPass.MouseLeave += new System.EventHandler(this.buttonAllNoPass_MouseLeave);
             // 
             // buttonAllPass
             // 
@@ -133,7 +111,7 @@
             this.buttonAllPass.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonAllPass.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonAllPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAllPass.Location = new System.Drawing.Point(3, 47);
+            this.buttonAllPass.Location = new System.Drawing.Point(3, 72);
             this.buttonAllPass.Name = "buttonAllPass";
             this.buttonAllPass.Size = new System.Drawing.Size(188, 44);
             this.buttonAllPass.TabIndex = 0;
@@ -157,7 +135,7 @@
             this.buttonModify.Font = new System.Drawing.Font("黑体", 10F);
             this.buttonModify.Image = ((System.Drawing.Image)(resources.GetObject("buttonModify.Image")));
             this.buttonModify.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonModify.Location = new System.Drawing.Point(3, 147);
+            this.buttonModify.Location = new System.Drawing.Point(3, 122);
             this.buttonModify.Name = "buttonModify";
             this.buttonModify.Size = new System.Drawing.Size(188, 44);
             this.buttonModify.TabIndex = 2;
@@ -177,7 +155,7 @@
             this.buttonFinished.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.buttonFinished.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.buttonFinished.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonFinished.Location = new System.Drawing.Point(3, -3);
+            this.buttonFinished.Location = new System.Drawing.Point(3, 22);
             this.buttonFinished.Name = "buttonFinished";
             this.buttonFinished.Size = new System.Drawing.Size(188, 44);
             this.buttonFinished.TabIndex = 3;
@@ -257,20 +235,20 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 504);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 493);
             this.tableLayoutPanel1.TabIndex = 15;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(114, 20);
+            this.labelStatus.Size = new System.Drawing.Size(182, 31);
             this.labelStatus.Text = "查看收货单条目";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // statusStrip1
@@ -279,16 +257,16 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(974, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(974, 36);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // FormSubmissionItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(974, 529);
@@ -330,7 +308,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Button buttonModify;
         private System.Windows.Forms.Button buttonAllPass;
-        private System.Windows.Forms.Button buttonAllNoPass;
         private System.Windows.Forms.Button buttonFinished;
     }
 }
