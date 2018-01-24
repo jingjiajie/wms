@@ -17,9 +17,13 @@ namespace WMS.UI
         private WMSEntities wmsEntities = new WMSEntities();
         private int defaultStockInfoID = -1;
         private Action<int> selectFinishCallback = null;
+        private Action<int[]> multiselectFinishedCallback = null;
         private PagerWidget<SupplyView> pagerWidget = null;
         private int projectID = -1;
-        private int warehouseID = -1; 
+        private int warehouseID = -1;
+
+        public static Mode SelectMode = Mode.NORMAL;
+        public enum Mode { NORMAL,MULTISELECT};
 
         static Point staticPos = new Point(-1, -1);
 
@@ -29,7 +33,7 @@ namespace WMS.UI
             this.defaultStockInfoID = defaultStockInfoID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
-        } 
+        }
 
         public FormSelectSupply()
         {
@@ -43,23 +47,30 @@ namespace WMS.UI
             this.selectFinishCallback = selectFinishedCallback;
         }
 
+        public void SetMultiselectFinishedCallback(Action<int[]> callback)
+        {
+            this.multiselectFinishedCallback = callback;
+        }
+
         private void InitComponents()
         {
-            
-            
-            this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlMain, SupplyViewMetaData.KeyNames, this.projectID, this.warehouseID);
+            if (SelectMode == Mode.NORMAL)
+            {
+                this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlMain, SupplyViewMetaData.KeyNames, this.projectID, this.warehouseID);
+            }
+            else
+            {
+                this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlMain, SupplyViewMetaData.KeyNames, this.projectID, this.warehouseID, PagerWidget<SupplyView>.Mode.MULTISELECT);
+            }
             this.panelPagerWidget.Controls.Add(this.pagerWidget);
             this.pagerWidget.Show();
             this.comboBoxSearchCondition.SelectedIndex  = 0;
-
         }
 
         private void FormJobTicketSelectStockInfo_Load(object sender, EventArgs e)
         {
             InitComponents();
-  
             this.Search();
-
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -69,8 +80,6 @@ namespace WMS.UI
 
         private void Search(bool savePage = false, int selectID = -1, Action<SupplyView[]> callback = null)
         {
-
-            
             string key = "";
             string value = this.textBoxSearchContition.Text;
             this.pagerWidget.ClearCondition();
@@ -79,19 +88,14 @@ namespace WMS.UI
 
                 key = "代号";
 
-            } 
+            }
             else
             {
                 key = "零件名";
             }
-
-
             this.pagerWidget.AddCondition("是否历史信息", "0");
-               this.pagerWidget.AddCondition(key, value);
-               this.pagerWidget.Search(savePage, selectID, callback);
-            
-
-
+            this.pagerWidget.AddCondition(key, value);
+            this.pagerWidget.Search(savePage, selectID, callback);
         }
 
         private void buttonSelect_Click(object sender, EventArgs e)
@@ -101,13 +105,31 @@ namespace WMS.UI
 
         private void SelectItem()
         {
-            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if (ids.Length != 1)
+            int[] ids;
+            if (SelectMode == Mode.NORMAL)
             {
-                MessageBox.Show("请选择一项");
+                ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            }
+            else
+            {
+                ids = this.pagerWidget.GetSelectedIDs();
+            }
+
+            if (ids.Length <= 0)
+            {
+                MessageBox.Show("请选择至少一项","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            this.selectFinishCallback?.Invoke(ids[0]);
+
+            if (SelectMode == Mode.NORMAL)
+            {
+                this.selectFinishCallback?.Invoke(ids[0]);
+            }
+            else
+            {
+                this.multiselectFinishedCallback?.Invoke(ids);
+            }
+
             this.Hide();
         }
 
