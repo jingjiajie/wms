@@ -412,7 +412,7 @@ namespace WMS.UI
 
         {
             if (this.FormSelectSupply == null)
-            { this.FormSelectSupply = new FormSelectSupply();
+            { this.FormSelectSupply = new FormSelectSupply(this.projectID ,this.warehouseID );
 
             }
             

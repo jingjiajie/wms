@@ -84,9 +84,9 @@ namespace WMS.UI
             {
                 key = "零件名";
             }
-               
 
-               
+
+            this.pagerWidget.AddCondition("是否历史信息", "0");
                this.pagerWidget.AddCondition(key, value);
                this.pagerWidget.Search(savePage, selectID, callback);
             
