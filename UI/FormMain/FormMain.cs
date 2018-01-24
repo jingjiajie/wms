@@ -887,7 +887,7 @@ namespace WMS.UI
         {
             if (user.SupplierID == null)
             {
-                FormSupplyRemind = new FormSupplyRemind();
+                 FormSupplyRemind = new FormSupplyRemind();                
                 FormSupplyRemind.Show();
             }
         }

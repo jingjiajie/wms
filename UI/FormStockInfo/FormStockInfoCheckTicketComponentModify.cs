@@ -1065,6 +1065,9 @@ namespace WMS.UI
                 {
                     wmsEntities = new WMSEntities();
                     supplyAll = (from kn in wmsEntities.SupplyView
+                                 where kn.ProjectID ==this.projectID &&
+                                 kn.WarehouseID ==this.warehouseID &&
+                                 kn.IsHistory ==0
                                  select kn).ToArray();
 
                     stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
@@ -1153,6 +1156,8 @@ namespace WMS.UI
                     {
                         stockinfo = (from kn in wmsEntities.StockInfoView
                                      where kn.SupplyNo == supplyNO
+                                     &&kn.ProjectID ==this.projectID &&
+                                     kn.WarehouseID ==this.warehouseID 
                                      select kn).ToArray();
                         for (int j = 0; j < stockinfo.Length; j++)
                         {
