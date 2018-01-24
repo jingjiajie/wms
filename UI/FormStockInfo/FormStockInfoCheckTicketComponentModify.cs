@@ -428,11 +428,12 @@ namespace WMS.UI
         {
             if (this.FormSelectSupply == null)
             { this.FormSelectSupply = new FormSelectSupply(this.projectID ,this.warehouseID );
-
+                
             }
-            
-            
+
+
             //this.projectID,this.warehouseID,this.stockinfoid );
+            FormSelectSupply.SelectMode = FormSelectSupply.Mode.NORMAL;
             this.FormSelectSupply.SetSelectFinishedCallback((selectedID) =>
             {
                  
