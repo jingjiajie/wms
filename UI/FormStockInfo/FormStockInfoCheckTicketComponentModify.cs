@@ -178,15 +178,30 @@ namespace WMS.UI
             TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
 
             TextBox textBoxtDifference = (TextBox)this.Controls.Find("textBoxDifference", true)[0];
-
+            decimal result;
             if (textBoxExcpetedOverflowAreaAmount.Text != "" && textBoxRealOverflowAreaAmount.Text != "" && textBoxExpectedShipmentAreaAmount.Text !="" && textBoxRealShipmentAreaAmount.Text != "")
 
-                
-
-
             {
+
+
+
+
+                if (Decimal.TryParse(textBoxRealOverflowAreaAmount.Text, out result) == false)
+
+
+                {
+                    MessageBox.Show("请输入正确的实际溢库区数值", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (Decimal.TryParse(textBoxRealShipmentAreaAmount.Text, out result) == false)
+
+
+                {
+                    MessageBox.Show("请输入正确的实际发货区数值", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 decimal  ExcpetedOverflowAreaAmount = Convert.ToDecimal (textBoxExcpetedOverflowAreaAmount.Text);
-               decimal  ExpectedShipmentAreaAmount = Convert.ToDecimal (textBoxExpectedShipmentAreaAmount.Text);
+                decimal  ExpectedShipmentAreaAmount = Convert.ToDecimal (textBoxExpectedShipmentAreaAmount.Text);
                 decimal  RealOverflowAreaAmount= Convert.ToDecimal (textBoxRealOverflowAreaAmount.Text);
                 decimal  RealShipmentAreaAmount = Convert.ToDecimal (textBoxRealShipmentAreaAmount.Text);
 
