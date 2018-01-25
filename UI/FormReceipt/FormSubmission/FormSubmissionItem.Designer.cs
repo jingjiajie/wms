@@ -58,7 +58,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 203);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(968, 287);
+            this.panel2.Size = new System.Drawing.Size(968, 298);
             this.panel2.TabIndex = 1;
             // 
             // reoGridControlSubmissionItems
@@ -78,7 +78,7 @@
             this.reoGridControlSubmissionItems.SheetTabVisible = true;
             this.reoGridControlSubmissionItems.SheetTabWidth = 163;
             this.reoGridControlSubmissionItems.ShowScrollEndSpacing = true;
-            this.reoGridControlSubmissionItems.Size = new System.Drawing.Size(968, 287);
+            this.reoGridControlSubmissionItems.Size = new System.Drawing.Size(968, 298);
             this.reoGridControlSubmissionItems.TabIndex = 9;
             this.reoGridControlSubmissionItems.Text = "reoGridControlSubmissionItems";
             // 
@@ -235,20 +235,22 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 493);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 504);
             this.tableLayoutPanel1.TabIndex = 15;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // labelStatus
             // 
+            this.labelStatus.BackColor = System.Drawing.SystemColors.Control;
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(182, 31);
+            this.labelStatus.Size = new System.Drawing.Size(114, 20);
             this.labelStatus.Text = "查看收货单条目";
             // 
             // toolStripStatusLabel1
             // 
+            this.toolStripStatusLabel1.BackColor = System.Drawing.SystemColors.Control;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 20);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // statusStrip1
@@ -257,16 +259,16 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 493);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 504);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(974, 36);
+            this.statusStrip1.Size = new System.Drawing.Size(974, 25);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
             // FormSubmissionItem
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(974, 529);

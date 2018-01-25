@@ -147,6 +147,8 @@
             this.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormPutOutTicketChooseExcelType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "选择报表类型";

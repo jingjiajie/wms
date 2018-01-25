@@ -267,8 +267,8 @@ namespace WMS.UI
             this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width );
             this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
             this.textBox1.Text = "";
-            this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
-            this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
+            //this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
+            //this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
             this.ShowInTaskbar = false;///使窗体不显示在任务栏
             this.sb = new StringBuilder();
             ClearTextBox();

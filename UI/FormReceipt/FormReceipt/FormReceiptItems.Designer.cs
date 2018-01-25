@@ -217,14 +217,27 @@
             // 
             // buttonImport
             // 
+            this.buttonImport.BackColor = System.Drawing.Color.White;
+            this.buttonImport.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
+            this.buttonImport.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonImport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonImport.FlatAppearance.BorderSize = 0;
+            this.buttonImport.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.buttonImport.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.buttonImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonImport.Font = new System.Drawing.Font("微软雅黑", 10.125F);
+            this.buttonImport.Image = ((System.Drawing.Image)(resources.GetObject("buttonImport.Image")));
+            this.buttonImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonImport.Location = new System.Drawing.Point(15, 82);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(196, 53);
             this.buttonImport.TabIndex = 3;
             this.buttonImport.Text = "批量导入";
-            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.UseVisualStyleBackColor = false;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            this.buttonImport.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonImport_MouseDown);
+            this.buttonImport.MouseEnter += new System.EventHandler(this.buttonImport_MouseEnter);
+            this.buttonImport.MouseLeave += new System.EventHandler(this.buttonImport_MouseLeave);
             // 
             // reoGridControlReceiptItems
             // 
@@ -243,7 +256,7 @@
             this.reoGridControlReceiptItems.SheetTabVisible = true;
             this.reoGridControlReceiptItems.SheetTabWidth = 163;
             this.reoGridControlReceiptItems.ShowScrollEndSpacing = true;
-            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(964, 147);
+            this.reoGridControlReceiptItems.Size = new System.Drawing.Size(964, 169);
             this.reoGridControlReceiptItems.TabIndex = 11;
             this.reoGridControlReceiptItems.Text = "reoGridControlRecieptItems";
             this.reoGridControlReceiptItems.Click += new System.EventHandler(this.reoGridControlReceiptItems_Click_1);
@@ -267,14 +280,14 @@
             // 
             this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 25);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(182, 25);
+            this.labelStatus.Size = new System.Drawing.Size(114, 25);
             this.labelStatus.Text = "查看收货单条目";
             // 
             // tableLayoutPanel1
@@ -292,22 +305,23 @@
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 286F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(974, 529);
             this.tableLayoutPanel1.TabIndex = 13;
             // 
             // panel2
             // 
+            this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 442);
+            this.panel2.Location = new System.Drawing.Point(3, 464);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(968, 54);
+            this.panel2.Size = new System.Drawing.Size(968, 32);
             this.panel2.TabIndex = 13;
             // 
             // FormReceiptItems
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanel1);

@@ -891,10 +891,30 @@ namespace WMS.UI
             buttonModify.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
 
+
+
+        private void buttonImport_MouseEnter(object sender, EventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonW_s;
+        }
+
+        private void buttonImport_MouseLeave(object sender, EventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonW_q;
+        }
+
+        private void buttonImport_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+
+
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
+
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
@@ -1064,6 +1084,9 @@ namespace WMS.UI
         {
 
         }
+
+
+        
     }
     /*
                         StockInfo stockInfo = new StockInfo();

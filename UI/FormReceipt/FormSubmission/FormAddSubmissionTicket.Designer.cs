@@ -46,8 +46,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.00001F));
             this.tableLayoutPanel1.Controls.Add(this.buttonOK, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 222);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(2, 243);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
@@ -68,7 +68,7 @@
             this.buttonOK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonOK.Font = new System.Drawing.Font("黑体", 10F);
             this.buttonOK.Location = new System.Drawing.Point(427, 33);
-            this.buttonOK.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(2);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(210, 64);
             this.buttonOK.TabIndex = 0;
@@ -94,18 +94,19 @@
             this.tableLayoutPanelTextBoxes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelTextBoxes.Font = new System.Drawing.Font("黑体", 10F);
             this.tableLayoutPanelTextBoxes.Location = new System.Drawing.Point(2, 24);
-            this.tableLayoutPanelTextBoxes.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tableLayoutPanelTextBoxes.Margin = new System.Windows.Forms.Padding(2);
             this.tableLayoutPanelTextBoxes.Name = "tableLayoutPanelTextBoxes";
-            this.tableLayoutPanelTextBoxes.RowCount = 3;
+            this.tableLayoutPanelTextBoxes.RowCount = 4;
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
             this.tableLayoutPanelTextBoxes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 12F));
-            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(1065, 198);
+            this.tableLayoutPanelTextBoxes.Size = new System.Drawing.Size(1065, 219);
             this.tableLayoutPanelTextBoxes.TabIndex = 4;
             // 
             // groupBox2
@@ -116,10 +117,10 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox2.Size = new System.Drawing.Size(1069, 345);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(1069, 366);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "修该送检单";
@@ -128,10 +129,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1069, 345);
+            this.ClientSize = new System.Drawing.Size(1069, 366);
             this.Controls.Add(this.groupBox2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormAddSubmissionTicket";
