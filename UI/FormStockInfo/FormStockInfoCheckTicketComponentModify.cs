@@ -268,6 +268,7 @@ namespace WMS.UI
         private void RefreshTextBoxes()
         {
             this.ClearTextBoxes();
+            
             var worksheet = this.reoGridControlMain.Worksheets[0];
 
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
@@ -644,9 +645,10 @@ namespace WMS.UI
             wmsEntities.SaveChanges();
             this.labelStatus.Text = "正在添加";
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //this.ClearTextBoxes();
+            //Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
 
 
-            
 
             this.Search(StockInfoCheckTicketItem.ID);
             this.labelStatus.Text = "盘点单条目";
@@ -1414,6 +1416,8 @@ namespace WMS.UI
                         }));
                     }
                     MessageBox.Show("批量添加条目成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var worksheet = this.reoGridControlMain.Worksheets [0] ;
+                 
 
                     if (this.mode == FormMode.CHECK && this.addFinishedCallback != null)
                     {
