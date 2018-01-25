@@ -32,10 +32,10 @@ namespace WMS.UI
         public FormJobTicket(int userID,int projectID,int warehouseID)
         {
             InitializeComponent();
-            InitComponents();
             this.userID = userID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
+            InitComponents();
         }
 
         protected override CreateParams CreateParams

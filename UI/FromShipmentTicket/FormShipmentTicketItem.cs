@@ -716,14 +716,14 @@ namespace WMS.UI
                         confirmPersonID = confirmPerson.ID;
                     }
 
-                    decimal totalShipmentableAmount = stockInfoViews.Sum((stockInfoView) => {
+                    decimal totalShipmentableAmountNoUnit = stockInfoViews.Sum((stockInfoView) => {
                         decimal shipmentableAmount = (stockInfoView.ShipmentAreaAmount ?? 0) - stockInfoView.ScheduledShipmentAmount;
                         shipmentableAmount = shipmentableAmount < 0 ? 0 : shipmentableAmount;
                         return shipmentableAmount;
                     });
-                    if (totalShipmentableAmount < results[i].ShipmentAmount * results[i].UnitAmount)
+                    if (totalShipmentableAmountNoUnit < results[i].ShipmentAmount * results[i].UnitAmount)
                     {
-                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存可发货数：{2}）", i + 1, componentName, Utilities.DecimalToString(totalShipmentableAmount)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存可发货数：{2}）", i + 1, componentName, Utilities.DecimalToString(totalShipmentableAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     results[i].ShipmentTicketID = this.shipmentTicketID;
