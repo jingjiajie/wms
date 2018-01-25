@@ -115,7 +115,7 @@ namespace WMS.UI.FormReceipt
         private void InitPanel()
         {
             Utilities.CreateEditPanel(this.tableLayoutPanel2, ReceiptMetaData.putawayTicketKeyName);
-            
+
             this.PersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxPersonName", "Name");
             if (this.formMode == FormMode.ADD)
             {
@@ -131,7 +131,7 @@ namespace WMS.UI.FormReceipt
                     return;
                 }
                 Utilities.CopyPropertiesToTextBoxes(putawayTicketView, this);
-                
+
             }
         }
 
@@ -303,7 +303,7 @@ namespace WMS.UI.FormReceipt
         private void OK_Click(object sender, EventArgs e)
         {
             WMSEntities wmsEntities = new WMSEntities();
-            
+
             /*
             List<int> ids = SelectReceiptTicketItem();
             if (ids.Count == 0)
@@ -350,7 +350,7 @@ namespace WMS.UI.FormReceipt
                     }
                     if (receiptTicket.HasPutawayTicket == "没有生成上架单")
                     {
-                        if(MessageBox.Show("生成上架单后，该收货单条目、状态都不能更改，是否继续","提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question,MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification) == DialogResult.No)
+                        if (MessageBox.Show("生成上架单后，该收货单条目、状态都不能更改，是否继续", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification) == DialogResult.No)
                         {
                             return;
                         }
@@ -398,7 +398,7 @@ namespace WMS.UI.FormReceipt
                             ///////////////////////////////////////////////////////////////
 
                             wmsEntities.SaveChanges();
-                            foreach (KeyValuePair<int ,decimal> ripa in receiptItemPutawayAmount)
+                            foreach (KeyValuePair<int, decimal> ripa in receiptItemPutawayAmount)
                             {
                                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == ripa.Key select rti).FirstOrDefault();
                                 if (ripa.Value < 0)
@@ -414,19 +414,19 @@ namespace WMS.UI.FormReceipt
                                     putawayTicketItem.ScheduledMoveCount = ripa.Value;
                                     if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - putawayTicketItem.ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                                     {
-                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                                         return;
                                     }
                                     if (receiptTicketItem.HasPutwayAmount == null)
                                     {
                                         receiptTicketItem.HasPutwayAmount = 0;
                                     }
-                                    
+
                                     if (putawayTicketItem.ScheduledMoveCount != null)
                                     {
                                         receiptTicketItem.HasPutwayAmount += putawayTicketItem.ScheduledMoveCount;
                                     }
-                                    
+
                                     //receiptTicketItem.HasPutwayAmount += putawayTicketItem.ScheduledMoveCount;
                                     //putawayTicketItem.HasPutawayAmount += ripa.Value;
                                     putawayTicketItem.PutawayTicketID = putawayTicket.ID;
@@ -460,7 +460,7 @@ namespace WMS.UI.FormReceipt
                             }*/
                             wmsEntities.SaveChanges();
                             int n = 0;
-                            foreach(ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+                            foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
                             {
                                 if (rti.HasPutwayAmount == rti.UnitCount)
                                 {
@@ -635,7 +635,7 @@ namespace WMS.UI.FormReceipt
                 results[i].State = "待上架";
                 if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - results[i].ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                 {
-                    MessageBox.Show("第" +(i+1) + "行中，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    MessageBox.Show("第" + (i + 1) + "行中，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
                     return false;
                 }
                 if (receiptTicketItem.HasPutwayAmount == null)
@@ -663,7 +663,7 @@ namespace WMS.UI.FormReceipt
                 wmsEntities.PutawayTicketItem.Add(results[i]);
             }
             PutawayTicket putawayTicket = CreatePutawayTicket();
-            foreach(PutawayTicketItem pti in putawayTicketItemList)
+            foreach (PutawayTicketItem pti in putawayTicketItemList)
             {
                 pti.PutawayTicketID = putawayTicket.ID;
             }
@@ -701,7 +701,7 @@ namespace WMS.UI.FormReceipt
 
         private void importFinishedCallback()
         {
-            
+
         }
 
         private PutawayTicket CreatePutawayTicket()
@@ -773,6 +773,106 @@ namespace WMS.UI.FormReceipt
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return null;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            ReceiptTicket receiptTicket = (from rti in wmsEntities.ReceiptTicket where rti.ID == this.receiptTicketID select rti).FirstOrDefault();
+            if (receiptTicket == null)
+            {
+                MessageBox.Show("该收货单已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            List<PutawayTicketItem> putawayTicketItemList = new List<PutawayTicketItem>();
+            foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
+            {
+                if (rti.HasPutwayAmount < rti.UnitCount || rti.HasPutwayAmount == null)
+                {
+                    PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
+                    
+                    putawayTicketItem.ReceiptTicketItemID = rti.ID;
+                    putawayTicketItem.ScheduledMoveCount = rti.UnitCount - (rti.HasPutwayAmount == null ? 0 : (decimal)rti.HasPutwayAmount);
+                    rti.HasPutwayAmount = rti.UnitCount;
+                    putawayTicketItem.State = "待上架";
+                    putawayTicketItem.UnitCount = rti.UnitCount;
+                    putawayTicketItem.UnitAmount = rti.UnitAmount;
+                    putawayTicketItemList.Add(putawayTicketItem);
+                    wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
+                }
+            }
+            if (putawayTicketItemList.Count != 0)
+            {
+                PutawayTicket putawayTicket = new PutawayTicket();
+                string errorMessage;
+                if (Utilities.CopyTextBoxTextsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName, out errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                Utilities.CopyComboBoxsToProperties(this, putawayTicket, ReceiptMetaData.putawayTicketKeyName);
+                putawayTicket.CreateTime = DateTime.Now;
+                putawayTicket.ReceiptTicketID = this.receiptTicketID;
+                putawayTicket.CreateUserID = this.userID;
+                putawayTicket.LastUpdateTime = DateTime.Now;
+                putawayTicket.LastUpdateUserID = this.userID;
+                putawayTicket.ProjectID = receiptTicket.ProjectID;
+                putawayTicket.WarehouseID = receiptTicket.WarehouseID;
+                putawayTicket.State = "待上架";
+                putawayTicket.PersonID = this.PersonIDGetter();
+                receiptTicket.HasPutawayTicket = "全部生成上架单";
+                wmsEntities.PutawayTicket.Add(putawayTicket);
+                new Thread(() =>
+                {
+                    try
+                    {
+                        wmsEntities.SaveChanges();
+                        //putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
+
+                        ////////////////////////////
+                        if (string.IsNullOrWhiteSpace(putawayTicket.No))
+                        {
+                            if (putawayTicket.CreateTime.HasValue == false)
+                            {
+                                MessageBox.Show("单号生成失败（未知创建日期）！请手动填写单号", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+
+                            DateTime createDay = new DateTime(putawayTicket.CreateTime.Value.Year, putawayTicket.CreateTime.Value.Month, putawayTicket.CreateTime.Value.Day);
+                            DateTime nextDay = createDay.AddDays(1);
+                            int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from s in wmsEntities.PutawayTicket
+                                                                                  where s.CreateTime >= createDay && s.CreateTime < nextDay
+                                                                                  select s.No).ToArray());
+                            if (maxRankOfToday == -1)
+                            {
+                                MessageBox.Show("单号生成失败！请手动填写单号", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            putawayTicket.No = Utilities.GenerateTicketNo("P", putawayTicket.CreateTime.Value, maxRankOfToday + 1);
+                        }
+
+                        ///////////////////////////////////////////////////////////////
+                        foreach(PutawayTicketItem pti in putawayTicketItemList)
+                        {
+                            pti.PutawayTicketID = putawayTicket.ID;
+                        }
+                        wmsEntities.SaveChanges();
+                        this.Invoke(new Action(() =>
+                        {
+                            this.Search();
+                            this.CallBack();
+                            MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }));
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
+                }).Start();
+
+            }
+
         }
     }
 }

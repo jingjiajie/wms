@@ -30,16 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPutawayNew));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.reoGridControlUser = new unvell.ReoGrid.ReoGridControl();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.OK = new System.Windows.Forms.Button();
             this.buttonImport = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -61,25 +62,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1509, 950);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
-            // reoGridControlUser
+            // groupBox1
             // 
-            this.reoGridControlUser.BackColor = System.Drawing.Color.White;
-            this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(4, 5);
-            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.reoGridControlUser.Name = "reoGridControlUser";
-            this.reoGridControlUser.RowHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Script = null;
-            this.reoGridControlUser.SheetTabContextMenuStrip = null;
-            this.reoGridControlUser.SheetTabNewButtonVisible = true;
-            this.reoGridControlUser.SheetTabVisible = true;
-            this.reoGridControlUser.SheetTabWidth = 90;
-            this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(1501, 479);
-            this.reoGridControlUser.TabIndex = 12;
-            this.reoGridControlUser.Text = "reoGridControl1";
+            this.groupBox1.Controls.Add(this.tableLayoutPanel2);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Location = new System.Drawing.Point(3, 492);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1503, 343);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "生成上架单";
             // 
             // tableLayoutPanel2
             // 
@@ -103,6 +95,26 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(1497, 309);
             this.tableLayoutPanel2.TabIndex = 13;
             // 
+            // reoGridControlUser
+            // 
+            this.reoGridControlUser.BackColor = System.Drawing.Color.White;
+            this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Location = new System.Drawing.Point(4, 5);
+            this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.reoGridControlUser.Name = "reoGridControlUser";
+            this.reoGridControlUser.RowHeaderContextMenuStrip = null;
+            this.reoGridControlUser.Script = null;
+            this.reoGridControlUser.SheetTabContextMenuStrip = null;
+            this.reoGridControlUser.SheetTabNewButtonVisible = true;
+            this.reoGridControlUser.SheetTabVisible = true;
+            this.reoGridControlUser.SheetTabWidth = 90;
+            this.reoGridControlUser.ShowScrollEndSpacing = true;
+            this.reoGridControlUser.Size = new System.Drawing.Size(1501, 479);
+            this.reoGridControlUser.TabIndex = 12;
+            this.reoGridControlUser.Text = "reoGridControl1";
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.BackColor = System.Drawing.SystemColors.InactiveBorder;
@@ -114,6 +126,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel3.Controls.Add(this.OK, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonImport, 3, 0);
+            this.tableLayoutPanel3.Controls.Add(this.button1, 2, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 841);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
@@ -155,16 +168,16 @@
             this.buttonImport.UseVisualStyleBackColor = true;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
-            // groupBox1
+            // button1
             // 
-            this.groupBox1.Controls.Add(this.tableLayoutPanel2);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 492);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1503, 343);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "生成上架单";
+            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button1.Location = new System.Drawing.Point(591, 3);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(318, 100);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "全部生成上架单";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // FormPutawayNew
             // 
@@ -180,8 +193,8 @@
             this.Text = "生成上架单";
             this.Load += new System.EventHandler(this.FormPutawayNew_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -196,5 +209,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button buttonImport;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
