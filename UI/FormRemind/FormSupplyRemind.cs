@@ -17,7 +17,8 @@ namespace WMS.UI
         string remind;
 
         public  StringBuilder  sb = new StringBuilder();
-        
+        private int projectID = GlobalData.ProjectID;
+        private int warehouseID = GlobalData.WarehouseID;
         public FormSupplyRemind()
         {
             InitializeComponent();
@@ -37,11 +38,27 @@ namespace WMS.UI
 
         private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this.sb = new StringBuilder();
+            ClearTextBox();
+            RefreshID();
             RemindSupply();
             RemindStock();
             TextDeliver();
             //MessageBox.Show("执行了一次程序");
+        }
+
+
+       public void ClearTextBox()
+        {
+            this.sb = new StringBuilder();
+        }
+
+        public void RefreshID()
+        {
+
+            this.projectID = GlobalData.ProjectID;
+            this.warehouseID = GlobalData.WarehouseID;
+
+
         }
 
         public   void RemindSupply()
@@ -57,6 +74,8 @@ namespace WMS.UI
             try
             {
                 StockInfoView = (from u in wmsEntities.StockInfoView
+                                 where u.ProjectID ==this.projectID &&
+                                 u.WarehouseID ==this.warehouseID 
                                  select u).ToArray();
 
                 if(StockInfoView ==null)
@@ -79,8 +98,13 @@ namespace WMS.UI
                     var SafetyDate1 = (from u in wmsEntities.SupplyView
                                        where u.ComponentName == ComponentName &&
                                        u.SupplierName == SupplierName &&
-                                       u.No == SupplyNo
+                                       u.No == SupplyNo&&u.ProjectID ==this.projectID 
+                                       &&u.WarehouseID ==this.warehouseID 
                                        select u).FirstOrDefault();
+                    if(SafetyDate1 == null)
+                    {
+                        continue;
+                    }
 
                     //到期日期
                     if (SafetyDate1.ValidPeriod == null)
@@ -117,6 +141,8 @@ namespace WMS.UI
             try
             {
                 SupplyView = (from u in wmsEntities.SupplyView
+                              where u.ProjectID ==this.projectID 
+                              &&u.WarehouseID ==this.warehouseID 
                               select u).ToArray();
 
                 if(SupplyView ==null)
@@ -146,7 +172,8 @@ namespace WMS.UI
                     stockInfo = (from kn in wmsEntities.StockInfoView
                                  where kn.ComponentName == ComponentName &&
                                  kn.SupplierName == SupplierName &&
-                                 kn.SupplyNo == SupplyNo
+                                 kn.SupplyNo == SupplyNo&&kn.WarehouseID ==this.warehouseID &&
+                                 kn.ProjectID ==this.projectID 
                                  select kn).ToArray();
                     if (stockInfo == null)
                     {
@@ -232,16 +259,20 @@ namespace WMS.UI
 
         private void FormSupplyRemind_Load(object sender, EventArgs e)
         {
-            double a = 0.35;
-            this.Top = 0;//25
-            this.Left = (int)(a * Screen.PrimaryScreen.Bounds.Width);
-            this.Width = 400;
-            this.Height = 100;//75
+            //double a = 0.35;
+            //this.Top = 0;//25
+            //this.Left = (int)(a * Screen.PrimaryScreen.Bounds.Width);
+            this.Left = 3;
+            this.Top = (int)(0.728 * Screen.PrimaryScreen.Bounds.Height);
+            this.Width = 555;
+            this.Height = 200;//75
             this.textBox1.Text = "";
             this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
             this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
             this.ShowInTaskbar = false;///使窗体不显示在任务栏
             this.sb = new StringBuilder();
+            ClearTextBox();
+            RefreshID();
             RemindSupply();
             RemindStock();
             TextDeliver();

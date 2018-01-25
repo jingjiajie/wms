@@ -30,6 +30,13 @@ namespace WMS.UI
         private DateTime contract_startdate;
         private int reminedays;
         FormSupplyRemind FormSupplyRemind = null;
+        int initx = 0;//≥ı ºleftæ‡¿Î
+        int inity = 0;//≥ı ºtopæ‡¿Î
+        int initbottom;//≥ı ºµ◊æ‡¿Î
+        int initright;
+        int initx1 = 0;//≥ı ºleftæ‡¿Î
+        int inity1 = 0;//≥ı ºtopæ‡¿Î
+         
         //FormSupplyRemind a1 = null;
 
 
@@ -529,6 +536,18 @@ namespace WMS.UI
                             break;
                         }
                     }
+
+                    //Panel PanelObj = new Panel();
+                    ////PanelObj.BackColor = Color.Black;
+                    //this.treeViewLeft.Controls.Add(PanelObj);
+                    //PanelObj.BringToFront();
+                    //FormSupplyRemind = new FormSupplyRemind();
+                    //FormSupplyRemind.TopLevel = false;
+                    //PanelObj.Controls.Add(FormSupplyRemind);
+                    //FormSupplyRemind.Show();
+
+
+
                 }));
             }).Start();
 
@@ -830,6 +849,15 @@ namespace WMS.UI
             this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
             GlobalData.ProjectID = this.project.ID;
             this.panelRight.Controls.Clear();
+            if (FormSupplyRemind != null)
+            {
+                FormSupplyRemind.ClearTextBox();
+                FormSupplyRemind.RefreshID();
+                FormSupplyRemind.RemindSupply();
+                FormSupplyRemind.RemindStock();
+                FormSupplyRemind.TextDeliver();
+            }
+
             this.treeViewLeft.SelectedNode = null;
         }
 
@@ -838,6 +866,14 @@ namespace WMS.UI
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
             GlobalData.WarehouseID = this.warehouse.ID;
             this.panelRight.Controls.Clear();
+            if (FormSupplyRemind != null)
+            {
+                FormSupplyRemind.ClearTextBox();
+                FormSupplyRemind.RefreshID();
+                FormSupplyRemind.RemindSupply();
+                FormSupplyRemind.RemindStock();
+                FormSupplyRemind.TextDeliver();
+            }
             this.treeViewLeft.SelectedNode = null;
         }
 
@@ -887,8 +923,15 @@ namespace WMS.UI
         {
             if (user.SupplierID == null)
             {
-                 FormSupplyRemind = new FormSupplyRemind();                
-                FormSupplyRemind.Show();
+                //FormSupplyRemind = new FormSupplyRemind();
+            
+                //initx = this.Left;
+                //inity = this.Top;
+                //this.initbottom = this.Bottom;
+                //this.initright = this.Right;
+                //FormSupplyRemind.Show();
+                //initx1 = FormSupplyRemind.Left;
+                //inity1 = FormSupplyRemind.Top;
             }
         }
 
@@ -911,8 +954,61 @@ namespace WMS.UI
                     FormSupplyRemind.Show();
 
                 }
+                //if (this.initbottom != this.Bottom)
+                //{
+
+                //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
+                //    this.initbottom = this.Bottom;
+
+
+                //}
 
             }
+            
+   
+
+
+
+
+
+
+        }
+
+        private void FormMain_Move(object sender, EventArgs e)
+        {
+            if (FormSupplyRemind != null)
+            {
+                FormSupplyRemind.Top = inity1 + (this.Top - inity);
+                FormSupplyRemind.Left = initx1 + (this.Left - initx);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (this.button1.Text == "œ‘ æÃ·–—")
+            {
+                if (FormSupplyRemind == null)
+                {
+                    FormSupplyRemind = new FormSupplyRemind();
+                }
+                initx = this.Left;
+                inity = this.Top;
+                //this.initbottom = this.Bottom;
+                //this.initright = this.Right;
+                FormSupplyRemind.Show();
+                initx1 = FormSupplyRemind.Left;
+                inity1 = FormSupplyRemind.Top;
+                this.button1.Text = "“˛≤ÿÃ·–—";
+            }
+            else if(this.button1 .Text == "“˛≤ÿÃ·–—")
+            {
+                if (FormSupplyRemind != null)
+                {
+                    FormSupplyRemind.Visible = false;
+                    this.button1.Text = "œ‘ æÃ·–—";
+                }
+            }
+            
         }
     }
 }
