@@ -146,6 +146,7 @@ namespace WMS.UI
             FormSelectPerson.DefaultPosition = Position.STOCKINFO;
             if (FormSelectPerson == null)
             {
+                FormSelectPerson.DefaultPosition = Position.STOCKINFO;
                 FormSelectPerson = new FormSelectPerson();
             }
             FormSelectPerson.SetSelectFinishedCallback((selectedID) =>

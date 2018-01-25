@@ -225,9 +225,11 @@ namespace WMS.UI
 
         private void textBoxPersonName_Click(object sender, EventArgs e)
         {
-            var FormSelectPerson = new FormSelectPerson();
+            FormSelectPerson FormSelectPerson = null;
+            FormSelectPerson.DefaultPosition = FormBase.Position.STOCKINFO;
+             FormSelectPerson = new FormSelectPerson();
 
-
+            
             FormSelectPerson.SetSelectFinishedCallback((selectedID) =>
             {
                 try
