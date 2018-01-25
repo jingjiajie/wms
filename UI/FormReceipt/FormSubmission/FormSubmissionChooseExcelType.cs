@@ -127,5 +127,50 @@ namespace WMS.UI
                  select p).ToArray();
             StartPreview(submissionTicketItemView);
         }
+
+        private void buttonPass_MouseEnter(object sender, EventArgs e)
+        {
+            buttonPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonPass_MouseLeave(object sender, EventArgs e)
+        {
+            buttonPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonPass_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonNoPass_MouseEnter(object sender, EventArgs e)
+        {
+            buttonNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonNoPass_MouseLeave(object sender, EventArgs e)
+        {
+            buttonNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonNoPass_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonNoPass.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonAll_MouseEnter(object sender, EventArgs e)
+        {
+            buttonAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonAll_MouseLeave(object sender, EventArgs e)
+        {
+            buttonAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonAll_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonAll.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
     }
 }

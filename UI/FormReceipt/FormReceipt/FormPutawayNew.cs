@@ -527,6 +527,36 @@ namespace WMS.UI.FormReceipt
         {
             OK.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
         }
+
+        private void buttonImport_MouseEnter(object sender, EventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonImport_MouseLeave(object sender, EventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void buttonImport_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonImport.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void button1_MouseEnter(object sender, EventArgs e)
+        {
+            button1.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+        private void button1_MouseLeave(object sender, EventArgs e)
+        {
+            button1.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
+
+        private void button1_MouseDown(object sender, MouseEventArgs e)
+        {
+            button1.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
         private void OK_MouseMove(object sender, MouseEventArgs e)
         {
             this.OK.Focus();
@@ -874,5 +904,7 @@ namespace WMS.UI.FormReceipt
             }
 
         }
+
+
     }
 }
