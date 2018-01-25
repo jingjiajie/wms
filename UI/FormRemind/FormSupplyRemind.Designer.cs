@@ -82,6 +82,7 @@
             this.Name = "FormSupplyRemind";
             this.Text = "FormSupplyRemind";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSupplyRemind_FormClosing);
             this.Load += new System.EventHandler(this.FormSupplyRemind_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

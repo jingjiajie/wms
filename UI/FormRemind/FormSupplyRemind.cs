@@ -22,7 +22,7 @@ namespace WMS.UI
         public FormSupplyRemind()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.None;
+            //this.FormBorderStyle = FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
 
@@ -263,7 +263,7 @@ namespace WMS.UI
             //this.Top = 0;//25
             //this.Left = (int)(a * Screen.PrimaryScreen.Bounds.Width);
             this.Left = 3;
-            this.Top = (int)(0.65 * Screen.PrimaryScreen.Bounds.Height);
+            this.Top = (int)(0.7 * Screen.PrimaryScreen.Bounds.Height);
             this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width );
             this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
             this.textBox1.Text = "";
@@ -282,13 +282,12 @@ namespace WMS.UI
 
         }
 
-
-
-
-
-
-        
-
+        private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Hide();
+            e.Cancel = true;
+            
+        }
     }
 
     

@@ -985,8 +985,8 @@ namespace WMS.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (this.button1.Text == "ÏÔÊ¾ÌáÐÑ")
-            {
+            //if (this.button1.Text == "ÏÔÊ¾ÌáÐÑ")
+            //{
                 if (FormSupplyRemind == null)
                 {
                     FormSupplyRemind = new FormSupplyRemind();
@@ -998,17 +998,23 @@ namespace WMS.UI
                 FormSupplyRemind.Show();
                 initx1 = FormSupplyRemind.Left;
                 inity1 = FormSupplyRemind.Top;
-                this.button1.Text = "Òþ²ØÌáÐÑ";
-            }
-            else if(this.button1 .Text == "Òþ²ØÌáÐÑ")
-            {
-                if (FormSupplyRemind != null)
-                {
-                    FormSupplyRemind.Visible = false;
-                    this.button1.Text = "ÏÔÊ¾ÌáÐÑ";
-                }
-            }
-            
+            //this.button1.Visible = false;
+            //this.button1.Text = "Òþ²ØÌáÐÑ";
+            //}
+            //else if(this.button1 .Text == "Òþ²ØÌáÐÑ")
+            //{
+            //    if (FormSupplyRemind != null)
+            //    {
+            //        FormSupplyRemind.Visible = false;
+            //        this.button1.Text = "ÏÔÊ¾ÌáÐÑ";
+            //    }
+            //}
+
         }
+
+        //public void ButtonVisble()
+        //{
+        //    this.button1.Visible = true;
+        //}
     }
 }
