@@ -61,7 +61,7 @@
             this.reoGridControl1.ColumnHeaderContextMenuStrip = null;
             this.reoGridControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControl1.LeadHeaderContextMenuStrip = null;
-            this.reoGridControl1.Location = new System.Drawing.Point(4, 55);
+            this.reoGridControl1.Location = new System.Drawing.Point(4, 44);
             this.reoGridControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.reoGridControl1.Name = "reoGridControl1";
             this.reoGridControl1.Readonly = true;
@@ -72,7 +72,7 @@
             this.reoGridControl1.SheetTabVisible = true;
             this.reoGridControl1.SheetTabWidth = 90;
             this.reoGridControl1.ShowScrollEndSpacing = true;
-            this.reoGridControl1.Size = new System.Drawing.Size(2000, 813);
+            this.reoGridControl1.Size = new System.Drawing.Size(2000, 824);
             this.reoGridControl1.TabIndex = 9;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
@@ -86,6 +86,7 @@
             // comboBoxSelect
             // 
             this.comboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSelect.Name = "comboBoxSelect";
             this.comboBoxSelect.Size = new System.Drawing.Size(223, 50);
             this.comboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelect_SelectedIndexChanged);
@@ -142,7 +143,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(2008, 50);
+            this.toolStripTop.Size = new System.Drawing.Size(2008, 39);
             this.toolStripTop.TabIndex = 8;
             this.toolStripTop.Text = "toolStrip1";
             this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
@@ -259,7 +260,7 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));

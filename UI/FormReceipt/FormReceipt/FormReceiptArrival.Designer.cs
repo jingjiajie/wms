@@ -44,6 +44,7 @@
             this.buttonDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonReceipt = new System.Windows.Forms.ToolStripButton();
+            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.buttonReject = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonItemSubmission = new System.Windows.Forms.ToolStripButton();
@@ -57,7 +58,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.buttonReceiptCancel = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -76,7 +76,7 @@
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
@@ -89,7 +89,7 @@
             this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(4, 53);
+            this.reoGridControlUser.Location = new System.Drawing.Point(4, 42);
             this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlUser.Name = "reoGridControlUser";
             this.reoGridControlUser.Readonly = true;
@@ -100,7 +100,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 120;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(2053, 395);
+            this.reoGridControlUser.Size = new System.Drawing.Size(2053, 406);
             this.reoGridControlUser.TabIndex = 10;
             this.reoGridControlUser.Text = "reoGridControl1";
             this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click_1);
@@ -138,7 +138,7 @@
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStripTop.Size = new System.Drawing.Size(2061, 50);
+            this.toolStripTop.Size = new System.Drawing.Size(2061, 39);
             this.toolStripTop.TabIndex = 3;
             this.toolStripTop.Text = "toolStrip1";
             // 
@@ -152,6 +152,7 @@
             // comboBoxSelect
             // 
             this.comboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSelect.Name = "comboBoxSelect";
             this.comboBoxSelect.Size = new System.Drawing.Size(224, 50);
             this.comboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelect_SelectedIndexChanged_1);
@@ -166,7 +167,7 @@
             this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
             this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(86, 47);
+            this.buttonSelect.Size = new System.Drawing.Size(86, 36);
             this.buttonSelect.Text = "查询";
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
@@ -233,6 +234,15 @@
             this.buttonReceipt.Size = new System.Drawing.Size(86, 47);
             this.buttonReceipt.Text = "收货";
             this.buttonReceipt.Click += new System.EventHandler(this.buttonReceipt_Click);
+            // 
+            // buttonReceiptCancel
+            // 
+            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
+            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
+            this.buttonReceiptCancel.Size = new System.Drawing.Size(134, 47);
+            this.buttonReceiptCancel.Text = "取消收货";
+            this.buttonReceiptCancel.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // buttonReject
             // 
@@ -341,15 +351,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(2053, 55);
             this.panel1.TabIndex = 11;
-            // 
-            // buttonReceiptCancel
-            // 
-            this.buttonReceiptCancel.Image = ((System.Drawing.Image)(resources.GetObject("buttonReceiptCancel.Image")));
-            this.buttonReceiptCancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonReceiptCancel.Name = "buttonReceiptCancel";
-            this.buttonReceiptCancel.Size = new System.Drawing.Size(134, 47);
-            this.buttonReceiptCancel.Text = "取消收货";
-            this.buttonReceiptCancel.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // FormReceiptArrival
             // 
