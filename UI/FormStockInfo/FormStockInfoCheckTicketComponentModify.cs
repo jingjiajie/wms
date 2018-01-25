@@ -463,11 +463,38 @@ namespace WMS.UI
                         MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                
-                
+
+                //111111111111111
                 //this.supplierID = selectedID;
                 //selectedID = 1;
-                this.supplyID  = selectedID;
+
+                StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
+                try
+                {
+                    stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
+                                                    where kn.StockInfoCheckTicketID == this.stockInfoCheckID
+                                                    select kn).ToArray();
+                }
+                catch
+                {
+                    MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                bool repet = false;
+                for (int j = 0; j < stockInfoCheckTicketItemSave.Length; j++)
+                {
+                    if (stockInfoCheckTicketItemSave[j].SupplyID == selectedID)
+                    {
+                        repet = true;
+                        break;
+                    }
+                }
+                if(repet ==true )
+                {
+                    MessageBox.Show("此条目已存在，请勿重复选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
+                    return;
+                }
+                this.supplyID = selectedID;
                 this.Controls.Find("textBoxComponentName", true)[0].Text = SupplyView.ComponentName;
                 this.Controls.Find("textBoxSupplierName", true)[0].Text = SupplyView.SupplierName;
                 this.Controls.Find("textBoxSupplyNo", true)[0].Text = SupplyView.No ;
@@ -478,6 +505,7 @@ namespace WMS.UI
                 string supplyNO = SupplyView.No ;
 
                 StockInfoView[] stockinfo = null;
+                
                 decimal ExcpetedOverflowAreaAmount=0;
                 decimal ExpectedShipmentAreaAmount=0;
                 decimal ExpectedRejectAreaAmount = 0;
@@ -488,6 +516,7 @@ namespace WMS.UI
                     stockinfo = (from kn in wmsEntities.StockInfoView
                                  where kn.SupplyNo == supplyNO
                                  select kn).ToArray();
+                    
                 }
                 catch
                 {
@@ -498,6 +527,8 @@ namespace WMS.UI
 
 
                 {
+                 
+
                     ExcpetedOverflowAreaAmount = ExcpetedOverflowAreaAmount+Convert .ToDecimal ( stockinfo[i].OverflowAreaAmount);
                     ExpectedShipmentAreaAmount = ExpectedShipmentAreaAmount + Convert.ToDecimal(stockinfo[i].ShipmentAreaAmount);
                     ExpectedRejectAreaAmount = ExpectedRejectAreaAmount + Convert.ToDecimal(stockinfo[i].RejectAreaAmount);
@@ -565,10 +596,11 @@ namespace WMS.UI
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-
+           
 
             decimal  tmp = 0;
-           DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
+            bool repet = false;
+            DataAccess.StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
            TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             TextBox textBoxSupplyNo = (TextBox)this.Controls.Find("textBoxSupplyNo", true)[0];
             TextBox textBoxRealRejectAreaAmount = (TextBox)this.Controls.Find("textBoxRealRejectAreaAmount", true)[0];
@@ -576,7 +608,28 @@ namespace WMS.UI
            TextBox textBoxRealSubmissionAmount = (TextBox)this.Controls.Find("textBoxRealSubmissionAmount", true)[0];
            TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
            TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
+
+            StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
+
+
+            try
+            {
+                wmsEntities = new WMSEntities();
+                
+
+                stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
+                                                where kn.StockInfoCheckTicketID == this.stockInfoCheckID
+                                              
+                                                select kn).ToArray();
+            }
+            catch
+            {
             
+                MessageBox.Show("添加条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
 
 
 
@@ -587,6 +640,20 @@ namespace WMS.UI
                 MessageBox.Show("请选择供货信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            for (int j = 0; j < stockInfoCheckTicketItemSave.Length; j++)
+            {
+                
+                if (stockInfoCheckTicketItemSave[j].SupplyNo  == textBoxSupplyNo.Text)
+                {
+                    repet = true;
+                    break;
+                }
+            }
+
+            if (repet == true)
+            {
+                MessageBox.Show("已存在本条目，请勿重复添加", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
+                return ; }
 
             if (textBoxRealRejectAreaAmount.Text !=string .Empty&&!decimal.TryParse(textBoxRealRejectAreaAmount.Text, out tmp))
             {
@@ -645,8 +712,7 @@ namespace WMS.UI
             wmsEntities.SaveChanges();
             this.labelStatus.Text = "正在添加";
             MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //this.ClearTextBoxes();
-            //Utilities.FillTextBoxDefaultValues(this.tableLayoutPanel1, ShipmentTicketItemViewMetaData.KeyNames);
+           
 
 
 
@@ -910,10 +976,82 @@ namespace WMS.UI
                  StockInfoCheckTicketItem.SupplyID  = this.supplyID  == -1 ? null : (int?)this.supplyID ;
 
 
+                decimal tmp = 0;
+                bool repet = false;
+                StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
+                TextBox textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
+                TextBox textBoxSupplyNo = (TextBox)this.Controls.Find("textBoxSupplyNo", true)[0];
+                TextBox textBoxRealRejectAreaAmount = (TextBox)this.Controls.Find("textBoxRealRejectAreaAmount", true)[0];
+                TextBox textBoxRealReceiptAreaAmount = (TextBox)this.Controls.Find("textBoxRealReceiptAreaAmount", true)[0];
+                TextBox textBoxRealSubmissionAmount = (TextBox)this.Controls.Find("textBoxRealSubmissionAmount", true)[0];
+                TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
+                TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
+
+                try
+                {
+                    wmsEntities = new WMSEntities();
 
 
+                    stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
+                                                    where kn.StockInfoCheckTicketID == this.stockInfoCheckID
 
+                                                    select kn).ToArray();
+                }
+                catch
+                {
 
+                    MessageBox.Show("修改条目操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                if (textBoxSupplyNo.Text == string.Empty)
+                {
+
+                    MessageBox.Show("请选择供货信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                for (int j = 0; j < stockInfoCheckTicketItemSave.Length; j++)
+                {
+
+                    if (stockInfoCheckTicketItemSave[j].SupplyNo == textBoxSupplyNo.Text)
+                    {
+                        repet = true;
+                        break;
+                    }
+                }
+
+                //if (repet == true)
+                //{
+                //    MessageBox.Show("已存在本条目，修改失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //    return;
+                //}
+
+                if (textBoxRealRejectAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealRejectAreaAmount.Text, out tmp))
+                {
+                    MessageBox.Show("实际不良品区数量只接受数字类型");
+                    return;
+                }
+                if (textBoxRealReceiptAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealReceiptAreaAmount.Text, out tmp))
+                {
+                    MessageBox.Show("实际收货区数量只接受数字类型");
+                    return;
+                }
+
+                if (textBoxRealSubmissionAmount.Text != string.Empty && !decimal.TryParse(textBoxRealSubmissionAmount.Text, out tmp))
+                {
+                    MessageBox.Show("实际送检数量只接受数字类型");
+                    return;
+                }
+
+                if (textBoxRealOverflowAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealOverflowAreaAmount.Text, out tmp))
+                {
+                    MessageBox.Show("实际溢库区数量只接受数字类型");
+                    return;
+                }
+                if (textBoxRealShipmentAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealShipmentAreaAmount.Text, out tmp))
+                {
+                    MessageBox.Show("实际发货区数量只接受数字类型");
+                    return;
+                }
 
 
 
@@ -1082,7 +1220,7 @@ namespace WMS.UI
             new Thread(() =>
             {
                 try
-                {
+                { 
                     wmsEntities = new WMSEntities();
                     supplyAll = (from kn in wmsEntities.SupplyView
                                  where kn.ProjectID ==this.projectID &&
@@ -1274,17 +1412,17 @@ namespace WMS.UI
             {
                     FormSelectSupply.SelectMode = FormSelectSupply.Mode.NORMAL;
                     int[] supplyBatch = null;
-                    //StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
-                    FormLoading formLoading = new FormLoading("正在添加，请稍后...");
+                StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
+                FormLoading formLoading = new FormLoading("正在添加，请稍后...");
                     formLoading.Show();
                 new Thread(() =>
                 {
                    
                         wmsEntities = new WMSEntities();
                         supplyBatch = selectedID;
-                        //stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
-                        //                                where kn.StockInfoCheckTicketID == this.stockInfoCheckID
-                        //                                select kn).ToArray();                
+                    stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
+                                                    where kn.StockInfoCheckTicketID == this.stockInfoCheckID
+                                                    select kn).ToArray();
 
                     if (supplyBatch.Length == 0)
                     {
@@ -1302,7 +1440,7 @@ namespace WMS.UI
 
                     for (int i = 0; i < supplyBatch.Length; i++)
                     {
-                        //bool repet = false;
+                        bool repet = false;
                         var StockInfoCheckTicketItem = new StockInfoCheckTicketItem();
 
                         try
@@ -1323,17 +1461,17 @@ namespace WMS.UI
                             return;
                         }
 
-                        //for (int j = 0; j < stockInfoCheckTicketItemSave.Length; j++)
-                        //{
-                        //    if (stockInfoCheckTicketItemSave[j].SupplyID == supplyBatch[i])
-                        //    {
-                        //        repet = true;
-                        //        break;
-                        //    }
-                        //}
+                        for (int j = 0; j < stockInfoCheckTicketItemSave.Length; j++)
+                        {
+                            if (stockInfoCheckTicketItemSave[j].SupplyID == supplyBatch[i])
+                            {
+                                repet = true;
+                                break;
+                            }
+                        }
 
-                        //if (repet == true)
-                        //{ continue; }
+                        if (repet == true)
+                        { continue; }
 
                         StockInfoCheckTicketItem.SupplyID = supplyBatch[i];
                            
