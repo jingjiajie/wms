@@ -383,8 +383,14 @@ namespace WMS.UI
         private bool importHandler(NewJobTicketItemData[] results, Dictionary<string, string[]> unimportedColumns)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            //已经被选中的项和数量
             Dictionary<int, decimal> checkedIDAndAmount = new Dictionary<int, decimal>();
-            for(int i = 0; i < this.validRows; i++)
+            //本次导入填写的项和数量
+            Dictionary<int, decimal> idAndAmount = new Dictionary<int, decimal>();
+            //项和单位数量的对应关系
+            Dictionary<int, decimal> idAndUnitAmount = new Dictionary<int, decimal>();
+            //统计已经选中的项
+            for (int i = 0; i < this.validRows; i++)
             {
                 if((worksheet[i,1] as bool? ?? false)==false)
                 {
@@ -404,7 +410,7 @@ namespace WMS.UI
                     checkedIDAndAmount.Add(id, amount);
                 }
             }
-            Dictionary<int, decimal> idAndAmount = new Dictionary<int, decimal>();
+
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
@@ -441,9 +447,17 @@ namespace WMS.UI
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
-                    selectedItems.RemoveAll((item) =>
+                    //记录每一项的剩余可分配数量
+                    Dictionary<int, decimal> restAmounts = new Dictionary<int, decimal>();
+                    //记录每一项的剩余数量，并把单位记录到单位对应关系里
+                    selectedItems.ForEach((item) =>
                     {
-                        decimal restAmount = item.ShipmentAmount - (item.ScheduledJobAmount ?? 0) ?? 0;
+                        if (idAndUnitAmount.ContainsKey(item.ID) == false)
+                        {
+                            idAndUnitAmount.Add(item.ID, item.UnitAmount ?? 1);
+                        }
+
+                        decimal restAmount = (item.ShipmentAmount - (item.ScheduledJobAmount ?? 0)) ?? 0;
                         if (idAndAmount.ContainsKey(item.ID))
                         {
                             restAmount -= idAndAmount[item.ID];
@@ -452,40 +466,26 @@ namespace WMS.UI
                         {
                             restAmount -= checkedIDAndAmount[item.ID];
                         }
-                        return restAmount <= 0;
+                        restAmounts.Add(item.ID, restAmount);
                     });
-                    decimal totalStockAmountNoUnit = selectedItems.Sum((item) =>
+                    //删除所有可分配数量为0的项
+                    selectedItems.RemoveAll((item) => restAmounts[item.ID] <= 0);
+                    decimal totalStockAmountNoUnit = restAmounts.Sum((item) =>
                     {
-                        decimal amount = (item.ShipmentAmount - (item.ScheduledJobAmount ?? 0)) * (item.UnitAmount ?? 1) ?? 0;
-                        if (idAndAmount.ContainsKey(item.ID))
-                        {
-                            amount -= idAndAmount[item.ID] * (item.UnitAmount ?? 1);
-                        }
-                        if (checkedIDAndAmount.ContainsKey(item.ID))
-                        {
-                            amount -= checkedIDAndAmount[item.ID] * (item.UnitAmount ?? 1);
-                        }
-                        return amount;
+                        if (item.Value > 0) return item.Value * idAndUnitAmount[item.Key];
+                        else return 0;
                     });
                     if(scheduleAmountNoUnit > totalStockAmountNoUnit)
                     {
-                        MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}", i + 1, totalStockAmountNoUnit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}个", i + 1, totalStockAmountNoUnit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
-                    decimal curAmountNoUnit = 0;
+                    decimal curAmountNoUnit = 0; //累计分配了多少
                     for (int j = 0; j < selectedItems.Count; j++)
                     {
-                        decimal curItemRestAmount = (selectedItems[j].ShipmentAmount - (selectedItems[j].ScheduledJobAmount ?? 0)) ?? 0;
-                        if (idAndAmount.ContainsKey(selectedItems[j].ID))
-                        {
-                            curItemRestAmount -= idAndAmount[selectedItems[j].ID];
-                        }
-                        if (checkedIDAndAmount.ContainsKey(selectedItems[j].ID))
-                        {
-                            curItemRestAmount -= checkedIDAndAmount[selectedItems[j].ID] * (selectedItems[j].UnitAmount ?? 1);
-                        }
-                        //当前项的剩余数量（不带单位）
-                        decimal curItemRestAmountNoUnit = curItemRestAmount * (selectedItems[j].UnitAmount ?? 1);
+                        //当前项的剩余数量
+                        decimal curItemRestAmount = restAmounts[selectedItems[j].ID];
+                        decimal curItemRestAmountNoUnit = curItemRestAmount * idAndUnitAmount[selectedItems[j].ID];
                         //当前项的剩余数量小于要分配的数量
                         if (curAmountNoUnit + curItemRestAmountNoUnit < scheduleAmountNoUnit)
                         {
