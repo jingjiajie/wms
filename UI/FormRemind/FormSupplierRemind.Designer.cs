@@ -41,6 +41,7 @@
             // textBoxContractRemind
             // 
             this.textBoxContractRemind.BackColor = System.Drawing.Color.White;
+            this.textBoxContractRemind.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.textBoxContractRemind.Location = new System.Drawing.Point(205, 72);
             this.textBoxContractRemind.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxContractRemind.Multiline = true;
@@ -52,6 +53,7 @@
             // textBox3
             // 
             this.textBox3.BackColor = System.Drawing.Color.White;
+            this.textBox3.Font = new System.Drawing.Font("微软雅黑", 10F);
             this.textBox3.Location = new System.Drawing.Point(205, 176);
             this.textBox3.Margin = new System.Windows.Forms.Padding(4);
             this.textBox3.Multiline = true;
