@@ -116,12 +116,18 @@ namespace WMS.UI
                         continue;
                     }
                     var SafetyDate = InventoryDate.AddDays(Convert.ToDouble(SafetyDate1.ValidPeriod));
-
-                    if (SafetyDate <= DateTime.Now)
+                    int day;
+                    day = ( SafetyDate-DateTime .Now ).Days;
+                    if (day<=30&&day>0)
                     {
+                        
+                       
+                        sb.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate +"  " +"有效期还剩"+day+"天"+"\r\n" + "\r\n");
 
-                        sb.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate + "\r\n" + "\r\n");
-
+                    }
+                    else if (day <= 0)
+                    {
+                        sb.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate + "  " + "已过期"  + "\r\n" + "\r\n");
                     }
 
                 }
@@ -140,7 +146,7 @@ namespace WMS.UI
         {
             WMSEntities wmsEntities = new WMSEntities();
             SupplyView[] SupplyView = null;
-            decimal  amount=0;
+            
 
             try
             {
@@ -155,7 +161,7 @@ namespace WMS.UI
                 }
                 for (int i = 0; i < SupplyView.Length; i++)
                 {
-
+                    decimal amount = 0;
                     string ComponentName = SupplyView[i].ComponentName;
                     string SupplierName = SupplyView[i].SupplierName;
                     string SupplyNo = SupplyView[i].No;
@@ -188,7 +194,11 @@ namespace WMS.UI
                     for (int j = 0; j < stockInfo.Length; j++)
 
                     {
-                        amount = Convert.ToDecimal(stockInfo[j].OverflowAreaAmount) + Convert.ToDecimal(stockInfo[j].ShipmentAreaAmount);
+
+                        
+
+
+                        amount = amount+Convert.ToDecimal(stockInfo[j].OverflowAreaAmount) + Convert.ToDecimal(stockInfo[j].ShipmentAreaAmount);
 
                     }
 
