@@ -16,7 +16,7 @@ namespace WMS.UI
     {
         string remind;
         //
-        public  StringBuilder  sb = new StringBuilder();
+        public  StringBuilder stringBuilder = new StringBuilder();
         private int projectID = GlobalData.ProjectID;
         private int warehouseID = GlobalData.WarehouseID;
 
@@ -54,52 +54,44 @@ namespace WMS.UI
 
        public void ClearTextBox()
         {
-            this.sb = new StringBuilder();
+            this.stringBuilder = new StringBuilder();
         }
 
         public void RefreshID()
         {
-
             this.projectID = GlobalData.ProjectID;
             this.warehouseID = GlobalData.WarehouseID;
-
-
         }
 
         public   void RemindSupply()
         {
             //存货有效期
             WMSEntities wmsEntities = new WMSEntities();
-            
-            StockInfoView[] StockInfoView = null;
-
-
-
-
+            StockInfoView[] stockInfoView = null;
             try
             {
-                StockInfoView = (from u in wmsEntities.StockInfoView
+                stockInfoView = (from u in wmsEntities.StockInfoView
                                  where u.ProjectID ==this.projectID &&
                                  u.WarehouseID ==this.warehouseID 
                                  select u).ToArray();
 
-                if(StockInfoView ==null)
+                if(stockInfoView ==null)
                 {
                     return;
                 }
 
-                for (int i = 0; i < StockInfoView.Length; i++)
+                for (int i = 0; i < stockInfoView.Length; i++)
                 {
                     //找到每个零件的保质期
-                    string ComponentName = StockInfoView[i].ComponentName;
-                    string SupplierName = StockInfoView[i].SupplierName;
-                    string SupplyNo = StockInfoView[i].SupplyNo;
-                    if (ComponentName == null || SupplierName == null || SupplyNo == null || StockInfoView[i].InventoryDate == null)
+                    string ComponentName = stockInfoView[i].ComponentName;
+                    string SupplierName = stockInfoView[i].SupplierName;
+                    string SupplyNo = stockInfoView[i].SupplyNo;
+                    if (ComponentName == null || SupplierName == null || SupplyNo == null || stockInfoView[i].InventoryDate == null)
                     {
 
                         continue;
                     }
-                    DateTime InventoryDate = Convert.ToDateTime(StockInfoView[i].InventoryDate);
+                    DateTime InventoryDate = Convert.ToDateTime(stockInfoView[i].InventoryDate);
                     var SafetyDate1 = (from u in wmsEntities.SupplyView
                                        where u.ComponentName == ComponentName &&
                                        u.SupplierName == SupplierName &&
@@ -121,34 +113,30 @@ namespace WMS.UI
                     day = ( SafetyDate-DateTime .Now ).Days;
                     if (day<=30&&day>0)
                     {
-                        
-                       
-                        sb.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate +"  " +"有效期还剩"+day+"天"+"\r\n" + "\r\n");
+
+
+                        stringBuilder.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate +"  " +"有效期还剩"+day+"天"+"\r\n" + "\r\n");
 
                     }
                     else if (day <= 0)
                     {
-                        sb.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate + "  " + "已过期"  + "\r\n" + "\r\n");
+                        stringBuilder.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate + "  " + "已过期"  + "\r\n" + "\r\n");
                     }
 
                 }
             }catch
 
             {
-                sb = new StringBuilder();
-                sb.Append("刷新失败,请检查网络连接");
+                stringBuilder = new StringBuilder();
+                stringBuilder.Append("刷新失败,请检查网络连接");
                 return;
             }
-
-
         }
 
-        public  void RemindStock()
+        public void RemindStock()
         {
             WMSEntities wmsEntities = new WMSEntities();
             SupplyView[] SupplyView = null;
-            
-
             try
             {
                 SupplyView = (from u in wmsEntities.SupplyView
@@ -195,48 +183,27 @@ namespace WMS.UI
                     for (int j = 0; j < stockInfo.Length; j++)
 
                     {
-
-                        
-
-
                         amount = amount+Convert.ToDecimal(stockInfo[j].OverflowAreaAmount) + Convert.ToDecimal(stockInfo[j].ShipmentAreaAmount);
-
                     }
 
                     if (amount < SaftyStock)
                     {
-                        sb.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "库存量" + "  " + amount + "  " + "已小于安全库存" + "   " + SaftyStock + "\r\n" + "\r\n");
+                        stringBuilder.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "库存量" + "  " + amount + "  " + "已小于安全库存" + "   " + SaftyStock + "\r\n" + "\r\n");
 
                     }
-
-
                 }
             }
             catch
             {
-
-
-                sb = new StringBuilder();
-                sb.Append("刷新失败,请检查网络连接");
+                stringBuilder = new StringBuilder();
+                stringBuilder.Append("刷新失败,请检查网络连接");
                 return;
             }
-
-
-
-
-
-
         }
-
-
-
-
-
 
         public void TextDeliver()
         {
-
-            this.textBox1.Text = sb.ToString();
+            this.textBox1.Text = stringBuilder.ToString();
             //MessageBox.Show("4646");
             if (this.textBox1 .Text =="刷新失败,请检查网络连接")
             {
@@ -249,28 +216,6 @@ namespace WMS.UI
             }
 
         }
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         private void FormSupplyRemind_Load(object sender, EventArgs e)
         {
@@ -286,7 +231,7 @@ namespace WMS.UI
             //this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
             //this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
             this.ShowInTaskbar = false;///使窗体不显示在任务栏
-            this.sb = new StringBuilder();
+            this.stringBuilder = new StringBuilder();
             ClearTextBox();
             RefreshID();
             RemindSupply();
@@ -302,9 +247,7 @@ namespace WMS.UI
         {
             this.Hide();
             e.Cancel = true;
-            this.button.Visible = true;
-
-            
+            this.button.Visible = true;           
         }
     }
 

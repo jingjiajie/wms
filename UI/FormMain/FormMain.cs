@@ -51,7 +51,7 @@ namespace WMS.UI
 
             if (user.SupplierID != null)
             {
-                this.button1.Visible = false;
+                this.button2.Visible = false;
                 this.supplierid = Convert.ToInt32(user.SupplierID);
                 remind();
 
@@ -549,10 +549,10 @@ namespace WMS.UI
 
                     if (FormSupplyRemind == null)
                     {
-                        FormSupplyRemind = new FormSupplyRemind(this.button1);
+                        FormSupplyRemind = new FormSupplyRemind(this.button2);
                     }
-                    this.button1.Left = 3;
-                    this.button1.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
+                    this.button2.Left = 3;
+                    this.button2.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
 
                 }));
             }).Start();
@@ -954,7 +954,7 @@ namespace WMS.UI
                     FormSupplyRemind.Hide();
 
                 }
-                else if (this.WindowState == FormWindowState.Maximized&&this.button1.Visible ==false )
+                else if (this.WindowState == FormWindowState.Maximized&&this.button2.Visible ==false )
                 {
 
 
@@ -1003,7 +1003,7 @@ namespace WMS.UI
                 FormSupplyRemind.Show();
                 //initx1 = FormSupplyRemind.Left;
                 //inity1 = FormSupplyRemind.Top;
-                this.button1.Visible = false;
+                this.button2.Visible = false;
                 //this.button1.Text = "вўВиЬсаб";
             //}
             //else if(this.button1 .Text == "вўВиЬсаб")
