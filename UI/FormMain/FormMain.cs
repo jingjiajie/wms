@@ -944,35 +944,35 @@ namespace WMS.UI
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            //if (FormSupplyRemind != null)
-            //{
+            if (FormSupplyRemind != null)
+            {
 
 
-            //    if (this.WindowState == FormWindowState.Minimized)
-            //    {
+                if (this.WindowState == FormWindowState.Minimized)
+                {
 
-            //        FormSupplyRemind.Hide();
+                    FormSupplyRemind.Hide();
 
-            //    }
-            //    else if(this.WindowState ==FormWindowState.Maximized )
-            //    {
-
-
-            //        FormSupplyRemind.Show();
-
-            //    }
-            //    //if (this.initbottom != this.Bottom)
-            //    //{
-
-            //    //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
-            //    //    this.initbottom = this.Bottom;
+                }
+                else if (this.WindowState == FormWindowState.Maximized&&this.button1.Visible ==false )
+                {
 
 
-            //    //}
+                    FormSupplyRemind.Show();
 
-            //}
-            
-   
+                }
+                //if (this.initbottom != this.Bottom)
+                //{
+
+                //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
+                //    this.initbottom = this.Bottom;
+
+
+                //}
+
+            }
+
+
 
 
 
