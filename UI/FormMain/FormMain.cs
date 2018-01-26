@@ -551,6 +551,8 @@ namespace WMS.UI
                     {
                         FormSupplyRemind = new FormSupplyRemind(this.button1);
                     }
+                    this.button1.Left = 3;
+                    this.button1.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
 
                 }));
             }).Start();
@@ -841,6 +843,7 @@ namespace WMS.UI
             this.panelRight.Controls.Add(form);
             form.Show();
             this.panelRight.Visible = true;
+
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
