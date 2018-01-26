@@ -22,6 +22,7 @@ namespace WMS.UI
         private int userID = -1;
         private int supplyID = -1;
         private int personid = -1;
+        private int stockinfocheckitemid = -1;
         private Func<int> StockIDGetter = null;
         private WMS.DataAccess.WMSEntities wmsEntities = new WMS.DataAccess.WMSEntities();
         private Action modifyFinishedCallback = null;
@@ -286,6 +287,7 @@ namespace WMS.UI
             }
             //this.buttonAdd.Text = "复制条目";
             int id = ids[0];
+            this.stockinfocheckitemid = id;
             WMS.DataAccess.StockInfoCheckTicketItemView StockInfoCheckTicketItem = null;
             
 
@@ -468,32 +470,32 @@ namespace WMS.UI
                 //this.supplierID = selectedID;
                 //selectedID = 1;
 
-                StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
-                try
-                {
-                    stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
-                                                    where kn.StockInfoCheckTicketID == this.stockInfoCheckID
-                                                    select kn).ToArray();
-                }
-                catch
-                {
-                    MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                bool repet = false;
-                for (int j = 0; j < stockInfoCheckTicketItemSave.Length; j++)
-                {
-                    if (stockInfoCheckTicketItemSave[j].SupplyID == selectedID)
-                    {
-                        repet = true;
-                        break;
-                    }
-                }
-                if(repet ==true )
-                {
-                    MessageBox.Show("此条目已存在，请勿重复选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
-                    return;
-                }
+                //StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
+                //try
+                //{
+                //    stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
+                //                                    where kn.StockInfoCheckTicketID == this.stockInfoCheckID
+                //                                    select kn).ToArray();
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("选择库存信息失败，库存信息不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
+                //bool repet = false;
+                //for (int j = 0; j < stockInfoCheckTicketItemSave.Length; j++)
+                //{
+                //    if (stockInfoCheckTicketItemSave[j].SupplyID == selectedID)
+                //    {
+                //        repet = true;
+                //        break;
+                //    }
+                //}
+                //if(repet ==true )
+                //{
+                //    MessageBox.Show("此条目已存在，请勿重复选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
+                //    return;
+                //}
                 this.supplyID = selectedID;
                 this.Controls.Find("textBoxComponentName", true)[0].Text = SupplyView.ComponentName;
                 this.Controls.Find("textBoxSupplierName", true)[0].Text = SupplyView.SupplierName;
@@ -555,7 +557,7 @@ namespace WMS.UI
                 this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].Text = ExcpetedOverflowAreaAmount.ToString();
                 this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].Text = ExpectedShipmentAreaAmount.ToString();
                 TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
-                this.Controls.Find("textBoxPersonName", true)[0].Text = "";
+                //this.Controls.Find("textBoxPersonName", true)[0].Text = "";
 
 
             });
@@ -652,7 +654,7 @@ namespace WMS.UI
 
             if (repet == true)
             {
-                MessageBox.Show("已存在本条目，请勿重复添加", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
+                MessageBox.Show("当前盘点单中已存在本条目，请勿重复添加", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
                 return ; }
 
             if (textBoxRealRejectAreaAmount.Text !=string .Empty&&!decimal.TryParse(textBoxRealRejectAreaAmount.Text, out tmp))
@@ -948,13 +950,14 @@ namespace WMS.UI
                 return;
             }
 
-
+            
 
             new Thread(new ThreadStart(() =>
             {
                 int id = ids[0];
-                WMS .DataAccess .StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
-                wmsEntities = new WMS.DataAccess.WMSEntities();
+                StockInfoCheckTicketItem StockInfoCheckTicketItem = null;
+
+                wmsEntities = new WMSEntities();
                 try
                 {
                     StockInfoCheckTicketItem = (from s in this.wmsEntities.StockInfoCheckTicketItem  where s.ID == id select s).FirstOrDefault();
@@ -972,8 +975,7 @@ namespace WMS.UI
 
            
                
-                StockInfoCheckTicketItem.PersonID  = this.personid == -1 ? null : (int?)this.personid;
-                 StockInfoCheckTicketItem.SupplyID  = this.supplyID  == -1 ? null : (int?)this.supplyID ;
+
 
 
                 decimal tmp = 0;
@@ -989,12 +991,12 @@ namespace WMS.UI
 
                 try
                 {
-                    wmsEntities = new WMSEntities();
+                    
 
 
                     stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
                                                     where kn.StockInfoCheckTicketID == this.stockInfoCheckID
-
+                                                    && kn.ID  != id
                                                     select kn).ToArray();
                 }
                 catch
@@ -1019,11 +1021,11 @@ namespace WMS.UI
                     }
                 }
 
-                //if (repet == true)
-                //{
-                //    MessageBox.Show("已存在本条目，修改失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //    return;
-                //}
+                if (repet == true)
+                {
+                    MessageBox.Show("当前盘点单中已存在本条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
 
                 if (textBoxRealRejectAreaAmount.Text != string.Empty && !decimal.TryParse(textBoxRealRejectAreaAmount.Text, out tmp))
                 {
@@ -1063,11 +1065,9 @@ namespace WMS.UI
 
                 try
                 {
-                    
-
-
-
-                    this.wmsEntities.SaveChanges();
+                    StockInfoCheckTicketItem.PersonID = this.personid == -1 ? null : (int?)this.personid;
+                    StockInfoCheckTicketItem.SupplyID = this.supplyID == -1 ? null : (int?)this.supplyID;
+                    wmsEntities.SaveChanges();
                 }
                 catch
                 {
