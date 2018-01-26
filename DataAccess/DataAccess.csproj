@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="CommonData.cs" />
     <Compile Include="Component.cs">
       <DependentUpon>WMSModel.tt</DependentUpon>
     </Compile>

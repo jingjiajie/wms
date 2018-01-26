@@ -16,7 +16,7 @@ namespace WMS.DataAccess
     public partial class WMSEntities : DbContext
     {
         public WMSEntities()
-            : base("name=WMSEntities")
+            : base(CommonData.connectionString)
         {
         }
     
