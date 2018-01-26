@@ -51,6 +51,7 @@ namespace WMS.UI
 
             if (user.SupplierID != null)
             {
+                this.button1.Visible = false;
                 this.supplierid = Convert.ToInt32(user.SupplierID);
                 remind();
 

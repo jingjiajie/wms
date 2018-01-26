@@ -612,11 +612,11 @@ namespace WMS.UI
            TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
 
             StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
-
+            wmsEntities = new WMSEntities();
 
             try
             {
-                wmsEntities = new WMSEntities();
+                
                 
 
                 stockInfoCheckTicketItemSave = (from kn in wmsEntities.StockInfoCheckTicketItemView
@@ -693,7 +693,7 @@ namespace WMS.UI
 
 
             StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
-            this.wmsEntities.StockInfoCheckTicketItem.Add(StockInfoCheckTicketItem);
+            wmsEntities.StockInfoCheckTicketItem.Add(StockInfoCheckTicketItem);
 
 
             StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID ;
@@ -848,6 +848,7 @@ namespace WMS.UI
         {
             new Thread(new ThreadStart(() =>
             {
+                wmsEntities = new WMSEntities();
                 var worksheet = this.reoGridControlMain.Worksheets[0];
 
             List<int> deleteIDs = new List<int>();
@@ -880,9 +881,9 @@ namespace WMS.UI
             {
                 foreach (int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicketItem WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
+                    wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfoCheckTicketItem WHERE ID = @stockCheckID", new SqlParameter("stockCheckID", id));
                 }
-                this.wmsEntities.SaveChanges();
+                wmsEntities.SaveChanges();
                 
             })).Start();
             this.Invoke(new Action(() =>
