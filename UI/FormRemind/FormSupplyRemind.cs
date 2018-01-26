@@ -15,7 +15,7 @@ namespace WMS.UI
     public partial class FormSupplyRemind : Form
     {
         string remind;
-        
+        //
         public  StringBuilder  sb = new StringBuilder();
         private int projectID = GlobalData.ProjectID;
         private int warehouseID = GlobalData.WarehouseID;
