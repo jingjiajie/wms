@@ -15,17 +15,21 @@ namespace WMS.UI
     public partial class FormSupplyRemind : Form
     {
         string remind;
-
+        
         public  StringBuilder  sb = new StringBuilder();
         private int projectID = GlobalData.ProjectID;
         private int warehouseID = GlobalData.WarehouseID;
-        public FormSupplyRemind()
+
+        Button  button= null;
+        public FormSupplyRemind(Button button)
         {
             InitializeComponent();
             //this.FormBorderStyle = FormBorderStyle.None;
+
+            this.button = button;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-
+        
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Enabled = true;
             timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
@@ -286,6 +290,8 @@ namespace WMS.UI
         {
             this.Hide();
             e.Cancel = true;
+            this.button.Visible = true;
+
             
         }
     }

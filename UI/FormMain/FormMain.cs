@@ -546,7 +546,10 @@ namespace WMS.UI
                     //PanelObj.Controls.Add(FormSupplyRemind);
                     //FormSupplyRemind.Show();
 
-
+                    if (FormSupplyRemind == null)
+                    {
+                        FormSupplyRemind = new FormSupplyRemind(this.button1);
+                    }
 
                 }));
             }).Start();
@@ -937,33 +940,33 @@ namespace WMS.UI
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            if (FormSupplyRemind != null)
-            {
+            //if (FormSupplyRemind != null)
+            //{
 
 
-                if (this.WindowState == FormWindowState.Minimized)
-                {
+            //    if (this.WindowState == FormWindowState.Minimized)
+            //    {
 
-                    FormSupplyRemind.Hide();
+            //        FormSupplyRemind.Hide();
 
-                }
-                else
-                {
-
-
-                    FormSupplyRemind.Show();
-
-                }
-                //if (this.initbottom != this.Bottom)
-                //{
-
-                //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
-                //    this.initbottom = this.Bottom;
+            //    }
+            //    else if(this.WindowState ==FormWindowState.Maximized )
+            //    {
 
 
-                //}
+            //        FormSupplyRemind.Show();
 
-            }
+            //    }
+            //    //if (this.initbottom != this.Bottom)
+            //    //{
+
+            //    //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
+            //    //    this.initbottom = this.Bottom;
+
+
+            //    //}
+
+            //}
             
    
 
@@ -976,30 +979,28 @@ namespace WMS.UI
 
         private void FormMain_Move(object sender, EventArgs e)
         {
-            if (FormSupplyRemind != null)
-            {
-                FormSupplyRemind.Top = inity1 + (this.Top - inity);
-                FormSupplyRemind.Left = initx1 + (this.Left - initx);
-            }
+            //if (FormSupplyRemind != null)
+            //{
+            //    FormSupplyRemind.Top = inity1 + (this.Top - inity);
+            //    FormSupplyRemind.Left = initx1 + (this.Left - initx);
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             //if (this.button1.Text == "ÏÔÊ¾ÌáÐÑ")
             //{
-                if (FormSupplyRemind == null)
-                {
-                    FormSupplyRemind = new FormSupplyRemind();
-                }
-                initx = this.Left;
-                inity = this.Top;
+
+                
+                //initx = this.Left;
+                //inity = this.Top;
                 //this.initbottom = this.Bottom;
                 //this.initright = this.Right;
                 FormSupplyRemind.Show();
-                initx1 = FormSupplyRemind.Left;
-                inity1 = FormSupplyRemind.Top;
-            //this.button1.Visible = false;
-            //this.button1.Text = "Òþ²ØÌáÐÑ";
+                //initx1 = FormSupplyRemind.Left;
+                //inity1 = FormSupplyRemind.Top;
+                this.button1.Visible = false;
+                //this.button1.Text = "Òþ²ØÌáÐÑ";
             //}
             //else if(this.button1 .Text == "Òþ²ØÌáÐÑ")
             //{
@@ -1009,12 +1010,9 @@ namespace WMS.UI
             //        this.button1.Text = "ÏÔÊ¾ÌáÐÑ";
             //    }
             //}
-
+            
         }
+        
 
-        //public void ButtonVisble()
-        //{
-        //    this.button1.Visible = true;
-        //}
     }
 }
