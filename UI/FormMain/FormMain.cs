@@ -995,6 +995,14 @@ namespace WMS.UI
             //MessageBox.Show("Stopwatch总共花费" + Convert.ToString(ts2.TotalMilliseconds) + "ms.");
         }
 
+        private void button2_MouseEnter(object sender, EventArgs e)
+        {
+            button2.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
 
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
     }
 }
