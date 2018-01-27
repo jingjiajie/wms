@@ -36,8 +36,6 @@ namespace WMS.UI
             timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
             timer.Start();
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer1_Elapsed);
-
-
             //this.Opacity = 109;
         }
 
@@ -113,10 +111,7 @@ namespace WMS.UI
                     day = ( SafetyDate-DateTime .Now ).Days;
                     if (day<=30&&day>0)
                     {
-
-
                         stringBuilder.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate +"  " +"有效期还剩"+day+"天"+"\r\n" + "\r\n");
-
                     }
                     else if (day <= 0)
                     {
@@ -158,14 +153,7 @@ namespace WMS.UI
                     StockInfoView[] stockInfo = null;
                     if (SupplyView[i].SafetyStock == null)
                     {
-
-
-
-
                         continue;
-
-
-
                     }
 
                     stockInfo = (from kn in wmsEntities.StockInfoView
