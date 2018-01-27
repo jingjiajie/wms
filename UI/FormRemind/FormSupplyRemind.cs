@@ -134,27 +134,27 @@ namespace WMS.UI
         public void RemindStock()
         {
             WMSEntities wmsEntities = new WMSEntities();
-            SupplyView[] SupplyView = null;
+            SupplyView[] supplyView = null;
             try
             {
-                SupplyView = (from u in wmsEntities.SupplyView
+                supplyView = (from u in wmsEntities.SupplyView
                               where u.ProjectID ==this.projectID 
                               &&u.WarehouseID ==this.warehouseID 
                               select u).ToArray();
 
-                if(SupplyView ==null)
+                if(supplyView ==null)
                 {
                     return;
                 }
-                for (int i = 0; i < SupplyView.Length; i++)
+                for (int i = 0; i < supplyView.Length; i++)
                 {
                     decimal amount = 0;
-                    string ComponentName = SupplyView[i].ComponentName;
-                    string SupplierName = SupplyView[i].SupplierName;
-                    string SupplyNo = SupplyView[i].No;
+                    string ComponentName = supplyView[i].ComponentName;
+                    string SupplierName = supplyView[i].SupplierName;
+                    string SupplyNo = supplyView[i].No;
                     decimal SaftyStock;
                     StockInfoView[] stockInfo = null;
-                    if (SupplyView[i].SafetyStock == null)
+                    if (supplyView[i].SafetyStock == null)
                     {
                         continue;
                     }
@@ -169,7 +169,7 @@ namespace WMS.UI
                     {
                         continue;
                     }
-                    SaftyStock = Convert.ToDecimal(SupplyView[i].SafetyStock);
+                    SaftyStock = Convert.ToDecimal(supplyView[i].SafetyStock);
 
                     for (int j = 0; j < stockInfo.Length; j++)
 
