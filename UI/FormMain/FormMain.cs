@@ -552,8 +552,8 @@ namespace WMS.UI
                     {
                         FormSupplyRemind = new FormSupplyRemind(this.button2);
                     }
-                    this.button2.Left = 3;
-                    this.button2.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
+                    //this.button2.Left = 3;
+                    //this.button2.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
 
                 }));
             }).Start();
