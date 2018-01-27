@@ -240,9 +240,6 @@ namespace WMS.UI
                     Utilities.CopyComboBoxsToProperties(this, componen, ComponenViewMetaData.ComponentOuterPackingSizekeyNames);
                 }
 
-                //componen.LastUpdateUserID = this.userID;
-                //componen.LastUpdateTime = DateTime.Now;
-                //componen.IsHistory = 0;
                 wmsEntities.SaveChanges();
                 //调用回调函数
                 if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)

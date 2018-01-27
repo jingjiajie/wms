@@ -63,10 +63,6 @@ namespace WMS.UI.FormBase
             }
         }
 
-
-
-
-
         public void SetModifyFinishedCallback(Action<int> callback)
         {
             this.modifyFinishedCallback = callback;
