@@ -11,6 +11,7 @@ using WMS.UI.FormReceipt;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
 using System.Diagnostics;
+using System.Threading;
 namespace WMS.UI
 {
     public partial class FormSupplyRemind : Form
@@ -216,26 +217,37 @@ namespace WMS.UI
             this.Top = (int)(0.7 * Screen.PrimaryScreen.Bounds.Height);
             this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width );
             this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
-            this.textBox1.Text = "";           
+
+            Thread thread = new Thread(loadData);
+            thread.Start();
+
+            this.textBox1.Text = "数据加载中...";           
             //this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
             //this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
             this.ShowInTaskbar = false;///使窗体不显示在任务栏
             this.stringBuilder = new StringBuilder();
-
             //Stopwatch sw = new Stopwatch();
+            //ClearTextBox();
+            //RefreshID();
+            ////sw.Start();
+            //RemindSupply();
+            ////sw.Stop();
+            //RemindStock();
+            ////TimeSpan ts2 = sw.Elapsed;
+            ////MessageBox.Show("Stopwatch总共花费" + Convert.ToString(ts2.TotalMilliseconds) + "ms.");
+            //TextDeliver();
+        }
+        public void loadData()
+        {
+            //加载数据
             ClearTextBox();
             RefreshID();
-            //sw.Start();
             RemindSupply();
-            //sw.Stop();
             RemindStock();
-
-            //TimeSpan ts2 = sw.Elapsed;
-            //MessageBox.Show("Stopwatch总共花费" + Convert.ToString(ts2.TotalMilliseconds) + "ms.");
-            TextDeliver();
-
-
-
+            if (textBox1.InvokeRequired)
+            {
+                textBox1.BeginInvoke(new Action(() => textBox1.Text = stringBuilder.ToString() ));
+            }
 
         }
 
@@ -245,6 +257,8 @@ namespace WMS.UI
             e.Cancel = true;
             this.button.Visible = true;           
         }
+
+ 
     }
 
     
