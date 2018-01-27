@@ -859,13 +859,8 @@ namespace WMS.UI
             this.panelRight.Controls.Clear();
             if (FormSupplyRemind != null)
             {
-                FormSupplyRemind.ClearTextBox();
-                FormSupplyRemind.RefreshID();
-                FormSupplyRemind.RemindSupply();
-                FormSupplyRemind.RemindStock();
-                FormSupplyRemind.TextDeliver();
+                FormSupplyRemind.RefreshDate ();
             }
-
             this.treeViewLeft.SelectedNode = null;
         }
 
@@ -876,11 +871,8 @@ namespace WMS.UI
             this.panelRight.Controls.Clear();
             if (FormSupplyRemind != null)
             {
-                FormSupplyRemind.ClearTextBox();
-                FormSupplyRemind.RefreshID();
-                FormSupplyRemind.RemindSupply();
-                FormSupplyRemind.RemindStock();
-                FormSupplyRemind.TextDeliver();
+                FormSupplyRemind.RefreshDate ();
+
             }
             this.treeViewLeft.SelectedNode = null;
         }

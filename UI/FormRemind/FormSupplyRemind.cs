@@ -21,7 +21,6 @@ namespace WMS.UI
         public  StringBuilder stringBuilder = new StringBuilder();
         private int projectID = GlobalData.ProjectID;
         private int warehouseID = GlobalData.WarehouseID;
-
         Button  button= null;
         public FormSupplyRemind(Button button)
         {
@@ -217,10 +216,8 @@ namespace WMS.UI
             this.Top = (int)(0.7 * Screen.PrimaryScreen.Bounds.Height);
             this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width );
             this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
-
             Thread thread = new Thread(loadData);
             thread.Start();
-
             this.textBox1.Text = "数据加载中...";           
             //this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
             //this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
@@ -247,8 +244,22 @@ namespace WMS.UI
             if (textBox1.InvokeRequired)
             {
                 textBox1.BeginInvoke(new Action(() => textBox1.Text = stringBuilder.ToString() ));
-            }
+                if (this.textBox1.Text == "刷新失败,请检查网络连接")
+                {
+                    this.textBox1.ForeColor = Color.Red;
 
+                }
+                else
+                {
+                    this.textBox1.ForeColor = Color.Black;
+                }
+            }
+        }
+        public void RefreshDate()
+        {
+            Thread thread = new Thread(loadData);
+            thread.Start();
+            this.textBox1.Text = "数据加载中...";
         }
 
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
