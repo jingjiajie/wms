@@ -336,8 +336,12 @@ namespace WMS.UI
                     this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.DefaultReceiptUnitAmount.ToString();
                     this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
                     this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
+                    //this.Controls.Find("textBoxManufactureDate", true)[0].Text = supply
                     this.Controls.Find("textBoxInventoryDate", true)[0].Text = DateTime.Now.ToString();
-
+                    if (supply.ValidPeriod != null)
+                    {
+                        this.Controls.Find("textBoxExpiryDate", true)[0].Text = DateTime.Now.AddDays((double)supply.ValidPeriod).ToString();
+                    }
                     //this.Controls.Find("textBoxWrongComponentUnit", true)[0].Text = "个";
                     //this.Controls.Find("textBoxWrongComponentUnitAmount", true)[0].Text = "1";
                     this.Controls.Find("textBoxRefuseUnitCount", true)[0].Text = "0";
