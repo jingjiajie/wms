@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
+using System.Diagnostics; 
 
 namespace WMS.UI
 {
@@ -992,31 +993,16 @@ namespace WMS.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //if (this.button1.Text == "显示提醒")
-            //{
 
-                
-                //initx = this.Left;
-                //inity = this.Top;
-                //this.initbottom = this.Bottom;
-                //this.initright = this.Right;
-                FormSupplyRemind.Show();
-                //initx1 = FormSupplyRemind.Left;
-                //inity1 = FormSupplyRemind.Top;
-                this.button2.Visible = false;
-                //this.button1.Text = "隐藏提醒";
-            //}
-            //else if(this.button1 .Text == "隐藏提醒")
-            //{
-            //    if (FormSupplyRemind != null)
-            //    {
-            //        FormSupplyRemind.Visible = false;
-            //        this.button1.Text = "显示提醒";
-            //    }
-            //}
-            
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
+            FormSupplyRemind.Show();
+            this.button2.Visible = false;
+            //sw.Stop();
+            //TimeSpan ts2 = sw.Elapsed;
+            //MessageBox.Show("Stopwatch总共花费" + Convert.ToString(ts2.TotalMilliseconds) + "ms.");
         }
-        
+
 
     }
 }

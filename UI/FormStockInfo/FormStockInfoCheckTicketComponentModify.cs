@@ -1411,11 +1411,11 @@ namespace WMS.UI
             FormSelectSupply.SelectMode = FormSelectSupply.Mode.MULTISELECT;
             FormSelectSupply.SetMultiselectFinishedCallback((selectedID) =>
             {
-                    FormSelectSupply.SelectMode = FormSelectSupply.Mode.NORMAL;
-                    int[] supplyBatch = null;
+                FormSelectSupply.SelectMode = FormSelectSupply.Mode.NORMAL;
+                int[] supplyBatch = null;
                 StockInfoCheckTicketItemView[] stockInfoCheckTicketItemSave = null;
                 FormLoading formLoading = new FormLoading("正在添加，请稍后...");
-                    formLoading.Show();
+                formLoading.Show();
                 new Thread(() =>
                 {
                    

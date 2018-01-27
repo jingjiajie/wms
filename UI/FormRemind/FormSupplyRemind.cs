@@ -10,6 +10,7 @@ using System.Drawing.Drawing2D;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
+using System.Diagnostics;
 namespace WMS.UI
 {
     public partial class FormSupplyRemind : Form
@@ -41,6 +42,7 @@ namespace WMS.UI
 
         private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+
             ClearTextBox();
             RefreshID();
             RemindSupply();
@@ -209,21 +211,27 @@ namespace WMS.UI
         {
             //double a = 0.35;
             //this.Top = 0;//25
-            //this.Left = (int)(a * Screen.PrimaryScreen.Bounds.Width);
+            //this.Left = (int)(a * Screen.PrimaryScreen.Bounds.Width);          
             this.Left = 3;
             this.Top = (int)(0.7 * Screen.PrimaryScreen.Bounds.Height);
             this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width );
             this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
-            this.textBox1.Text = "";
-            
+            this.textBox1.Text = "";           
             //this.TransparencyKey = System.Drawing.Color.Black;//设置黑的是透明色
             //this.BackColor = System.Drawing.Color.Black;//把窗口的背景色设置为黑
             this.ShowInTaskbar = false;///使窗体不显示在任务栏
             this.stringBuilder = new StringBuilder();
+
+            //Stopwatch sw = new Stopwatch();
             ClearTextBox();
             RefreshID();
+            //sw.Start();
             RemindSupply();
+            //sw.Stop();
             RemindStock();
+
+            //TimeSpan ts2 = sw.Elapsed;
+            //MessageBox.Show("Stopwatch总共花费" + Convert.ToString(ts2.TotalMilliseconds) + "ms.");
             TextDeliver();
 
 
