@@ -1184,7 +1184,7 @@ namespace WMS.UI
         private void buttonPreview_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("收货单预览", (float)0.9);
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("收货单预览", 1.0f);
             if (formPreview.SetPatternTable(@"Excel\ReceiptTicket.xlsx") == false)
             {
                 this.Close();
@@ -1294,6 +1294,14 @@ namespace WMS.UI
         private void reoGridControlUser_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                this.buttonSelect.PerformClick();
+            }
         }
     }
 }

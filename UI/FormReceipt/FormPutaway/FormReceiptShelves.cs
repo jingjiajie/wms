@@ -610,5 +610,13 @@ namespace WMS.UI.FormReceipt
             //formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             formPreview.Show();
         }
+
+        private void toolStripTextBoxSelect_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.toolStripButtonSelect.PerformClick();
+            }
+        }
     }
 }

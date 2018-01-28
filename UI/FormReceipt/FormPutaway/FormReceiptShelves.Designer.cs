@@ -128,7 +128,7 @@
             // 
             this.toolStripLabelSelect.Name = "toolStripLabelSelect";
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 45);
+            this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 36);
             this.toolStripLabelSelect.Text = "查询条件：";
             // 
             // toolStripComboBoxSelect
@@ -136,13 +136,14 @@
             this.toolStripComboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(223, 48);
+            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(223, 39);
             this.toolStripComboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelect_SelectedIndexChanged_1);
             // 
             // toolStripTextBoxSelect
             // 
             this.toolStripTextBoxSelect.Name = "toolStripTextBoxSelect";
-            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(298, 48);
+            this.toolStripTextBoxSelect.Size = new System.Drawing.Size(298, 39);
+            this.toolStripTextBoxSelect.KeyDown += new System.Windows.Forms.KeyEventHandler(this.toolStripTextBoxSelect_KeyDown);
             // 
             // toolStripButtonSelect
             // 
@@ -165,7 +166,7 @@
             this.toolStripButtonItem.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonItem.Name = "toolStripButtonItem";
-            this.toolStripButtonItem.Size = new System.Drawing.Size(134, 45);
+            this.toolStripButtonItem.Size = new System.Drawing.Size(134, 36);
             this.toolStripButtonItem.Text = "查看详细";
             this.toolStripButtonItem.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             this.toolStripButtonItem.Click += new System.EventHandler(this.toolStripButtonItem_Click);
@@ -181,7 +182,7 @@
             this.toolStripButtonAlter.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonAlter.Image")));
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(86, 45);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(86, 36);
             this.toolStripButtonAlter.Text = "修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -190,7 +191,7 @@
             this.toolStripButtonDelete.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButtonDelete.Image")));
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(86, 45);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(86, 36);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
@@ -205,7 +206,7 @@
             this.buttonPreview.Image = ((System.Drawing.Image)(resources.GetObject("buttonPreview.Image")));
             this.buttonPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPreview.Name = "buttonPreview";
-            this.buttonPreview.Size = new System.Drawing.Size(144, 45);
+            this.buttonPreview.Size = new System.Drawing.Size(144, 36);
             this.buttonPreview.Text = "导出/打印";
             this.buttonPreview.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
