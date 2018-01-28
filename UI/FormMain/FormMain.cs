@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
-
+using System.Data.SqlClient;
 using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormBase;
@@ -32,14 +32,7 @@ namespace WMS.UI
         private int reminedays;
         FormSupplyRemind FormSupplyRemind = null;
         StringBuilder  stringBuilder = new StringBuilder();
-        bool show = false;
-        int initx = 0;//初始left距离
-        int inity = 0;//初始top距离
-        int initbottom;//初始底距离
-        int initright;
-        int initx1 = 0;//初始left距离
-        int inity1 = 0;//初始top距离
-         
+        bool show = false;       
         //FormSupplyRemind a1 = null;
 
 
@@ -67,18 +60,7 @@ namespace WMS.UI
 
 
             }
-
-
-
-
-
-
-
         }
-
-
-
-
 
 
 
@@ -570,7 +552,7 @@ namespace WMS.UI
             //}
 
 
-
+            RemindStockinfo();
 
         }
 
@@ -951,29 +933,9 @@ namespace WMS.UI
                 }
                 else if (this.WindowState == FormWindowState.Maximized&&this.button2.Visible ==false )
                 {
-
-
-                    FormSupplyRemind.Show();
-
-                }
-                //if (this.initbottom != this.Bottom)
-                //{
-
-                //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
-                //    this.initbottom = this.Bottom;
-
-
-                //}
-
+                   FormSupplyRemind.Show();
+                }               
             }
-
-
-
-
-
-
-
-
         }
 
         private void FormMain_Move(object sender, EventArgs e)
@@ -1005,6 +967,69 @@ namespace WMS.UI
         private void button2_MouseLeave(object sender, EventArgs e)
         {
             button2.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
-        }    
-  }
+        }
+        public void RemindStockinfo ()
+        {           
+            //SupplyView[] SupplyViewRemind = null;
+            //SupplyViewRemind = wmsEntities.Database.SqlQuery<SupplyView >(sql).ToArray ();
+            //string sql = "";
+            //sql = "select SupplyView .ProjectName ,SupplyView .WarehouseName,SupplyView .SupplierName, SupplyView.ComponentName ,SupplyView .No,(select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No = StockInfoView.SupplyNo),SupplyView.SafetyStock from SupplyView where(select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No = StockInfoView.SupplyNo)< SupplyView.SafetyStock and IsHistory = 0";
+            wmsEntities = new WMSEntities();
+            string sql = "";
+            sql = "select * from SupplyView where (select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo)<SupplyView.SafetyStock and IsHistory =0 ";
+            //sql = sql + "and ProjectID=" + GlobalData.ProjectID;
+            //sql = sql + "and WarehouseID=" + GlobalData.WarehouseID;
+            //sql = "select * from SupplyView ";
+            sql = "select SupplyView .ProjectName ,SupplyView .WarehouseName,SupplyView .SupplierName, SupplyView.ComponentName ,SupplyView .No,(select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo),SupplyView.SafetyStock    from SupplyView where    (select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo)<SupplyView.SafetyStock and ProjectName ='某某项目' and WarehouseName ='其他'and IsHistory =0";
+            wmsEntities.Database.Connection.Open();
+            DataTable DataTabledt1 = new DataTable();// 实例化数据表
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, (SqlConnection)wmsEntities.Database.Connection);
+            sqlDataAdapter.Fill(DataTabledt1);
+            //SqlCommand cmd = new SqlCommand(sql, (SqlConnection)wmsEntities.Database.Connection);
+            //object r = cmd.ExecuteReader();
+            string a = DataTabledt1.Rows[0][0].ToString();
+
+
+            wmsEntities.Database.Connection.Close();
+
+
+
+
+
+
+
+
+            //DataTable dt1 = new DataTable();
+            //SqlDataAdapter da1 = new SqlDataAdapter();
+            //wmsEntities.Database.Connection.Open();
+            //MessageBox.Show("数据库连接成功", "好");
+            //string query = "select * from SupplyView";
+            //DataSet objDataSet = new DataSet();
+            //SqlDataAdapter obj = new SqlDataAdapter();
+            //obj.SelectCommand = new SqlCommand(query, (SqlConnection)wmsEntities.Database.Connection);
+            //obj.Fill(objDataSet, "info");
+            //SqlCommand objSqlCommand = new SqlCommand(query, (SqlConnection)wmsEntities.Database.Connection);
+            //SqlDataReader objSqlReader = objSqlCommand.ExecuteReader();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+    }
 }

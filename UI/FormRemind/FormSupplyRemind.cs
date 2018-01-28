@@ -97,7 +97,7 @@ namespace WMS.UI
                                        where u.ComponentName == ComponentName &&
                                        u.SupplierName == SupplierName &&
                                        u.No == SupplyNo&&u.ProjectID ==this.projectID 
-                                       &&u.WarehouseID ==this.warehouseID 
+                                       &&u.WarehouseID ==this.warehouseID &&u.IsHistory ==0
                                        select u).FirstOrDefault();
                     if(SafetyDate1 == null)
                     {
@@ -142,6 +142,7 @@ namespace WMS.UI
                 supplyView = (from u in wmsEntities.SupplyView
                               where u.ProjectID ==this.projectID 
                               &&u.WarehouseID ==this.warehouseID 
+                              &&u.IsHistory ==0
                               select u).ToArray();
 
                 if(supplyView ==null)
