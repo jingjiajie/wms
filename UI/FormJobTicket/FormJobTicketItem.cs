@@ -66,8 +66,8 @@ namespace WMS.UI
             this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
-            worksheet.SelectionRangeChanged += this.worksheet_SelectionRangeChanged;
-
+            worksheet.FocusPosChanged += worksheet_FocusPosChanged;
+        
             for (int i = 0; i < JobTicketItemViewMetaData.KeyNames.Length; i++)
             {
                 worksheet.ColumnHeaders[i].Text = JobTicketItemViewMetaData.KeyNames[i].Name;
@@ -78,6 +78,11 @@ namespace WMS.UI
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties,JobTicketItemViewMetaData.KeyNames);
             this.JobPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxJobPersonName", "Name");
             this.ConfirmPersonIDGetter = Utilities.BindTextBoxSelect<FormSelectPerson, Person>(this, "textBoxConfirmPersonName", "Name");
+        }
+
+        private void worksheet_FocusPosChanged(object sender, unvell.ReoGrid.Events.CellPosEventArgs e)
+        {
+            this.RefreshTextBoxes();
         }
 
         private JobTicketView GetJobTicketViewByNo(string jobTicketNo)
@@ -143,37 +148,14 @@ namespace WMS.UI
 
         private void buttonFinish_Click(object sender, EventArgs e)
         {
-            ComboBox comboBoxState = (ComboBox)this.Controls.Find("comboBoxState",true)[0];
-            TextBox textBoxScheduledAmount = (TextBox)this.Controls.Find("textBoxScheduledAmount",true)[0];
             TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
             TextBox textBoxHappenTime = (TextBox)this.Controls.Find("textBoxHappenTime", true)[0];
             textBoxHappenTime.Text = DateTime.Now.ToString();
-            JobTicketItem tmpJobTicketItem = new JobTicketItem();
+
             if (string.IsNullOrWhiteSpace(textBoxRealAmount.Text))
             {
                 MessageBox.Show("请填写实际完成数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            }
-            if (Utilities.CopyTextBoxTextsToProperties(this, tmpJobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
-            {
-                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if(int.TryParse(textBoxScheduledAmount.Text, out int scheduledAmount) == false)
-            {
-                scheduledAmount = 0;
-            }
-            if(tmpJobTicketItem.RealAmount == 0)
-            {
-                comboBoxState.SelectedIndex = 0;
-            }
-            else if(tmpJobTicketItem.RealAmount < scheduledAmount)
-            {
-                comboBoxState.SelectedIndex = 1;
-            }
-            else
-            {
-                comboBoxState.SelectedIndex = 2;
             }
             this.buttonModify.PerformClick();
         }
@@ -282,6 +264,19 @@ namespace WMS.UI
                     int confirmPersonID = this.ConfirmPersonIDGetter();
                     jobTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
                     jobTicketItem.ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
+                    if (jobTicketItem.RealAmount == jobTicketItem.ScheduledAmount)
+                    {
+                        jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_ALL_FINISHED;
+                    }
+                    else if (jobTicketItem.RealAmount == 0)
+                    {
+                        jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
+                    }
+                    else
+                    {
+                        jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_PART_FINISHED;
+                    }
+
                     new Thread(()=>
                     {
                         try
