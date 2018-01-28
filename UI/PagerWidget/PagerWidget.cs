@@ -134,21 +134,41 @@ namespace WMS.UI
         {
             string realKey = null;
             //首先判断查询的Key是否在KeyName中对应的Name，如果是，则转换成相应的Key
-            string foundKey = (from kn in keyNames
+            KeyName foundKeyName = (from kn in keyNames
                                where kn.Name == key
-                               select kn.Key).FirstOrDefault();
-            if (foundKey != null)
+                               select kn).FirstOrDefault();
+            if (foundKeyName == null)
             {
-                realKey = foundKey;
+                foundKeyName = (from kn in keyNames
+                                where kn.Key == key
+                                select kn).FirstOrDefault();
             }
-            else if (typeof(TargetClass).GetProperty(key) != null)
+            if (foundKeyName != null)
             {
-                realKey = key;
+                realKey = foundKeyName.Key;
+                if (foundKeyName.Translator != null)
+                {
+                    try
+                    {
+                        value = foundKeyName.Translator(value).ToString();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("查询失败，请检查查询条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return null;
+                    }
+                }
             }
             else
             {
-                throw new Exception("KeyNames中不存在Name:" + key + "请检查你的代码！");
+                PropertyInfo property = typeof(TargetClass).GetProperty(key);
+                if (property == null)
+                {
+                    throw new Exception(typeof(TargetClass).Name + "的KeyNames中不存在Name:" + key + "请检查你的代码！");
+                }
+                realKey = key;
             }
+
             string paramName = "@value" + Guid.NewGuid().ToString("N");
             Type propertyType = typeof(TargetClass).GetProperty(realKey).PropertyType;
             string sql = "(1<>1 ";
@@ -190,7 +210,11 @@ namespace WMS.UI
 
         public void AddCondition(string key,string value)
         {
-            this.condition.Add(this.MakeCondition(key,value));
+            Condition cond = this.MakeCondition(key, value);
+            if (cond != null)
+            {
+                this.condition.Add(cond);
+            }
         }
 
 

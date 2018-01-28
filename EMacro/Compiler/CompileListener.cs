@@ -43,5 +43,11 @@ namespace EMacro
             string jsText = context.jsCommand().JSTEXT().GetText();
             commandList.Add(new Command.SET_COLOR(jsText));
         }
+
+        public override void EnterSetTableColumnsCommand([NotNull] EMacroParser.SetTableColumnsCommandContext context)
+        {
+            string jsText = context.jsCommand().JSTEXT().GetText();
+            commandList.Add(new Command.SET_TABLE_COLUMNS(jsText));
+        }
     }
 }

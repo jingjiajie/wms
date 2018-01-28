@@ -755,5 +755,13 @@ namespace WMS.UI
             
             //this.Close();
         }
+
+        private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.buttonSelect.PerformClick();
+            }
+        }
     }
 }

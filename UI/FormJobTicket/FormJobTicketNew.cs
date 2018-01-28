@@ -383,20 +383,22 @@ namespace WMS.UI
         private bool importHandler(NewJobTicketItemData[] results, Dictionary<string, string[]> unimportedColumns)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            int[] showedIDs = new int[this.validRows];
             //已经被选中的项和数量
             Dictionary<int, decimal> checkedIDAndAmount = new Dictionary<int, decimal>();
             //本次导入填写的项和数量
             Dictionary<int, decimal> idAndAmount = new Dictionary<int, decimal>();
             //项和单位数量的对应关系
             Dictionary<int, decimal> idAndUnitAmount = new Dictionary<int, decimal>();
-            //统计已经选中的项
+            //统计已经显示的项和选中的项
             for (int i = 0; i < this.validRows; i++)
             {
-                if((worksheet[i,1] as bool? ?? false)==false)
+                int id = int.Parse(worksheet[i, 0].ToString());
+                showedIDs[i] = id;
+                if ((worksheet[i,1] as bool? ?? false)==false)
                 {
                     continue;
                 }
-                int id = int.Parse(worksheet[i, 0].ToString());
                 if (decimal.TryParse(worksheet[i, 2] == null ? "" : worksheet[i, 2].ToString(), out decimal amount) == false)
                 {
                     amount = 0;
@@ -414,7 +416,6 @@ namespace WMS.UI
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                ShipmentTicketItemView[] shipmentTicketItemViews = (from s in wmsEntities.ShipmentTicketItemView where s.ShipmentTicketID == this.shipmentTicketID select s).ToArray();
                 for (int i = 0; i < results.Length; i++)
                 {
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
@@ -436,6 +437,7 @@ namespace WMS.UI
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
                                          && s.SupplyNo == supplyNoOrComponentName
+                                         && showedIDs.Contains(s.ID)
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
@@ -444,6 +446,7 @@ namespace WMS.UI
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
                                          && s.ComponentName == supplyNoOrComponentName
+                                         && showedIDs.Contains(s.ID)
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
@@ -477,7 +480,7 @@ namespace WMS.UI
                     });
                     if(scheduleAmountNoUnit > totalStockAmountNoUnit)
                     {
-                        MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}个", i + 1, totalStockAmountNoUnit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}个", i + 1, Utilities.DecimalToString(totalStockAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     decimal curAmountNoUnit = 0; //累计分配了多少
@@ -543,11 +546,11 @@ namespace WMS.UI
                 //如果之前没点击，则覆盖数量。否则累加数量
                 if (oriChecked && decimal.TryParse(worksheet[i, 2].ToString(), out decimal oriAmount))
                 {
-                    worksheet[i, 2] =  amount + oriAmount;
+                    worksheet[i, 2] = Utilities.DecimalToString(amount + oriAmount);
                 }
                 else
                 {
-                    worksheet[i, 2] = amount;
+                    worksheet[i, 2] = Utilities.DecimalToString(amount);
                 }
             }
         }

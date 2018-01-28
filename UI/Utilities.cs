@@ -726,18 +726,38 @@ namespace WMS.UI
     {
         public static object BoolTranslator(object value)
         {
-            int intValue = value as int? ?? -1;
-            if ((intValue == 0 || intValue == 1) == false)
+            if (value is int)
             {
-                throw new Exception("BoolTranslator只接受整数0/1！");
-            }
-            if (intValue == 0)
+                if ((int)value == 0)
+                {
+                    return "否";
+                }
+                else if ((int)value == 1)
+                {
+                    return "是";
+                }
+                else
+                {
+                    throw new Exception("BoolTranslator只接受整数0/1！");
+                }
+            }else if(value is string)
             {
-                return "否";
+                if ((string)value == "是")
+                {
+                    return 1;
+                }
+                else if ((string)value == "否")
+                {
+                    return 0;
+                }
+                else
+                {
+                    throw new Exception("BoolTranslator只接受是/否！");
+                }
             }
             else
             {
-                return "是";
+                throw new Exception("BoolTranslator只接受整数型或字符串数据！");
             }
         }
     }

@@ -50,7 +50,7 @@ namespace WMS.UI
             try
             {
                 this.reoGridControlMain.Worksheets.Clear();
-                foreach(var item in this.patternTables)
+                foreach (var item in this.patternTables)
                 {
                     string sheetName = item.Key;
                     Worksheet patternTable = item.Value;
@@ -65,10 +65,6 @@ namespace WMS.UI
                     Worksheet newWorksheet = this.excelGenerator.Generate();
                     newWorksheet.Name = sheetName;
                     this.reoGridControlMain.Worksheets.Add(newWorksheet);
-                    for (int i = 0; i < newWorksheet.Columns; i++)
-                    {
-                        newWorksheet.AutoFitColumnWidth(i);
-                    }
                 }
             }
             catch (Exception ex)

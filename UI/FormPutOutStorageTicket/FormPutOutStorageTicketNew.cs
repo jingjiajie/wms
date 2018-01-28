@@ -525,11 +525,11 @@ namespace WMS.UI
                 //如果之前没点击，则覆盖数量。否则累加数量
                 if (oriChecked && decimal.TryParse(worksheet[i, 2].ToString(), out decimal oriAmount))
                 {
-                    worksheet[i, 2] = amount + oriAmount;
+                    worksheet[i, 2] = Utilities.DecimalToString(amount + oriAmount);
                 }
                 else
                 {
-                    worksheet[i, 2] = amount;
+                    worksheet[i, 2] = Utilities.DecimalToString(amount);
                 }
             }
         }

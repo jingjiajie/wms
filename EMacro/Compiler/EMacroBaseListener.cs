@@ -131,6 +131,18 @@ public partial class EMacroBaseListener : IEMacroListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitSetColorCommand([NotNull] EMacroParser.SetColorCommandContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="EMacroParser.setTableColumnsCommand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterSetTableColumnsCommand([NotNull] EMacroParser.SetTableColumnsCommandContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="EMacroParser.setTableColumnsCommand"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitSetTableColumnsCommand([NotNull] EMacroParser.SetTableColumnsCommandContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="EMacroParser.jsCommand"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
