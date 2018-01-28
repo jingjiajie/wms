@@ -282,7 +282,7 @@ namespace WMS.UI
             this.panelFill.Location = new System.Drawing.Point(0, 140);
             this.panelFill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panelFill.Name = "panelFill";
-            this.panelFill.Size = new System.Drawing.Size(1333, 905);
+            this.panelFill.Size = new System.Drawing.Size(1333, 897);
             this.panelFill.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -299,7 +299,7 @@ namespace WMS.UI
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1333, 905);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1333, 897);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // panelRight
@@ -312,7 +312,7 @@ namespace WMS.UI
             this.panelRight.Location = new System.Drawing.Point(240, 0);
             this.panelRight.Margin = new System.Windows.Forms.Padding(0);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(1093, 905);
+            this.panelRight.Size = new System.Drawing.Size(1093, 897);
             this.panelRight.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -327,7 +327,7 @@ namespace WMS.UI
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.21468F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.785317F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(234, 899);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(234, 891);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // panelLeft
@@ -337,7 +337,7 @@ namespace WMS.UI
             this.panelLeft.Location = new System.Drawing.Point(1, 1);
             this.panelLeft.Margin = new System.Windows.Forms.Padding(1);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(232, 836);
+            this.panelLeft.Size = new System.Drawing.Size(232, 828);
             this.panelLeft.TabIndex = 0;
             // 
             // treeViewLeft
@@ -389,7 +389,7 @@ namespace WMS.UI
             treeNode14,
             treeNode16});
             this.treeViewLeft.SelectedImageIndex = 0;
-            this.treeViewLeft.Size = new System.Drawing.Size(232, 836);
+            this.treeViewLeft.Size = new System.Drawing.Size(232, 828);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);
             // 
@@ -409,7 +409,7 @@ namespace WMS.UI
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.947368F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 841);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 833);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -443,7 +443,7 @@ namespace WMS.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1333, 1045);
+            this.ClientSize = new System.Drawing.Size(1333, 1037);
             this.Controls.Add(this.panelFill);
             this.Controls.Add(this.panelTop);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
