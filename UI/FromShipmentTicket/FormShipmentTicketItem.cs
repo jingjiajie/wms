@@ -78,6 +78,7 @@ namespace WMS.UI
             this.reoGridControlMain.SetSettings(WorkbookSettings.View_ShowSheetTabControl, false);
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.SelectionMode = WorksheetSelectionMode.Row;
+            worksheet.FocusPosChanged += this.worksheet_FocusPosChanged;
 
             for (int i = 0; i < usedKeyNames.Length; i++)
             {
@@ -87,8 +88,6 @@ namespace WMS.UI
             worksheet.Columns = usedKeyNames.Length; //限制表的长度
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, usedKeyNames);
-
-            this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
 
             this.textBoxComponentName = (TextBox)this.Controls.Find("textBoxComponentName", true)[0];
             textBoxComponentName.Click += textBoxComponentName_Click;
@@ -212,7 +211,7 @@ namespace WMS.UI
             formSelectStockInfo.ShowDialog();
         }
 
-        private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        private void worksheet_FocusPosChanged(object sender, unvell.ReoGrid.Events.CellPosEventArgs e)
         {
             this.RefreshTextBoxes();
         }

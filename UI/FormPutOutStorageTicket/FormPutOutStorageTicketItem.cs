@@ -121,10 +121,10 @@ namespace WMS.UI
             worksheet.Columns = PutOutStorageTicketItemViewMetaData.KeyNames.Length; //限制表的长度
 
             Utilities.CreateEditPanel(this.tableLayoutPanelProperties, PutOutStorageTicketItemViewMetaData.KeyNames);
-            worksheet.SelectionRangeChanged += worksheet_SelectionRangeChanged;
+            worksheet.FocusPosChanged += worksheet_FocusPosChanged;
         }
 
-        private void worksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        private void worksheet_FocusPosChanged(object sender, unvell.ReoGrid.Events.CellPosEventArgs e)
         {
             this.RefreshTextBoxes();
         }
@@ -267,9 +267,9 @@ namespace WMS.UI
                 return;
             }
 
-            decimal oriRealAmount = putOutStorageTicketItem.RealAmount ?? 0;
-            decimal oriReturnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1);
-            decimal oriReturnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1);
+            decimal oriRealAmountNoUnit = (putOutStorageTicketItem.RealAmount ?? 0) * (putOutStorageTicketItem.UnitAmount ?? 1);
+            decimal oriReturnQualityAmountNoUnit = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1);
+            decimal oriReturnRejectAmountNoUnit = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1);
             string oriState = putOutStorageTicketItem.State;
 
             if (Utilities.CopyTextBoxTextsToProperties(this, putOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
@@ -287,7 +287,7 @@ namespace WMS.UI
                 MessageBox.Show("实际装车数量必须大于等于0并且小于计划装车数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            decimal deltaRealAmount = (putOutStorageTicketItem.RealAmount ?? 0) - oriRealAmount;
+            decimal deltaRealAmountNoUnit = (putOutStorageTicketItem.RealAmount ?? 0) - oriRealAmountNoUnit;
             decimal? returnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * putOutStorageTicketItem.ReturnQualityUnitAmount;
             decimal? returnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * putOutStorageTicketItem.ReturnRejectUnitAmount;
             decimal? deliverAmount = putOutStorageTicketItem.RealAmount * putOutStorageTicketItem.UnitAmount;
@@ -300,16 +300,29 @@ namespace WMS.UI
             int confirmPersonID = this.confirmPersonGetter();
             putOutStorageTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
             putOutStorageTicketItem.ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
+            if (putOutStorageTicketItem.RealAmount == putOutStorageTicketItem.ScheduledAmount)
+            {
+                putOutStorageTicketItem.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED;
+            }
+            else if (putOutStorageTicketItem.RealAmount == 0)
+            {
+                putOutStorageTicketItem.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_WAIT_FOR_LOAD;
+            }
+            else
+            {
+                putOutStorageTicketItem.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_PART_LOADED;
+            }
+
             if (stockInfo != null)
             {
                 //更新发货区，已分配发货数量
-                stockInfo.ShipmentAreaAmount -= deltaRealAmount;
-                stockInfo.ScheduledShipmentAmount -= deltaRealAmount;
+                stockInfo.ShipmentAreaAmount -= deltaRealAmountNoUnit;
+                stockInfo.ScheduledShipmentAmount -= deltaRealAmountNoUnit;
                 //更新退回数量
-                decimal deltaReturnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1) - oriReturnQualityAmount;
-                decimal deltaReturnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1) - oriReturnRejectAmount;
-                stockInfo.ShipmentAreaAmount += deltaReturnQualityAmount;
-                stockInfo.RejectAreaAmount += deltaReturnRejectAmount;
+                decimal deltaReturnQualityAmountNoUnit = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1) - oriReturnQualityAmountNoUnit;
+                decimal deltaReturnRejectAmountNoUnit = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1) - oriReturnRejectAmountNoUnit;
+                stockInfo.ShipmentAreaAmount += deltaReturnQualityAmountNoUnit;
+                stockInfo.RejectAreaAmount += deltaReturnRejectAmountNoUnit;
             }
             new Thread(() =>
             {
@@ -404,18 +417,6 @@ namespace WMS.UI
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
-            }
-            if(tmpPutOutStorageTicketItem.RealAmount == 0)
-            {
-                comboBoxState.SelectedIndex = 0;
-            }
-            else if (tmpPutOutStorageTicketItem.RealAmount < tmpPutOutStorageTicketItem.ScheduledAmount)
-            {
-                comboBoxState.SelectedIndex = 1;
-            }
-            else
-            {
-                comboBoxState.SelectedIndex = 2;
             }
             if (string.IsNullOrWhiteSpace(textBoxLoadingTime.Text))
             {

@@ -61,7 +61,7 @@ namespace WMS.UI.FormReceipt
         {
             this.pagerWidget.ClearCondition();
             
-            if (this.comboBoxSearchCondition.SelectedIndex != -1)
+            if (this.comboBoxSearchCondition.SelectedIndex != 0)
             {
                 this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchContition.Text);
             }
@@ -170,6 +170,42 @@ namespace WMS.UI.FormReceipt
         private void comboBoxSearchCondition_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBoxSearchContition_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                this.buttonSearch.PerformClick();
+            }
+        }
+
+        private void comboBoxSearchCondition_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                if (this.textBoxSearchContition.Enabled)
+                {
+                    this.textBoxSearchContition.Focus();
+                    this.textBoxSearchContition.SelectAll();
+                }
+                else
+                {
+                    this.buttonSearch.PerformClick();
+                }
+            }
+        }
+
+        private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.comboBoxSearchCondition.SelectedIndex == 0)
+            {
+                this.textBoxSearchContition.Enabled = false;
+            }
+            else
+            {
+                this.textBoxSearchContition.Enabled = true;
+            }
         }
     }
 

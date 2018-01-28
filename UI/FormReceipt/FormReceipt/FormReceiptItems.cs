@@ -301,7 +301,7 @@ namespace WMS.UI
             ReceiptTicket receiptTicket1 = (from rt in wmsEntities1.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
             if (receiptTicket1 == null)
             {
-                MessageBox.Show("改收货单已被删除，请刷新后重试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("该收货单已被删除，请刷新后重试", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (receiptTicket1.SupplierID == null)

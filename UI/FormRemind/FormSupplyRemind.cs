@@ -65,6 +65,7 @@ namespace WMS.UI
 
         public   void RemindSupply()
         {
+            DateTime before = DateTime.Now;
             //存货有效期
             WMSEntities wmsEntities = new WMSEntities();
             StockInfoView[] stockInfoView = null;
@@ -128,10 +129,12 @@ namespace WMS.UI
                 stringBuilder.Append("刷新失败,请检查网络连接");
                 return;
             }
+            Console.WriteLine("刷新供货预警提醒花费时间：{0}毫秒", (DateTime.Now - before).TotalMilliseconds);
         }
 
         public void RemindStock()
         {
+            DateTime before = DateTime.Now;
             WMSEntities wmsEntities = new WMSEntities();
             SupplyView[] supplyView = null;
             try
@@ -188,6 +191,7 @@ namespace WMS.UI
                 stringBuilder.Append("刷新失败2,请检查网络连接");
                 return;
             }
+            Console.WriteLine("刷新库存提醒花费时间：{0}毫秒",(DateTime.Now - before).TotalMilliseconds);
         }
 
         public void TextDeliver()

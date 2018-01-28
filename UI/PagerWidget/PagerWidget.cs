@@ -452,6 +452,7 @@ namespace WMS.UI
                             }
                         }));
                     }
+                    Utilities.AutoFitReoGridColumnWidth(this.reoGrid);
                     searchFinishedCallback?.Invoke(results);
                     enableCheckEvent = true;
                 }));

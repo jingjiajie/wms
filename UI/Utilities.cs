@@ -605,6 +605,27 @@ namespace WMS.UI
             worksheet.Columns = keyNames.Length; //限制表的长度
         }
 
+        public static void AutoFitReoGridColumnWidth(ReoGridControl reoGrid)
+        {
+            var worksheet = reoGrid.CurrentWorksheet;
+            for(int i = 0; i < worksheet.Columns; i++)
+            {
+                if (worksheet.ColumnHeaders[i].IsVisible == false) continue;
+                worksheet.AutoFitColumnWidth(i);
+                string headerText = worksheet.ColumnHeaders[i].Text;
+                ushort headerWidth = (ushort)(headerText.Length * 10);
+                //如果内容宽度小于表头长度，取表头宽度。
+                if (worksheet.GetColumnWidth(i) < headerWidth)
+                {
+                    worksheet.SetColumnsWidth(i, 1, (ushort)(headerWidth + 20));
+                }//否则取内容宽度
+                else
+                {
+                    worksheet.SetColumnsWidth(i, 1, (ushort)(worksheet.GetColumnWidth(i) + 10));
+                }
+            }
+        }
+
         public static string DecimalToString(decimal value, int precision = 3)
         {
             if (precision == 3)
