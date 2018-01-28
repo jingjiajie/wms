@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using WMS.UI.FormReceipt;
 using WMS.UI.FormBase;
 using WMS.DataAccess;
+using System.Diagnostics; 
 
 namespace WMS.UI
 {
@@ -51,7 +52,7 @@ namespace WMS.UI
 
             if (user.SupplierID != null)
             {
-                this.button1.Visible = false;
+                this.button2.Visible = false;
                 this.supplierid = Convert.ToInt32(user.SupplierID);
                 remind();
 
@@ -549,10 +550,10 @@ namespace WMS.UI
 
                     if (FormSupplyRemind == null)
                     {
-                        FormSupplyRemind = new FormSupplyRemind(this.button1);
+                        FormSupplyRemind = new FormSupplyRemind(this.button2);
                     }
-                    this.button1.Left = 3;
-                    this.button1.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
+                    //this.button2.Left = 3;
+                    //this.button2.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
 
                 }));
             }).Start();
@@ -858,13 +859,8 @@ namespace WMS.UI
             this.panelRight.Controls.Clear();
             if (FormSupplyRemind != null)
             {
-                FormSupplyRemind.ClearTextBox();
-                FormSupplyRemind.RefreshID();
-                FormSupplyRemind.RemindSupply();
-                FormSupplyRemind.RemindStock();
-                FormSupplyRemind.TextDeliver();
+                FormSupplyRemind.RefreshDate ();
             }
-
             this.treeViewLeft.SelectedNode = null;
         }
 
@@ -875,11 +871,8 @@ namespace WMS.UI
             this.panelRight.Controls.Clear();
             if (FormSupplyRemind != null)
             {
-                FormSupplyRemind.ClearTextBox();
-                FormSupplyRemind.RefreshID();
-                FormSupplyRemind.RemindSupply();
-                FormSupplyRemind.RemindStock();
-                FormSupplyRemind.TextDeliver();
+                FormSupplyRemind.RefreshDate ();
+
             }
             this.treeViewLeft.SelectedNode = null;
         }
@@ -944,35 +937,35 @@ namespace WMS.UI
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            //if (FormSupplyRemind != null)
-            //{
+            if (FormSupplyRemind != null)
+            {
 
 
-            //    if (this.WindowState == FormWindowState.Minimized)
-            //    {
+                if (this.WindowState == FormWindowState.Minimized)
+                {
 
-            //        FormSupplyRemind.Hide();
+                    FormSupplyRemind.Hide();
 
-            //    }
-            //    else if(this.WindowState ==FormWindowState.Maximized )
-            //    {
-
-
-            //        FormSupplyRemind.Show();
-
-            //    }
-            //    //if (this.initbottom != this.Bottom)
-            //    //{
-
-            //    //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
-            //    //    this.initbottom = this.Bottom;
+                }
+                else if (this.WindowState == FormWindowState.Maximized&&this.button2.Visible ==false )
+                {
 
 
-            //    //}
+                    FormSupplyRemind.Show();
 
-            //}
-            
-   
+                }
+                //if (this.initbottom != this.Bottom)
+                //{
+
+                //    FormSupplyRemind.Top = inity1 + (this.initbottom - this.Bottom);
+                //    this.initbottom = this.Bottom;
+
+
+                //}
+
+            }
+
+
 
 
 
@@ -992,31 +985,16 @@ namespace WMS.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //if (this.button1.Text == "显示提醒")
-            //{
 
-                
-                //initx = this.Left;
-                //inity = this.Top;
-                //this.initbottom = this.Bottom;
-                //this.initright = this.Right;
-                FormSupplyRemind.Show();
-                //initx1 = FormSupplyRemind.Left;
-                //inity1 = FormSupplyRemind.Top;
-                this.button1.Visible = false;
-                //this.button1.Text = "隐藏提醒";
-            //}
-            //else if(this.button1 .Text == "隐藏提醒")
-            //{
-            //    if (FormSupplyRemind != null)
-            //    {
-            //        FormSupplyRemind.Visible = false;
-            //        this.button1.Text = "显示提醒";
-            //    }
-            //}
-            
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
+            FormSupplyRemind.Show();
+            this.button2.Visible = false;
+            //sw.Stop();
+            //TimeSpan ts2 = sw.Elapsed;
+            //MessageBox.Show("Stopwatch总共花费" + Convert.ToString(ts2.TotalMilliseconds) + "ms.");
         }
-        
+
 
     }
 }

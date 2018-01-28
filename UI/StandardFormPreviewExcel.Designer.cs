@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StandardFormPreviewExcel));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.buttonPrint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonExport = new System.Windows.Forms.ToolStripButton();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBoxScale = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.buttonPrint = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.textBoxScale = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -85,26 +86,55 @@
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             // 
-            // buttonPrint
+            // buttonExport
             // 
-            this.buttonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonPrint.Name = "buttonPrint";
-            this.buttonPrint.Size = new System.Drawing.Size(114, 27);
-            this.buttonPrint.Text = "打印单据";
-            this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
+            this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(80, 27);
+            this.buttonExport.Text = "导出Excel";
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
             // 
-            // buttonExport
+            // buttonPrint
             // 
-            this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(123, 27);
-            this.buttonExport.Text = "导出Excel";
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            this.buttonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonPrint.Name = "buttonPrint";
+            this.buttonPrint.Size = new System.Drawing.Size(73, 27);
+            this.buttonPrint.Text = "打印单据";
+            this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(114, 27);
+            this.toolStripLabel1.Text = "打印缩放比例：";
+            // 
+            // textBoxScale
+            // 
+            this.textBoxScale.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.textBoxScale.Name = "textBoxScale";
+            this.textBoxScale.Size = new System.Drawing.Size(50, 30);
+            this.textBoxScale.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxScale.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxScale_KeyDown);
+            this.textBoxScale.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScale_KeyPress);
+            this.textBoxScale.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxScale_KeyUp);
+            this.textBoxScale.Click += new System.EventHandler(this.textBoxScale_Click);
+            this.textBoxScale.TextChanged += new System.EventHandler(this.textBoxScale_TextChanged);
+            // 
+            // toolStripLabel2
+            // 
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(24, 27);
+            this.toolStripLabel2.Text = "倍";
             // 
             // tableLayoutPanel1
             // 
@@ -121,42 +151,14 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1074, 529);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
-            // textBoxScale
-            // 
-            this.textBoxScale.Font = new System.Drawing.Font("微软雅黑", 10F);
-            this.textBoxScale.Name = "textBoxScale";
-            this.textBoxScale.Size = new System.Drawing.Size(50, 30);
-            this.textBoxScale.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxScale.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxScale_KeyDown);
-            this.textBoxScale.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScale_KeyPress);
-            this.textBoxScale.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBoxScale_KeyUp);
-            this.textBoxScale.Click += new System.EventHandler(this.textBoxScale_Click);
-            this.textBoxScale.TextChanged += new System.EventHandler(this.textBoxScale_TextChanged);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(182, 27);
-            this.toolStripLabel1.Text = "打印缩放比例：";
-            // 
-            // toolStripLabel2
-            // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(38, 27);
-            this.toolStripLabel2.Text = "倍";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
-            // 
             // StandardFormPreviewExcel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1074, 529);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("黑体", 10F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StandardFormPreviewExcel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "标准单据预览窗口";

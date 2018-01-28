@@ -393,16 +393,7 @@ namespace WMS.UI
                                 MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return false;
                             }
-
-
                         }
-
-
-
-
-
-
-
                         return true;
                     },
                     () => //参数3：导入完成回调函数

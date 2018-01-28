@@ -175,10 +175,6 @@ namespace WMS.UI
             this.buttonSearch.DisplayStyle= ToolStripItemDisplayStyle.Text;
             this.buttonSearch.Text = "全部信息";
             this.buttonHistorySearch.Visible = false;
-
-
-
-
             this.pagerWidget.ClearCondition();
 
             var worksheet = this.reoGridControlSupply.Worksheets[0];
@@ -216,12 +212,7 @@ namespace WMS.UI
                 this.check_history = 1;
                 this.pagerWidget.Search();
             }
-
-
-
-
         }
-
 
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -288,7 +279,6 @@ namespace WMS.UI
             }
             this.labelStatus.Text = "正在删除...";
 
-
             try
             {
                 foreach (int id in deleteIDs)
@@ -313,12 +303,6 @@ namespace WMS.UI
                 MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
-
-
-
-
-
 
             new Thread(new ThreadStart(() =>
                 {
@@ -567,33 +551,18 @@ namespace WMS.UI
                                 return false;
                             }
 
-
-
-
-
-
-                                //检查导入列表中是否重名
-                                for (int j = i + 1; j < results.Length; j++)
+                            //检查导入列表中是否重名
+                            for (int j = i + 1; j < results.Length; j++)
+                            {
+                                if (results[i].No == results[j].No)
                                 {
+                                    MessageBox.Show("您输入的代号：" + results[i].No + "条目在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-
-
-                                    if (results[i].No== results[j].No)
-                                    {
-                                        MessageBox.Show("您输入的代号：" + results[i].No + "条目在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                                        return false;
-                                    }
-                                //if (suppliernames[j] == suppliername && componentnames[j] == componentname)
-                                //{
-                                //    MessageBox.Show("您输入的供货商——零件：" + suppliername + "——" + componentname + "条目在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                                //    return false;
-                                //}
-
+                                    return false;
+                                }
                             }
-                                //检查数据库中同名
-                                try
+                            //检查数据库中同名
+                            try
                                 {
                                     try
                                     {
@@ -627,7 +596,7 @@ namespace WMS.UI
                                                      select u).ToArray();
                                 if (sameNameUser.Length > 0)
                                 {
-                                    MessageBox.Show("导入供应信息失败，已存在相同代号供货条目："  + no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    MessageBox.Show("导入供货信息失败，已存在相同代号供货条目：" + no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     return false;
                                 }
 
@@ -661,26 +630,6 @@ namespace WMS.UI
                                 results[i].ProjectID = this.projectID;
                             
                         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         return true;
                     },
                     () => //参数3：导入完成回调函数
