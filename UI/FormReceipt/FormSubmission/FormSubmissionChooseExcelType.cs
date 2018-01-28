@@ -68,7 +68,7 @@ namespace WMS.UI
         private void StartPreview(SubmissionTicketItemView[] submissionTicketItemView)
         {
             WMSEntities wmsEntities = new WMSEntities();
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("送检单预览", (float)0.9);
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("送检单预览", (float)0.7);
             if (formPreview.SetPatternTable(@"Excel\SubmissionTicket.xlsx") == false)
             {
                 this.Close();
