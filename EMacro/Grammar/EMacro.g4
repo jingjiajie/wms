@@ -9,7 +9,7 @@ options {tokenVocab=EMacroLexer;}
 
 stat : text? command*;
 
-command : writeCommand | repeatCommand | setColorCommand ;
+command : writeCommand | repeatCommand | setColorCommand | setTableColumnsCommand;
 
 text : TEXT;
 commandStartSharp : TEXT_SHARP|JS_SHARP|COMMAND_SHARP;
@@ -17,5 +17,6 @@ commandStartAt : TEXT_AT | JS_AT;
 writeCommand :  commandStartSharp WRITE jsCommand | commandStartAt jsCommand;
 repeatCommand : commandStartSharp REPEAT AREA DIGIT DIGIT VAR ID IN jsCommand;
 setColorCommand : commandStartSharp SET COLOR jsCommand;
+setTableColumnsCommand: commandStartSharp SET TABLE_COLUMNS jsCommand;
 
 jsCommand : JSTEXT;

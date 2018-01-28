@@ -81,5 +81,22 @@ namespace EMacro
                 return String.Format("SET COLOR {0} END",JsExpr.Trim());
             }
         }
+
+        public class SET_TABLE_COLUMNS : Command
+        {
+            string jsExpr;
+
+            public SET_TABLE_COLUMNS(string jsExpr)
+            {
+                this.jsExpr = jsExpr;
+            }
+
+            public string JsExpr { get => jsExpr; set => jsExpr = value; }
+
+            public override string ToString()
+            {
+                return String.Format("SET TABLE COLUMNS {0} END", jsExpr);
+            }
+        }
     }
 }

@@ -21,6 +21,7 @@ WRITE : 'WRITE'-> mode(MODE_JSLEX);
 
 SET : 'SET';
 COLOR : 'COLOR' -> mode(MODE_JSLEX);
+TABLE_COLUMNS : 'TABLE' [ ]+ 'COLUMNS' -> mode(MODE_JSLEX);
 
 DIGIT : [0-9]+;
 ID : [a-zA-Z][a-zA-Z0-9]* ;

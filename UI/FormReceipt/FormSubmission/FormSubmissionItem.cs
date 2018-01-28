@@ -154,6 +154,7 @@ namespace WMS.UI.FormReceipt
                     this.labelStatus.Text = "搜索完成";
                     var worksheet = this.reoGridControlSubmissionItems.Worksheets[0];
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    worksheet.Rows = submissionTicketItemView.Length < 10 ? 10 : submissionTicketItemView.Length;
                     int n = 0;
                     for (int i = 0; i < submissionTicketItemView.Length; i++)
                     {

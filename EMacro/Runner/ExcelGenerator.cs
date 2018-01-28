@@ -91,7 +91,16 @@ namespace EMacro
                     this.ParseCell(i, j);
                 }
             }
-
+            //自动调整结果表的行高
+            for (int i = 0; i < this.resultTable.Rows; i++)
+            {
+                this.resultTable.AutoFitRowHeight(i);
+            }
+            //结果表的列宽和模式表各列一样
+            for (int i = 0; i < this.resultTable.Columns; i++)
+            {
+                this.resultTable.SetColumnsWidth(i, 1, this.patternTable.GetColumnWidth(i));
+            }
             return this.resultTable; //返回目标表
         }
 
@@ -107,6 +116,10 @@ namespace EMacro
 
         private void ParseCell(int line,int column,ParseAttribute attribute)
         {
+            if (resultTable.Columns <= column)
+            {
+                return;
+            }
             bool gotNextCell = false;
             Func<Cell> GetOperationResultCell = () =>
             {
@@ -273,6 +286,21 @@ namespace EMacro
                         return;
                     }
                 }
+                if(command is Command.SET_TABLE_COLUMNS)
+                {
+                    var setTableColumnsCommand = command as Command.SET_TABLE_COLUMNS;
+                    Cell curResultCell = GetOperationResultCell();
+                    try
+                    {
+                        int columns = (int)this.jsEngine.Execute(setTableColumnsCommand.JsExpr).GetCompletionValue().AsNumber();
+                        resultTable.Columns = columns;
+                    }
+                    catch
+                    {
+                        curResultCell.Data = string.Format("Error({0},{1}): set table columns command doesn't recognize \"{2}\"", line, column, setTableColumnsCommand.JsExpr);
+                        return;
+                    }
+                }
             }
         }
 
@@ -290,7 +318,11 @@ namespace EMacro
 
         private void ResultMoveToNextCellByColumn(int column,int step = 1)
         {
-            if(this.lengthColumnResult.ContainsKey(column) == false)
+            if (resultTable.Columns <= column)
+            {
+                return;
+            }
+            if (this.lengthColumnResult.ContainsKey(column) == false)
             {
                 this.lengthColumnResult.Add(column, 0);
             }
@@ -303,11 +335,19 @@ namespace EMacro
 
         private Cell ResultGetCurCellByColumn(int column)
         {
+            if(resultTable.Columns <= column)
+            {
+                return null;
+            }
             return this.resultTable.Cells[this.lengthColumnResult[column] - 1, column];
         }
 
         private void ResultSetCurCellByColumn(int column, Cell cell)
         {
+            if (resultTable.Columns <= column)
+            {
+                return;
+            }
             var resultCurCell = this.ResultGetCurCellByColumn(column);
             resultCurCell.Body = cell.Body;
             resultCurCell.Data = cell.Data;

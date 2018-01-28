@@ -47,8 +47,8 @@ namespace WMS.UI
 
         private void StandardFormPreviewExcel_Load(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 this.reoGridControlMain.Worksheets.Clear();
                 foreach(var item in this.patternTables)
                 {
@@ -65,17 +65,17 @@ namespace WMS.UI
                     Worksheet newWorksheet = this.excelGenerator.Generate();
                     newWorksheet.Name = sheetName;
                     this.reoGridControlMain.Worksheets.Add(newWorksheet);
-                    for (int i = 0; i < newWorksheet.Columns; i++)
-                    {
-                        newWorksheet.AutoFitColumnWidth(i);
-                    }
+                    //for (int i = 0; i < newWorksheet.Columns; i++)
+                    //{
+                    //    newWorksheet.AutoFitColumnWidth(i);
+                    //}
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("生成报表错误：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("生成报表错误：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             if (worksheet == null) return;
             worksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);

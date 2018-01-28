@@ -37,15 +37,15 @@ public partial class EMacroParser : Parser {
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
 		TEXT_SHARP=1, TEXT_AT=2, TEXT=3, WS=4, COMMAND_SHARP=5, REPEAT=6, AREA=7, 
-		VAR=8, IN=9, WRITE=10, SET=11, COLOR=12, DIGIT=13, ID=14, JS_SHARP=15, 
-		JS_AT=16, JSTEXT=17;
+		VAR=8, IN=9, WRITE=10, SET=11, COLOR=12, TABLE_COLUMNS=13, DIGIT=14, ID=15, 
+		JS_SHARP=16, JS_AT=17, JSTEXT=18;
 	public const int
 		RULE_stat = 0, RULE_command = 1, RULE_text = 2, RULE_commandStartSharp = 3, 
 		RULE_commandStartAt = 4, RULE_writeCommand = 5, RULE_repeatCommand = 6, 
-		RULE_setColorCommand = 7, RULE_jsCommand = 8;
+		RULE_setColorCommand = 7, RULE_setTableColumnsCommand = 8, RULE_jsCommand = 9;
 	public static readonly string[] ruleNames = {
 		"stat", "command", "text", "commandStartSharp", "commandStartAt", "writeCommand", 
-		"repeatCommand", "setColorCommand", "jsCommand"
+		"repeatCommand", "setColorCommand", "setTableColumnsCommand", "jsCommand"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -54,8 +54,8 @@ public partial class EMacroParser : Parser {
 	};
 	private static readonly string[] _SymbolicNames = {
 		null, "TEXT_SHARP", "TEXT_AT", "TEXT", "WS", "COMMAND_SHARP", "REPEAT", 
-		"AREA", "VAR", "IN", "WRITE", "SET", "COLOR", "DIGIT", "ID", "JS_SHARP", 
-		"JS_AT", "JSTEXT"
+		"AREA", "VAR", "IN", "WRITE", "SET", "COLOR", "TABLE_COLUMNS", "DIGIT", 
+		"ID", "JS_SHARP", "JS_AT", "JSTEXT"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -121,25 +121,25 @@ public partial class EMacroParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 19;
+			State = 21;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			if (_la==TEXT) {
 				{
-				State = 18; text();
+				State = 20; text();
 				}
 			}
 
-			State = 24;
+			State = 26;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << TEXT_SHARP) | (1L << TEXT_AT) | (1L << COMMAND_SHARP) | (1L << JS_SHARP) | (1L << JS_AT))) != 0)) {
 				{
 				{
-				State = 21; command();
+				State = 23; command();
 				}
 				}
-				State = 26;
+				State = 28;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
@@ -166,6 +166,9 @@ public partial class EMacroParser : Parser {
 		public SetColorCommandContext setColorCommand() {
 			return GetRuleContext<SetColorCommandContext>(0);
 		}
+		public SetTableColumnsCommandContext setTableColumnsCommand() {
+			return GetRuleContext<SetTableColumnsCommandContext>(0);
+		}
 		public CommandContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -186,25 +189,31 @@ public partial class EMacroParser : Parser {
 		CommandContext _localctx = new CommandContext(Context, State);
 		EnterRule(_localctx, 2, RULE_command);
 		try {
-			State = 30;
+			State = 33;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,2,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 27; writeCommand();
+				State = 29; writeCommand();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 28; repeatCommand();
+				State = 30; repeatCommand();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 29; setColorCommand();
+				State = 31; setColorCommand();
+				}
+				break;
+			case 4:
+				EnterOuterAlt(_localctx, 4);
+				{
+				State = 32; setTableColumnsCommand();
 				}
 				break;
 			}
@@ -244,7 +253,7 @@ public partial class EMacroParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 32; Match(TEXT);
+			State = 35; Match(TEXT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -285,7 +294,7 @@ public partial class EMacroParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 34;
+			State = 37;
 			_la = TokenStream.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << TEXT_SHARP) | (1L << COMMAND_SHARP) | (1L << JS_SHARP))) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -333,7 +342,7 @@ public partial class EMacroParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 36;
+			State = 39;
 			_la = TokenStream.LA(1);
 			if ( !(_la==TEXT_AT || _la==JS_AT) ) {
 			ErrorHandler.RecoverInline(this);
@@ -386,7 +395,7 @@ public partial class EMacroParser : Parser {
 		WriteCommandContext _localctx = new WriteCommandContext(Context, State);
 		EnterRule(_localctx, 10, RULE_writeCommand);
 		try {
-			State = 45;
+			State = 48;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case TEXT_SHARP:
@@ -394,17 +403,17 @@ public partial class EMacroParser : Parser {
 			case JS_SHARP:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 38; commandStartSharp();
-				State = 39; Match(WRITE);
-				State = 40; jsCommand();
+				State = 41; commandStartSharp();
+				State = 42; Match(WRITE);
+				State = 43; jsCommand();
 				}
 				break;
 			case TEXT_AT:
 			case JS_AT:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 42; commandStartAt();
-				State = 43; jsCommand();
+				State = 45; commandStartAt();
+				State = 46; jsCommand();
 				}
 				break;
 			default:
@@ -460,15 +469,15 @@ public partial class EMacroParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 47; commandStartSharp();
-			State = 48; Match(REPEAT);
-			State = 49; Match(AREA);
-			State = 50; Match(DIGIT);
-			State = 51; Match(DIGIT);
-			State = 52; Match(VAR);
-			State = 53; Match(ID);
-			State = 54; Match(IN);
-			State = 55; jsCommand();
+			State = 50; commandStartSharp();
+			State = 51; Match(REPEAT);
+			State = 52; Match(AREA);
+			State = 53; Match(DIGIT);
+			State = 54; Match(DIGIT);
+			State = 55; Match(VAR);
+			State = 56; Match(ID);
+			State = 57; Match(IN);
+			State = 58; jsCommand();
 			}
 		}
 		catch (RecognitionException re) {
@@ -513,10 +522,58 @@ public partial class EMacroParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 57; commandStartSharp();
-			State = 58; Match(SET);
-			State = 59; Match(COLOR);
-			State = 60; jsCommand();
+			State = 60; commandStartSharp();
+			State = 61; Match(SET);
+			State = 62; Match(COLOR);
+			State = 63; jsCommand();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class SetTableColumnsCommandContext : ParserRuleContext {
+		public CommandStartSharpContext commandStartSharp() {
+			return GetRuleContext<CommandStartSharpContext>(0);
+		}
+		public ITerminalNode SET() { return GetToken(EMacroParser.SET, 0); }
+		public ITerminalNode TABLE_COLUMNS() { return GetToken(EMacroParser.TABLE_COLUMNS, 0); }
+		public JsCommandContext jsCommand() {
+			return GetRuleContext<JsCommandContext>(0);
+		}
+		public SetTableColumnsCommandContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_setTableColumnsCommand; } }
+		public override void EnterRule(IParseTreeListener listener) {
+			IEMacroListener typedListener = listener as IEMacroListener;
+			if (typedListener != null) typedListener.EnterSetTableColumnsCommand(this);
+		}
+		public override void ExitRule(IParseTreeListener listener) {
+			IEMacroListener typedListener = listener as IEMacroListener;
+			if (typedListener != null) typedListener.ExitSetTableColumnsCommand(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public SetTableColumnsCommandContext setTableColumnsCommand() {
+		SetTableColumnsCommandContext _localctx = new SetTableColumnsCommandContext(Context, State);
+		EnterRule(_localctx, 16, RULE_setTableColumnsCommand);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 65; commandStartSharp();
+			State = 66; Match(SET);
+			State = 67; Match(TABLE_COLUMNS);
+			State = 68; jsCommand();
 			}
 		}
 		catch (RecognitionException re) {
@@ -550,11 +607,11 @@ public partial class EMacroParser : Parser {
 	[RuleVersion(0)]
 	public JsCommandContext jsCommand() {
 		JsCommandContext _localctx = new JsCommandContext(Context, State);
-		EnterRule(_localctx, 16, RULE_jsCommand);
+		EnterRule(_localctx, 18, RULE_jsCommand);
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 62; Match(JSTEXT);
+			State = 70; Match(JSTEXT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -570,56 +627,62 @@ public partial class EMacroParser : Parser {
 
 	private static char[] _serializedATN = {
 		'\x3', '\x608B', '\xA72A', '\x8133', '\xB9ED', '\x417C', '\x3BE7', '\x7786', 
-		'\x5964', '\x3', '\x13', '\x43', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
+		'\x5964', '\x3', '\x14', 'K', '\x4', '\x2', '\t', '\x2', '\x4', '\x3', 
 		'\t', '\x3', '\x4', '\x4', '\t', '\x4', '\x4', '\x5', '\t', '\x5', '\x4', 
 		'\x6', '\t', '\x6', '\x4', '\a', '\t', '\a', '\x4', '\b', '\t', '\b', 
-		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x3', '\x2', '\x5', 
-		'\x2', '\x16', '\n', '\x2', '\x3', '\x2', '\a', '\x2', '\x19', '\n', '\x2', 
-		'\f', '\x2', '\xE', '\x2', '\x1C', '\v', '\x2', '\x3', '\x3', '\x3', '\x3', 
-		'\x3', '\x3', '\x5', '\x3', '!', '\n', '\x3', '\x3', '\x4', '\x3', '\x4', 
-		'\x3', '\x5', '\x3', '\x5', '\x3', '\x6', '\x3', '\x6', '\x3', '\a', '\x3', 
-		'\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', 
-		'\x5', '\a', '\x30', '\n', '\a', '\x3', '\b', '\x3', '\b', '\x3', '\b', 
+		'\x4', '\t', '\t', '\t', '\x4', '\n', '\t', '\n', '\x4', '\v', '\t', '\v', 
+		'\x3', '\x2', '\x5', '\x2', '\x18', '\n', '\x2', '\x3', '\x2', '\a', '\x2', 
+		'\x1B', '\n', '\x2', '\f', '\x2', '\xE', '\x2', '\x1E', '\v', '\x2', '\x3', 
+		'\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x3', '\x5', '\x3', '$', '\n', 
+		'\x3', '\x3', '\x4', '\x3', '\x4', '\x3', '\x5', '\x3', '\x5', '\x3', 
+		'\x6', '\x3', '\x6', '\x3', '\a', '\x3', '\a', '\x3', '\a', '\x3', '\a', 
+		'\x3', '\a', '\x3', '\a', '\x3', '\a', '\x5', '\a', '\x33', '\n', '\a', 
 		'\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', 
-		'\b', '\x3', '\b', '\x3', '\t', '\x3', '\t', '\x3', '\t', '\x3', '\t', 
-		'\x3', '\t', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x2', '\x2', '\v', 
-		'\x2', '\x4', '\x6', '\b', '\n', '\f', '\xE', '\x10', '\x12', '\x2', '\x4', 
-		'\x5', '\x2', '\x3', '\x3', '\a', '\a', '\x11', '\x11', '\x4', '\x2', 
-		'\x4', '\x4', '\x12', '\x12', '\x2', '>', '\x2', '\x15', '\x3', '\x2', 
-		'\x2', '\x2', '\x4', ' ', '\x3', '\x2', '\x2', '\x2', '\x6', '\"', '\x3', 
-		'\x2', '\x2', '\x2', '\b', '$', '\x3', '\x2', '\x2', '\x2', '\n', '&', 
-		'\x3', '\x2', '\x2', '\x2', '\f', '/', '\x3', '\x2', '\x2', '\x2', '\xE', 
-		'\x31', '\x3', '\x2', '\x2', '\x2', '\x10', ';', '\x3', '\x2', '\x2', 
-		'\x2', '\x12', '@', '\x3', '\x2', '\x2', '\x2', '\x14', '\x16', '\x5', 
-		'\x6', '\x4', '\x2', '\x15', '\x14', '\x3', '\x2', '\x2', '\x2', '\x15', 
-		'\x16', '\x3', '\x2', '\x2', '\x2', '\x16', '\x1A', '\x3', '\x2', '\x2', 
-		'\x2', '\x17', '\x19', '\x5', '\x4', '\x3', '\x2', '\x18', '\x17', '\x3', 
-		'\x2', '\x2', '\x2', '\x19', '\x1C', '\x3', '\x2', '\x2', '\x2', '\x1A', 
-		'\x18', '\x3', '\x2', '\x2', '\x2', '\x1A', '\x1B', '\x3', '\x2', '\x2', 
-		'\x2', '\x1B', '\x3', '\x3', '\x2', '\x2', '\x2', '\x1C', '\x1A', '\x3', 
-		'\x2', '\x2', '\x2', '\x1D', '!', '\x5', '\f', '\a', '\x2', '\x1E', '!', 
-		'\x5', '\xE', '\b', '\x2', '\x1F', '!', '\x5', '\x10', '\t', '\x2', ' ', 
-		'\x1D', '\x3', '\x2', '\x2', '\x2', ' ', '\x1E', '\x3', '\x2', '\x2', 
-		'\x2', ' ', '\x1F', '\x3', '\x2', '\x2', '\x2', '!', '\x5', '\x3', '\x2', 
-		'\x2', '\x2', '\"', '#', '\a', '\x5', '\x2', '\x2', '#', '\a', '\x3', 
-		'\x2', '\x2', '\x2', '$', '%', '\t', '\x2', '\x2', '\x2', '%', '\t', '\x3', 
-		'\x2', '\x2', '\x2', '&', '\'', '\t', '\x3', '\x2', '\x2', '\'', '\v', 
-		'\x3', '\x2', '\x2', '\x2', '(', ')', '\x5', '\b', '\x5', '\x2', ')', 
-		'*', '\a', '\f', '\x2', '\x2', '*', '+', '\x5', '\x12', '\n', '\x2', '+', 
-		'\x30', '\x3', '\x2', '\x2', '\x2', ',', '-', '\x5', '\n', '\x6', '\x2', 
-		'-', '.', '\x5', '\x12', '\n', '\x2', '.', '\x30', '\x3', '\x2', '\x2', 
-		'\x2', '/', '(', '\x3', '\x2', '\x2', '\x2', '/', ',', '\x3', '\x2', '\x2', 
-		'\x2', '\x30', '\r', '\x3', '\x2', '\x2', '\x2', '\x31', '\x32', '\x5', 
-		'\b', '\x5', '\x2', '\x32', '\x33', '\a', '\b', '\x2', '\x2', '\x33', 
-		'\x34', '\a', '\t', '\x2', '\x2', '\x34', '\x35', '\a', '\xF', '\x2', 
-		'\x2', '\x35', '\x36', '\a', '\xF', '\x2', '\x2', '\x36', '\x37', '\a', 
-		'\n', '\x2', '\x2', '\x37', '\x38', '\a', '\x10', '\x2', '\x2', '\x38', 
-		'\x39', '\a', '\v', '\x2', '\x2', '\x39', ':', '\x5', '\x12', '\n', '\x2', 
-		':', '\xF', '\x3', '\x2', '\x2', '\x2', ';', '<', '\x5', '\b', '\x5', 
-		'\x2', '<', '=', '\a', '\r', '\x2', '\x2', '=', '>', '\a', '\xE', '\x2', 
-		'\x2', '>', '?', '\x5', '\x12', '\n', '\x2', '?', '\x11', '\x3', '\x2', 
-		'\x2', '\x2', '@', '\x41', '\a', '\x13', '\x2', '\x2', '\x41', '\x13', 
-		'\x3', '\x2', '\x2', '\x2', '\x6', '\x15', '\x1A', ' ', '/',
+		'\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\b', '\x3', '\t', 
+		'\x3', '\t', '\x3', '\t', '\x3', '\t', '\x3', '\t', '\x3', '\n', '\x3', 
+		'\n', '\x3', '\n', '\x3', '\n', '\x3', '\n', '\x3', '\v', '\x3', '\v', 
+		'\x3', '\v', '\x2', '\x2', '\f', '\x2', '\x4', '\x6', '\b', '\n', '\f', 
+		'\xE', '\x10', '\x12', '\x14', '\x2', '\x4', '\x5', '\x2', '\x3', '\x3', 
+		'\a', '\a', '\x12', '\x12', '\x4', '\x2', '\x4', '\x4', '\x13', '\x13', 
+		'\x2', '\x46', '\x2', '\x17', '\x3', '\x2', '\x2', '\x2', '\x4', '#', 
+		'\x3', '\x2', '\x2', '\x2', '\x6', '%', '\x3', '\x2', '\x2', '\x2', '\b', 
+		'\'', '\x3', '\x2', '\x2', '\x2', '\n', ')', '\x3', '\x2', '\x2', '\x2', 
+		'\f', '\x32', '\x3', '\x2', '\x2', '\x2', '\xE', '\x34', '\x3', '\x2', 
+		'\x2', '\x2', '\x10', '>', '\x3', '\x2', '\x2', '\x2', '\x12', '\x43', 
+		'\x3', '\x2', '\x2', '\x2', '\x14', 'H', '\x3', '\x2', '\x2', '\x2', '\x16', 
+		'\x18', '\x5', '\x6', '\x4', '\x2', '\x17', '\x16', '\x3', '\x2', '\x2', 
+		'\x2', '\x17', '\x18', '\x3', '\x2', '\x2', '\x2', '\x18', '\x1C', '\x3', 
+		'\x2', '\x2', '\x2', '\x19', '\x1B', '\x5', '\x4', '\x3', '\x2', '\x1A', 
+		'\x19', '\x3', '\x2', '\x2', '\x2', '\x1B', '\x1E', '\x3', '\x2', '\x2', 
+		'\x2', '\x1C', '\x1A', '\x3', '\x2', '\x2', '\x2', '\x1C', '\x1D', '\x3', 
+		'\x2', '\x2', '\x2', '\x1D', '\x3', '\x3', '\x2', '\x2', '\x2', '\x1E', 
+		'\x1C', '\x3', '\x2', '\x2', '\x2', '\x1F', '$', '\x5', '\f', '\a', '\x2', 
+		' ', '$', '\x5', '\xE', '\b', '\x2', '!', '$', '\x5', '\x10', '\t', '\x2', 
+		'\"', '$', '\x5', '\x12', '\n', '\x2', '#', '\x1F', '\x3', '\x2', '\x2', 
+		'\x2', '#', ' ', '\x3', '\x2', '\x2', '\x2', '#', '!', '\x3', '\x2', '\x2', 
+		'\x2', '#', '\"', '\x3', '\x2', '\x2', '\x2', '$', '\x5', '\x3', '\x2', 
+		'\x2', '\x2', '%', '&', '\a', '\x5', '\x2', '\x2', '&', '\a', '\x3', '\x2', 
+		'\x2', '\x2', '\'', '(', '\t', '\x2', '\x2', '\x2', '(', '\t', '\x3', 
+		'\x2', '\x2', '\x2', ')', '*', '\t', '\x3', '\x2', '\x2', '*', '\v', '\x3', 
+		'\x2', '\x2', '\x2', '+', ',', '\x5', '\b', '\x5', '\x2', ',', '-', '\a', 
+		'\f', '\x2', '\x2', '-', '.', '\x5', '\x14', '\v', '\x2', '.', '\x33', 
+		'\x3', '\x2', '\x2', '\x2', '/', '\x30', '\x5', '\n', '\x6', '\x2', '\x30', 
+		'\x31', '\x5', '\x14', '\v', '\x2', '\x31', '\x33', '\x3', '\x2', '\x2', 
+		'\x2', '\x32', '+', '\x3', '\x2', '\x2', '\x2', '\x32', '/', '\x3', '\x2', 
+		'\x2', '\x2', '\x33', '\r', '\x3', '\x2', '\x2', '\x2', '\x34', '\x35', 
+		'\x5', '\b', '\x5', '\x2', '\x35', '\x36', '\a', '\b', '\x2', '\x2', '\x36', 
+		'\x37', '\a', '\t', '\x2', '\x2', '\x37', '\x38', '\a', '\x10', '\x2', 
+		'\x2', '\x38', '\x39', '\a', '\x10', '\x2', '\x2', '\x39', ':', '\a', 
+		'\n', '\x2', '\x2', ':', ';', '\a', '\x11', '\x2', '\x2', ';', '<', '\a', 
+		'\v', '\x2', '\x2', '<', '=', '\x5', '\x14', '\v', '\x2', '=', '\xF', 
+		'\x3', '\x2', '\x2', '\x2', '>', '?', '\x5', '\b', '\x5', '\x2', '?', 
+		'@', '\a', '\r', '\x2', '\x2', '@', '\x41', '\a', '\xE', '\x2', '\x2', 
+		'\x41', '\x42', '\x5', '\x14', '\v', '\x2', '\x42', '\x11', '\x3', '\x2', 
+		'\x2', '\x2', '\x43', '\x44', '\x5', '\b', '\x5', '\x2', '\x44', '\x45', 
+		'\a', '\r', '\x2', '\x2', '\x45', '\x46', '\a', '\xF', '\x2', '\x2', '\x46', 
+		'G', '\x5', '\x14', '\v', '\x2', 'G', '\x13', '\x3', '\x2', '\x2', '\x2', 
+		'H', 'I', '\a', '\x14', '\x2', '\x2', 'I', '\x15', '\x3', '\x2', '\x2', 
+		'\x2', '\x6', '\x17', '\x1C', '#', '\x32',
 	};
 
 	public static readonly ATN _ATN =

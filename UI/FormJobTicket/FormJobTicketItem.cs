@@ -119,6 +119,7 @@ namespace WMS.UI
                 {
                     this.labelStatus.Text = "加载完成";
                     worksheet.DeleteRangeData(RangePosition.EntireRange);
+                    worksheet.Rows = jobTicketItemViews.Length < 10 ? 10 : jobTicketItemViews.Length;
                     if (jobTicketItemViews.Length == 0)
                     {
                         worksheet[0, 1] = "没有符合条件的记录";

@@ -111,6 +111,16 @@ public interface IEMacroListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitSetColorCommand([NotNull] EMacroParser.SetColorCommandContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="EMacroParser.setTableColumnsCommand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterSetTableColumnsCommand([NotNull] EMacroParser.SetTableColumnsCommandContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="EMacroParser.setTableColumnsCommand"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitSetTableColumnsCommand([NotNull] EMacroParser.SetTableColumnsCommandContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="EMacroParser.jsCommand"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
