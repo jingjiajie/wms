@@ -205,7 +205,7 @@ namespace WMS.UI
                 
 
                 int stockiofocheckid = ids[0];
-                WMSEntities wmsEntities = new WMSEntities();
+                 wmsEntities = new WMSEntities();
                 var personid =(from kn in wmsEntities .StockInfoCheckTicketView where 
                                    kn.ID ==stockiofocheckid
                                 select kn.PersonID).FirstOrDefault() ;
@@ -213,22 +213,46 @@ namespace WMS.UI
                 this.personid = Convert .ToInt32 ( personid);
 
                 var a1 = new FormStockInfoCheckTicketComponentModify(this.projectID , this.warehouseID ,this.userID ,this.personid , stockiofocheckid);
+                StockInfoCheckTicket stockInfoCheck1 = null;
+                try
+                {
+                    wmsEntities = new WMSEntities();
+                    stockInfoCheck1 = (from s in wmsEntities.StockInfoCheckTicket
+                                       where s.ID == stockiofocheckid
+                                       select s).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("加载盘点单数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    this.Close();
+                    return;
+                }
+                if (stockInfoCheck1 == null)
+                {
+                    MessageBox.Show("要查看的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+                    return;
+                }
+
+
+
+
 
                 a1.SetAddFinishedCallback((CheckID) =>
                 {
 
                     this.checkid = CheckID;
                     //更改盘点信息
+                  
 
-                    WMS.DataAccess.StockInfoCheckTicket stockInfoCheck = null;
+                    StockInfoCheckTicket stockInfoCheck = null;
                     try
                     {
                         wmsEntities = new DataAccess.WMSEntities();
                         stockInfoCheck = (from s in wmsEntities.StockInfoCheckTicket
                                           where s.ID == this.checkid
                                           select s).FirstOrDefault();
-
-
                     }
                     catch
                     {
@@ -239,7 +263,7 @@ namespace WMS.UI
                     }
                     if (stockInfoCheck == null)
                     {
-                        MessageBox.Show("要修改的项目已不存在1121，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("要修改的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         this.Close();
                         return;
                     }
@@ -257,28 +281,7 @@ namespace WMS.UI
                         return;
                     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    this.pagerWidget.Search(false ,checkid);
+                this.pagerWidget.Search(false ,checkid);
 
                 });
                 a1.SetMode(FormMode.CHECK);
@@ -322,6 +325,32 @@ namespace WMS.UI
                 return;
             }
 
+
+
+
+
+           
+            StockInfoCheckTicket stockInfoCheck1 = null;
+            try
+            {
+                wmsEntities = new WMSEntities();
+                stockInfoCheck1 = (from s in wmsEntities.StockInfoCheckTicket
+                                   where s.ID == stockInfoCheckID
+                                   select s).FirstOrDefault();
+            }
+            catch
+            {
+                MessageBox.Show("加载盘点单数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                this.Close();
+                return;
+            }
+            if (stockInfoCheck1 == null)
+            {
+                MessageBox.Show("要查看的项目已不存在，请确认后操作！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close();
+                return;
+            }
 
             StockInfoCheckTicketView StockInfoCheckTicketView = (from stv in wmsEntities.StockInfoCheckTicketView  
                                                    where stv.ID == stockInfoCheckID

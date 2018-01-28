@@ -31,6 +31,8 @@ namespace WMS.UI
         private DateTime contract_startdate;
         private int reminedays;
         FormSupplyRemind FormSupplyRemind = null;
+        StringBuilder  stringBuilder = new StringBuilder();
+        bool show = false;
         int initx = 0;//≥ı ºleftæ‡¿Î
         int inity = 0;//≥ı ºtopæ‡¿Î
         int initbottom;//≥ı ºµ◊æ‡¿Î
@@ -1003,6 +1005,6 @@ namespace WMS.UI
         private void button2_MouseLeave(object sender, EventArgs e)
         {
             button2.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
-        }
-    }
+        }    
+  }
 }

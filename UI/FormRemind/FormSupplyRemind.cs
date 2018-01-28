@@ -17,7 +17,7 @@ namespace WMS.UI
     public partial class FormSupplyRemind : Form
     {
         string remind;
-        //
+        //       
         public  StringBuilder stringBuilder = new StringBuilder();
         private int projectID = GlobalData.ProjectID;
         private int warehouseID = GlobalData.WarehouseID;
@@ -157,11 +157,10 @@ namespace WMS.UI
                     {
                         continue;
                     }
-
+                    int suppluID = supplyView[i].ID;
                     stockInfo = (from kn in wmsEntities.StockInfoView
-                                 where kn.ComponentName == ComponentName &&
-                                 kn.SupplierName == SupplierName &&
-                                 kn.SupplyNo == SupplyNo&&kn.WarehouseID ==this.warehouseID &&
+                                 where kn.SupplyID == suppluID &&
+                                 kn.WarehouseID ==this.warehouseID &&
                                  kn.ProjectID ==this.projectID 
                                  select kn).ToArray();
                     if (stockInfo == null)
@@ -186,7 +185,7 @@ namespace WMS.UI
             catch
             {
                 stringBuilder = new StringBuilder();
-                stringBuilder.Append("刷新失败,请检查网络连接");
+                stringBuilder.Append("刷新失败2,请检查网络连接");
                 return;
             }
         }

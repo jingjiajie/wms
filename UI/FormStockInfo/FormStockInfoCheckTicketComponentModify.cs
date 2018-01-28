@@ -30,12 +30,7 @@ namespace WMS.UI
         private Action<int> SetSelectFinishedCallback = null;
         private FormSelectSupply FormSelectSupply = null;
         private PagerWidget<WMS.DataAccess.StockInfoCheckTicketItemView > pagerWidget = null;
-
-
         //private Action checkFinishedCallback = null;
-
-
-
 
         public FormStockInfoCheckTicketComponentModify(int projectID, int warehouseID,int userID ,int personid ,int stockInfoCheckID=-1)
         {
@@ -44,12 +39,7 @@ namespace WMS.UI
             this.projectID = projectID;
             this.warehouseID = warehouseID;
             this.userID = userID;
-
-
-
-          
-
-
+       
         }
 
         private void FormStockCheckModify_Load(object sender, EventArgs e)
@@ -74,22 +64,16 @@ namespace WMS.UI
 
             }
             if (this.mode == FormMode.ADD)
-                {
+            {
                 this.labelStatus.Text = "添加盘点单";
-
-                 }
+            }
             if (this.mode == FormMode.ALTER)
             {
                 this.labelStatus.Text = "修改盘点单";
-
             }
             if (this.mode==FormMode.CHECK)
-            {
-                
-                this.labelStatus.Text = "盘点单条目";
-                
-
-
+            {               
+              this.labelStatus.Text = "盘点单条目";              
             }
             
             Utilities.CreateEditPanel(this.tableLayoutPanel2, StockInfoCheckTicksModifyMetaDate.KeyNames);
@@ -100,25 +84,14 @@ namespace WMS.UI
             //this.StockIDGetter = Utilities.BindTextBoxSelect<FormSelectStockInfo, WMS.DataAccess.StockInfoView>(this, "textBoxComponentName", "ComponentName");
             this.Controls.Find("textBoxSupplyNo", true)[0].Click += textBoxSupplyNo_Click;
             this.Controls.Find("textBoxPersonName", true)[0].Click += textBoxPersonName_Click;
-
-
-
             this.Controls.Find("textBoxExcpetedOverflowAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
             this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
             this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
             this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
 
-
-
-
-
-
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
-            this.InitComponents();
-           
-            
+            this.InitComponents();         
             additionTextboxDiffrence();
-
             this.Search();
             
 
@@ -183,20 +156,12 @@ namespace WMS.UI
             if (textBoxExcpetedOverflowAreaAmount.Text != "" && textBoxRealOverflowAreaAmount.Text != "" && textBoxExpectedShipmentAreaAmount.Text !="" && textBoxRealShipmentAreaAmount.Text != "")
 
             {
-
-
-
-
                 if (Decimal.TryParse(textBoxRealOverflowAreaAmount.Text, out result) == false)
-
-
                 {
                     MessageBox.Show("请输入正确的实际溢库区数值", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (Decimal.TryParse(textBoxRealShipmentAreaAmount.Text, out result) == false)
-
-
                 {
                     MessageBox.Show("请输入正确的实际发货区数值", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -205,8 +170,6 @@ namespace WMS.UI
                 decimal  ExpectedShipmentAreaAmount = Convert.ToDecimal (textBoxExpectedShipmentAreaAmount.Text);
                 decimal  RealOverflowAreaAmount= Convert.ToDecimal (textBoxRealOverflowAreaAmount.Text);
                 decimal  RealShipmentAreaAmount = Convert.ToDecimal (textBoxRealShipmentAreaAmount.Text);
-
-
                 textBoxtDifference.Text =( -(ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount)).ToString();
 
 
@@ -633,9 +596,6 @@ namespace WMS.UI
 
 
 
-
-
-
             if (textBoxSupplyNo.Text == string.Empty)
             {
 
@@ -713,7 +673,7 @@ namespace WMS.UI
            
             wmsEntities.SaveChanges();
             this.labelStatus.Text = "正在添加";
-            MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
            
 
 
@@ -776,8 +736,7 @@ namespace WMS.UI
 
 
             //var worksheet = this.reoGridControlMain.Worksheets[0];
-
-            //worksheet[0, 1] = "加载中...";
+           //worksheet[0, 1] = "加载中...";
             //new Thread(new ThreadStart(() => 
             //{
             //    WMS.DataAccess.StockInfoCheckTicketItemView[] shipmentTicketItemViews = null;
@@ -823,13 +782,6 @@ namespace WMS.UI
             //                worksheet[i, j] = columns[j] == null ? "" : columns[j].ToString();
             //            }
             //        }
-
-
-
-
-
-
-
             //if (selectID != -1)
             //{
             //    Utilities.SelectLineByID(this.reoGridControlMain, selectID);
