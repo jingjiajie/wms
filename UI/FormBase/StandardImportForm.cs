@@ -20,6 +20,8 @@ namespace WMS.UI
         private Func<TargetClass[],Dictionary<string,string[]>,bool> importListener = null;
         private Action importFinishedCallback = null;
 
+        private Dictionary<string, int> KeyColumn = new Dictionary<string, int>();
+
         public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback,string formTitle = "导入信息")
         {
             InitializeComponent();
@@ -139,9 +141,11 @@ namespace WMS.UI
             
             for (int i = 0; i < importVisibleKeyNames.Length; i++)
             {
-                string text = importVisibleKeyNames[i].Name;
-                worksheet.ColumnHeaders[i].Text = text;
-                worksheet.ColumnHeaders[i].Width = (ushort)(text.Length * 10 + 30);
+                string name = importVisibleKeyNames[i].Name;
+                worksheet.ColumnHeaders[i].Text = name;
+                worksheet.ColumnHeaders[i].Width = (ushort)(name.Length * 10 + 30);
+
+                if(this.KeyColumn.ContainsKey(name))
             }
             worksheet.Columns = importVisibleKeyNames.Length; //限制表的长度
         }
