@@ -16,11 +16,19 @@ namespace WMS.UI
 {
     public partial class StandardImportForm<TargetClass> : Form where TargetClass:class,new()
     {
+        class KeySQL
+        {
+            public string Key = null;
+            public string SQL = null;
+        }
+
         private KeyName[] importVisibleKeyNames = null;
         private Func<TargetClass[],Dictionary<string,string[]>,bool> importListener = null;
         private Action importFinishedCallback = null;
 
-        private Dictionary<string, int> KeyColumn = new Dictionary<string, int>();
+        //Key和列号的对应关系
+        private Dictionary<string, int> keyColumn = new Dictionary<string, int>();
+        private List<KeySQL> keyDefaultValueSQL = new List<KeySQL>();
 
         public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback,string formTitle = "导入信息")
         {
@@ -146,22 +154,26 @@ namespace WMS.UI
                 worksheet.ColumnHeaders[i].Text = name;
                 worksheet.ColumnHeaders[i].Width = (ushort)(name.Length * 10 + 30);
 
-                if (this.KeyColumn.ContainsKey(key))
+                if (this.keyColumn.ContainsKey(key))
                 {
-                    this.KeyColumn[key] = i;
+                    this.keyColumn[key] = i;
                 }
                 else
                 {
-                    this.KeyColumn.Add(key, i);
+                    this.keyColumn.Add(key, i);
                 }
             }
             worksheet.Columns = importVisibleKeyNames.Length; //限制表的长度
         }
 
-        //public void AddDefaultValue(string key,string sqlValue)
-        //{
-
-        //}
+        public void AddDefaultValue(string key, string sqlValue)
+        {
+            this.keyDefaultValueSQL.Add(new KeySQL()
+            {
+                Key=key,
+                SQL = sqlValue
+            });
+        }
 
         private T[] MakeObjectByReoGridImport<T>(out string errorMessage) where T : new()
         {

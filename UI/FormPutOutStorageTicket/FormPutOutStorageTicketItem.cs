@@ -287,7 +287,7 @@ namespace WMS.UI
                 MessageBox.Show("实际装车数量必须大于等于0并且小于计划装车数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            decimal deltaRealAmountNoUnit = (putOutStorageTicketItem.RealAmount ?? 0) - oriRealAmountNoUnit;
+            decimal deltaRealAmountNoUnit = ((putOutStorageTicketItem.RealAmount ?? 0) * (putOutStorageTicketItem.UnitAmount ?? 1)) - oriRealAmountNoUnit;
             decimal? returnQualityAmount = putOutStorageTicketItem.ReturnQualityAmount * putOutStorageTicketItem.ReturnQualityUnitAmount;
             decimal? returnRejectAmount = putOutStorageTicketItem.ReturnRejectAmount * putOutStorageTicketItem.ReturnRejectUnitAmount;
             decimal? deliverAmount = putOutStorageTicketItem.RealAmount * putOutStorageTicketItem.UnitAmount;
