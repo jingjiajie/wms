@@ -34,7 +34,7 @@ namespace WMS.UI
             //计时
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Enabled = true;
-            timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
+            timer.Interval = 1000;//执行间隔时间,单位为毫秒  一千分之一
             timer.Start();
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer1_Elapsed);
         }
@@ -49,7 +49,9 @@ namespace WMS.UI
        
         public void RemindStockinfo()
         {
-            this.stringBuilder = new StringBuilder();
+            new Thread(new ThreadStart(() =>
+            {
+                this.stringBuilder = new StringBuilder();
             try
             {
                 WMSEntities  wmsEntities = new WMSEntities();
@@ -114,17 +116,28 @@ namespace WMS.UI
                 stringBuilder.Append("刷新失败，请检查网络连接");            
                 return;
             }
+            this.Invoke(new Action(() =>
+                {
+                    if (this.IsDisposed)  return;
 
-            this.textBox1.Text = stringBuilder.ToString();
+                    else
+                    {
+                        this.textBox1.Text = stringBuilder.ToString();
 
-            if (this.textBox1.Text == "刷新失败，请检查网络连接")
-            {
-                this.textBox1.ForeColor = Color.Red;
-            }
-            else
-            {
-                this.textBox1.ForeColor = Color.Black;
-            }
+                        if (this.textBox1.Text == "刷新失败，请检查网络连接")
+                        {
+                            this.textBox1.ForeColor = Color.Red;
+                         }
+                        else
+                         {
+                            this.textBox1.ForeColor = Color.Black;
+                         }
+                    }
+                }));
+
+            })).Start();
+
+
         }      
 
         private void FormSupplyRemind_Load(object sender, EventArgs e)
