@@ -16,17 +16,18 @@ using System.Data.SqlClient;
 namespace WMS.UI
 {
     public partial class FormSupplyRemind : Form
-    {     
-        public  StringBuilder stringBuilder = new StringBuilder();
+    {
+       
+        //public   StringBuilder stringBuilder = new StringBuilder();
         private int projectID = GlobalData.ProjectID;
         private int warehouseID = GlobalData.WarehouseID;
-        Button  button= null;
-        string remind_Text;
-        public FormSupplyRemind(Button button=null)
+               
+        private static FormSupplyRemind instance = null;       
+        public FormSupplyRemind()
         {
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
-            this.button = button;
+            
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             
@@ -47,11 +48,18 @@ namespace WMS.UI
         }
 
        
-        public void RemindStockinfo()
+        public static void RemindStockinfo()
         {
+
+            if(instance ==null)
+            {
+                instance = new FormSupplyRemind();
+                
+            }
+            instance.Show();
             new Thread(new ThreadStart(() =>
             {
-                this.stringBuilder = new StringBuilder();
+              StringBuilder  stringBuilder = new StringBuilder();
             try
             {
                 WMSEntities  wmsEntities = new WMSEntities();
@@ -116,42 +124,41 @@ namespace WMS.UI
                 stringBuilder.Append("刷新失败，请检查网络连接");            
                 return;
             }
-                //if (this.IsHandleCreated)
-                //{
-                    this.Invoke(new Action(() =>
-                    {
-                        if (this.IsDisposed) return;
 
+                while (true )
+                {
+                    if (instance.IsHandleCreated)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(10);
+                }
+                
+                instance.Invoke(new Action(() =>
+                    {
+                        if (instance.IsDisposed) return;
                         else
                         {
-                            this.textBox1.Text = stringBuilder.ToString();
+                            instance.textBox1.Text = stringBuilder.ToString();
 
-                            if (this.textBox1.Text == "刷新失败，请检查网络连接")
+                            if (instance.textBox1.Text == "刷新失败，请检查网络连接")
                             {
-                                this.textBox1.ForeColor = Color.Red;
-                                this.Visible = true;
-                                this.button.Visible = false;
+                                instance.textBox1.ForeColor = Color.Red;
+                                instance.Show();                               
                             }
-                            else if(this.textBox1 .Text =="")
+                            else if(instance.textBox1 .Text =="")
                             {
-                                this.Visible = false;
-                                button.Visible = true;
+                                instance.Visible = false;
+
                             }
                             else
                             {
-                                this.textBox1.ForeColor = Color.Black;
-                                this.Visible = true;
-                                this.button.Visible = false;
+                                instance.textBox1.ForeColor = Color.Black;
+                                instance.Show ();                              
                             }
                         }
-
-                    }));
-              
-
+                    }));            
             })).Start();
-
-
-
         }      
 
         private void FormSupplyRemind_Load(object sender, EventArgs e)
@@ -178,8 +185,7 @@ namespace WMS.UI
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Hide();
-            e.Cancel = true;
-            this.button.Visible = true;           
+            e.Cancel = true;                    
         }
 
 

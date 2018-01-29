@@ -33,9 +33,7 @@ namespace WMS.UI
         private DateTime contract_startdate;
         private int reminedays;
         StringBuilder  stringBuilder = new StringBuilder();
-        bool show = false;
-        FormSupplyRemind FormSupplyRemind = null;
-
+        //bool show = false;
         //FormSupplyRemind a1 = null;
 
 
@@ -69,8 +67,6 @@ namespace WMS.UI
 
             WMSEntities wmsEntities = new WMSEntities();
             ComponentView component = null;
-
-
             int days;
             StringBuilder sb = new StringBuilder();
 
@@ -288,8 +284,6 @@ namespace WMS.UI
 
                                     sb.Append("您的库存" + ComponentName[i] + "已经不足3天生产，请您补货" + "\r\n" + "\r\n");
                                 }
-
-
                             }
 
                         }
@@ -335,22 +329,11 @@ namespace WMS.UI
             if (days < 0 || remindtext != "" || this.contractstate == "待审核" || contract_effect == false)//||reminedays ==10||reminedays <10 )
 
             {
-
                 FormSupplierRemind a1 = new FormSupplierRemind(days, this.remindtext, this.contractstate, startend, this.contract_effect);
 
                 a1.Show();
-
-
-
-
             }
-
         }
-
-
-
-
-
 
         public void SetFormClosedCallback(Action callback)
         {
@@ -466,9 +449,9 @@ namespace WMS.UI
 
             if (this.supplierid == -1)
             {
-                //RemindStockinfo();
-                FormSupplyRemind = new FormSupplyRemind(this.button2);
-                FormSupplyRemind.Show();
+
+                FormSupplyRemind.RemindStockinfo();
+
             }
 
             else if (this.supplierid != -1)
@@ -815,7 +798,7 @@ namespace WMS.UI
             this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
             GlobalData.ProjectID = this.project.ID;
             this.panelRight.Controls.Clear();
-            if (FormSupplyRemind != null &&this.Run1 ==true  )
+            if (this.Run1 ==true  )
             {
                  FormSupplyRemind.RemindStockinfo();
                  
@@ -829,7 +812,7 @@ namespace WMS.UI
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
             GlobalData.WarehouseID = this.warehouse.ID;
             this.panelRight.Controls.Clear();
-            if (FormSupplyRemind != null&&this.Run ==true  )
+            if (this.Run ==true  )
             {
                 FormSupplyRemind.RemindStockinfo();
                
@@ -884,32 +867,32 @@ namespace WMS.UI
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            if (FormSupplyRemind != null)
-            {
+            //if (FormSupplyRemind != null)
+            //{
 
 
-                if (this.WindowState == FormWindowState.Minimized)
-                {
+            //    if (this.WindowState == FormWindowState.Minimized)
+            //    {
 
-                    FormSupplyRemind.Hide();
+            //        FormSupplyRemind.Hide();
 
-                }
-                else if (this.WindowState == FormWindowState.Maximized && this.button2.Visible == false)
-                {
-                    FormSupplyRemind.Show();
-                }
-            }
+            //    }
+            //    else if (this.WindowState == FormWindowState.Maximized && this.button2.Visible == false)
+            //    {
+            //        FormSupplyRemind.Show();
+            //    }
+            //}
         }
 
 
         private void button1_Click(object sender, EventArgs e)
         {
 
- ;         if (FormSupplyRemind == null)
-            {
-                FormSupplyRemind = new FormSupplyRemind(this.button2);
-            }
-           FormSupplyRemind.Show();
+ //;         if (FormSupplyRemind == null)
+ //           {
+ //               FormSupplyRemind = new FormSupplyRemind(this.button2);
+ //           }
+ //          FormSupplyRemind.Show();
            this.button2.Visible = false;
            this.Run = true;
             this.Run1 = true;
