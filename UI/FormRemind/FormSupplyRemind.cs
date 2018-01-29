@@ -22,7 +22,7 @@ namespace WMS.UI
         private int warehouseID = GlobalData.WarehouseID;
         Button  button= null;
         string remind_Text;
-        public FormSupplyRemind(Button button,string remind_Text)
+        public FormSupplyRemind(Button button=null,string remind_Text=null)
         {
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
