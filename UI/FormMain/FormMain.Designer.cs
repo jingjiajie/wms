@@ -462,9 +462,7 @@ namespace WMS.UI
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
             this.Load += new System.EventHandler(this.FormMain_Load);
-            this.Shown += new System.EventHandler(this.FormMain_Shown);
             this.SizeChanged += new System.EventHandler(this.FormMain_SizeChanged);
-            this.Move += new System.EventHandler(this.FormMain_Move);
             this.panelTop.ResumeLayout(false);
             this.tableLayoutBanner.ResumeLayout(false);
             this.panel3.ResumeLayout(false);

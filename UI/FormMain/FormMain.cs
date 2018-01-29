@@ -522,24 +522,9 @@ namespace WMS.UI
                             break;
                         }
                     }
-                    //if (FormSupplyRemind == null)
-                    //{
-                    //    FormSupplyRemind = new FormSupplyRemind(this.button2);
-                    //}
-                    //this.button2.Left = 3;
-                    //this.button2.Top = (int)(0.75 * Screen.PrimaryScreen.Bounds.Height);
-
                 }));
             }).Start();
 
-            //if (this.supplierid != -1)
-            //{
-
-            //    FormSupplierRemind a1 = new FormSupplierRemind(this.supplierid );
-            //    a1.Show();
-
-
-            //}
 
             if (this.supplierid == -1)
             {
@@ -839,6 +824,7 @@ namespace WMS.UI
             this.panelRight.Controls.Clear();
             if (FormSupplyRemind != null)
             {
+                FormSupplyRemind.RemindStockinfo();
                 FormSupplyRemind.RefreshDate ();
             }
             this.treeViewLeft.SelectedNode = null;
@@ -849,11 +835,13 @@ namespace WMS.UI
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
             GlobalData.WarehouseID = this.warehouse.ID;
             this.panelRight.Controls.Clear();
-            //if (FormSupplyRemind != null)
-            //{
-            //    FormSupplyRemind.RefreshDate ();
 
-            //}
+            if (FormSupplyRemind != null)
+            {
+                FormSupplyRemind.RemindStockinfo();
+                FormSupplyRemind.RefreshDate();
+
+            }
             this.treeViewLeft.SelectedNode = null;
         }
 
@@ -899,49 +887,27 @@ namespace WMS.UI
         }
 
 
-        private void FormMain_Shown(object sender, EventArgs e)
-        {
-            if (user.SupplierID == null)
-            {
-                //FormSupplyRemind = new FormSupplyRemind();
-            
-                //initx = this.Left;
-                //inity = this.Top;
-                //this.initbottom = this.Bottom;
-                //this.initright = this.Right;
-                //FormSupplyRemind.Show();
-                //initx1 = FormSupplyRemind.Left;
-                //inity1 = FormSupplyRemind.Top;
-            }
-        }
+
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            //if (FormSupplyRemind != null)
-            //{
+            if (FormSupplyRemind != null)
+            {
 
 
-            //    if (this.WindowState == FormWindowState.Minimized)
-            //    {
+                if (this.WindowState == FormWindowState.Minimized)
+                {
 
-            //        FormSupplyRemind.Hide();
+                    FormSupplyRemind.Hide();
 
-            //    }
-            //    else if (this.WindowState == FormWindowState.Maximized&&this.button2.Visible ==false )
-            //    {
-            //       FormSupplyRemind.Show();
-            //    }               
-            //}
+                }
+                else if (this.WindowState == FormWindowState.Maximized && this.button2.Visible == false)
+                {
+                    FormSupplyRemind.Show();
+                }
+            }
         }
 
-        private void FormMain_Move(object sender, EventArgs e)
-        {
-            //if (FormSupplyRemind != null)
-            //{
-            //    FormSupplyRemind.Top = inity1 + (this.Top - inity);
-            //    FormSupplyRemind.Left = initx1 + (this.Left - initx);
-            //}
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -967,8 +933,8 @@ namespace WMS.UI
 
         public void RemindStockinfo ()
         {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
             try
             {
                 wmsEntities = new WMSEntities();
@@ -996,9 +962,9 @@ namespace WMS.UI
                 sqlDataAdapter2.Fill(DataTabledt2);
                 int count2 = DataTabledt2.Rows.Count;
                 wmsEntities.Database.Connection.Close();
-                sw.Stop();
-                TimeSpan ts2 = sw.Elapsed;
-                MessageBox.Show("查询所用时间" + ts2.ToString());
+                //sw.Stop();
+                //TimeSpan ts2 = sw.Elapsed;
+                //MessageBox.Show("查询所用时间" + ts2.ToString());
                 
                 //开始填写
                 int count = DataTabledt1.Rows.Count;
