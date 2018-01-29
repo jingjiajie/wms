@@ -644,7 +644,11 @@ namespace WMS.UI
                 null,
                 "导入发货单条目"
                 );
-            standardImportForm.Show();
+            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultShipmentUnit FROM Supply WHERE [No] = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};",this.projectID,this.warehouseID));
+            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultShipmentUnitAmount FROM Supply WHERE [No] = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultShipmentUnit FROM SupplyView WHERE ComponentName = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.ShowDialog();
         }
 
         private bool importItemHandler(ShipmentTicketItem[] results,Dictionary<string,string[]> unimportedColumns)
