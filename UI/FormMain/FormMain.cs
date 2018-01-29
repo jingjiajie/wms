@@ -543,7 +543,7 @@ namespace WMS.UI
 
 
             RemindStockinfo();
-
+            
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
@@ -982,39 +982,58 @@ namespace WMS.UI
                     string SaftyStock = DataTabledt1.Rows[i][4].ToString();
                     stringBuilder.Append(SupplierName + " " + ComponentName + " " + No + " " + "库存量" + " " + stock_Sum + " " + "已小于安全库存" + " " + SaftyStock + "\r\n" + "\r\n");
                 }
+                //日期查询
+                string sql1 = "";
+                sql1 = @"select  StockInfoView.SupplierName,StockInfoView.ComponentName,StockInfoView.SupplyNo,StockInfoView.InventoryDate ,
+                       (select SupplyView.ValidPeriod  from SupplyView where StockInfoView.SupplyID = SupplyView.ID  )ValidPeriod,(select SupplyView.IsHistory from SupplyView where StockInfoView.SupplyID = SupplyView.ID )IsHIstory,
+                       GETDATE() Date_Now,(select dateadd(day, (select SupplyView.ValidPeriod from SupplyView where StockInfoView.SupplyID = SupplyView.ID), StockInfoView.InventoryDate))EndDate ,datediff(day, GETDATE(), (select dateadd(day, (select SupplyView.ValidPeriod from SupplyView where StockInfoView.SupplyID = SupplyView.ID), StockInfoView.InventoryDate))) dayss
+                       from StockInfoView where(select SupplyView.IsHistory from SupplyView where StockInfoView.SupplyID= SupplyView.ID)= 0
+                        and datediff(day, GETDATE(), (select dateadd(day, (select SupplyView.ValidPeriod from SupplyView where StockInfoView.SupplyID= SupplyView.ID), StockInfoView.InventoryDate)))<= 30";
+
+                sql1 = sql1 + "and ProjectID=" + GlobalData.ProjectID;
+                sql1 = sql1 + "and WarehouseID=" + GlobalData.WarehouseID;
+
+                DataTable DataTabledt2 = new DataTable();// 实例化数据表
+                SqlDataAdapter sqlDataAdapter2 = new SqlDataAdapter(sql1, (SqlConnection)wmsEntities.Database.Connection);
+                sqlDataAdapter2.Fill(DataTabledt2);
+                int count2 = DataTabledt2.Rows.Count;
+                wmsEntities.Database.Connection.Close();
+
+                for (int j=0;j<count2;j++)
+                {
+                    string SupplierName = DataTabledt2.Rows[j][0].ToString();
+                    string ComponentName = DataTabledt2.Rows[j][1].ToString();
+                    string SupplyNo = DataTabledt2.Rows[j][3].ToString();
+                    string InventoryDate = DataTabledt2.Rows[j][4].ToString();
+                    string days = DataTabledt2.Rows[j][8].ToString();
+                    if(Convert.ToInt32(days) <= 0)
+                    {
+                        stringBuilder.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate + "  " + "已过期" + "\r\n" + "\r\n");
+                    }
+                    else if(Convert .ToInt32 (days)>0 )
+
+                    {
+                        stringBuilder.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate + "  " + "有效期还剩" + days + "天" + "\r\n" + "\r\n");
+                    }
+
+                }
             }
             catch
             {
                 stringBuilder = new StringBuilder();
                 stringBuilder.Append("刷新失败，请检查网络连接");
+                button2.PerformClick();
                 return;
-            } 
-            if(stringBuilder.ToString () != "")
+            }
+            if (stringBuilder.ToString() != "")
             {
                 button2.PerformClick();
             }
-
         }
 
 
 
 
-        public void RemindData()
-        {
-            wmsEntities = new WMSEntities();
-            string sql = "";
-
-            sql = sql + "and ProjectID=" + GlobalData.ProjectID;
-            sql = sql + "and WarehouseID=" + GlobalData.WarehouseID;
-            wmsEntities.Database.Connection.Open();
-            DataTable DataTabledt1 = new DataTable();// 实例化数据表
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, (SqlConnection)wmsEntities.Database.Connection);
-            sqlDataAdapter.Fill(DataTabledt1);
-            int count = DataTabledt1.Rows.Count;
-            wmsEntities.Database.Connection.Close();
-
-
-        }
 
 
 
