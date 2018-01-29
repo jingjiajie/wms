@@ -27,14 +27,15 @@ namespace WMS.UI
         string remindtext = "";
         private bool contract_effect = true;
         private bool startend = true;
+        private  bool Run = false;
+        private  bool Run1 = false;
         private DateTime contract_enddate;
         private DateTime contract_startdate;
         private int reminedays;
         StringBuilder  stringBuilder = new StringBuilder();
         bool show = false;
         FormSupplyRemind FormSupplyRemind = null;
-        bool Run = false;
-        bool Run1 = false;
+
         //FormSupplyRemind a1 = null;
 
 
@@ -58,9 +59,6 @@ namespace WMS.UI
             else if (user.SupplierID == null)
             {
                 supplierid = -1;
-
-
-
             }
         }
 
@@ -468,7 +466,9 @@ namespace WMS.UI
 
             if (this.supplierid == -1)
             {
-               RemindStockinfo();
+                //RemindStockinfo();
+                FormSupplyRemind = new FormSupplyRemind(this.button2);
+                FormSupplyRemind.Show();
             }
 
             else if (this.supplierid != -1)
@@ -491,9 +491,6 @@ namespace WMS.UI
 
             new Thread(() =>
             {
-                
-                
-                
                 //下拉栏显示仓库
                 WMSEntities wms = new WMSEntities();
                 var allWarehouses = (from s in wms.Warehouse select s).ToArray();
@@ -910,7 +907,7 @@ namespace WMS.UI
 
  ;         if (FormSupplyRemind == null)
             {
-                FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                FormSupplyRemind = new FormSupplyRemind(this.button2);
             }
            FormSupplyRemind.Show();
            this.button2.Visible = false;
@@ -947,7 +944,7 @@ namespace WMS.UI
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sql, (SqlConnection)wmsEntities.Database.Connection);
                 sqlDataAdapter.Fill(DataTabledt1);
                 
-               
+              
                 //日期查询
                 string sql1 = "";
                 sql1 = @"select TOP 50 StockInfoView.SupplierName,StockInfoView.ComponentName,StockInfoView.SupplyNo,StockInfoView.InventoryDate ,
@@ -962,9 +959,6 @@ namespace WMS.UI
                 sqlDataAdapter2.Fill(DataTabledt2);
                 int count2 = DataTabledt2.Rows.Count;
                 wmsEntities.Database.Connection.Close();
-                //sw.Stop();
-                //TimeSpan ts2 = sw.Elapsed;
-                //MessageBox.Show("查询所用时间" + ts2.ToString());
                 
                 //开始填写
                 int count = DataTabledt1.Rows.Count;
@@ -999,7 +993,6 @@ namespace WMS.UI
             {
                 stringBuilder = new StringBuilder();
                 stringBuilder.Append("刷新失败，请检查网络连接");
-                //button2.PerformClick();
                 this.Invoke(new Action(() =>
                 {
                   
@@ -1009,10 +1002,10 @@ namespace WMS.UI
                     {
                         if (FormSupplyRemind == null)
                         {
-                            FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                            FormSupplyRemind = new FormSupplyRemind(this.button2);
                         }
-                        FormSupplyRemind.Show();
-                        this.button2.Visible = false;
+                        //FormSupplyRemind.Show();
+                        //this.button2.Visible = false;
                         return;
                     }
                 }));
@@ -1020,7 +1013,6 @@ namespace WMS.UI
 
             if (stringBuilder.ToString() != "")
             {
-               //button2.PerformClick();
             this.Invoke(new Action(() =>
             {
               if (this.IsDisposed) return;
@@ -1028,10 +1020,10 @@ namespace WMS.UI
                 {
                     if (FormSupplyRemind == null)
                     {
-                        FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                        FormSupplyRemind = new FormSupplyRemind(this.button2);
                     }
-                    FormSupplyRemind.Show();
-                    this.button2.Visible = false;
+                    //FormSupplyRemind.Show();
+                    //this.button2.Visible = false;
                 }
              }));
             }

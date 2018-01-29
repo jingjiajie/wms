@@ -22,14 +22,14 @@ namespace WMS.UI
         private int warehouseID = GlobalData.WarehouseID;
         Button  button= null;
         string remind_Text;
-        public FormSupplyRemind(Button button=null,string remind_Text=null)
+        public FormSupplyRemind(Button button=null)
         {
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
             this.button = button;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.remind_Text = remind_Text;
+            
             
             //计时
             System.Timers.Timer timer = new System.Timers.Timer();
@@ -129,17 +129,27 @@ namespace WMS.UI
                             if (this.textBox1.Text == "刷新失败，请检查网络连接")
                             {
                                 this.textBox1.ForeColor = Color.Red;
+                                this.Visible = true;
+                                this.button.Visible = false;
+                            }
+                            else if(this.textBox1 .Text =="")
+                            {
+                                this.Visible = false;
+                                button.Visible = true;
                             }
                             else
                             {
                                 this.textBox1.ForeColor = Color.Black;
+                                this.Visible = true;
+                                this.button.Visible = false;
                             }
                         }
 
                     }));
-                //}
+              
 
             })).Start();
+
 
 
         }      
@@ -152,7 +162,7 @@ namespace WMS.UI
             this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
             //this.textBox1.Text = "数据加载中...";                  
             this.ShowInTaskbar = false;///使窗体不显示在任务栏                            
-            textBox1.Text = this.remind_Text;
+            RemindStockinfo();
             if (this.textBox1.Text == "刷新失败，请检查网络连接")
             {
                 this.textBox1.ForeColor = Color.Red;
