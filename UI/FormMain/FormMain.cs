@@ -33,6 +33,8 @@ namespace WMS.UI
         StringBuilder  stringBuilder = new StringBuilder();
         bool show = false;
         FormSupplyRemind FormSupplyRemind = null;
+        bool Run = false;
+        bool Run1 = false;
         //FormSupplyRemind a1 = null;
 
 
@@ -91,11 +93,7 @@ namespace WMS.UI
 
                 if (Supplier.EndingTime == null || Supplier.EndingTime == null)
                 {
-
                     startend = false;
-
-
-
                 }
 
 
@@ -349,16 +347,6 @@ namespace WMS.UI
 
             }
 
-
-
-
-
-
-
-
-
-
-
         }
 
 
@@ -496,7 +484,7 @@ namespace WMS.UI
                 WMSEntities wms = new WMSEntities();
                 var allWarehouses = (from s in wms.Warehouse select s).ToArray();
                 var allProjects = (from s in wms.Project select s).ToArray();
-
+                
                 if (this.IsDisposed)
                 {
                     return;
@@ -504,6 +492,7 @@ namespace WMS.UI
                 this.Invoke(new Action(() =>
                 {
                     this.comboBoxWarehouse.Items.AddRange((from w in allWarehouses select new ComboBoxItem(w.Name, w)).ToArray());
+
                     for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
                     {
                         if (((Warehouse)(((ComboBoxItem)this.comboBoxWarehouse.Items[i]).Value)).ID == this.warehouse.ID)
@@ -528,13 +517,14 @@ namespace WMS.UI
 
             if (this.supplierid == -1)
             {
+              
                 RemindStockinfo();
             }
-            else if(this.supplierid != -1)
+            else if (this.supplierid != -1)
             {
                 this.button2.Visible = false;
             }
-            
+
         }
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
@@ -822,12 +812,13 @@ namespace WMS.UI
             this.project = ((ComboBoxItem)this.comboBoxProject.SelectedItem).Value as Project;
             GlobalData.ProjectID = this.project.ID;
             this.panelRight.Controls.Clear();
-            if (FormSupplyRemind != null)
+            if (FormSupplyRemind != null &&this.Run1 ==true  )
             {
-                FormSupplyRemind.RemindStockinfo();
-                FormSupplyRemind.RefreshDate ();
+                 FormSupplyRemind.RemindStockinfo();
+                 FormSupplyRemind.RefreshDate();
             }
             this.treeViewLeft.SelectedNode = null;
+            this.Run1 = true;
         }
 
         private void comboBoxWarehouse_SelectedIndexChanged(object sender, EventArgs e)
@@ -835,13 +826,12 @@ namespace WMS.UI
             this.warehouse = ((ComboBoxItem)this.comboBoxWarehouse.SelectedItem).Value as Warehouse;
             GlobalData.WarehouseID = this.warehouse.ID;
             this.panelRight.Controls.Clear();
-
-            if (FormSupplyRemind != null)
+            if (FormSupplyRemind != null&&this.Run ==true  )
             {
                 FormSupplyRemind.RemindStockinfo();
                 FormSupplyRemind.RefreshDate();
-
             }
+            this.Run = true;
             this.treeViewLeft.SelectedNode = null;
         }
 
@@ -918,6 +908,8 @@ namespace WMS.UI
             }
            FormSupplyRemind.Show();
            this.button2.Visible = false;
+           this.Run = true;
+            this.Run1 = true;
                        
         }
 
@@ -999,12 +991,27 @@ namespace WMS.UI
             {
                 stringBuilder = new StringBuilder();
                 stringBuilder.Append("Ë¢ÐÂÊ§°Ü£¬Çë¼ì²éÍøÂçÁ¬½Ó");
-                button2.PerformClick();
+                //button2.PerformClick();
+                ; if (FormSupplyRemind == null)
+                {
+                    FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                }
+                FormSupplyRemind.Show();
+                this.button2.Visible = false;
+
                 return;
             }
             if (stringBuilder.ToString() != "")
             {
-                button2.PerformClick();
+
+                //button2.PerformClick();
+                ; if (FormSupplyRemind == null)
+                {
+                    FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                }
+                FormSupplyRemind.Show();
+                this.button2.Visible = false;
+
             }
         }
 
