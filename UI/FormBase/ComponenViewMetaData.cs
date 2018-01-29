@@ -10,8 +10,8 @@ namespace WMS.UI
         public static KeyName[] componenkeyNames = {
             new KeyName(){Name = "ID", Key = "ID", Visible = false, Editable = false,Save=false,ImportVisible=false},
             new KeyName(){Key="Name",Name="零件名称",Visible = true, Editable = true,NotNull=true},
-            new KeyName(){Key="SingleCarUsageAmount",Name="单台用量",Visible = true, Editable = true},
-            new KeyName(){Key="DailyProduction",Name="单日产量",Visible = true, Editable = true},
+            new KeyName(){Key="SingleCarUsageAmount",Name="单台用量",Visible = true, Editable = true,NotNull=true,Positive=true},
+            new KeyName(){Key="DailyProduction",Name="单日产量",Visible = true, Editable = true,NotNull=true,Positive=true},
 
             //new KeyName(){Key="DefaultReceiptUnit",Name="默认收货单位",Visible = true, Editable = true},
             //new KeyName(){Key="DefaultReceiptUnitAmount",Name="默认收货单位数量",Visible = true, Editable = true},
