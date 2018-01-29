@@ -1002,16 +1002,20 @@ namespace WMS.UI
                 //button2.PerformClick();
                 this.Invoke(new Action(() =>
                 {
-                    if (FormSupplyRemind .IsDisposed) return;
-                    else { 
-                    if (FormSupplyRemind == null)
+                    if (FormSupplyRemind != null)
                     {
-                        FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                        if (FormSupplyRemind.IsDisposed) return;
                     }
-                    FormSupplyRemind.Show();
-                    this.button2.Visible = false;
-                    return;
-                          }
+                    else
+                    {
+                        if (FormSupplyRemind == null)
+                        {
+                            FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                        }
+                        FormSupplyRemind.Show();
+                        this.button2.Visible = false;
+                        return;
+                    }
                 }));
             }
 
@@ -1020,7 +1024,10 @@ namespace WMS.UI
                //button2.PerformClick();
             this.Invoke(new Action(() =>
             {
-                if (FormSupplyRemind.IsDisposed) return;
+                if (FormSupplyRemind != null)
+                {
+                    if (FormSupplyRemind.IsDisposed) return;
+                }
                 {
                     if (FormSupplyRemind == null)
                     {
