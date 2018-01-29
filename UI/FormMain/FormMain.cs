@@ -973,7 +973,7 @@ namespace WMS.UI
             {
                 wmsEntities = new WMSEntities();
                 string sql = "";
-                sql = "select SupplyView.SupplierName,SupplyView.ComponentName,SupplyView.No,(select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo) stock_Sum,SupplyView.SafetyStock from SupplyView where (select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo)<SupplyView.SafetyStock and IsHistory =0";
+                sql = "select TOP 50 SupplyView.SupplierName,SupplyView.ComponentName,SupplyView.No,(select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo) stock_Sum,SupplyView.SafetyStock from SupplyView where (select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo)<SupplyView.SafetyStock and IsHistory =0";
                 sql = sql + "and ProjectID=" + GlobalData.ProjectID;
                 sql = sql + "and WarehouseID=" + GlobalData.WarehouseID;
                 wmsEntities.Database.Connection.Open();
@@ -984,7 +984,7 @@ namespace WMS.UI
                
                 //日期查询
                 string sql1 = "";
-                sql1 = @"select  StockInfoView.SupplierName,StockInfoView.ComponentName,StockInfoView.SupplyNo,StockInfoView.InventoryDate ,
+                sql1 = @"select TOP 50 StockInfoView.SupplierName,StockInfoView.ComponentName,StockInfoView.SupplyNo,StockInfoView.InventoryDate ,
                        (select SupplyView.ValidPeriod  from SupplyView where StockInfoView.SupplyID = SupplyView.ID  )ValidPeriod,(select SupplyView.IsHistory from SupplyView where StockInfoView.SupplyID = SupplyView.ID )IsHIstory,
                        GETDATE() Date_Now,(select dateadd(day, (select SupplyView.ValidPeriod from SupplyView where StockInfoView.SupplyID = SupplyView.ID), StockInfoView.InventoryDate))EndDate ,datediff(day, GETDATE(), (select dateadd(day, (select SupplyView.ValidPeriod from SupplyView where StockInfoView.SupplyID = SupplyView.ID), StockInfoView.InventoryDate))) dayss
                        from StockInfoView where(select SupplyView.IsHistory from SupplyView where StockInfoView.SupplyID= SupplyView.ID)= 0
@@ -999,8 +999,8 @@ namespace WMS.UI
                 sw.Stop();
                 TimeSpan ts2 = sw.Elapsed;
                 MessageBox.Show("查询所用时间" + ts2.ToString());
+                
                 //开始填写
-
                 int count = DataTabledt1.Rows.Count;
                 for (int i = 0; i < count; i++)
                 {
@@ -1028,7 +1028,6 @@ namespace WMS.UI
                         stringBuilder.Append(SupplierName + "  " + ComponentName + "  " + SupplyNo + "  " + "存货日期" + " " + InventoryDate + "  " + "有效期还剩" + days + "天" + "\r\n" + "\r\n");
                     }
                 }
-
             }
             catch
             {

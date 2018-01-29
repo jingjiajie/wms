@@ -56,7 +56,7 @@ namespace WMS.UI
             {
                 WMSEntities  wmsEntities = new WMSEntities();
                 string sql = "";
-                sql = "select SupplyView.SupplierName,SupplyView.ComponentName,SupplyView.No,(select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo) stock_Sum,SupplyView.SafetyStock from SupplyView where (select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo)<SupplyView.SafetyStock and IsHistory =0";
+                sql = "select TOP 50 SupplyView.SupplierName,SupplyView.ComponentName,SupplyView.No,(select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo) stock_Sum,SupplyView.SafetyStock from SupplyView where (select (sum(StockInfoView.ShipmentAreaAmount)+sum(StockInfoView.OverflowAreaAmount)) from StockInfoView where SupplyView.No =StockInfoView.SupplyNo)<SupplyView.SafetyStock and IsHistory =0";
                 sql = sql + "and ProjectID=" + GlobalData.ProjectID;
                 sql = sql + "and WarehouseID=" + GlobalData.WarehouseID;
                 wmsEntities.Database.Connection.Open();
@@ -76,7 +76,7 @@ namespace WMS.UI
                 }
                 //日期查询
                 string sql1 = "";
-                sql1 = @"select  StockInfoView.SupplierName,StockInfoView.ComponentName,StockInfoView.SupplyNo,StockInfoView.InventoryDate ,
+                sql1 = @"select TOP 50 StockInfoView.SupplierName,StockInfoView.ComponentName,StockInfoView.SupplyNo,StockInfoView.InventoryDate ,
                        (select SupplyView.ValidPeriod  from SupplyView where StockInfoView.SupplyID = SupplyView.ID  )ValidPeriod,(select SupplyView.IsHistory from SupplyView where StockInfoView.SupplyID = SupplyView.ID )IsHIstory,
                        GETDATE() Date_Now,(select dateadd(day, (select SupplyView.ValidPeriod from SupplyView where StockInfoView.SupplyID = SupplyView.ID), StockInfoView.InventoryDate))EndDate ,datediff(day, GETDATE(), (select dateadd(day, (select SupplyView.ValidPeriod from SupplyView where StockInfoView.SupplyID = SupplyView.ID), StockInfoView.InventoryDate))) dayss
                        from StockInfoView where(select SupplyView.IsHistory from SupplyView where StockInfoView.SupplyID= SupplyView.ID)= 0
@@ -95,8 +95,8 @@ namespace WMS.UI
                 {
                     string SupplierName = DataTabledt2.Rows[j][0].ToString();
                     string ComponentName = DataTabledt2.Rows[j][1].ToString();
-                    string SupplyNo = DataTabledt2.Rows[j][3].ToString();
-                    string InventoryDate = DataTabledt2.Rows[j][4].ToString();
+                    string SupplyNo = DataTabledt2.Rows[j][2].ToString();
+                    string InventoryDate = DataTabledt2.Rows[j][3].ToString();
                     string days = DataTabledt2.Rows[j][8].ToString();
                     if (Convert.ToInt32(days) <= 0)
                     {
@@ -333,12 +333,23 @@ namespace WMS.UI
         }
         public void RefreshDate()
         {
+            //Stopwatch sw = new Stopwatch();
+            //sw.Start();
             //Thread thread = new Thread(loadData);
             //thread.Start();
             //this.textBox1.Text = "数据加载中...";
-            new Thread(() =>
-            {
-                this.textBox1.Text = stringBuilder.ToString();
+            //new Thread(() =>
+            //{
+            string a = stringBuilder.ToString();
+            //sw.Stop();
+            //TimeSpan ts = sw.Elapsed;
+            //MessageBox.Show("转换所用时间" + ts.ToString());
+            Stopwatch sw1 = new Stopwatch();
+            sw1.Start();
+            this.textBox1.Text = a;
+            sw1.Stop();
+            TimeSpan ts3 = sw1.Elapsed;
+            MessageBox.Show("显示所用时间" + ts3.ToString());
             if (this.textBox1.Text == "刷新失败，请检查网络连接")
             {
                 this.textBox1.ForeColor = Color.Red;
@@ -348,7 +359,8 @@ namespace WMS.UI
                 this.textBox1.ForeColor = Color.Black;
              }
 
-            }).Start();
+            //}).Start();
+
         }
 
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
