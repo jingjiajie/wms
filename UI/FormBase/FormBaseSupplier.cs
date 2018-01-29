@@ -777,25 +777,10 @@ namespace WMS.UI
                                 MessageBox.Show("操作失败，供应商"+ suppliernameimport+ "的合同状态请改为待审核、已过审或空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
                                 return false;
                             }
-
-                            
-                        
-
-
-
-
-
-
-
-
                             //历史信息设为0
                             results[i].IsHistory = 0;
 
                         }
-
-
-
-
 
                         return true;
                     }, 

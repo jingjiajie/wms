@@ -17,11 +17,10 @@ namespace WMS.UI
 {
     public partial class FormSupplyRemind : Form
     {
-       
-        //public   StringBuilder stringBuilder = new StringBuilder();
         private int projectID = GlobalData.ProjectID;
         private int warehouseID = GlobalData.WarehouseID;
-               
+        private Action HidedCallback = null;
+        private Action ShowCallback = null;
         private static FormSupplyRemind instance = null;       
         public FormSupplyRemind()
         {
@@ -144,17 +143,29 @@ namespace WMS.UI
                             if (instance.textBox1.Text == "刷新失败，请检查网络连接")
                             {
                                 instance.textBox1.ForeColor = Color.Red;
-                                instance.Show();                               
+                                instance.Show();
+                                if (instance.ShowCallback != null)
+                                {
+                                    instance.ShowCallback();
+                                }
+
                             }
                             else if(instance.textBox1 .Text =="")
                             {
                                 instance.Visible = false;
-
+                                if (instance.HidedCallback != null)
+                                {
+                                    instance.HidedCallback();
+                                }
                             }
                             else
                             {
                                 instance.textBox1.ForeColor = Color.Black;
-                                instance.Show ();                              
+                                instance.Show ();
+                                if (instance.ShowCallback != null)
+                                {
+                                    instance.ShowCallback();
+                                }
                             }
                         }
                     }));            
@@ -185,12 +196,25 @@ namespace WMS.UI
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.Hide();
-            e.Cancel = true;                    
+            e.Cancel = true;
+            if (instance.HidedCallback != null)
+            {
+                instance.HidedCallback();              
+            }
+        }
+        public static void SetFormHidedCallback(Action callback)
+        {
+            instance.HidedCallback = callback;
         }
 
 
-
+        public static void SetFormShowCallback(Action callback)
+        {
+            instance.ShowCallback = callback;
+        }
+        
     }
-
-    
+     
+     
 }
+ 

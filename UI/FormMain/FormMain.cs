@@ -452,12 +452,22 @@ namespace WMS.UI
 
                 FormSupplyRemind.RemindStockinfo();
 
+                FormSupplyRemind.SetFormHidedCallback(() =>
+                {
+                    this.button2.Visible = true ;
+                });
+                FormSupplyRemind.SetFormShowCallback(() =>
+                {
+                    this.button2.Visible = false ;
+                });
             }
-
+          
             else if (this.supplierid != -1)
             {
                 this.button2.Visible = false;
-            }
+            }            
+
+
 
             //Ë¢ÐÂ×ó±ßÊ÷ÐÎ¿ò
             this.RefreshTreeView();
@@ -478,7 +488,6 @@ namespace WMS.UI
                 WMSEntities wms = new WMSEntities();
                 var allWarehouses = (from s in wms.Warehouse select s).ToArray();
                 var allProjects = (from s in wms.Project select s).ToArray();
-
                 if (this.IsDisposed)
                 {
                     return;
@@ -495,7 +504,6 @@ namespace WMS.UI
                             break;
                         }
                     }
-
                     this.comboBoxProject.Items.AddRange((from p in allProjects select new ComboBoxItem(p.Name, p)).ToArray());
                     for (int i = 0; i < this.comboBoxWarehouse.Items.Count; i++)
                     {
@@ -887,16 +895,10 @@ namespace WMS.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-
- //;         if (FormSupplyRemind == null)
- //           {
- //               FormSupplyRemind = new FormSupplyRemind(this.button2);
- //           }
- //          FormSupplyRemind.Show();
-           this.button2.Visible = false;
+           FormSupplyRemind.RemindStockinfo();
+           //this.button2.Visible = false;
            this.Run = true;
-            this.Run1 = true;
-                       
+           this.Run1 = true;         
         }
 
         private void button2_MouseEnter(object sender, EventArgs e)
@@ -907,7 +909,7 @@ namespace WMS.UI
         private void button2_MouseLeave(object sender, EventArgs e)
         {
             button2.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
-        }  
+        }
 
     }
 }
