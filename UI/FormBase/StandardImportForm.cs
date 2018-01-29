@@ -11,6 +11,7 @@ using WMS.DataAccess;
 using System.Reflection;
 using System.Data.Entity;
 using System.Threading;
+using System.Data.SqlClient;
 
 namespace WMS.UI
 {
@@ -164,6 +165,51 @@ namespace WMS.UI
                 }
             }
             worksheet.Columns = importVisibleKeyNames.Length; //限制表的长度
+            worksheet.BeforeSelectionRangeChange += Worksheet_BeforeSelectionRangeChange;
+        }
+
+        private void Worksheet_BeforeSelectionRangeChange(object sender, unvell.ReoGrid.Events.BeforeSelectionChangeEventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            this.RefreshDefaultValue(new int[] { worksheet.SelectionRange.Row });
+        }
+
+        private void RefreshDefaultValue(int[] rows)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            
+            using (WMSEntities wmsEntities = new WMSEntities())
+            {
+                wmsEntities.Database.Connection.Open();
+                //遍历行
+                foreach (int row in rows)
+                {
+                    if (IsEmptyLine(worksheet, row)) continue;
+                    //将worksheet当前行的值作为SQL参数传进去
+                    List<SqlParameter> parameters = new List<SqlParameter>();
+                    foreach (var kc in this.keyColumn)
+                    {
+                        parameters.Add(new SqlParameter(kc.Key, worksheet[row, kc.Value] ?? ""));
+                    }
+
+                    //遍历设置了默认值的列
+                    foreach (var keySQL in this.keyDefaultValueSQL)
+                    {
+                        int col = this.keyColumn[keySQL.Key];
+                        //如果已经有字，不覆盖
+                        if (worksheet.GetCell(row, col) != null && worksheet[row, col] != null && string.IsNullOrWhiteSpace(worksheet[row, col].ToString()) == false) continue;
+                        string sql = keySQL.SQL;
+                        SqlCommand command = new SqlCommand(sql,(SqlConnection)wmsEntities.Database.Connection);
+                        command.Parameters.AddRange(parameters.ToArray());
+                        SqlDataReader dataReader = command.ExecuteReader();
+                        command.Parameters.Clear();
+                        if (dataReader.HasRows == false) continue;
+                        dataReader.Read();
+                        object value = dataReader.GetValue(0);
+                        worksheet[row, col] = value == null ? "" : value.ToString();
+                    }
+                }
+            }
         }
 
         public void AddDefaultValue(string key, string sqlValue)
@@ -173,6 +219,18 @@ namespace WMS.UI
                 Key=key,
                 SQL = sqlValue
             });
+        }
+
+        private bool IsEmptyLine(Worksheet worksheet,int row)
+        {
+            for(int i = 0; i < worksheet.Columns; i++)
+            {
+                if(worksheet.GetCell(row,i) != null && worksheet[row,i] != null && string.IsNullOrWhiteSpace(worksheet[row, i].ToString()) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private T[] MakeObjectByReoGridImport<T>(out string errorMessage) where T : new()

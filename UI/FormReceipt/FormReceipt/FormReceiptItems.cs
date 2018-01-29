@@ -923,6 +923,16 @@ namespace WMS.UI
         private void buttonImport_Click(object sender, EventArgs e)
         {
             this.standardImportForm = new StandardImportForm<ReceiptTicketItem>(ReceiptMetaData.itemsKeyName, importItemHandler, importFinishedCallback, "导入收货单条目");
+            this.standardImportForm.AddDefaultValue("RealReceiptUnitCount", "SELECT @ExpectedUnitCount");
+            this.standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultReceiptUnit FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            this.standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultReceiptUnitAmount FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            this.standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultReceiptUnit FROM SupplyView WHERE ComponentName = @Component AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            this.standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultReceiptUnitAmount FROM SupplyView WHERE ComponentName = @Component AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            this.standardImportForm.AddDefaultValue("RefuseUnitCount", "SELECT 0");
+            this.standardImportForm.AddDefaultValue("RefuseUnit","SELECT '个'");
+            this.standardImportForm.AddDefaultValue("RefuseUnitAmount", "SELECT 1");
+            this.standardImportForm.AddDefaultValue("InventoryDate",string.Format("SELECT '{0}'",DateTime.Now.ToString()));
+            //this.standardImportForm.AddDefaultValue("ExpiryDate", string.Format("SELECT CAST(@InventoryDate as datetime) FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             this.standardImportForm.ShowDialog();
         }
 

@@ -100,7 +100,7 @@ namespace WMS.UI
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Margin = new System.Windows.Forms.Padding(0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1333, 140);
+            this.panelTop.Size = new System.Drawing.Size(2000, 224);
             this.panelTop.TabIndex = 0;
             // 
             // tableLayoutBanner
@@ -109,7 +109,7 @@ namespace WMS.UI
             this.tableLayoutBanner.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.tableLayoutBanner.ColumnCount = 2;
             this.tableLayoutBanner.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutBanner.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 467F));
+            this.tableLayoutBanner.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 700F));
             this.tableLayoutBanner.Controls.Add(this.panel3, 0, 0);
             this.tableLayoutBanner.Controls.Add(this.panel1, 0, 1);
             this.tableLayoutBanner.Controls.Add(this.panel2, 1, 1);
@@ -119,8 +119,8 @@ namespace WMS.UI
             this.tableLayoutBanner.Name = "tableLayoutBanner";
             this.tableLayoutBanner.RowCount = 2;
             this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutBanner.Size = new System.Drawing.Size(1333, 140);
+            this.tableLayoutBanner.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.tableLayoutBanner.Size = new System.Drawing.Size(2000, 224);
             this.tableLayoutBanner.TabIndex = 3;
             // 
             // panel3
@@ -133,7 +133,7 @@ namespace WMS.UI
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1333, 100);
+            this.panel3.Size = new System.Drawing.Size(2000, 160);
             this.panel3.TabIndex = 0;
             // 
             // label1
@@ -142,9 +142,10 @@ namespace WMS.UI
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 16.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(51, 9);
+            this.label1.Location = new System.Drawing.Point(76, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(537, 36);
+            this.label1.Size = new System.Drawing.Size(856, 57);
             this.label1.TabIndex = 0;
             this.label1.Text = "∞≤Õæ∑·¥ÔWMSŒÔ¡˜π‹¿ÌœµÕ≥ ≤‚ ‘∞Ê±æ-127";
             // 
@@ -155,10 +156,10 @@ namespace WMS.UI
             this.panel1.Controls.Add(this.labelUsername);
             this.panel1.Controls.Add(this.labelAuth);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 100);
+            this.panel1.Location = new System.Drawing.Point(0, 160);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(866, 40);
+            this.panel1.Size = new System.Drawing.Size(1300, 64);
             this.panel1.TabIndex = 3;
             // 
             // labelUsername
@@ -168,9 +169,10 @@ namespace WMS.UI
             this.labelUsername.BackColor = System.Drawing.Color.Transparent;
             this.labelUsername.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelUsername.ForeColor = System.Drawing.Color.White;
-            this.labelUsername.Location = new System.Drawing.Point(91, 6);
+            this.labelUsername.Location = new System.Drawing.Point(136, 10);
+            this.labelUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(69, 26);
+            this.labelUsername.Size = new System.Drawing.Size(104, 39);
             this.labelUsername.TabIndex = 1;
             this.labelUsername.Text = "”√ªß√˚";
             // 
@@ -181,9 +183,10 @@ namespace WMS.UI
             this.labelAuth.BackColor = System.Drawing.Color.Transparent;
             this.labelAuth.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelAuth.ForeColor = System.Drawing.Color.White;
-            this.labelAuth.Location = new System.Drawing.Point(1, 6);
+            this.labelAuth.Location = new System.Drawing.Point(2, 10);
+            this.labelAuth.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelAuth.Name = "labelAuth";
-            this.labelAuth.Size = new System.Drawing.Size(55, 26);
+            this.labelAuth.Size = new System.Drawing.Size(83, 39);
             this.labelAuth.TabIndex = 2;
             this.labelAuth.Text = "»®œﬁ:";
             // 
@@ -192,10 +195,10 @@ namespace WMS.UI
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.tableLayoutPanel2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(867, 101);
-            this.panel2.Margin = new System.Windows.Forms.Padding(1);
+            this.panel2.Location = new System.Drawing.Point(1302, 162);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(465, 38);
+            this.panel2.Size = new System.Drawing.Size(696, 60);
             this.panel2.TabIndex = 4;
             // 
             // tableLayoutPanel2
@@ -205,21 +208,21 @@ namespace WMS.UI
             this.tableLayoutPanel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.tableLayoutPanel2.ColumnCount = 5;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 167F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 167F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 250F));
             this.tableLayoutPanel2.Controls.Add(this.comboBoxWarehouse, 4, 0);
             this.tableLayoutPanel2.Controls.Add(this.comboBoxProject, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label2, 3, 0);
             this.tableLayoutPanel2.Controls.Add(this.label3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(465, 38);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(696, 60);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // comboBoxWarehouse
@@ -228,10 +231,10 @@ namespace WMS.UI
             this.comboBoxWarehouse.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxWarehouse.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10F);
             this.comboBoxWarehouse.FormattingEnabled = true;
-            this.comboBoxWarehouse.Location = new System.Drawing.Point(301, 2);
-            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.comboBoxWarehouse.Location = new System.Drawing.Point(450, 4);
+            this.comboBoxWarehouse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxWarehouse.Name = "comboBoxWarehouse";
-            this.comboBoxWarehouse.Size = new System.Drawing.Size(161, 31);
+            this.comboBoxWarehouse.Size = new System.Drawing.Size(242, 43);
             this.comboBoxWarehouse.TabIndex = 0;
             this.comboBoxWarehouse.SelectedIndexChanged += new System.EventHandler(this.comboBoxWarehouse_SelectedIndexChanged);
             // 
@@ -241,10 +244,10 @@ namespace WMS.UI
             this.comboBoxProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxProject.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10F);
             this.comboBoxProject.FormattingEnabled = true;
-            this.comboBoxProject.Location = new System.Drawing.Point(65, 1);
-            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(1);
+            this.comboBoxProject.Location = new System.Drawing.Point(98, 2);
+            this.comboBoxProject.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxProject.Name = "comboBoxProject";
-            this.comboBoxProject.Size = new System.Drawing.Size(165, 31);
+            this.comboBoxProject.Size = new System.Drawing.Size(246, 43);
             this.comboBoxProject.TabIndex = 1;
             this.comboBoxProject.SelectedIndexChanged += new System.EventHandler(this.comboBoxProject_SelectedIndexChanged);
             // 
@@ -255,9 +258,10 @@ namespace WMS.UI
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(234, 0);
+            this.label2.Location = new System.Drawing.Point(350, 0);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 38);
+            this.label2.Size = new System.Drawing.Size(92, 60);
             this.label2.TabIndex = 2;
             this.label2.Text = "≤÷ø‚";
             // 
@@ -269,8 +273,9 @@ namespace WMS.UI
             this.label3.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(0, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 38);
+            this.label3.Size = new System.Drawing.Size(92, 60);
             this.label3.TabIndex = 3;
             this.label3.Text = "œÓƒø";
             // 
@@ -279,27 +284,27 @@ namespace WMS.UI
             this.panelFill.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panelFill.Controls.Add(this.tableLayoutPanel1);
             this.panelFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelFill.Location = new System.Drawing.Point(0, 140);
-            this.panelFill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panelFill.Location = new System.Drawing.Point(0, 224);
+            this.panelFill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panelFill.Name = "panelFill";
-            this.panelFill.Size = new System.Drawing.Size(1333, 892);
+            this.panelFill.Size = new System.Drawing.Size(2000, 1428);
             this.panelFill.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 240F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 360F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panelRight, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(1);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1333, 892);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(2000, 1428);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // panelRight
@@ -309,10 +314,10 @@ namespace WMS.UI
             this.panelRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRight.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.panelRight.Location = new System.Drawing.Point(240, 0);
+            this.panelRight.Location = new System.Drawing.Point(360, 0);
             this.panelRight.Margin = new System.Windows.Forms.Padding(0);
             this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(1093, 892);
+            this.panelRight.Size = new System.Drawing.Size(1640, 1428);
             this.panelRight.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -322,23 +327,23 @@ namespace WMS.UI
             this.tableLayoutPanel3.Controls.Add(this.panelLeft, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.tableLayoutPanel4, 0, 1);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 2);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.21468F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.785317F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(234, 888);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(352, 1420);
             this.tableLayoutPanel3.TabIndex = 2;
             // 
             // panelLeft
             // 
             this.panelLeft.Controls.Add(this.treeViewLeft);
             this.panelLeft.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLeft.Location = new System.Drawing.Point(1, 1);
-            this.panelLeft.Margin = new System.Windows.Forms.Padding(1);
+            this.panelLeft.Location = new System.Drawing.Point(2, 2);
+            this.panelLeft.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.panelLeft.Name = "panelLeft";
-            this.panelLeft.Size = new System.Drawing.Size(232, 825);
+            this.panelLeft.Size = new System.Drawing.Size(348, 1319);
             this.panelLeft.TabIndex = 0;
             // 
             // treeViewLeft
@@ -390,7 +395,7 @@ namespace WMS.UI
             treeNode14,
             treeNode16});
             this.treeViewLeft.SelectedImageIndex = 0;
-            this.treeViewLeft.Size = new System.Drawing.Size(232, 825);
+            this.treeViewLeft.Size = new System.Drawing.Size(348, 1319);
             this.treeViewLeft.TabIndex = 0;
             this.treeViewLeft.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewLeft_AfterSelect);
             // 
@@ -410,12 +415,12 @@ namespace WMS.UI
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 3.947368F));
             this.tableLayoutPanel4.Controls.Add(this.button2, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 829);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(4, 1327);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(228, 57);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(344, 89);
             this.tableLayoutPanel4.TabIndex = 32;
             // 
             // button2
@@ -430,10 +435,10 @@ namespace WMS.UI
             this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Œ¢»Ì—≈∫⁄", 10F);
-            this.button2.Location = new System.Drawing.Point(11, 5);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.button2.Location = new System.Drawing.Point(16, 7);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(204, 48);
+            this.button2.Size = new System.Drawing.Size(310, 76);
             this.button2.TabIndex = 31;
             this.button2.Text = "œ‘ æø‚¥Ê‘§æØ";
             this.button2.UseVisualStyleBackColor = false;
@@ -443,14 +448,14 @@ namespace WMS.UI
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1333, 1032);
+            this.ClientSize = new System.Drawing.Size(2000, 1652);
             this.Controls.Add(this.panelFill);
             this.Controls.Add(this.panelTop);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
+            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.Name = "FormMain";
             this.Text = "∞≤Õæ∑·¥ÔWMSŒÔ¡˜π‹¿ÌœµÕ≥";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
