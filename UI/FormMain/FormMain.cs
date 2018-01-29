@@ -465,6 +465,17 @@ namespace WMS.UI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+
+            if (this.supplierid == -1)
+            {
+               RemindStockinfo();
+            }
+
+            else if (this.supplierid != -1)
+            {
+                this.button2.Visible = false;
+            }
+
             //Ë¢ÐÂ×ó±ßÊ÷ÐÎ¿ò
             this.RefreshTreeView();
 
@@ -480,11 +491,14 @@ namespace WMS.UI
 
             new Thread(() =>
             {
+                
+                
+                
                 //ÏÂÀ­À¸ÏÔÊ¾²Ö¿â
                 WMSEntities wms = new WMSEntities();
                 var allWarehouses = (from s in wms.Warehouse select s).ToArray();
                 var allProjects = (from s in wms.Project select s).ToArray();
-                
+
                 if (this.IsDisposed)
                 {
                     return;
@@ -513,17 +527,9 @@ namespace WMS.UI
                     }
                 }));
             }).Start();
-
-
-            if (this.supplierid == -1)
-            {
-              
-                RemindStockinfo();
-            }
-            else if (this.supplierid != -1)
-            {
-                this.button2.Visible = false;
-            }
+           
+ 
+            
 
         }
 
@@ -815,7 +821,7 @@ namespace WMS.UI
             if (FormSupplyRemind != null &&this.Run1 ==true  )
             {
                  FormSupplyRemind.RemindStockinfo();
-                 FormSupplyRemind.RefreshDate();
+                 
             }
             this.treeViewLeft.SelectedNode = null;
             this.Run1 = true;
@@ -829,7 +835,7 @@ namespace WMS.UI
             if (FormSupplyRemind != null&&this.Run ==true  )
             {
                 FormSupplyRemind.RemindStockinfo();
-                FormSupplyRemind.RefreshDate();
+               
             }
             this.Run = true;
             this.treeViewLeft.SelectedNode = null;
@@ -927,7 +933,9 @@ namespace WMS.UI
         {
             //Stopwatch sw = new Stopwatch();
             //sw.Start();
-            try
+            new Thread(new ThreadStart(() =>
+            {
+                try
             {
                 wmsEntities = new WMSEntities();
                 string sql = "";
@@ -992,27 +1000,45 @@ namespace WMS.UI
                 stringBuilder = new StringBuilder();
                 stringBuilder.Append("Ë¢ÐÂÊ§°Ü£¬Çë¼ì²éÍøÂçÁ¬½Ó");
                 //button2.PerformClick();
-                ; if (FormSupplyRemind == null)
+                this.Invoke(new Action(() =>
                 {
-                    FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
-                }
-                FormSupplyRemind.Show();
-                this.button2.Visible = false;
-
-                return;
+                    if (FormSupplyRemind != null)
+                    {
+                        if (FormSupplyRemind.IsDisposed) return;
+                    }
+                    else
+                    {
+                        if (FormSupplyRemind == null)
+                        {
+                            FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                        }
+                        FormSupplyRemind.Show();
+                        this.button2.Visible = false;
+                        return;
+                    }
+                }));
             }
+
             if (stringBuilder.ToString() != "")
             {
-
-                //button2.PerformClick();
-                ; if (FormSupplyRemind == null)
+               //button2.PerformClick();
+            this.Invoke(new Action(() =>
+            {
+                if (FormSupplyRemind != null)
                 {
-                    FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                    if (FormSupplyRemind.IsDisposed) return;
                 }
-                FormSupplyRemind.Show();
-                this.button2.Visible = false;
-
+                {
+                    if (FormSupplyRemind == null)
+                    {
+                        FormSupplyRemind = new FormSupplyRemind(this.button2, stringBuilder.ToString());
+                    }
+                    FormSupplyRemind.Show();
+                    this.button2.Visible = false;
+                }
+             }));
             }
+            })).Start();
         }
 
     }

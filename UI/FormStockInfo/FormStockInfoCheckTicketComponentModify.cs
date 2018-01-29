@@ -840,9 +840,12 @@ namespace WMS.UI
             })).Start();
             this.Invoke(new Action(() =>
             {
-                this.pagerWidget.Search();
-            //this.Search();
-            this.labelStatus.Text = "盘点单条目";
+                if (this.IsDisposed) return;
+                {
+                    this.pagerWidget.Search();
+                    //this.Search();
+                    this.labelStatus.Text = "盘点单条目";
+                }
             }));
 
             //this.labelStatus.Text = "盘点单条目";

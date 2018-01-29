@@ -22,7 +22,7 @@ namespace WMS.UI
         private int warehouseID = GlobalData.WarehouseID;
         Button  button= null;
         string remind_Text;
-        public FormSupplyRemind(Button button,string remind_Text)
+        public FormSupplyRemind(Button button=null,string remind_Text=null)
         {
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
@@ -43,13 +43,15 @@ namespace WMS.UI
         {
 
             RemindStockinfo();
-            RefreshDate();
             //MessageBox.Show("执行了一次程序");
         }
 
+       
         public void RemindStockinfo()
         {
-            this.stringBuilder = new StringBuilder();
+            new Thread(new ThreadStart(() =>
+            {
+                this.stringBuilder = new StringBuilder();
             try
             {
                 WMSEntities  wmsEntities = new WMSEntities();
@@ -114,6 +116,28 @@ namespace WMS.UI
                 stringBuilder.Append("刷新失败，请检查网络连接");            
                 return;
             }
+            this.Invoke(new Action(() =>
+                {
+                    if (this.IsDisposed) return;
+
+                    else
+                    {
+                        this.textBox1.Text = stringBuilder.ToString();
+
+                        if (this.textBox1.Text == "刷新失败，请检查网络连接")
+                        {
+                            this.textBox1.ForeColor = Color.Red;
+                         }
+                        else
+                         {
+                            this.textBox1.ForeColor = Color.Black;
+                         }
+                    }
+                }));
+
+            })).Start();
+
+
         }      
 
         private void FormSupplyRemind_Load(object sender, EventArgs e)
@@ -135,19 +159,7 @@ namespace WMS.UI
             }      
         }
 
-        public void RefreshDate()
-        {
-            this.textBox1.Text = stringBuilder.ToString();
 
-            if (this.textBox1.Text == "刷新失败，请检查网络连接")
-            {
-                this.textBox1.ForeColor = Color.Red;
-            }
-            else
-            {
-                this.textBox1.ForeColor = Color.Black;
-            }
-        }
 
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
         {
