@@ -238,26 +238,26 @@ namespace WMS.UI
         public void loadData()
         {
             //加载数据
-            if (textBox1.InvokeRequired)
-            {
-                textBox1.BeginInvoke(new Action(() => textBox1.Text = stringBuilder.ToString() ));
-                textBox1.Text = this.remind_Text;
-                if (this.textBox1.Text == "刷新失败，请检查网络连接")
-                {
-                    this.textBox1.ForeColor = Color.Red;
+            //if (textBox1.InvokeRequired)
+            //{
+            //    textBox1.BeginInvoke(new Action(() => textBox1.Text = stringBuilder.ToString() ));
+            //    textBox1.Text = this.remind_Text;
+            //    if (this.textBox1.Text == "刷新失败，请检查网络连接")
+            //    {
+            //        this.textBox1.ForeColor = Color.Red;
 
-                }
-                else
-                {
-                    this.textBox1.ForeColor = Color.Black;
-                }
-            }
+            //    }
+            //    else
+            //    {
+            //        this.textBox1.ForeColor = Color.Black;
+            //    }
+            //}
         }
         public void RefreshDate()
         {
-            Thread thread = new Thread(loadData);
-            thread.Start();
-            this.textBox1.Text = "数据加载中...";
+            //Thread thread = new Thread(loadData);
+            //thread.Start();
+            //this.textBox1.Text = "数据加载中...";
         }
 
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)

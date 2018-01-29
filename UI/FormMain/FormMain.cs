@@ -988,7 +988,12 @@ namespace WMS.UI
                 stringBuilder = new StringBuilder();
                 stringBuilder.Append("刷新失败，请检查网络连接");
                 return;
-            }          
+            } 
+            if(stringBuilder.ToString () != "")
+            {
+                button2.PerformClick();
+            }
+
         }
 
 
