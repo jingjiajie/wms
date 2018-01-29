@@ -116,24 +116,28 @@ namespace WMS.UI
                 stringBuilder.Append("刷新失败，请检查网络连接");            
                 return;
             }
-            this.Invoke(new Action(() =>
-                {
-                    if (this.IsDisposed) return;
-
-                    else
+                //if (this.IsHandleCreated)
+                //{
+                    this.Invoke(new Action(() =>
                     {
-                        this.textBox1.Text = stringBuilder.ToString();
+                        if (this.IsDisposed) return;
 
-                        if (this.textBox1.Text == "刷新失败，请检查网络连接")
-                        {
-                            this.textBox1.ForeColor = Color.Red;
-                         }
                         else
-                         {
-                            this.textBox1.ForeColor = Color.Black;
-                         }
-                    }
-                }));
+                        {
+                            this.textBox1.Text = stringBuilder.ToString();
+
+                            if (this.textBox1.Text == "刷新失败，请检查网络连接")
+                            {
+                                this.textBox1.ForeColor = Color.Red;
+                            }
+                            else
+                            {
+                                this.textBox1.ForeColor = Color.Black;
+                            }
+                        }
+
+                    }));
+                //}
 
             })).Start();
 

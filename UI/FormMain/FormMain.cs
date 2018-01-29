@@ -1002,10 +1002,9 @@ namespace WMS.UI
                 //button2.PerformClick();
                 this.Invoke(new Action(() =>
                 {
-                    if (FormSupplyRemind != null)
-                    {
-                        if (FormSupplyRemind.IsDisposed) return;
-                    }
+                  
+                   if (this.IsDisposed) return;
+                    
                     else
                     {
                         if (FormSupplyRemind == null)
@@ -1024,10 +1023,8 @@ namespace WMS.UI
                //button2.PerformClick();
             this.Invoke(new Action(() =>
             {
-                if (FormSupplyRemind != null)
-                {
-                    if (FormSupplyRemind.IsDisposed) return;
-                }
+              if (this.IsDisposed) return;
+               
                 {
                     if (FormSupplyRemind == null)
                     {
