@@ -465,6 +465,17 @@ namespace WMS.UI
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+
+            if (this.supplierid == -1)
+            {
+               RemindStockinfo();
+            }
+
+            else if (this.supplierid != -1)
+            {
+                this.button2.Visible = false;
+            }
+
             //À¢–¬◊Û±ﬂ ˜–ŒøÚ
             this.RefreshTreeView();
 
@@ -480,6 +491,9 @@ namespace WMS.UI
 
             new Thread(() =>
             {
+                
+                
+                
                 //œ¬¿≠¿∏œ‘ æ≤÷ø‚
                 WMSEntities wms = new WMSEntities();
                 var allWarehouses = (from s in wms.Warehouse select s).ToArray();
@@ -514,16 +528,7 @@ namespace WMS.UI
                 }));
             }).Start();
            
-                if (this.supplierid == -1)
-                {
-  
-                    RemindStockinfo();               
-                 }
-            
-            else if (this.supplierid != -1)
-            {
-                this.button2.Visible = false;
-            }
+ 
             
 
         }
