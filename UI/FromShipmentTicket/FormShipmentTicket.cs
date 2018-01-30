@@ -165,7 +165,7 @@ namespace WMS.UI
                 MessageBox.Show("请选择您要删除的记录", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            WMSEntities wmsEntities = new WMSEntities();
             //如果被作业单引用了，不能删除
             try
             {
@@ -175,7 +175,7 @@ namespace WMS.UI
                     sbIDArray.Append(id + ",");
                 }
                 sbIDArray.Length--;
-                int countRef = this.wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM JobTicket WHERE ShipmentTicketID IN ({0})",sbIDArray.ToString())).Single();
+                int countRef = wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM JobTicket WHERE ShipmentTicketID IN ({0})",sbIDArray.ToString())).Single();
                 if (countRef > 0)
                 {
                     MessageBox.Show("删除失败，不能删除被作业单引用的发货单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -199,11 +199,17 @@ namespace WMS.UI
             {
                 try
                 {
-                    foreach (int id in deleteIDs)
+                    foreach (int ticketID in deleteIDs)
                     {
-                        this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicket WHERE ID = @shipmentTicketID", new SqlParameter("shipmentTicketID", id));
+                        int[] itemIDs = (from s in wmsEntities.ShipmentTicketItem where s.ShipmentTicketID == ticketID select s.ID).ToArray();
+                        if (ShipmentTicketUtilities.DeleteItemsSync(itemIDs,out string errorMessage) == false)
+                        {
+                            MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        wmsEntities.Database.ExecuteSqlCommand("DELETE FROM ShipmentTicket WHERE ID = @shipmentTicketID", new SqlParameter("shipmentTicketID", ticketID));
                     }
-                    this.wmsEntities.SaveChanges();
+                    wmsEntities.SaveChanges();
                 }
                 catch
                 {

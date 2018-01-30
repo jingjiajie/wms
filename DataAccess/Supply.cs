@@ -76,6 +76,8 @@ namespace WMS.DataAccess
         public Nullable<decimal> DefaultSubmissionAmount { get; set; }
         public Nullable<decimal> ValidPeriod { get; set; }
         public Nullable<decimal> SafetyStock { get; set; }
+        public int ReceiveTimes { get; set; }
+        public int ShipmentTimes { get; set; }
     
         public virtual Component Component { get; set; }
         public virtual ICollection<StockInfoCheckTicketItem> StockInfoCheckTicketItem { get; set; }
