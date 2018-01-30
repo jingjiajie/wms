@@ -120,8 +120,14 @@ namespace WMS.UI
             catch
             {
                 stringBuilder = new StringBuilder();
-                stringBuilder.Append("刷新失败，请检查网络连接");            
-                return;
+                stringBuilder.Append("刷新失败，请检查网络连接");
+                instance.textBox1.Text = stringBuilder.ToString();
+                instance.textBox1.ForeColor = Color.Red;
+                    if (instance.ShowCallback != null)
+                    {
+                        instance.ShowCallback();
+                    }
+                    return;
             }
 
                 while (true )
@@ -173,7 +179,7 @@ namespace WMS.UI
         }      
 
         private void FormSupplyRemind_Load(object sender, EventArgs e)
-        {    
+        {           
             this.Left = 3;
             this.Top = (int)(0.7 * Screen.PrimaryScreen.Bounds.Height);
             this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width );
