@@ -56,9 +56,14 @@ namespace WMS.UI
                 
             }
             instance.Show();
-            new Thread(new ThreadStart(() =>
+            instance.Hide();
+            if (instance.HidedCallback != null)
             {
-              StringBuilder  stringBuilder = new StringBuilder();
+                instance.HidedCallback();
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            new Thread(new ThreadStart(() =>
+            {              
             try
             {
                 WMSEntities  wmsEntities = new WMSEntities();
@@ -120,11 +125,39 @@ namespace WMS.UI
             catch
             {
                 stringBuilder = new StringBuilder();
-                stringBuilder.Append("刷新失败，请检查网络连接");            
+                stringBuilder.Append("刷新失败，请检查网络连接");
+                instance.Invoke(new Action(() =>
+                {
+                 instance.Show();
+                 instance.textBox1.Text = "刷新失败，请检查网络连接";
+                 instance.textBox1.ForeColor = Color.Red;
+                }));
+                if (instance.ShowCallback != null)
+                {
+                instance.ShowCallback();
+                }
                 return;
             }
 
-                while (true )
+
+                if (stringBuilder.ToString() != "")
+                {
+                    instance.Invoke(new Action(() =>
+                    {
+                        instance.Show();
+                    }));
+
+                    if (instance.ShowCallback != null)
+                    {
+                        instance.ShowCallback();
+                    }
+                }
+                else
+                {
+                    return ;
+                }
+
+                while (true)
                 {
                     if (instance.IsHandleCreated)
                     {
@@ -132,7 +165,9 @@ namespace WMS.UI
                     }
                     Thread.Sleep(10);
                 }
-                
+
+
+
                 instance.Invoke(new Action(() =>
                     {
                         if (instance.IsDisposed) return;
@@ -140,36 +175,27 @@ namespace WMS.UI
                         {
                             instance.textBox1.Text = stringBuilder.ToString();
 
-                            if (instance.textBox1.Text == "刷新失败，请检查网络连接")
-                            {
-                                instance.textBox1.ForeColor = Color.Red;
-                                instance.Show();
-                                if (instance.ShowCallback != null)
-                                {
-                                    instance.ShowCallback();
-                                }
-
-                            }
-                            else if(instance.textBox1 .Text =="")
-                            {
-                                instance.Visible = false;
-                                if (instance.HidedCallback != null)
-                                {
-                                    instance.HidedCallback();
-                                }
-                            }
-                            else
-                            {
+                            //if (instance.textBox1.Text == "刷新失败，请检查网络连接")
+                            //{
+                            //    instance.textBox1.ForeColor = Color.Red;
+                            //}
+                            //else if (instance.textBox1.Text == "")
+                            //{
+                            //    instance.Visible = false;
+                            //    if (instance.HidedCallback != null)
+                            //    {
+                            //        instance.HidedCallback();
+                            //    }
+                            //}
+                            //else
+                            //{
                                 instance.textBox1.ForeColor = Color.Black;
-                                instance.Show ();
-                                if (instance.ShowCallback != null)
-                                {
-                                    instance.ShowCallback();
-                                }
-                            }
+
+                            //}
                         }
-                    }));            
+                    }));
             })).Start();
+
         }      
 
         private void FormSupplyRemind_Load(object sender, EventArgs e)
