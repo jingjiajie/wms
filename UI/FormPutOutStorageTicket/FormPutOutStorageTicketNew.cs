@@ -362,7 +362,7 @@ namespace WMS.UI
             this.standardImportForm.Show();
         }
 
-        private bool importHandler(NewPutOutStorageTicketItemData[] results, Dictionary<string, string[]> unimportedColumns)
+        private bool importHandler(List<NewPutOutStorageTicketItemData> results, Dictionary<string, string[]> unimportedColumns)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             //已经勾选的项
@@ -396,7 +396,7 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 JobTicketItemView[] jobTicketItemViews = (from j in wmsEntities.JobTicketItemView where j.JobTicketID == this.jobTicketID select j).ToArray();
-                for (int i = 0; i < results.Length; i++)
+                for (int i = 0; i < results.Count; i++)
                 {
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].SchedulePutOutAmount * results[i].UnitAmount;

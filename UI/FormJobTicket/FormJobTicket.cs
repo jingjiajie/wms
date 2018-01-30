@@ -154,6 +154,11 @@ namespace WMS.UI
                         JobTicket jobTicket = (from j in this.wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
                         foreach(JobTicketItem jobTicketItem in jobTicket.JobTicketItem)
                         {
+                            if(jobTicketItem.RealAmount > 0)
+                            {
+                                MessageBox.Show("删除失败，已完成翻包的作业单不能删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
                             ShipmentTicketItem shipmentTicketItem = (from s in wmsEntities.ShipmentTicketItem where s.ID == jobTicketItem.ShipmentTicketItemID select s).FirstOrDefault();
                             if (shipmentTicketItem == null) continue;
                             shipmentTicketItem.ScheduledJobAmount -= (jobTicketItem.ScheduledAmount - (jobTicketItem.RealAmount ?? 0)) ?? 0;
@@ -169,7 +174,6 @@ namespace WMS.UI
                     {
                         ShipmentTicketUtilities.UpdateShipmentTicketStateSync(shipmentTicketID);
                     }
-                    //wmsEntities.SaveChanges();
                 }
                 catch
                 {
@@ -293,6 +297,11 @@ namespace WMS.UI
                     return;
                 }
             }).Start();
+
+        }
+
+        private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
 
         }
     }

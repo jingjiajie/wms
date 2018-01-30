@@ -557,31 +557,9 @@ namespace WMS.UI
                 MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            try
+            if(ShipmentTicketUtilities.DeleteItemsSync(ids,out string errorMessage) == false)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                foreach (int id in ids)
-                {
-                    ShipmentTicketItem item = (from s in wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
-                    if (item == null) continue;
-                    if(item.ScheduledJobAmount > 0)
-                    {
-                        MessageBox.Show("不能删除已分配翻包的零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    
-                    //把库存已分配发货数减回去
-                    decimal? amount = item.ShipmentAmount * item.UnitAmount;
-                    StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
-                    if (stockInfo == null) continue;
-                    stockInfo.ScheduledShipmentAmount -= amount ?? 0;
-                    wmsEntities.ShipmentTicketItem.Remove(item);
-                }
-                wmsEntities.SaveChanges();
-            }
-            catch
-            {
-                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             this.Search();
@@ -651,13 +629,13 @@ namespace WMS.UI
             standardImportForm.ShowDialog();
         }
 
-        private bool importItemHandler(ShipmentTicketItem[] results,Dictionary<string,string[]> unimportedColumns)
+        private bool importItemHandler(List<ShipmentTicketItem> results,Dictionary<string,string[]> unimportedColumns)
         {
             List<ShipmentTicketItem> realImportList = new List<ShipmentTicketItem>(); //真正要导入的ShipmentTicketItem（有的一个result项可能对应多个导入项）
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                for (int i = 0; i < results.Length; i++)
+                for (int i = 0; i < results.Count; i++)
                 {
                     string supplyNo = unimportedColumns["SupplyNoOrComponentName"][i];
                     string componentName = unimportedColumns["SupplyNoOrComponentName"][i];

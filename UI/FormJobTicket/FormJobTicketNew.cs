@@ -380,7 +380,7 @@ namespace WMS.UI
             this.standardImportForm.Show();
         }
 
-        private bool importHandler(NewJobTicketItemData[] results, Dictionary<string, string[]> unimportedColumns)
+        private bool importHandler(List<NewJobTicketItemData> results, Dictionary<string, string[]> unimportedColumns)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             int[] showedIDs = new int[this.validRows];
@@ -416,7 +416,7 @@ namespace WMS.UI
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                for (int i = 0; i < results.Length; i++)
+                for (int i = 0; i < results.Count; i++)
                 {
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].ScheduleJobAmount * results[i].UnitAmount;

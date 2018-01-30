@@ -520,7 +520,7 @@ namespace WMS.UI
                         suppliernames = supplierNamesCount[0];
                         string[] componentnames;
                         componentnames = componentNamesCount[0];
-                        for (int i = 0; i < results.Length; i++)
+                        for (int i = 0; i < results.Count; i++)
                         {
                             string suppliername;
                             string componentname;
@@ -552,7 +552,7 @@ namespace WMS.UI
                             }
 
                             //检查导入列表中是否重名
-                            for (int j = i + 1; j < results.Length; j++)
+                            for (int j = i + 1; j < results.Count; j++)
                             {
                                 if (results[i].No == results[j].No)
                                 {

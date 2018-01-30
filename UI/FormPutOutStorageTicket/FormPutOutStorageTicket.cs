@@ -169,6 +169,11 @@ namespace WMS.UI
                         var items = putOutStorageTicket.PutOutStorageTicketItem;
                         foreach(var item in items)
                         {
+                            if(item.RealAmount > 0)
+                            {
+                                MessageBox.Show("删除失败，已完成装车的出库单不能删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
                             JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
                                                            where j.ID == item.JobTicketItemID
                                                            select j).FirstOrDefault();
