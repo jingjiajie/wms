@@ -43,5 +43,40 @@ namespace WMS.UI
             }
             wmsEntities.SaveChanges();
         }
+
+        public static bool DeleteItemsSync(int[] itemIDs,out string errorMessage)
+        {
+            try
+            {
+                using (WMSEntities wmsEntities = new WMSEntities())
+                {
+                    foreach (int id in itemIDs)
+                    {
+                        ShipmentTicketItem item = (from s in wmsEntities.ShipmentTicketItem where s.ID == id select s).FirstOrDefault();
+                        if (item == null) continue;
+                        if (item.ScheduledJobAmount > 0)
+                        {
+                            errorMessage = "不能删除已分配翻包的零件！";
+                            return false;
+                        }
+
+                        //把库存已分配发货数减回去
+                        decimal? amount = item.ShipmentAmount * item.UnitAmount;
+                        StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
+                        if (stockInfo == null) continue;
+                        stockInfo.ScheduledShipmentAmount -= amount ?? 0;
+                        wmsEntities.ShipmentTicketItem.Remove(item);
+                    }
+                    wmsEntities.SaveChanges();
+                    errorMessage = null;
+                    return true;
+                }
+            }
+            catch
+            {
+                errorMessage = "操作失败，请检查网络连接";
+                return false;
+            }
+        }
     }
 }

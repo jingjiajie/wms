@@ -165,6 +165,8 @@ namespace WMS.UI
                 }
             }
             worksheet.Columns = importVisibleKeyNames.Length; //限制表的长度
+            //设置表格输入形式为文本
+            worksheet.SetRangeDataFormat(RangePosition.EntireRange, unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text);
             worksheet.BeforeSelectionRangeChange += Worksheet_BeforeSelectionRangeChange;
         }
 
