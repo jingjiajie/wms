@@ -629,13 +629,13 @@ namespace WMS.UI
             standardImportForm.ShowDialog();
         }
 
-        private bool importItemHandler(ShipmentTicketItem[] results,Dictionary<string,string[]> unimportedColumns)
+        private bool importItemHandler(List<ShipmentTicketItem> results,Dictionary<string,string[]> unimportedColumns)
         {
             List<ShipmentTicketItem> realImportList = new List<ShipmentTicketItem>(); //真正要导入的ShipmentTicketItem（有的一个result项可能对应多个导入项）
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                for (int i = 0; i < results.Length; i++)
+                for (int i = 0; i < results.Count; i++)
                 {
                     string supplyNo = unimportedColumns["SupplyNoOrComponentName"][i];
                     string componentName = unimportedColumns["SupplyNoOrComponentName"][i];

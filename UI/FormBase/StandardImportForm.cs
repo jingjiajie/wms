@@ -24,18 +24,27 @@ namespace WMS.UI
         }
 
         private KeyName[] importVisibleKeyNames = null;
-        private Func<TargetClass[],Dictionary<string,string[]>,bool> importListener = null;
+        private Func<List<TargetClass>, Dictionary<string, string[]>, bool> listImportHandler = null;
         private Action importFinishedCallback = null;
 
         //Key和列号的对应关系
         private Dictionary<string, int> keyColumn = new Dictionary<string, int>();
         private List<KeySQL> keyDefaultValueSQL = new List<KeySQL>();
 
-        public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback,string formTitle = "导入信息")
+        //public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback,string formTitle = "导入信息")
+        //{
+        //    InitializeComponent();
+        //    this.importVisibleKeyNames = (from kn in keyNames where kn.ImportVisible == true select kn).ToArray(); ;
+        //    this.importListener = importHandler;
+        //    this.importFinishedCallback = importFinishedCallback;
+        //    this.Text = formTitle;
+        //}
+
+        public StandardImportForm(KeyName[] keyNames, Func<List<TargetClass>, Dictionary<string, string[]>, bool> importHandler, Action importFinishedCallback, string formTitle = "导入信息")
         {
             InitializeComponent();
             this.importVisibleKeyNames = (from kn in keyNames where kn.ImportVisible == true select kn).ToArray(); ;
-            this.importListener = importHandler;
+            this.listImportHandler = importHandler;
             this.importFinishedCallback = importFinishedCallback;
             this.Text = formTitle;
         }
@@ -52,14 +61,15 @@ namespace WMS.UI
             FormLoading formLoading = new FormLoading("正在导入，请稍后...");
             formLoading.Show();
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            TargetClass[] newObjs = this.MakeObjectByReoGridImport<TargetClass>(out string errorMessage);
-            if (newObjs == null)
+            var result = this.MakeObjectByReoGridImport<TargetClass>(out string errorMessage);
+            if (result == null)
             {
                 formLoading.Close();
                 MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (newObjs.Length == 0)
+            List<TargetClass> newObjs = result.ToList();
+            if (newObjs.Count == 0)
             {
                 formLoading.Close();
                 MessageBox.Show("未导入任何数据！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -71,10 +81,11 @@ namespace WMS.UI
                 //如果在导入窗口中可见的列设置为不导入，则加入未导入列表中
                 if(this.importVisibleKeyNames[i].Import == false)
                 {
-                    unImportedColumns.Add(this.importVisibleKeyNames[i].Key, this.GetColumn(i, newObjs.Length));
+                    unImportedColumns.Add(this.importVisibleKeyNames[i].Key, this.GetColumn(i, newObjs.Count));
                 }
             }
-            if (this.importListener(newObjs, unImportedColumns) == false)
+
+            if (this.listImportHandler != null && this.listImportHandler(newObjs, unImportedColumns) == false)
             {
                 formLoading.Close();
                 return;

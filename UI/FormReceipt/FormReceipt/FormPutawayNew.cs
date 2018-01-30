@@ -579,7 +579,7 @@ namespace WMS.UI.FormReceipt
             this.standardImportForm.ShowDialog();
         }
 
-        private bool importItemHandler(PutawayTicketItem[] results, Dictionary<string, string[]> unimportedColumns)
+        private bool importItemHandler(List<PutawayTicketItem> results, Dictionary<string, string[]> unimportedColumns)
         {
             WMSEntities wmsEntities = new WMSEntities();
             string[] supplyNoNames = (from s in unimportedColumns where s.Key == "Component" select s.Value).FirstOrDefault();
@@ -587,7 +587,7 @@ namespace WMS.UI.FormReceipt
             string[] confirmPersonNames = (from s in unimportedColumns where s.Key == "ConfirmPersonName" select s.Value).FirstOrDefault();
             List<PutawayTicketItem> putawayTicketItemList = new List<PutawayTicketItem>();
             List<int> supplyIDs = new List<int>();
-            for (int i = 0; i < results.Length; i++)
+            for (int i = 0; i < results.Count; i++)
             {
                 string supplyNoName = supplyNoNames[i];
                 if (supplyNoName == null)

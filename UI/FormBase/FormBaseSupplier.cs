@@ -716,14 +716,14 @@ namespace WMS.UI
                     SupplierMetaData.KeyNames, //参数1：KeyName
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
-                        for (int i=0;i<results.Length;i++)
+                        for (int i=0;i<results.Count;i++)
 
 
                         {
                             string suppliernameimport;
                             suppliernameimport = results[i].Name;
                             //检查导入列表中是否重名
-                            for (int j = i+1; j < results.Length; j++)
+                            for (int j = i+1; j < results.Count; j++)
 
                             {
                                 if (suppliernameimport == results[j].Name)

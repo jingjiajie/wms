@@ -253,7 +253,7 @@ namespace WMS.UI.FormBase
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
                         WMSEntities wmsEntities = new WMSEntities();
-                        for (int i = 0; i < results.Length; i++)
+                        for (int i = 0; i < results.Count; i++)
                         {
                             User result = results[i];
                             if (string.IsNullOrWhiteSpace(result.AuthorityName))

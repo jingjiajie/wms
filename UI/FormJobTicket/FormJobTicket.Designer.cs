@@ -100,6 +100,7 @@
             this.toolStripTop.Size = new System.Drawing.Size(1996, 45);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
+            this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
             // 
             // labelSelect
             // 

@@ -936,14 +936,14 @@ namespace WMS.UI
             this.standardImportForm.ShowDialog();
         }
 
-        private bool importItemHandler(ReceiptTicketItem[] results, Dictionary<string, string[]> unimportedColumns)
+        private bool importItemHandler(List<ReceiptTicketItem> results, Dictionary<string, string[]> unimportedColumns)
         {
             WMSEntities wmsEntities = new WMSEntities();
             string[] supplyNoNames = (from s in unimportedColumns where s.Key == "Component" select s.Value).FirstOrDefault();
             string[] jobPersonNames = (from s in unimportedColumns where s.Key == "JobPersonName" select s.Value).FirstOrDefault();
             string[] confirmPersonNames = (from s in unimportedColumns where s.Key == "ConfirmPersonName" select s.Value).FirstOrDefault();
             List<int> supplyIDs = new List<int>();
-            for (int i = 0; i < results.Length; i++)
+            for (int i = 0; i < results.Count; i++)
             {
                 string supplyNoName = supplyNoNames[i];
                 if (supplyNoName == null)
@@ -1050,7 +1050,7 @@ namespace WMS.UI
             new Thread(() =>
             {
                 wmsEntities.SaveChanges();
-                for (int i = 0; i < results.Length; i++)
+                for (int i = 0; i < results.Count; i++)
                 {
                     StockInfo stockInfo = new StockInfo();
                     stockInfo.ExpiryDate = results[i].ExpiryDate;
