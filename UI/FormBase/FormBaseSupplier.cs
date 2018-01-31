@@ -763,14 +763,13 @@ namespace WMS.UI
                                                      u.IsHistory ==0
                                                      select u).FirstOrDefault ();
                                 if (sameNameUsers!=null)
-                                {                                    
+                                {
+                                    Removei.Add(i);
                                     supplierID_Import = sameNameUsers.ID;
                                     MsgBoxResult = MessageBox.Show("已存在同名供应商：" + suppliernameimport+"是否导入并将原信息保留为历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
                                     MessageBoxDefaultButton.Button2);
                                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
-                                    {
-
-                                        Removei.Add(i);
+                                    {                                        
                                         wmsEntities.Supplier.Add(sameNameUsers);
                                         try
                                         {
