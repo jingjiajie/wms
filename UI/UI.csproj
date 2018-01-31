@@ -51,7 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonDataStructures.cs" />
+    <Compile Include="Utilities\CommonDataStructures.cs" />
     <Compile Include="FormBase\BasePersonMetaData.cs" />
     <Compile Include="FormBase\BasePackageUnitMetaData.cs" />
     <Compile Include="FormBase\ComponentOuterPackingSizeModify.cs">
@@ -140,10 +140,16 @@
     <Compile Include="FormBase\FormSupplierModify.Designer.cs">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormBase\StandardImportForm.cs">
+    <Compile Include="Utilities\FormChooseAmbiguousItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormBase\StandardImportForm.Designer.cs">
+    <Compile Include="Utilities\FormChooseAmbiguousItem.Designer.cs">
+      <DependentUpon>FormChooseAmbiguousItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\StandardImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\StandardImportForm.Designer.cs">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FormBase\SupplierStorageInfoMetaData.cs" />
@@ -153,10 +159,10 @@
     <Compile Include="FormJobTicket\FormJobTicketNew.Designer.cs">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormLoading.cs">
+    <Compile Include="Utilities\FormLoading.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormLoading.Designer.cs">
+    <Compile Include="Utilities\FormLoading.Designer.cs">
       <DependentUpon>FormLoading.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.cs">
@@ -373,10 +379,10 @@
     </Compile>
     <Compile Include="FromShipmentTicket\ShipmentTicketUtilities.cs" />
     <Compile Include="GlobalData.cs" />
-    <Compile Include="StandardFormPreviewExcel.cs">
+    <Compile Include="Utilities\StandardFormPreviewExcel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StandardFormPreviewExcel.Designer.cs">
+    <Compile Include="Utilities\StandardFormPreviewExcel.Designer.cs">
       <DependentUpon>StandardFormPreviewExcel.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain\FormMain.cs">
@@ -450,10 +456,10 @@
     <Compile Include="FormReceipt\FormSubmission\FormSubmissionManage.Designer.cs">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </Compile>
-    <Compile Include="PagerWidget\PagerWidget.cs">
+    <Compile Include="Utilities\PagerWidget.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PagerWidget\PagerWidget.Designer.cs">
+    <Compile Include="Utilities\PagerWidget.Designer.cs">
       <DependentUpon>PagerWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -478,7 +484,7 @@
     </Compile>
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketItemViewMetaData.cs" />
     <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketViewMetaData.cs" />
-    <Compile Include="Utilities.cs" />
+    <Compile Include="Utilities\Utilities.cs" />
     <EmbeddedResource Include="FormBase\ComponentOuterPackingSizeModify.resx">
       <DependentUpon>ComponentOuterPackingSizeModify.cs</DependentUpon>
     </EmbeddedResource>
@@ -521,13 +527,16 @@
     <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormBase\StandardImportForm.resx">
+    <EmbeddedResource Include="Utilities\FormChooseAmbiguousItem.resx">
+      <DependentUpon>FormChooseAmbiguousItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\StandardImportForm.resx">
       <DependentUpon>StandardImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormJobTicket\FormJobTicketNew.resx">
       <DependentUpon>FormJobTicketNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormLoading.resx">
+    <EmbeddedResource Include="Utilities\FormLoading.resx">
       <DependentUpon>FormLoading.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPutOutStorageTicket\FormPutOutStorageTicketNew.resx">
@@ -623,7 +632,7 @@
     <EmbeddedResource Include="FormStockInfo\FormStockInfoCheckTicketModify.resx">
       <DependentUpon>FormStockInfoCheckTicketModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StandardFormPreviewExcel.resx">
+    <EmbeddedResource Include="Utilities\StandardFormPreviewExcel.resx">
       <DependentUpon>StandardFormPreviewExcel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain\FormMain.resx">
@@ -669,7 +678,7 @@
     <EmbeddedResource Include="FormReceipt\FormSubmission\FormSubmissionManage.resx">
       <DependentUpon>FormSubmissionManage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PagerWidget\PagerWidget.resx">
+    <EmbeddedResource Include="Utilities\PagerWidget.resx">
       <DependentUpon>PagerWidget.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -715,9 +724,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="icon\122.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="icon\50d0c10fba64391e381ffe58fca092e32236601974e677b18ec58876ac30569e.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon\botton1 %282%29.jpg" />

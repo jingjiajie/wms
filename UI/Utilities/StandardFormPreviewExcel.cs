@@ -11,6 +11,7 @@ using System.IO;
 
 using unvell.ReoGrid;
 using unvell.ReoGrid.Print;
+using System.Drawing.Printing;
 
 namespace WMS.UI
 {
@@ -140,7 +141,7 @@ namespace WMS.UI
 
         private void buttonPrint_Click(object sender, EventArgs e)
         {
-            System.Drawing.Printing.PrintDocument doc = null;
+            PrintDocument doc = null;
             try
             {
                 doc = this.reoGridControlMain.CreatePrintSession().PrintDocument;
@@ -150,6 +151,19 @@ namespace WMS.UI
                 MessageBox.Show(this, ex.Message, this.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            //System.Drawing.Printing.PaperSize ps = new System.Drawing.Printing.PaperSize("Custom", (int)(9.448 * 100),(int)(5.511 * 100));
+            //doc.PrinterSettings.DefaultPageSettings.PaperSize = ps;
+            //doc.DefaultPageSettings.PaperSize = ps;
+            doc.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
+
+            PageSetupDialog pageSetupDialog = new PageSetupDialog();
+            pageSetupDialog.Document = doc;
+            pageSetupDialog.ShowDialog();
+
+            //PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
+            //printPreviewDialog.Document = doc;
+            //printPreviewDialog.ShowDialog();
 
             using (var pd = new System.Windows.Forms.PrintDialog())
             {
