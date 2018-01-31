@@ -60,7 +60,7 @@ namespace WMS.UI
                                                  String = s.No
                                              }).ToArray());
             }
-            form.listBox.SelectedIndex = 0;
+            //form.listBox.SelectedIndex = 0;
             form.label1.Text = string.Format("您输入的零件\"{0}\"不明确，请选择下列零件中的一个",supplyNoOrComponentName);
             form.ShowDialog();
             return form.selectedItem;

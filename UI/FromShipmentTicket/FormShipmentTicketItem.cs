@@ -642,7 +642,7 @@ namespace WMS.UI
                     string jobPersonName = unimportedColumns["JobPersonName"][i];
                     string confirmPersonName = unimportedColumns["ConfirmPersonName"][i];
                     //封装的根据 零件名/供货代号 获取 零件/供货的函数
-                    if(Utilities.GetSupplyOrComponent(supplyNoOrComponentName,out DataAccess.Component component,out Supply supply,out string errorMessage,wmsEntities)==false)
+                    if(Utilities.GetSupplyOrComponent(supplyNoOrComponentName,out DataAccess.Component component,out Supply supply,out string errorMessage,-1,wmsEntities)==false)
                     {
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
