@@ -21,7 +21,8 @@ namespace WMS.UI
         private int warehouseID = GlobalData.WarehouseID;
         private Action HidedCallback = null;
         private Action ShowCallback = null;
-        private static FormSupplyRemind instance = null;       
+        private static FormSupplyRemind instance = null;
+        System.Timers.Timer timer = new System.Timers.Timer();
         public FormSupplyRemind()
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -31,8 +32,7 @@ namespace WMS.UI
             this.MinimizeBox = false;
             
             
-            //计时
-            System.Timers.Timer timer = new System.Timers.Timer();
+            //计时            
             timer.Enabled = true;
             timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
             timer.Start();
@@ -49,14 +49,16 @@ namespace WMS.UI
        
         public static void RemindStockinfo()
         {
-
+            
             if(instance ==null)
             {
                 instance = new FormSupplyRemind();
                 
             }
+            if (instance.IsDisposed) return;
             instance.Show();
-            instance.Hide();
+            instance.timer.Start();
+            //instance.Hide();
             if (instance.HidedCallback != null)
             {
                 instance.HidedCallback();
@@ -131,6 +133,7 @@ namespace WMS.UI
                  instance.Show();
                  instance.textBox1.Text = "刷新失败，请检查网络连接";
                  instance.textBox1.ForeColor = Color.Red;
+                 instance.Opacity = 100;
                 }));
                 if (instance.ShowCallback != null)
                 {
@@ -145,6 +148,7 @@ namespace WMS.UI
                     instance.Invoke(new Action(() =>
                     {
                         instance.Show();
+                        instance.Opacity = 100;
                     }));
 
                     if (instance.ShowCallback != null)
@@ -154,6 +158,12 @@ namespace WMS.UI
                 }
                 else
                 {
+                    instance.Hide();
+                    instance.Opacity = 0;
+                    if (instance.HidedCallback != null)
+                    {
+                        instance.HidedCallback();
+                    }
                     return ;
                 }
 
@@ -196,33 +206,29 @@ namespace WMS.UI
                     }));
             })).Start();
 
-        }      
-
-        private void FormSupplyRemind_Load(object sender, EventArgs e)
-        {    
-            this.Left = 3;
-            this.Top = (int)(0.7 * Screen.PrimaryScreen.Bounds.Height);
-            this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width );
-            this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
-            //this.textBox1.Text = "数据加载中...";                  
-            this.ShowInTaskbar = false;///使窗体不显示在任务栏                            
-            RemindStockinfo();
-            if (this.textBox1.Text == "刷新失败，请检查网络连接")
-            {
-                this.textBox1.ForeColor = Color.Red;
-            }
-            else
-            {
-                this.textBox1.ForeColor = Color.Black;
-            }      
         }
 
-
+        private void FormSupplyRemind_Load(object sender, EventArgs e)
+        {
+            this.Left = 3;
+            this.Top = (int)(0.7 * Screen.PrimaryScreen.Bounds.Height);
+            this.Width = (int)(0.35 * Screen.PrimaryScreen.Bounds.Width);
+            this.Height = (int)(0.25 * Screen.PrimaryScreen.Bounds.Height);//75
+            //this.textBox1.Text = "数据加载中...";  
+            this.Opacity = 0;
+            if (instance.HidedCallback != null)
+            {
+                instance.HidedCallback();
+            }
+            this.ShowInTaskbar = false;///使窗体不显示在任务栏                            
+        }
 
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
         {
+            timer.Stop();
             this.Hide();
             e.Cancel = true;
+            this.Opacity = 0;
             if (instance.HidedCallback != null)
             {
                 instance.HidedCallback();              

@@ -379,12 +379,13 @@ namespace WMS.UI
                         PutOutStorageTicketItem item = items[i];
                         item.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED;
                         item.LoadingTime = DateTime.Now;
+                        decimal deltaRealAmountNoUnit = (items[i].ScheduledAmount - (items[i].RealAmount ?? 0)) * (items[i].UnitAmount ?? 1) ?? 0;
                         item.RealAmount = items[i].ScheduledAmount;
                         StockInfo stockInfo = (from s in wmsEntities.StockInfo
                                                where s.ID == item.StockInfoID
                                                select s).FirstOrDefault();
-                        stockInfo.ShipmentAreaAmount -= item.RealAmount * item.UnitAmount;
-                        stockInfo.ScheduledShipmentAmount -= (item.RealAmount * item.UnitAmount) ?? 0;
+                        stockInfo.ShipmentAreaAmount -= deltaRealAmountNoUnit;
+                        stockInfo.ScheduledShipmentAmount -= deltaRealAmountNoUnit;
                     }
 
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));

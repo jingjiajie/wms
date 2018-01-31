@@ -219,6 +219,7 @@ namespace WMS.UI
                         if (dataReader.HasRows == false) continue;
                         dataReader.Read();
                         object value = dataReader.GetValue(0);
+                        if (dataReader.Read()) continue; //如果结果不唯一，则不填写默认值
                         worksheet[row, col] = value == null ? "" : value.ToString();
                     }
                 }
