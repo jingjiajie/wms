@@ -220,28 +220,40 @@ namespace WMS.UI
                 results[i].WarehouseID = this.warehouseID;
 
                 string supplyNo = unimportedColumns["SupplyNo"][i];
-                Supply[] supplies = (from s in wmsEntities.Supply
-                                     where s.ProjectID == this.projectID
+
+                //先精确搜索，没有再模糊搜索
+                Supply supply = (from s in wmsEntities.Supply
+                                 where s.ProjectID == this.projectID
                                      && s.WarehouseID == this.warehouseID
-                                     && s.No.Contains(supplyNo)
-                                     select s).ToArray();
-                if(supplies.Length == 0)
+                                     && s.No == supplyNo
+                                 select s).FirstOrDefault();
+                if (supply == null)
                 {
-                    MessageBox.Show(string.Format("行{0}：未找到代号为 {1} 的零件！", i + 1, supplyNo), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
-                if(supplies.Length > 1)
-                {
-                    StringBuilder sbHint = new StringBuilder();
-                    sbHint.AppendFormat("行{0}：零件不明确，您是否要搜索：\n", i + 1);
-                    foreach(var s in supplies)
+                    Supply[] supplies = (from s in wmsEntities.Supply
+                                         where s.ProjectID == this.projectID
+                                         && s.WarehouseID == this.warehouseID
+                                         && s.No.Contains(supplyNo)
+                                         select s).ToArray();
+                    if (supplies.Length == 0)
                     {
-                        sbHint.AppendFormat("{0}\n", s.No);
+                        MessageBox.Show(string.Format("行{0}：未找到代号为 {1} 的零件！", i + 1, supplyNo), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
                     }
-                    MessageBox.Show(sbHint.ToString(),"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
+                    if (supplies.Length > 1)
+                    {
+                        StringBuilder sbHint = new StringBuilder();
+                        sbHint.AppendFormat("行{0}：零件不明确，您是否要搜索：\n", i + 1);
+                        foreach (var s in supplies)
+                        {
+                            sbHint.AppendFormat("{0}\n", s.No);
+                        }
+                        MessageBox.Show(sbHint.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    supply = supplies[0];
                 }
-                results[i].SupplyID = supplies[0].ID;
+
+                results[i].SupplyID = supply.ID;
             }
             return true;
         }
