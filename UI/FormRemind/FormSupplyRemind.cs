@@ -21,7 +21,8 @@ namespace WMS.UI
         private int warehouseID = GlobalData.WarehouseID;
         private Action HidedCallback = null;
         private Action ShowCallback = null;
-        private static FormSupplyRemind instance = null;       
+        private static FormSupplyRemind instance = null;
+        System.Timers.Timer timer = new System.Timers.Timer();
         public FormSupplyRemind()
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -31,8 +32,7 @@ namespace WMS.UI
             this.MinimizeBox = false;
             
             
-            //计时
-            System.Timers.Timer timer = new System.Timers.Timer();
+            //计时            
             timer.Enabled = true;
             timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
             timer.Start();
@@ -49,13 +49,15 @@ namespace WMS.UI
        
         public static void RemindStockinfo()
         {
-
+            
             if(instance ==null)
             {
                 instance = new FormSupplyRemind();
                 
             }
+            if (instance.IsDisposed) return;
             instance.Show();
+            instance.timer.Start();
             //instance.Hide();
             if (instance.HidedCallback != null)
             {
@@ -223,6 +225,7 @@ namespace WMS.UI
 
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
         {
+            timer.Stop();
             this.Hide();
             e.Cancel = true;
             this.Opacity = 0;
