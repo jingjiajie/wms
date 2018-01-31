@@ -875,21 +875,16 @@ namespace WMS.UI
 
         private void FormMain_SizeChanged(object sender, EventArgs e)
         {
-            //if (FormSupplyRemind != null)
-            //{
+            if (this.WindowState == FormWindowState.Minimized)
+            {
 
-
-            //    if (this.WindowState == FormWindowState.Minimized)
-            //    {
-
-            //        FormSupplyRemind.Hide();
-
-            //    }
-            //    else if (this.WindowState == FormWindowState.Maximized && this.button2.Visible == false)
-            //    {
-            //        FormSupplyRemind.Show();
-            //    }
-            //}
+                FormSupplyRemind.HideForm();
+            }
+            else if (this.WindowState == FormWindowState.Maximized && this.button2.Visible == false)
+            {
+                //FormSupplyRemind.RemindStockinfo();
+                FormSupplyRemind.ShowForm();
+            }
         }
 
 
