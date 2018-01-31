@@ -584,6 +584,14 @@ namespace WMS.UI.FormReceipt
         private bool importItemHandler(List<PutawayTicketItem> results, Dictionary<string, string[]> unimportedColumns)
         {
             WMSEntities wmsEntities = new WMSEntities();
+            ReceiptTicket receiptTicket = (from r in wmsEntities.ReceiptTicket
+                                           where r.ID == this.receiptTicketID
+                                           select r).FirstOrDefault();
+            if (receiptTicket == null)
+            {
+                MessageBox.Show("导入失败：收货单不存在，可能已被删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             string[] supplyNoNames = (from s in unimportedColumns where s.Key == "Component" select s.Value).FirstOrDefault();
             string[] jobPersonNames = (from s in unimportedColumns where s.Key == "JobPersonName" select s.Value).FirstOrDefault();
             string[] confirmPersonNames = (from s in unimportedColumns where s.Key == "ConfirmPersonName" select s.Value).FirstOrDefault();
@@ -597,85 +605,103 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("第" + (i + 1).ToString() + "行中，没有填写零件编号/名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
-                ReceiptTicketItemView[] receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
-                if (receiptTicketItemViewNo.Length == 0)
+                //根据零件名称或代号获取相应的零件或Supply
+                if (Utilities.GetSupplyOrComponent(supplyNoName, out DataAccess.Component component, out Supply supply, out string errorMessage, receiptTicket.SupplierID.Value, wmsEntities) == false)
                 {
-                    receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
-                }
-                ReceiptTicketItemView[] receiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
-                if (receiptTicketItemViewName.Length == 0)
-                {
-                    receiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
-                }
-                if (receiptTicketItemViewName.Length + receiptTicketItemViewNo.Length > 1)
-                {
-                    string errorMsg = "";
-                    int n = 0;
-                    foreach (ReceiptTicketItemView rtiv in receiptTicketItemViewNo)
-                    {
-                        errorMsg += (rtiv.SupplyNo.ToString() + "\n");
-                        n++;
-                    }
-                    foreach(ReceiptTicketItemView rtiv in receiptTicketItemViewName)
-                    {
-                        errorMsg += (rtiv.ComponentName.ToString() + "\n");
-                        n++;
-                    }
-                    if (n > 10)
-                    {
-                        MessageBox.Show("第" + (i + 1) + "行中，零件不明确，符合条件的零件有" + n + "条！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        MessageBox.Show("第" + (i + 1) + "行中，零件不明确，您是否要搜索:\n" + errorMsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
-                if (receiptTicketItemViewNo == null || receiptTicketItemViewNo.Length == 0)
+                //如果输入的不是supply，那一定是Component。根据Component找到Supply
+                if (supply == null)
                 {
-                    //ReceiptTicketItemView[] ReceiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
-                    if (receiptTicketItemViewName.Length == 0)
-                    {
-                        MessageBox.Show("第" + (i + 1).ToString() + "行中，无法无法找到该供应商提供的该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
-                    else if (receiptTicketItemViewName.Length > 1)
-                    {
-                        MessageBox.Show("第" + (i + 1).ToString() + "行中，有多个零件重名，请输入零件编号！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
-                    else
-                    {
-                        results[i].ReceiptTicketItemID = receiptTicketItemViewName[0].ID;
-                    }
+                    supply = (from s in wmsEntities.Supply
+                              where s.SupplierID == receiptTicket.SupplierID
+                              && s.ComponentID == component.ID
+                              select s).FirstOrDefault();
                 }
-                else if (receiptTicketItemViewNo.Length > 1)
-                {
-                    string errorMsg = "";
-                    foreach (ReceiptTicketItemView rtiv in receiptTicketItemViewNo)
-                    {
-                        errorMsg += (rtiv.SupplyNo.ToString() + "\n");
-                    }
-                    MessageBox.Show("第" + (i + 1) + "行中，零件不明确，您是否要搜索:\n" + errorMsg);
-                    return false;
-                }
-                else
-                {
-                    results[i].ReceiptTicketItemID = receiptTicketItemViewNo[0].ID;
-                }
-                if (results[i].ReceiptTicketItemID == null)
-                {
-                    MessageBox.Show("第" + (i + 1) + "行，无法在该收货单中找到该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
-                int receiptTicketItemID = (int)results[i].ReceiptTicketItemID;
-                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptTicketItemID select rti).FirstOrDefault();
-                PutawayTicketItem result = results[i];
+                ReceiptTicketItem receiptTicketItem = (from r in wmsEntities.ReceiptTicketItem
+                                                       where r.ReceiptTicketID == this.receiptTicketID
+                                                       && r.SupplyID == supply.ID
+                                                       select r).FirstOrDefault();
                 if (receiptTicketItem == null)
                 {
                     MessageBox.Show("第" + (i + 1) + "行中，无法找到该收货单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
+                results[i].ReceiptTicketItemID = receiptTicketItem.ID;
+
+                //ReceiptTicketItemView[] receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                //if (receiptTicketItemViewNo.Length == 0)
+                //{
+                //    receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                //}
+                //ReceiptTicketItemView[] receiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                //if (receiptTicketItemViewName.Length == 0)
+                //{
+                //    receiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                //}
+                //if (receiptTicketItemViewName.Length + receiptTicketItemViewNo.Length > 1)
+                //{
+                //    string errorMsg = "";
+                //    int n = 0;
+                //    foreach (ReceiptTicketItemView rtiv in receiptTicketItemViewNo)
+                //    {
+                //        errorMsg += (rtiv.SupplyNo.ToString() + "\n");
+                //        n++;
+                //    }
+                //    foreach(ReceiptTicketItemView rtiv in receiptTicketItemViewName)
+                //    {
+                //        errorMsg += (rtiv.ComponentName.ToString() + "\n");
+                //        n++;
+                //    }
+                //    if (n > 10)
+                //    {
+                //        MessageBox.Show("第" + (i + 1) + "行中，零件不明确，符合条件的零件有" + n + "条！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    }
+                //    else
+                //    {
+                //        MessageBox.Show("第" + (i + 1) + "行中，零件不明确，您是否要搜索:\n" + errorMsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    }
+                //    return false;
+                //}
+                //if (receiptTicketItemViewNo == null || receiptTicketItemViewNo.Length == 0)
+                //{
+                //    //ReceiptTicketItemView[] ReceiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                //    if (receiptTicketItemViewName.Length == 0)
+                //    {
+                //        MessageBox.Show("第" + (i + 1).ToString() + "行中，无法无法找到该供应商提供的该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //        return false;
+                //    }
+                //    else if (receiptTicketItemViewName.Length > 1)
+                //    {
+                //        MessageBox.Show("第" + (i + 1).ToString() + "行中，有多个零件重名，请输入零件编号！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //        return false;
+                //    }
+                //    else
+                //    {
+                //        results[i].ReceiptTicketItemID = receiptTicketItemViewName[0].ID;
+                //    }
+                //}
+                //else if (receiptTicketItemViewNo.Length > 1)
+                //{
+                //    string errorMsg = "";
+                //    foreach (ReceiptTicketItemView rtiv in receiptTicketItemViewNo)
+                //    {
+                //        errorMsg += (rtiv.SupplyNo.ToString() + "\n");
+                //    }
+                //    MessageBox.Show("第" + (i + 1) + "行中，零件不明确，您是否要搜索:\n" + errorMsg);
+                //    return false;
+                //}
+                //else
+                //{
+                //    results[i].ReceiptTicketItemID = receiptTicketItemViewNo[0].ID;
+                //}
+                if (results[i].ReceiptTicketItemID == null)
+                {
+                    MessageBox.Show("第" + (i + 1) + "行，无法在该收货单中找到该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                PutawayTicketItem result = results[i];
                 string jobPersonName = jobPersonNames[i];
                 string confirmPersonName = confirmPersonNames[i];
                 if (jobPersonName == "" || jobPersonName == null)
@@ -743,7 +769,7 @@ namespace WMS.UI.FormReceipt
                 pti.PutawayTicketID = putawayTicket.ID;
             }
             wmsEntities.SaveChanges();
-            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+            
             if (receiptTicket != null)
             {
                 int n = 0;
