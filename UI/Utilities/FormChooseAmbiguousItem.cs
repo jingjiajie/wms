@@ -23,6 +23,7 @@ namespace WMS.UI
             }
         }
 
+        private bool clickedButtonOK = false; //点击确定按钮才保存，点击叉子虽然也是Close事件，但是取消选择
         private object selectedItem = null;
 
         private FormChooseAmbiguousSupplyOrComponent()
@@ -74,7 +75,22 @@ namespace WMS.UI
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            if(this.selectedItem == null)
+            {
+                MessageBox.Show("请选择一项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            this.clickedButtonOK = true;
             this.Close();
+        }
+
+        private void FormChooseAmbiguousSupplyOrComponent_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //如果是点击右上角叉子关闭窗口，无视选择项，直接取消导入
+            if(this.clickedButtonOK == false)
+            {
+                this.selectedItem = null;
+            }
         }
     }
 
