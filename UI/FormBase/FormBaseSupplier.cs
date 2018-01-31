@@ -762,12 +762,13 @@ namespace WMS.UI
                                                      select u).FirstOrDefault ();
                                 if (sameNameUsers!=null)
                                 {
+                                    supplierID_Import = sameNameUsers.ID;
                                     MsgBoxResult = MessageBox.Show("已存在同名供应商：" + suppliernameimport+"是否导入并将原信息保留为历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
 
                                     MessageBoxDefaultButton.Button2);
                                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
                                     {
-                                        supplierID_Import = sameNameUsers.ID;
+                                        
 
                                         wmsEntities.Supplier.Add(sameNameUsers);
                                         try
@@ -781,28 +782,29 @@ namespace WMS.UI
                                         }
                                         catch
                                         {
-                                            MessageBox.Show("操作失败，请检查网络连接222", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
                                             return false ;
                                         }
-                                    }
-                                    try
-                                    {
-                                        var supplierstorge = (from u in wmsEntities.SupplierStorageInfo
-                                                              where u.SupplierID == supplierID_Import
-                                                              select u).ToArray();
-
-                                        for (int a = 0; a < supplierstorge.Length; a++)
+                                        try
                                         {
-                                            supplierstorge[a].ExecuteSupplierID = supplierID_Import;
-                                            wmsEntities.SaveChanges();
+                                            var supplierstorge = (from u in wmsEntities.SupplierStorageInfo
+                                                                  where u.SupplierID == supplierID_Import
+                                                                  select u).ToArray();
 
+                                            for (int a = 0; a < supplierstorge.Length; a++)
+                                            {
+                                                supplierstorge[a].ExecuteSupplierID = supplierID_Import;
+                                                wmsEntities.SaveChanges();
+
+                                            }
+                                        }
+                                        catch
+                                        {
+                                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                            continue;
                                         }
                                     }
-                                    catch
-                                    {
-                                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                        continue;
-                                    }
+                                    
 
                                     try
                                     {
@@ -814,7 +816,7 @@ namespace WMS.UI
                                     }
                                     catch
                                     {
-                                        MessageBox.Show("操作失败，请检查网络连接333", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show("操作失败，请检查网络连接1231132", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                         return false;
                                     }
                                     PropertyInfo[] proAs = results[i].GetType().GetProperties();
@@ -833,14 +835,22 @@ namespace WMS.UI
                                             }
                                         }
                                     }
+                                    try
+                                    {
+                                        supplier1.IsHistory = 0;
+                                        supplier1.CreateTime = DateTime.Now;
+                                        supplier1.CreateUserID = this.userid;
+                                        supplier1.LastUpdateTime = DateTime.Now;
+                                        supplier1.LastUpdateUserID = this.userid;
+                                        wmsEntities.SaveChanges();
+                                    }
+                                    catch
+                                    {
 
-                                    supplier1.IsHistory = 0;
-                                    
-                                    supplier1.CreateTime = DateTime.Now;
-                                    supplier1.CreateUserID = this.userid;
-                                    supplier1.LastUpdateTime = DateTime.Now;
-                                    supplier1.LastUpdateUserID = this.userid;
-                                    wmsEntities.SaveChanges();
+                                        MessageBox.Show("操作失败，请检查网络连接111", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return false;
+                                    }
+
                                 }
                             }
                             catch
