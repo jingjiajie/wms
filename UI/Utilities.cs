@@ -720,6 +720,72 @@ namespace WMS.UI
                 property.SetValue(targetObject, srcValue, null);
             }
         }
+
+        public static bool GetSupplyOrComponent(string supplyNoOrComponentName, out Component component, out Supply supply, out string errorMessage, WMSEntities wmsEntities = null)
+        {
+            if (wmsEntities == null) wmsEntities = new WMSEntities();
+            //首先精确查询，如果没有，再模糊查询
+            component = (from c in wmsEntities.Component
+                         where c.Name.Contains(supplyNoOrComponentName)
+                         select c).FirstOrDefault();
+            supply = (from s in wmsEntities.Supply
+                      where s.No == supplyNoOrComponentName
+                      && s.ProjectID == GlobalData.ProjectID
+                      && s.WarehouseID == GlobalData.WarehouseID
+                      select s).FirstOrDefault();
+            if (component == null && supply == null)
+            {
+                //模糊查询供货
+                Supply[] supplies = (from s in wmsEntities.Supply
+                                     where s.No.Contains(supplyNoOrComponentName)
+                                     && s.ProjectID == GlobalData.ProjectID
+                                     && s.WarehouseID == GlobalData.WarehouseID
+                                     select s).ToArray();
+                //模糊查询零件
+                DataAccess.Component[] components = (from c in wmsEntities.Component
+                                                     where c.Name.Contains(supplyNoOrComponentName)
+                                                     select c).ToArray();
+                if (supplies.Length + components.Length == 0)
+                {
+                    component = null;
+                    supply = null;
+                    errorMessage = "未找到零件：" + supplyNoOrComponentName;
+                    return false;
+                }
+                //Supply或Component不唯一的情况
+                if (supplies.Length + components.Length != 1)
+                {
+                    StringBuilder sbHint = new StringBuilder();
+                    sbHint.AppendFormat("零件不明确，您是否要查询：\n");
+                    for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
+                    {
+                        sbHint.AppendLine(supplies[j].No);
+                    }
+                    for (int j = 0; j < Math.Min(components.Length, 25); j++)
+                    {
+                        sbHint.AppendLine(components[j].Name);
+                    }
+                    errorMessage = sbHint.ToString();
+                    component = null;
+                    supply = null;
+                    return false;
+                }
+
+                //如果搜索到唯一的零件/供货，则确定就是它。
+                if (supplies.Length > 0)
+                {
+                    supply = supplies[0];
+                }
+                else
+                {
+                    component = components[0];
+                }
+                errorMessage = null;
+                return true;
+            }
+            errorMessage = null;
+            return true;
+        }
     }
 
     class Translator
