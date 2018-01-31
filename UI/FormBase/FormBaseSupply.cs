@@ -602,11 +602,19 @@ namespace WMS.UI
                                                      select u).ToArray();
                                 if (sameNameSupply.Length > 0)
                                 {
-                                    Removei.Add(i);
-                                    messageBoxResult = MessageBox.Show("已存在相同代号供货条目：" + no + ",是否要保留历史信息?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+                                    
+                                    messageBoxResult = MessageBox.Show("已存在相同代号供货条目：" + no + ",是否要保留历史信息?", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation,
 
                                     MessageBoxDefaultButton.Button2);
-                                    Supply supply = null;
+                                    if (messageBoxResult == DialogResult.Cancel)
+                                    {
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        Removei.Add(i);
+                                    }
+                                        Supply supply = null;
                                     if (messageBoxResult == DialogResult.Yes)
                                     {
 
