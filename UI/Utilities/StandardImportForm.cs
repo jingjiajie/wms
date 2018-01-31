@@ -62,7 +62,7 @@ namespace WMS.UI
             formLoading.Show();
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.EndEdit(new EndEditReason());
-            var result = this.MakeObjectByReoGridImport<TargetClass>(out string errorMessage);
+            var result = this.MakeObjectByReoGridImport<TargetClass>(out int[] emptyLines,out string errorMessage);
             if (result == null)
             {
                 formLoading.Close();
@@ -82,7 +82,7 @@ namespace WMS.UI
                 //如果在导入窗口中可见的列设置为不导入，则加入未导入列表中
                 if(this.importVisibleKeyNames[i].Import == false)
                 {
-                    unImportedColumns.Add(this.importVisibleKeyNames[i].Key, this.GetColumn(i, newObjs.Count));
+                    unImportedColumns.Add(this.importVisibleKeyNames[i].Key, this.GetColumn(i,emptyLines));
                 }
             }
 
@@ -138,21 +138,22 @@ namespace WMS.UI
             }).Start();
         }
 
-        private string[] GetColumn(int column,int length)
+        private string[] GetColumn(int column,int[] skipLines)
         {
-            string[] results = new string[length];
+            List<string> results = new List<string>();
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            for(int line = 0; line < length; line++)
+            for(int line = 0; line < worksheet.Rows; line++)
             {
+                if (skipLines.Contains(line)) continue;
                 Cell curCell = worksheet.GetCell(line,column);
                 if (curCell == null || curCell.Data == null)
                 {
-                    results[line] = "";
+                    results.Add("");
                     continue;
                 }
-                results[line] = curCell.Data.ToString();
+                results.Add(curCell.Data.ToString());
             }
-            return results;
+            return results.ToArray();
         }
 
         private void InitReoGridImport()
@@ -255,10 +256,11 @@ namespace WMS.UI
             return true;
         }
 
-        private T[] MakeObjectByReoGridImport<T>(out string errorMessage) where T : new()
+        private T[] MakeObjectByReoGridImport<T>(out int[] emptyLines,out string errorMessage) where T : new()
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             List<T> result = new List<T>();
+            List<int> emptyLineList = new List<int>();
             string[] propertyNames = (from kn in importVisibleKeyNames
                                       select kn.Key).ToArray();
             //遍历行
@@ -267,6 +269,7 @@ namespace WMS.UI
                 //如果是空行，则跳过
                 if (IsEmptyLine(this.reoGridControlMain, line))
                 {
+                    emptyLineList.Add(line);
                     continue;
                 }
 
@@ -294,11 +297,13 @@ namespace WMS.UI
                     if (Utilities.CopyTextToProperty(cellString, propertyNames[col], newObj, importVisibleKeyNames, out errorMessage) == false)
                     {
                         errorMessage = string.Format("行{0}：{1}", line + 1, errorMessage);
+                        emptyLines = emptyLineList.ToArray();
                         return null;
                     }
                 }
             }
             errorMessage = null;
+            emptyLines = emptyLineList.ToArray();
             return result.ToArray();
         }
 
