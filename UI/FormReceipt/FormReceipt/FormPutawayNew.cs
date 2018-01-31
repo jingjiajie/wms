@@ -284,7 +284,7 @@ namespace WMS.UI.FormReceipt
                         }
                         if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - submissionAmount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                         {
-                            MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                            MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return null;
                         }
 
@@ -350,7 +350,7 @@ namespace WMS.UI.FormReceipt
                     }
                     if (receiptTicket.HasPutawayTicket == "没有生成上架单")
                     {
-                        if (MessageBox.Show("生成上架单后，该收货单条目、状态都不能更改，是否继续", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification) == DialogResult.No)
+                        if (MessageBox.Show("生成上架单后，该收货单条目、状态都不能更改，是否继续", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.No)
                         {
                             return;
                         }
@@ -414,7 +414,7 @@ namespace WMS.UI.FormReceipt
                                     putawayTicketItem.ScheduledMoveCount = ripa.Value;
                                     if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - putawayTicketItem.ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                                     {
-                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                         return;
                                     }
                                     if (receiptTicketItem.HasPutwayAmount == null)
@@ -708,7 +708,7 @@ namespace WMS.UI.FormReceipt
                 results[i].State = "待上架";
                 if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - results[i].ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                 {
-                    MessageBox.Show("第" + (i + 1) + "行中，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
+                    MessageBox.Show("第" + (i + 1) + "行中，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
                 if (receiptTicketItem.HasPutwayAmount == null)
