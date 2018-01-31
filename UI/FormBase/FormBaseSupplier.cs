@@ -712,6 +712,8 @@ namespace WMS.UI
         {
             int supplierID_Import=0;
             wmsEntities = new WMSEntities();
+            List<int> Removei = new List<int>();
+
             //创建导入窗口
             StandardImportForm<Supplier > formImport =
                 new StandardImportForm<Supplier>
@@ -762,14 +764,12 @@ namespace WMS.UI
                                                      select u).FirstOrDefault ();
                                 if (sameNameUsers!=null)
                                 {
+                                    Removei.Add(i);
                                     supplierID_Import = sameNameUsers.ID;
                                     MsgBoxResult = MessageBox.Show("已存在同名供应商：" + suppliernameimport+"是否导入并将原信息保留为历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
-
                                     MessageBoxDefaultButton.Button2);
                                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
-                                    {
-                                        
-
+                                    {                                        
                                         wmsEntities.Supplier.Add(sameNameUsers);
                                         try
                                         {
@@ -852,6 +852,7 @@ namespace WMS.UI
                                     }
 
                                 }
+                                
                             }
                             catch
                             {
@@ -873,9 +874,13 @@ namespace WMS.UI
                             
                             //历史信息设为0
                             results[i].IsHistory = 0;
-                            results.RemoveAt(i);
+                            
                         }
-
+                        int length = Removei.ToArray().Length;
+                        for (int b = 0; b < length; b++)
+                        {
+                            results.RemoveAt(Removei.ToArray()[b]-b);
+                        }
                         return true;
                     }, 
                     () => //参数3：导入完成回调函数
