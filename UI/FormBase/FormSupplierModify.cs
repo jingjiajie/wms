@@ -340,7 +340,8 @@ namespace WMS.UI
                     {
 
                         var sameNameUsers = (from u in wmsEntities.Supplier
-                                             where u.Name == textBoxName.Text
+                                             where u.Name == textBoxName.Text&&
+                                             u.IsHistory ==0
                                              select u).ToArray();
                         if (sameNameUsers.Length > 0)
                         {
