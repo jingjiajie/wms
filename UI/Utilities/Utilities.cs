@@ -11,7 +11,7 @@ using WMS.DataAccess;
 
 namespace WMS.UI
 {
-    class Utilities
+    partial class Utilities
     {
         public const int WM_SETREDRAW = 0xB;
 
@@ -755,20 +755,38 @@ namespace WMS.UI
                 //Supply或Component不唯一的情况
                 if (supplies.Length + components.Length != 1)
                 {
-                    StringBuilder sbHint = new StringBuilder();
-                    sbHint.AppendFormat("零件不明确，您是否要查询：\n");
-                    for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
+                    object selectedObj = FormChooseAmbiguousSupplyOrComponent.ChooseAmbiguousSupplyOrComponent(components, supplies,supplyNoOrComponentName);
+                    if(selectedObj == null)
                     {
-                        sbHint.AppendLine(supplies[j].No);
+                        errorMessage = "用户取消了导入";
+                        return false;
                     }
-                    for (int j = 0; j < Math.Min(components.Length, 25); j++)
+                    else if (selectedObj is DataAccess.Component)
                     {
-                        sbHint.AppendLine(components[j].Name);
+                        component = selectedObj as DataAccess.Component;
+                    }else if(selectedObj is Supply)
+                    {
+                        supply = selectedObj as Supply;
+                    }else
+                    {
+                        throw new Exception("FormChooseAmbiguousSupplyOrComponent返回值类型错误");
                     }
-                    errorMessage = sbHint.ToString();
-                    component = null;
-                    supply = null;
-                    return false;
+                    errorMessage = null;
+                    return true;
+                    //StringBuilder sbHint = new StringBuilder();
+                    //sbHint.AppendFormat("零件不明确，您是否要查询：\n");
+                    //for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
+                    //{
+                    //    sbHint.AppendLine(supplies[j].No);
+                    //}
+                    //for (int j = 0; j < Math.Min(components.Length, 25); j++)
+                    //{
+                    //    sbHint.AppendLine(components[j].Name);
+                    //}
+                    //errorMessage = sbHint.ToString();
+                    //component = null;
+                    //supply = null;
+                    //return false;
                 }
 
                 //如果搜索到唯一的零件/供货，则确定就是它。
