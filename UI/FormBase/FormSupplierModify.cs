@@ -97,13 +97,11 @@ namespace WMS.UI
 
         private void buttonModify_Click(object sender, EventArgs e)
         {
-
-
          
-                DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
+          DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
 
-            ComboBox ComBoxContractState = (ComboBox)this.Controls.Find("comboBoxContractState", true)[0];
-          if(ComBoxContractState.Text !="已过审"&&ComBoxContractState.Text  !="待审核"&&ComBoxContractState .Text !="已过期")
+          ComboBox ComBoxContractState = (ComboBox)this.Controls.Find("comboBoxContractState", true)[0];
+          if(ComBoxContractState.Text !="已过审"&&ComBoxContractState.Text  !="待审核")
             {
                 MessageBox.Show("请选择正确的合同状态", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
