@@ -31,6 +31,7 @@ namespace WMS.UI
         {
             new KeyName(){Key="SupplyNoOrComponentName",Name="零件代号/名称",NotNull=true},
             new KeyName(){Key="ScheduleJobAmount",Name="计划翻包数量",NotNull=true,Positive=true},
+            new KeyName(){Key="Unit",Name="单位",NotNull=true},
             new KeyName(){Key="UnitAmount",Name="单位数量",NotNull=true,Positive=true}
         };
 
@@ -39,10 +40,12 @@ namespace WMS.UI
             private string supplyNoOrComponentName;
             private decimal scheduleJobAmount;
             private decimal unitAmount;
+            private string unit;
 
             public string SupplyNoOrComponentName { get => supplyNoOrComponentName; set => supplyNoOrComponentName = value; }
             public decimal ScheduleJobAmount { get => scheduleJobAmount; set => scheduleJobAmount = value; }
             public decimal UnitAmount { get => unitAmount; set => unitAmount = value; }
+            public string Unit { get => unit; set => unit = value; }
         }
 
         private StandardImportForm<NewJobTicketItemData> standardImportForm = null;
@@ -377,6 +380,10 @@ namespace WMS.UI
                 null,
                 "导入作业单条目"
                 );
+            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             this.standardImportForm.Show();
         }
 
@@ -420,35 +427,39 @@ namespace WMS.UI
                 {
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].ScheduleJobAmount * results[i].UnitAmount;
-                    Supply supply = (from s in wmsEntities.Supply where s.No == supplyNoOrComponentName select s).FirstOrDefault();
-                    DataAccess.Component component = null;
-                    if (supply == null)
+                    //封装的根据 零件名/供货代号 获取 零件/供货的函数
+                    if (Utilities.GetSupplyOrComponent(supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, wmsEntities) == false)
                     {
-                        component = (from c in wmsEntities.Component where c.Name == supplyNoOrComponentName select c).FirstOrDefault();
-                        if (component == null)
-                        {
-                            MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, supplyNoOrComponentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return false;
-                        }
+                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
                     }
+                    string realName = null;
                     List<ShipmentTicketItemView> selectedItems = null;
+                    //根据零件，或者供货，来查询发货单条目
                     if (supply != null)
                     {
+                        realName = supply.No;
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
-                                         && s.SupplyNo == supplyNoOrComponentName
+                                         && s.SupplyNo == supply.No
                                          && showedIDs.Contains(s.ID)
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
                     else if (component != null)
                     {
+                        realName = component.Name;
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
                                          && s.ComponentName == supplyNoOrComponentName
                                          && showedIDs.Contains(s.ID)
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
+                    }
+                    if(selectedItems.Count == 0)
+                    {
+                        MessageBox.Show(string.Format("此发货单中不包含{0}！请检查输入", realName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
                     }
                     //记录每一项的剩余可分配数量
                     Dictionary<int, decimal> restAmounts = new Dictionary<int, decimal>();
@@ -480,7 +491,7 @@ namespace WMS.UI
                     });
                     if(scheduleAmountNoUnit > totalStockAmountNoUnit)
                     {
-                        MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}个", i + 1, Utilities.DecimalToString(totalStockAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：零件{1} 在此发货单剩余待分配翻包数量不足，剩余量：{2}个", i + 1,realName, Utilities.DecimalToString(totalStockAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     decimal curAmountNoUnit = 0; //累计分配了多少
