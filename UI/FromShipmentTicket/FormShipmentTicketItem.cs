@@ -626,7 +626,7 @@ namespace WMS.UI
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
-            standardImportForm.ShowDialog();
+            standardImportForm.Show();
         }
 
         private bool importItemHandler(List<ShipmentTicketItem> results,Dictionary<string,string[]> unimportedColumns)
@@ -639,46 +639,67 @@ namespace WMS.UI
                 {
                     string supplyNo = unimportedColumns["SupplyNoOrComponentName"][i];
                     string componentName = unimportedColumns["SupplyNoOrComponentName"][i];
+                    string realName = null;
                     string jobPersonName = unimportedColumns["JobPersonName"][i];
                     string confirmPersonName = unimportedColumns["ConfirmPersonName"][i];
-                    //模糊查询供货
-                    Supply[] supplies = (from s in wmsEntities.Supply
-                                     where s.No.Contains(supplyNo)
-                                     select s).ToArray();
-                    //模糊查询零件
-                    DataAccess.Component[] components = (from c in wmsEntities.Component
-                                                      where c.Name == componentName
-                                                      select c).ToArray();
-                    //Supply或Component不唯一的情况
-                    if(supplies.Length + components.Length != 1)
+                    //首先精确查询，如果没有，再模糊查询
+                    DataAccess.Component component = (from c in wmsEntities.Component
+                                                      where c.Name.Contains(componentName)
+                                                      select c).FirstOrDefault();
+                    Supply supply = (from s in wmsEntities.Supply
+                                     where s.No == supplyNo
+                                     && s.ProjectID == this.projectID
+                                     && s.WarehouseID == this.warehouseID
+                                     select s).FirstOrDefault();
+                    if (component == null && supply == null)
                     {
-                        StringBuilder sbHint = new StringBuilder();
-                        sbHint.AppendFormat("行{0}：零件不明确，您是否要查询：\n", i + 1);
-                        for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
-                        {
-                            sbHint.AppendLine(supplies[j].No);
-                        }
-                        for (int j = 0; j < Math.Min(components.Length, 25); j++)
-                        {
-                            sbHint.AppendLine(components[j].Name);
-                        }
-                        MessageBox.Show(sbHint.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
 
-                    DataAccess.Component component = null;
-                    Supply supply = null;
-                    if(components.Length > 0)
-                    {
-                        component = components[0];
-                    }
-                    else
-                    {
-                        supply = supplies[0];
+                        //模糊查询供货
+                        Supply[] supplies = (from s in wmsEntities.Supply
+                                             where s.No.Contains(supplyNo)
+                                             && s.ProjectID == this.projectID
+                                             && s.WarehouseID == this.warehouseID
+                                             select s).ToArray();
+                        //模糊查询零件
+                        DataAccess.Component[] components = (from c in wmsEntities.Component
+                                                             where c.Name.Contains(componentName)
+                                                             select c).ToArray();
+                        if(supplies.Length + components.Length == 0)
+                        {
+                            MessageBox.Show(string.Format("行{0}：未找到零件名称或代号：{1}", i + 1, supplyNo), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
+                        //Supply或Component不唯一的情况
+                        if (supplies.Length + components.Length != 1)
+                        {
+                            StringBuilder sbHint = new StringBuilder();
+                            sbHint.AppendFormat("行{0}：零件不明确，您是否要查询：\n", i + 1);
+                            for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
+                            {
+                                sbHint.AppendLine(supplies[j].No);
+                            }
+                            for (int j = 0; j < Math.Min(components.Length, 25); j++)
+                            {
+                                sbHint.AppendLine(components[j].Name);
+                            }
+                            MessageBox.Show(sbHint.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
+
+                        //如果搜索到唯一的零件/供货，则确定就是它。
+                        if (supplies.Length > 0)
+                        {
+                            supply = supplies[0];
+                        }
+                        else
+                        {
+                            component = components[0];
+                        }
                     }
                     StockInfoView[] stockInfoViews = null;
-                    if (supplies != null)
+                    if (supply != null)
                     {
+                        realName = supply.No;
                         stockInfoViews = (from s in wmsEntities.StockInfoView
                                           where s.SupplyNo == supplyNo
                                                 && s.ProjectID == this.projectID
@@ -689,6 +710,7 @@ namespace WMS.UI
                     }
                     else if (component != null)
                     {
+                        realName = component.Name;
                         stockInfoViews = (from s in wmsEntities.StockInfoView
                                           where s.ComponentName == componentName
                                                 && s.ProjectID == this.projectID
@@ -729,7 +751,7 @@ namespace WMS.UI
                     });
                     if (totalShipmentableAmountNoUnit < results[i].ShipmentAmount * results[i].UnitAmount)
                     {
-                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存可发货数：{2}）", i + 1, componentName, Utilities.DecimalToString(totalShipmentableAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存可发货数：{2}）", i + 1, realName, Utilities.DecimalToString(totalShipmentableAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     results[i].ShipmentTicketID = this.shipmentTicketID;

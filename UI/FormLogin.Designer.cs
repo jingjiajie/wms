@@ -170,7 +170,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(716, 72);
             this.label1.TabIndex = 7;
-            this.label1.Text = "安途丰达WMS物流管理系统";
+            this.label1.Text = "安途丰达WMS仓库管理系统";
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseDown);
             this.label1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseMove);
             this.label1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormLogin_MouseUp);
@@ -358,7 +358,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormLogin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FormLogin";
+            this.Text = "欢迎使用安途丰达WMS仓库管理系统";
             this.Activated += new System.EventHandler(this.FormLogin_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);
             this.Load += new System.EventHandler(this.FormLogin_Load);

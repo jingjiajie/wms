@@ -61,6 +61,7 @@ namespace WMS.UI
             FormLoading formLoading = new FormLoading("正在导入，请稍后...");
             formLoading.Show();
             var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet.EndEdit(new EndEditReason());
             var result = this.MakeObjectByReoGridImport<TargetClass>(out string errorMessage);
             if (result == null)
             {
