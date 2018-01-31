@@ -441,7 +441,7 @@ namespace WMS.UI
                         realName = supply.No;
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
-                                         && s.SupplyNo == supply.No
+                                         && s.SupplyID == supply.ID
                                          && showedIDs.Contains(s.ID)
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
@@ -451,7 +451,7 @@ namespace WMS.UI
                         realName = component.Name;
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
-                                         && s.ComponentName == supplyNoOrComponentName
+                                         && s.ComponentID == component.ID
                                          && showedIDs.Contains(s.ID)
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();

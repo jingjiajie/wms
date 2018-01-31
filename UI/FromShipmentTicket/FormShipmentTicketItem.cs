@@ -653,7 +653,7 @@ namespace WMS.UI
                     {
                         realName = supply.No;
                         stockInfoViews = (from s in wmsEntities.StockInfoView
-                                          where s.SupplyNo == supplyNoOrComponentName
+                                          where s.SupplyID == supply.ID
                                                 && s.ProjectID == this.projectID
                                                 && s.WarehouseID == this.warehouseID
                                                 && s.ShipmentAreaAmount - s.ScheduledShipmentAmount > 0
@@ -664,7 +664,7 @@ namespace WMS.UI
                     {
                         realName = component.Name;
                         stockInfoViews = (from s in wmsEntities.StockInfoView
-                                          where s.ComponentName == supplyNoOrComponentName
+                                          where s.ComponentID == component.ID
                                                 && s.ProjectID == this.projectID
                                                 && s.WarehouseID == this.warehouseID
                                                 && s.ShipmentAreaAmount - s.ScheduledShipmentAmount > 0

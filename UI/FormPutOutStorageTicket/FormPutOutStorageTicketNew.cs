@@ -413,7 +413,7 @@ namespace WMS.UI
                         realName = supply.No;
                         selectedItems = (from s in wmsEntities.JobTicketItemView
                                          where s.JobTicketID == this.jobTicketID
-                                         && s.SupplyNo == supplyNoOrComponentName
+                                         && s.SupplyID == supply.ID
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
@@ -422,7 +422,7 @@ namespace WMS.UI
                         realName = component.Name;
                         selectedItems = (from s in wmsEntities.JobTicketItemView
                                          where s.JobTicketID == this.jobTicketID
-                                         && s.ComponentName == supplyNoOrComponentName
+                                         && s.ComponentID == component.ID
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
