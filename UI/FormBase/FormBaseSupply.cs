@@ -566,8 +566,8 @@ namespace WMS.UI
                                 }
                             }
                             //检查数据库中同名
-                            try
-                                {
+                            //try
+                            //    {
                                     try
                                     {
                                         Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == suppliername && s.IsHistory == 0 select s).FirstOrDefault();
@@ -601,7 +601,7 @@ namespace WMS.UI
                                                      select u).ToArray();
                                 if (sameNameSupply.Length > 0)
                                 {
-                                    messageBoxResult=MessageBox.Show("已存在相同代号供货条目：" + no+ "是否要保留历史信息?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+                                    messageBoxResult=MessageBox.Show("已存在相同代号供货条目：" + no+ ",是否要保留历史信息?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
 
                                     MessageBoxDefaultButton.Button2);
                                     Supply supply = null;
@@ -633,7 +633,6 @@ namespace WMS.UI
                                         try
                                         {
                                             supply.ID=-1;
-                                            supply.PhotoIndex = "错了没有";
                                             supply.IsHistory = 1;
                                             supply.NewestSupplyID =newImportID;
                                             supply.LastUpdateUserID = this.userID;
@@ -681,7 +680,8 @@ namespace WMS.UI
                                     {
                                         for (int j = 0; j < proBs.Length; j++)
                                         {
-                                            if (proAs[k].Name == proBs[j].Name&& proAs[k].Name!="ID")
+                                            if (proAs[k].Name == proBs[j].Name&& proBs[j].Name!="ID"&& proBs[j].Name != "SupplierID" && proBs[j].Name != "ComponentID"&&proBs[j].Name != "Component")
+                                            
                                             {
                                                 object a = proAs[k].GetValue(results[i], null);
                                                 proBs[j].SetValue(supply1, a, null);
@@ -702,13 +702,13 @@ namespace WMS.UI
 
                                 }
 
-                            }
-                            catch
-                            {
+                            //}
+                            //catch
+                            //{
 
-                                MessageBox.Show("操作失败，请检查网络连接4", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return false;
-                            }
+                            //    MessageBox.Show("操作失败，请检查网络连接4", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            //    return false;
+                            //}
                             
                             //results[i].SupplierID = importsupplierID;
                             //results[i].ComponentID = importcomponenID;
