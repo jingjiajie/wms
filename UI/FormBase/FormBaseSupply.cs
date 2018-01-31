@@ -25,6 +25,8 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
         int userID = -1;
+        string textSearchValue = null;
+        object itemComboBoxSelect = 0;
         private Supplier supplier = null;
         private string  contractst;   //合同状态
         private int contract_change = 1;
@@ -125,6 +127,9 @@ namespace WMS.UI
                 this.toolStripComboBoxSelect.Enabled = true;
                 this.buttonImport.Enabled = true;
                 this.buttonHistorySearch.Visible = true;
+
+                this.toolStripComboBoxSelect.SelectedItem = itemComboBoxSelect;
+                this.textBoxSearchValue.Text = textSearchValue;
                 if (this.contractst == "待审核")
                 {
                     this.toolStripButtonAdd.Enabled = false ;
@@ -169,6 +174,8 @@ namespace WMS.UI
                 MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            this.textSearchValue = this.textBoxSearchValue.Text;
+            this.itemComboBoxSelect = this.toolStripComboBoxSelect.SelectedItem;
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
             this.toolStripComboBoxSelect.Enabled = false;
