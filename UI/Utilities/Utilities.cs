@@ -728,7 +728,9 @@ namespace WMS.UI
             component = (from c in wmsEntities.Component
                          where c.Name == supplyNoOrComponentName
                          && (from s in wmsEntities.Supply
-                             where s.ComponentID == c.ID 
+                             where s.ComponentID == c.ID
+                             && s.ProjectID == GlobalData.ProjectID
+                             && s.WarehouseID == GlobalData.WarehouseID
                              && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
                              select s).Count() > 0
                          select c).FirstOrDefault();
@@ -754,6 +756,8 @@ namespace WMS.UI
                                                      where c.Name.Contains(supplyNoOrComponentName)
                                                      && (from s in wmsEntities.Supply
                                                          where s.ComponentID == c.ID
+                                                         && s.ProjectID == GlobalData.ProjectID
+                                                         && s.WarehouseID == GlobalData.WarehouseID
                                                          && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
                                                          select s).Count() > 0
                                                      select c).ToArray();
