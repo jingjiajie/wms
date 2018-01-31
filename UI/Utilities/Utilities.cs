@@ -726,7 +726,11 @@ namespace WMS.UI
             if (wmsEntities == null) wmsEntities = new WMSEntities();
             //首先精确查询，如果没有，再模糊查询
             component = (from c in wmsEntities.Component
-                         where c.Name.Contains(supplyNoOrComponentName)
+                         where c.Name == supplyNoOrComponentName
+                         && (from s in wmsEntities.Supply
+                             where s.ComponentID == c.ID 
+                             && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                             select s).Count() > 0
                          select c).FirstOrDefault();
             supply = (from s in wmsEntities.Supply
                       where s.No == supplyNoOrComponentName
@@ -748,7 +752,12 @@ namespace WMS.UI
                 //模糊查询零件
                 DataAccess.Component[] components = (from c in wmsEntities.Component
                                                      where c.Name.Contains(supplyNoOrComponentName)
+                                                     && (from s in wmsEntities.Supply
+                                                         where s.ComponentID == c.ID
+                                                         && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                                                         select s).Count() > 0
                                                      select c).ToArray();
+
                 if (supplies.Length + components.Length == 0)
                 {
                     component = null;
