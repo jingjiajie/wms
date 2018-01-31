@@ -11,6 +11,7 @@ using WMS.DataAccess;
 using System.Threading;
 using System.Data.SqlClient;
 using unvell.ReoGrid.DataFormat;
+using System.Reflection;
 
 
 namespace WMS.UI
@@ -709,20 +710,25 @@ namespace WMS.UI
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            
+            int supplierID_Import=0;
             wmsEntities = new WMSEntities();
             //创建导入窗口
             StandardImportForm<Supplier > formImport =
                 new StandardImportForm<Supplier>
                 (
+                    
                     SupplierMetaData.KeyNames, //参数1：KeyName
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
                         for (int i=0;i<results.Count;i++)
                         {
                             DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
+                            Supplier supplier1 = new Supplier();
+                            
                             string suppliernameimport;
+
                             suppliernameimport = results[i].Name;
+                            
                             //检查导入列表中是否重名
                             for (int j = i+1; j < results.Count; j++)
 
@@ -734,6 +740,18 @@ namespace WMS.UI
                                     return false;
                                     
                                 }
+                            }
+                            if (results[i].StartingTime > results[i].EndingTime)
+                            {
+                                MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同生效日期不能大于截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return false;
+
+                            }
+                            string contractstate = results[i].ContractState;
+                            if (contractstate != "待审核" && contractstate != "已过审" && contractstate != "")
+                            {
+                                MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同状态请改为待审核、已过审或空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return false;
                             }
                             //检查数据库中是否与非历史信息同名
                             try
@@ -749,45 +767,80 @@ namespace WMS.UI
                                     MessageBoxDefaultButton.Button2);
                                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
                                     {
-                                        var supplierstorge = (from u in wmsEntities.SupplierStorageInfo
-                                                              where u.SupplierID == sameNameUsers.ID
-                                                              select u).ToArray();
-                                        for (int a = 0; a < supplierstorge.Length; a++)
-                                        {
-                                            try
-                                            {
-                                                supplierstorge[a].ExecuteSupplierID = supplier.ID;
-                                                wmsEntities.SaveChanges();
-                                                {
-                                                    MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                                }
-                                                
-                                            }
-                                            catch
-                                            {
-                                                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
-                                                continue;
-                                            }
-                                        }
+                                        supplierID_Import = sameNameUsers.ID;
+
                                         wmsEntities.Supplier.Add(sameNameUsers);
                                         try
                                         {
-                                            sameNameUsers.NewestSupplierID = sameNameUsers.ID;
+                                            sameNameUsers.NewestSupplierID = supplierID_Import;
                                             sameNameUsers.ID = -1;
-                                            sameNameUsers.IsHistory = 1;                                          
+                                            sameNameUsers.IsHistory = 1;
                                             sameNameUsers.LastUpdateUserID = this.userid;
                                             sameNameUsers.LastUpdateTime = DateTime.Now;
                                             wmsEntities.SaveChanges();
                                         }
                                         catch
                                         {
-                                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            MessageBox.Show("操作失败，请检查网络连接222", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
                                             return false ;
                                         }
                                     }
+                                    try
+                                    {
+                                        var supplierstorge = (from u in wmsEntities.SupplierStorageInfo
+                                                              where u.SupplierID == supplierID_Import
+                                                              select u).ToArray();
 
-                                        //MessageBox.Show("导入供应商名失败，已存在同名供应商：" + suppliernameimport, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                        //return false ;
+                                        for (int a = 0; a < supplierstorge.Length; a++)
+                                        {
+                                            supplierstorge[a].ExecuteSupplierID = supplierID_Import;
+                                            wmsEntities.SaveChanges();
+
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        continue;
+                                    }
+
+                                    try
+                                    {
+
+                                        supplier1 = (from u in wmsEntities.Supplier
+                                                     where u.ID == supplierID_Import &&
+                                                     u.IsHistory == 0
+                                                     select u).FirstOrDefault();
+                                    }
+                                    catch
+                                    {
+                                        MessageBox.Show("操作失败，请检查网络连接333", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return false;
+                                    }
+                                    PropertyInfo[] proAs = results[i].GetType().GetProperties();
+                                    PropertyInfo[] proBs = supplier1.GetType().GetProperties();
+
+                                    for (int k = 0; k < proAs.Length; k++)
+                                    {
+                                        for (int j = 0; j < proBs.Length; j++)
+                                        {
+                                            if (proAs[k].Name == proBs[j].Name && proBs[j].Name != "ID" && proBs[j].Name != "RecipientName" && proBs[j].Name != "Supplier1" & proBs[j].Name != "Supplier2"
+                                            && proBs[j].Name != "SupplierStorageInfo"&& proBs[j].Name != "SupplierStorageInfo1")
+
+                                            {
+                                                object a = proAs[k].GetValue(results[i], null);
+                                                proBs[j].SetValue(supplier1, a, null);
+                                            }
+                                        }
+                                    }
+
+                                    supplier1.IsHistory = 0;
+                                    
+                                    supplier1.CreateTime = DateTime.Now;
+                                    supplier1.CreateUserID = this.userid;
+                                    supplier1.LastUpdateTime = DateTime.Now;
+                                    supplier1.LastUpdateUserID = this.userid;
+                                    wmsEntities.SaveChanges();
                                 }
                             }
                             catch
@@ -798,12 +851,7 @@ namespace WMS.UI
                             }
 
 
-                            if(results [i].StartingTime >results [i].EndingTime )
-                            {
-                                MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同生效日期不能大于截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return false;
 
-                            }
 
                             results[i].CreateTime = DateTime.Now;
                             results[i].CreateUserID  = this.userid;
@@ -812,15 +860,10 @@ namespace WMS.UI
 
 
 
-                            string contractstate = results[i].ContractState;
-                            if(contractstate !="待审核"&&contractstate !="已过审"&&contractstate!="")
-                            {
-                                MessageBox.Show("操作失败，供应商"+ suppliernameimport+ "的合同状态请改为待审核、已过审或空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
-                                return false;
-                            }
+                            
                             //历史信息设为0
                             results[i].IsHistory = 0;
-
+                            results.RemoveAt(i);
                         }
 
                         return true;
