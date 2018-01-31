@@ -622,10 +622,10 @@ namespace WMS.UI
                 null,
                 "导入发货单条目"
                 );
-            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultShipmentUnit FROM Supply WHERE [No] = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};",this.projectID,this.warehouseID));
-            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultShipmentUnitAmount FROM Supply WHERE [No] = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
-            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultShipmentUnit FROM SupplyView WHERE ComponentName = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
-            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID,this.warehouseID));
+            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
+            standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             standardImportForm.ShowDialog();
         }
 
@@ -641,19 +641,43 @@ namespace WMS.UI
                     string componentName = unimportedColumns["SupplyNoOrComponentName"][i];
                     string jobPersonName = unimportedColumns["JobPersonName"][i];
                     string confirmPersonName = unimportedColumns["ConfirmPersonName"][i];
-                    Supply supply = (from s in wmsEntities.Supply where s.No == supplyNo select s).FirstOrDefault();
-                    DataAccess.Component component = null;
-                    if (supply == null)
+                    //模糊查询供货
+                    Supply[] supplies = (from s in wmsEntities.Supply
+                                     where s.No.Contains(supplyNo)
+                                     select s).ToArray();
+                    //模糊查询零件
+                    DataAccess.Component[] components = (from c in wmsEntities.Component
+                                                      where c.Name == componentName
+                                                      select c).ToArray();
+                    //Supply或Component不唯一的情况
+                    if(supplies.Length + components.Length != 1)
                     {
-                        component = (from c in wmsEntities.Component where c.Name == componentName select c).FirstOrDefault();
-                        if (component == null)
+                        StringBuilder sbHint = new StringBuilder();
+                        sbHint.AppendFormat("行{0}：零件不明确，您是否要查询：\n", i + 1);
+                        for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
                         {
-                            MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, componentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return false;
+                            sbHint.AppendLine(supplies[j].No);
                         }
+                        for (int j = 0; j < Math.Min(components.Length, 25); j++)
+                        {
+                            sbHint.AppendLine(components[j].Name);
+                        }
+                        MessageBox.Show(sbHint.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+
+                    DataAccess.Component component = null;
+                    Supply supply = null;
+                    if(components.Length > 0)
+                    {
+                        component = components[0];
+                    }
+                    else
+                    {
+                        supply = supplies[0];
                     }
                     StockInfoView[] stockInfoViews = null;
-                    if (supply != null)
+                    if (supplies != null)
                     {
                         stockInfoViews = (from s in wmsEntities.StockInfoView
                                           where s.SupplyNo == supplyNo
