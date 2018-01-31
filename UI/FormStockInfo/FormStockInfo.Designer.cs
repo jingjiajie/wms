@@ -44,6 +44,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.panelPager = new System.Windows.Forms.Panel();
+            this.buttonImport = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -63,7 +64,8 @@
             this.toolStripSeparator1,
             this.buttonAdd,
             this.buttonAlter,
-            this.buttonDelete});
+            this.buttonDelete,
+            this.buttonImport});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -136,7 +138,6 @@
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(86, 36);
             this.buttonDelete.Text = "删除";
-            this.buttonDelete.Visible = false;
             this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // statusStrip1
@@ -215,6 +216,15 @@
             this.panelPager.Size = new System.Drawing.Size(1440, 61);
             this.panelPager.TabIndex = 5;
             // 
+            // buttonImport
+            // 
+            this.buttonImport.Image = global::WMS.UI.Properties.Resources.add_b;
+            this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(134, 36);
+            this.buttonImport.Text = "批量导入";
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
+            // 
             // FormStockInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -253,5 +263,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelPager;
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
+        private System.Windows.Forms.ToolStripButton buttonImport;
     }
 }

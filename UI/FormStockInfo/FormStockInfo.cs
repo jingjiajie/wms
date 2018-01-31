@@ -57,6 +57,7 @@ namespace WMS.UI
                 {
                     this.pagerWidget.AddStaticCondition("SupplierID", user.SupplierID.ToString());
                     this.buttonAlter.Enabled = false;
+                    this.buttonImport.Enabled = false;
                 }
             }
             catch
@@ -152,7 +153,16 @@ namespace WMS.UI
             {
                 foreach(int id in deleteIDs)
                 {
-                    this.wmsEntities.Database.ExecuteSqlCommand("DELETE FROM StockInfo WHERE ID = @stockInfoID", new SqlParameter("stockInfoID", id));
+                    StockInfo stockInfo = (from s in wmsEntities.StockInfo
+                                           where s.ID == id
+                                           select s).FirstOrDefault();
+                    if (stockInfo == null) continue;
+                    if(stockInfo.ReceiptTicketItemID != null)
+                    {
+                        MessageBox.Show("被收货单引用的库存信息不能删除！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    wmsEntities.StockInfo.Remove(stockInfo);
                 }
                 if (MessageBox.Show("您真的要删除这些记录吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
@@ -162,6 +172,7 @@ namespace WMS.UI
                 this.Invoke(new Action(()=>
                 {
                     this.pagerWidget.Search();
+                    MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             })).Start();
         }
@@ -185,6 +196,54 @@ namespace WMS.UI
             {
                 this.textBoxSearchValue.Enabled = true;
             }
+        }
+
+        private void buttonImport_Click(object sender, EventArgs e)
+        {
+            StandardImportForm<StockInfo> formImport = new StandardImportForm<StockInfo>(
+                StockInfoViewMetaData.KeyNames,
+                importHandler,
+                () =>
+                {
+                    this.buttonSearch.PerformClick();
+                },
+                "导入库存信息");
+            formImport.Show();
+        }
+
+        private bool importHandler(List<StockInfo> results,Dictionary<string,string[]> unimportedColumns)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            for(int i = 0; i < results.Count; i++)
+            {
+                results[i].ProjectID = this.projectID;
+                results[i].WarehouseID = this.warehouseID;
+
+                string supplyNo = unimportedColumns["SupplyNo"][i];
+                Supply[] supplies = (from s in wmsEntities.Supply
+                                     where s.ProjectID == this.projectID
+                                     && s.WarehouseID == this.warehouseID
+                                     && s.No.Contains(supplyNo)
+                                     select s).ToArray();
+                if(supplies.Length == 0)
+                {
+                    MessageBox.Show(string.Format("行{0}：未找到代号为 {1} 的零件！", i + 1, supplyNo), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                if(supplies.Length > 1)
+                {
+                    StringBuilder sbHint = new StringBuilder();
+                    sbHint.AppendFormat("行{0}：零件不明确，您是否要搜索：\n", i + 1);
+                    foreach(var s in supplies)
+                    {
+                        sbHint.AppendFormat("{0}\n", s.No);
+                    }
+                    MessageBox.Show(sbHint.ToString(),"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                results[i].SupplyID = supplies[0].ID;
+            }
+            return true;
         }
     }
 }
