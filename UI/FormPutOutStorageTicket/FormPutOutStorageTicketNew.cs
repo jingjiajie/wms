@@ -400,20 +400,17 @@ namespace WMS.UI
                 {
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].SchedulePutOutAmount * results[i].UnitAmount;
-                    Supply supply = (from s in wmsEntities.Supply where s.No == supplyNoOrComponentName select s).FirstOrDefault();
-                    DataAccess.Component component = null;
-                    if (supply == null)
+                    //封装的根据 零件名/供货代号 获取 零件/供货的函数
+                    if (Utilities.GetSupplyOrComponent(supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, wmsEntities) == false)
                     {
-                        component = (from c in wmsEntities.Component where c.Name == supplyNoOrComponentName select c).FirstOrDefault();
-                        if (component == null)
-                        {
-                            MessageBox.Show(string.Format("行{0}：不存在零件\"{1}\"！", i + 1, supplyNoOrComponentName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return false;
-                        }
+                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
                     }
+                    string realName = null;
                     List<JobTicketItemView> selectedItems = null;
                     if (supply != null)
                     {
+                        realName = supply.No;
                         selectedItems = (from s in wmsEntities.JobTicketItemView
                                          where s.JobTicketID == this.jobTicketID
                                          && s.SupplyNo == supplyNoOrComponentName
@@ -422,13 +419,18 @@ namespace WMS.UI
                     }
                     else if (component != null)
                     {
+                        realName = component.Name;
                         selectedItems = (from s in wmsEntities.JobTicketItemView
                                          where s.JobTicketID == this.jobTicketID
                                          && s.ComponentName == supplyNoOrComponentName
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
-
+                    if(selectedItems.Count == 0)
+                    {
+                        MessageBox.Show(string.Format("此作业单中不包含{0}！请检查输入", realName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
                     //记录每一项的剩余可分配数量
                     Dictionary<int, decimal> restAmounts = new Dictionary<int, decimal>();
                     //记录每一项的剩余数量，并把单位记录到单位对应关系里
@@ -460,7 +462,7 @@ namespace WMS.UI
 
                     if (scheduleAmountNoUnit > totalStockAmountNoUnit)
                     {
-                        MessageBox.Show(string.Format("行{0}：翻包作业单剩余待分配翻包数量不足，剩余量：{1}", i + 1, totalStockAmountNoUnit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：零件{1} 在此翻包作业单剩余待分配翻包数量不足，剩余量：{2}", i + 1, realName, Utilities.DecimalToString(totalStockAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     decimal curAmountNoUnit = 0;

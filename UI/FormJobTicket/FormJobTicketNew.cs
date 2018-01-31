@@ -427,45 +427,18 @@ namespace WMS.UI
                 {
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].ScheduleJobAmount * results[i].UnitAmount;
-                    //模糊查询供货
-                    Supply[] supplies = (from s in wmsEntities.Supply
-                                         where s.No.Contains(supplyNoOrComponentName)
-                                         select s).ToArray();
-                    //模糊查询零件
-                    DataAccess.Component[] components = (from c in wmsEntities.Component
-                                                         where c.Name.Contains(supplyNoOrComponentName)
-                                                         select c).ToArray();
-                    //Supply或Component不唯一的情况
-                    if (supplies.Length + components.Length != 1)
+                    //封装的根据 零件名/供货代号 获取 零件/供货的函数
+                    if (Utilities.GetSupplyOrComponent(supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, wmsEntities) == false)
                     {
-                        StringBuilder sbHint = new StringBuilder();
-                        sbHint.AppendFormat("行{0}：零件不明确，您是否要查询：\n", i + 1);
-                        for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
-                        {
-                            sbHint.AppendLine(supplies[j].No);
-                        }
-                        for (int j = 0; j < Math.Min(components.Length, 25); j++)
-                        {
-                            sbHint.AppendLine(components[j].Name);
-                        }
-                        MessageBox.Show(sbHint.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
-
-                    DataAccess.Component component = null;
-                    Supply supply = null;
-                    if (components.Length > 0)
-                    {
-                        component = components[0];
-                    }
-                    else
-                    {
-                        supply = supplies[0];
-                    }
+                    string realName = null;
                     List<ShipmentTicketItemView> selectedItems = null;
                     //根据零件，或者供货，来查询发货单条目
                     if (supply != null)
                     {
+                        realName = supply.No;
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
                                          && s.SupplyNo == supply.No
@@ -475,12 +448,18 @@ namespace WMS.UI
                     }
                     else if (component != null)
                     {
+                        realName = component.Name;
                         selectedItems = (from s in wmsEntities.ShipmentTicketItemView
                                          where s.ShipmentTicketID == this.shipmentTicketID
                                          && s.ComponentName == supplyNoOrComponentName
                                          && showedIDs.Contains(s.ID)
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
+                    }
+                    if(selectedItems.Count == 0)
+                    {
+                        MessageBox.Show(string.Format("此发货单中不包含{0}！请检查输入", realName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
                     }
                     //记录每一项的剩余可分配数量
                     Dictionary<int, decimal> restAmounts = new Dictionary<int, decimal>();
@@ -512,7 +491,7 @@ namespace WMS.UI
                     });
                     if(scheduleAmountNoUnit > totalStockAmountNoUnit)
                     {
-                        MessageBox.Show(string.Format("行{0}：发货单剩余待分配翻包数量不足，剩余量：{1}个", i + 1, Utilities.DecimalToString(totalStockAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：零件{1} 在此发货单剩余待分配翻包数量不足，剩余量：{2}个", i + 1,realName, Utilities.DecimalToString(totalStockAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     decimal curAmountNoUnit = 0; //累计分配了多少
