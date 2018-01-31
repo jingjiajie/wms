@@ -269,21 +269,14 @@ namespace WMS.UI
                             this.history_save = 1;
 
 
-                        }
-
-                        
-
-
-
-
-
+                        }                      
                         //继续查找
 
                         try
                         {
                             supplier = (from s in this.wmsEntities.Supplier
                                         where s.ID == this.supplierID
-                                        select s).Single();
+                                        select s).FirstOrDefault() ;
                         }
                         catch
                         {
