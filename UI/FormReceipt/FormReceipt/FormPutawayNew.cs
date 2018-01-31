@@ -595,23 +595,56 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("第" + (i + 1).ToString() + "行中，没有填写零件编号/名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
-                ReceiptTicketItemView[] receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                ReceiptTicketItemView[] receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                if (receiptTicketItemViewNo.Length == 0)
+                {
+                    receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                }
+                ReceiptTicketItemView[] receiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                if (receiptTicketItemViewName.Length == 0)
+                {
+                    receiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                }
+                if (receiptTicketItemViewName.Length + receiptTicketItemViewNo.Length > 1)
+                {
+                    string errorMsg = "";
+                    int n = 0;
+                    foreach (ReceiptTicketItemView rtiv in receiptTicketItemViewNo)
+                    {
+                        errorMsg += (rtiv.SupplyNo.ToString() + "\n");
+                        n++;
+                    }
+                    foreach(ReceiptTicketItemView rtiv in receiptTicketItemViewName)
+                    {
+                        errorMsg += (rtiv.ComponentName.ToString() + "\n");
+                        n++;
+                    }
+                    if (n > 10)
+                    {
+                        MessageBox.Show("第" + (i + 1) + "行中，零件不明确，符合条件的零件有" + n + "条！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show("第" + (i + 1) + "行中，零件不明确，您是否要搜索:\n" + errorMsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    return false;
+                }
                 if (receiptTicketItemViewNo == null || receiptTicketItemViewNo.Length == 0)
                 {
-                    ReceiptTicketItemView[] ReceiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
-                    if (ReceiptTicketItemViewName.Length == 0)
+                    //ReceiptTicketItemView[] ReceiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                    if (receiptTicketItemViewName.Length == 0)
                     {
                         MessageBox.Show("第" + (i + 1).ToString() + "行中，无法无法找到该供应商提供的该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
-                    else if (ReceiptTicketItemViewName.Length > 1)
+                    else if (receiptTicketItemViewName.Length > 1)
                     {
                         MessageBox.Show("第" + (i + 1).ToString() + "行中，有多个零件重名，请输入零件编号！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     else
                     {
-                        results[i].ReceiptTicketItemID = ReceiptTicketItemViewName[0].ID;
+                        results[i].ReceiptTicketItemID = receiptTicketItemViewName[0].ID;
                     }
                 }
                 else if (receiptTicketItemViewNo.Length > 1)
