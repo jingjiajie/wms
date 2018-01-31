@@ -617,6 +617,8 @@ namespace WMS.UI.FormReceipt
                     supply = (from s in wmsEntities.Supply
                               where s.SupplierID == receiptTicket.SupplierID
                               && s.ComponentID == component.ID
+                              && s.ProjectID == GlobalData.ProjectID
+                              && s.WarehouseID == GlobalData.WarehouseID
                               select s).FirstOrDefault();
                 }
                 ReceiptTicketItem receiptTicketItem = (from r in wmsEntities.ReceiptTicketItem
