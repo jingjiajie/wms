@@ -595,8 +595,8 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("第" + (i + 1).ToString() + "行中，没有填写零件编号/名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
-                ReceiptTicketItemView receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).FirstOrDefault();
-                if (receiptTicketItemViewNo == null)
+                ReceiptTicketItemView[] receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo.Contains(supplyNoName) && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
+                if (receiptTicketItemViewNo == null || receiptTicketItemViewNo.Length == 0)
                 {
                     ReceiptTicketItemView[] ReceiptTicketItemViewName = (from sv in wmsEntities.ReceiptTicketItemView where sv.ComponentName == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
                     if (ReceiptTicketItemViewName.Length == 0)
@@ -614,9 +614,19 @@ namespace WMS.UI.FormReceipt
                         results[i].ReceiptTicketItemID = ReceiptTicketItemViewName[0].ID;
                     }
                 }
+                else if (receiptTicketItemViewNo.Length > 1)
+                {
+                    string errorMsg = "";
+                    foreach (ReceiptTicketItemView rtiv in receiptTicketItemViewNo)
+                    {
+                        errorMsg += (rtiv.SupplyNo.ToString() + "\n");
+                    }
+                    MessageBox.Show("第" + (i + 1) + "行中，零件不明确，您是否要搜索:\n" + errorMsg);
+                    return false;
+                }
                 else
                 {
-                    results[i].ReceiptTicketItemID = receiptTicketItemViewNo.ID;
+                    results[i].ReceiptTicketItemID = receiptTicketItemViewNo[0].ID;
                 }
                 if (results[i].ReceiptTicketItemID == null)
                 {

@@ -951,10 +951,11 @@ namespace WMS.UI
                     MessageBox.Show("第" + (i + 1).ToString() + "行中，没有填写零件编号/名称！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
-                SupplyView supplyViewNo = (from sv in wmsEntities.SupplyView where sv.No == supplyNoName && sv.SupplierID == this.ReceiptTicketView.SupplierID select sv).FirstOrDefault();
-                if (supplyViewNo == null)
+                SupplyView[] supplyViewNo = (from sv in wmsEntities.SupplyView where sv.No.Contains(supplyNoName) && sv.SupplierID == this.ReceiptTicketView.SupplierID select sv).ToArray();
+                if (supplyViewNo == null || supplyViewNo.Length == 0)
                 {
                     SupplyView[] supplyViewName = (from sv in wmsEntities.SupplyView where sv.ComponentName == supplyNoName && sv.SupplierID == this.ReceiptTicketView.SupplierID select sv).ToArray();
+                    
                     if (supplyViewName.Length == 0)
                     {
                         MessageBox.Show("第" + (i + 1).ToString() + "行中，无法找到该供应商提供的该零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -970,9 +971,19 @@ namespace WMS.UI
                         results[i].SupplyID = supplyViewName[0].ID;
                     }
                 }
+                else if(supplyViewNo.Length > 1)
+                {
+                    string errorMsg = "";
+                    foreach(SupplyView sv in supplyViewNo)
+                    {
+                        errorMsg += (sv.No.ToString() + "\n");
+                    }
+                    MessageBox.Show("第" + (i + 1) + "行中，零件不明确，您是否要搜索:\n" + errorMsg);
+                    return false;
+                }
                 else
                 {
-                    results[i].SupplyID = supplyViewNo.ID;
+                    results[i].SupplyID = supplyViewNo[0].ID;
                 }
                 if (results[i].SupplyID == null)
                 {
