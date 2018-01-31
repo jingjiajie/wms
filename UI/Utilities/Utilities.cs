@@ -721,17 +721,23 @@ namespace WMS.UI
             }
         }
 
-        public static bool GetSupplyOrComponent(string supplyNoOrComponentName, out Component component, out Supply supply, out string errorMessage, WMSEntities wmsEntities = null)
+        public static bool GetSupplyOrComponent(string supplyNoOrComponentName, out Component component, out Supply supply, out string errorMessage,int supplierID = -1, WMSEntities wmsEntities = null)
         {
             if (wmsEntities == null) wmsEntities = new WMSEntities();
             //首先精确查询，如果没有，再模糊查询
             component = (from c in wmsEntities.Component
-                         where c.Name.Contains(supplyNoOrComponentName)
+                         where c.Name == supplyNoOrComponentName
+                         && (from s in wmsEntities.Supply
+                             where s.ComponentID == c.ID 
+                             && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                             select s).Count() > 0
                          select c).FirstOrDefault();
             supply = (from s in wmsEntities.Supply
                       where s.No == supplyNoOrComponentName
                       && s.ProjectID == GlobalData.ProjectID
                       && s.WarehouseID == GlobalData.WarehouseID
+                      && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                      && s.IsHistory == 0
                       select s).FirstOrDefault();
             if (component == null && supply == null)
             {
@@ -740,11 +746,18 @@ namespace WMS.UI
                                      where s.No.Contains(supplyNoOrComponentName)
                                      && s.ProjectID == GlobalData.ProjectID
                                      && s.WarehouseID == GlobalData.WarehouseID
+                                     && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                                     && s.IsHistory == 0
                                      select s).ToArray();
                 //模糊查询零件
                 DataAccess.Component[] components = (from c in wmsEntities.Component
                                                      where c.Name.Contains(supplyNoOrComponentName)
+                                                     && (from s in wmsEntities.Supply
+                                                         where s.ComponentID == c.ID
+                                                         && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                                                         select s).Count() > 0
                                                      select c).ToArray();
+
                 if (supplies.Length + components.Length == 0)
                 {
                     component = null;
@@ -755,7 +768,11 @@ namespace WMS.UI
                 //Supply或Component不唯一的情况
                 if (supplies.Length + components.Length != 1)
                 {
-                    object selectedObj = FormChooseAmbiguousSupplyOrComponent.ChooseAmbiguousSupplyOrComponent(components, supplies,supplyNoOrComponentName);
+                    object selectedObj = 
+                        FormChooseAmbiguousSupplyOrComponent.ChooseAmbiguousSupplyOrComponent(
+                        components, 
+                        supplies,
+                        supplyNoOrComponentName);
                     if(selectedObj == null)
                     {
                         errorMessage = "用户取消了导入";
