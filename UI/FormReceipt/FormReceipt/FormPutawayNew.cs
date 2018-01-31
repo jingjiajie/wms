@@ -284,7 +284,8 @@ namespace WMS.UI.FormReceipt
                         }
                         if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - submissionAmount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                         {
-                            MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            SupplyView supplyView = (from sv in wmsEntities.SupplyView where sv.ID == receiptTicketItem.SupplyID select sv).FirstOrDefault();
+                            MessageBox.Show("上架失败，计划上架数量过多！零件编号：" + supplyView.No + " 零件名称：" + supplyView.ComponentName, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return null;
                         }
 
@@ -414,7 +415,8 @@ namespace WMS.UI.FormReceipt
                                     putawayTicketItem.ScheduledMoveCount = ripa.Value;
                                     if ((receiptTicketItem.UnitCount == null ? 0 : (decimal)receiptTicketItem.UnitCount) - putawayTicketItem.ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                                     {
-                                        MessageBox.Show("上架失败，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        SupplyView supplyView = (from sv in wmsEntities.SupplyView where sv.ID == receiptTicketItem.SupplyID select sv).FirstOrDefault();
+                                        MessageBox.Show("上架失败，计划上架数量过多！零件编号：" + supplyView.No + " 零件名称：" + supplyView.ComponentName, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                         return;
                                     }
                                     if (receiptTicketItem.HasPutwayAmount == null)
