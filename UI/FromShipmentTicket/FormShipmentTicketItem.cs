@@ -626,7 +626,7 @@ namespace WMS.UI
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
-            standardImportForm.ShowDialog();
+            standardImportForm.Show();
         }
 
         private bool importItemHandler(List<ShipmentTicketItem> results,Dictionary<string,string[]> unimportedColumns)
@@ -637,60 +637,34 @@ namespace WMS.UI
                 WMSEntities wmsEntities = new WMSEntities();
                 for (int i = 0; i < results.Count; i++)
                 {
-                    string supplyNo = unimportedColumns["SupplyNoOrComponentName"][i];
-                    string componentName = unimportedColumns["SupplyNoOrComponentName"][i];
+                    string supplyNoOrComponentName = unimportedColumns["SupplyNoOrComponentName"][i];
+                    string realName = null;
                     string jobPersonName = unimportedColumns["JobPersonName"][i];
                     string confirmPersonName = unimportedColumns["ConfirmPersonName"][i];
-                    //模糊查询供货
-                    Supply[] supplies = (from s in wmsEntities.Supply
-                                     where s.No.Contains(supplyNo)
-                                     select s).ToArray();
-                    //模糊查询零件
-                    DataAccess.Component[] components = (from c in wmsEntities.Component
-                                                      where c.Name == componentName
-                                                      select c).ToArray();
-                    //Supply或Component不唯一的情况
-                    if(supplies.Length + components.Length != 1)
+                    //封装的根据 零件名/供货代号 获取 零件/供货的函数
+                    if(Utilities.GetSupplyOrComponent(supplyNoOrComponentName,out DataAccess.Component component,out Supply supply,out string errorMessage,wmsEntities)==false)
                     {
-                        StringBuilder sbHint = new StringBuilder();
-                        sbHint.AppendFormat("行{0}：零件不明确，您是否要查询：\n", i + 1);
-                        for (int j = 0; j < Math.Min(supplies.Length, 25); j++)
-                        {
-                            sbHint.AppendLine(supplies[j].No);
-                        }
-                        for (int j = 0; j < Math.Min(components.Length, 25); j++)
-                        {
-                            sbHint.AppendLine(components[j].Name);
-                        }
-                        MessageBox.Show(sbHint.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
-
-                    DataAccess.Component component = null;
-                    Supply supply = null;
-                    if(components.Length > 0)
-                    {
-                        component = components[0];
-                    }
-                    else
-                    {
-                        supply = supplies[0];
-                    }
                     StockInfoView[] stockInfoViews = null;
-                    if (supplies != null)
+                    //如果填写的是供货
+                    if (supply != null)
                     {
+                        realName = supply.No;
                         stockInfoViews = (from s in wmsEntities.StockInfoView
-                                          where s.SupplyNo == supplyNo
+                                          where s.SupplyNo == supplyNoOrComponentName
                                                 && s.ProjectID == this.projectID
                                                 && s.WarehouseID == this.warehouseID
                                                 && s.ShipmentAreaAmount - s.ScheduledShipmentAmount > 0
                                           orderby s.InventoryDate ascending
                                           select s).ToArray();
-                    }
+                    } //否则填写的是零件
                     else if (component != null)
                     {
+                        realName = component.Name;
                         stockInfoViews = (from s in wmsEntities.StockInfoView
-                                          where s.ComponentName == componentName
+                                          where s.ComponentName == supplyNoOrComponentName
                                                 && s.ProjectID == this.projectID
                                                 && s.WarehouseID == this.warehouseID
                                                 && s.ShipmentAreaAmount - s.ScheduledShipmentAmount > 0
@@ -729,7 +703,7 @@ namespace WMS.UI
                     });
                     if (totalShipmentableAmountNoUnit < results[i].ShipmentAmount * results[i].UnitAmount)
                     {
-                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存可发货数：{2}）", i + 1, componentName, Utilities.DecimalToString(totalShipmentableAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存可发货数：{2}）", i + 1, realName, Utilities.DecimalToString(totalShipmentableAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     results[i].ShipmentTicketID = this.shipmentTicketID;

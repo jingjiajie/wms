@@ -61,6 +61,7 @@ namespace WMS.UI
             FormLoading formLoading = new FormLoading("正在导入，请稍后...");
             formLoading.Show();
             var worksheet = this.reoGridControlMain.Worksheets[0];
+            worksheet.EndEdit(new EndEditReason());
             var result = this.MakeObjectByReoGridImport<TargetClass>(out string errorMessage);
             if (result == null)
             {
@@ -187,13 +188,17 @@ namespace WMS.UI
             this.RefreshDefaultValue(new int[] { worksheet.SelectionRange.Row });
         }
 
+        private WMSEntities globalWMSEntities = new WMSEntities();
         private void RefreshDefaultValue(int[] rows)
         {
-            var worksheet = this.reoGridControlMain.CurrentWorksheet;
-            
-            using (WMSEntities wmsEntities = new WMSEntities())
+            //异步刷新默认值，防止卡顿
+            new Thread(()=>
             {
-                wmsEntities.Database.Connection.Open();
+                if (globalWMSEntities.Database.Connection.State != ConnectionState.Open)
+                {
+                    globalWMSEntities.Database.Connection.Open();
+                }
+                var worksheet = this.reoGridControlMain.CurrentWorksheet;
                 //遍历行
                 foreach (int row in rows)
                 {
@@ -212,7 +217,7 @@ namespace WMS.UI
                         //如果已经有字，不覆盖
                         if (worksheet.GetCell(row, col) != null && worksheet[row, col] != null && string.IsNullOrWhiteSpace(worksheet[row, col].ToString()) == false) continue;
                         string sql = keySQL.SQL;
-                        SqlCommand command = new SqlCommand(sql,(SqlConnection)wmsEntities.Database.Connection);
+                        SqlCommand command = new SqlCommand(sql, (SqlConnection)globalWMSEntities.Database.Connection);
                         command.Parameters.AddRange(parameters.ToArray());
                         SqlDataReader dataReader = command.ExecuteReader();
                         command.Parameters.Clear();
@@ -220,10 +225,13 @@ namespace WMS.UI
                         dataReader.Read();
                         object value = dataReader.GetValue(0);
                         if (dataReader.Read()) continue; //如果结果不唯一，则不填写默认值
-                        worksheet[row, col] = value == null ? "" : value.ToString();
+                        this.Invoke(new Action(()=>
+                        {
+                            worksheet[row, col] = value == null ? "" : value.ToString();
+                        }));
                     }
                 }
-            }
+            }).Start();
         }
 
         public void AddDefaultValue(string key, string sqlValue)

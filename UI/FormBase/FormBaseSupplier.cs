@@ -709,6 +709,8 @@ namespace WMS.UI
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
+            
+            wmsEntities = new WMSEntities();
             //创建导入窗口
             StandardImportForm<Supplier > formImport =
                 new StandardImportForm<Supplier>
@@ -717,9 +719,8 @@ namespace WMS.UI
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
                         for (int i=0;i<results.Count;i++)
-
-
                         {
+                            DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
                             string suppliernameimport;
                             suppliernameimport = results[i].Name;
                             //检查导入列表中是否重名
@@ -733,19 +734,41 @@ namespace WMS.UI
                                     return false;
                                     
                                 }
-
                             }
-
-                            //检查数据库中同名
+                            //检查数据库中是否与非历史信息同名
                             try
                             {
                                 var sameNameUsers = (from u in wmsEntities.Supplier
-                                                     where u.Name == suppliernameimport
-                                                     select u).ToArray();
-                                if (sameNameUsers.Length > 0)
+                                                     where u.Name == suppliernameimport &&
+                                                     u.IsHistory ==0
+                                                     select u).FirstOrDefault ();
+                                if (sameNameUsers!=null)
                                 {
-                                    MessageBox.Show("导入供应商名失败，已存在同名供应商：" + suppliernameimport, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    return false ;
+                                    MsgBoxResult = MessageBox.Show("已存在同名供应商：" + suppliernameimport+"是否导入并将原信息保留为历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+
+                                    MessageBoxDefaultButton.Button2);
+                                    if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
+                                    {
+
+                                        wmsEntities.Supplier.Add(sameNameUsers);
+                                        try
+                                        {
+                                            sameNameUsers.NewestSupplierID = sameNameUsers.ID;
+                                            sameNameUsers.ID = -1;
+                                            sameNameUsers.IsHistory = 1;                                          
+                                            sameNameUsers.LastUpdateUserID = this.userid;
+                                            sameNameUsers.LastUpdateTime = DateTime.Now;
+                                            wmsEntities.SaveChanges();
+                                        }
+                                        catch
+                                        {
+                                            MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return false ;
+                                        }
+                                    }
+
+                                        //MessageBox.Show("导入供应商名失败，已存在同名供应商：" + suppliernameimport, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        //return false ;
                                 }
                             }
                             catch
@@ -760,7 +783,6 @@ namespace WMS.UI
                             {
                                 MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同生效日期不能大于截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 return false;
-
 
                             }
 

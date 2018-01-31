@@ -128,8 +128,17 @@ namespace WMS.UI
             {
                 stringBuilder = new StringBuilder();
                 stringBuilder.Append("刷新失败，请检查网络连接");
+                if (instance.IsDisposed) return;
                 instance.Invoke(new Action(() =>
                 {
+                    while (true)
+                    {
+                        if (instance.IsHandleCreated)
+                        {
+                            break;
+                        }
+                        Thread.Sleep(10);
+                    }
                  instance.Show();
                  instance.textBox1.Text = "刷新失败，请检查网络连接";
                  instance.textBox1.ForeColor = Color.Red;
@@ -141,10 +150,18 @@ namespace WMS.UI
                 }
                 return;
             }
-
+                while (true)
+                {
+                    if (instance.IsHandleCreated)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(10);
+                }
 
                 if (stringBuilder.ToString() != "")
                 {
+                    if (instance.IsDisposed) return;
                     instance.Invoke(new Action(() =>
                     {
                         instance.Show();
@@ -167,17 +184,10 @@ namespace WMS.UI
                     return ;
                 }
 
-                while (true)
-                {
-                    if (instance.IsHandleCreated)
-                    {
-                        break;
-                    }
-                    Thread.Sleep(10);
-                }
 
 
 
+                if (instance.IsDisposed) return;
                 instance.Invoke(new Action(() =>
                     {
                         if (instance.IsDisposed) return;
