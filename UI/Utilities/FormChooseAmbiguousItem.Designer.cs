@@ -114,6 +114,7 @@
             this.Name = "FormChooseAmbiguousSupplyOrComponent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "请选择项目";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormChooseAmbiguousSupplyOrComponent_FormClosing);
             this.Load += new System.EventHandler(this.FormChooseAmbiguousItem_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
