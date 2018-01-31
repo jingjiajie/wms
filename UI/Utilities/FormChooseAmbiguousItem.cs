@@ -68,6 +68,7 @@ namespace WMS.UI
 
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (this.listBox.SelectedItem == null) return;
             this.selectedItem = (this.listBox.SelectedItem as ItemAndString).Item;
         }
 
