@@ -749,7 +749,26 @@ namespace WMS.UI
                                     MessageBoxDefaultButton.Button2);
                                     if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
                                     {
-
+                                        var supplierstorge = (from u in wmsEntities.SupplierStorageInfo
+                                                              where u.SupplierID == sameNameUsers.ID
+                                                              select u).ToArray();
+                                        for (int a = 0; a < supplierstorge.Length; a++)
+                                        {
+                                            try
+                                            {
+                                                supplierstorge[a].ExecuteSupplierID = supplier.ID;
+                                                wmsEntities.SaveChanges();
+                                                {
+                                                    MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                                }
+                                                
+                                            }
+                                            catch
+                                            {
+                                                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                                                continue;
+                                            }
+                                        }
                                         wmsEntities.Supplier.Add(sameNameUsers);
                                         try
                                         {
