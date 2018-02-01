@@ -46,8 +46,42 @@ namespace WMS.UI
             //MessageBox.Show("执行了一次程序");
         }
 
-       
-        public static void RemindStockinfo()
+        public static void HideForm()
+        {
+            
+            if (instance == null)
+            {
+                instance = new FormSupplyRemind();
+
+            }
+            if (instance.IsDisposed) return;
+            instance.timer.Stop();
+            instance.Hide();
+            instance.Opacity = 0;
+            
+            //if (instance.HidedCallback!= null)
+            //{
+            //    instance.HidedCallback();
+            //}
+
+        }
+        public static void ShowForm()
+        {
+
+            if (instance == null)
+            {
+                instance = new FormSupplyRemind();
+
+            }
+            if (instance.IsDisposed) return;
+            instance.timer.Start();
+            instance.Show();
+            instance.Opacity = 100;
+
+
+        }
+
+            public static void RemindStockinfo()
         {
             
             if(instance ==null)

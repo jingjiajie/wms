@@ -84,8 +84,10 @@ namespace WMS.UI
                 this.buttonAllLoad.Text = "已发运不能修改装车状态";
                 this.buttonLoad.Enabled = false;
                 this.buttonLoad.Text = "已发运不能修改装车状态";
+                TextBox textBoxScheduledAmount = (TextBox)this.Controls.Find("textBoxScheduledAmount",true)[0];
                 TextBox textBoxRealAmount = (TextBox)this.Controls.Find("textBoxRealAmount", true)[0];
                 textBoxRealAmount.ReadOnly = true;
+                textBoxScheduledAmount.ReadOnly = true;
                 this.textBoxLoadingTime.ReadOnly = true;
             }
             else //未发运不能修改退回信息
@@ -267,6 +269,7 @@ namespace WMS.UI
                 return;
             }
 
+            decimal oriScheduledAmountNoUnit = (putOutStorageTicketItem.ScheduledAmount ?? 0) * (putOutStorageTicketItem.UnitAmount ?? 1);
             decimal oriRealAmountNoUnit = (putOutStorageTicketItem.RealAmount ?? 0) * (putOutStorageTicketItem.UnitAmount ?? 1);
             decimal oriReturnQualityAmountNoUnit = putOutStorageTicketItem.ReturnQualityAmount * (putOutStorageTicketItem.ReturnQualityUnitAmount ?? 1);
             decimal oriReturnRejectAmountNoUnit = putOutStorageTicketItem.ReturnRejectAmount * (putOutStorageTicketItem.ReturnRejectUnitAmount ?? 1);
@@ -295,6 +298,37 @@ namespace WMS.UI
             {
                 MessageBox.Show("正品返回数量与不良品返回数量之和不能超过实际发货数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
+            }
+
+            //如果修改了计划翻包数量，这个数量不可以大于发货单剩余可分配翻包数量
+            //新的计划装车数量
+            decimal newScheduledAmountNoUnit = (putOutStorageTicketItem.ScheduledAmount ?? 0) * (putOutStorageTicketItem.UnitAmount ?? 1);
+            //变化的计划装车数量
+            decimal deltaScheduledAmountNoUnit = newScheduledAmountNoUnit - oriScheduledAmountNoUnit;
+            if (deltaScheduledAmountNoUnit != 0)
+            {
+                if (putOutStorageTicketItem.ScheduledAmount < putOutStorageTicketItem.RealAmount)
+                {
+                    MessageBox.Show("计划装车数量不可以小于实际装车数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
+                                                         where j.ID == putOutStorageTicketItem.JobTicketItemID
+                                                         select j).FirstOrDefault();
+                if (jobTicketItem != null)
+                {
+                    //实际翻包总数量
+                    decimal jobTicketItemRealAmount = (jobTicketItem.RealAmount ?? 0) * (jobTicketItem.UnitAmount ?? 1);
+                    //剩余可分配装车数量
+                    decimal restScheduableAmountNoUnit = jobTicketItemRealAmount - (jobTicketItem.ScheduledPutOutAmount ?? 0) * (jobTicketItem.UnitAmount ?? 1);
+                    if (restScheduableAmountNoUnit < deltaScheduledAmountNoUnit)
+                    {
+                        MessageBox.Show(string.Format("翻包作业单剩余可分配装车数量不足！\n剩余可分配装车数：{0}（{1}）", Utilities.DecimalToString(restScheduableAmountNoUnit / (putOutStorageTicketItem.UnitAmount ?? 1)), putOutStorageTicketItem.Unit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    //把多的计划装车数量加进作业单的已分配装车数里
+                    jobTicketItem.ScheduledPutOutAmount += deltaScheduledAmountNoUnit / jobTicketItem.UnitAmount;
+                }
             }
             int jobPersonID = this.jobPersonGetter();
             int confirmPersonID = this.confirmPersonGetter();

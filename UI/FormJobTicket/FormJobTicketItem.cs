@@ -241,6 +241,7 @@ namespace WMS.UI
                 }
                 this.Invoke(new Action(()=>
                 {
+                    decimal oriScheduledAmountNoUnit = (jobTicketItem.ScheduledAmount ?? 0) * (jobTicketItem.UnitAmount ?? 1); //原翻包数量*单位
                     if (Utilities.CopyTextBoxTextsToProperties(this, jobTicketItem, JobTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
                     {
                         MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -256,11 +257,42 @@ namespace WMS.UI
                         MessageBox.Show("实际翻包数量不能超过计划翻包数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
-                    if(jobTicketItem.RealAmount < jobTicketItem.ScheduledPutOutAmount)
+                    if (jobTicketItem.RealAmount < jobTicketItem.ScheduledPutOutAmount)
                     {
                         MessageBox.Show("实际翻包数量不能小于已分配出库数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    //如果修改了计划翻包数量，这个数量不可以大于发货单剩余可分配翻包数量
+                    //新的计划翻包数量
+                    decimal newScheduledAmountNoUnit = (jobTicketItem.ScheduledAmount ?? 0) * (jobTicketItem.UnitAmount ?? 1);
+                    //变化的计划翻包数量
+                    decimal deltaScheduledAmountNoUnit = newScheduledAmountNoUnit - oriScheduledAmountNoUnit;
+                    if(deltaScheduledAmountNoUnit != 0)
+                    {
+                        if(jobTicketItem.ScheduledAmount < jobTicketItem.RealAmount)
+                        {
+                            MessageBox.Show("计划翻包数量不可以小于实际翻包数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        ShipmentTicketItem shipmentTicketItem = (from s in wmsEntities1.ShipmentTicketItem
+                                                                 where s.ID == jobTicketItem.ShipmentTicketItemID
+                                                                 select s).FirstOrDefault();
+                        if (shipmentTicketItem != null)
+                        {
+                            //发货总数量
+                            decimal shipmentAmountNoUnit = (shipmentTicketItem.ShipmentAmount ?? 0) * (shipmentTicketItem.UnitAmount ?? 1);
+                            //剩余可分配翻包数量
+                            decimal restScheduableAmountNoUnit = shipmentAmountNoUnit - (shipmentTicketItem.ScheduledJobAmount ?? 0) * (shipmentTicketItem.UnitAmount ?? 1);
+                            if(restScheduableAmountNoUnit < deltaScheduledAmountNoUnit)
+                            {
+                                MessageBox.Show(string.Format("发货单剩余可分配翻包数量不足！\n剩余可分配翻包数：{0}（{1}）", Utilities.DecimalToString(restScheduableAmountNoUnit / (jobTicketItem.UnitAmount ?? 1)),jobTicketItem.Unit), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            //把多的计划翻包数量加进发货单的已分配发货数里
+                            shipmentTicketItem.ScheduledJobAmount += deltaScheduledAmountNoUnit / shipmentTicketItem.UnitAmount;
+                        }
+                    }
+
                     int jobPersonID = this.JobPersonIDGetter();
                     int confirmPersonID = this.ConfirmPersonIDGetter();
                     jobTicketItem.JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;

@@ -62,7 +62,7 @@ namespace WMS.UI
             formLoading.Show();
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.EndEdit(new EndEditReason());
-            var result = this.MakeObjectByReoGridImport<TargetClass>(out string errorMessage);
+            var result = this.MakeObjectByReoGridImport<TargetClass>(out int[] emptyLines,out string errorMessage);
             if (result == null)
             {
                 formLoading.Close();
@@ -82,7 +82,7 @@ namespace WMS.UI
                 //如果在导入窗口中可见的列设置为不导入，则加入未导入列表中
                 if(this.importVisibleKeyNames[i].Import == false)
                 {
-                    unImportedColumns.Add(this.importVisibleKeyNames[i].Key, this.GetColumn(i, newObjs.Count));
+                    unImportedColumns.Add(this.importVisibleKeyNames[i].Key, this.GetColumn(i,emptyLines));
                 }
             }
 
@@ -138,21 +138,22 @@ namespace WMS.UI
             }).Start();
         }
 
-        private string[] GetColumn(int column,int length)
+        private string[] GetColumn(int column,int[] skipLines)
         {
-            string[] results = new string[length];
+            List<string> results = new List<string>();
             var worksheet = this.reoGridControlMain.Worksheets[0];
-            for(int line = 0; line < length; line++)
+            for(int line = 0; line < worksheet.Rows; line++)
             {
+                if (skipLines.Contains(line)) continue;
                 Cell curCell = worksheet.GetCell(line,column);
                 if (curCell == null || curCell.Data == null)
                 {
-                    results[line] = "";
+                    results.Add("");
                     continue;
                 }
-                results[line] = curCell.Data.ToString();
+                results.Add(curCell.Data.ToString());
             }
-            return results;
+            return results.ToArray();
         }
 
         private void InitReoGridImport()
@@ -255,10 +256,11 @@ namespace WMS.UI
             return true;
         }
 
-        private T[] MakeObjectByReoGridImport<T>(out string errorMessage) where T : new()
+        private T[] MakeObjectByReoGridImport<T>(out int[] emptyLines,out string errorMessage) where T : new()
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             List<T> result = new List<T>();
+            List<int> emptyLineList = new List<int>();
             string[] propertyNames = (from kn in importVisibleKeyNames
                                       select kn.Key).ToArray();
             //遍历行
@@ -267,6 +269,7 @@ namespace WMS.UI
                 //如果是空行，则跳过
                 if (IsEmptyLine(this.reoGridControlMain, line))
                 {
+                    emptyLineList.Add(line);
                     continue;
                 }
 
@@ -294,11 +297,13 @@ namespace WMS.UI
                     if (Utilities.CopyTextToProperty(cellString, propertyNames[col], newObj, importVisibleKeyNames, out errorMessage) == false)
                     {
                         errorMessage = string.Format("行{0}：{1}", line + 1, errorMessage);
+                        emptyLines = emptyLineList.ToArray();
                         return null;
                     }
                 }
             }
             errorMessage = null;
+            emptyLines = emptyLineList.ToArray();
             return result.ToArray();
         }
 
@@ -363,6 +368,163 @@ namespace WMS.UI
                 worksheet[worksheet.SelectionRange.StartPos] = "";
                 worksheet.StartEdit();
             }
+        }
+    }
+
+    public partial class Utilities
+    {
+        public static bool GetPersonByNameAmbiguous(string name,out Person person,out string errorMessage,WMSEntities wmsEntities = null)
+        {
+            if (wmsEntities == null) wmsEntities = new WMSEntities();
+            //如果输入的名字是空的，直接抛出异常。这儿不允许传入空的
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception("GetPersonByNameAmbiguous()函数不允许传入空的零件名字（代号）！空格也不行！请使用string.IsNullOrWhiteSpace()自行判空");
+            }
+            //首先精确查询，如果没有，再模糊查询
+            person = (from p in wmsEntities.Person
+                      where p.Name == name
+                      select p).FirstOrDefault();
+            //如果搜到了，直接返回
+            if(person != null)
+            {
+                errorMessage = null;
+                return true;
+            }
+            //如果没搜到，模糊搜索
+            Person[] persons = (from p in wmsEntities.Person
+                              where p.Name.Contains(name)
+                              select p).ToArray();
+            //如果模糊搜索也没搜到，提示错误
+            if(persons.Length == 0)
+            {
+                person = null;
+                errorMessage = "未找到人员：" + name;
+                return false;
+            }
+            //正好一个就太好了，直接返回这一个
+            if(persons.Length == 1)
+            {
+                person = persons[0];
+                errorMessage = null;
+                return true;
+            }
+            else //如果搜到了多个，那就得让用户选是哪一个了
+            {
+                Person selectedPerson =
+                       FormChooseAmbiguousPerson.ChoosePerson(
+                       persons,
+                       name);
+                if (selectedPerson == null)
+                {
+                    errorMessage = "用户取消了导入";
+                    return false;
+                }
+                else
+                {
+                    person = selectedPerson;
+                    errorMessage = null;
+                    return true;
+                }
+            }
+        }
+
+        public static bool GetSupplyOrComponentAmbiguous(string supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, int supplierID = -1, WMSEntities wmsEntities = null)
+        {
+            if (wmsEntities == null) wmsEntities = new WMSEntities();
+            //如果输入的名字是空的，直接抛出异常。这儿不允许传入空的
+            if (string.IsNullOrWhiteSpace(supplyNoOrComponentName))
+            {
+                throw new Exception("GetSupplyOrComponentAmbiguous()函数不允许传入空的零件名字（代号）！空格也不行！请使用string.IsNullOrWhiteSpace()自行判空");
+            }
+            //首先精确查询，如果没有，再模糊查询
+            component = (from c in wmsEntities.Component
+                         where c.Name == supplyNoOrComponentName
+                         && (from s in wmsEntities.Supply
+                             where s.ComponentID == c.ID
+                             && s.ProjectID == GlobalData.ProjectID
+                             && s.WarehouseID == GlobalData.WarehouseID
+                             && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                             select s).Count() > 0
+                         select c).FirstOrDefault();
+            supply = (from s in wmsEntities.Supply
+                      where s.No == supplyNoOrComponentName
+                      && s.ProjectID == GlobalData.ProjectID
+                      && s.WarehouseID == GlobalData.WarehouseID
+                      && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                      && s.IsHistory == 0
+                      select s).FirstOrDefault();
+            if (component == null && supply == null)
+            {
+                //模糊查询供货
+                Supply[] supplies = (from s in wmsEntities.Supply
+                                     where s.No.Contains(supplyNoOrComponentName)
+                                     && s.ProjectID == GlobalData.ProjectID
+                                     && s.WarehouseID == GlobalData.WarehouseID
+                                     && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                                     && s.IsHistory == 0
+                                     select s).ToArray();
+                //模糊查询零件
+                DataAccess.Component[] components = (from c in wmsEntities.Component
+                                                     where c.Name.Contains(supplyNoOrComponentName)
+                                                     && (from s in wmsEntities.Supply
+                                                         where s.ComponentID == c.ID
+                                                         && s.ProjectID == GlobalData.ProjectID
+                                                         && s.WarehouseID == GlobalData.WarehouseID
+                                                         && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                                                         select s).Count() > 0
+                                                     select c).ToArray();
+
+                if (supplies.Length + components.Length == 0)
+                {
+                    component = null;
+                    supply = null;
+                    errorMessage = "未找到零件：" + supplyNoOrComponentName;
+                    return false;
+                }
+                //Supply或Component不唯一的情况
+                if (supplies.Length + components.Length != 1)
+                {
+                    object selectedObj =
+                        FormChooseAmbiguousSupplyOrComponent.ChooseAmbiguousSupplyOrComponent(
+                        components,
+                        supplies,
+                        supplyNoOrComponentName);
+                    if (selectedObj == null)
+                    {
+                        errorMessage = "用户取消了导入";
+                        return false;
+                    }
+                    else if (selectedObj is DataAccess.Component)
+                    {
+                        component = selectedObj as DataAccess.Component;
+                    }
+                    else if (selectedObj is Supply)
+                    {
+                        supply = selectedObj as Supply;
+                    }
+                    else
+                    {
+                        throw new Exception("FormChooseAmbiguousSupplyOrComponent返回值类型错误");
+                    }
+                    errorMessage = null;
+                    return true;
+                }
+
+                //如果搜索到唯一的零件/供货，则确定就是它。
+                if (supplies.Length > 0)
+                {
+                    supply = supplies[0];
+                }
+                else
+                {
+                    component = components[0];
+                }
+                errorMessage = null;
+                return true;
+            }
+            errorMessage = null;
+            return true;
         }
     }
 }

@@ -240,54 +240,52 @@ namespace WMS.UI
         private void buttonDeliver_Click(object sender, EventArgs e)
         {
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if(ids.Length != 1)
-            {
-                MessageBox.Show("请选择一项进行发运！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             WMSEntities wmsEntities = new WMSEntities();
-            int id = ids[0];
 
             try
             {
-                PutOutStorageTicket putOutStorageTicket = (from p in wmsEntities.PutOutStorageTicket
-                                                           where p.ID == id
-                                                           select p).FirstOrDefault();
-                if(putOutStorageTicket == null)
+                foreach (int id in ids)
                 {
-                    MessageBox.Show("出库单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if(putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_DELIVERED)
-                {
-                    MessageBox.Show("单据已经发运，请不要重复发运","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_PART_LOADED)
-                {
-                    MessageBox.Show("单据正在装车中，必须全部装车完成才可以发运", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if(putOutStorageTicket.State != PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)
-                {
-                    MessageBox.Show("未装车完成的出库单不能发运！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                    PutOutStorageTicket putOutStorageTicket = (from p in wmsEntities.PutOutStorageTicket
+                                                               where p.ID == id
+                                                               select p).FirstOrDefault();
+                    string no = putOutStorageTicket.No;
+                    if (putOutStorageTicket == null)
+                    {
+                        MessageBox.Show("出库单不存在，可能已被删除，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_DELIVERED)
+                    {
+                        MessageBox.Show("单据"+ no +"已经发运，请不要重复发运", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (putOutStorageTicket.State == PutOutStorageTicketViewMetaData.STRING_STATE_PART_LOADED)
+                    {
+                        MessageBox.Show("单据"+ no +"正在装车中，必须全部装车完成才可以发运", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    if (putOutStorageTicket.State != PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)
+                    {
+                        MessageBox.Show("未装车完成的出库单"+ no +"不能发运！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    putOutStorageTicket.State = PutOutStorageTicketViewMetaData.STRING_STATE_DELIVERED;
+                    putOutStorageTicket.DeliverTime = DateTime.Now;
+                }//End For
+
                 if (MessageBox.Show("确定要发运选中项吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 {
                     return;
                 }
-                putOutStorageTicket.State = PutOutStorageTicketViewMetaData.STRING_STATE_DELIVERED;
-                putOutStorageTicket.DeliverTime = DateTime.Now;
                 wmsEntities.SaveChanges();
-                this.Search(true);
             }
             catch
             {
-                MessageBox.Show("操作失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            this.Search(true);
             MessageBox.Show("发运成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }

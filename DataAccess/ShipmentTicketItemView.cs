@@ -48,5 +48,7 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> StockInfoManufactureDate { get; set; }
         public Nullable<System.DateTime> StockInfoExpiryDate { get; set; }
         public string StockInfoReceiptTicketNo { get; set; }
+        public Nullable<int> SupplyID { get; set; }
+        public Nullable<int> ComponentID { get; set; }
     }
 }

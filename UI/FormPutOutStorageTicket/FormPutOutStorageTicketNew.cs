@@ -113,6 +113,7 @@ namespace WMS.UI
             {
                 MessageBox.Show("登录失效，操作失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this.Text = "生成出库单（作业单号：" + jobTicket.JobTicketNo+"）";
             this.Controls.Find("textBoxCreateUserUsername", true)[0].Text = user.Username;
             this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
             this.Controls.Find("textBoxJobTicketJobTicketNo", true)[0].Text = jobTicket.JobTicketNo;
@@ -401,7 +402,7 @@ namespace WMS.UI
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].SchedulePutOutAmount * results[i].UnitAmount;
                     //封装的根据 零件名/供货代号 获取 零件/供货的函数
-                    if (Utilities.GetSupplyOrComponent(supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, wmsEntities) == false)
+                    if (Utilities.GetSupplyOrComponentAmbiguous(supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, -1,wmsEntities) == false)
                     {
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
@@ -413,7 +414,7 @@ namespace WMS.UI
                         realName = supply.No;
                         selectedItems = (from s in wmsEntities.JobTicketItemView
                                          where s.JobTicketID == this.jobTicketID
-                                         && s.SupplyNo == supplyNoOrComponentName
+                                         && s.SupplyID == supply.ID
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }
@@ -422,7 +423,7 @@ namespace WMS.UI
                         realName = component.Name;
                         selectedItems = (from s in wmsEntities.JobTicketItemView
                                          where s.JobTicketID == this.jobTicketID
-                                         && s.ComponentName == supplyNoOrComponentName
+                                         && s.ComponentID == component.ID
                                          orderby s.StockInfoInventoryDate ascending
                                          select s).ToList();
                     }

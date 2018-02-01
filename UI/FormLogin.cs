@@ -159,14 +159,28 @@ namespace WMS.UI
                 User user = this.possibleUser;
                 if (user == null)
                 {
-                    MessageBox.Show("用户名错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (textBoxUsername.Text.StartsWith(" ") || textBoxUsername.Text.EndsWith(" "))
+                    {
+                        MessageBox.Show("用户名错误（是不是用户名首尾多打了空格？）", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show("用户名错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                     this.possibleUserMutex.ReleaseMutex();
                     ClickCount = 0;
                     return;
                 }
                 else if (user.Password != textBoxPassword.Text)
                 {
-                    MessageBox.Show("密码错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (textBoxPassword.Text.StartsWith(" ") || textBoxPassword.Text.EndsWith(" "))
+                    {
+                        MessageBox.Show("密码错误（是不是密码首尾多打了空格？）", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        MessageBox.Show("密码错误，请重新输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                     this.possibleUserMutex.ReleaseMutex();
                     ClickCount = 0;
                     return;

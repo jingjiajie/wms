@@ -321,29 +321,29 @@ namespace WMS.UI
             {
                 TargetClass[] results = null;
                 string sqlSelect = "SELECT * FROM " + this.dbTableName;
-                string sqlCondition = " WHERE 1=1 ";
+                StringBuilder sqlCondition = new StringBuilder(" WHERE 1=1 ");
                 List<SqlParameter> parameters = new List<SqlParameter>();
 
                 if (projectID != -1)
                 {
-                    sqlCondition += "AND ProjectID = @projectID ";
+                    sqlCondition.Append("AND ProjectID = @projectID ");
                     parameters.Add(new SqlParameter("projectID", projectID));
                 }
                 if (warehouseID != -1)
                 {
-                    sqlCondition += "AND WarehouseID = @warehouseID ";
+                    sqlCondition.Append("AND WarehouseID = @warehouseID ");
                     parameters.Add(new SqlParameter("warehouseID", warehouseID));
                 }
 
                 foreach(Condition cond in this.condition)
                 {
-                    sqlCondition += " AND " + cond.Sql;
+                    sqlCondition.Append(" AND " + cond.Sql);
                     parameters.AddRange(cond.Parameters);
                 }
 
                 foreach (Condition cond in this.staticCondition)
                 {
-                    sqlCondition += " AND " + cond.Sql;
+                    sqlCondition.Append(" AND " + cond.Sql);
                     parameters.AddRange(cond.Parameters);
                 }
                 using (WMSEntities wmsEntities = new WMSEntities()) {
@@ -374,22 +374,32 @@ namespace WMS.UI
                     }
 
                     //添加分页条件
-                    sqlCondition += " ORDER BY "; //倒序排序
-                    foreach (string orderByCondition in this.order)
+                    sqlCondition.Append(" ORDER BY "); //倒序排序
+                    if (this.order.Count == 0) //如果没有设置排序条件，就按照ID倒序排列
                     {
-                        sqlCondition += orderByCondition + ",";
+                        sqlCondition.Append("ID DESC ");
                     }
-                    sqlCondition += "ID DESC ";
+                    for (int i = 0; i < this.order.Count; i++)
+                    {
+                        string orderByCondition = this.order[i];
+                        sqlCondition.Append(orderByCondition);
+                        //如果不是最后一个条件，则加上逗号
+                        if (i != this.order.Count - 1)
+                        {
+                            sqlCondition.Append(',');
+                        }
+                    }
+
                     if(this.pageSize != -1)
                     {
-                        sqlCondition += " OFFSET @offsetRows ROWS FETCH NEXT @pageSize ROWS ONLY";
+                        sqlCondition.Append(" OFFSET @offsetRows ROWS FETCH NEXT @pageSize ROWS ONLY");
                         parameters.Add(new SqlParameter("@offsetRows", this.curPage * this.pageSize));
                         parameters.Add(new SqlParameter("@pageSize", this.pageSize));
                     }
 
                     try
                     {
-                        string sql = sqlSelect + sqlCondition;
+                        string sql = sqlSelect + sqlCondition.ToString();
                         results = wmsEntities.Database.SqlQuery<TargetClass>(sql, (from p in parameters select ((ICloneable)p).Clone()).ToArray()).ToArray();
                     }
                     catch (EntityCommandExecutionException)

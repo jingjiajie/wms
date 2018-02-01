@@ -649,6 +649,8 @@
           <Property Name="StockInfoManufactureDate" Type="datetime" />
           <Property Name="StockInfoExpiryDate" Type="datetime" />
           <Property Name="StockInfoReceiptTicketNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyID" Type="int" />
+          <Property Name="ComponentID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.JobTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1105,6 +1107,8 @@
           <Property Name="StockInfoManufactureDate" Type="datetime" />
           <Property Name="StockInfoExpiryDate" Type="datetime" />
           <Property Name="StockInfoReceiptTicketNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="SupplyID" Type="int" />
+          <Property Name="ComponentID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.ShipmentTicketView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1248,6 +1252,7 @@
           <Property Name="SupplyID" Type="int" />
           <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledShipmentAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ComponentID" Type="int" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1996,7 +2001,9 @@ FROM [dbo].[ComponentView] AS [ComponentView]</DefiningQuery>
 [JobTicketItemView].[StockInfoInventoryDate] AS [StockInfoInventoryDate], 
 [JobTicketItemView].[StockInfoManufactureDate] AS [StockInfoManufactureDate], 
 [JobTicketItemView].[StockInfoExpiryDate] AS [StockInfoExpiryDate], 
-[JobTicketItemView].[StockInfoReceiptTicketNo] AS [StockInfoReceiptTicketNo]
+[JobTicketItemView].[StockInfoReceiptTicketNo] AS [StockInfoReceiptTicketNo], 
+[JobTicketItemView].[SupplyID] AS [SupplyID], 
+[JobTicketItemView].[ComponentID] AS [ComponentID]
 FROM [dbo].[JobTicketItemView] AS [JobTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="JobTicketView" EntityType="Self.JobTicketView" store:Type="Views" store:Schema="dbo">
@@ -2410,7 +2417,9 @@ FROM [dbo].[ReceiptTicketView] AS [ReceiptTicketView]</DefiningQuery>
 [ShipmentTicketItemView].[StockInfoInventoryDate] AS [StockInfoInventoryDate], 
 [ShipmentTicketItemView].[StockInfoManufactureDate] AS [StockInfoManufactureDate], 
 [ShipmentTicketItemView].[StockInfoExpiryDate] AS [StockInfoExpiryDate], 
-[ShipmentTicketItemView].[StockInfoReceiptTicketNo] AS [StockInfoReceiptTicketNo]
+[ShipmentTicketItemView].[StockInfoReceiptTicketNo] AS [StockInfoReceiptTicketNo], 
+[ShipmentTicketItemView].[SupplyID] AS [SupplyID], 
+[ShipmentTicketItemView].[ComponentID] AS [ComponentID]
 FROM [dbo].[ShipmentTicketItemView] AS [ShipmentTicketItemView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ShipmentTicketView" EntityType="Self.ShipmentTicketView" store:Type="Views" store:Schema="dbo">
@@ -2538,7 +2547,8 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[InventoryDate] AS [InventoryDate], 
 [StockInfoView].[SupplyID] AS [SupplyID], 
 [StockInfoView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
-[StockInfoView].[ScheduledShipmentAmount] AS [ScheduledShipmentAmount]
+[StockInfoView].[ScheduledShipmentAmount] AS [ScheduledShipmentAmount], 
+[StockInfoView].[ComponentID] AS [ComponentID]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -3760,6 +3770,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="StockInfoManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="StockInfoExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="StockInfoReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyID" Type="Int32" />
+          <Property Name="ComponentID" Type="Int32" />
         </EntityType>
         <EntityType Name="JobTicketView">
           <Key>
@@ -4194,6 +4206,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="StockInfoManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="StockInfoExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="StockInfoReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SupplyID" Type="Int32" />
+          <Property Name="ComponentID" Type="Int32" />
         </EntityType>
         <EntityType Name="ShipmentTicketView">
           <Key>
@@ -4329,6 +4343,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="SupplyID" Type="Int32" />
           <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledShipmentAmount" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <Property Name="ComponentID" Type="Int32" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -5616,6 +5631,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="JobTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.JobTicketItemView">
               <MappingFragment StoreEntitySet="JobTicketItemView">
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
                 <ScalarProperty Name="StockInfoReceiptTicketNo" ColumnName="StockInfoReceiptTicketNo" />
                 <ScalarProperty Name="StockInfoExpiryDate" ColumnName="StockInfoExpiryDate" />
                 <ScalarProperty Name="StockInfoManufactureDate" ColumnName="StockInfoManufactureDate" />
@@ -6045,6 +6062,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="ShipmentTicketItemView">
             <EntityTypeMapping TypeName="WMSModel.ShipmentTicketItemView">
               <MappingFragment StoreEntitySet="ShipmentTicketItemView">
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
+                <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />
                 <ScalarProperty Name="StockInfoReceiptTicketNo" ColumnName="StockInfoReceiptTicketNo" />
                 <ScalarProperty Name="StockInfoExpiryDate" ColumnName="StockInfoExpiryDate" />
                 <ScalarProperty Name="StockInfoManufactureDate" ColumnName="StockInfoManufactureDate" />
@@ -6180,6 +6199,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoView">
               <MappingFragment StoreEntitySet="StockInfoView">
+                <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
                 <ScalarProperty Name="ScheduledShipmentAmount" ColumnName="ScheduledShipmentAmount" />
                 <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />
                 <ScalarProperty Name="SupplyID" ColumnName="SupplyID" />

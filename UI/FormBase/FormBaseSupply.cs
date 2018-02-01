@@ -10,12 +10,13 @@ using unvell.ReoGrid;
 using WMS.DataAccess;
 using System.Threading;
 using System.Data.SqlClient;
+using System.Reflection;
+using System.Data.Entity;
 
 namespace WMS.UI
 {
     public partial class FormBaseSupply : Form
-    {
-        int newImportID = -1;
+    {        
         private WMSEntities wmsEntities = new WMSEntities();
         private int authority;
         private int authority_self = (int)Authority.BASE_COMPONENT;
@@ -24,6 +25,8 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
         int userID = -1;
+        string textSearchValue = null;
+        object itemComboBoxSelect = 0;
         private Supplier supplier = null;
         private string  contractst;   //合同状态
         private int contract_change = 1;
@@ -52,6 +55,7 @@ namespace WMS.UI
 
             this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlSupply, SupplyViewMetaData.supplykeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
+            this.pagerWidget.AddOrderBy("ID");
             pagerWidget.Show();
 
 
@@ -124,6 +128,9 @@ namespace WMS.UI
                 this.toolStripComboBoxSelect.Enabled = true;
                 this.buttonImport.Enabled = true;
                 this.buttonHistorySearch.Visible = true;
+
+                this.toolStripComboBoxSelect.SelectedItem = itemComboBoxSelect;
+                this.textBoxSearchValue.Text = textSearchValue;
                 if (this.contractst == "待审核")
                 {
                     this.toolStripButtonAdd.Enabled = false ;
@@ -168,6 +175,8 @@ namespace WMS.UI
                 MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            this.textSearchValue = this.textBoxSearchValue.Text;
+            this.itemComboBoxSelect = this.toolStripComboBoxSelect.SelectedItem;
             this.toolStripButtonAdd.Enabled = false;
             this.toolStripButtonAlter.Enabled = false;
             this.toolStripComboBoxSelect.Enabled = false;
@@ -499,6 +508,8 @@ namespace WMS.UI
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
+            int newImportID = -1;
+            List<int> Removei = new List<int>();
             //创建导入窗口
             StandardImportForm<Supply> formImport =
                 new StandardImportForm<Supply>
@@ -523,23 +534,24 @@ namespace WMS.UI
                         componentnames = componentNamesCount[0];
                         for (int i = 0; i < results.Count; i++)
                         {
-                            string suppliername;
-                            string componentname;
+                            Supply supply1 = null;
+                            string supplierName;
+                            string componentName;
                             string no;
                             no = results[i].No;
-                            suppliername = suppliernames[i];
-                            componentname = componentnames[i];
+                            supplierName = suppliernames[i];
+                            componentName = componentnames[i];
                             int importcomponenID=-1;
                             int importsupplierID=-1;
 
-                                if (suppliername.Length == 0)
+                                if (supplierName.Length == 0)
                                 {
                                     MessageBox.Show("第" + (i + 1) + "行供货商名称不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                                     return false;
                                 }
 
-                                if (componentname.Length == 0)
+                                if (componentName.Length == 0)
                                 {
                                     MessageBox.Show("第" + (i + 1) + "行零件名称不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -564,15 +576,15 @@ namespace WMS.UI
                             }
                             //检查数据库中同名
                             try
-                                {
-                                    try
+                            {
+                                try
                                     {
-                                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == suppliername && s.IsHistory == 0 select s).FirstOrDefault();
+                                        Supplier supplierID = (from s in this.wmsEntities.Supplier where s.Name == supplierName && s.IsHistory == 0 select s).FirstOrDefault();
                                         importsupplierID = supplierID.ID;
                                     }
                                     catch
                                     {
-                                        MessageBox.Show("您输入的第" + (i + 1) + "行供货商名称：" + suppliername + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        MessageBox.Show("您输入的第" + (i + 1) + "行供货商名称：" + supplierName + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                                         return false;
                                     }
@@ -580,12 +592,12 @@ namespace WMS.UI
 
                                     try
                                     {
-                                        DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentname select s).FirstOrDefault();
+                                        DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.Name == componentName select s).FirstOrDefault();
                                         importcomponenID = componenID.ID;
                                     }
                                     catch
                                     {
-                                        MessageBox.Show("您输入的第" + (i + 1) + "行零件名称：" + componentname + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        MessageBox.Show("您输入的第" + (i + 1) + "行零件名称：" + componentName + "不存在，请重新确认后输入", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                                         return false;
                                     }
@@ -598,13 +610,23 @@ namespace WMS.UI
                                                      select u).ToArray();
                                 if (sameNameSupply.Length > 0)
                                 {
-                                    messageBoxResult=MessageBox.Show("已存在相同代号供货条目：" + no+ "是否要保留历史信息?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+                                    
+                                    messageBoxResult = MessageBox.Show("已存在相同代号供货条目：" + no + ",是否要保留历史信息?", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation,
 
                                     MessageBoxDefaultButton.Button2);
+                                    if (messageBoxResult == DialogResult.Cancel)
+                                    {
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        Removei.Add(i);
+                                    }
+                                        Supply supply = null;
                                     if (messageBoxResult == DialogResult.Yes)
                                     {
-                                        
-                                        Supply supply = null;
+
+
                                         try
                                         {
                                             supply = (from s in this.wmsEntities.Supply
@@ -628,10 +650,9 @@ namespace WMS.UI
 
                                         try
                                         {
-                                            supply.ID=-1;
-                                            supply.PhotoIndex = "错了没有";
+                                            supply.ID = -1;
                                             supply.IsHistory = 1;
-                                            supply.NewestSupplyID =newImportID;
+                                            supply.NewestSupplyID = newImportID;
                                             supply.LastUpdateUserID = this.userID;
                                             supply.LastUpdateTime = DateTime.Now;
                                             wmsEntities.SaveChanges();
@@ -643,7 +664,7 @@ namespace WMS.UI
                                         }
 
                                         var supplystorge = (from u in wmsEntities.Supply
-                                                            where u.NewestSupplyID ==newImportID
+                                                            where u.NewestSupplyID == newImportID
                                                             select u).ToArray();
 
 
@@ -652,41 +673,86 @@ namespace WMS.UI
                                             MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         }
                                     }
+                                    try
+                                    {
+                                        supply1 = (from s in this.wmsEntities.Supply
+                                                   where s.No == no
+                                                    && s.ProjectID == this.projectID && s.WarehouseID == this.warehouseID
+                                                    && s.IsHistory == 0
+                                                   select s).FirstOrDefault();
+                                    }
+                                    catch
+                                    {
+                                        MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return false;
+                                    }
+                                    if (supply1 == null)
+                                    {
+                                        MessageBox.Show("历史零件信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return false;
+                                    }
+                                    PropertyInfo[] proAs = results[i].GetType().GetProperties();
+                                    PropertyInfo[] proBs = supply1.GetType().GetProperties();
+
+                                    for (int k = 0; k < proAs.Length; k++)
+                                    {
+                                        for (int j = 0; j < proBs.Length; j++)
+                                        {
+                                            if (proAs[k].Name == proBs[j].Name && proBs[j].Name != "ID" && proBs[j].Name != "SupplierID" && proBs[j].Name != "ComponentID" && proBs[j].Name != "Component")
+
+                                            {
+                                                object a = proAs[k].GetValue(results[i], null);
+                                                proBs[j].SetValue(supply1, a, null);
+                                            }
+                                        }
+                                    }
+                                    supply1.SupplierID = importsupplierID;
+                                    supply1.ComponentID = importcomponenID;
+
+                                    supply1.IsHistory = 0;
+                                    supply1.CreateTime = DateTime.Now;
+                                    supply1.CreateUserID = this.userID;
+                                    supply1.LastUpdateTime = DateTime.Now;
+                                    supply1.LastUpdateUserID = this.userID;
+                                    supply1.WarehouseID = this.warehouseID;
+                                    supply1.ProjectID = this.projectID;
+                                    wmsEntities.SaveChanges();
 
                                 }
 
-
-                                //var sameNameUsers = (from u in wmsEntities.Supply
-                                //                         where u.SupplierID == importsupplierID
-                                //                         && u.ComponentID == importcomponenID
-                                //                         && u.No == no
-                                //                         && u.ProjectID == this.projectID && u.WarehouseID == this.warehouseID
-                                //                         select u).ToArray();
-                                //    if (sameNameUsers.Length > 0)
-                                //    {
-                                //        MessageBox.Show("导入供应信息失败，已存在同名供应商——零件——代号供货条目：" + suppliername + "——" + componentname+"——"+no, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                //        return false;
-                                //    }
                             }
-                                catch
-                                {
+                            catch
+                            {
 
-                                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return false;
-                                }
-                                results[i].SupplierID = importsupplierID;
-                                results[i].ComponentID = importcomponenID;
+                                MessageBox.Show("操作失败，请检查网络连接4", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return false;
+                            }
 
-                                results[i].IsHistory = 0;
-                                results[i].CreateTime = DateTime.Now;
-                                results[i].CreateUserID = this.userID;
-                                results[i].LastUpdateTime = DateTime.Now;
-                                results[i].LastUpdateUserID = this.userID;
-                                results[i].WarehouseID = this.warehouseID;
-                                results[i].ProjectID = this.projectID;
-                            
+
+                            results[i].SupplierID = importsupplierID;
+                            results[i].ComponentID = importcomponenID;
+
+                            results[i].IsHistory = 0;
+                            results[i].CreateTime = DateTime.Now;
+                            results[i].CreateUserID = this.userID;
+                            results[i].LastUpdateTime = DateTime.Now;
+                            results[i].LastUpdateUserID = this.userID;
+                            results[i].WarehouseID = this.warehouseID;
+                            results[i].ProjectID = this.projectID;
+
+
+                            //历史信息设为0
+                            results[i].IsHistory = 0;
+
+
+                        }
+                        int length = Removei.ToArray().Length;
+                        for (int b = 0; b < length; b++)
+                        {
+                            results.RemoveAt(Removei.ToArray()[b] - b);
                         }
                         return true;
+
                     },
                     () => //参数3：导入完成回调函数
                     {
