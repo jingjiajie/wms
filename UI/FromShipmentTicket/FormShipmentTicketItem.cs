@@ -182,7 +182,7 @@ namespace WMS.UI
                             stockInfoView = (from s in wmsEntities.StockInfoView
                                              where s.ID == selectedStockInfoID
                                              select s).FirstOrDefault();
-                            supply = wmsEntities.Database.SqlQuery<Supply>(String.Format("SELECT * FROM Supply WHERE ID = (SELECT SupplyID FROM ReceiptTicketItem AS RI WHERE RI.ID = {0})",stockInfoView.ReceiptTicketItemID)).FirstOrDefault();
+                            supply = (from s in wmsEntities.Supply where s.ID == stockInfoView.SupplyID select s).FirstOrDefault();
                         }
                         catch
                         {
