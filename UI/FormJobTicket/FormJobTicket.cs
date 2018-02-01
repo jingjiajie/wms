@@ -116,7 +116,7 @@ namespace WMS.UI
                 MessageBox.Show("请选择要删除的项目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
+            WMSEntities wmsEntities = new WMSEntities();
             //如果被出库单引用了，不能删除
             try
             {
@@ -126,10 +126,10 @@ namespace WMS.UI
                     sbIDArray.Append(id + ",");
                 }
                 sbIDArray.Length--;
-                int countRef = this.wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM PutOutStorageTicket WHERE JobTicketID IN ({0})", sbIDArray.ToString())).Single();
+                int countRef = wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM PutOutStorageTicket WHERE JobTicketID IN ({0})", sbIDArray.ToString())).Single();
                 if (countRef > 0)
                 {
-                    MessageBox.Show("删除失败，不能删除被出库单引用的作业单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("删除失败，作业单被出库单引用，请先删除出库单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -139,7 +139,7 @@ namespace WMS.UI
                 return;
             }
 
-            if (MessageBox.Show("确定要删除选中项吗？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question)!= DialogResult.Yes)
+            if (MessageBox.Show("确定要删除选中项吗？\n重要提示：\n删除后所有零件的分配翻包数量将会退回发货单中，无视实际翻包数量！\n请谨慎操作！", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question)!= DialogResult.Yes)
             {
                 return;
             }
@@ -151,23 +151,24 @@ namespace WMS.UI
                     List<int> shipmentTicketIDs = new List<int>();
                     foreach (int id in ids)
                     {
-                        JobTicket jobTicket = (from j in this.wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
-                        foreach(JobTicketItem jobTicketItem in jobTicket.JobTicketItem)
+                        JobTicket jobTicket = (from j in wmsEntities.JobTicket where j.ID == id select j).FirstOrDefault();
+                        if (jobTicket.State != JobTicketViewMetaData.STRING_STATE_UNFINISHED)
                         {
-                            if(jobTicketItem.RealAmount > 0)
-                            {
-                                MessageBox.Show("删除失败，已完成翻包的作业单不能删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
+                            MessageBox.Show("删除失败，只能删除未完成翻包的作业单！\n如果需要强行删除，请使用修改功能将单据状态改为未完成", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        foreach (JobTicketItem jobTicketItem in jobTicket.JobTicketItem)
+                        {
                             ShipmentTicketItem shipmentTicketItem = (from s in wmsEntities.ShipmentTicketItem where s.ID == jobTicketItem.ShipmentTicketItemID select s).FirstOrDefault();
                             if (shipmentTicketItem == null) continue;
-                            shipmentTicketItem.ScheduledJobAmount -= (jobTicketItem.ScheduledAmount - (jobTicketItem.RealAmount ?? 0)) ?? 0;
+                            //如果删除作业单，则发货单直接把计划翻包数量的全部数量加回来，无视实际翻包数量
+                            shipmentTicketItem.ScheduledJobAmount -= ((jobTicketItem.ScheduledAmount ?? 0) * (jobTicketItem.UnitAmount ?? 1)) / (shipmentTicketItem.UnitAmount ?? 1);
                         }
                         if (jobTicket.ShipmentTicketID != null)
                         {
                             shipmentTicketIDs.Add(jobTicket.ShipmentTicketID.Value);
                         }
-                        this.wmsEntities.Database.ExecuteSqlCommand(string.Format("DELETE FROM JobTicket WHERE ID = {0}", id));
+                        wmsEntities.Database.ExecuteSqlCommand(string.Format("DELETE FROM JobTicket WHERE ID = {0}", id));
                     }
                     wmsEntities.SaveChanges();
                     foreach(int shipmentTicketID in shipmentTicketIDs)

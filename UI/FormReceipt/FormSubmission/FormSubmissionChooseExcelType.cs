@@ -86,6 +86,7 @@ namespace WMS.UI
             }
             formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             formPreview.Show();
+            this.Close();
         }
 
         private void buttonPass_Click(object sender, EventArgs e)

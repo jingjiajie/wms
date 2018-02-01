@@ -144,57 +144,56 @@ namespace WMS.UI
         private void buttonDelete_Click(object sender, EventArgs e)
         {
             int[] ids = this.GetSelectedIDs();
-            if(ids.Length == 0)
+            if (ids.Length == 0)
             {
-                MessageBox.Show("请选择要删除的项目","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择要删除的项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (MessageBox.Show("确定删除选中的项目吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show("确定删除选中的项目吗？\n重要提示：\n删除后所有零件的计划装车数量将会退回翻包作业单，无视实际装车数量！\n请谨慎操作！", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
-            new Thread(new ThreadStart(()=>
+
+            WMSEntities wmsEntities = new WMSEntities();
+            try
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
+                //删除每个选中的出库单
+                foreach (int id in ids)
                 {
-                    //删除每个选中的出库单
-                    foreach (int id in ids)
+                    PutOutStorageTicket putOutStorageTicket = (from p in wmsEntities.PutOutStorageTicket
+                                                               where p.ID == id
+                                                               select p).FirstOrDefault();
+                    if (putOutStorageTicket == null) continue;
+                    if (putOutStorageTicket.State != PutOutStorageTicketViewMetaData.STRING_STATE_NOT_LOADED)
                     {
-                        PutOutStorageTicket putOutStorageTicket = (from p in wmsEntities.PutOutStorageTicket
-                                                                   where p.ID == id
-                                                                   select p).FirstOrDefault();
-                        if (putOutStorageTicket == null) continue;
-                        //把没完成出库的条目在作业单的已分配出库数量里减去
-                        var items = putOutStorageTicket.PutOutStorageTicketItem;
-                        foreach(var item in items)
-                        {
-                            if(item.RealAmount > 0)
-                            {
-                                MessageBox.Show("删除失败，已完成装车的出库单不能删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
-                                                           where j.ID == item.JobTicketItemID
-                                                           select j).FirstOrDefault();
-                            if (jobTicketItem == null) continue;
-                            jobTicketItem.ScheduledPutOutAmount -= (item.ScheduledAmount - (item.RealAmount ?? 0)) ?? 0;
-                        }
-                        wmsEntities.PutOutStorageTicket.Remove(putOutStorageTicket);
+                        MessageBox.Show("删除失败，只能删除未装车的出库单！\n如果需要强行删除，请使用修改功能将出库单的状态改为未装车", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                    wmsEntities.SaveChanges();
+                    //把没完成出库的条目在作业单的已分配出库数量里减去
+                    var items = putOutStorageTicket.PutOutStorageTicketItem;
+                    foreach (var item in items)
+                    {
+                        JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
+                                                       where j.ID == item.JobTicketItemID
+                                                       select j).FirstOrDefault();
+                        if (jobTicketItem == null) continue;
+                        jobTicketItem.ScheduledPutOutAmount -= ((item.ScheduledAmount ?? 0) * (item.UnitAmount ?? 1)) / (jobTicketItem.UnitAmount ?? 1);
+                    }
+                    wmsEntities.PutOutStorageTicket.Remove(putOutStorageTicket);
                 }
-                catch
-                {
-                    MessageBox.Show("删除失败，请检查网络连接","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.Invoke(new Action(()=>
-                {
-                    this.Search(true);
-                }));
-                MessageBox.Show("删除成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            this.Invoke(new Action(() =>
+            {
+                this.Search(true);
+            }));
+            MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private int[] GetSelectedIDs()

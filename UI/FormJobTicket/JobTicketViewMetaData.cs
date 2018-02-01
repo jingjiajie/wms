@@ -21,6 +21,7 @@ namespace WMS.UI
             } },
             new KeyName(){Key="State",Name="状态",Editable=false,ComboBoxItems=new ComboBoxItem[]{
                 new ComboBoxItem(STRING_STATE_UNFINISHED),
+                new ComboBoxItem(STRING_STATE_PART_FINISHED),
                 new ComboBoxItem(STRING_STATE_ALL_FINISHED),
             } },
             new KeyName(){Key="JobGroupName",Name="作业组名称"},

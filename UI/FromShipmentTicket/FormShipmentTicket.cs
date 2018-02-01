@@ -178,7 +178,7 @@ namespace WMS.UI
                 int countRef = wmsEntities.Database.SqlQuery<int>(string.Format("SELECT COUNT(*) FROM JobTicket WHERE ShipmentTicketID IN ({0})",sbIDArray.ToString())).Single();
                 if (countRef > 0)
                 {
-                    MessageBox.Show("删除失败，不能删除被作业单引用的发货单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("删除失败，发货单被作业单引用，请先删除相应作业单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
