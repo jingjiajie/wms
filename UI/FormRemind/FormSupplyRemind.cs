@@ -48,13 +48,14 @@ namespace WMS.UI
 
         public static void HideForm()
         {
-            instance.timer.Stop();
+            
             if (instance == null)
             {
                 instance = new FormSupplyRemind();
 
             }
             if (instance.IsDisposed) return;
+            instance.timer.Stop();
             instance.Hide();
             instance.Opacity = 0;
             
@@ -66,12 +67,14 @@ namespace WMS.UI
         }
         public static void ShowForm()
         {
-            if(instance == null)
+
+            if (instance == null)
             {
                 instance = new FormSupplyRemind();
 
             }
             if (instance.IsDisposed) return;
+            instance.timer.Start();
             instance.Show();
             instance.Opacity = 100;
 
