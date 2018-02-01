@@ -64,7 +64,7 @@ namespace WMS.UI.FormReceipt
         {
             new KeyName(){Name="ID", Key="ID",Visible=false,Editable=false, Save = true},
             new KeyName(){Name="收货单ID", Key="ReceiptTicketID",Visible=false,Editable=false, Save = true},
-            new KeyName(){Name="送检单单号", Key="No",Visible=true,Editable=false, EditPlaceHolder = "自动生成"},
+            new KeyName(){Name="送检单单号", Key="No",Visible=true,Editable=true, EditPlaceHolder = "自动生成"},
             new KeyName(){Name="收货单单号", Key="ReceiptTicketNo", Visible = true, Editable = false, Save = false},
             new KeyName(){Name="状态", Key="State",Visible=true,Editable=false},
             new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=false, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("有", "有"), new ComboBoxItem("无", "无")} },
@@ -166,7 +166,7 @@ namespace WMS.UI.FormReceipt
         public static KeyName[] putawayTicketKeyName =
         {
             new KeyName{Name = "ID", Key = "ID", Visible = false, Editable = false, Save = true},
-            new KeyName{Name = "上架单编号", Key = "No", Visible = true, Editable = false, Save = true, EditPlaceHolder= "留空自动生成"},
+            new KeyName{Name = "上架单编号", Key = "No", Visible = true, Editable = true, Save = true, EditPlaceHolder= "留空自动生成"},
             new KeyName{Name = "单据类型", Key = "Type", Visible = true, Editable = true, Save = true, GetAllValueToComboBox = "PutawayTicket.Type"},
             new KeyName{Name = "收货单ID", Key = "ReceiptTicketID", Visible = false, Editable = false, Save = true},
             new KeyName{Name = "收货单编号", Key = "ReceiptTicketNo", Visible = true, Editable = false, Save = false},
