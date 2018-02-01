@@ -450,7 +450,7 @@ namespace WMS.UI
             if (this.supplierid == -1)
             {
 
-                FormSupplyRemind.RemindStockinfo();
+                
 
                 FormSupplyRemind.SetFormHidedCallback(() =>
                 {
@@ -460,6 +460,7 @@ namespace WMS.UI
                 {
                     this.button2.Visible = false ;
                 });
+                FormSupplyRemind.RemindStockinfo();
             }
           
             else if (this.supplierid != -1)
@@ -890,7 +891,8 @@ namespace WMS.UI
 
         private void button1_Click(object sender, EventArgs e)
         {
-           FormSupplyRemind.RemindStockinfo();
+           //FormSupplyRemind.RemindStockinfo();
+           FormSupplyRemind.RemindStockinfoClick();
            //this.button2.Visible = false;
            this.Run = true;
            this.Run1 = true;         
