@@ -12,11 +12,11 @@ namespace WMS.UI
 {
     public partial class FormPutOutTicketChooseExcelType : Form
     {
-        int putOutStorageTicketID = -1;
-        public FormPutOutTicketChooseExcelType(int putOutStorageTicketID)
+        int[] putOutStorageTicketIDs = null;
+        public FormPutOutTicketChooseExcelType(int[] putOutStorageTicketIDs)
         {
             InitializeComponent();
-            this.putOutStorageTicketID = putOutStorageTicketID;
+            this.putOutStorageTicketIDs = putOutStorageTicketIDs;
         }
 
         private void FormPutOutTicketChooseExcelType_Load(object sender, EventArgs e)
@@ -27,22 +27,61 @@ namespace WMS.UI
         private void buttonCover_Click(object sender, EventArgs e)
         {
             StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("发货单预览");
-            if (formPreview.SetPatternTable(@"Excel\patternPutOutStorageTicketNormal.xlsx") == false)
+            WMSEntities wmsEntities = new WMSEntities();
+            foreach (int id in this.putOutStorageTicketIDs)
             {
-                this.Close();
-                return;
+                PutOutStorageTicketView putOutStorageTicketView = null;
+                ShipmentTicketView shipmentTicketView = null;
+                PutOutStorageTicketItemView[] putOutStorageTicketItemViews = null;
+                try
+                {
+                    putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
+                                               where p.ID == id
+                                               select p).FirstOrDefault();
+                    putOutStorageTicketItemViews =
+                        (from p in wmsEntities.PutOutStorageTicketItemView
+                         where p.PutOutStorageTicketID == putOutStorageTicketView.ID
+                         select p).ToArray();
+                    if (putOutStorageTicketView == null)
+                    {
+                        MessageBox.Show("出库单"+ putOutStorageTicketView.No+ "不存在，可能已被删除，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    shipmentTicketView =
+                        wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
+                                                                    (SELECT ShipmentTicketID FROM JobTicket
+                                                                    WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
+                }
+                catch
+                {
+                    MessageBox.Show("加载失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string worksheetName = id.ToString();
+                if (formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketNormal.xlsx", worksheetName) == false)
+                {
+                    this.Close();
+                    return;
+                }
+                formPreview.AddData("putOutStorageTicket", putOutStorageTicketView, worksheetName);
+                formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketItemViews,worksheetName);
+                formPreview.AddData("shipmentTicket", shipmentTicketView, worksheetName);
+                formPreview.SetPrintScale(0.9F,worksheetName);
             }
+            formPreview.Show();
+            this.Close();
+        }
 
-            PutOutStorageTicketView putOutStorageTicketView = null;
-            ShipmentTicketView shipmentTicketView = null;
-            PutOutStorageTicketItemView[] putOutStorageTicketItemViews = null;
-            try
+        private void buttonInner_Click(object sender, EventArgs e)
+        {
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
+            WMSEntities wmsEntities = new WMSEntities();
+            foreach(int id in putOutStorageTicketIDs)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
-                                           where p.ID == this.putOutStorageTicketID
-                                           select p).FirstOrDefault();
-                putOutStorageTicketItemViews =
+                PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
+                                                                   where p.ID == id
+                                                                   select p).FirstOrDefault();
+                PutOutStorageTicketItemView[] putOutStorageTicketTiemViews =
                     (from p in wmsEntities.PutOutStorageTicketItemView
                      where p.PutOutStorageTicketID == putOutStorageTicketView.ID
                      select p).ToArray();
@@ -51,54 +90,20 @@ namespace WMS.UI
                     MessageBox.Show("出库单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                shipmentTicketView =
+                ShipmentTicketView shipmentTicketView =
                     wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
-                                                                    (SELECT ShipmentTicketID FROM JobTicket
-                                                                    WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
-            }
-            catch
-            {
-                MessageBox.Show("加载失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            formPreview.AddData("putOutStorageTicket", putOutStorageTicketView);
-            formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketItemViews);
-            formPreview.AddData("shipmentTicket", shipmentTicketView);
-            formPreview.SetPrintScale(0.9F);
-            formPreview.Show();
-            this.Close();
-        }
-
-        private void buttonInner_Click(object sender, EventArgs e)
-        {
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
-            if (formPreview.SetPatternTable(@"Excel\patternPutOutStorageTicketCover.xlsx") == false)
-            {
-                this.Close();
-                return;
-            }
-            WMSEntities wmsEntities = new WMSEntities();
-            PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
-                                                               where p.ID == this.putOutStorageTicketID
-                                                               select p).FirstOrDefault();
-            PutOutStorageTicketItemView[] putOutStorageTicketTiemViews =
-                (from p in wmsEntities.PutOutStorageTicketItemView
-                 where p.PutOutStorageTicketID == putOutStorageTicketView.ID
-                 select p).ToArray();
-            if (putOutStorageTicketView == null)
-            {
-                MessageBox.Show("出库单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            ShipmentTicketView shipmentTicketView =
-                wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
                                                     (SELECT ShipmentTicketID FROM JobTicket
                                                         WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
-
-            formPreview.AddData("putOutStorageTicket", putOutStorageTicketView);
-            formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketTiemViews);
-            formPreview.AddData("shipmentTicket", shipmentTicketView);
+                string worksheetName = id.ToString();
+                if (formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketCover.xlsx", worksheetName) == false)
+                {
+                    this.Close();
+                    return;
+                }
+                formPreview.AddData("putOutStorageTicket", putOutStorageTicketView, worksheetName);
+                formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketTiemViews,worksheetName);
+                formPreview.AddData("shipmentTicket", shipmentTicketView, worksheetName);
+            }
             formPreview.Show();
             this.Close();
         }
@@ -106,32 +111,37 @@ namespace WMS.UI
         private void buttonZhongDu_Click(object sender, EventArgs e)
         {
             StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
-            if (formPreview.SetPatternTable(@"Excel\patternPutOutStorageTicketZhongDu.xlsx") == false)
-            {
-                this.Close();
-                return;
-            }
+
             WMSEntities wmsEntities = new WMSEntities();
-            PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
-                                                               where p.ID == this.putOutStorageTicketID
-                                                               select p).FirstOrDefault();
-            PutOutStorageTicketItemView[] putOutStorageTicketTiemViews =
-                (from p in wmsEntities.PutOutStorageTicketItemView
-                 where p.PutOutStorageTicketID == putOutStorageTicketView.ID
-                 select p).ToArray();
-            if (putOutStorageTicketView == null)
+            foreach (int id in putOutStorageTicketIDs)
             {
-                MessageBox.Show("出库单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            ShipmentTicketView shipmentTicketView =
-                wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
+                PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
+                                                                   where p.ID == id
+                                                                   select p).FirstOrDefault();
+                PutOutStorageTicketItemView[] putOutStorageTicketTiemViews =
+                    (from p in wmsEntities.PutOutStorageTicketItemView
+                     where p.PutOutStorageTicketID == putOutStorageTicketView.ID
+                     select p).ToArray();
+                if (putOutStorageTicketView == null)
+                {
+                    MessageBox.Show("出库单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                ShipmentTicketView shipmentTicketView =
+                    wmsEntities.Database.SqlQuery<ShipmentTicketView>(string.Format(@"SELECT * FROM ShipmentTicketView WHERE ID = 
                                                     (SELECT ShipmentTicketID FROM JobTicket
                                                         WHERE JobTicket.ID = {0})", putOutStorageTicketView.JobTicketID)).FirstOrDefault();
 
-            formPreview.AddData("putOutStorageTicket", putOutStorageTicketView);
-            formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketTiemViews);
-            formPreview.AddData("shipmentTicket", shipmentTicketView);
+                string worksheetName = id.ToString();
+                if (formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketZhongDu.xlsx",worksheetName) == false)
+                {
+                    this.Close();
+                    return;
+                }
+                formPreview.AddData("putOutStorageTicket", putOutStorageTicketView, worksheetName);
+                formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketTiemViews,worksheetName);
+                formPreview.AddData("shipmentTicket", shipmentTicketView,worksheetName);
+            }
             formPreview.Show();
             this.Close();
         }
@@ -140,8 +150,15 @@ namespace WMS.UI
         {
             StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库单预览");
             WMSEntities wmsEntities = new WMSEntities();
+            if(putOutStorageTicketIDs.Length > 1)
+            {
+                MessageBox.Show("摩比斯格式暂不支持批量打印", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.Close();
+                return;
+            }
+            int id = putOutStorageTicketIDs[0];
             PutOutStorageTicketView putOutStorageTicketView = (from p in wmsEntities.PutOutStorageTicketView
-                                                               where p.ID == this.putOutStorageTicketID
+                                                               where p.ID == id
                                                                select p).FirstOrDefault();
             PutOutStorageTicketItemView[] putOutStorageTicketItemViews =
                 (from p in wmsEntities.PutOutStorageTicketItemView

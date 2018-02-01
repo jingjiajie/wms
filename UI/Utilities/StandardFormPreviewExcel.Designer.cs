@@ -63,6 +63,7 @@
             this.reoGridControlMain.Size = new System.Drawing.Size(1074, 499);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
+            this.reoGridControlMain.CurrentWorksheetChanged += new System.EventHandler(this.reoGridControlMain_CurrentWorksheetChanged);
             // 
             // toolStripTop
             // 
@@ -90,7 +91,7 @@
             // 
             this.buttonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(80, 27);
+            this.buttonExport.Size = new System.Drawing.Size(123, 27);
             this.buttonExport.Text = "导出Excel";
             this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
@@ -103,7 +104,7 @@
             // 
             this.buttonPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonPrint.Name = "buttonPrint";
-            this.buttonPrint.Size = new System.Drawing.Size(73, 27);
+            this.buttonPrint.Size = new System.Drawing.Size(114, 27);
             this.buttonPrint.Text = "打印单据";
             this.buttonPrint.Click += new System.EventHandler(this.buttonPrint_Click);
             // 
@@ -115,7 +116,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(114, 27);
+            this.toolStripLabel1.Size = new System.Drawing.Size(182, 27);
             this.toolStripLabel1.Text = "打印缩放比例：";
             // 
             // textBoxScale
@@ -133,7 +134,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(24, 27);
+            this.toolStripLabel2.Size = new System.Drawing.Size(38, 27);
             this.toolStripLabel2.Text = "倍";
             // 
             // tableLayoutPanel1
@@ -153,7 +154,7 @@
             // 
             // StandardFormPreviewExcel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1074, 529);
             this.Controls.Add(this.tableLayoutPanel1);

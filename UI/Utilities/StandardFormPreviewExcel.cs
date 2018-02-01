@@ -19,35 +19,50 @@ namespace WMS.UI
     {
         ExcelGenerator excelGenerator = new ExcelGenerator();
         bool loadFinished = false;
-        float defaultPrintScale = 1;
 
+        Dictionary<string, float> defaultPrintScales = new Dictionary<string, float>();
         Dictionary<string, Worksheet> patternTables = new Dictionary<string, Worksheet>();
         Dictionary<string, Dictionary<string, object>> data = new Dictionary<string, Dictionary<string, object>>();
 
-        public StandardFormPreviewExcel(string formTitle,float printScale = 1.0F)
+        public StandardFormPreviewExcel(string formTitle, float printScale = 1.0F)
         {
             InitializeComponent();
             this.Text = formTitle;
             this.SetPrintScale(printScale);
         }
 
-        public void SetPrintScale(float scale)
+        public void SetPrintScale(float scale, string worksheetName = "sheet1")
         {
             if (this.loadFinished == false)
             {
-                this.defaultPrintScale = scale;
+                if (this.defaultPrintScales.ContainsKey(worksheetName))
+                {
+                    this.defaultPrintScales[worksheetName] = scale;
+                }
+                else
+                {
+                    this.defaultPrintScales.Add(worksheetName, scale);
+                }
             }
             else
             {
-                var worksheet = this.reoGridControlMain.CurrentWorksheet;
-                worksheet.PrintSettings.PageScaling = scale;
-                worksheet.AutoSplitPage();
-                this.textBoxScale.Text = scale.ToString();
+                foreach (var worksheet in this.reoGridControlMain.Worksheets)
+                {
+                    if (worksheet.Name == worksheetName)
+                    {
+                        if (worksheet.PrintSettings.PageScaling == scale) break; //如果放大倍数没变，就不用再调整一次了
+                        worksheet.PrintSettings.PageScaling = scale;
+                        worksheet.AutoSplitPage();
+                        break;
+                    }
+                }
+                this.textBoxScale.Text = this.reoGridControlMain.CurrentWorksheet.PrintSettings.PageScaling.ToString();
             }
         }
 
         private void StandardFormPreviewExcel_Load(object sender, EventArgs e)
         {
+            loadFinished = true;
             try
             {
                 this.reoGridControlMain.Worksheets.Clear();
@@ -65,7 +80,13 @@ namespace WMS.UI
                     }
                     Worksheet newWorksheet = this.excelGenerator.Generate();
                     newWorksheet.Name = sheetName;
+                    newWorksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
+                    newWorksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
                     this.reoGridControlMain.Worksheets.Add(newWorksheet);
+                    if (this.defaultPrintScales.ContainsKey(sheetName))
+                    {
+                        this.SetPrintScale(this.defaultPrintScales[sheetName], sheetName);
+                    }
                 }
             }
             catch (Exception ex)
@@ -73,12 +94,6 @@ namespace WMS.UI
                 MessageBox.Show("生成报表错误：" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var worksheet = this.reoGridControlMain.CurrentWorksheet;
-            if (worksheet == null) return;
-            worksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
-            worksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
-            loadFinished = true;
-            this.SetPrintScale(this.defaultPrintScale);
         }
 
         public bool AddPatternTable(string filePath, string sheetName = "sheet1")
@@ -106,9 +121,9 @@ namespace WMS.UI
             return this.AddPatternTable(filePath);
         }
 
-        public void AddData<T>(string name, T data,string sheetName = "sheet1")
+        public void AddData<T>(string name, T data, string sheetName = "sheet1")
         {
-            if (this.data.ContainsKey(sheetName)==false)
+            if (this.data.ContainsKey(sheetName) == false)
             {
                 this.data.Add(sheetName, new Dictionary<string, object>());
             }
@@ -131,7 +146,7 @@ namespace WMS.UI
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "Excel文件|.xlsx";
-            if(dialog.ShowDialog() != DialogResult.OK)
+            if (dialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
@@ -173,7 +188,14 @@ namespace WMS.UI
                 if (pd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     doc.PrinterSettings = pd.PrinterSettings;
-                    doc.Print();
+                    try
+                    {
+                        doc.Print();
+                    }
+                    catch
+                    {
+                        if (doc != null) doc.Dispose();
+                    }
                 }
             }
 
@@ -182,11 +204,11 @@ namespace WMS.UI
 
         private void textBoxScale_TextChanged(object sender, EventArgs e)
         {
-            if (float.TryParse(this.textBoxScale.Text,out float printScale) == false)
+            if (float.TryParse(this.textBoxScale.Text, out float printScale) == false)
             {
                 return;
             }
-            this.SetPrintScale(printScale);
+            this.SetPrintScale(printScale, this.reoGridControlMain.CurrentWorksheet.Name);
         }
 
         private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
@@ -205,14 +227,14 @@ namespace WMS.UI
             {
                 return;
             }
-            if(printScale <= 0)
+            if (printScale <= 0)
             {
                 return;
             }
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Right)
             {
                 printScale += 0.1F;
-                this.textBoxScale.Text = string.Format("{0:0.##}",printScale);
+                this.textBoxScale.Text = string.Format("{0:0.##}", printScale);
             }
             else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Left)
             {
@@ -224,6 +246,18 @@ namespace WMS.UI
         private void textBoxScale_KeyUp(object sender, KeyEventArgs e)
         {
 
+        }
+
+        private void reoGridControlMain_CurrentWorksheetChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                this.textBoxScale.Text = this.reoGridControlMain.CurrentWorksheet.PrintSettings.PageScaling.ToString();
+            }
+            catch
+            {
+                //如果已经关闭窗口，这里会抛异常。直接返回即可
+            }
         }
     }
 }

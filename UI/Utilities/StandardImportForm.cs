@@ -256,6 +256,15 @@ namespace WMS.UI
             return true;
         }
 
+        //private void RemoveEmptyLines(Worksheet worksheet)
+        //{
+        //    bool isTailEmptyLines = true; //末尾的几十行空行不能删
+        //    for(int i = worksheet.Rows - 1; i >= 0; i--)
+        //    {
+
+        //    }
+        //}
+
         private T[] MakeObjectByReoGridImport<T>(out int[] emptyLines,out string errorMessage) where T : new()
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
@@ -435,7 +444,7 @@ namespace WMS.UI
             //如果输入的名字是空的，直接抛出异常。这儿不允许传入空的
             if (string.IsNullOrWhiteSpace(supplyNoOrComponentName))
             {
-                throw new Exception("GetSupplyOrComponentAmbiguous()函数不允许传入空的零件名字（代号）！空格也不行！请使用string.IsNullOrWhiteSpace()自行判空");
+                throw new Exception("GetSupplyOrComponent()函数不允许传入空的零件名字（代号）！空格也不行！请使用string.IsNullOrWhiteSpace()自行判空");
             }
             //首先精确查询，如果没有，再模糊查询
             component = (from c in wmsEntities.Component
