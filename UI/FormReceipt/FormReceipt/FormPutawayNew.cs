@@ -375,6 +375,7 @@ namespace WMS.UI.FormReceipt
                             //putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
 
                             ////////////////////////////
+
                             if (string.IsNullOrWhiteSpace(putawayTicket.No))
                             {
                                 if (putawayTicket.CreateTime.HasValue == false)
@@ -608,6 +609,7 @@ namespace WMS.UI.FormReceipt
                 //根据零件名称或代号获取相应的零件或Supply
                 if (Utilities.GetSupplyOrComponentAmbiguous(supplyNoName, out DataAccess.Component component, out Supply supply, out string errorMessage, receiptTicket.SupplierID.Value, wmsEntities) == false)
                 {
+
                     MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
@@ -845,6 +847,7 @@ namespace WMS.UI.FormReceipt
                 //putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
 
                 ////////////////////////////
+
                 if (string.IsNullOrWhiteSpace(putawayTicket.No))
                 {
                     if (putawayTicket.CreateTime.HasValue == false)
@@ -893,7 +896,7 @@ namespace WMS.UI.FormReceipt
                 if (rti.HasPutwayAmount < rti.UnitCount || rti.HasPutwayAmount == null)
                 {
                     PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
-                    
+
                     putawayTicketItem.ReceiptTicketItemID = rti.ID;
                     putawayTicketItem.ScheduledMoveCount = rti.UnitCount - (rti.HasPutwayAmount == null ? 0 : (decimal)rti.HasPutwayAmount);
                     rti.HasPutwayAmount = rti.UnitCount;
@@ -933,6 +936,7 @@ namespace WMS.UI.FormReceipt
                         //putawayTicket.No = Utilities.GenerateNo("P", putawayTicket.ID);
 
                         ////////////////////////////
+
                         if (string.IsNullOrWhiteSpace(putawayTicket.No))
                         {
                             if (putawayTicket.CreateTime.HasValue == false)
@@ -955,7 +959,7 @@ namespace WMS.UI.FormReceipt
                         }
 
                         ///////////////////////////////////////////////////////////////
-                        foreach(PutawayTicketItem pti in putawayTicketItemList)
+                        foreach (PutawayTicketItem pti in putawayTicketItemList)
                         {
                             pti.PutawayTicketID = putawayTicket.ID;
                         }
