@@ -190,29 +190,27 @@ namespace WMS.UI
         private void buttonGeneratePutOutStorageTicket_Click(object sender, EventArgs e)
         {
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-            if (ids.Length != 1)
-            {
-                MessageBox.Show("请选择一项进行操作", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            int jobTicketID = ids[0];
             WMSEntities wmsEntities = new WMSEntities();
-            JobTicket jobTicket = (from j in wmsEntities.JobTicket where j.ID == jobTicketID select j).FirstOrDefault();
-            if(jobTicket == null)
+
+            foreach (int jobTicketID in ids)
             {
-                MessageBox.Show("选中作业单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (jobTicket.State != JobTicketViewMetaData.STRING_STATE_ALL_FINISHED)
-            {
-                if (MessageBox.Show("选中作业单未全部完成，确定生成出库单吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) 
+                JobTicket jobTicket = (from j in wmsEntities.JobTicket where j.ID == jobTicketID select j).FirstOrDefault();
+                if (jobTicket == null)
                 {
+                    MessageBox.Show("选中作业单不存在，可能已被删除，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+                if (jobTicket.State != JobTicketViewMetaData.STRING_STATE_ALL_FINISHED)
+                {
+                    if (MessageBox.Show("选中作业单未全部完成，确定生成出库单吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+                FormPutOutStorageTicketNew form = new FormPutOutStorageTicketNew(jobTicketID, this.userID, this.projectID, this.warehouseID);
+                form.SetToPutOutStorageTicketCallback(this.toPutOutStorageTicketCallback);
+                form.Show();
             }
-            FormPutOutStorageTicketNew form = new FormPutOutStorageTicketNew(jobTicketID, this.userID, this.projectID, this.warehouseID);
-            form.SetToPutOutStorageTicketCallback(this.toPutOutStorageTicketCallback);
-            form.Show();
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)

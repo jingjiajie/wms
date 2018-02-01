@@ -729,15 +729,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:安途丰达WMS系统"
-        "ProductCode" = "8:{7B517450-579E-46CA-92A7-C7EDF5A9E5EE}"
-        "PackageCode" = "8:{798708CE-4746-4B99-ACB3-957933C08359}"
+        "ProductCode" = "8:{903882AC-B0F6-4660-ADF9-2D7FDBAA6AEB}"
+        "PackageCode" = "8:{31E2FC71-73D9-43EA-BD3D-F5A2B4C74266}"
         "UpgradeCode" = "8:{4AC616AA-E624-47D0-AEEF-E71E7B7654FC}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.1.1"
         "Manufacturer" = "8:BJUT"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -852,7 +852,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_61711852C860427FA4629FB3DFE1D02E"
             {
-            "Name" = "8:安途丰达WMS 测试版本127"
+            "Name" = "8:安途丰达WMS 测试版本201"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

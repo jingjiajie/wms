@@ -223,16 +223,12 @@ namespace WMS.UI
         private void buttonGenerateJobTicket_Click(object sender, EventArgs e)
         {
             int[] ids = this.GetSelectedIDs();
-            if(ids.Length != 1)
+            foreach (int shipmentTicketID in ids)
             {
-                MessageBox.Show("请选择一项进行操作","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                FormJobTicketNew form = new FormJobTicketNew(shipmentTicketID, this.userID, this.projectID, this.warehouseID);
+                form.SetToJobTicketCallback(this.toJobTicketCallback);
+                form.Show();
             }
-            int shipmentTicketID = ids[0];
-
-            FormJobTicketNew form = new FormJobTicketNew(shipmentTicketID,this.userID,this.projectID,this.warehouseID);
-            form.SetToJobTicketCallback(this.toJobTicketCallback);
-            form.Show();
         }
 
         private int[] GetSelectedIDs()

@@ -370,4 +370,161 @@ namespace WMS.UI
             }
         }
     }
+
+    public partial class Utilities
+    {
+        public static bool GetPersonByNameAmbiguous(string name,out Person person,out string errorMessage,WMSEntities wmsEntities = null)
+        {
+            if (wmsEntities == null) wmsEntities = new WMSEntities();
+            //如果输入的名字是空的，直接抛出异常。这儿不允许传入空的
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception("GetPersonByNameAmbiguous()函数不允许传入空的零件名字（代号）！空格也不行！请使用string.IsNullOrWhiteSpace()自行判空");
+            }
+            //首先精确查询，如果没有，再模糊查询
+            person = (from p in wmsEntities.Person
+                      where p.Name == name
+                      select p).FirstOrDefault();
+            //如果搜到了，直接返回
+            if(person != null)
+            {
+                errorMessage = null;
+                return true;
+            }
+            //如果没搜到，模糊搜索
+            Person[] persons = (from p in wmsEntities.Person
+                              where p.Name.Contains(name)
+                              select p).ToArray();
+            //如果模糊搜索也没搜到，提示错误
+            if(persons.Length == 0)
+            {
+                person = null;
+                errorMessage = "未找到人员：" + name;
+                return false;
+            }
+            //正好一个就太好了，直接返回这一个
+            if(persons.Length == 1)
+            {
+                person = persons[0];
+                errorMessage = null;
+                return true;
+            }
+            else //如果搜到了多个，那就得让用户选是哪一个了
+            {
+                Person selectedPerson =
+                       FormChooseAmbiguousPerson.ChoosePerson(
+                       persons,
+                       name);
+                if (selectedPerson == null)
+                {
+                    errorMessage = "用户取消了导入";
+                    return false;
+                }
+                else
+                {
+                    person = selectedPerson;
+                    errorMessage = null;
+                    return true;
+                }
+            }
+        }
+
+        public static bool GetSupplyOrComponentAmbiguous(string supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, int supplierID = -1, WMSEntities wmsEntities = null)
+        {
+            if (wmsEntities == null) wmsEntities = new WMSEntities();
+            //如果输入的名字是空的，直接抛出异常。这儿不允许传入空的
+            if (string.IsNullOrWhiteSpace(supplyNoOrComponentName))
+            {
+                throw new Exception("GetSupplyOrComponentAmbiguous()函数不允许传入空的零件名字（代号）！空格也不行！请使用string.IsNullOrWhiteSpace()自行判空");
+            }
+            //首先精确查询，如果没有，再模糊查询
+            component = (from c in wmsEntities.Component
+                         where c.Name == supplyNoOrComponentName
+                         && (from s in wmsEntities.Supply
+                             where s.ComponentID == c.ID
+                             && s.ProjectID == GlobalData.ProjectID
+                             && s.WarehouseID == GlobalData.WarehouseID
+                             && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                             select s).Count() > 0
+                         select c).FirstOrDefault();
+            supply = (from s in wmsEntities.Supply
+                      where s.No == supplyNoOrComponentName
+                      && s.ProjectID == GlobalData.ProjectID
+                      && s.WarehouseID == GlobalData.WarehouseID
+                      && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                      && s.IsHistory == 0
+                      select s).FirstOrDefault();
+            if (component == null && supply == null)
+            {
+                //模糊查询供货
+                Supply[] supplies = (from s in wmsEntities.Supply
+                                     where s.No.Contains(supplyNoOrComponentName)
+                                     && s.ProjectID == GlobalData.ProjectID
+                                     && s.WarehouseID == GlobalData.WarehouseID
+                                     && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                                     && s.IsHistory == 0
+                                     select s).ToArray();
+                //模糊查询零件
+                DataAccess.Component[] components = (from c in wmsEntities.Component
+                                                     where c.Name.Contains(supplyNoOrComponentName)
+                                                     && (from s in wmsEntities.Supply
+                                                         where s.ComponentID == c.ID
+                                                         && s.ProjectID == GlobalData.ProjectID
+                                                         && s.WarehouseID == GlobalData.WarehouseID
+                                                         && s.SupplierID == (supplierID == -1 ? s.SupplierID : supplierID)
+                                                         select s).Count() > 0
+                                                     select c).ToArray();
+
+                if (supplies.Length + components.Length == 0)
+                {
+                    component = null;
+                    supply = null;
+                    errorMessage = "未找到零件：" + supplyNoOrComponentName;
+                    return false;
+                }
+                //Supply或Component不唯一的情况
+                if (supplies.Length + components.Length != 1)
+                {
+                    object selectedObj =
+                        FormChooseAmbiguousSupplyOrComponent.ChooseAmbiguousSupplyOrComponent(
+                        components,
+                        supplies,
+                        supplyNoOrComponentName);
+                    if (selectedObj == null)
+                    {
+                        errorMessage = "用户取消了导入";
+                        return false;
+                    }
+                    else if (selectedObj is DataAccess.Component)
+                    {
+                        component = selectedObj as DataAccess.Component;
+                    }
+                    else if (selectedObj is Supply)
+                    {
+                        supply = selectedObj as Supply;
+                    }
+                    else
+                    {
+                        throw new Exception("FormChooseAmbiguousSupplyOrComponent返回值类型错误");
+                    }
+                    errorMessage = null;
+                    return true;
+                }
+
+                //如果搜索到唯一的零件/供货，则确定就是它。
+                if (supplies.Length > 0)
+                {
+                    supply = supplies[0];
+                }
+                else
+                {
+                    component = components[0];
+                }
+                errorMessage = null;
+                return true;
+            }
+            errorMessage = null;
+            return true;
+        }
+    }
 }

@@ -606,7 +606,7 @@ namespace WMS.UI.FormReceipt
                     return false;
                 }
                 //根据零件名称或代号获取相应的零件或Supply
-                if (Utilities.GetSupplyOrComponent(supplyNoName, out DataAccess.Component component, out Supply supply, out string errorMessage, receiptTicket.SupplierID.Value, wmsEntities) == false)
+                if (Utilities.GetSupplyOrComponentAmbiguous(supplyNoName, out DataAccess.Component component, out Supply supply, out string errorMessage, receiptTicket.SupplierID.Value, wmsEntities) == false)
                 {
                     MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;

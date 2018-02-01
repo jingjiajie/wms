@@ -642,7 +642,7 @@ namespace WMS.UI
                     string jobPersonName = unimportedColumns["JobPersonName"][i];
                     string confirmPersonName = unimportedColumns["ConfirmPersonName"][i];
                     //封装的根据 零件名/供货代号 获取 零件/供货的函数
-                    if(Utilities.GetSupplyOrComponent(supplyNoOrComponentName,out DataAccess.Component component,out Supply supply,out string errorMessage,-1,wmsEntities)==false)
+                    if(Utilities.GetSupplyOrComponentAmbiguous(supplyNoOrComponentName,out DataAccess.Component component,out Supply supply,out string errorMessage,-1,wmsEntities)==false)
                     {
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
@@ -676,10 +676,9 @@ namespace WMS.UI
                     //搜索作业人名
                     if (string.IsNullOrWhiteSpace(jobPersonName) == false)
                     {
-                        Person jobPerson = (from p in wmsEntities.Person where p.Name == jobPersonName select p).FirstOrDefault();
-                        if (jobPerson == null)
+                        if (Utilities.GetPersonByNameAmbiguous(jobPersonName, out Person jobPerson, out errorMessage, wmsEntities) == false) 
                         {
-                            MessageBox.Show(string.Format("行{0}：作业人员\"{1}\"不存在！", i + 1, jobPersonName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return false;
                         }
                         jobPersonID = jobPerson.ID;
@@ -687,10 +686,9 @@ namespace WMS.UI
                     //搜索确认人名
                     if (string.IsNullOrWhiteSpace(confirmPersonName) == false)
                     {
-                        Person confirmPerson = (from p in wmsEntities.Person where p.Name == confirmPersonName select p).FirstOrDefault();
-                        if (confirmPerson == null)
+                        if (Utilities.GetPersonByNameAmbiguous(confirmPersonName, out Person confirmPerson, out errorMessage, wmsEntities) == false)
                         {
-                            MessageBox.Show(string.Format("行{0}：确认人员\"{1}\"不存在！", i + 1, confirmPersonName), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return false;
                         }
                         confirmPersonID = confirmPerson.ID;

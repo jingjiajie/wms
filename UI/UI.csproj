@@ -140,11 +140,17 @@
     <Compile Include="FormBase\FormSupplierModify.Designer.cs">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\FormChooseAmbiguousItem.cs">
+    <Compile Include="Utilities\FormChooseAmbiguousPerson.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Utilities\FormChooseAmbiguousItem.Designer.cs">
-      <DependentUpon>FormChooseAmbiguousItem.cs</DependentUpon>
+    <Compile Include="Utilities\FormChooseAmbiguousPerson.Designer.cs">
+      <DependentUpon>FormChooseAmbiguousPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\FormChooseAmbiguousSupplyOrComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\FormChooseAmbiguousSupplyOrComponent.Designer.cs">
+      <DependentUpon>FormChooseAmbiguousSupplyOrComponent.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\StandardImportForm.cs">
       <SubType>Form</SubType>
@@ -527,8 +533,11 @@
     <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Utilities\FormChooseAmbiguousItem.resx">
-      <DependentUpon>FormChooseAmbiguousItem.cs</DependentUpon>
+    <EmbeddedResource Include="Utilities\FormChooseAmbiguousPerson.resx">
+      <DependentUpon>FormChooseAmbiguousPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\FormChooseAmbiguousSupplyOrComponent.resx">
+      <DependentUpon>FormChooseAmbiguousSupplyOrComponent.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\StandardImportForm.resx">
       <DependentUpon>StandardImportForm.cs</DependentUpon>

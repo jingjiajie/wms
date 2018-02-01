@@ -129,6 +129,7 @@ namespace WMS.UI
             {
                 MessageBox.Show("登录失效，操作失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            this.Text = string.Format("生成翻包作业单（发货单号：{0}）", shipmentTicket.No);
             this.Controls.Find("textBoxCreateUserUsername", true)[0].Text = user.Username;
             this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
             this.Controls.Find("textBoxShipmentTicketNo", true)[0].Text = shipmentTicket.No;
@@ -428,7 +429,7 @@ namespace WMS.UI
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].ScheduleJobAmount * results[i].UnitAmount;
                     //封装的根据 零件名/供货代号 获取 零件/供货的函数
-                    if (Utilities.GetSupplyOrComponent(supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, -1,wmsEntities) == false)
+                    if (Utilities.GetSupplyOrComponentAmbiguous(supplyNoOrComponentName, out DataAccess.Component component, out Supply supply, out string errorMessage, -1,wmsEntities) == false)
                     {
                         MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
