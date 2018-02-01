@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using WMS.DataAccess;
 using WMS.UI.FormBase;
+using System.Threading;
 
 namespace WMS.UI.FormReceipt
 {
@@ -348,7 +349,12 @@ namespace WMS.UI.FormReceipt
             if (this.formMode == FormMode.ALTER)
             {
 
-                ReceiptTicket receiptTicket = (from rt in this.wmsEntities.ReceiptTicket where rt.ID == this.ID select rt).Single();
+                ReceiptTicket receiptTicket = (from rt in this.wmsEntities.ReceiptTicket where rt.ID == this.ID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("该收货单可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 string errorInfo;
                 if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicket, ReceiptMetaData.receiptNameKeys, out errorInfo) == false)
                 {
@@ -358,6 +364,7 @@ namespace WMS.UI.FormReceipt
                 //wmsEntities.ReceiptTicket.Add(receiptTicket);
                 else
                 {
+                    
                     oldState = receiptTicket.State;
                     if (Utilities.CopyComboBoxsToProperties(this, receiptTicket, ReceiptMetaData.receiptNameKeys) == false)
                     {
@@ -455,8 +462,19 @@ namespace WMS.UI.FormReceipt
                             }
                         }
                     }
-
-                    wmsEntities.SaveChanges();
+                    ReceiptTicketItem[] receiptTicketItem = receiptTicket.ReceiptTicketItem.ToArray();
+                    foreach(ReceiptTicketItem s in receiptTicketItem)
+                    {
+                        StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == s.ID select si).FirstOrDefault();
+                        if (stockInfo != null)
+                        {
+                            stockInfo.ReceiptTicketNo = receiptTicket.No;
+                        }
+                    }
+                    new Thread(() => 
+                    {
+                        wmsEntities.SaveChanges();
+                    }).Start();
                     //MessageBox.Show("Successful!");
                 }
             }

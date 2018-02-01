@@ -54,5 +54,7 @@ namespace WMS.DataAccess
         public Nullable<int> ReceivePersonID { get; set; }
         public Nullable<System.DateTime> SubmissionDate { get; set; }
         public Nullable<System.DateTime> PaintTime { get; set; }
+        public string ReceiptTicketInwardDeliverTicketNo { get; set; }
+        public string ReceiptTicketInwardDeliverLineNo { get; set; }
     }
 }
