@@ -55,6 +55,7 @@ namespace WMS.UI
 
             this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlSupply, SupplyViewMetaData.supplykeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
+            this.pagerWidget.AddOrderBy("ID");
             pagerWidget.Show();
 
 
