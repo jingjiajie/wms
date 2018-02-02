@@ -196,16 +196,16 @@
   <data name="buttonDeliver.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAIWSURBVDhP3dH7S1NxGMfxb9HKsJM/BDmXc9e0tp3jWQjL
-        EWWti1sxgiBaCBmxJv3SIqIwYzAwiFUIOiMwrRGlkbTogluFEgwmQVhZQRfoIrMxyTxlLdr49KgH9j/4
-        wOuXL7wfHviyeTZCZKTYHs1w6/u+LDVvb/KHT6t+xW6ppYGrGinWrZPil/VS/JJeehwxSH7v1q9yJs+5
-        Z66qeHqyLvFdUr/MZYoPdqc+9TIgRz6St2SEJMkLhgvHaiCXNIHBIu3t1HQiD4wCsKQBtq9tejjEsrPx
-        EImRe6Sf3GcINAo/5Jqxxe1vejsn8vhJ8RRxj9GC+tZM4iz7i1cUPCR3yMxFEdLH0LzfVFigu/nhT/9v
-        4NDrLBxD31A6TAt2tqaTAbrgOQXRuWg27iLXGY67DYUFio53KUV0EuzuP7AHFCeJKzjx5AhdEJ8LcIWE
-        STvpWQCfS52Vc5rw1Gf2CFgeeorSPX6s8J6HrrYeu2x67N5sxBaxDO4NlXCIKrhsWuzdZoFoVI3KNWNm
-        XxBlTRehXKWHZ50OTrMWayuUOHy0BQd8Z7Ba2IRFXAU2Oj3QCA5wmnKcqObG5Zw+YUdRS51aEVzCWD7U
-        1oGTp5pRwnE5QRDe26zWcZEXB8tVKnT1XENDQyOWKUtueAwra+W8MKZqm3eNwSjxFl7ied5JTwsJ7WXM
-        aq3pNOoNkslkGuPt9qqZt3kxjP0HnZkej4E/rG4AAAAASUVORK5CYII=
+        YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAIWSURBVDhP3dHtS1NhGMfxu2hl2MkXQc7TNnc209p2jscQ
+        liPKWmVbJUEQLQSFmEpvWkEUZowEg7InmI5emNaIcoS0qKRNQomERRBWVpAEPchUJpmnrIWOX5d6YP+D
+        F3ze3PC9uOBmi2yk0GC2I5LkNoe/rbTurve1neV/R8N65ektgxLtMCqxG4ISCwpKb8ik+Lw7v6uZOhdf
+        uYuiY5PlAz8U/duZZHZNR+JLFwNmyWfykQySOHnDcOVEKdSSxt+XZbyfmB5IA0MAbOMAO3xtOn6Jpebj
+        fhIlj0g3eczgrxZ/qjVjywMfuoITafyieIpUjtCCiubkiwvsH95R0EMekLmLQiTM0HDEklkg3Bv+2/0H
+        OPo+BWf/GHJf0oK9zeNxP13wmoLIQjQft5M7DCf3mzMLNIFPCU1kEuzhDNgTiuPEdX7i2TG6ILYQ4CZp
+        IwHSuQS1bl1KzWlap76yXmB1y3PkHvRhjfcyhLI92Gc34cD2AuyQ81C5pRBOmYfbbsShXTbIBfyQWjNm
+        rWtCXv1VaNeZ4NkkwGU1YqNBi9rjjaiuO4f10jYs4wzY6vIgX3KCy9fhVDE3qub0CRVZjeV6TdMKxtIt
+        11tx+kwDcjhuVpKkYbssj8qi3KfjebR33kZVVQ1WaXPuesxry9Q8M5Ziu3eDyayINlERRdFFT0sJ7WWs
+        pKQ0aBZMisViGREdjqK5t0UxjP0HSJUeaj2GrtsAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="buttonPreview.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

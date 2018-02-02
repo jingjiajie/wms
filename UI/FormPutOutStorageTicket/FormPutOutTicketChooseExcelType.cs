@@ -268,6 +268,43 @@ namespace WMS.UI
             buttonNormal.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
         }
 
+        private void buttonZhongDuFlow_Click(object sender, EventArgs e)
+        {
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("出库流水预览");
 
+            WMSEntities wmsEntities = new WMSEntities();
+            List<PutOutStorageTicketItemView> items = new List<PutOutStorageTicketItemView>();
+            foreach (int id in putOutStorageTicketIDs)
+            {
+                PutOutStorageTicketItemView[] putOutStorageTicketItemViews =
+                    (from p in wmsEntities.PutOutStorageTicketItemView
+                     where p.PutOutStorageTicketID == id
+                     select p).ToArray();
+                items.AddRange(putOutStorageTicketItemViews);
+            }
+            if (formPreview.AddPatternTable(@"Excel\patternPutOutStorageTicketZhongDuFlow.xlsx") == false)
+            {
+                this.Close();
+                return;
+            }
+            formPreview.AddData("putOutStorageTicketItems", items.ToArray());
+            formPreview.Show();
+            this.Close();
+        }
+
+        private void buttonZhongDuFlow_MouseDown(object sender, MouseEventArgs e)
+        {
+            buttonZhongDuFlow.BackgroundImage = WMS.UI.Properties.Resources.bottonB3_q;
+        }
+
+        private void buttonZhongDuFlow_MouseEnter(object sender, EventArgs e)
+        {
+            buttonZhongDuFlow.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_s;
+        }
+
+        private void buttonZhongDuFlow_MouseLeave(object sender, EventArgs e)
+        {
+            buttonZhongDuFlow.BackgroundImage = WMS.UI.Properties.Resources.bottonB2_q;
+        }
     }
 }

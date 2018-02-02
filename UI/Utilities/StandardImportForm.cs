@@ -316,8 +316,15 @@ namespace WMS.UI
             {
                 this.formAssociate.Hide();
             }
-            //刷新默认值
-            this.RefreshDefaultValue(new int[] { worksheet.SelectionRange.Row });
+            //刷新默认值，刷新原选区的第一行和新选区所有行
+            List<int> refreshRows = new List<int>();
+            refreshRows.Add(worksheet.SelectionRange.Row);
+            for(int i = e.StartRow; i <= e.EndRow; i++)
+            {
+                if (refreshRows.Contains(i)) continue;
+                refreshRows.Add(i);
+            }
+            this.RefreshDefaultValue(refreshRows.ToArray());
             //设置联想框SQL
             if(this.formAssociate != null)
             {

@@ -295,5 +295,6 @@ namespace WMS.UI
             FormPutOutTicketChooseExcelType form = new FormPutOutTicketChooseExcelType(ids);
             form.Show();
         }
+
     }
 }
