@@ -97,7 +97,7 @@ namespace WMS.UI
                         sqlCommand.Parameters.Add(parameter);
                         SqlDataReader dataReader = sqlCommand.ExecuteReader();
                         sqlCommand.Parameters.Clear();
-                        while (dataReader.Read())
+                        for (int i = 0; i < 30 && dataReader.Read(); i++) //最多显示30条数据
                         {
                             this.listBox.Items.Add(dataReader.GetValue(0).ToString());
                         }

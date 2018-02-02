@@ -394,6 +394,8 @@ namespace WMS.UI
 
             standardImportForm.AddAssociation("SupplyNoOrComponentName", string.Format("SELECT No FROM Supply WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND No LIKE '%'+@value+'%'; ", this.projectID, this.warehouseID));
             standardImportForm.AddAssociation("SupplyNoOrComponentName", string.Format("SELECT ComponentName FROM SupplyView WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND ComponentName LIKE '%'+@value+'%'; ", this.projectID, this.warehouseID));
+            standardImportForm.AddAssociation("JobPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
+            standardImportForm.AddAssociation("ConfirmPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
             this.standardImportForm.Show();
         }
 
