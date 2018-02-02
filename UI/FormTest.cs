@@ -14,13 +14,67 @@ namespace WMS.UI
         public FormTest()
         {
             InitializeComponent();
+            this.reoGridControlMain.PreviewKeyDown += ReoGridControlMain_PreviewKeyDown;
+            this.reoGridControlMain.KeyDown += ReoGridControlMain_KeyDown;
+            this.reoGridControlMain.CurrentWorksheet.SelectionRangeChanging += CurrentWorksheet_SelectionRangeChanging;
+            this.reoGridControlMain.CurrentWorksheet.SelectionRangeChanged += CurrentWorksheet_SelectionRangeChanged;
+            this.reoGridControlMain.CurrentWorksheet.BeforeCellKeyDown += CurrentWorksheet_BeforeCellKeyDown;
+            this.reoGridControlMain.CurrentWorksheet.AfterCellKeyDown += CurrentWorksheet_AfterCellKeyDown;
+            this.reoGridControlMain.CurrentWorksheet.BeforeSelectionRangeChange += CurrentWorksheet_BeforeSelectionRangeChange;
+            this.reoGridControlMain.MouseDown += ReoGridControlMain_MouseDown;
+            this.reoGridControlMain.CurrentWorksheet.CellMouseDown += CurrentWorksheet_CellMouseDown;
         }
+
+        private void CurrentWorksheet_CellMouseDown(object sender, unvell.ReoGrid.Events.CellMouseEventArgs e)
+        {
+            Console.WriteLine("CellMouseDown");
+        }
+
+        private void ReoGridControlMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("MouseDown");
+        }
+
+        private void CurrentWorksheet_BeforeSelectionRangeChange(object sender, unvell.ReoGrid.Events.BeforeSelectionChangeEventArgs e)
+        {
+            Console.WriteLine("Before SelectionRange Change");
+        }
+
+        private void CurrentWorksheet_AfterCellKeyDown(object sender, unvell.ReoGrid.Events.AfterCellKeyDownEventArgs e)
+        {
+            Console.WriteLine("AfterCellKeyDown");
+        }
+
+        private void CurrentWorksheet_BeforeCellKeyDown(object sender, unvell.ReoGrid.Events.BeforeCellKeyDownEventArgs e)
+        {
+            e.IsCancelled = true;
+            Console.WriteLine("BeforeCellKeyDown");
+        }
+
+        private void CurrentWorksheet_SelectionRangeChanged(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        {
+            Console.WriteLine("SelectionRangeChanged");
+        }
+
+        private void CurrentWorksheet_SelectionRangeChanging(object sender, unvell.ReoGrid.Events.RangeEventArgs e)
+        {
+            Console.WriteLine("SelectionRangeChanging");
+        }
+
+        private void ReoGridControlMain_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            Console.WriteLine("Preview Key Down!");
+        }
+
 
         private void FormTest_Load(object sender, EventArgs e)
         {
-            this.reoGridControlMain.Load(@"C:\Users\jonas\Desktop\a.xlsx");
-            var worksheet = this.reoGridControlMain.Worksheets[0];
-            worksheet.InsertRows(6, 10);
+
+        }
+
+        private void ReoGridControlMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            Console.WriteLine("Key Down!");
         }
 
         private void reoGridControlMain_LostFocus(object sender, EventArgs e)
@@ -32,6 +86,11 @@ namespace WMS.UI
         {
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.EndEdit(new unvell.ReoGrid.EndEditReason());
+        }
+
+        private void reoGridControlMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            Console.WriteLine("MouseDown");
         }
     }
 }

@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Data.Entity;
 using System.Threading;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 namespace WMS.UI
 {
@@ -29,7 +30,14 @@ namespace WMS.UI
 
         //Key和列号的对应关系
         private Dictionary<string, int> keyColumn = new Dictionary<string, int>();
+        //默认值设置
         private List<KeySQL> keyDefaultValueSQL = new List<KeySQL>();
+        //联想设置 key:列号 value:sql列表（要是对于一个列有多个联想sql，就加多项）
+        private Dictionary<int, List<string>> columnAssociation = new Dictionary<int, List<string>>();
+
+        private FormAssociate formAssociate = null;
+        private TextBox inputTextBox = null;
+        private bool canChangeSelectionRange = true;
 
         //public StandardImportForm(KeyName[] keyNames, Func<TargetClass[], Dictionary<string, string[]>, bool> importHandler,Action importFinishedCallback,string formTitle = "导入信息")
         //{
@@ -47,13 +55,13 @@ namespace WMS.UI
             this.listImportHandler = importHandler;
             this.importFinishedCallback = importFinishedCallback;
             this.Text = formTitle;
+            this.InitReoGridImport();
         }
 
         private void StandardImportForm_Load(object sender, EventArgs e)
         {
             this.comboBoxImeMode.SelectedIndex = 0;
             this.Icon = System.Drawing.Icon.FromHandle(Properties.Resources._20180114034630784_easyicon_net_64.GetHicon());
-            this.InitReoGridImport();
         }
 
         private void buttonImport_Click(object sender, EventArgs e)
@@ -62,6 +70,7 @@ namespace WMS.UI
             formLoading.Show();
             var worksheet = this.reoGridControlMain.Worksheets[0];
             worksheet.EndEdit(new EndEditReason());
+            RemoveEmptyLines(worksheet);
             var result = this.MakeObjectByReoGridImport<TargetClass>(out int[] emptyLines,out string errorMessage);
             if (result == null)
             {
@@ -178,15 +187,158 @@ namespace WMS.UI
                 }
             }
             worksheet.Columns = importVisibleKeyNames.Length; //限制表的长度
-            //设置表格输入形式为文本
-            worksheet.SetRangeDataFormat(RangePosition.EntireRange, unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text);
+            //禁止自动分析文本格式
+            worksheet.SetSettings(WorksheetSettings.Edit_AutoFormatCell, false);
+            //worksheet.SetRangeDataFormat(RangePosition.EntireRange, unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text);
             worksheet.BeforeSelectionRangeChange += Worksheet_BeforeSelectionRangeChange;
+            worksheet.CellEditTextChanging += worksheet_CellEditTextChanging; //编辑时联想
+            worksheet.CellMouseDown += worksheet_CellMouseDown;
+        }
+
+        private void worksheet_CellMouseDown(object sender, unvell.ReoGrid.Events.CellMouseEventArgs e)
+        {
+            this.canChangeSelectionRange = true;
+        }
+
+        private void worksheet_CellEditTextChanging(object sender, unvell.ReoGrid.Events.CellEditTextChangingEventArgs e)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            if (worksheet.CellEditText == "") return;
+            //初始化联想窗口
+            new Thread(()=>
+            {
+                //否则基于TextBox开始联想
+                if (this.inputTextBox == null)
+                {
+                    //如果输入焦点不是TextBox而是ReoGrid，则等待100毫秒，等TextBox肯定创建出来了，再试一次。
+                    if (Utilities.GetFocus() == this.reoGridControlMain.Handle)
+                    {
+                        Thread.Sleep(100);
+                        if (Utilities.GetFocus() == this.reoGridControlMain.Handle) return;
+                    }
+                    this.Invoke(new Action(()=>
+                    {
+                        //ReoGrid自动生成的TextBox。把联想绑到这个上面
+                        foreach(Control control in this.reoGridControlMain.Controls)
+                        {
+                            if(control is TextBox && control.Name == "")
+                            {
+                                inputTextBox = control as TextBox;
+                            }
+                        }
+                        if (this.inputTextBox == null) return;
+                        inputTextBox.Font = new Font(worksheet.EditingCell.Style.FontName, worksheet.EditingCell.Style.FontSize + 1);
+                        this.inputTextBox.VisibleChanged += inputTextBox_VisibleChanged;
+                        this.inputTextBox.TextChanged += inputTextBox_TextChanged;
+                        this.inputTextBox.PreviewKeyDown += InputTextBox_PreviewKeyDown;
+                        this.formAssociate = new FormAssociate(inputTextBox);
+                        this.formAssociate.ClearAssociationSQL();
+                        if (this.columnAssociation.ContainsKey(worksheet.SelectionRange.Col))
+                        {
+                            foreach (string sql in this.columnAssociation[worksheet.SelectionRange.Col])
+                            {
+                                this.formAssociate.AddAssociationSQL(sql);
+                            }
+                        }
+                        this.formAssociate.RefreshAssociation();
+                    }));
+                }
+            }).Start();
+        }
+
+        private void inputTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(inputTextBox.Text) == false && this.formAssociate.Visible == false)
+            {
+                this.formAssociate.RefreshAssociation();
+            }
+        }
+
+        private volatile bool isWaitingShow = false;
+        private void inputTextBox_VisibleChanged(object sender, EventArgs e)
+        {
+            //只处理上下键选联想项的情况。此时canChangeSelectionRange=false
+            if (canChangeSelectionRange == true)
+            {
+                return;
+            }
+            //只处理从显示到隐藏。不处理显示
+            if (inputTextBox.Visible == true)
+            {
+                return;
+            }
+            new Thread(() =>
+            {
+                if (isWaitingShow) return;
+                isWaitingShow = true;
+                while (this.reoGridControlMain.CurrentWorksheet.IsEditing) //Reogrid太tm坑了！无奈只能等着它结束编辑，再重新开启
+                {
+                    Console.WriteLine("Waiting for end edit");
+                    Thread.Sleep(1);
+                }
+                //必须是当前不能移动选区并且编辑框被隐藏，才需要重新显示编辑框开始编辑
+                if (!(this.canChangeSelectionRange == false && this.inputTextBox.Visible == false))
+                {
+                    isWaitingShow = false;
+                    return;
+                }
+                this.Invoke(new Action(() =>
+                {
+                    //重新启动编辑的时候不触发本事件
+                    this.inputTextBox.VisibleChanged -= this.inputTextBox_VisibleChanged;
+                    this.reoGridControlMain.CurrentWorksheet.StartEdit();
+                    this.inputTextBox.VisibleChanged += this.inputTextBox_VisibleChanged;
+                    if (formAssociate.Selected == false)
+                    {
+                        this.formAssociate.Show();
+                    }
+                    else
+                    {
+                        this.formAssociate.Hide();
+                    }
+                }));
+                isWaitingShow = false;
+            }).Start();
+        }
+
+        private void InputTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||e.KeyCode == Keys.Enter) && this.formAssociate != null && this.formAssociate.Visible == true)
+            {
+                this.canChangeSelectionRange = false;
+            }
+            else
+            {
+                this.canChangeSelectionRange = true;
+            }
         }
 
         private void Worksheet_BeforeSelectionRangeChange(object sender, unvell.ReoGrid.Events.BeforeSelectionChangeEventArgs e)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            if (this.canChangeSelectionRange == false)
+            {
+                e.IsCancelled = true;
+                return;
+            }
+            if(this.formAssociate != null && this.formAssociate.IsDisposed == false)
+            {
+                this.formAssociate.Hide();
+            }
+            //刷新默认值
             this.RefreshDefaultValue(new int[] { worksheet.SelectionRange.Row });
+            //设置联想框SQL
+            if(this.formAssociate != null)
+            {
+                this.formAssociate.ClearAssociationSQL();
+                if (this.columnAssociation.ContainsKey(e.StartCol))
+                {
+                    foreach (string sql in this.columnAssociation[e.StartCol])
+                    {
+                        this.formAssociate.AddAssociationSQL(sql);
+                    }
+                }
+            }
         }
 
         private WMSEntities globalWMSEntities = new WMSEntities();
@@ -244,6 +396,23 @@ namespace WMS.UI
             });
         }
 
+        public void AddAssociation(string key,string sql)
+        {
+            if (this.keyColumn.ContainsKey(key) == false)
+            {
+                throw new Exception("导入表格中不包含"+key+"字段！请检查程序");
+            }
+            int column = this.keyColumn[key];
+            if (this.columnAssociation.ContainsKey(column))
+            {
+                this.columnAssociation[column].Add(sql);
+            }
+            else
+            {
+                this.columnAssociation.Add(column, new List<string>(new string[] { sql }));
+            }
+        }
+
         private bool IsEmptyLine(Worksheet worksheet,int row)
         {
             for(int i = 0; i < worksheet.Columns; i++)
@@ -256,14 +425,51 @@ namespace WMS.UI
             return true;
         }
 
-        //private void RemoveEmptyLines(Worksheet worksheet)
-        //{
-        //    bool isTailEmptyLines = true; //末尾的几十行空行不能删
-        //    for(int i = worksheet.Rows - 1; i >= 0; i--)
-        //    {
-
-        //    }
-        //}
+        private void RemoveEmptyLines(Worksheet worksheet)
+        {
+            Stack<Tuple<int, int>> emptyRowAndCount = new Stack<Tuple<int, int>>(); //空行和连续几行
+            bool isTailEmptyLines = true; //末尾的几十行空行不能删
+            for (int i = worksheet.Rows - 1; i >= 0; i--)
+            {
+                //从后往前循环，如果遇到一个非空行，则将开始记录后续空行
+                if(isTailEmptyLines && IsEmptyLine(worksheet, i) == false)
+                {
+                    isTailEmptyLines = false;
+                    continue;
+                }
+                //如果遇到空行，则记录
+                if(isTailEmptyLines==false && IsEmptyLine(worksheet, i) == true)
+                {
+                    //若没有记录，则新增一条
+                    if (emptyRowAndCount.Count == 0)
+                    {
+                        emptyRowAndCount.Push(new Tuple<int, int>(i, 1));
+                    }
+                    else //若已经有相邻行记录，则更新相邻行记录的count+1，否则新增记录
+                    {
+                        var topElem = emptyRowAndCount.Pop();
+                        Tuple<int, int> newElem;
+                        int row = topElem.Item1;
+                        int count = topElem.Item2;
+                        if(row == i + 1)
+                        {
+                            newElem = new Tuple<int, int>(i, count + 1);
+                            emptyRowAndCount.Push(newElem);
+                        }
+                        else
+                        {
+                            newElem = new Tuple<int, int>(i, 1);
+                            emptyRowAndCount.Push(topElem);
+                            emptyRowAndCount.Push(newElem);
+                        }
+                    }
+                }
+            }
+            foreach(var item in emptyRowAndCount.Reverse())
+            {
+                worksheet.DeleteRows(item.Item1, item.Item2);
+            }
+        }
 
         private T[] MakeObjectByReoGridImport<T>(out int[] emptyLines,out string errorMessage) where T : new()
         {
@@ -354,6 +560,7 @@ namespace WMS.UI
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             if (worksheet.SelectionRange.IsSingleCell == false) return;
             if (e.Control) return;
+
             Keys[] dontEditkeys = new Keys[]
             {
                 Keys.ControlKey,
@@ -369,13 +576,27 @@ namespace WMS.UI
                 Keys.Left,
                 Keys.Right,
                 Keys.PageDown,
-                Keys.PageUp
+                Keys.PageUp,
+                Keys.Enter
             };
             if (dontEditkeys.Contains(e.KeyCode)) return;
             if (worksheet.IsEditing == false)
             {
                 worksheet[worksheet.SelectionRange.StartPos] = "";
                 worksheet.StartEdit();
+            }
+        }
+
+        private void worksheet_BeforeCellKeyDown_Cancel(object sender, unvell.ReoGrid.Events.BeforeCellKeyDownEventArgs e)
+        {
+            e.IsCancelled = true;
+        }
+
+        private void StandardImportForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (this.formAssociate.IsDisposed == false)
+            {
+                this.formAssociate.Close();
             }
         }
     }

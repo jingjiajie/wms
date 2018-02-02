@@ -18,6 +18,21 @@ namespace WMS.UI
         [DllImport("user32")]
         public static extern int SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
 
+        [DllImport("user32")]
+        public static extern bool GetCaretPos(out Point lpPoint);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetFocus();
+
+        [DllImport("user32.dll")]
+        public static extern void ClientToScreen(IntPtr hWnd, out Point p);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetActiveWindow();//获得当前活动窗体
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SetActiveWindow(IntPtr hwnd);//设置活动窗体
+
         public static object[] GetValuesByPropertieNames<T>(T obj, string[] keys)
         {
             Type objType = typeof(T);
@@ -720,6 +735,7 @@ namespace WMS.UI
                 property.SetValue(targetObject, srcValue, null);
             }
         }
+
     }
 
     class Translator

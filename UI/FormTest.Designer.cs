@@ -50,6 +50,7 @@
             this.reoGridControlMain.Size = new System.Drawing.Size(1361, 857);
             this.reoGridControlMain.TabIndex = 4;
             this.reoGridControlMain.Text = "reoGridControl1";
+            this.reoGridControlMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.reoGridControlMain_MouseDown);
             // 
             // FormTest
             // 

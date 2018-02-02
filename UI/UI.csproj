@@ -140,6 +140,12 @@
     <Compile Include="FormBase\FormSupplierModify.Designer.cs">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\FormAssociate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Utilities\FormAssociate.Designer.cs">
+      <DependentUpon>FormAssociate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\FormChooseAmbiguousPerson.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -532,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\FormAssociate.resx">
+      <DependentUpon>FormAssociate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FormChooseAmbiguousPerson.resx">
       <DependentUpon>FormChooseAmbiguousPerson.cs</DependentUpon>
