@@ -73,6 +73,7 @@ namespace WMS.UI
             this.RefreshAssociation();
         }
 
+        private DateTime newestListBoxDataTime = DateTime.Now;
         public void RefreshAssociation()
         {
             if (string.IsNullOrWhiteSpace(textBox.Text) || this.sqls.Count == 0)
@@ -82,6 +83,8 @@ namespace WMS.UI
             }
             new Thread(() =>
             {
+                DateTime threadStartTime = DateTime.Now;
+                this.newestListBoxDataTime = threadStartTime;
                 try
                 {
                     SqlConnection connection = (SqlConnection)globalWMSEntities.Database.Connection;
@@ -90,26 +93,34 @@ namespace WMS.UI
                         connection.Open();
                     }
                     SqlParameter parameter = new SqlParameter("@value", textBox.Text);
-                    this.listBox.Items.Clear();
+                    List<string> data = new List<string>(); //存储返回结果
                     foreach (string sql in this.sqls)
                     {
                         SqlCommand sqlCommand = new SqlCommand(sql, connection);
                         sqlCommand.Parameters.Add(parameter);
                         SqlDataReader dataReader = sqlCommand.ExecuteReader();
                         sqlCommand.Parameters.Clear();
-                        for (int i = 0; i < 30 && dataReader.Read(); i++) //最多显示30条数据
+                        while (data.Count < 30 && dataReader.Read()) //最多显示30条数据
                         {
-                            this.listBox.Items.Add(dataReader.GetValue(0).ToString());
+                            data.Add(dataReader.GetValue(0).ToString());
                         }
                     }
-                    if (this.listBox.Items.Count == 0)
+                    if(this.newestListBoxDataTime > threadStartTime)
                     {
-                        this.Hide();
+                        return;
                     }
-                    else if (this.Visible == false && textBox.Visible == true)
-                    {
-                        this.Show();
-                    }
+                    this.Invoke(new Action(() =>{
+                        this.listBox.Items.Clear();
+                        this.listBox.Items.AddRange(data.ToArray());
+                        if (data.Count == 0)
+                        {
+                            this.Hide();
+                        }
+                        else if (this.Visible == false && textBox.Visible == true)
+                        {
+                            this.Show();
+                        }
+                    }));
                 }
                 catch
                 {

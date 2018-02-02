@@ -229,7 +229,6 @@ namespace WMS.UI
                         if (this.inputTextBox == null) return;
                         inputTextBox.Font = new Font(worksheet.EditingCell.Style.FontName, worksheet.EditingCell.Style.FontSize + 1);
                         this.inputTextBox.VisibleChanged += inputTextBox_VisibleChanged;
-                        this.inputTextBox.TextChanged += inputTextBox_TextChanged;
                         this.inputTextBox.PreviewKeyDown += InputTextBox_PreviewKeyDown;
                         this.formAssociate = new FormAssociate(inputTextBox);
                         this.formAssociate.ClearAssociationSQL();
@@ -244,14 +243,6 @@ namespace WMS.UI
                     }));
                 }
             }).Start();
-        }
-
-        private void inputTextBox_TextChanged(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(inputTextBox.Text) == false && this.formAssociate.Visible == false)
-            {
-                this.formAssociate.RefreshAssociation();
-            }
         }
 
         private volatile bool isWaitingShow = false;
@@ -594,7 +585,7 @@ namespace WMS.UI
 
         private void StandardImportForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (this.formAssociate.IsDisposed == false)
+            if (this.formAssociate != null && this.formAssociate.IsDisposed == false)
             {
                 this.formAssociate.Close();
             }
