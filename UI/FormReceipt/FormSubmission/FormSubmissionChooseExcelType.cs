@@ -12,16 +12,15 @@ namespace WMS.UI
 {
     public partial class FormSubmissionChooseExcelType : Form
     {
-        private SubmissionTicket submissionTicket;
-
+        private int[] ids;
         public FormSubmissionChooseExcelType()
         {
             InitializeComponent();
         }
-        public FormSubmissionChooseExcelType(SubmissionTicket submissionTicket)
+        public FormSubmissionChooseExcelType(int[] ids)
         {
             InitializeComponent();
-            this.submissionTicket = submissionTicket;
+            this.ids = ids;
         }
 
         private void FormSubmissionChooseExcelType_Load(object sender, EventArgs e)
@@ -29,104 +28,188 @@ namespace WMS.UI
 
         }
 
-        private void buttonAll_Click(object sender, EventArgs e)
+        private SubmissionTicket[] idsToSubmissionTickets(int[] ids)
         {
-            
-            SubmissionTicket submissionTicket;
+            List<SubmissionTicket> submissionTicketList = new List<SubmissionTicket>();
             try
             {
-                submissionTicket = AddPreviewTime(this.submissionTicket.ID);
+                WMSEntities wmsEntities = new WMSEntities();
+
+                foreach (int id in ids)
+                {
+                    SubmissionTicket submissionTicket = (from s in wmsEntities.SubmissionTicket where s.ID == id select s).FirstOrDefault();
+                    if (submissionTicket != null)
+                    {
+                        submissionTicket.PaintTime = DateTime.Now;
+                        submissionTicketList.Add(submissionTicket);
+                    }
+                }
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return null;
+            }
+
+            return submissionTicketList.ToArray();
+        }
+
+        private void buttonAll_Click(object sender, EventArgs e)
+        {
+            WMSEntities wmsEntities = new WMSEntities();
+            StandardFormPreviewExcel standardFormPreviewExcel = new StandardFormPreviewExcel("送检单预览");
+            SubmissionTicket[] submissionTicket = idsToSubmissionTickets(this.ids);
+            try
+            {
+                foreach(SubmissionTicket st in submissionTicket)
+                {
+                    string worksheetName = st.ID.ToString();
+                    SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView where stv.ID == st.ID select stv).FirstOrDefault();
+                    SubmissionTicketItemView[] submissionTicketItemView =
+                        (from p in wmsEntities.SubmissionTicketItemView
+                         where p.SubmissionTicketID == st.ID
+                        select p).ToArray();
+                    ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == st.ReceiptTicketID select rt).FirstOrDefault();
+                    if (standardFormPreviewExcel.AddPatternTable(@"Excel\SubmissionTicket.xlsx", worksheetName) == false)
+                    {
+                        this.Close();
+                        return;
+                    }
+                    if (st != null)
+                    {
+                        standardFormPreviewExcel.AddData("SubmissionTicket", submissionTicketView, worksheetName);
+                    }
+                    if (receiptTicketView != null)
+                    {
+                        standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
+                    }
+                    standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
+                }
+                standardFormPreviewExcel.Show();
             }
             catch
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            WMSEntities wmsEntities = new WMSEntities();
-            SubmissionTicketItemView[] submissionTicketItemView =
-                (from p in wmsEntities.SubmissionTicketItemView
-                 where p.SubmissionTicketID == submissionTicket.ID
-                 select p).ToArray();
-            StartPreview(submissionTicketItemView);
+            
+            //StartPreview(submissionTicketItemView);
         }
 
-        private SubmissionTicket AddPreviewTime(int submissionTicketID)
+        private SubmissionTicket AddPreviewTime(SubmissionTicket submissionTicket)
         {
-            WMSEntities wmsEntities = new WMSEntities();
-            SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
+            
             if (submissionTicket != null)
             {
                 submissionTicket.PaintTime = DateTime.Now;
-            }
-            
-            wmsEntities.SaveChanges();
-           
+            }           
 
             return submissionTicket;
         }
 
         private void StartPreview(SubmissionTicketItemView[] submissionTicketItemView)
         {
-            WMSEntities wmsEntities = new WMSEntities();
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("送检单预览", (float)0.7);
-            if (formPreview.SetPatternTable(@"Excel\SubmissionTicket.xlsx") == false)
-            {
-                this.Close();
-                return;
-            }
-            SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView where stv.ID == this.submissionTicket.ID select stv).FirstOrDefault();
-            ReceiptTicketView receiptTicketView = (from rtv in wmsEntities.ReceiptTicketView where rtv.ID == submissionTicketView.ReceiptTicketID select rtv).FirstOrDefault();
-            if (receiptTicketView != null)
-            {
-                formPreview.AddData("ReceiptTicket", receiptTicketView);
-            }
-            if (submissionTicketView != null)
-            {
-                formPreview.AddData("SubmissionTicket", submissionTicketView);
-            }
-            formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
-            formPreview.Show();
-            this.Close();
+            //WMSEntities wmsEntities = new WMSEntities();
+            //StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("送检单预览", (float)0.7);
+            //if (formPreview.SetPatternTable(@"Excel\SubmissionTicket.xlsx") == false)
+            //{
+            //    this.Close();
+            //    return;
+            //}
+            //SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView where stv.ID == this.submissionTicket.ID select stv).FirstOrDefault();
+            //ReceiptTicketView receiptTicketView = (from rtv in wmsEntities.ReceiptTicketView where rtv.ID == submissionTicketView.ReceiptTicketID select rtv).FirstOrDefault();
+            //if (receiptTicketView != null)
+            //{
+            //    formPreview.AddData("ReceiptTicket", receiptTicketView);
+            //}
+            //if (submissionTicketView != null)
+            //{
+            //    formPreview.AddData("SubmissionTicket", submissionTicketView);
+            //}
+            //formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
+            //formPreview.Show();
+            //this.Close();
         }
 
         private void buttonPass_Click(object sender, EventArgs e)
         {
-            SubmissionTicket submissionTicket;
+            WMSEntities wmsEntities = new WMSEntities();
+            StandardFormPreviewExcel standardFormPreviewExcel = new StandardFormPreviewExcel("送检单预览");
+            SubmissionTicket[] submissionTicket = idsToSubmissionTickets(this.ids);
             try
             {
-                submissionTicket = AddPreviewTime(this.submissionTicket.ID);
+                foreach (SubmissionTicket st in submissionTicket)
+                {
+                    string worksheetName = st.ID.ToString();
+                    SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView where stv.ID == st.ID select stv).FirstOrDefault();
+                    SubmissionTicketItemView[] submissionTicketItemView =
+                        (from p in wmsEntities.SubmissionTicketItemView
+                         where p.SubmissionTicketID == st.ID && p.State == "合格"
+                         select p).ToArray();
+                    ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == st.ReceiptTicketID select rt).FirstOrDefault();
+                    if (standardFormPreviewExcel.AddPatternTable(@"Excel\SubmissionTicket.xlsx", worksheetName) == false)
+                    {
+                        this.Close();
+                        return;
+                    }
+                    if (st != null)
+                    {
+                        standardFormPreviewExcel.AddData("SubmissionTicket", submissionTicketView, worksheetName);
+                    }
+                    if (receiptTicketView != null)
+                    {
+                        standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
+                    }
+                    standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
+                }
+                standardFormPreviewExcel.Show();
             }
             catch
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            WMSEntities wmsEntities = new WMSEntities();
-            SubmissionTicketItemView[] submissionTicketItemView =
-                (from p in wmsEntities.SubmissionTicketItemView
-                 where p.SubmissionTicketID == submissionTicket.ID && p.State == "合格"
-                 select p).ToArray();
-            StartPreview(submissionTicketItemView);
         }
 
         private void buttonNoPass_Click(object sender, EventArgs e)
         {
-            SubmissionTicket submissionTicket;
+            WMSEntities wmsEntities = new WMSEntities();
+            StandardFormPreviewExcel standardFormPreviewExcel = new StandardFormPreviewExcel("送检单预览");
+            SubmissionTicket[] submissionTicket = idsToSubmissionTickets(this.ids);
             try
             {
-                submissionTicket = AddPreviewTime(this.submissionTicket.ID);
+                foreach (SubmissionTicket st in submissionTicket)
+                {
+                    string worksheetName = st.ID.ToString();
+                    SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView where stv.ID == st.ID select stv).FirstOrDefault();
+                    SubmissionTicketItemView[] submissionTicketItemView =
+                        (from p in wmsEntities.SubmissionTicketItemView
+                         where p.SubmissionTicketID == st.ID && p.State != "合格"
+                         select p).ToArray();
+                    ReceiptTicketView receiptTicketView = (from rt in wmsEntities.ReceiptTicketView where rt.ID == st.ReceiptTicketID select rt).FirstOrDefault();
+                    if (standardFormPreviewExcel.AddPatternTable(@"Excel\SubmissionTicket.xlsx", worksheetName) == false)
+                    {
+                        this.Close();
+                        return;
+                    }
+                    if (st != null)
+                    {
+                        standardFormPreviewExcel.AddData("SubmissionTicket", submissionTicketView, worksheetName);
+                    }
+                    if (receiptTicketView != null)
+                    {
+                        standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
+                    }
+                    standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
+                }
+                standardFormPreviewExcel.Show();
             }
             catch
             {
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
-            WMSEntities wmsEntities = new WMSEntities();
-            SubmissionTicketItemView[] submissionTicketItemView =
-                (from p in wmsEntities.SubmissionTicketItemView
-                 where p.SubmissionTicketID == submissionTicket.ID && (p.State == "不合格" || p.State == "部分合格")
-                 select p).ToArray();
-            StartPreview(submissionTicketItemView);
         }
 
         private void buttonPass_MouseEnter(object sender, EventArgs e)

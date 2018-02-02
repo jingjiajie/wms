@@ -1183,51 +1183,48 @@ namespace WMS.UI
 
         private void buttonPreview_Click(object sender, EventArgs e)
         {
-            var worksheet = this.reoGridControlUser.Worksheets[0];
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("收货单预览", 1.0f);
-            if (formPreview.SetPatternTable(@"Excel\ReceiptTicket.xlsx") == false)
-            {
-                this.Close();
-                return;
-            }
             WMSEntities wmsEntities = new WMSEntities();
-            if (worksheet.SelectionRange.Rows != 1)
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            int receiptTicketID;
-            try
-            {
-                receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-            }
-            catch
-            {
-                MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlUser);
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("收货单预览");
 
-
-            ReceiptTicketView receiptTicketView = (from stv in wmsEntities.ReceiptTicketView
-                                                   where stv.ID == receiptTicketID
-                                                   select stv).FirstOrDefault();
-
-            ReceiptTicketItemView[] receiptTicketItemView =
-                (from p in wmsEntities.ReceiptTicketItemView
-                 where p.ReceiptTicketID == receiptTicketView.ID
-                 select p).ToArray();
-            if (receiptTicketView == null)
+            foreach (int id in ids)
             {
-                MessageBox.Show("收货单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                try
+                {
+                    ReceiptTicketView receiptTicketView = (from stv in wmsEntities.ReceiptTicketView
+                                                           where stv.ID == id
+                                                           select stv).FirstOrDefault();
+
+                    ReceiptTicketItemView[] receiptTicketItemView =
+                        (from p in wmsEntities.ReceiptTicketItemView
+                         where p.ReceiptTicketID == receiptTicketView.ID
+                         select p).ToArray();
+                    string worksheetName = id.ToString();
+                    if (receiptTicketView == null)
+                    {
+                        MessageBox.Show("收货单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    //ReceiptTicketView receiptTicketView = (from rtv in wmsEntities.ReceiptTicketView where rtv.ID == submissionTicketView.ReceiptTicketID select rtv).FirstOrDefault();
+                    if (formPreview.AddPatternTable(@"Excel\ReceiptTicket.xlsx", worksheetName) == false)
+                    {
+                        this.Close();
+                        return;
+                    }
+                    if (receiptTicketView != null)
+                    {
+                        formPreview.AddData("ReceiptTicket", receiptTicketView, worksheetName);
+                    }
+                    formPreview.AddData("ReceiptTicketItem", receiptTicketItemView, worksheetName);
+                    formPreview.SetPrintScale(0.9F, worksheetName);
+                }
+                catch
+                {
+                    MessageBox.Show("搜索失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             }
-            //ReceiptTicketView receiptTicketView = (from rtv in wmsEntities.ReceiptTicketView where rtv.ID == submissionTicketView.ReceiptTicketID select rtv).FirstOrDefault();
-            if (receiptTicketView != null)
-            {
-                formPreview.AddData("ReceiptTicket", receiptTicketView);
-            }
-            formPreview.AddData("ReceiptTicketItem", receiptTicketItemView);
-            //formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             formPreview.Show();
         }
 

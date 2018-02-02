@@ -570,43 +570,42 @@ namespace WMS.UI.FormReceipt
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("上架单预览", (float)0.7);
-            if (formPreview.SetPatternTable(@"Excel\PutawayTicket.xlsx") == false)
-            {
-                this.Close();
-                return;
-            }
+            StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("上架单预览");
             WMSEntities wmsEntities = new WMSEntities();
-            if (worksheet.SelectionRange.Rows != 1)
+            int[] ids = Utilities.GetSelectedIDs(this.reoGridControlUser);
+            foreach(int id in ids)
             {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            int receiptTicketID;
-            try
-            {
-                receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-            }
-            catch
-            {
-                MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                try
+                {
+                    PutawayTicketView putawayTicketView = (from ptv in wmsEntities.PutawayTicketView where ptv.ID == id select ptv).FirstOrDefault();
+                    PutawayTicketItemView[] putawayTicketItemView = (from ptiv in wmsEntities.PutawayTicketItemView where ptiv.PutawayTicketID == putawayTicketView.ID select ptiv).ToArray<PutawayTicketItemView>();
+                    string worksheetName = id.ToString();
+                    if (putawayTicketView == null)
+                    {
+                        MessageBox.Show("上架单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    //ReceiptTicketView receiptTicketView = (from rtv in wmsEntities.ReceiptTicketView where rtv.ID == submissionTicketView.ReceiptTicketID select rtv).FirstOrDefault();
+                    if (formPreview.AddPatternTable(@"Excel\PutawayTicket.xlsx", worksheetName) == false)
+                    {
+                        this.Close();
+                        return;
+                    }
+                    if (putawayTicketView != null)
+                    {
+                        formPreview.AddData("PutawayTicket", putawayTicketView, worksheetName);
+                    }
+                    formPreview.AddData("PutawayTicketItem", putawayTicketItemView, worksheetName);
+                    formPreview.SetPrintScale(0.9F, worksheetName);
+                }
+                catch
+                {
+                    MessageBox.Show("搜索失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
             }
 
-            PutawayTicketView putawayTicketView = (from ptv in wmsEntities.PutawayTicketView where ptv.ID == receiptTicketID select ptv).FirstOrDefault();
-            PutawayTicketItemView[] putawayTicketItemView = (from ptiv in wmsEntities.PutawayTicketItemView where ptiv.PutawayTicketID == putawayTicketView.ID select ptiv).ToArray();
-           
-            if (putawayTicketView == null)
-            {
-                MessageBox.Show("上架单不存在，请重新查询！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            //ReceiptTicketView receiptTicketView = (from rtv in wmsEntities.ReceiptTicketView where rtv.ID == submissionTicketView.ReceiptTicketID select rtv).FirstOrDefault();
-            if (putawayTicketView != null)
-            {
-                formPreview.AddData("PutawayTicket", putawayTicketView);
-            }
-            formPreview.AddData("PutawayTicketItem", putawayTicketItemView);
+            
             //formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             formPreview.Show();
         }
