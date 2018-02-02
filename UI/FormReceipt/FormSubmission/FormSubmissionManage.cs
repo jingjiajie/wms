@@ -725,24 +725,8 @@ namespace WMS.UI
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
-                var worksheet = this.reoGridControl1.Worksheets[0];
-                int submissionTicketID;
-                try
-                {
-                    submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                }
-                catch
-                {
-                    MessageBox.Show("请选择一项导出", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                SubmissionTicket submissionTicket = (from st in wmsEntities.SubmissionTicket where st.ID == submissionTicketID select st).FirstOrDefault();
-                if (submissionTicket == null)
-                {
-                    MessageBox.Show("找不到该送检单，可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                FormSubmissionChooseExcelType formSubmissionChooseExcelType = new FormSubmissionChooseExcelType(submissionTicket);
+                int[] ids = Utilities.GetSelectedIDs(this.reoGridControl1);
+                FormSubmissionChooseExcelType formSubmissionChooseExcelType = new FormSubmissionChooseExcelType(ids);
                 formSubmissionChooseExcelType.Show();
             }
             catch

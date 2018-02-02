@@ -65,6 +65,7 @@ namespace WMS.UI.FormReceipt
             {
                 this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchContition.Text);
             }
+            this.pagerWidget.AddOrderBy("ReceiveTimes");
             this.pagerWidget.Search(savePage, selectID);
         }
 
