@@ -256,14 +256,19 @@ namespace WMS.UI
             if (worksheet.SelectionRange.Rows != 1)
             {
                 Object alterData = worksheet[worksheet.SelectionRange.Row, 0, worksheet.SelectionRange.Rows,1];
-                var alterDatas = new Object[worksheet.SelectionRange.Rows];
+                var alterDatas = new SupplyView[worksheet.SelectionRange.Rows];
                 for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
                 {
                     int curSupplyID = int.Parse(worksheet[worksheet.SelectionRange.Row+i, 0].ToString());
-                    var curSupply = (from u in wmsEntities.Supply
+                    var curSupply = (from u in wmsEntities.SupplyView
                                           where
                                           u.ID == curSupplyID
-                                          select u).ToArray();
+                                          select u).FirstOrDefault();
+                    if (curSupply == null)
+                    {
+                        MessageBox.Show("供货信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return ;
+                    }
                     alterDatas[i] = curSupply;
                     //alterDatas[i] = worksheet[worksheet.SelectionRange.Row+i, 0,1, worksheet.SelectionRange.Cols];
                 }
@@ -289,6 +294,9 @@ namespace WMS.UI
                                                               select kn.Value).ToArray();
 
                             DialogResult messageBoxResult = DialogResult.No;//设置对话框的返回值
+                        DialogResult allMessageBoxResult = DialogResult.No;
+                        bool allIgnore = false;
+                        bool choose = false;
                         string[] suppliernames;
                             suppliernames = supplierNamesCount[0];
                             string[] componentnames;
@@ -371,10 +379,28 @@ namespace WMS.UI
                                                           select u).ToArray();
                                     if (sameNameSupply.Length > 0)
                                     {
+                                    if (allIgnore != true&& choose == false)
+                                    {
+                                        allMessageBoxResult = MessageBox.Show("已存在相同代号供货条目,是否要全部保留历史信息?选否将逐一确定是否保留历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+
+                                        MessageBoxDefaultButton.Button2);
+                                        if (allMessageBoxResult == DialogResult.Yes)
+                                        {
+                                            allIgnore = true;
+                                        }
+                                        choose = true;
+                                    }
+                                    if (allIgnore != true)
+                                    {
 
                                         messageBoxResult = MessageBox.Show("已存在相同代号供货条目：" + no + ",是否要保留历史信息?", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation,
 
-                                        MessageBoxDefaultButton.Button2);
+                                            MessageBoxDefaultButton.Button2);
+                                    }
+                                    else
+                                    {
+                                        messageBoxResult = DialogResult.Yes;
+                                    }
                                         if (messageBoxResult == DialogResult.Cancel)
                                         {
                                             return false;
@@ -429,7 +455,7 @@ namespace WMS.UI
                                                                 select u).ToArray();
 
 
-                                            if (supplystorge.Length > 0)
+                                            if (supplystorge.Length > 0&&allIgnore!=true)
                                             {
                                                 MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                             }
