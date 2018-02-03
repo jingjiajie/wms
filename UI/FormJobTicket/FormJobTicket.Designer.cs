@@ -30,6 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormJobTicket));
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
             this.labelSelect = new System.Windows.Forms.ToolStripLabel();
             this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
@@ -43,14 +48,10 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
             this.buttonToPutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panelPagerWidget = new System.Windows.Forms.Panel();
-            this.toolStripTop.SuspendLayout();
+            this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.toolStripTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // reoGridControlMain
@@ -59,7 +60,7 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(4, 48);
+            this.reoGridControlMain.Location = new System.Drawing.Point(4, 93);
             this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
@@ -70,9 +71,62 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1988, 537);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1988, 492);
             this.reoGridControlMain.TabIndex = 6;
             this.reoGridControlMain.Text = "reoGridControl1";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.labelStatus});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 649);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1996, 36);
+            this.statusStrip1.TabIndex = 7;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
+            this.toolStripStatusLabel1.Text = "状态：";
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(110, 31);
+            this.labelStatus.Text = "作业管理";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panelSearchWidget, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1996, 649);
+            this.tableLayoutPanel1.TabIndex = 8;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            // 
+            // panelPagerWidget
+            // 
+            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPagerWidget.Location = new System.Drawing.Point(3, 591);
+            this.panelPagerWidget.Name = "panelPagerWidget";
+            this.panelPagerWidget.Size = new System.Drawing.Size(1990, 55);
+            this.panelPagerWidget.TabIndex = 7;
             // 
             // toolStripTop
             // 
@@ -94,7 +148,7 @@
             this.toolStripSeparator3,
             this.buttonGeneratePutOutStorageTicket,
             this.buttonToPutOutStorageTicket});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
+            this.toolStripTop.Location = new System.Drawing.Point(0, 45);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripTop.Size = new System.Drawing.Size(1996, 45);
@@ -198,55 +252,13 @@
             this.buttonToPutOutStorageTicket.Text = "查看出库单";
             this.buttonToPutOutStorageTicket.Click += new System.EventHandler(this.buttonToPutOutStorageTicket_Click);
             // 
-            // statusStrip1
+            // panelSearchWidget
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.labelStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 649);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 14, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1996, 36);
-            this.statusStrip1.TabIndex = 7;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 31);
-            this.toolStripStatusLabel1.Text = "状态：";
-            // 
-            // labelStatus
-            // 
-            this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(110, 31);
-            this.labelStatus.Text = "作业管理";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.reoGridControlMain, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panelPagerWidget, 0, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1996, 649);
-            this.tableLayoutPanel1.TabIndex = 8;
-            // 
-            // panelPagerWidget
-            // 
-            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(3, 591);
-            this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(1990, 55);
-            this.panelPagerWidget.TabIndex = 7;
+            this.panelSearchWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSearchWidget.Location = new System.Drawing.Point(3, 3);
+            this.panelSearchWidget.Name = "panelSearchWidget";
+            this.panelSearchWidget.Size = new System.Drawing.Size(1990, 39);
+            this.panelSearchWidget.TabIndex = 8;
             // 
             // FormJobTicket
             // 
@@ -258,12 +270,12 @@
             this.Name = "FormJobTicket";
             this.Text = "FormJobTicket";
             this.Load += new System.EventHandler(this.FormJobTicket_Load);
-            this.toolStripTop.ResumeLayout(false);
-            this.toolStripTop.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.toolStripTop.ResumeLayout(false);
+            this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -290,5 +302,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panelPagerWidget;
+        private System.Windows.Forms.Panel panelSearchWidget;
     }
 }

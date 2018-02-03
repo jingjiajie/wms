@@ -195,6 +195,7 @@ namespace WMS.UI
                         Warehouse warehouse = (this.comboBoxWarehouse.SelectedItem as ComboBoxItem).Value as Warehouse;
                         GlobalData.ProjectID = project.ID;
                         GlobalData.WarehouseID = warehouse.ID;
+                        GlobalData.UserID = user.ID;
                         FormMain formMain = new FormMain(user, project, warehouse);
                         formMain.SetFormClosedCallback(this.Dispose);
                         formMain.Show();

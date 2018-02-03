@@ -21,6 +21,7 @@ namespace WMS.UI
         private int warehouseID = -1;
 
         private PagerWidget<JobTicketView> pagerWidget = null;
+        private SearchWidget<JobTicketView> searchWidget = null;
 
         private Action<string,string> toPutOutStorageTicketCallback = null;
 
@@ -67,6 +68,9 @@ namespace WMS.UI
             this.pagerWidget = new PagerWidget<JobTicketView>(this.reoGridControlMain, JobTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPagerWidget.Controls.Add(this.pagerWidget);
             this.pagerWidget.Show();
+
+            this.searchWidget = new SearchWidget<JobTicketView>(JobTicketViewMetaData.KeyNames, pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
         }
 
         public void SetSearchCondition(string key,string value)
@@ -173,7 +177,7 @@ namespace WMS.UI
                     wmsEntities.SaveChanges();
                     foreach(int shipmentTicketID in shipmentTicketIDs)
                     {
-                        ShipmentTicketUtilities.UpdateShipmentTicketStateSync(shipmentTicketID);
+                        ShipmentTicketUtilities.UpdateShipmentTicketStateSync(shipmentTicketID,wmsEntities);
                     }
                 }
                 catch
@@ -300,6 +304,11 @@ namespace WMS.UI
         }
 
         private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

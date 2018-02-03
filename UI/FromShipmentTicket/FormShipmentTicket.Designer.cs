@@ -245,6 +245,7 @@
             this.buttonGenerateJobTicket.Size = new System.Drawing.Size(158, 36);
             this.buttonGenerateJobTicket.Text = "生成作业单";
             this.buttonGenerateJobTicket.Click += new System.EventHandler(this.buttonGenerateJobTicket_Click);
+            this.buttonGenerateJobTicket.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonGenerateJobTicket_MouseDown);
             // 
             // toolStripButtonToJobTicket
             // 

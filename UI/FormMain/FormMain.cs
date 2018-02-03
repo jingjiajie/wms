@@ -759,14 +759,14 @@ namespace WMS.UI
             }
         }
 
-        private void ToJobTicketCallback(string shipmentTicketNo)
+        private void ToJobTicketCallback(string condition, string value)
         {
             if (this.IsDisposed) return;
             this.Invoke(new Action(() =>
             {
                 FormJobTicket formJobTicket = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 formJobTicket.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
-                formJobTicket.SetSearchCondition("ShipmentTicketNo", shipmentTicketNo);
+                formJobTicket.SetSearchCondition(condition, value);
                 this.LoadSubWindow(formJobTicket);
                 this.SetTreeViewSelectedNodeByText("翻包作业单管理");
             }));

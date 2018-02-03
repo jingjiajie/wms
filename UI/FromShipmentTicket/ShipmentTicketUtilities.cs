@@ -9,24 +9,12 @@ namespace WMS.UI
 {
     class ShipmentTicketUtilities
     {
-        public static void UpdateShipmentTicketStateSync(int shipmentTicketID)
+        public static void UpdateShipmentTicketStateSync(int shipmentTicketID,WMSEntities wmsEntities,bool saveChanges = true)
         {
-            WMSEntities wmsEntities = new WMSEntities();
-            int total = wmsEntities.Database.SqlQuery<int>(string.Format(
-                @"SELECT COUNT(*) FROM ShipmentTicketItem 
-                    WHERE ShipmentTicketID = {0}",
-                shipmentTicketID
-                )).Single();
-            int fullAssignedCount = wmsEntities.Database.SqlQuery<int>(string.Format(
-                @"SELECT COUNT(*) FROM ShipmentTicketItem 
-                    WHERE ShipmentTicketID = {0} AND ScheduledJobAmount = ShipmentAmount",
-                shipmentTicketID
-                )).Single();
-            int notAssignedCount = wmsEntities.Database.SqlQuery<int>(string.Format(
-                @"SELECT COUNT(*) FROM ShipmentTicketItem 
-                    WHERE ShipmentTicketID = {0} AND ScheduledJobAmount = 0",
-                shipmentTicketID
-                )).Single();
+            int total = (from s in wmsEntities.ShipmentTicketItem where s.ShipmentTicketID == shipmentTicketID select s).Count();
+            int fullAssignedCount = (from s in wmsEntities.ShipmentTicketItem where s.ShipmentTicketID == shipmentTicketID && s.ScheduledJobAmount==s.ShipmentAmount select s).Count();
+            int notAssignedCount = (from s in wmsEntities.ShipmentTicketItem where s.ShipmentTicketID == shipmentTicketID && s.ScheduledJobAmount==0 select s).Count();
+            Console.WriteLine("未分配："+notAssignedCount+"  总数："+total);
             if (notAssignedCount == total)
             {
                 wmsEntities.Database.ExecuteSqlCommand(string.Format(
@@ -42,7 +30,7 @@ namespace WMS.UI
                 wmsEntities.Database.ExecuteSqlCommand(string.Format(
                     @"UPDATE ShipmentTicket SET State = '{0}' WHERE ID = {1}", ShipmentTicketViewMetaData.STRING_STATE_PART_ASSIGNED_JOB, shipmentTicketID));
             }
-            wmsEntities.SaveChanges();
+            if (saveChanges) wmsEntities.SaveChanges();
         }
 
         public static bool DeleteItemsSync(int[] itemIDs,out string errorMessage)

@@ -22,7 +22,7 @@ namespace WMS.UI
 
         private int curPersonID = -1;
 
-        private Action<string> toJobTicketCallback = null;
+        private Action<string,string> toJobTicketCallback = null;
         private int[] editableColumns = new int[] { 1, 2 };
         private int validRows { get => shipmentTicketItems == null ? 0 : shipmentTicketItems.Length; }
         private ShipmentTicketItemView[] shipmentTicketItems = null;
@@ -50,7 +50,7 @@ namespace WMS.UI
 
         private StandardImportForm<NewJobTicketItemData> standardImportForm = null;
 
-        public void SetToJobTicketCallback(Action<string> callback)
+        public void SetToJobTicketCallback(Action<string,string> callback)
         {
             this.toJobTicketCallback = callback;
         }
@@ -299,14 +299,14 @@ namespace WMS.UI
                     newJobTicket.JobTicketNo = Utilities.GenerateTicketNo("Z", newJobTicket.CreateTime.Value, maxRankOfToday + 1);
                 }
                 wmsEntities.SaveChanges();
-                ShipmentTicketUtilities.UpdateShipmentTicketStateSync(this.shipmentTicketID);
+                ShipmentTicketUtilities.UpdateShipmentTicketStateSync(this.shipmentTicketID,wmsEntities);
                 if(MessageBox.Show("生成作业单成功，是否查看作业单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                 {
                     if(this.toJobTicketCallback == null)
                     {
                         throw new Exception("ToJobTicketCallback不允许为空！");
                     }
-                    this.toJobTicketCallback(shipmentTicket.No);
+                    this.toJobTicketCallback("ShipmentTicketNo",shipmentTicket.No);
                 }
                 if (!this.IsDisposed)
                 {

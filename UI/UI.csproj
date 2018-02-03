@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -51,6 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormJobTicket\JobTicketUtilities.cs" />
     <Compile Include="Utilities\CommonDataStructures.cs" />
     <Compile Include="FormBase\BasePersonMetaData.cs" />
     <Compile Include="FormBase\BasePackageUnitMetaData.cs" />
@@ -157,6 +159,12 @@
     </Compile>
     <Compile Include="Utilities\FormChooseAmbiguousSupplyOrComponent.Designer.cs">
       <DependentUpon>FormChooseAmbiguousSupplyOrComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utilities\SearchWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Utilities\SearchWidget.Designer.cs">
+      <DependentUpon>SearchWidget.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\StandardImportForm.cs">
       <SubType>Form</SubType>
@@ -547,6 +555,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FormChooseAmbiguousSupplyOrComponent.resx">
       <DependentUpon>FormChooseAmbiguousSupplyOrComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utilities\SearchWidget.resx">
+      <DependentUpon>SearchWidget.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\StandardImportForm.resx">
       <DependentUpon>StandardImportForm.cs</DependentUpon>

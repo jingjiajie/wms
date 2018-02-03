@@ -598,7 +598,7 @@ namespace WMS.UI
             }
         }
 
-        public void PushData<T>(T[] data,Dictionary<string,string> keyConvert)
+        public void PushData<T>(T[] data,Dictionary<string,string> keyConvert = null)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             this.RemoveEmptyLines(worksheet);
@@ -612,7 +612,7 @@ namespace WMS.UI
             int curLine = firstEmptyLine;
             foreach (T obj in data)
             {
-                object[] columns = Utilities.GetValuesByPropertieNames(obj, (from kn in importVisibleKeyNames select keyConvert.ContainsKey(kn.Key) ? keyConvert[kn.Key] : kn.Key).ToArray());
+                object[] columns = Utilities.GetValuesByPropertieNames(obj, (from kn in importVisibleKeyNames select keyConvert == null ? kn.Key : (keyConvert.ContainsKey(kn.Key) ? keyConvert[kn.Key] : kn.Key)).ToArray());
                 for (int j = 0; j < columns.Length; j++)
                 {
                     //多选模式则空出第一列，放置选择框

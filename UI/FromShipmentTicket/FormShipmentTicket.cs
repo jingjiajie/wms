@@ -22,9 +22,9 @@ namespace WMS.UI
         int projectID = -1;
         int warehouseID = -1;
 
-        private Action<string> toJobTicketCallback = null;
+        private Action<string,string> toJobTicketCallback = null; //参数：查询条件，查询值
 
-        public void SetToJobTicketCallback(Action<string> callback)
+        public void SetToJobTicketCallback(Action<string,string> callback)
         {
             this.toJobTicketCallback = callback;
         }
@@ -298,7 +298,7 @@ namespace WMS.UI
                         MessageBox.Show("发货单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    this.toJobTicketCallback(shipmentTicket.No);
+                    this.toJobTicketCallback("ShipmentTicketNo",shipmentTicket.No);
                 }
                 catch (Exception)
                 {
@@ -312,6 +312,40 @@ namespace WMS.UI
         private void buttonPreview_Click(object sender, EventArgs e)
         {
  
+        }
+
+        private void buttonGenerateJobTicket_MouseDown(object sender, MouseEventArgs e)
+        {
+            //按下右键，选中发货单全部生成作业单
+            if(e.Button == MouseButtons.Right)
+            {
+                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+                if (ids.Length == 0)
+                {
+                    MessageBox.Show("请选择要生成翻包作业单的项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (MessageBox.Show("确定为所有选中发货单满额生成翻包作业单吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) 
+                {
+                    return;
+                }
+                WMSEntities wmsEntities = new WMSEntities();
+                DateTime createTime = DateTime.Now;
+                bool hasSucceededItem = false;
+                foreach (int id in ids)
+                {
+                    hasSucceededItem |= JobTicketUtilities.GenerateJobTicketFullSync(id, wmsEntities, createTime);
+                }
+                if (hasSucceededItem == false)
+                {
+                    return;
+                }
+                wmsEntities.SaveChanges();
+                if(MessageBox.Show("生成完成，是否查看生成的作业单？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    this.toJobTicketCallback?.Invoke("CreateTime", createTime.ToString());
+                }
+            }
         }
     }
 }
