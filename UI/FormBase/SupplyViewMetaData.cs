@@ -132,5 +132,38 @@ namespace WMS.UI
             new KeyName(){Key="IsHistory",Name="是否历史信息",Visible = false , Editable = false,ImportVisible=false,NotNull =true },
 
         };
+        public static Dictionary<string, string> keyConvert = new Dictionary<string, string>()
+        {
+            {"SupplierName","SupplierID"},
+            { "ComponentName","ComponentID"},
+            { "No","No"},
+            { "Number","Number"},
+
+            { "ReceiveTimes","ReceiveTimes"},
+            { "ShipmentTimes","ShipmentTimes"},
+            { "DefaultReceiptUnit","DefaultReceiptUnit"},
+            { "DefaultReceiptUnitAmount","DefaultReceiptUnitAmount"},
+            { "DefaultShipmentUnit","DefaultShipmentUnit"},
+            { "DefaultShipmentUnitAmount","DefaultShipmentUnitAmount"},
+            { "DefaultSubmissionAmount","DefaultSubmissionAmount"},
+            { "SafetyStock","SafetyStock"},
+            { "ValidPeriod","ValidPeriod"},
+
+            { "PhotoIndex","PhotoIndex"},
+            { "ContainerNo","ContainerNo"},
+            { "Factroy","Factroy"},
+            { "WorkPosition","WorkPosition"},
+            { "SupplierType","SupplierType"},
+            { "Type","Type"},
+            { "Size","Size"},
+            { "Category","Category"},
+            { "Charge1","Charge1"},
+            { "Charge2","Charge2"},
+
+            { "LastUpdateUserUsername","LastUpdateUserUsername"},
+            { "LastUpdateTime","LastUpdateTime"}
+        };
+
+
     }
 }
