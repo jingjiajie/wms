@@ -19,6 +19,22 @@ namespace WMS.UI
             UP,DOWN
         }
 
+        private class ListItem
+        {
+            public string Word;
+            public string Hint;
+
+            public override string ToString()
+            {
+                string str = string.Format("{0,-22}",Word);
+                if (string.IsNullOrWhiteSpace(Hint) == false)
+                {
+                    str += " -" + Hint;
+                }
+                return str;
+            }
+        }
+
         List<string> sqls = new List<string>();
         WMSEntities globalWMSEntities = new WMSEntities();
 
@@ -93,7 +109,7 @@ namespace WMS.UI
                         connection.Open();
                     }
                     SqlParameter parameter = new SqlParameter("@value", textBox.Text);
-                    List<string> data = new List<string>(); //存储返回结果
+                    List<ListItem> data = new List<ListItem>(); //存储返回结果
                     foreach (string sql in this.sqls)
                     {
                         SqlCommand sqlCommand = new SqlCommand(sql, connection);
@@ -102,7 +118,16 @@ namespace WMS.UI
                         sqlCommand.Parameters.Clear();
                         while (data.Count < 30 && dataReader.Read()) //最多显示30条数据
                         {
-                            data.Add(dataReader.GetValue(0).ToString());
+                            ListItem newListItem = new ListItem();
+                            if (dataReader.FieldCount >= 1)
+                            {
+                                newListItem.Word = dataReader.GetValue(0).ToString();
+                            }
+                            if(dataReader.FieldCount >= 2)
+                            {
+                                newListItem.Hint = dataReader.GetValue(1).ToString();
+                            }
+                            data.Add(newListItem);
                         }
                     }
                     if(this.newestListBoxDataTime > threadStartTime)
@@ -187,7 +212,7 @@ namespace WMS.UI
             {
                 this.stayVisible = true;
                 textBox.TextChanged -= this.textBox_TextChanged; //修改文字不触发事件
-                textBox.Text = this.listBox.SelectedItem.ToString();
+                textBox.Text = (this.listBox.SelectedItem as ListItem).Word;
                 textBox.TextChanged += this.textBox_TextChanged;
                 this.Selected = true;
                 this.stayVisible = false;

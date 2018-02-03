@@ -22,6 +22,7 @@ namespace WMS.UI
         public string EditPlaceHolder = null;
         public bool Save = true;
         public bool ImportVisible = true;
+        public bool ImportEditable = false;
         public bool Import = true;
     }
 

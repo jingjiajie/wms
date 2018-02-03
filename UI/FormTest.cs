@@ -69,7 +69,16 @@ namespace WMS.UI
 
         private void FormTest_Load(object sender, EventArgs e)
         {
-
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            // put data on spreadsheet
+            worksheet["A1"] = new object[,] {
+  { "1", "A", "D" },
+  { "2", "B", "E" },
+  { "3", "C", "F" },
+  { "4", "D", "G" },
+  { "5", "E", "H" },
+};
+            worksheet.SortColumn(1, new unvell.ReoGrid.RangePosition("A1:C5"), unvell.ReoGrid.SortOrder.Descending);
         }
 
         private void ReoGridControlMain_KeyDown(object sender, KeyEventArgs e)
