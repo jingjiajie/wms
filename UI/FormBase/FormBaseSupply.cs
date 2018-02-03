@@ -240,6 +240,7 @@ namespace WMS.UI
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
+            wmsEntities = new WMSEntities();
             Worksheet worksheet = this.reoGridControlSupply.Worksheets[0];
             if (worksheet.SelectionRange.Rows == 1)
             {
@@ -295,7 +296,8 @@ namespace WMS.UI
 
                             DialogResult messageBoxResult = DialogResult.No;//设置对话框的返回值
                         DialogResult allMessageBoxResult = DialogResult.No;
-                        bool allIgnore = false;
+                        bool allSave = false;
+                        bool allIgnore = true;
                         bool choose = false;
                         string[] suppliernames;
                             suppliernames = supplierNamesCount[0];
@@ -379,16 +381,36 @@ namespace WMS.UI
                                                           select u).ToArray();
                                     if (sameNameSupply.Length > 0)
                                     {
-                                    if (allIgnore != true&& choose == false)
+                                    if (allSave != true&& choose == false)
                                     {
-                                        allMessageBoxResult = MessageBox.Show("已存在相同代号供货条目,是否要全部保留历史信息?选否将逐一确定是否保留历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+                                        allMessageBoxResult = MessageBox.Show("已存在相同代号供货条目,是否要全部保留历史信息?", "提示", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation,
 
                                         MessageBoxDefaultButton.Button2);
                                         if (allMessageBoxResult == DialogResult.Yes)
                                         {
+                                            allSave = true;
                                             allIgnore = true;
                                         }
-                                        choose = true;
+                                        if (allMessageBoxResult == DialogResult.No)
+                                        {
+                                            allSave = false;
+                                            allIgnore = true;
+                                        }
+                                        if (allMessageBoxResult == DialogResult.Cancel)
+                                        {
+                                            allSave = false;
+                                            allIgnore = false;
+                                        }
+                                            choose = true;
+                                    }
+
+                                    if (allSave == true)
+                                    {
+                                        messageBoxResult = DialogResult.Yes;
+                                    }
+                                    else
+                                    {
+                                        messageBoxResult = DialogResult.No;
                                     }
                                     if (allIgnore != true)
                                     {
@@ -397,11 +419,7 @@ namespace WMS.UI
 
                                             MessageBoxDefaultButton.Button2);
                                     }
-                                    else
-                                    {
-                                        messageBoxResult = DialogResult.Yes;
-                                    }
-                                        if (messageBoxResult == DialogResult.Cancel)
+                                    if (messageBoxResult == DialogResult.Cancel)
                                         {
                                             return false;
                                         }
@@ -455,7 +473,7 @@ namespace WMS.UI
                                                                 select u).ToArray();
 
 
-                                            if (supplystorge.Length > 0&&allIgnore!=true)
+                                            if (supplystorge.Length > 0&&allSave!=true)
                                             {
                                                 MessageBox.Show("历史信息保留成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                             }
