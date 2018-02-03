@@ -962,6 +962,11 @@ namespace WMS.UI
             this.standardImportForm.AddDefaultValue("RefuseUnit","SELECT '个'");
             this.standardImportForm.AddDefaultValue("RefuseUnitAmount", "SELECT 1");
             this.standardImportForm.AddDefaultValue("InventoryDate",string.Format("SELECT '{0}'",DateTime.Now.ToString()));
+
+            standardImportForm.AddAssociation("Component", string.Format("SELECT No,SupplierName FROM SupplyView WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND No LIKE '%'+@value+'%'; ", this.projectID, this.warehouseID));
+            standardImportForm.AddAssociation("Component", string.Format("SELECT DISTINCT ComponentName FROM SupplyView WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND ComponentName LIKE '%'+@value+'%'; ", this.projectID, this.warehouseID));
+            standardImportForm.AddAssociation("JobPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
+            standardImportForm.AddAssociation("ConfirmPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
             //this.standardImportForm.AddDefaultValue("ExpiryDate", string.Format("SELECT CAST(@InventoryDate as datetime) FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1};", this.projectID, this.warehouseID));
             this.standardImportForm.ShowDialog();
         }

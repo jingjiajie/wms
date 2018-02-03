@@ -578,7 +578,20 @@ namespace WMS.UI.FormReceipt
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
+            int projectID = -1;
+            int warehouseID = -1;
+            WMSEntities wmsEntities = new WMSEntities();
+            ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+            if (receiptTicket != null)
+            {
+                projectID = receiptTicket.ProjectID;
+                warehouseID = receiptTicket.WarehouseID;
+            }
             this.standardImportForm = new StandardImportForm<PutawayTicketItem>(ReceiptMetaData.importPutawayTicket, importItemHandler, importFinishedCallback, "导入收货单条目");
+            standardImportForm.AddAssociation("Component", string.Format("SELECT No,SupplierName FROM SupplyView WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND No LIKE '%'+@value+'%'; ", projectID, warehouseID));
+            standardImportForm.AddAssociation("Component", string.Format("SELECT DISTINCT ComponentName FROM SupplyView WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND ComponentName LIKE '%'+@value+'%'; ", projectID, warehouseID));
+            standardImportForm.AddAssociation("JobPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
+            standardImportForm.AddAssociation("ConfirmPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
             this.standardImportForm.ShowDialog();
         }
 
