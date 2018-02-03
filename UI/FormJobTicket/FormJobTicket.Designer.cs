@@ -34,13 +34,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.labelSelect = new System.Windows.Forms.ToolStripLabel();
-            this.comboBoxSearchCondition = new System.Windows.Forms.ToolStripComboBox();
-            this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
-            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonOpen = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonAlter = new System.Windows.Forms.ToolStripButton();
@@ -48,6 +42,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonGeneratePutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
             this.buttonToPutOutStorageTicket = new System.Windows.Forms.ToolStripButton();
+            this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -60,8 +55,8 @@
             this.reoGridControlMain.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlMain.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlMain.Location = new System.Drawing.Point(4, 93);
-            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.reoGridControlMain.Location = new System.Drawing.Point(0, 95);
+            this.reoGridControlMain.Margin = new System.Windows.Forms.Padding(0);
             this.reoGridControlMain.Name = "reoGridControlMain";
             this.reoGridControlMain.Readonly = true;
             this.reoGridControlMain.RowHeaderContextMenuStrip = null;
@@ -71,7 +66,7 @@
             this.reoGridControlMain.SheetTabVisible = true;
             this.reoGridControlMain.SheetTabWidth = 120;
             this.reoGridControlMain.ShowScrollEndSpacing = true;
-            this.reoGridControlMain.Size = new System.Drawing.Size(1988, 492);
+            this.reoGridControlMain.Size = new System.Drawing.Size(1996, 493);
             this.reoGridControlMain.TabIndex = 6;
             this.reoGridControlMain.Text = "reoGridControl1";
             // 
@@ -112,21 +107,13 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1996, 649);
             this.tableLayoutPanel1.TabIndex = 8;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
-            // 
-            // panelPagerWidget
-            // 
-            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPagerWidget.Location = new System.Drawing.Point(3, 591);
-            this.panelPagerWidget.Name = "panelPagerWidget";
-            this.panelPagerWidget.Size = new System.Drawing.Size(1990, 55);
-            this.panelPagerWidget.TabIndex = 7;
             // 
             // toolStripTop
             // 
@@ -136,11 +123,6 @@
             this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.labelSelect,
-            this.comboBoxSearchCondition,
-            this.textBoxSearchValue,
-            this.buttonSearch,
-            this.toolStripSeparator1,
             this.buttonOpen,
             this.toolStripSeparator2,
             this.buttonAlter,
@@ -148,51 +130,13 @@
             this.toolStripSeparator3,
             this.buttonGeneratePutOutStorageTicket,
             this.buttonToPutOutStorageTicket});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 45);
+            this.toolStripTop.Location = new System.Drawing.Point(0, 50);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStripTop.Padding = new System.Windows.Forms.Padding(0);
             this.toolStripTop.Size = new System.Drawing.Size(1996, 45);
             this.toolStripTop.TabIndex = 5;
             this.toolStripTop.Text = "toolStrip1";
             this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
-            // 
-            // labelSelect
-            // 
-            this.labelSelect.Name = "labelSelect";
-            this.labelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.labelSelect.Size = new System.Drawing.Size(134, 42);
-            this.labelSelect.Text = "查询条件：";
-            // 
-            // comboBoxSearchCondition
-            // 
-            this.comboBoxSearchCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSearchCondition.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.comboBoxSearchCondition.Name = "comboBoxSearchCondition";
-            this.comboBoxSearchCondition.Size = new System.Drawing.Size(190, 45);
-            this.comboBoxSearchCondition.SelectedIndexChanged += new System.EventHandler(this.comboBoxSearchCondition_SelectedIndexChanged);
-            // 
-            // textBoxSearchValue
-            // 
-            this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxSearchValue.Enabled = false;
-            this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(290, 45);
-            this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
-            // 
-            // buttonSearch
-            // 
-            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
-            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(86, 42);
-            this.buttonSearch.Text = "查询";
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.AutoSize = false;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
             // 
             // buttonOpen
             // 
@@ -252,12 +196,21 @@
             this.buttonToPutOutStorageTicket.Text = "查看出库单";
             this.buttonToPutOutStorageTicket.Click += new System.EventHandler(this.buttonToPutOutStorageTicket_Click);
             // 
+            // panelPagerWidget
+            // 
+            this.panelPagerWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPagerWidget.Location = new System.Drawing.Point(3, 591);
+            this.panelPagerWidget.Name = "panelPagerWidget";
+            this.panelPagerWidget.Size = new System.Drawing.Size(1990, 55);
+            this.panelPagerWidget.TabIndex = 7;
+            // 
             // panelSearchWidget
             // 
             this.panelSearchWidget.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSearchWidget.Location = new System.Drawing.Point(3, 3);
+            this.panelSearchWidget.Location = new System.Drawing.Point(0, 0);
+            this.panelSearchWidget.Margin = new System.Windows.Forms.Padding(0);
             this.panelSearchWidget.Name = "panelSearchWidget";
-            this.panelSearchWidget.Size = new System.Drawing.Size(1990, 39);
+            this.panelSearchWidget.Size = new System.Drawing.Size(1996, 50);
             this.panelSearchWidget.TabIndex = 8;
             // 
             // FormJobTicket
@@ -285,11 +238,6 @@
 
         private unvell.ReoGrid.ReoGridControl reoGridControlMain;
         private System.Windows.Forms.ToolStrip toolStripTop;
-        private System.Windows.Forms.ToolStripLabel labelSelect;
-        private System.Windows.Forms.ToolStripComboBox comboBoxSearchCondition;
-        private System.Windows.Forms.ToolStripTextBox textBoxSearchValue;
-        private System.Windows.Forms.ToolStripButton buttonSearch;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonAlter;
         private System.Windows.Forms.ToolStripButton buttonDelete;
         private System.Windows.Forms.StatusStrip statusStrip1;

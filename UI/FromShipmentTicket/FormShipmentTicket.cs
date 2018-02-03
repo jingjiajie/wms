@@ -341,10 +341,7 @@ namespace WMS.UI
                     return;
                 }
                 wmsEntities.SaveChanges();
-                if(MessageBox.Show("生成完成，是否查看生成的作业单？","提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    this.toJobTicketCallback?.Invoke("CreateTime", createTime.ToString());
-                }
+                MessageBox.Show("生成成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
         }
     }

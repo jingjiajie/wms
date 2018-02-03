@@ -43,10 +43,6 @@ namespace WMS.UI
                     textBoxCondition.Enabled = true;
                 }
             };
-            buttonSearch.Click += (sender, e) =>
-            {
-                this.Search();
-            };
             
             this.Dock = DockStyle.Fill;
         }
@@ -71,7 +67,7 @@ namespace WMS.UI
                 //如果是日期类型，按模糊搜索
                 if (property.PropertyType == typeof(DateTime) || (property.PropertyType == typeof(DateTime?)))
                 {
-                    pagerWidget.AddCondition(string.Format("CONVERT(NVARCHAR(32),{0},20) LIKE '%'+@value+'%'", key), new SqlParameter("value", textBoxCondition.Text));
+                    pagerWidget.AddCondition(string.Format("DATEDIFF(day,@value,{0})=0", key), new SqlParameter("value", textBoxCondition.Text));
                 }
                 else //否则按普通搜索
                 {
@@ -79,6 +75,44 @@ namespace WMS.UI
                 }
             }
             pagerWidget.Search(savePage, selectID);
+        }
+
+        public void SetSearchCondition(string key, string value)
+        {
+            string name = (from kn in JobTicketViewMetaData.KeyNames
+                           where kn.Key == key
+                           select kn.Name).FirstOrDefault();
+            if (name == null)
+            {
+                return;
+            }
+            for (int i = 0; i < this.comboBoxCondition.Items.Count; i++)
+            {
+                var item = comboBoxCondition.Items[i];
+                if (item.ToString() == name)
+                {
+                    this.comboBoxCondition.SelectedIndex = i;
+                }
+            }
+            this.textBoxCondition.Text = value;
+        }
+
+        private void tableLayoutPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBoxCondition_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode== Keys.Enter)
+            {
+                this.buttonSearch.PerformClick();
+            }
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            this.Search();
         }
     }
 }
