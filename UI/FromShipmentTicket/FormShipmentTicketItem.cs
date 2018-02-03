@@ -757,9 +757,9 @@ namespace WMS.UI
                 MessageBox.Show("导入成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.standardImportForm.Close();
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("操作失败，请检查网络连接！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("操作失败，请检查网络连接！\n请把如下错误信息反馈给我们！\n"+ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return false;

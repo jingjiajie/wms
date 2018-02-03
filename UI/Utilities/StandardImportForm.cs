@@ -122,14 +122,14 @@ namespace WMS.UI
                 {
                     wmsEntities.SaveChanges();
                 }
-                catch
+                catch(Exception ex)
                 {
                     if (!this.IsDisposed)
                     {
                         this.Invoke(new Action(() =>
                         {
                             formLoading.Close();
-                            MessageBox.Show("导入失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("导入失败，请检查网络连接\n请把如下错误信息反馈给我们：\n"+ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }));
                     }
                     return;
@@ -596,6 +596,58 @@ namespace WMS.UI
             {
                 this.formAssociate.Close();
             }
+        }
+
+        public void PushData<T>(T[] data,Dictionary<string,string> keyConvert)
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            this.RemoveEmptyLines(worksheet);
+            int firstEmptyLine = FindFirstEmptyLine();
+            int totalLines = worksheet.Rows;
+            if(totalLines < firstEmptyLine + data.Length)
+            {
+                worksheet.Rows = firstEmptyLine + data.Length;
+            }
+            //遍历传入对象
+            int curLine = firstEmptyLine;
+            foreach (T obj in data)
+            {
+                object[] columns = Utilities.GetValuesByPropertieNames(obj, (from kn in importVisibleKeyNames select keyConvert.ContainsKey(kn.Key) ? keyConvert[kn.Key] : kn.Key).ToArray());
+                for (int j = 0; j < columns.Length; j++)
+                {
+                    //多选模式则空出第一列，放置选择框
+                    if (columns[j] == null) continue;
+                    worksheet.Cells[curLine, j].DataFormat = unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text;
+                    string text = null;
+                    if (importVisibleKeyNames[j].Translator != null)
+                    {
+                        text = importVisibleKeyNames[j].Translator(columns[j]).ToString();
+                    }
+                    else
+                    {
+                        if (columns[j] is decimal || columns[j] is decimal?)
+                        {
+                            text = Utilities.DecimalToString((decimal)columns[j]);
+                        }
+                        else
+                        {
+                            text = columns[j].ToString();
+                        }
+                    }
+                    worksheet[curLine, j] = text;
+                }
+                curLine++;
+            }
+        }
+
+        private int FindFirstEmptyLine()
+        {
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            for (int i = 0; i < worksheet.Rows; i++)
+            {
+                if (IsEmptyLine(worksheet, i)) return i;
+            }
+            return -1;
         }
     }
 
