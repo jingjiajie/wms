@@ -256,10 +256,16 @@ namespace WMS.UI
             if (worksheet.SelectionRange.Rows != 1)
             {
                 Object alterData = worksheet[worksheet.SelectionRange.Row, 0, worksheet.SelectionRange.Rows,1];
-                var alterDatas = new int[worksheet.SelectionRange.Rows];
+                var alterDatas = new Object[worksheet.SelectionRange.Rows];
                 for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
                 {
-                    alterDatas[i] = int.Parse(worksheet[worksheet.SelectionRange.Row+i, 0].ToString());
+                    int curSupplyID = int.Parse(worksheet[worksheet.SelectionRange.Row+i, 0].ToString());
+                    var curSupply = (from u in wmsEntities.Supply
+                                          where
+                                          u.ID == curSupplyID
+                                          select u).ToArray();
+                    alterDatas[i] = curSupply;
+                    //alterDatas[i] = worksheet[worksheet.SelectionRange.Row+i, 0,1, worksheet.SelectionRange.Cols];
                 }
 
 

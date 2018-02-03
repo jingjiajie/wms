@@ -134,8 +134,8 @@ namespace WMS.UI
         };
         public static Dictionary<string, string> keyConvert = new Dictionary<string, string>()
         {
-            {"SupplierID","SupplierName"},
-            { "ComponentID","ComponentName"},
+            {"SupplierName","SupplierID"},
+            { "ComponentName","ComponentID"},
             { "No","No"},
             { "Number","Number"},
 
