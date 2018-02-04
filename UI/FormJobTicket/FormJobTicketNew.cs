@@ -223,99 +223,96 @@ namespace WMS.UI
             this.reoGridControlMain.CurrentWorksheet.EndEdit(new EndEditReason());
             JobTicket newJobTicket = new JobTicket();
             string errorMessage = null;
-            if(Utilities.CopyTextBoxTextsToProperties(this, newJobTicket, JobTicketViewMetaData.KeyNames, out errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, newJobTicket, JobTicketViewMetaData.KeyNames, out errorMessage) == false)
             {
                 MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            new Thread(()=>
+            WMSEntities wmsEntities = new WMSEntities();
+            wmsEntities.JobTicket.Add(newJobTicket);
+
+            ShipmentTicket shipmentTicket = (from s in wmsEntities.ShipmentTicket
+                                             where s.ID == shipmentTicketID
+                                             select s).FirstOrDefault();
+            if (shipmentTicket == null)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                wmsEntities.JobTicket.Add(newJobTicket);
+                MessageBox.Show("发货单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_PART_ASSIGNED_JOB;
+            newJobTicket.State = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
+            newJobTicket.ShipmentTicketID = shipmentTicket.ID;
+            newJobTicket.ProjectID = this.projectID;
+            newJobTicket.WarehouseID = this.warehouseID;
+            newJobTicket.CreateUserID = this.userID;
+            newJobTicket.CreateTime = DateTime.Now;
+            newJobTicket.PersonID = this.curPersonID == -1 ? null : (int?)this.curPersonID;
 
-                ShipmentTicket shipmentTicket = (from s in wmsEntities.ShipmentTicket
-                                  where s.ID == shipmentTicketID
-                                  select s).FirstOrDefault();
-                if(shipmentTicket == null)
+            var worksheet = this.reoGridControlMain.Worksheets[0];
+            for (int i = 0; i < worksheet.Rows; i++)
+            {
+                if ((worksheet[i, 1] as bool? ?? false) == false) continue;
+                int shipmentTicketItemID = int.Parse(worksheet[i, 0].ToString());
+                ShipmentTicketItem shipmentTicketItem = (from s in wmsEntities.ShipmentTicketItem
+                                                         where s.ID == shipmentTicketItemID
+                                                         select s).FirstOrDefault();
+                if (shipmentTicketItem == null)
                 {
-                    MessageBox.Show("发货单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("发货单条目不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                shipmentTicket.State = ShipmentTicketViewMetaData.STRING_STATE_PART_ASSIGNED_JOB;
-                newJobTicket.State = JobTicketViewMetaData.STRING_STATE_UNFINISHED;
-                newJobTicket.ShipmentTicketID = shipmentTicket.ID;
-                newJobTicket.ProjectID = this.projectID;
-                newJobTicket.WarehouseID = this.warehouseID;
-                newJobTicket.CreateUserID = this.userID;
-                newJobTicket.CreateTime = DateTime.Now;
-                newJobTicket.PersonID = this.curPersonID == -1 ? null : (int?)this.curPersonID;
-
-                var worksheet = this.reoGridControlMain.Worksheets[0];
-                for (int i=0;i<worksheet.Rows;i++)
+                var jobTicketItem = new JobTicketItem();
+                if (Utilities.CopyTextToProperty(worksheet[i, 2]?.ToString(), "ScheduledAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out errorMessage) == false)
                 {
-                    if ((worksheet[i, 1] as bool? ?? false) == false) continue;
-                    int shipmentTicketItemID = int.Parse(worksheet[i, 0].ToString());
-                    ShipmentTicketItem shipmentTicketItem = (from s in wmsEntities.ShipmentTicketItem
-                                                             where s.ID == shipmentTicketItemID
-                                                             select s).FirstOrDefault();
-                    if(shipmentTicketItem == null)
-                    {
-                        MessageBox.Show("发货单条目不存在，请重新查询","提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    var jobTicketItem = new JobTicketItem();
-                    if (Utilities.CopyTextToProperty(worksheet[i,2]?.ToString(), "ScheduledAmount", jobTicketItem, JobTicketItemViewMetaData.KeyNames, out errorMessage) == false)
-                    {
-                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if (jobTicketItem.ScheduledAmount + (shipmentTicketItem.ScheduledJobAmount ?? 0) > shipmentTicketItem.ShipmentAmount)
-                    {
-                        MessageBox.Show(string.Format("行{0}：{1}", i + 1, "计划翻包数量总和不可以超过发货数量！"), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
-                    jobTicketItem.ShipmentTicketItemID = shipmentTicketItem.ID;
-                    jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
-                    jobTicketItem.Unit = shipmentTicketItem.Unit;
-                    jobTicketItem.UnitAmount = shipmentTicketItem.UnitAmount;
-                    jobTicketItem.RealAmount = 0;
-                    shipmentTicketItem.ScheduledJobAmount = (shipmentTicketItem.ScheduledJobAmount ?? 0) + jobTicketItem.ScheduledAmount;
-                    newJobTicket.JobTicketItem.Add(jobTicketItem);
-                }
-                if(newJobTicket.JobTicketItem.Count == 0)
-                {
-                    MessageBox.Show("至少选择一项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(string.Format("行{0}：{1}", i + 1, errorMessage), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+                if (jobTicketItem.ScheduledAmount + (shipmentTicketItem.ScheduledJobAmount ?? 0) > shipmentTicketItem.ShipmentAmount)
+                {
+                    MessageBox.Show(string.Format("行{0}：{1}", i + 1, "计划翻包数量总和不可以超过发货数量！"), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                jobTicketItem.StockInfoID = shipmentTicketItem.StockInfoID;
+                jobTicketItem.ShipmentTicketItemID = shipmentTicketItem.ID;
+                jobTicketItem.State = JobTicketItemViewMetaData.STRING_STATE_UNFINISHED;
+                jobTicketItem.Unit = shipmentTicketItem.Unit;
+                jobTicketItem.UnitAmount = shipmentTicketItem.UnitAmount;
+                jobTicketItem.RealAmount = 0;
+                shipmentTicketItem.ScheduledJobAmount = (shipmentTicketItem.ScheduledJobAmount ?? 0) + jobTicketItem.ScheduledAmount;
+                newJobTicket.JobTicketItem.Add(jobTicketItem);
+            }
+            if (newJobTicket.JobTicketItem.Count == 0)
+            {
+                MessageBox.Show("至少选择一项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-                if (string.IsNullOrWhiteSpace(newJobTicket.JobTicketNo))
+            if (string.IsNullOrWhiteSpace(newJobTicket.JobTicketNo))
+            {
+                DateTime createDay = new DateTime(shipmentTicket.CreateTime.Value.Year, shipmentTicket.CreateTime.Value.Month, shipmentTicket.CreateTime.Value.Day);
+                DateTime nextDay = createDay.AddDays(1);
+                int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from j in wmsEntities.JobTicket
+                                                                      where j.CreateTime >= createDay && j.CreateTime < nextDay
+                                                                      select j.JobTicketNo).ToArray());
+                newJobTicket.JobTicketNo = Utilities.GenerateTicketNo("Z", newJobTicket.CreateTime.Value, maxRankOfToday + 1);
+            }
+            wmsEntities.SaveChanges();
+            ShipmentTicketUtilities.UpdateShipmentTicketStateSync(this.shipmentTicketID, wmsEntities);
+            if (MessageBox.Show("生成作业单成功，是否查看作业单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                if (this.toJobTicketCallback == null)
                 {
-                    DateTime createDay = new DateTime(shipmentTicket.CreateTime.Value.Year, shipmentTicket.CreateTime.Value.Month, shipmentTicket.CreateTime.Value.Day);
-                    DateTime nextDay = createDay.AddDays(1);
-                    int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from j in wmsEntities.JobTicket
-                                                                          where j.CreateTime >= createDay && j.CreateTime < nextDay
-                                                                          select j.JobTicketNo).ToArray());
-                    newJobTicket.JobTicketNo = Utilities.GenerateTicketNo("Z", newJobTicket.CreateTime.Value, maxRankOfToday + 1);
+                    throw new Exception("ToJobTicketCallback不允许为空！");
                 }
-                wmsEntities.SaveChanges();
-                ShipmentTicketUtilities.UpdateShipmentTicketStateSync(this.shipmentTicketID,wmsEntities);
-                if(MessageBox.Show("生成作业单成功，是否查看作业单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                this.toJobTicketCallback("ShipmentTicketNo", shipmentTicket.No);
+            }
+            if (!this.IsDisposed)
+            {
+                this.Invoke(new Action(() =>
                 {
-                    if(this.toJobTicketCallback == null)
-                    {
-                        throw new Exception("ToJobTicketCallback不允许为空！");
-                    }
-                    this.toJobTicketCallback("ShipmentTicketNo",shipmentTicket.No);
-                }
-                if (!this.IsDisposed)
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        this.Close();
-                    }));
-                }
-            }).Start();
+                    this.Close();
+                }));
+            }
         }
 
         private void buttonOK_MouseEnter(object sender, EventArgs e)

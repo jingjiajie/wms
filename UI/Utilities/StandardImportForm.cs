@@ -60,8 +60,33 @@ namespace WMS.UI
 
         private void StandardImportForm_Load(object sender, EventArgs e)
         {
-            this.comboBoxImeMode.SelectedIndex = 0;
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
             this.Icon = System.Drawing.Icon.FromHandle(Properties.Resources._20180114034630784_easyicon_net_64.GetHicon());
+
+            //寻找ReoGrid自动生成的TextBox。把联想绑到这个上面
+            worksheet.StartEdit(); //让它先把TextBox创建出来
+            foreach (Control control in this.reoGridControlMain.Controls)
+            {
+                if (control is TextBox && control.Name == "")
+                {
+                    inputTextBox = control as TextBox;
+                }
+            }
+            if (this.inputTextBox == null) return;
+            inputTextBox.Font = new Font(worksheet.EditingCell.Style.FontName, worksheet.EditingCell.Style.FontSize + 1);
+            this.inputTextBox.VisibleChanged += inputTextBox_VisibleChanged;
+            this.inputTextBox.PreviewKeyDown += InputTextBox_PreviewKeyDown;
+            this.formAssociate = new FormAssociate(inputTextBox);
+            this.formAssociate.ClearAssociationSQL();
+            if (this.columnAssociation.ContainsKey(worksheet.SelectionRange.Col))
+            {
+                foreach (string sql in this.columnAssociation[worksheet.SelectionRange.Col])
+                {
+                    this.formAssociate.AddAssociationSQL(sql);
+                }
+            }
+            this.formAssociate.RefreshAssociation();
+            worksheet.EndEdit(new EndEditReason());
         }
 
         private void buttonImport_Click(object sender, EventArgs e)
@@ -191,7 +216,6 @@ namespace WMS.UI
             worksheet.SetSettings(WorksheetSettings.Edit_AutoFormatCell, false);
             //worksheet.SetRangeDataFormat(RangePosition.EntireRange, unvell.ReoGrid.DataFormat.CellDataFormatFlag.Text);
             worksheet.BeforeSelectionRangeChange += Worksheet_BeforeSelectionRangeChange;
-            worksheet.CellEditTextChanging += worksheet_CellEditTextChanging; //编辑时联想
             worksheet.CellMouseDown += worksheet_CellMouseDown;
         }
 
@@ -200,54 +224,10 @@ namespace WMS.UI
             this.canChangeSelectionRange = true;
         }
 
-        private void worksheet_CellEditTextChanging(object sender, unvell.ReoGrid.Events.CellEditTextChangingEventArgs e)
-        {
-            var worksheet = this.reoGridControlMain.CurrentWorksheet;
-            if (worksheet.CellEditText == "") return;
-            //初始化联想窗口
-            new Thread(()=>
-            {
-                //否则基于TextBox开始联想
-                if (this.inputTextBox == null)
-                {
-                    //如果输入焦点不是TextBox而是ReoGrid，则等待100毫秒，等TextBox肯定创建出来了，再试一次。
-                    if (Utilities.GetFocus() == this.reoGridControlMain.Handle)
-                    {
-                        Thread.Sleep(100);
-                        if (Utilities.GetFocus() == this.reoGridControlMain.Handle) return;
-                    }
-                    this.Invoke(new Action(()=>
-                    {
-                        //ReoGrid自动生成的TextBox。把联想绑到这个上面
-                        foreach(Control control in this.reoGridControlMain.Controls)
-                        {
-                            if(control is TextBox && control.Name == "")
-                            {
-                                inputTextBox = control as TextBox;
-                            }
-                        }
-                        if (this.inputTextBox == null) return;
-                        inputTextBox.Font = new Font(worksheet.EditingCell.Style.FontName, worksheet.EditingCell.Style.FontSize + 1);
-                        this.inputTextBox.VisibleChanged += inputTextBox_VisibleChanged;
-                        this.inputTextBox.PreviewKeyDown += InputTextBox_PreviewKeyDown;
-                        this.formAssociate = new FormAssociate(inputTextBox);
-                        this.formAssociate.ClearAssociationSQL();
-                        if (this.columnAssociation.ContainsKey(worksheet.SelectionRange.Col))
-                        {
-                            foreach (string sql in this.columnAssociation[worksheet.SelectionRange.Col])
-                            {
-                                this.formAssociate.AddAssociationSQL(sql);
-                            }
-                        }
-                        this.formAssociate.RefreshAssociation();
-                    }));
-                }
-            }).Start();
-        }
-
         private volatile bool isWaitingShow = false;
         private void inputTextBox_VisibleChanged(object sender, EventArgs e)
         {
+            Console.WriteLine(InputLanguage.CurrentInputLanguage.LayoutName);
             //只处理上下键选联想项的情况。此时canChangeSelectionRange=false
             if (canChangeSelectionRange == true)
             {
@@ -294,6 +274,11 @@ namespace WMS.UI
 
         private void InputTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            if(e.KeyCode == Keys.ShiftKey)
+            {
+                this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
+            }
+
             if ((e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||e.KeyCode == Keys.Enter) && this.formAssociate != null && this.formAssociate.Visible == true)
             {
                 this.canChangeSelectionRange = false;
@@ -536,28 +521,16 @@ namespace WMS.UI
             return true;
         }
 
-        private void reoGridControlMain_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void comboBoxImeMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(this.comboBoxImeMode.SelectedIndex == 0)
-            {
-                this.reoGridControlMain.ImeMode = ImeMode.On;
-            }
-            else
-            {
-                this.reoGridControlMain.ImeMode = 0;
-            }
-        }
-
         private void reoGridControlMain_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             if (worksheet.SelectionRange.IsSingleCell == false) return;
-            if (e.Control) return;
+
+            if (e.KeyCode == Keys.ShiftKey) //Shift Shift切换输入中英文
+            {
+                this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
+                return;
+            }
 
             Keys[] dontEditkeys = new Keys[]
             {
@@ -648,6 +621,20 @@ namespace WMS.UI
                 if (IsEmptyLine(worksheet, i)) return i;
             }
             return -1;
+        }
+
+        private void checkBoxLockEnglish_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxLockEnglish.Checked)
+            {
+                this.reoGridControlMain.ImeMode = ImeMode.Disable;
+                this.inputTextBox.ImeMode = ImeMode.Disable;
+            }
+            else
+            {
+                this.reoGridControlMain.ImeMode = ImeMode.On;
+                this.inputTextBox.ImeMode = ImeMode.On;
+            }
         }
     }
 

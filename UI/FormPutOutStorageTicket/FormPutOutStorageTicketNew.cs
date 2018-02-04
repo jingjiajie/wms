@@ -183,7 +183,7 @@ namespace WMS.UI
                 MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if(Utilities.CopyComboBoxsToProperties(this,newPutOutStorageTicket, PutOutStorageTicketViewMetaData.KeyNames) == false)
+            if (Utilities.CopyComboBoxsToProperties(this, newPutOutStorageTicket, PutOutStorageTicketViewMetaData.KeyNames) == false)
             {
                 MessageBox.Show("内部错误：读取复选框数据失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -198,105 +198,103 @@ namespace WMS.UI
                 }
                 checkedLines.Add(i);
             }
-            if(checkedLines.Count == 0)
+            if (checkedLines.Count == 0)
             {
                 MessageBox.Show("至少选择一项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            new Thread(() =>
+
+            WMSEntities wmsEntities = new WMSEntities();
+            wmsEntities.PutOutStorageTicket.Add(newPutOutStorageTicket);
+
+            JobTicket jobTicket = (from s in wmsEntities.JobTicket
+                                   where s.ID == this.jobTicketID
+                                   select s).FirstOrDefault();
+
+            if (jobTicket == null)
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                wmsEntities.PutOutStorageTicket.Add(newPutOutStorageTicket);
+                MessageBox.Show("作业单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            newPutOutStorageTicket.JobTicketID = jobTicket.ID;
+            newPutOutStorageTicket.ProjectID = this.projectID;
+            newPutOutStorageTicket.WarehouseID = this.warehouseID;
+            newPutOutStorageTicket.CreateUserID = this.userID;
+            newPutOutStorageTicket.CreateTime = DateTime.Now;
+            int personID = this.personIDGetter();
+            if (personID != -1)
+            {
+                newPutOutStorageTicket.PersonID = personID;
+            }
 
-                JobTicket jobTicket = (from s in wmsEntities.JobTicket
-                                                 where s.ID == this.jobTicketID
-                                                 select s).FirstOrDefault();
-
+            //把选中的条目加进出库单
+            foreach (int line in checkedLines)
+            {
+                int id = int.Parse(worksheet[line, 0].ToString());
+                JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
+                                               where j.ID == id
+                                               select j).FirstOrDefault();
                 if (jobTicket == null)
                 {
-                    MessageBox.Show("作业单不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("无法找到作业单条目，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                newPutOutStorageTicket.JobTicketID = jobTicket.ID;
-                newPutOutStorageTicket.ProjectID = this.projectID;
-                newPutOutStorageTicket.WarehouseID = this.warehouseID;
-                newPutOutStorageTicket.CreateUserID = this.userID;
-                newPutOutStorageTicket.CreateTime = DateTime.Now;
-                int personID = this.personIDGetter();
-                if(personID != -1)
-                {
-                    newPutOutStorageTicket.PersonID = personID;
-                }
 
-                //把选中的条目加进出库单
-                foreach (int line in checkedLines)
-                {
-                    int id = int.Parse(worksheet[line, 0].ToString());
-                    JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
-                                                   where j.ID == id
-                                                   select j).FirstOrDefault();
-                    if (jobTicket == null)
-                    {
-                        MessageBox.Show("无法找到作业单条目，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+                PutOutStorageTicketItem newPutOutStorageTicketItem = new PutOutStorageTicketItem();
 
-                    PutOutStorageTicketItem newPutOutStorageTicketItem = new PutOutStorageTicketItem();
-
-                    if (Utilities.CopyTextToProperty(worksheet[line, 2].ToString(), "ScheduledAmount", newPutOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
-                    {
-                        MessageBox.Show(errorMesage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if(newPutOutStorageTicketItem.ScheduledAmount <= 0)
-                    {
-                        MessageBox.Show("行" + (line + 1) + "：计划出库数量必须大于0！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if (newPutOutStorageTicketItem.ScheduledAmount + (jobTicketItem.ScheduledPutOutAmount ?? 0) > jobTicketItem.RealAmount)
-                    {
-                        MessageBox.Show("行" + (line+1) + "：计划出库数量不能大于实际翻包完成数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    jobTicketItem.ScheduledPutOutAmount = (jobTicketItem.ScheduledPutOutAmount ?? 0) + newPutOutStorageTicketItem.ScheduledAmount;
-                    newPutOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
-                    newPutOutStorageTicketItem.JobTicketItemID = jobTicketItem.ID;
-                    newPutOutStorageTicketItem.RealAmount = 0;
-                    newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
-                    newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
-                    newPutOutStorageTicketItem.ReturnQualityUnit = "个";
-                    newPutOutStorageTicketItem.ReturnQualityUnitAmount = 1;
-                    newPutOutStorageTicketItem.ReturnRejectUnit = "个";
-                    newPutOutStorageTicketItem.ReturnRejectUnitAmount = 1;
-                    newPutOutStorageTicket.PutOutStorageTicketItem.Add(newPutOutStorageTicketItem);
-                }
-                //生成出库单号
-                if (string.IsNullOrWhiteSpace(newPutOutStorageTicket.No))
+                if (Utilities.CopyTextToProperty(worksheet[line, 2].ToString(), "ScheduledAmount", newPutOutStorageTicketItem, PutOutStorageTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
                 {
-                    DateTime createDay = new DateTime(jobTicket.CreateTime.Value.Year, jobTicket.CreateTime.Value.Month, jobTicket.CreateTime.Value.Day);
-                    DateTime nextDay = createDay.AddDays(1);
-                    int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from p in wmsEntities.PutOutStorageTicket
-                                                                          where p.CreateTime >= createDay && p.CreateTime < nextDay
-                                                                          select p.No).ToArray());
-                    newPutOutStorageTicket.No = Utilities.GenerateTicketNo("C", newPutOutStorageTicket.CreateTime.Value, maxRankOfToday + 1);
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                wmsEntities.SaveChanges();
-                if (MessageBox.Show("生成出库单成功，是否查看出库单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                if (newPutOutStorageTicketItem.ScheduledAmount <= 0)
                 {
-                    if (this.toPutOutStorageTicketCallback == null)
-                    {
-                        throw new Exception("toPutOutStorageTicketCallback不可以为空！");
-                    }
-                    this.toPutOutStorageTicketCallback("No",newPutOutStorageTicket.No);
+                    MessageBox.Show("行" + (line + 1) + "：计划出库数量必须大于0！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-                if (!this.IsDisposed)
+                if (newPutOutStorageTicketItem.ScheduledAmount + (jobTicketItem.ScheduledPutOutAmount ?? 0) > jobTicketItem.RealAmount)
                 {
-                    this.Invoke(new Action(() =>
-                    {
-                        this.Close();
-                    }));
+                    MessageBox.Show("行" + (line + 1) + "：计划出库数量不能大于实际翻包完成数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-            }).Start();
+                jobTicketItem.ScheduledPutOutAmount = (jobTicketItem.ScheduledPutOutAmount ?? 0) + newPutOutStorageTicketItem.ScheduledAmount;
+                newPutOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
+                newPutOutStorageTicketItem.JobTicketItemID = jobTicketItem.ID;
+                newPutOutStorageTicketItem.RealAmount = 0;
+                newPutOutStorageTicketItem.Unit = jobTicketItem.Unit;
+                newPutOutStorageTicketItem.UnitAmount = jobTicketItem.UnitAmount;
+                newPutOutStorageTicketItem.ReturnQualityUnit = "个";
+                newPutOutStorageTicketItem.ReturnQualityUnitAmount = 1;
+                newPutOutStorageTicketItem.ReturnRejectUnit = "个";
+                newPutOutStorageTicketItem.ReturnRejectUnitAmount = 1;
+                newPutOutStorageTicket.PutOutStorageTicketItem.Add(newPutOutStorageTicketItem);
+            }
+            //生成出库单号
+            if (string.IsNullOrWhiteSpace(newPutOutStorageTicket.No))
+            {
+                DateTime createDay = new DateTime(jobTicket.CreateTime.Value.Year, jobTicket.CreateTime.Value.Month, jobTicket.CreateTime.Value.Day);
+                DateTime nextDay = createDay.AddDays(1);
+                int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from p in wmsEntities.PutOutStorageTicket
+                                                                      where p.CreateTime >= createDay && p.CreateTime < nextDay
+                                                                      select p.No).ToArray());
+                newPutOutStorageTicket.No = Utilities.GenerateTicketNo("C", newPutOutStorageTicket.CreateTime.Value, maxRankOfToday + 1);
+            }
+            wmsEntities.SaveChanges();
+            if (MessageBox.Show("生成出库单成功，是否查看出库单？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                if (this.toPutOutStorageTicketCallback == null)
+                {
+                    throw new Exception("toPutOutStorageTicketCallback不可以为空！");
+                }
+                this.toPutOutStorageTicketCallback("No", newPutOutStorageTicket.No);
+            }
+            if (!this.IsDisposed)
+            {
+                this.Invoke(new Action(() =>
+                {
+                    this.Close();
+                }));
+            }
         }
 
         private void buttonOK_MouseEnter(object sender, EventArgs e)
