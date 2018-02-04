@@ -18,6 +18,7 @@ namespace WMS.UI
     {
         WMSEntities wmsEntities = new WMSEntities();
         private PagerWidget<PutOutStorageTicketView> pagerWidget = null;
+        private SearchWidget<PutOutStorageTicketView> searchWidget = null;
 
         int userID = -1;
         int projectID = -1;
@@ -34,6 +35,9 @@ namespace WMS.UI
             this.pagerWidget = new PagerWidget<PutOutStorageTicketView>(this.reoGridControlMain, PutOutStorageTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPagerWidget.Controls.Add(this.pagerWidget);
             this.pagerWidget.Show();
+
+            this.searchWidget = new SearchWidget<PutOutStorageTicketView>(PutOutStorageTicketViewMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(this.searchWidget);
         }
 
         private void FormPutOutStorageTicket_Load(object sender, EventArgs e)
@@ -57,40 +61,17 @@ namespace WMS.UI
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
-            this.comboBoxSearchCondition.Items.Add("无");
-            this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
-            this.comboBoxSearchCondition.SelectedIndex = 0;
+            
         }
 
         public void SetSearchCondition(string key, string value)
         {
-            string name = (from kn in PutOutStorageTicketViewMetaData.KeyNames
-                           where kn.Key == key
-                           select kn.Name).FirstOrDefault();
-            if (name == null)
-            {
-                return;
-            }
-            for (int i = 0; i < this.comboBoxSearchCondition.Items.Count; i++)
-            {
-                var item = comboBoxSearchCondition.Items[i];
-                if (item.ToString() == name)
-                {
-                    this.comboBoxSearchCondition.SelectedIndex = i;
-                }
-            }
-            this.textBoxSearchValue.Text = value;
+            this.searchWidget.SetSearchCondition(key, value);
         }
 
         private void Search(bool savePage = false, int selectID = -1)
         {
-            this.pagerWidget.ClearCondition();
-            if(this.comboBoxSearchCondition.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-            }
-            this.pagerWidget.Search(savePage, selectID);
+            this.searchWidget.Search(savePage, selectID);
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -213,19 +194,6 @@ namespace WMS.UI
                 }
             }
             return ids.ToArray();
-        }
-
-        private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.comboBoxSearchCondition.SelectedIndex == 0)
-            {
-                this.textBoxSearchValue.Text = "";
-                this.textBoxSearchValue.Enabled = false;
-            }
-            else
-            {
-                this.textBoxSearchValue.Enabled = true;
-            }
         }
 
         private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)

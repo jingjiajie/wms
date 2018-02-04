@@ -20,6 +20,7 @@ namespace WMS.UI
         private int projectID = -1;
         private int warehouseID = -1;
         private PagerWidget<StockInfoView> pagerWidget = null;
+        private SearchWidget<StockInfoView> searchWidget = null;
 
         public FormStockInfo(int userID,int projectID,int warehouseID)
         {
@@ -78,15 +79,13 @@ namespace WMS.UI
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化查询框
-            this.comboBoxSearchCondition.Items.Add("无");
-            this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
-            this.comboBoxSearchCondition.SelectedIndex = 0;
-
             //初始化分页控件
             this.pagerWidget = new PagerWidget<StockInfoView>(this.reoGridControlMain, StockInfoViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
+
+            this.searchWidget = new SearchWidget<StockInfoView>(StockInfoViewMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
         }
 
         private void reoGridControlMain_Click(object sender, EventArgs e)
@@ -94,15 +93,6 @@ namespace WMS.UI
 
         }
         
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
-            this.pagerWidget.ClearCondition();
-            if(this.comboBoxSearchCondition.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-            }
-            this.pagerWidget.Search();
-        }
 
         private void buttonAlter_Click(object sender, EventArgs e)
         {
@@ -175,28 +165,7 @@ namespace WMS.UI
                     MessageBox.Show("删除成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
             })).Start();
-        }
-
-        private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                this.buttonSearch.PerformClick();
-            }
-        }
-
-        private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.comboBoxSearchCondition.SelectedIndex == 0)
-            {
-                this.textBoxSearchValue.Text = "";
-                this.textBoxSearchValue.Enabled = false;
-            }
-            else
-            {
-                this.textBoxSearchValue.Enabled = true;
-            }
-        }
+        } 
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
@@ -205,7 +174,7 @@ namespace WMS.UI
                 importHandler,
                 () =>
                 {
-                    this.buttonSearch.PerformClick();
+                    this.searchWidget.Search();
                 },
                 "导入库存信息");
             formImport.Show();

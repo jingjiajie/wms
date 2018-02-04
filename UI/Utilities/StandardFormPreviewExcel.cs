@@ -208,7 +208,8 @@ namespace WMS.UI
             {
                 return;
             }
-            this.SetPrintScale(printScale, this.reoGridControlMain.CurrentWorksheet.Name);
+            this.reoGridControlMain.CurrentWorksheet.PrintSettings.PageScaling = printScale;
+            this.reoGridControlMain.CurrentWorksheet.AutoSplitPage();
         }
 
         private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
@@ -231,12 +232,12 @@ namespace WMS.UI
             {
                 return;
             }
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Right)
+            if (e.KeyCode == Keys.Up)
             {
                 printScale += 0.1F;
                 this.textBoxScale.Text = string.Format("{0:0.##}", printScale);
             }
-            else if (e.KeyCode == Keys.Down || e.KeyCode == Keys.Left)
+            else if (e.KeyCode == Keys.Down)
             {
                 printScale -= 0.1F;
                 this.textBoxScale.Text = string.Format("{0:0.##}", printScale);

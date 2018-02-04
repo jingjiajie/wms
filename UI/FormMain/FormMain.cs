@@ -524,10 +524,11 @@ namespace WMS.UI
 
         private void treeViewLeft_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            this.panelRight.Hide();
+            this.panelRight.SuspendLayout();
             if (treeViewLeft.SelectedNode.Text == "用户管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormUser l = new FormUser(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = DockStyle.Fill;//窗口大小
@@ -538,7 +539,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "供应商管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormBaseSupplier l = new FormBaseSupplier(user.Authority, this.supplierid, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -549,7 +549,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "供货管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormBaseSupply l = new FormBaseSupply(user.Authority, this.supplierid, this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -560,7 +559,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "零件管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormBaseComponent l = new FormBaseComponent(user.Authority, this.supplierid, this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -576,7 +574,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "项目管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 this.setitem = 1;
                 FormBaseProject l = new FormBaseProject();//实例化子窗口
                 l.TopLevel = false;
@@ -588,7 +585,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "人员管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormBase.FormBasePerson l = new FormBase.FormBasePerson();//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -599,12 +595,10 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "到货单管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormReceiptArrival l = new FormReceiptArrival(this.project.ID, this.warehouse.ID, this.user.ID, this.supplierid);//实例化子窗口
                 l.SetActionTo(0, new Action<string, string>((string key, string value) =>
                 {
                     this.panelRight.Controls.Clear();
-                    panelRight.Visible = true;
                     FormSubmissionManage s = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
                     s.TopLevel = false;
                     s.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -654,7 +648,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "上架单管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormReceiptShelves l = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -680,7 +673,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "上架零件管理")
             {
                 this.panelRight.Controls.Clear();
-                panelRight.Visible = true;
                 FormShelvesItem l = new FormShelvesItem(this.project.ID, this.warehouse.ID, this.user.ID, null, null);
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -692,7 +684,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "工作任务单管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormShipmentTicket formShipmentTicket = new FormShipmentTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 formShipmentTicket.SetToJobTicketCallback(this.ToJobTicketCallback);
                 formShipmentTicket.TopLevel = false;
@@ -704,7 +695,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "翻包作业单管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormJobTicket l = new FormJobTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 l.SetToPutOutStorageTicketCallback(this.ToPutOutStorageTicketCallback);
                 l.TopLevel = false;
@@ -716,7 +706,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "出库单管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 FormPutOutStorageTicket l = new FormPutOutStorageTicket(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 l.TopLevel = false;
                 l.Dock = System.Windows.Forms.DockStyle.Fill;//窗口大小
@@ -727,7 +716,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "库存信息")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 var formBaseStock = new FormStockInfo(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
@@ -738,7 +726,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "库存盘点")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 var formBaseStock = new FormStockInfoCheckTicket(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 formBaseStock.TopLevel = false;
                 formBaseStock.Dock = DockStyle.Fill;//窗口大小
@@ -749,7 +736,6 @@ namespace WMS.UI
             if (treeViewLeft.SelectedNode.Text == "送检单管理")
             {
                 this.panelRight.Controls.Clear();//清空
-                panelRight.Visible = true;
                 var formSubmissionManage = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
                 formSubmissionManage.TopLevel = false;
                 formSubmissionManage.Dock = DockStyle.Fill;//窗口大小
@@ -757,6 +743,8 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(formSubmissionManage);
                 formSubmissionManage.Show();
             }
+            this.panelRight.ResumeLayout();
+            this.panelRight.Show();
         }
 
         private void ToJobTicketCallback(string condition, string value)
@@ -786,15 +774,12 @@ namespace WMS.UI
 
         private void LoadSubWindow(Form form)
         {
-            this.panelRight.Visible = false;
             form.TopLevel = false;
             form.Dock = DockStyle.Fill;//窗口大小
             form.FormBorderStyle = FormBorderStyle.None;//没有标题栏
             this.panelRight.Controls.Clear();//清空
             this.panelRight.Controls.Add(form);
             form.Show();
-            this.panelRight.Visible = true;
-
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)

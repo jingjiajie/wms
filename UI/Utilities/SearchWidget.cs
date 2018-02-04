@@ -27,32 +27,39 @@ namespace WMS.UI
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
 
-            //初始化
-            comboBoxCondition.Items.Add("无");
-            comboBoxCondition.Items.AddRange(visibleColumnNames);
-            comboBoxCondition.SelectedIndex = 0;
-            comboBoxCondition.SelectedIndexChanged += (sender, e) =>
+            //初始化搜索条件框
+            comboBoxSearchCondition.Items.Add("无");
+            comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
+            comboBoxSearchCondition.SelectedIndex = 0;
+            comboBoxSearchCondition.SelectedIndexChanged += (sender, e) =>
             {
-                if (comboBoxCondition.SelectedIndex == 0)
+                if (comboBoxSearchCondition.SelectedIndex == 0)
                 {
-                    textBoxCondition.Text = "";
-                    textBoxCondition.Enabled = false;
+                    textBoxSearchCondition.Text = "";
+                    textBoxSearchCondition.Enabled = false;
                 }
                 else
                 {
-                    textBoxCondition.Enabled = true;
+                    textBoxSearchCondition.Enabled = true;
                 }
             };
-            
+
+            //初始化排序条件框
+            comboBoxOrderByCondition.Items.Add("无");
+            comboBoxOrderByCondition.Items.AddRange(visibleColumnNames);
+            comboBoxOrderByCondition.SelectedIndex = 0;
+            comboBoxOrderByOrder.SelectedIndex = 0;
+
             this.Dock = DockStyle.Fill;
         }
 
         public void Search(bool savePage = false, int selectID = -1)
         {
             pagerWidget.ClearCondition();
-            if (comboBoxCondition.SelectedIndex != 0)
+            pagerWidget.ClearOrderBy();
+            if (comboBoxSearchCondition.SelectedIndex != 0)
             {
-                string name = comboBoxCondition.SelectedItem.ToString();
+                string name = comboBoxSearchCondition.SelectedItem.ToString();
                 string key = (from kn in this.keyNames where kn.Name == name select kn.Key).FirstOrDefault();
                 if (key == null)
                 {
@@ -67,12 +74,33 @@ namespace WMS.UI
                 //如果是日期类型，按模糊搜索
                 if (property.PropertyType == typeof(DateTime) || (property.PropertyType == typeof(DateTime?)))
                 {
-                    pagerWidget.AddCondition(string.Format("DATEDIFF(day,@value,{0})=0", key), new SqlParameter("value", textBoxCondition.Text));
+                    pagerWidget.AddCondition(string.Format("DATEDIFF(day,@value,{0})=0", key), new SqlParameter("value", textBoxSearchCondition.Text));
                 }
                 else //否则按普通搜索
                 {
-                    pagerWidget.AddCondition(key, textBoxCondition.Text);
+                    pagerWidget.AddCondition(key, textBoxSearchCondition.Text);
                 }
+            }
+            if(comboBoxOrderByCondition.SelectedIndex != 0)
+            {
+                string name = comboBoxOrderByCondition.SelectedItem.ToString();
+                string key = (from kn in this.keyNames where kn.Name == name select kn.Key).FirstOrDefault();
+                if (key == null)
+                {
+                    throw new Exception("SearchWidget找不到字段 " + name + " 对应的Key，请检查传入的KeyNames");
+                }
+                //判断搜索字段类型
+                PropertyInfo property = typeof(T).GetProperty(key);
+                if (property == null)
+                {
+                    throw new Exception(typeof(T).Name + " 中不存在字段 " + key + " 请检查程序！");
+                }
+                string orderByCond = key;
+                if(this.comboBoxOrderByOrder.SelectedIndex == 1) //倒序
+                {
+                    orderByCond += " DESC";
+                }
+                pagerWidget.AddOrderBy(orderByCond);
             }
             pagerWidget.Search(savePage, selectID);
         }
@@ -86,15 +114,15 @@ namespace WMS.UI
             {
                 return;
             }
-            for (int i = 0; i < this.comboBoxCondition.Items.Count; i++)
+            for (int i = 0; i < this.comboBoxSearchCondition.Items.Count; i++)
             {
-                var item = comboBoxCondition.Items[i];
+                var item = comboBoxSearchCondition.Items[i];
                 if (item.ToString() == name)
                 {
-                    this.comboBoxCondition.SelectedIndex = i;
+                    this.comboBoxSearchCondition.SelectedIndex = i;
                 }
             }
-            this.textBoxCondition.Text = value;
+            this.textBoxSearchCondition.Text = value;
         }
 
         private void tableLayoutPanel_Paint(object sender, PaintEventArgs e)
@@ -113,6 +141,18 @@ namespace WMS.UI
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             this.Search();
+        }
+
+        private void comboBoxOrderByCondition_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.comboBoxOrderByCondition.SelectedIndex == 0)
+            {
+                this.comboBoxOrderByOrder.Enabled = false;
+            }
+            else
+            {
+                this.comboBoxOrderByOrder.Enabled = true;
+            }
         }
     }
 }

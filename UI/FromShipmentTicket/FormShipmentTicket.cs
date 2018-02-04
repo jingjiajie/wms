@@ -17,6 +17,7 @@ namespace WMS.UI
     public partial class FormShipmentTicket : Form
     {
         PagerWidget<ShipmentTicketView> pagerWidget = null;
+        SearchWidget<ShipmentTicketView> searchWidget = null;
         WMSEntities wmsEntities = new WMSEntities();
         int userID = -1;
         int projectID = -1;
@@ -61,25 +62,17 @@ namespace WMS.UI
             string[] visibleColumnNames = (from kn in ShipmentTicketViewMetaData.KeyNames
                                            where kn.Visible == true
                                            select kn.Name).ToArray();
-
-            //初始化
-            this.comboBoxSearchCondition.Items.Add("无");
-            this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
-            this.comboBoxSearchCondition.SelectedIndex = 0;
-
             this.pagerWidget = new PagerWidget<ShipmentTicketView>(this.reoGridControlMain, ShipmentTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPagerWidget.Controls.Add(pagerWidget);
             this.pagerWidget.Show();
+
+            this.searchWidget = new SearchWidget<ShipmentTicketView>(ShipmentTicketViewMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
         }
 
         private void Search(bool savePage = false,int selectID = -1)
         {
-            this.pagerWidget.ClearCondition();
-            if(this.comboBoxSearchCondition.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(),this.textBoxSearchValue.Text);
-            }
-            this.pagerWidget.Search(savePage,selectID);
+            this.searchWidget.Search(savePage, selectID);
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -253,19 +246,6 @@ namespace WMS.UI
         private void buttonSearch_Click(object sender, EventArgs e)
         {
             this.Search();
-        }
-
-        private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.comboBoxSearchCondition.SelectedIndex == 0)
-            {
-                this.textBoxSearchValue.Text = "";
-                this.textBoxSearchValue.Enabled = false;
-            }
-            else
-            {
-                this.textBoxSearchValue.Enabled = true;
-            }
         }
 
         private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)

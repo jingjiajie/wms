@@ -85,6 +85,7 @@ namespace WMS.UI
                         standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
                     }
                     standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
+                    standardFormPreviewExcel.SetPrintScale(0.73f,worksheetName);
                 }
                 standardFormPreviewExcel.Show();
             }
@@ -135,7 +136,7 @@ namespace WMS.UI
         private void buttonPass_Click(object sender, EventArgs e)
         {
             WMSEntities wmsEntities = new WMSEntities();
-            StandardFormPreviewExcel standardFormPreviewExcel = new StandardFormPreviewExcel("送检单预览");
+            StandardFormPreviewExcel standardFormPreviewExcel = new StandardFormPreviewExcel("送检单预览",0.73f);
             SubmissionTicket[] submissionTicket = idsToSubmissionTickets(this.ids);
             try
             {
@@ -162,6 +163,7 @@ namespace WMS.UI
                         standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
                     }
                     standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
+                    standardFormPreviewExcel.SetPrintScale(0.73f, worksheetName);
                 }
                 standardFormPreviewExcel.Show();
             }
@@ -175,7 +177,7 @@ namespace WMS.UI
         private void buttonNoPass_Click(object sender, EventArgs e)
         {
             WMSEntities wmsEntities = new WMSEntities();
-            StandardFormPreviewExcel standardFormPreviewExcel = new StandardFormPreviewExcel("送检单预览");
+            StandardFormPreviewExcel standardFormPreviewExcel = new StandardFormPreviewExcel("送检单预览",0.73f);
             SubmissionTicket[] submissionTicket = idsToSubmissionTickets(this.ids);
             try
             {
@@ -202,6 +204,7 @@ namespace WMS.UI
                         standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
                     }
                     standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
+                    standardFormPreviewExcel.SetPrintScale(0.73f, worksheetName);
                 }
                 standardFormPreviewExcel.Show();
             }

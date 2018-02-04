@@ -220,6 +220,7 @@
             this.ClientSize = new System.Drawing.Size(1996, 685);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
+            this.DoubleBuffered = true;
             this.Name = "FormJobTicket";
             this.Text = "FormJobTicket";
             this.Load += new System.EventHandler(this.FormJobTicket_Load);
