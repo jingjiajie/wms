@@ -15,6 +15,7 @@ namespace WMS.UI
             new KeyName(){Key="ID",Name="ID",Visible=false,Editable=false,Save=false},
             //new KeyName(){Key="StockInfoID",Name="库存信息ID",Editable=true},
             //new KeyName(){Key="PutOutStorageTicketNo",Name="出库单号",Editable=false,Save=false},
+            new KeyName(){Key="SupplyNo",Name="零件代号",Editable=false,Save=false},
             new KeyName(){Key="ComponentName",Name="零件",Editable=false,Save=false},
             new KeyName(){Key="SupplierName",Name="供应商",Editable=false,Save=false},
             new KeyName(){Key="ScheduledAmount",Name="计划装车数量",Positive=true},

@@ -706,9 +706,9 @@ namespace WMS.UI
                     }
 
                     decimal totalShipmentableAmountNoUnit = stockInfoViews.Sum((stockInfoView) => {
-                        decimal shipmentableAmount = (stockInfoView.ShipmentAreaAmount ?? 0) - stockInfoView.ScheduledShipmentAmount;
-                        shipmentableAmount = shipmentableAmount < 0 ? 0 : shipmentableAmount;
-                        return shipmentableAmount;
+                        decimal shipmentableAmountNoUnit = (stockInfoView.ShipmentAreaAmount ?? 0) - stockInfoView.ScheduledShipmentAmount;
+                        shipmentableAmountNoUnit = shipmentableAmountNoUnit < 0 ? 0 : shipmentableAmountNoUnit;
+                        return shipmentableAmountNoUnit;
                     });
                     if (totalShipmentableAmountNoUnit < results[i].ShipmentAmount * results[i].UnitAmount)
                     {
@@ -718,26 +718,26 @@ namespace WMS.UI
                     results[i].ShipmentTicketID = this.shipmentTicketID;
                     results[i].JobPersonID = jobPersonID == -1 ? null : (int?)jobPersonID;
                     results[i].ConfirmPersonID = confirmPersonID == -1 ? null : (int?)confirmPersonID;
-                    decimal curAmount = 0;
+                    decimal curAmountNoUnit = 0;
                     for (int j = 0; j < stockInfoViews.Length; j++)
                     {
                         ShipmentTicketItem newItem = new ShipmentTicketItem();
                         Utilities.CopyProperties(results[i], newItem);
                         newItem.StockInfoID = stockInfoViews[j].ID;
-                        decimal curShipmentableAmount = (stockInfoViews[j].ShipmentAreaAmount ?? 0) - stockInfoViews[j].ScheduledShipmentAmount;
-                        curShipmentableAmount = curShipmentableAmount < 0 ? 0 : curShipmentableAmount;
+                        decimal curShipmentableAmountNoUnit = (stockInfoViews[j].ShipmentAreaAmount ?? 0) - stockInfoViews[j].ScheduledShipmentAmount;
+                        curShipmentableAmountNoUnit = curShipmentableAmountNoUnit < 0 ? 0 : curShipmentableAmountNoUnit;
                         //当前StockInfo的数量小于要发货的数量
-                        if (curAmount + curShipmentableAmount < results[i].ShipmentAmount)
+                        if (curAmountNoUnit + curShipmentableAmountNoUnit < results[i].ShipmentAmount * results[i].UnitAmount)
                         {
-                            newItem.ShipmentAmount = curShipmentableAmount;
+                            newItem.ShipmentAmount = curShipmentableAmountNoUnit/newItem.UnitAmount;
                             realImportList.Add(newItem);
-                            curAmount += newItem.ShipmentAmount.Value;
+                            curAmountNoUnit += newItem.ShipmentAmount.Value * newItem.UnitAmount.Value;
                         }
                         else //当前StockInfo数量大于等于需要发货的数量
                         {
-                            newItem.ShipmentAmount = results[i].ShipmentAmount - curAmount;
+                            newItem.ShipmentAmount = (results[i].ShipmentAmount*results[i].UnitAmount - curAmountNoUnit)/results[i].UnitAmount;
                             realImportList.Add(newItem);
-                            curAmount += newItem.ShipmentAmount.Value;
+                            curAmountNoUnit += newItem.ShipmentAmount.Value * (newItem.UnitAmount ?? 1);
                             break;
                         }
                     }
@@ -747,7 +747,7 @@ namespace WMS.UI
                 {
                     //增加条目，记录库存分配发货数量
                     StockInfo stockInfo = (from s in wmsEntities.StockInfo where s.ID == item.StockInfoID select s).FirstOrDefault();
-                    stockInfo.ScheduledShipmentAmount += item.ShipmentAmount ?? 0;
+                    stockInfo.ScheduledShipmentAmount += (item.ShipmentAmount ?? 0) * (item.UnitAmount ?? 1);
                     //设置发货单条目初始信息
                     item.ScheduledJobAmount = 0;
                     wmsEntities.ShipmentTicketItem.Add(item);

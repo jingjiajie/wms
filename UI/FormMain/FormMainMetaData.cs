@@ -26,7 +26,7 @@ namespace WMS.UI
             MakeItem("翻包作业单管理",Authority.DELIVERY_JOB,Authority.DELIVERY_JOB_SUPPLIER_SELFONLY),
             MakeItem("出库单管理",Authority.DELIVERY_OUTPUT,Authority.DELIVERY_OUTPUT_SUPPLIER_SELFONLY),
         
-            MakeItem("库存信息",Authority.STOCKINFO,Authority.STOCKINFO_SUPPLIER_SELFONLY),
+            MakeItem("库存批次",Authority.STOCKINFO,Authority.STOCKINFO_SUPPLIER_SELFONLY),
             MakeItem("库存盘点",Authority.STOCK_CHECK),
         };
 

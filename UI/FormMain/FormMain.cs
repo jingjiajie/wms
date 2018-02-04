@@ -364,7 +364,7 @@ namespace WMS.UI
                     MakeTreeNode("出库单管理"),
                     }),
                 MakeTreeNode("库存管理",new TreeNode[]{
-                    MakeTreeNode("库存信息"),
+                    MakeTreeNode("库存批次"),
                     MakeTreeNode("库存盘点"),
                     }),
             };
@@ -713,7 +713,7 @@ namespace WMS.UI
                 this.panelRight.Controls.Add(l);
                 l.Show();
             }
-            if (treeViewLeft.SelectedNode.Text == "库存信息")
+            if (treeViewLeft.SelectedNode.Text == "库存批次")
             {
                 this.panelRight.Controls.Clear();//清空
                 var formBaseStock = new FormStockInfo(this.user.ID, this.project.ID, this.warehouse.ID);//实例化子窗口
