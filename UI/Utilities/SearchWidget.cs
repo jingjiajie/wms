@@ -107,12 +107,12 @@ namespace WMS.UI
 
         public void SetSearchCondition(string key, string value)
         {
-            string name = (from kn in JobTicketViewMetaData.KeyNames
+            string name = (from kn in this.keyNames
                            where kn.Key == key
                            select kn.Name).FirstOrDefault();
             if (name == null)
             {
-                return;
+                throw new Exception(typeof(T).Name+"中不存在字段"+key+" 请检查代码！");
             }
             for (int i = 0; i < this.comboBoxSearchCondition.Items.Count; i++)
             {

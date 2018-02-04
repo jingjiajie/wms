@@ -425,9 +425,9 @@ namespace WMS.UI
                     wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));
                     wmsEntities.SaveChanges();
                 }
-                catch
+                catch(Exception ex)
                 {
-                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("操作失败，请检查网络连接\n请将下面的错误信息反馈给我们：\n"+ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 this.putOutStorageTicketStateChangedCallback?.Invoke(this.putOutStorageTicketID);

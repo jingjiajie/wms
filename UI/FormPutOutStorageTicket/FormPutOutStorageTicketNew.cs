@@ -258,6 +258,7 @@ namespace WMS.UI
                     return;
                 }
                 jobTicketItem.ScheduledPutOutAmount = (jobTicketItem.ScheduledPutOutAmount ?? 0) + newPutOutStorageTicketItem.ScheduledAmount;
+                newPutOutStorageTicketItem.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_WAIT_FOR_LOAD;
                 newPutOutStorageTicketItem.StockInfoID = jobTicketItem.StockInfoID;
                 newPutOutStorageTicketItem.JobTicketItemID = jobTicketItem.ID;
                 newPutOutStorageTicketItem.RealAmount = 0;
