@@ -23,13 +23,16 @@ namespace WMS.UI
         private int authority_supplier = Convert.ToInt32(Authority.BASE_SUPPLIER);
         private int authority_supplierself = Convert.ToInt32(Authority.BASE_SUPPLIER_SUPPLIER_SELFONLY);
         private PagerWidget<SupplierView > pagerWidget = null;
+        SearchWidget<SupplierView> searchWidget = null;
         private Supplier supplier = null;
         private string  contractst="";
         private int check_history = 0;
         private int userid = -1;
         private int projectID = -1;
         private int warehouseID = -1;
-        
+        private Button toolStripButton1 = null;
+        private ComboBox toolStripComboBoxSelect = null;
+        private MaskedTextBox toolStripTextBoxSelect = null;
 
 
         private int id=-1;
@@ -40,29 +43,19 @@ namespace WMS.UI
             this.authority = authority;
             this.id = supplierid;
             this.userid = userid;
+
         }
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
         {
-
-
-
             try
             {
-
                 if ((this.authority & authority_supplier) != authority_supplier)
                 {
-
-
                     Supplier supplier = (from u in this.wmsEntities.Supplier
                                          where u.ID == id
-                                         select u).FirstOrDefault();
-
+                                        select u).FirstOrDefault();
                     this.contractst = supplier.ContractState;
-
-
-
-
                     this.contractst = supplier.ContractState;
                     this.toolStripButtonAdd.Enabled = false;
                     this.toolStripButtonDelete.Enabled = false;
@@ -79,41 +72,23 @@ namespace WMS.UI
                     {
                         this.toolStripButtonAlter.Enabled = false;
                     }
-                    //else if (this.contractst == "已过期")
-                    //{
-                    //    this.toolStripButtonAlter.Enabled = false;
-
-                    //}
-
-
                     InitSupplier();
-
-                    this.pagerWidget.AddCondition("ID", Convert.ToString(id));
-                    this.pagerWidget.AddCondition("是否历史信息", "0");
-                    this.pagerWidget.Search();
+                    this.pagerWidget.AddStaticCondition("ID", Convert.ToString(id));
+                    this.pagerWidget.AddStaticCondition("IsHistory", "0");
+                    this.searchWidget.Search();
                 }
-
-
                 if ((this.authority & authority_supplier) == authority_supplier)
                 {
-
-
                     InitSupplier();
-                    this.pagerWidget.AddCondition("是否历史信息", "0");
-                    this.pagerWidget.Search();
+                    this.pagerWidget.AddStaticCondition("IsHistory", "0");
+                    this.searchWidget.Search() ;
                 }
-
-
             }
-
             catch
             {
                 MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-
-
         }
         protected override CreateParams CreateParams
         {
@@ -127,40 +102,39 @@ namespace WMS.UI
 
         private void InitSupplier ()
         {
-            try
-            {
-                this.wmsEntities.Database.Connection.Open();
+            //try
+            //{
+            //    this.wmsEntities.Database.Connection.Open();
 
-                string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
-                                               where kn.Visible == true
-                                               select kn.Name).ToArray();
-
-
-                //初始化查询框
-                this.toolStripComboBoxSelect.Items.Add("无");
-                this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-                this.toolStripComboBoxSelect.SelectedIndex = 0;
-            }
-            catch
-            {
-                MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    //string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
+            //    //                               where kn.Visible == true
+            //    //                               select kn.Name).ToArray();
+            //    //初始化查询框
+            //    //this.toolStripComboBoxSelect.Items.Add("无");
+            //    //this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
+            //    //this.toolStripComboBoxSelect.SelectedIndex = 0;
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 
-                return;
-            }
+            //    return;
+            //}
             //初始化分页控件
+
             this.pagerWidget = new PagerWidget<SupplierView>(this.reoGridControlUser, SupplierMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
-
+            this.searchWidget = new SearchWidget<SupplierView>(SupplierMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
+            Button toolStripButton1 = (Button)this.Controls.Find("buttonSearch", true)[0];
+            this.toolStripButton1 = toolStripButton1;
+            ComboBox toolStripComboBoxSelect = (ComboBox)this.Controls.Find("comboBoxSearchCondition", true)[0];
+            this.toolStripComboBoxSelect = toolStripComboBoxSelect;
+            MaskedTextBox  toolStripTextBoxSelect = (MaskedTextBox)this.Controls.Find("textBoxSearchCondition", true)[0];
+            this.toolStripTextBoxSelect = toolStripTextBoxSelect;
         }
-
-
-
-
-    
-
-        
-
+       
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             var a1  = new FormSupplierModify(-1,this.contractst,this.userid );
@@ -169,11 +143,9 @@ namespace WMS.UI
 
             a1.SetAddFinishedCallback((AddID ) =>
             {
-                this.pagerWidget.Search(false ,AddID );
+                this.searchWidget.Search(false ,AddID );
                 this.labelStatus.Text = "供应商信息";
-                //var worksheet = this.reoGridControlUser.Worksheets[0];
 
-                //worksheet.SelectionRange = new RangePosition("A1:A1");
             });
             a1.Show();  
         }
@@ -182,190 +154,210 @@ namespace WMS.UI
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
-            if(check_history ==1)
-            {
-                MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            this.toolStripButtonSelect.Visible = false;
-            this.toolStripComboBoxSelect.Enabled = false;
-            this.toolStripComboBoxSelect.SelectedIndex  = 0;
-            this.buttonCheck.Enabled = false;
-            this.toolStripButtonAdd.Enabled = false;
-            this.toolStripButtonAlter.Enabled = false;
-            this.buttonImport.Enabled = false;
-            this.toolStripButton1.Text = "全部信息";
-
-            this.pagerWidget.ClearCondition();
-
-            var worksheet = this.reoGridControlUser.Worksheets[0];
-            try
-            {
-                if (worksheet.SelectionRange.Rows != 1)
+            if (this.check_history == 0)
+            {               
+                this.pagerWidget.ClearCondition();
+                this.pagerWidget.ClearStaticCondition();
+                this.pagerWidget.AddCondition("IsHistory", "1");
+                this.toolStripButtonSelect.Text = "全部信息";
+                this.toolStripComboBoxSelect.SelectedIndex = 0;
+                this.buttonCheck.Enabled = false;
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonAlter.Enabled = false;
+                this.buttonImport.Enabled = false;
+                this.toolStripButton1.Enabled = false;
+                var worksheet = this.reoGridControlUser.Worksheets[0];
+                try
                 {
-                    
+                    if (worksheet.SelectionRange.Rows != 1)
+                    {
+                        throw new Exception();
 
-                    throw new Exception();
-                    
-
+                    }
+                    int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                    this.pagerWidget.AddCondition("NewestSupplierID", Convert.ToString(supplierID));
                 }
-                int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                this.pagerWidget.AddCondition("NewestSupplierID", Convert.ToString(supplierID));
+                catch
+                {
+                    MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                    this.toolStripButtonAdd.Enabled = true;
+                    this.toolStripButtonAlter.Enabled = true;
+                    this.buttonCheck.Enabled = true;
+                    this.buttonImport.Enabled = true;                   
+                    this.toolStripButton1.Enabled = true;
+                   
+                    return;
+                }
+
+                if ((this.authority & authority_supplier) != authority_supplier)
+                {
+                    this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+                    this.check_history = 1;
+                    this.pagerWidget.Search();
+                    this.labelStatus.Text = "供应商信息";
+                }
+                if ((this.authority & authority_supplier) == authority_supplier)
+                {
+                    this.check_history = 1;
+                    this.pagerWidget.Search();
+                    this.labelStatus.Text = "供应商信息";
+                }
 
             }
-            catch
+            else if(this.check_history ==1)
             {
-                MessageBox.Show("请选择一项进行查看", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                this.toolStripButton1.Text = "查询";
-                this.toolStripButtonAdd.Enabled = true;
-                this.toolStripButtonAlter.Enabled = true;
-                this.buttonCheck.Enabled = true;
-                this.buttonImport.Enabled = true;
-                this.toolStripComboBoxSelect.Enabled = true;
-                return;
-            }      
-            
-            
-            this.pagerWidget.AddCondition("是否历史信息", "1");
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+                //增加静态条件
+                if ((this.authority & authority_supplier) != authority_supplier)
+                {
+                    this.pagerWidget.AddStaticCondition("ID", Convert.ToString(id));
+                    this.pagerWidget.AddStaticCondition("IsHistory", "0");
+                }
+                if ((this.authority & authority_supplier) == authority_supplier)
+                {
+                    this.pagerWidget.AddStaticCondition("IsHistory", "0");
+                }
+                this.pagerWidget.ClearCondition();                
+                if (this.toolStripButtonSelect.Text == "全部信息" && (this.authority & authority_supplier) == authority_supplier)
+                {
+                    this.toolStripButtonAdd.Enabled = true;
+                    this.buttonCheck.Enabled = true;
+                    this.toolStripComboBoxSelect.Enabled = true;
+                    this.buttonImport.Enabled = true;
+                   
+                    this.toolStripButtonSelect.Visible = true;
+                }
+                this.toolStripButtonSelect.Text = "查询历史信息";
+                this.toolStripButton1.Enabled = true;
+                if (this.contractst == "待审核" || this.contractst == "")
+                {
+                    this.toolStripButtonAlter.Enabled = true;
+                }
+                this.pagerWidget.AddCondition("是否历史信息", "0");
+                if ((this.authority & authority_supplier) != authority_supplier)
+                {
+                    this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+                    this.check_history = 0;
+                    this.pagerWidget.Search();
+                    this.labelStatus.Text = "供应商信息";
+                }
+                if ((this.authority & authority_supplier) == authority_supplier)
+                {
+                    this.check_history = 0;
+                    this.pagerWidget.Search();
+                    this.labelStatus.Text = "供应商信息";
+                }
             }
-
-            if ((this.authority & authority_supplier) != authority_supplier)
-            {
             
 
-                this.check_history = 1;
-                this.pagerWidget.Search();
-                this.labelStatus.Text = "供应商信息";
-            }
-            if ((this.authority & authority_supplier) == authority_supplier)
-            {
-                this.check_history = 1;
-                this.pagerWidget.Search();
-                this.labelStatus.Text = "供应商信息";
-            }
 
-            
         }
 
         private void Search()
         {
-            string key = null;
-            string value = null;
+        //    string key = null;
+        //    string value = null;
 
 
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                key = (from kn in SupplierMetaData.KeyNames
-                       where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
-                       select kn.Key).First();
-                value = this.toolStripTextBoxSelect.Text;
-            }
-            this.labelStatus.Text = "正在搜索中...";
-            var worksheet = this.reoGridControlUser.Worksheets[0];
-            worksheet[0, 0] = "加载中...";
+        //    if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+        //    {
+        //        key = (from kn in SupplierMetaData.KeyNames
+        //               where kn.Name == this.toolStripComboBoxSelect.SelectedItem.ToString()
+        //               select kn.Key).First();
+        //        value = this.toolStripTextBoxSelect.Text;
+        //    }
+        //    this.labelStatus.Text = "正在搜索中...";
+        //    var worksheet = this.reoGridControlUser.Worksheets[0];
+        //    worksheet[0, 0] = "加载中...";
 
 
-            new Thread(new ThreadStart(() =>
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                SupplierView[] SupplierView = null;
-                string sql = "SELECT * FROM SupplierView WHERE 1=1 ";
-                List<SqlParameter> parameters = new List<SqlParameter>();
-                if ((this.authority & authority_supplier) == authority_supplier)
-                {
-                    if (key != null && value != null) //查询条件不为null则增加查询条件
-                    {
-                        sql += "AND " + key + " = @value ";
-                        parameters.Add(new SqlParameter("value", value));
-                    }
-                    sql += " ORDER BY ID DESC"; //倒序排序
-                    try
-                    {
-                        SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
+        //    new Thread(new ThreadStart(() =>
+        //    {
+        //        WMSEntities wmsEntities = new WMSEntities();
+        //        SupplierView[] SupplierView = null;
+        //        string sql = "SELECT * FROM SupplierView WHERE 1=1 ";
+        //        List<SqlParameter> parameters = new List<SqlParameter>();
+        //        if ((this.authority & authority_supplier) == authority_supplier)
+        //        {
+        //            if (key != null && value != null) //查询条件不为null则增加查询条件
+        //            {
+        //                sql += "AND " + key + " = @value ";
+        //                parameters.Add(new SqlParameter("value", value));
+        //            }
+        //            sql += " ORDER BY ID DESC"; //倒序排序
+        //            try
+        //            {
+        //                SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
                         
-                    }
+        //            }
                     
-                    catch (EntityCommandExecutionException)
-                    {
-                        MessageBox.Show("查询失败，请检查输入条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
+        //            catch (EntityCommandExecutionException)
+        //            {
+        //                MessageBox.Show("查询失败，请检查输入条件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                return;
+        //            }
+        //            catch (Exception)
+        //            {
+        //                MessageBox.Show("查询失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //                return;
+        //            }
+        //        }
 
 
 
-                if ((this.authority & authority_supplier) != authority_supplier)
-                {
-                    if (id != -1)
-                    {
-                        sql += "AND ID = @ID ";
-                        parameters.Add(new SqlParameter("ID", id));
-                    }
-                    if (key != null && value != null) //查询条件不为null则增加查询条件
-                    {
-                        sql += "AND " + key + " = @value ";
-                        parameters.Add(new SqlParameter("value", value));
-                    }
-                    sql += " ORDER BY ID DESC"; //倒序排序
-                    SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
+        //        if ((this.authority & authority_supplier) != authority_supplier)
+        //        {
+        //            if (id != -1)
+        //            {
+        //                sql += "AND ID = @ID ";
+        //                parameters.Add(new SqlParameter("ID", id));
+        //            }
+        //            if (key != null && value != null) //查询条件不为null则增加查询条件
+        //            {
+        //                sql += "AND " + key + " = @value ";
+        //                parameters.Add(new SqlParameter("value", value));
+        //            }
+        //            sql += " ORDER BY ID DESC"; //倒序排序
+        //            SupplierView = wmsEntities.Database.SqlQuery<SupplierView>(sql, parameters.ToArray()).ToArray();
 
-                }
-
-
+        //        }
 
 
 
 
-                this.reoGridControlUser.Invoke(new Action(() =>
-                {
-                    this.labelStatus.Text = "搜索完成";
-                    var worksheet1 = this.reoGridControlUser.Worksheets[0];
-                    worksheet1.DeleteRangeData(RangePosition.EntireRange);
-
-                    if (SupplierView.Length == 0)
-                    {
-                        worksheet1[0, 1] = "没有查询到符合条件的记录";
-                    }
-                    for (int i = 0; i < SupplierView.Length; i++)
-                    {
-                        SupplierView curComponent = SupplierView[i];
-                        object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierMetaData.KeyNames
 
 
-                                                                                              select kn.Key).ToArray());
+        //        this.reoGridControlUser.Invoke(new Action(() =>
+        //        {
+        //            this.labelStatus.Text = "搜索完成";
+        //            var worksheet1 = this.reoGridControlUser.Worksheets[0];
+        //            worksheet1.DeleteRangeData(RangePosition.EntireRange);
 
-                        for (int j = 0; j < worksheet1.Columns; j++)
-                        {
-
-                            worksheet1[i, j] = columns[j] == null ? "" : columns[j].ToString();
-                            worksheet1.SetRangeDataFormat(RangePosition.EntireRange, CellDataFormatFlag.Text, null);
-                        }
-                    }
-
-                }));
-            }
-
-        )).Start();
+        //            if (SupplierView.Length == 0)
+        //            {
+        //                worksheet1[0, 1] = "没有查询到符合条件的记录";
+        //            }
+        //            for (int i = 0; i < SupplierView.Length; i++)
+        //            {
+        //                SupplierView curComponent = SupplierView[i];
+        //                object[] columns = Utilities.GetValuesByPropertieNames(curComponent, (from kn in SupplierMetaData.KeyNames
 
 
+        //                                                                                      select kn.Key).ToArray());
+
+        //                for (int j = 0; j < worksheet1.Columns; j++)
+        //                {
+
+        //                    worksheet1[i, j] = columns[j] == null ? "" : columns[j].ToString();
+        //                    worksheet1.SetRangeDataFormat(RangePosition.EntireRange, CellDataFormatFlag.Text, null);
+        //                }
+        //            }
+
+        //        }));
+        //    }
+
+        //)).Start();
         }
-
-
-
-
-
-
-
-
-
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
@@ -379,7 +371,7 @@ namespace WMS.UI
                 var a1= new FormSupplierModify(supplierID, this.contractst, this.userid );
                 a1.SetModifyFinishedCallback((AlterID) =>
                 {
-                    this.pagerWidget.Search(false ,AlterID );
+                    this.searchWidget.Search(false ,AlterID );
                     this.labelStatus.Text = "供应商信息";
                 });
                 a1.Show();
@@ -391,11 +383,6 @@ namespace WMS.UI
             }
 
         }
-
-
-
-
-
 
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
@@ -447,16 +434,6 @@ namespace WMS.UI
                                 return;
                             }
 
-
-                            //var ShipmentTicket = (from kn in wmsEntities.ShipmentTicket
-                            //                      where kn.SupplierID == id
-                            //                      select kn).ToArray();
-                            //if (recipettickets.Length > 0)
-                            //{
-                            //    MessageBox.Show("删除失败，请先删除与本供应商相关的发货单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            //    return;
-                            //}
-
                             wmsEntities = new WMSEntities();
                             var Supply = (from kn in wmsEntities.Supply 
                                                   where kn.SupplierID == id
@@ -474,16 +451,6 @@ namespace WMS.UI
                             return;
 
                         }
-
-
-
-
-
-
-
-
-
-
 
                         var supplierstorgeid = (from kn in wmsEntities.SupplierStorageInfo
                                                 where kn.SupplierID == id
@@ -516,10 +483,6 @@ namespace WMS.UI
                     MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-
-
-
 
                 try
                 {
@@ -559,9 +522,7 @@ namespace WMS.UI
                     return;
                 }
                 try
-                {
-
-                   
+                {                  
 
                     foreach (int id in deleteIDs)
                     {
@@ -570,36 +531,19 @@ namespace WMS.UI
 
                     wmsEntities.SaveChanges();
 
-
-
                 }
                 catch
                 {
                     MessageBox.Show("删除失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-
-
-
-
-
-
-
-
-
-
-
-
                 this.Invoke(new Action(() =>
                 {
-                    this.pagerWidget.Search();
+                    this.searchWidget.Search();
                     this.labelStatus.Text = "供应商信息";
                     
-                }));
-                
+                }));               
             })).Start();
-
-
         }
         
 
@@ -624,7 +568,7 @@ namespace WMS.UI
 
             if (e.KeyChar == 13)
             {
-                this.pagerWidget.Search();
+                this.searchWidget .Search();
             }
 
         }
@@ -656,56 +600,45 @@ namespace WMS.UI
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             if(this.toolStripButton1.Text =="全部信息"&& (this.authority & authority_supplier) == authority_supplier)
-            {
-                
-                this.toolStripButtonAdd .Enabled = true;
-                
+            {                
+                this.toolStripButtonAdd .Enabled = true;                
                 this.buttonCheck.Enabled = true;
                 this.toolStripComboBoxSelect.Enabled = true;
                 this.buttonImport.Enabled = true;
-
             }
 
             this.toolStripButton1.Text = "查询";
             this.toolStripButtonSelect.Visible = true;
-            if (this.contractst == "待审核"||this.contractst =="")
-                
+            if (this.contractst == "待审核"||this.contractst =="")                
             {
                 this.toolStripButtonAlter.Enabled = true;
             }
-            
-            this.pagerWidget.ClearCondition();
-            this.pagerWidget.AddCondition("是否历史信息", "0");
+            this.pagerWidget.AddStaticCondition("是否历史信息", "0");
 
-
-
-
-
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                if(this.toolStripButton1.Text == "查询" && this.toolStripTextBoxSelect.Text ==string.Empty)
-                {
-
-                    MessageBox.Show("请输入要查询的关键词", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
-                    return;
-
-                }
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
-            }
+            //if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            //{
+            //    if(this.toolStripButton1.Text == "查询" && this.toolStripTextBoxSelect.Text ==string.Empty)
+            //    {
+            //        MessageBox.Show("请输入要查询的关键词", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+            //        return;
+            //    }
+            //    this.pagerWidget .SetSearchCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            //}
 
             if ((this.authority & authority_supplier) != authority_supplier)
             {
-                this.pagerWidget.AddCondition("ID", Convert.ToString(id));
+                this.pagerWidget.AddStaticCondition("ID", Convert.ToString(id));
                 this.check_history = 0;
-                this.pagerWidget.Search();
+                this.searchWidget.Search();
                 this.labelStatus.Text = "供应商信息";
             }
             if ((this.authority & authority_supplier) == authority_supplier)
             {
                 this.check_history = 0;
-                this.pagerWidget.Search();
+                this.searchWidget.Search();
                 this.labelStatus.Text = "供应商信息";
             }
+
         }
 
         private void buttonImport_Click(object sender, EventArgs e)
@@ -896,6 +829,11 @@ namespace WMS.UI
             //a1.remindSupply();
             //a1.remindStock();
             //a1.TextDeliver();
+        }
+
+        private void panelSearchWidget_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
     
