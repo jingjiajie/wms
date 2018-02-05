@@ -16,6 +16,7 @@ namespace WMS.UI.FormBase
     public partial class FormBasePerson : Form
     {
         private PagerWidget<PersonView> pagerWidget = null;
+        private SearchWidget<PersonView> searchWidget = null;
         private WMSEntities wmsEntities = new WMSEntities();
         public FormBasePerson()
         {
@@ -29,14 +30,17 @@ namespace WMS.UI.FormBase
                                            select kn.Name).ToArray();
 
             //初始化
-            this.toolStripComboBoxSelect.Items.Add("无");
-            this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
+            //this.toolStripComboBoxSelect.Items.Add("无");
+            //this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
+            //this.toolStripComboBoxSelect.SelectedIndex = 0;
 
 
             this.pagerWidget = new PagerWidget<PersonView>(this.reoGridControlPerson, BasePersonMetaData.KeyNames);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
+
+            this.searchWidget = new SearchWidget<PersonView>(BasePersonMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
         }
 
         private void FormBasePerson_Load(object sender, EventArgs e)
@@ -48,27 +52,29 @@ namespace WMS.UI.FormBase
         private void Search()
         {
             this.pagerWidget.ClearCondition();
+            this.pagerWidget.ClearStaticCondition();
+
             if (this.checkBoxOnlyThisProAndWare.Checked == true)
             {
-                this.pagerWidget.AddCondition("ProjectID", Convert.ToString(GlobalData.ProjectID));
-                this.pagerWidget.AddCondition("WarehouseID", Convert.ToString(GlobalData.WarehouseID));
+                this.pagerWidget.AddStaticCondition("ProjectID", Convert.ToString(GlobalData.ProjectID));
+                this.pagerWidget.AddStaticCondition("WarehouseID", Convert.ToString(GlobalData.WarehouseID));
             }
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
-            }
-            this.pagerWidget.Search();
+            //if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            //{
+            //    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            //}
+            this.searchWidget.Search();
         }
 
-        private void toolStripButtonSelect_Click(object sender, EventArgs e)
-        {
-            this.pagerWidget.ClearCondition();
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
-            }
-            this.Search();
-        }
+        //private void toolStripButtonSelect_Click(object sender, EventArgs e)
+        //{
+        //    this.pagerWidget.ClearCondition();
+        //    if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+        //    {
+        //        this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+        //    }
+        //    this.Search();
+        //}
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
@@ -336,29 +342,29 @@ namespace WMS.UI.FormBase
             })).Start();
         }
 
-        private void toolStripTextBoxSelect_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                this.toolStripButtonSelect.PerformClick();
-            }
-        }
+        //private void toolStripTextBoxSelect_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    if (e.KeyChar == 13)
+        //    {
+        //        this.toolStripButtonSelect.PerformClick();
+        //    }
+        //}
 
-        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                this.toolStripTextBoxSelect.Text = "";
-                this.toolStripTextBoxSelect.Enabled = false;
-                this.toolStripTextBoxSelect.BackColor = Color.LightGray;
+        //private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.toolStripTextBoxSelect.Text = "";
+        //        this.toolStripTextBoxSelect.Enabled = false;
+        //        this.toolStripTextBoxSelect.BackColor = Color.LightGray;
 
-            }
-            else
-            {
-                this.toolStripTextBoxSelect.Enabled = true;
-                this.toolStripTextBoxSelect.BackColor = Color.White;
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        this.toolStripTextBoxSelect.Enabled = true;
+        //        this.toolStripTextBoxSelect.BackColor = Color.White;
+        //    }
+        //}
 
         private void checkBoxOnlyThisProAndWare_CheckedChanged(object sender, EventArgs e)
         {
