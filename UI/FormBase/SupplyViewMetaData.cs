@@ -27,7 +27,10 @@ namespace WMS.UI
             new KeyName(){Key="SafetyStock",Name="安全库存数量",Visible = true, Editable = true},
             new KeyName(){Key="ValidPeriod",Name="有效期限（天）",Visible = true, Editable = true},
 
-            new KeyName(){Key="Category",Name="套餐",Visible = true, Editable = true},
+            new KeyName(){Key="Package",Name="套餐",Visible = true, Editable = true},
+            new KeyName(){Key="PackageDefaultShipmentAmount",Name="套餐默认发货数量",Visible = true, Editable = true},
+            new KeyName(){Key="PackageDefaultShipmentUnit",Name="套餐默认发货单位",Visible = true, Editable = true},
+            new KeyName(){Key="PackageDefaultShipmentUnitAmount",Name="套餐默认单位数量",Visible = true, Editable = true },
             new KeyName(){Key="PhotoIndex",Name="照片索引",Visible = true, Editable = true},
             new KeyName(){Key="ContainerNo",Name="容器号",Visible = true, Editable = true},
             new KeyName(){Key="Factroy",Name="工厂",Visible = true, Editable = true},

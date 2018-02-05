@@ -644,8 +644,8 @@ namespace WMS.UI
 
         private void buttonAddCategoryClickedCallback()
         {
-            string categoryName = FormSelectCategory.SelectCategory();
-            if(categoryName == null)
+            string packageName = FormSelectCategory.SelectCategory();
+            if(packageName == null)
             {
                 return;
             }
@@ -655,10 +655,13 @@ namespace WMS.UI
                                      where s.ProjectID == this.projectID
                                      && s.WarehouseID == this.warehouseID 
                                      && s.IsHistory != 1 
-                                     && s.Category == categoryName
+                                     && s.Package == packageName
                                      select s).ToArray();
                 Dictionary<string, string> keyConvert = new Dictionary<string, string>();
                 keyConvert.Add("SupplyNoOrComponentName", "No");
+                keyConvert.Add("ShipmentAmount", "PackageDefaultShipmentAmount");
+                keyConvert.Add("Unit", "PackageDefaultShipmentUnit");
+                keyConvert.Add("UnitAmount", "PackageDefaultShipmentUnitAmount");
                 this.standardImportForm.PushData(supplies, keyConvert, true);
             }
         }

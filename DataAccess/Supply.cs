@@ -78,6 +78,10 @@ namespace WMS.DataAccess
         public Nullable<decimal> SafetyStock { get; set; }
         public int ReceiveTimes { get; set; }
         public int ShipmentTimes { get; set; }
+        public string Package { get; set; }
+        public Nullable<decimal> PackageDefaultShipmentAmount { get; set; }
+        public string PackageDefaultShipmentUnit { get; set; }
+        public Nullable<decimal> PackageDefaultShipmentUnitAmount { get; set; }
     
         public virtual Component Component { get; set; }
         public virtual ICollection<StockInfoCheckTicketItem> StockInfoCheckTicketItem { get; set; }
