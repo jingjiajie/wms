@@ -59,6 +59,7 @@ namespace WMS.UI
 
             this.searchWidget = new SearchWidget<SupplyView>(SupplyViewMetaData.KeyNames, this.pagerWidget);
             this.pagerWidget.AddStaticCondition("IsHistory", "0");
+            this.searchWidget.SetOrderByCondition("CreateTime",false);
             this.panelSearchWidget.Controls.Add(searchWidget);
 
 
@@ -1078,7 +1079,7 @@ namespace WMS.UI
                     },
                     () => //参数3：导入完成回调函数
                     {
-                        this.pagerWidget.Search();
+                        this.searchWidget.Search();
                     }
                 );
 
