@@ -34,14 +34,10 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.labelStatus = new System.Windows.Forms.ToolStripLabel();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.reoGridControlSupply = new unvell.ReoGrid.ReoGridControl();
             this.panelPager = new System.Windows.Forms.Panel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripComboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
-            this.textBoxSearchValue = new System.Windows.Forms.ToolStripTextBox();
-            this.buttonSearch = new System.Windows.Forms.ToolStripButton();
             this.buttonHistorySearch = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
@@ -53,6 +49,7 @@
             this.toolStripButtonSupplyShipmentInfo = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonImport = new System.Windows.Forms.ToolStripButton();
+            this.panelSearchWidget = new System.Windows.Forms.Panel();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -73,44 +70,28 @@
             // 
             // toolStrip1
             // 
-            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.labelStatus});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 569);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 529);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1585, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(988, 20);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(43, 22);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 17);
             this.toolStripStatusLabel1.Text = "状态:";
             // 
             // labelStatus
             // 
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(69, 22);
+            this.labelStatus.Size = new System.Drawing.Size(56, 17);
             this.labelStatus.Text = "零件信息";
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 1;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.reoGridControlSupply, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panelPager, 0, 1);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 28);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1585, 541);
-            this.tableLayoutPanel2.TabIndex = 6;
             // 
             // reoGridControlSupply
             // 
@@ -118,40 +99,57 @@
             this.reoGridControlSupply.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlSupply.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlSupply.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlSupply.Location = new System.Drawing.Point(3, 2);
-            this.reoGridControlSupply.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.reoGridControlSupply.Location = new System.Drawing.Point(2, 47);
+            this.reoGridControlSupply.Margin = new System.Windows.Forms.Padding(2);
             this.reoGridControlSupply.Name = "reoGridControlSupply";
             this.reoGridControlSupply.RowHeaderContextMenuStrip = null;
             this.reoGridControlSupply.Script = null;
             this.reoGridControlSupply.SheetTabContextMenuStrip = null;
             this.reoGridControlSupply.SheetTabNewButtonVisible = true;
             this.reoGridControlSupply.SheetTabVisible = true;
-            this.reoGridControlSupply.SheetTabWidth = 80;
+            this.reoGridControlSupply.SheetTabWidth = 60;
             this.reoGridControlSupply.ShowScrollEndSpacing = true;
-            this.reoGridControlSupply.Size = new System.Drawing.Size(1579, 499);
+            this.reoGridControlSupply.Size = new System.Drawing.Size(984, 450);
             this.reoGridControlSupply.TabIndex = 4;
             this.reoGridControlSupply.Text = "reoGridControl1";
             // 
             // panelPager
             // 
             this.panelPager.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPager.Location = new System.Drawing.Point(4, 507);
-            this.panelPager.Margin = new System.Windows.Forms.Padding(4);
+            this.panelPager.Location = new System.Drawing.Point(3, 502);
             this.panelPager.Name = "panelPager";
-            this.panelPager.Size = new System.Drawing.Size(1577, 30);
+            this.panelPager.Size = new System.Drawing.Size(982, 24);
             this.panelPager.TabIndex = 5;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 1;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.toolStrip1, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.reoGridControlSupply, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.panelPager, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.toolStripTop, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.panelSearchWidget, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 5;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(988, 549);
+            this.tableLayoutPanel2.TabIndex = 6;
             // 
             // toolStripTop
             // 
             this.toolStripTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.toolStripTop.BackgroundImage = global::WMS.UI.Properties.Resources.bottonW_q;
             this.toolStripTop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabelSelect,
-            this.toolStripComboBoxSelect,
-            this.textBoxSearchValue,
-            this.buttonSearch,
             this.buttonHistorySearch,
             this.toolStripSeparator2,
             this.toolStripButtonAdd,
@@ -163,50 +161,18 @@
             this.toolStripButtonSupplyShipmentInfo,
             this.toolStripSeparator1,
             this.buttonImport});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
+            this.toolStripTop.Location = new System.Drawing.Point(0, 25);
             this.toolStripTop.Name = "toolStripTop";
-            this.toolStripTop.Size = new System.Drawing.Size(1585, 28);
+            this.toolStripTop.Size = new System.Drawing.Size(988, 20);
             this.toolStripTop.TabIndex = 2;
             this.toolStripTop.Text = "toolStrip1";
-            // 
-            // toolStripLabelSelect
-            // 
-            this.toolStripLabelSelect.Name = "toolStripLabelSelect";
-            this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(84, 25);
-            this.toolStripLabelSelect.Text = "查询条件：";
-            // 
-            // toolStripComboBoxSelect
-            // 
-            this.toolStripComboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.toolStripComboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.toolStripComboBoxSelect.Name = "toolStripComboBoxSelect";
-            this.toolStripComboBoxSelect.Size = new System.Drawing.Size(151, 28);
-            this.toolStripComboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxSelect_SelectedIndexChanged);
-            // 
-            // textBoxSearchValue
-            // 
-            this.textBoxSearchValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxSearchValue.Enabled = false;
-            this.textBoxSearchValue.Name = "textBoxSearchValue";
-            this.textBoxSearchValue.Size = new System.Drawing.Size(201, 28);
-            this.textBoxSearchValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxSearchValue_KeyPress);
-            // 
-            // buttonSearch
-            // 
-            this.buttonSearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonSearch.Image")));
-            this.buttonSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(63, 25);
-            this.buttonSearch.Text = "查询";
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // buttonHistorySearch
             // 
             this.buttonHistorySearch.Image = ((System.Drawing.Image)(resources.GetObject("buttonHistorySearch.Image")));
             this.buttonHistorySearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonHistorySearch.Name = "buttonHistorySearch";
-            this.buttonHistorySearch.Size = new System.Drawing.Size(123, 25);
+            this.buttonHistorySearch.Size = new System.Drawing.Size(104, 17);
             this.buttonHistorySearch.Text = "查看历史信息";
             this.buttonHistorySearch.Click += new System.EventHandler(this.buttonHistorySearch_Click);
             // 
@@ -221,7 +187,7 @@
             this.toolStripButtonAdd.Image = global::WMS.UI.Properties.Resources.add;
             this.toolStripButtonAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
-            this.toolStripButtonAdd.Size = new System.Drawing.Size(63, 25);
+            this.toolStripButtonAdd.Size = new System.Drawing.Size(56, 17);
             this.toolStripButtonAdd.Text = "添加";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
@@ -230,7 +196,7 @@
             this.toolStripButtonAlter.Image = global::WMS.UI.Properties.Resources.cancle;
             this.toolStripButtonAlter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonAlter.Name = "toolStripButtonAlter";
-            this.toolStripButtonAlter.Size = new System.Drawing.Size(63, 25);
+            this.toolStripButtonAlter.Size = new System.Drawing.Size(56, 17);
             this.toolStripButtonAlter.Text = "修改";
             this.toolStripButtonAlter.Click += new System.EventHandler(this.toolStripButtonAlter_Click);
             // 
@@ -239,7 +205,7 @@
             this.toolStripButtonDelete.Image = global::WMS.UI.Properties.Resources.delete;
             this.toolStripButtonDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDelete.Name = "toolStripButtonDelete";
-            this.toolStripButtonDelete.Size = new System.Drawing.Size(63, 25);
+            this.toolStripButtonDelete.Size = new System.Drawing.Size(56, 17);
             this.toolStripButtonDelete.Text = "删除";
             this.toolStripButtonDelete.Click += new System.EventHandler(this.toolStripButtonDelete_Click);
             // 
@@ -254,7 +220,7 @@
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplySingleBoxTranPackingInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Name = "toolStripButtonSupplySingleBoxTranPackingInfo";
-            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(189, 25);
+            this.toolStripButtonSupplySingleBoxTranPackingInfo.Size = new System.Drawing.Size(157, 17);
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Text = "查看/修改单箱包装信息";
             this.toolStripButtonSupplySingleBoxTranPackingInfo.Click += new System.EventHandler(this.toolStripButtonSupplySingleBoxTranPackingInfo_Click);
             // 
@@ -263,7 +229,7 @@
             this.toolStripButtonSupplyOuterPackingSize.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplyOuterPackingSize.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyOuterPackingSize.Name = "toolStripButtonSupplyOuterPackingSize";
-            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(204, 25);
+            this.toolStripButtonSupplyOuterPackingSize.Size = new System.Drawing.Size(169, 17);
             this.toolStripButtonSupplyOuterPackingSize.Text = "查看/修改零件外包装信息";
             this.toolStripButtonSupplyOuterPackingSize.Click += new System.EventHandler(this.toolStripButtonSupplyOuterPackingSize_Click);
             // 
@@ -272,7 +238,7 @@
             this.toolStripButtonSupplyShipmentInfo.Image = global::WMS.UI.Properties.Resources.find;
             this.toolStripButtonSupplyShipmentInfo.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSupplyShipmentInfo.Name = "toolStripButtonSupplyShipmentInfo";
-            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(189, 25);
+            this.toolStripButtonSupplyShipmentInfo.Size = new System.Drawing.Size(157, 17);
             this.toolStripButtonSupplyShipmentInfo.Text = "查看/修改出货包装信息";
             this.toolStripButtonSupplyShipmentInfo.Click += new System.EventHandler(this.toolStripButtonSupplyShipmentInfo_Click);
             // 
@@ -287,56 +253,60 @@
             this.buttonImport.Image = global::WMS.UI.Properties.Resources.add;
             this.buttonImport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(93, 25);
+            this.buttonImport.Size = new System.Drawing.Size(80, 17);
             this.buttonImport.Text = "批量导入";
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
+            // panelSearchWidget
+            // 
+            this.panelSearchWidget.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSearchWidget.Location = new System.Drawing.Point(3, 3);
+            this.panelSearchWidget.Margin = new System.Windows.Forms.Padding(0);
+            this.panelSearchWidget.Name = "panelSearchWidget";
+            this.panelSearchWidget.Size = new System.Drawing.Size(982, 25);
+            this.panelSearchWidget.TabIndex = 6;
+            // 
             // FormBaseSupply
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1585, 594);
+            this.ClientSize = new System.Drawing.Size(988, 549);
             this.Controls.Add(this.tableLayoutPanel2);
-            this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.toolStripTop);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormBaseSupply";
             this.Text = "零件信息";
             this.Load += new System.EventHandler(this.FormBaseSupply_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.toolStripTop.ResumeLayout(false);
             this.toolStripTop.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.ToolStrip toolStripTop;
-        private System.Windows.Forms.ToolStripLabel toolStripLabelSelect;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxSelect;
-        private System.Windows.Forms.ToolStripTextBox textBoxSearchValue;
-        private System.Windows.Forms.ToolStripButton buttonSearch;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
-        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripLabel labelStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private unvell.ReoGrid.ReoGridControl reoGridControlSupply;
         private System.Windows.Forms.Panel panelPager;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.ToolStrip toolStripTop;
+        private System.Windows.Forms.ToolStripButton buttonHistorySearch;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAdd;
+        private System.Windows.Forms.ToolStripButton toolStripButtonAlter;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton toolStripButtonSupplySingleBoxTranPackingInfo;
         private System.Windows.Forms.ToolStripButton toolStripButtonSupplyOuterPackingSize;
         private System.Windows.Forms.ToolStripButton toolStripButtonSupplyShipmentInfo;
-        private System.Windows.Forms.ToolStripButton buttonHistorySearch;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonImport;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.Panel panelSearchWidget;
     }
 }

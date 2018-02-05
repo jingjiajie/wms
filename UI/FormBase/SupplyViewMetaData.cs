@@ -27,7 +27,7 @@ namespace WMS.UI
             new KeyName(){Key="SafetyStock",Name="安全库存数量",Visible = true, Editable = true},
             new KeyName(){Key="ValidPeriod",Name="有效期限（天）",Visible = true, Editable = true},
 
-
+            new KeyName(){Key="Category",Name="套餐",Visible = true, Editable = true},
             new KeyName(){Key="PhotoIndex",Name="照片索引",Visible = true, Editable = true},
             new KeyName(){Key="ContainerNo",Name="容器号",Visible = true, Editable = true},
             new KeyName(){Key="Factroy",Name="工厂",Visible = true, Editable = true},
@@ -35,7 +35,7 @@ namespace WMS.UI
             new KeyName(){Key="SupplierType",Name="A系列/B系列供应商",Visible = true, Editable = true},
             new KeyName(){Key="Type",Name="机型区分",Visible = true, Editable = true},
             new KeyName(){Key="Size",Name="尺寸（大件/小件）",Visible = true, Editable = true},
-            new KeyName(){Key="Category",Name="分类",Visible = true, Editable = true},
+
             new KeyName(){Key="Charge1",Name="物流服务费1",Visible = true, Editable = true},
             new KeyName(){Key="Charge2",Name="物流服务费2",Visible = true, Editable = true},
 
@@ -112,7 +112,7 @@ namespace WMS.UI
             new KeyName(){Key="SafetyStock",Name="安全库存数量",Visible = true, Editable = true},
             new KeyName(){Key="ValidPeriod",Name="有效期限（天）",Visible = true, Editable = true},
 
-
+            new KeyName(){Key="Category",Name="套餐",Visible = true, Editable = true},
             new KeyName(){Key="PhotoIndex",Name="照片索引",Visible = true, Editable = true},
             new KeyName(){Key="ContainerNo",Name="容器号",Visible = true, Editable = true},
             new KeyName(){Key="Factroy",Name="工厂",Visible = true, Editable = true},
@@ -120,7 +120,6 @@ namespace WMS.UI
             new KeyName(){Key="SupplierType",Name="A系列/B系列供应商",Visible = true, Editable = true},
             new KeyName(){Key="Type",Name="机型区分",Visible = true, Editable = true},
             new KeyName(){Key="Size",Name="尺寸（大件/小件）",Visible = true, Editable = true},
-            new KeyName(){Key="Category",Name="分类",Visible = true, Editable = true},
             new KeyName(){Key="Charge1",Name="物流服务费1",Visible = true, Editable = true},
             new KeyName(){Key="Charge2",Name="物流服务费2",Visible = true, Editable = true},
 
