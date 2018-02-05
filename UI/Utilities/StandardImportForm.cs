@@ -531,6 +531,10 @@ namespace WMS.UI
                 this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
                 return;
             }
+            if(e.Control)
+            {
+                return;
+            }
 
             Keys[] dontEditkeys = new Keys[]
             {
