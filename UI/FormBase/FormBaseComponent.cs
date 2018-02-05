@@ -28,6 +28,7 @@ namespace WMS.UI
         private int contractst;   //合同状态
         private int contract_change = 1;
         private PagerWidget<ComponentView> pagerWidget = null;
+        private SearchWidget<ComponentView> searchWidget = null;
 
         public FormBaseComponent(int authority, int supplierID, int projectID, int warehouseID, int userID)
         {
@@ -45,13 +46,16 @@ namespace WMS.UI
                                            select kn.Name).ToArray();
 
             //初始化
-            this.toolStripComboBoxSelect.Items.Add("无");
-            this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
+            //this.toolStripComboBoxSelect.Items.Add("无");
+            //this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
+            //this.toolStripComboBoxSelect.SelectedIndex = 0;
 
             this.pagerWidget = new PagerWidget<ComponentView>(this.reoGridControlComponen, ComponenViewMetaData.componenkeyNames);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
+
+            this.searchWidget = new SearchWidget<ComponentView>(ComponenViewMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
         }
 
         private void FormBaseComponent_Load(object sender, EventArgs e)
@@ -66,36 +70,36 @@ namespace WMS.UI
 
         }
 
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
+        //private void buttonSearch_Click(object sender, EventArgs e)
+        //{
 
-            if (this.buttonSearch.Text == "全部信息")
-            {
-                this.buttonSearch.Text = "查询";
-                this.buttonSearch.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-                this.toolStripButtonAdd.Enabled = true;
-                this.toolStripButtonAlter.Enabled = true;
-                this.toolStripComboBoxSelect.Enabled = true;
-                this.buttonImport.Enabled = true;
-            }
+        //    if (this.buttonSearch.Text == "全部信息")
+        //    {
+        //        this.buttonSearch.Text = "查询";
+        //        this.buttonSearch.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+        //        this.toolStripButtonAdd.Enabled = true;
+        //        this.toolStripButtonAlter.Enabled = true;
+        //        this.toolStripComboBoxSelect.Enabled = true;
+        //        this.buttonImport.Enabled = true;
+        //    }
 
-            this.pagerWidget.ClearCondition();
+        //    this.pagerWidget.ClearCondition();
 
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-            }
-            if ((this.authority & authority_self) != authority_self)
-            {
-                this.check_history = 0;
-                this.pagerWidget.Search();
-            }
-            if ((this.authority & authority_self) == authority_self)
-            {
-                this.check_history = 0;
-                this.pagerWidget.Search();
-            }
-        }
+        //    if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+        //    {
+        //        this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+        //    }
+        //    if ((this.authority & authority_self) != authority_self)
+        //    {
+        //        this.check_history = 0;
+        //        this.pagerWidget.Search();
+        //    }
+        //    if ((this.authority & authority_self) == authority_self)
+        //    {
+        //        this.check_history = 0;
+        //        this.pagerWidget.Search();
+        //    }
+        //}
 
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -225,20 +229,20 @@ namespace WMS.UI
             }
         }
 
-        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                this.textBoxSearchValue.Text = "";
-                this.textBoxSearchValue.Enabled = false;
-                this.textBoxSearchValue.BackColor = Color.LightGray;
-            }
-            else
-            {
-                this.textBoxSearchValue.Enabled = true;
-                this.textBoxSearchValue.BackColor = Color.White;
-            }
-        }
+        //private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.textBoxSearchValue.Text = "";
+        //        this.textBoxSearchValue.Enabled = false;
+        //        this.textBoxSearchValue.BackColor = Color.LightGray;
+        //    }
+        //    else
+        //    {
+        //        this.textBoxSearchValue.Enabled = true;
+        //        this.textBoxSearchValue.BackColor = Color.White;
+        //    }
+        //}
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -398,7 +402,7 @@ namespace WMS.UI
                     },
                     () => //参数3：导入完成回调函数
                     {
-                        this.pagerWidget.Search();
+                        this.searchWidget.Search();
                     }
                 );
 
