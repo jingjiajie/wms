@@ -33,6 +33,7 @@ namespace WMS.UI
         private Button toolStripButton1 = null;
         private ComboBox toolStripComboBoxSelect = null;
         private MaskedTextBox toolStripTextBoxSelect = null;
+        private ComboBox comboBoxOrderByCondition = null;
 
 
         private int id=-1;
@@ -133,6 +134,8 @@ namespace WMS.UI
             this.toolStripComboBoxSelect = toolStripComboBoxSelect;
             MaskedTextBox  toolStripTextBoxSelect = (MaskedTextBox)this.Controls.Find("textBoxSearchCondition", true)[0];
             this.toolStripTextBoxSelect = toolStripTextBoxSelect;
+            ComboBox comboBoxOrderByCondition= (ComboBox)this.Controls.Find("comboBoxOrderByCondition", true)[0];
+            this.comboBoxOrderByCondition = comboBoxOrderByCondition;
         }
        
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -166,6 +169,8 @@ namespace WMS.UI
                 this.toolStripButtonAlter.Enabled = false;
                 this.buttonImport.Enabled = false;
                 this.toolStripButton1.Enabled = false;
+                comboBoxOrderByCondition.Enabled = false;
+                this.toolStripComboBoxSelect.Enabled = false;
                 var worksheet = this.reoGridControlUser.Worksheets[0];
                 try
                 {
@@ -229,6 +234,8 @@ namespace WMS.UI
                 }
                 this.toolStripButtonSelect.Text = "查询历史信息";
                 this.toolStripButton1.Enabled = true;
+                this.comboBoxOrderByCondition .Enabled =true ;
+                this.toolStripComboBoxSelect.Enabled = true;
                 if (this.contractst == "待审核" || this.contractst == "")
                 {
                     this.toolStripButtonAlter.Enabled = true;
