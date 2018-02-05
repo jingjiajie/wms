@@ -280,14 +280,14 @@
             // 
             this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(54, 25);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(86, 25);
             this.toolStripStatusLabel1.Text = "状态：";
             // 
             // labelStatus
             // 
             this.labelStatus.BackColor = System.Drawing.Color.Transparent;
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(114, 25);
+            this.labelStatus.Size = new System.Drawing.Size(182, 25);
             this.labelStatus.Text = "查看收货单条目";
             // 
             // tableLayoutPanel1
@@ -321,7 +321,7 @@
             // 
             // FormReceiptItems
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 529);
             this.Controls.Add(this.tableLayoutPanel1);
@@ -333,6 +333,7 @@
             this.Name = "FormReceiptItems";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "查看零件条目";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormReceiptItems_FormClosing);
             this.Load += new System.EventHandler(this.FormReceiptArrivalItems_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
