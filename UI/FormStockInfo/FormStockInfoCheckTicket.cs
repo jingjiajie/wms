@@ -22,6 +22,7 @@ namespace WMS.UI
         private int  personid=-1;
         private int checkid = -1;
         private PagerWidget<StockInfoCheckTicketView > pagerWidget = null;
+        SearchWidget<StockInfoCheckTicketView> searchWidget = null;
         public FormStockInfoCheckTicket(int projectID, int warehouseID,int userID)
         {
             this.projectID = projectID;
@@ -33,9 +34,7 @@ namespace WMS.UI
         private void FormStockInfoCheckTicket_Load(object sender, EventArgs e)
         {
             InitComponents();
-
-            this.pagerWidget.ClearCondition();
-            this.pagerWidget.Search();
+            this.searchWidget.Search();
         }
         private void InitComponents()
         {
@@ -46,26 +45,28 @@ namespace WMS.UI
                                            select kn.Name).ToArray();
 
             //初始化查询框
-            this.comboBoxSearchCondition.Items.Add("无");
-            this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
-            this.comboBoxSearchCondition.SelectedIndex = 0;
+            //this.comboBoxSearchCondition.Items.Add("无");
+            //this.comboBoxSearchCondition.Items.AddRange(visibleColumnNames);
+            //this.comboBoxSearchCondition.SelectedIndex = 0;
 
             //初始化分页控件
             this.pagerWidget = new PagerWidget<StockInfoCheckTicketView >(this.reoGridControlMain , StockInfoCheckTicketViewMetaData.KeyNames, this.projectID, this.warehouseID);
             this.paperpanel.Controls.Add(pagerWidget);
             pagerWidget.Show();
+            this.searchWidget = new SearchWidget<StockInfoCheckTicketView>(StockInfoCheckTicketViewMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
         }
 
        
 
         private void buttonSearch_Click(object sender, EventArgs e)
         {
-            this.pagerWidget.ClearCondition();
-            if (this.comboBoxSearchCondition.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-            }
-            this.pagerWidget.Search();
+            //this.pagerWidget.ClearCondition();
+            //if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            //{
+            //    this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+            //}
+            //this.pagerWidget.Search();
         }
 
         
@@ -74,28 +75,28 @@ namespace WMS.UI
 
         private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == 13)
-            {
-                if (this.comboBoxSearchCondition.SelectedIndex != 0)
-                {
-                    this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-                }
-                this.pagerWidget.Search();
-            }
+            //if (e.KeyChar == 13)
+            //{
+            //    if (this.comboBoxSearchCondition.SelectedIndex != 0)
+            //    {
+            //        this.pagerWidget.AddCondition(this.comboBoxSearchCondition.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+            //    }
+            //    this.pagerWidget.Search();
+            //}
         }
 
         private void comboBoxSearchCondition_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.comboBoxSearchCondition.SelectedIndex == 0)
-            {
-                this.textBoxSearchValue.Text = "";
-                this.textBoxSearchValue.Enabled = false;
+            //if (this.comboBoxSearchCondition.SelectedIndex == 0)
+            //{
+            //    this.textBoxSearchValue.Text = "";
+            //    this.textBoxSearchValue.Enabled = false;
                
-            }
-            else
-            {
-                this.textBoxSearchValue.Enabled = true;
-            }
+            //}
+            //else
+            //{
+            //    this.textBoxSearchValue.Enabled = true;
+            //}
         }
 
         private void buttonAdd_Click_1(object sender, EventArgs e)
@@ -106,7 +107,7 @@ namespace WMS.UI
             form.SetAddFinishedCallback((AddID) =>
             {
 
-                this.pagerWidget.Search(false  ,AddID  );
+                this.searchWidget.Search(false  ,AddID  );
                 MessageBox.Show("添加成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information );
               
 
@@ -180,7 +181,7 @@ namespace WMS.UI
                 this.wmsEntities.SaveChanges();
                 this.Invoke(new Action(() =>
                 {
-                    this.pagerWidget.Search();
+                    this.searchWidget.Search();
                     this.labelStatus.Text = "搜索完成";
                 }));
             })).Start();
