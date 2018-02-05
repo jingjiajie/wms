@@ -30,8 +30,8 @@
         {
             this.reoGridControlMain = new unvell.ReoGrid.ReoGridControl();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBoxLockEnglish = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelTop = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBoxLockEnglish = new System.Windows.Forms.CheckBox();
             this.buttonImport = new System.Windows.Forms.Button();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanelTop.SuspendLayout();
@@ -75,27 +75,13 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(998, 697);
             this.tableLayoutPanel2.TabIndex = 7;
             // 
-            // checkBoxLockEnglish
-            // 
-            this.checkBoxLockEnglish.AutoSize = true;
-            this.checkBoxLockEnglish.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.checkBoxLockEnglish.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBoxLockEnglish.Location = new System.Drawing.Point(163, 3);
-            this.checkBoxLockEnglish.Margin = new System.Windows.Forms.Padding(3, 1, 0, 0);
-            this.checkBoxLockEnglish.Name = "checkBoxLockEnglish";
-            this.checkBoxLockEnglish.Size = new System.Drawing.Size(394, 39);
-            this.checkBoxLockEnglish.TabIndex = 5;
-            this.checkBoxLockEnglish.Text = "锁定英文输入（Ctrl+Alt切换）";
-            this.checkBoxLockEnglish.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.checkBoxLockEnglish.UseVisualStyleBackColor = false;
-            this.checkBoxLockEnglish.CheckedChanged += new System.EventHandler(this.checkBoxLockEnglish_CheckedChanged);
-            // 
             // tableLayoutPanelTop
             // 
             this.tableLayoutPanelTop.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.tableLayoutPanelTop.ColumnCount = 2;
+            this.tableLayoutPanelTop.ColumnCount = 3;
             this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 230F));
+            this.tableLayoutPanelTop.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTop.Controls.Add(this.checkBoxLockEnglish, 1, 0);
             this.tableLayoutPanelTop.Controls.Add(this.buttonImport, 0, 0);
             this.tableLayoutPanelTop.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -106,6 +92,22 @@
             this.tableLayoutPanelTop.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTop.Size = new System.Drawing.Size(998, 33);
             this.tableLayoutPanelTop.TabIndex = 6;
+            this.tableLayoutPanelTop.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanelTop_Paint);
+            // 
+            // checkBoxLockEnglish
+            // 
+            this.checkBoxLockEnglish.AutoSize = true;
+            this.checkBoxLockEnglish.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.checkBoxLockEnglish.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkBoxLockEnglish.Location = new System.Drawing.Point(103, 1);
+            this.checkBoxLockEnglish.Margin = new System.Windows.Forms.Padding(3, 1, 0, 0);
+            this.checkBoxLockEnglish.Name = "checkBoxLockEnglish";
+            this.checkBoxLockEnglish.Size = new System.Drawing.Size(227, 32);
+            this.checkBoxLockEnglish.TabIndex = 5;
+            this.checkBoxLockEnglish.Text = "锁定英文输入（Ctrl+Alt切换）";
+            this.checkBoxLockEnglish.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.checkBoxLockEnglish.UseVisualStyleBackColor = false;
+            this.checkBoxLockEnglish.CheckedChanged += new System.EventHandler(this.checkBoxLockEnglish_CheckedChanged);
             // 
             // buttonImport
             // 
@@ -115,12 +117,12 @@
             this.buttonImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonImport.Image = global::WMS.UI.Properties.Resources.add;
             this.buttonImport.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonImport.Location = new System.Drawing.Point(3, 3);
+            this.buttonImport.Location = new System.Drawing.Point(6, 3);
             this.buttonImport.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(154, 39);
+            this.buttonImport.Size = new System.Drawing.Size(91, 27);
             this.buttonImport.TabIndex = 6;
-            this.buttonImport.Text = " 批量导入";
+            this.buttonImport.Text = "  批量导入";
             this.buttonImport.UseVisualStyleBackColor = false;
             this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
