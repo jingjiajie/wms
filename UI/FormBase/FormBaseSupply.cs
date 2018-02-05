@@ -254,13 +254,21 @@ namespace WMS.UI
             Worksheet worksheet = this.reoGridControlSupply.Worksheets[0];
             if (worksheet.SelectionRange.Rows == 1)
             {
-                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var formSupplyModify = new FormSupplyModify(this.projectID, this.warehouseID, this.supplierID, this.userID, componenID);
-                formSupplyModify.SetModifyFinishedCallback((addedID) =>
+                try
                 {
-                    this.pagerWidget.Search(false, addedID);
-                });
-                formSupplyModify.Show();
+                    int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                    var formSupplyModify = new FormSupplyModify(this.projectID, this.warehouseID, this.supplierID, this.userID, componenID);
+                    formSupplyModify.SetModifyFinishedCallback((addedID) =>
+                    {
+                        this.pagerWidget.Search(false, addedID);
+                    });
+                    formSupplyModify.Show();
+                }
+                catch
+                {
+                    MessageBox.Show("当前选中空白条目，请重新选择要修改的条目进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
             }
 
@@ -270,18 +278,26 @@ namespace WMS.UI
                 var alterDatas = new SupplyView[worksheet.SelectionRange.Rows];
                 for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
                 {
-                    int curSupplyID = int.Parse(worksheet[worksheet.SelectionRange.Row+i, 0].ToString());
-                    var curSupply = (from u in wmsEntities.SupplyView
-                                          where
-                                          u.ID == curSupplyID
-                                          select u).FirstOrDefault();
-                    if (curSupply == null)
+                    try
                     {
-                        MessageBox.Show("供货信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return ;
+                        int curSupplyID = int.Parse(worksheet[worksheet.SelectionRange.Row + i, 0].ToString());
+                        var curSupply = (from u in wmsEntities.SupplyView
+                                         where
+                                         u.ID == curSupplyID
+                                         select u).FirstOrDefault();
+                        if (curSupply == null)
+                        {
+                            MessageBox.Show("供货信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        alterDatas[i] = curSupply;
+                        //alterDatas[i] = worksheet[worksheet.SelectionRange.Row+i, 0,1, worksheet.SelectionRange.Cols];
                     }
-                    alterDatas[i] = curSupply;
-                    //alterDatas[i] = worksheet[worksheet.SelectionRange.Row+i, 0,1, worksheet.SelectionRange.Cols];
+                    catch
+                    {
+                        MessageBox.Show("当前选中空白条目，请重新选择要修改的条目进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
                 }
 
 
@@ -1029,6 +1045,7 @@ namespace WMS.UI
                                             }
                                         }
                                     }
+
                                     supply1.SupplierID = importsupplierID;
                                     supply1.ComponentID = importcomponenID;
 
@@ -1049,6 +1066,22 @@ namespace WMS.UI
 
                                 MessageBox.Show("操作失败，请检查网络连接4", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return false;
+                            }
+
+
+                            DataAccess.Component curComponen = (from s in this.wmsEntities.Component where s.Name == componentName select s).FirstOrDefault();
+                            PropertyInfo[] proA = curComponen.GetType().GetProperties();
+                            PropertyInfo[] proB = results[i].GetType().GetProperties();
+                            for (int l = 0; l < proA.Length; l++)
+                            {
+                                for (int j = 0; j < proB.Length; j++)
+                                {
+                                    if (proA[l].Name == "Default" + proB[j].Name)
+                                    {
+                                        object a = proA[l].GetValue(curComponen, null);
+                                        proB[j].SetValue(results[i], a, null);
+                                    }
+                                }
                             }
 
 
