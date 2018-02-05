@@ -58,6 +58,7 @@ namespace WMS.UI
             pagerWidget.Show();
 
             this.searchWidget = new SearchWidget<SupplyView>(SupplyViewMetaData.KeyNames, this.pagerWidget);
+            this.pagerWidget.AddStaticCondition("IsHistory", "0");
             this.panelSearchWidget.Controls.Add(searchWidget);
 
 
@@ -181,6 +182,8 @@ namespace WMS.UI
                 this.buttonImport.Enabled = true;
 
                 this.pagerWidget.ClearCondition();
+                this.pagerWidget.ClearStaticCondition();
+                this.pagerWidget.AddStaticCondition("IsHistory", "0");
                 this.pagerWidget.Search();
             }
             else
@@ -191,7 +194,7 @@ namespace WMS.UI
                 this.buttonHistorySearch.Text = "显示全部信息";
 
                 this.pagerWidget.ClearCondition();
-
+                this.pagerWidget.ClearStaticCondition();
                 var worksheet = this.reoGridControlSupply.Worksheets[0];
                 try
                 {
@@ -209,7 +212,7 @@ namespace WMS.UI
                     return;
                 }
 
-                this.pagerWidget.AddCondition("IsHistory", "1");
+                this.pagerWidget.AddStaticCondition("IsHistory", "1");
 
                 //if (this.toolStripComboBoxSelect.SelectedIndex != 0)
                 //{
