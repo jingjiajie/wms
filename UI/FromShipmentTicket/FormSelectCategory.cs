@@ -28,9 +28,11 @@ namespace WMS.UI
             using (WMSEntities wmsEntities = new WMSEntities())
             {
                 string[] categories = wmsEntities.Database.SqlQuery<string>
-                    (@"SELECT DISTINCT Package 
+                    (string.Format(@"SELECT DISTINCT Package 
                        FROM Supply
-                       WHERE len(Package) > 0 ").ToArray();
+                       WHERE ProjectID = {0}
+                        AND WarehouseID = {1}
+                        AND len(Package) > 0 ", GlobalData.ProjectID, GlobalData.WarehouseID)).ToArray();
                 this.listBox.Items.Clear();
                 this.listBox.Items.AddRange(categories);
             }
