@@ -32,6 +32,7 @@ namespace WMS.UI
         private int contract_change = 1;
         private int setitem = -1;
         private PagerWidget<SupplyView> pagerWidget = null;
+        private SearchWidget<SupplyView> searchWidget = null;
 
         public FormBaseSupply(int authority, int supplierID, int projectID, int warehouseID, int userID)
         {
@@ -49,14 +50,16 @@ namespace WMS.UI
                                            select kn.Name).ToArray();
 
             //初始化
-            this.toolStripComboBoxSelect.Items.Add("无");
-            this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
+
 
             this.pagerWidget = new PagerWidget<SupplyView>(this.reoGridControlSupply, SupplyViewMetaData.supplykeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             this.pagerWidget.AddOrderBy("ID");
             pagerWidget.Show();
+
+            this.searchWidget = new SearchWidget<SupplyView>(SupplyViewMetaData.KeyNames, this.pagerWidget);
+            this.pagerWidget.AddStaticCondition("IsHistory", "0");
+            this.panelSearchWidget.Controls.Add(searchWidget);
 
 
         }
@@ -116,111 +119,117 @@ namespace WMS.UI
 
         }
 
-        private void buttonSearch_Click(object sender, EventArgs e)
-        {
+        //private void buttonSearch_Click(object sender, EventArgs e)
+        //{
 
-            if (this.buttonSearch.Text == "全部信息")
-            {
-                this.buttonSearch.Text = "查询";
-                this.buttonSearch.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
-                this.toolStripButtonAdd.Enabled = true;
-                this.toolStripButtonAlter.Enabled = true;
-                this.toolStripComboBoxSelect.Enabled = true;
-                this.buttonImport.Enabled = true;
-                this.buttonHistorySearch.Visible = true;
+        //    if (this.buttonSearch.Text == "全部信息")
+        //    {
+        //        this.buttonSearch.Text = "查询";
+        //        this.buttonSearch.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+        //        this.toolStripButtonAdd.Enabled = true;
+        //        this.toolStripButtonAlter.Enabled = true;
+        //        this.toolStripComboBoxSelect.Enabled = true;
+        //        this.buttonImport.Enabled = true;
+        //        this.buttonHistorySearch.Visible = true;
 
-                this.toolStripComboBoxSelect.SelectedItem = itemComboBoxSelect;
-                this.textBoxSearchValue.Text = textSearchValue;
-                if (this.contractst == "待审核")
-                {
-                    this.toolStripButtonAdd.Enabled = false ;
+        //        this.toolStripComboBoxSelect.SelectedItem = itemComboBoxSelect;
+        //        this.textBoxSearchValue.Text = textSearchValue;
+        //        if (this.contractst == "待审核")
+        //        {
+        //            this.toolStripButtonAdd.Enabled = false ;
                   
-                    this.toolStripComboBoxSelect.Enabled = true;
-                    this.buttonImport.Enabled = false ;
-                }
-                else if(this.contractst == "已过审")
-                {
-                    this.toolStripButtonAdd.Enabled = false;
-                    this.toolStripButtonAlter.Enabled = false;
-                    this.toolStripComboBoxSelect.Enabled = true;
-                    this.buttonImport.Enabled = false;
-                }
-            }
+        //            this.toolStripComboBoxSelect.Enabled = true;
+        //            this.buttonImport.Enabled = false ;
+        //        }
+        //        else if(this.contractst == "已过审")
+        //        {
+        //            this.toolStripButtonAdd.Enabled = false;
+        //            this.toolStripButtonAlter.Enabled = false;
+        //            this.toolStripComboBoxSelect.Enabled = true;
+        //            this.buttonImport.Enabled = false;
+        //        }
+        //    }
 
-            this.pagerWidget.ClearCondition();
-            this.pagerWidget.AddCondition("IsHistory", "0");
+        //    this.pagerWidget.ClearCondition();
+        //    this.pagerWidget.AddCondition("IsHistory", "0");
 
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-            }
-            if ((this.authority & authority_self) != authority_self)
-            {
-                this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
-                this.check_history = 0;
-                this.pagerWidget.Search();
-            }
-            if ((this.authority & authority_self) == authority_self)
-            {
-                this.check_history = 0;
-                this.pagerWidget.Search();
-            }
-        }
+        //    if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+        //    {
+        //        this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+        //    }
+        //    if ((this.authority & authority_self) != authority_self)
+        //    {
+        //        this.pagerWidget.AddCondition("ID", Convert.ToString(supplierID));
+        //        this.check_history = 0;
+        //        this.pagerWidget.Search();
+        //    }
+        //    if ((this.authority & authority_self) == authority_self)
+        //    {
+        //        this.check_history = 0;
+        //        this.pagerWidget.Search();
+        //    }
+        //}
 
 
         private void buttonHistorySearch_Click(object sender, EventArgs e)
         {
             if (check_history == 1)
             {
-                MessageBox.Show("已经显示历史信息了", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            this.textSearchValue = this.textBoxSearchValue.Text;
-            this.itemComboBoxSelect = this.toolStripComboBoxSelect.SelectedItem;
-            this.toolStripButtonAdd.Enabled = false;
-            this.toolStripButtonAlter.Enabled = false;
-            this.toolStripComboBoxSelect.Enabled = false;
-            this.buttonImport.Enabled = false;
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
-            this.buttonSearch.DisplayStyle= ToolStripItemDisplayStyle.Text;
-            this.buttonSearch.Text = "全部信息";
-            this.buttonHistorySearch.Visible = false;
-            this.pagerWidget.ClearCondition();
+                this.buttonHistorySearch.Text = "查看历史信息";
+                check_history = 0;
+                this.toolStripButtonAdd.Enabled = true;
+                this.toolStripButtonAlter.Enabled = true;
+                this.buttonImport.Enabled = true;
 
-            var worksheet = this.reoGridControlSupply.Worksheets[0];
-            try
+                this.pagerWidget.ClearCondition();
+                this.pagerWidget.ClearStaticCondition();
+                this.pagerWidget.AddStaticCondition("IsHistory", "0");
+                this.pagerWidget.Search();
+            }
+            else
             {
-                if (worksheet.SelectionRange.Rows != 1)
+                this.toolStripButtonAdd.Enabled = false;
+                this.toolStripButtonAlter.Enabled = false;
+                this.buttonImport.Enabled = false;
+                this.buttonHistorySearch.Text = "显示全部信息";
+
+                this.pagerWidget.ClearCondition();
+                this.pagerWidget.ClearStaticCondition();
+                var worksheet = this.reoGridControlSupply.Worksheets[0];
+                try
                 {
-                    throw new Exception();
+                    if (worksheet.SelectionRange.Rows != 1)
+                    {
+                        throw new Exception();
+                    }
+                    int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                    this.pagerWidget.AddCondition("NewestSupplyID", Convert.ToString(componenID));
                 }
-                int componenID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                this.pagerWidget.AddCondition("NewestSupplyID", Convert.ToString(componenID));
-            }
 
-            catch
-            {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            this.pagerWidget.AddCondition("IsHistory", "1");
+                this.pagerWidget.AddStaticCondition("IsHistory", "1");
 
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
+                //if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+                //{
 
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
-            }
-            if ((this.authority & authority_self) != authority_self)
-            {
-                this.pagerWidget.AddCondition("SupplierID", Convert.ToString(supplierID));
-                this.check_history = 1;
-                this.pagerWidget.Search();
-            }
-            if ((this.authority & authority_self) == authority_self)
-            {
-                this.check_history = 1;
-                this.pagerWidget.Search();
+                //    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.textBoxSearchValue.Text);
+                //}
+                if ((this.authority & authority_self) != authority_self)
+                {
+                    this.pagerWidget.AddCondition("SupplierID", Convert.ToString(supplierID));
+                    this.check_history = 1;
+                    this.pagerWidget.Search();
+                }
+                if ((this.authority & authority_self) == authority_self)
+                {
+                    this.check_history = 1;
+                    this.pagerWidget.Search();
+                }
             }
         }
 
@@ -691,28 +700,28 @@ namespace WMS.UI
 
         }//删除
 
-        private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 13)
-            {
-                this.pagerWidget.Search();
-            }
-        }
+        //private void textBoxSearchValue_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    if (e.KeyChar == 13)
+        //    {
+        //        this.pagerWidget.Search();
+        //    }
+        //}
 
-        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                this.textBoxSearchValue.Text = "";
-                this.textBoxSearchValue.Enabled = false;
-                this.textBoxSearchValue.BackColor = Color.LightGray;
-            }
-            else
-            {
-                this.textBoxSearchValue.Enabled = true;
-                this.textBoxSearchValue.BackColor = Color.White;
-            }
-        }
+        //private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.textBoxSearchValue.Text = "";
+        //        this.textBoxSearchValue.Enabled = false;
+        //        this.textBoxSearchValue.BackColor = Color.LightGray;
+        //    }
+        //    else
+        //    {
+        //        this.textBoxSearchValue.Enabled = true;
+        //        this.textBoxSearchValue.BackColor = Color.White;
+        //    }
+        //}
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {

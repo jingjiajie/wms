@@ -274,7 +274,7 @@ namespace WMS.UI
 
         private void InputTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if(e.KeyCode == Keys.ShiftKey)
+            if(e.Control && e.Alt) //Ctrl+Alt切换中英文输入
             {
                 this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
             }
@@ -521,14 +521,47 @@ namespace WMS.UI
             return true;
         }
 
+        public void AddButton(string buttonText,Action callback)
+        {
+            AddButton(new string[] { buttonText }, new Action[] { callback });
+        }
+
+        public void AddButton(string[] buttonTexts,Action[] callbacks)
+        {
+            int oriColumnCount = this.tableLayoutPanelTop.ColumnCount;
+            this.tableLayoutPanelTop.ColumnCount = oriColumnCount + buttonTexts.Length;
+            for(int i = 0; i < buttonTexts.Length; i++)
+            {
+                Button button = new Button();
+                button.Text = buttonTexts[i];
+                button.Dock = DockStyle.Fill;
+                button.FlatStyle = FlatStyle.Flat;
+                button.FlatAppearance.BorderSize = 0;
+                button.Font = this.buttonImport.Font;
+                button.Margin = new Padding(3, 3, 3, 3);
+                button.Click += (obj, e) =>
+                {
+                    if (callbacks.Length > i && callbacks[i] != null)
+                    {
+                        callbacks[i]();
+                    }
+                };
+                this.tableLayoutPanelTop.ColumnStyles.Insert(oriColumnCount + i, new ColumnStyle(SizeType.Absolute, button.Width));
+                this.tableLayoutPanelTop.Controls.Add(button, oriColumnCount + i, 0);
+            }
+        }
+        
         private void reoGridControlMain_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             if (worksheet.SelectionRange.IsSingleCell == false) return;
 
-            if (e.KeyCode == Keys.ShiftKey) //Shift Shift切换输入中英文
+            if (e.Control)
             {
-                this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
+                if (e.Alt) //Ctrl + Alt切换输入中英文
+                {
+                    this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
+                }
                 return;
             }
 

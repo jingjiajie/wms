@@ -125,6 +125,33 @@ namespace WMS.UI
             this.textBoxSearchCondition.Text = value;
         }
 
+        public void SetOrderByCondition(string key, bool descending = false)
+        {
+            string name = (from kn in this.keyNames
+                           where kn.Key == key
+                           select kn.Name).FirstOrDefault();
+            if (name == null)
+            {
+                throw new Exception(typeof(T).Name + "中不存在字段" + key + " 请检查代码！");
+            }
+            for (int i = 0; i < this.comboBoxOrderByCondition.Items.Count; i++)
+            {
+                var item = comboBoxOrderByCondition.Items[i];
+                if (item.ToString() == name)
+                {
+                    this.comboBoxOrderByCondition.SelectedIndex = i;
+                }
+            }
+            if (descending == false)
+            {
+                this.comboBoxOrderByOrder.SelectedIndex = 0;
+            }
+            else
+            {
+                this.comboBoxOrderByOrder.SelectedIndex = 1;
+            }
+        }
+
         private void tableLayoutPanel_Paint(object sender, PaintEventArgs e)
         {
 

@@ -21,6 +21,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "供货商名称", Key = "SupplierName" , Visible = true, Editable = true, Save=false, EditPlaceHolder = "点击添加供应商"},
             new KeyName(){Name = "仓库名", Key = "WarehouseName" , Visible = true, Editable = false, Save=false},
             new KeyName(){Name = "单据类型", Key = "Type", Visible = true, Editable = true, GetAllValueToComboBox="ReceiptTicket.Type"},
+            new KeyName(){Name = "内向交货单号", Key = "InwardDeliverTicketNo", Visible = true, Editable = true},
             new KeyName(){Name = "状态", Key = "State", Visible = true, Editable = false},
             new KeyName(){Name = "是否已经送检",Key = "HasSubmission", Visible = true, Editable = false, ComboBoxItems = new ComboBoxItem[]{ new ComboBoxItem("是", 1), new ComboBoxItem("否", 0)}, Translator = Translator.BoolTranslator },
             new KeyName(){Name = "是否已经生成上架单", Key = "HasPutawayTicket", Visible = true, Editable = false, Save = true, EditPlaceHolder = "自动生成"},
@@ -35,7 +36,6 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name = "关联凭证年", Key = "ReletedVoucherYear", Visible = true, Editable = true},
             new KeyName(){Name = "抬头文本", Key = "HeadingText", Visible = true, Editable = true},
             new KeyName(){Name = "过账日期", Key = "PostCountDate", Visible = true, Editable = true},
-            new KeyName(){Name = "内向交货单号", Key = "InwardDeliverTicketNo", Visible = true, Editable = true},
             new KeyName(){Name = "内向交货行号", Key = "InwardDeliverLineNo", Visible = true, Editable = true},
             new KeyName(){Name = "外向交货单号", Key = "OutwardDeliverTicketNo", Visible = true, Editable = true},
             new KeyName(){Name = "外向交货行号", Key = "OutwardDeliverLineNo", Visible = true, Editable = true},
@@ -99,10 +99,13 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true,ImportVisible = false ,Import = false},
             new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true, Import = false, ImportVisible =false},
             new KeyName(){Name="收货数量", Key="ReceiviptAmount", Visible=true,Editable=false,Save=true, NotNegative = true,ImportVisible = false, Import = false},
-
+            
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
-            new KeyName(){Name="订单数量", Key="ExpectedUnitCount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
-            new KeyName(){Name="实收数量", Key="RealReceiptUnitCount", Visible=true,Editable=true,Save=true,NotNegative=true,NotNull=true},
+            //new KeyName(){Name="订单数量", Key="ExpectedUnitCount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
+            //new KeyName(){Name="实收数量", Key="RealReceiptUnitCount", Visible=true,Editable=true,Save=true,NotNegative=true,NotNull=true},
+            new KeyName(){Name="订单数量", Key="ExpectedAmount", Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true, ImportVisible = true, Import = true},
+            new KeyName(){Name="实收数量", Key="RealReceiptAmount", Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true, Import = true, ImportVisible = true},
+            new KeyName(){Name="箱数", Key="RealReceiptUnitCount",Visible=true,Editable=true,Save=true,NotNegative=true, Import = true, ImportVisible = true},
             new KeyName(){Name="单位名称", Key="Unit",Visible=true,Editable=true,Save=true, NotNull = true},
             new KeyName(){Name="单位数量", Key="UnitAmount",Visible=true,Editable=true,Save=true, NotNegative = true, NotNull = true},
 

@@ -360,6 +360,26 @@ namespace WMS.UI
                         return;
                     }
                 }
+                supply.ProjectID = this.projectID;
+                supply.WarehouseID = this.warehouseID;
+                supply.SupplierID = this.supplierID;
+                supply.ComponentID = this.componenID;
+
+
+                //开始数据库操作
+                if (Utilities.CopyTextBoxTextsToProperties(this, supply, SupplyViewMetaData.supplykeyNames, out string errorMessage) == false)
+                {
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    Utilities.CopyComboBoxsToProperties(this, supply, SupplyViewMetaData.KeyNames);
+                }
+                supply.LastUpdateUserID = this.userID;
+                supply.LastUpdateTime = DateTime.Now;
+                supply.IsHistory = 0;
+                wmsEntities.SaveChanges();
 
             }
             else if (mode == FormMode.ADD)
@@ -385,48 +405,69 @@ namespace WMS.UI
                     return;
                 }
                 supply = new DataAccess.Supply();
-                this.wmsEntities.Supply.Add(supply);
+
                 supply.CreateUserID = this.userID;
                 //supply.CreateTime = DateTime.Now;
+                supply.ProjectID = this.projectID;
+                supply.WarehouseID = this.warehouseID;
+                supply.SupplierID = this.supplierID;
+                supply.ComponentID = this.componenID;
 
-            }
 
-            //把选择零件的默认包装信息存进供应表
-            DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.ID == this.componenID select s).FirstOrDefault();
-            PropertyInfo[] proAs = componenID.GetType().GetProperties();
-            PropertyInfo[] proBs = supply.GetType().GetProperties();
-            for (int i = 0; i < proAs.Length; i++)
-            {
-                for (int j = 0; j < proBs.Length; j++)
+                //开始数据库操作
+                if (Utilities.CopyTextBoxTextsToProperties(this, supply, SupplyViewMetaData.supplykeyNames, out string errorMessage) == false)
                 {
-                    if (proAs[i].Name == "Default" + proBs[j].Name)
-                    {
-                        object a = proAs[i].GetValue(componenID, null);
-                        proBs[j].SetValue(supply, a, null);
-                    }
+                    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
+                else
+                {
+                    Utilities.CopyComboBoxsToProperties(this, supply, SupplyViewMetaData.KeyNames);
+                }
+                supply.LastUpdateUserID = this.userID;
+                supply.LastUpdateTime = DateTime.Now;
+                supply.IsHistory = 0;
+                this.wmsEntities.Supply.Add(supply);
+                wmsEntities.SaveChanges();
+
             }
 
-            supply.ProjectID = this.projectID;
-            supply.WarehouseID = this.warehouseID;
-            supply.SupplierID = this.supplierID;
-            supply.ComponentID = this.componenID;
+            ////把选择零件的默认包装信息存进供应表
+            //DataAccess.Component componenID = (from s in this.wmsEntities.Component where s.ID == this.componenID select s).FirstOrDefault();
+            //PropertyInfo[] proAs = componenID.GetType().GetProperties();
+            //PropertyInfo[] proBs = supply.GetType().GetProperties();
+            //for (int i = 0; i < proAs.Length; i++)
+            //{
+            //    for (int j = 0; j < proBs.Length; j++)
+            //    {
+            //        if (proAs[i].Name == "Default" + proBs[j].Name)
+            //        {
+            //            object a = proAs[i].GetValue(componenID, null);
+            //            proBs[j].SetValue(supply, a, null);
+            //        }
+            //    }
+            //}
+
+            //supply.ProjectID = this.projectID;
+            //supply.WarehouseID = this.warehouseID;
+            //supply.SupplierID = this.supplierID;
+            //supply.ComponentID = this.componenID;
 
 
-            //开始数据库操作
-            if (Utilities.CopyTextBoxTextsToProperties(this, supply, SupplyViewMetaData.supplykeyNames, out string errorMessage) == false)
-            {
-                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            else
-            {
-                Utilities.CopyComboBoxsToProperties(this, supply, SupplyViewMetaData.KeyNames);
-            }
-            supply.LastUpdateUserID = this.userID;
-            supply.LastUpdateTime = DateTime.Now;
-            supply.IsHistory = 0;
-            wmsEntities.SaveChanges();
+            ////开始数据库操作
+            //if (Utilities.CopyTextBoxTextsToProperties(this, supply, SupplyViewMetaData.supplykeyNames, out string errorMessage) == false)
+            //{
+            //    MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
+            //else
+            //{
+            //    Utilities.CopyComboBoxsToProperties(this, supply, SupplyViewMetaData.KeyNames);
+            //}
+            //supply.LastUpdateUserID = this.userID;
+            //supply.LastUpdateTime = DateTime.Now;
+            //supply.IsHistory = 0;
+            //wmsEntities.SaveChanges();
 
             //调用回调函数
             if (this.mode == FormMode.ALTER && this.modifyFinishedCallback != null)

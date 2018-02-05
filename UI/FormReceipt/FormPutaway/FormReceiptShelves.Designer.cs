@@ -200,9 +200,10 @@
             // panel2
             // 
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1635, 44);
+            this.panel2.Size = new System.Drawing.Size(1641, 50);
             this.panel2.TabIndex = 9;
             // 
             // FormReceiptShelves
