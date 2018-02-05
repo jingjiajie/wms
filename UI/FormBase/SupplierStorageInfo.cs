@@ -22,6 +22,7 @@ namespace WMS.UI
         private int check_history = 0;
         private WMSEntities wmsEntities = new WMSEntities();
         private PagerWidget<SupplierStorageInfoView> pagerWidget = null;
+        SearchWidget<SupplierStorageInfoView> searchWidget = null;
 
         public SupplierStorageInfo(int supplierid=-1,int check_history=0)
         {
@@ -42,23 +43,31 @@ namespace WMS.UI
         }
         private void InitializeComponent1()
         {
+            try
+            {
+                this.wmsEntities.Database.Connection.Open();
 
-            this.wmsEntities.Database.Connection.Open();
+                //string[] visibleColumnNames = (from kn in SupplierStorageInfoMetaData.KeyNames
+                //                               where kn.Visible == true
+                //                               select kn.Name).ToArray();
 
-            string[] visibleColumnNames = (from kn in SupplierStorageInfoMetaData.KeyNames
-                                           where kn.Visible == true
-                                           select kn.Name).ToArray();
+                ////初始化查询框
+                //this.toolStripComboBoxSelect.Items.Add("无");
+                //this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
+                //this.toolStripComboBoxSelect.SelectedIndex = 0;
+            }
+            catch
+            {
+                MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            //初始化查询框
-            this.toolStripComboBoxSelect.Items.Add("无");
-            this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
-
+                return;
+            }
             //初始化分页控件
             this.pagerWidget = new PagerWidget<SupplierStorageInfoView>(this.reoGridControlUser, SupplierStorageInfoMetaData.KeyNames, this.projectID, this.warehouseID);
             this.panelPager.Controls.Add(pagerWidget);
             pagerWidget.Show();
-
+            this.searchWidget = new SearchWidget<SupplierStorageInfoView>(SupplierStorageInfoMetaData.KeyNames, this.pagerWidget);
+            this.panelSearchWidget.Controls.Add(searchWidget);
         }
 
         private void FormSupplierAnnualInfo_Load(object sender, EventArgs e)
@@ -74,23 +83,23 @@ namespace WMS.UI
             //}
             //else
             {
-                this.pagerWidget.AddCondition("供应商ID", Convert.ToString(this.supplierid));
+                this.pagerWidget.AddStaticCondition("供应商ID", Convert.ToString(this.supplierid));
                 this.pagerWidget.Search();
             }
         }
 
         private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                this.toolStripTextBoxSelect.Text = "";
-                this.toolStripTextBoxSelect.Enabled = false;
+            //if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+            //{
+            //    this.toolStripTextBoxSelect.Text = "";
+            //    this.toolStripTextBoxSelect.Enabled = false;
                 
-            }
-            else
-            {
-                this.toolStripTextBoxSelect.Enabled = true;
-            }
+            //}
+            //else
+            //{
+            //    this.toolStripTextBoxSelect.Enabled = true;
+            //}
         }
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
@@ -115,13 +124,13 @@ namespace WMS.UI
 
         private void toolStripButtonSelect_Click(object sender, EventArgs e)
         {
-            this.pagerWidget.ClearCondition();
-            this.pagerWidget.AddCondition("供应商ID", Convert.ToString(this.supplierid));
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
-            }
-             this.pagerWidget.Search();
+            //this.pagerWidget.ClearCondition();
+            //this.pagerWidget.AddCondition("供应商ID", Convert.ToString(this.supplierid));
+            //if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            //{
+            //    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            //}
+            // this.pagerWidget.Search();
            
         }
 

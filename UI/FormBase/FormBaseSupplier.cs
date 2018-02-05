@@ -103,24 +103,24 @@ namespace WMS.UI
 
         private void InitSupplier ()
         {
-            //try
-            //{
-            //    this.wmsEntities.Database.Connection.Open();
+            try
+            {
+                this.wmsEntities.Database.Connection.Open();
 
-            //    //string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
-            //    //                               where kn.Visible == true
-            //    //                               select kn.Name).ToArray();
-            //    //初始化查询框
-            //    //this.toolStripComboBoxSelect.Items.Add("无");
-            //    //this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
-            //    //this.toolStripComboBoxSelect.SelectedIndex = 0;
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                
-            //    return;
-            //}
+                //string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
+                //                               where kn.Visible == true
+                //                               select kn.Name).ToArray();
+                //初始化查询框
+                //this.toolStripComboBoxSelect.Items.Add("无");
+                //this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
+                //this.toolStripComboBoxSelect.SelectedIndex = 0;
+            }
+            catch
+            {
+                MessageBox.Show("加载失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
             //初始化分页控件
 
             this.pagerWidget = new PagerWidget<SupplierView>(this.reoGridControlUser, SupplierMetaData.KeyNames, this.projectID, this.warehouseID);
