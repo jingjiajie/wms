@@ -58,6 +58,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lableStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -67,15 +68,17 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.reoGridControlUser, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.reoGridControlUser, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.toolStripTop, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 61F));
@@ -89,7 +92,7 @@
             this.reoGridControlUser.ColumnHeaderContextMenuStrip = null;
             this.reoGridControlUser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.reoGridControlUser.LeadHeaderContextMenuStrip = null;
-            this.reoGridControlUser.Location = new System.Drawing.Point(4, 41);
+            this.reoGridControlUser.Location = new System.Drawing.Point(4, 91);
             this.reoGridControlUser.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.reoGridControlUser.Name = "reoGridControlUser";
             this.reoGridControlUser.Readonly = true;
@@ -100,7 +103,7 @@
             this.reoGridControlUser.SheetTabVisible = true;
             this.reoGridControlUser.SheetTabWidth = 120;
             this.reoGridControlUser.ShowScrollEndSpacing = true;
-            this.reoGridControlUser.Size = new System.Drawing.Size(2676, 589);
+            this.reoGridControlUser.Size = new System.Drawing.Size(2676, 539);
             this.reoGridControlUser.TabIndex = 10;
             this.reoGridControlUser.Text = "reoGridControl1";
             this.reoGridControlUser.Click += new System.EventHandler(this.reoGridControlUser_Click_1);
@@ -135,7 +138,7 @@
             this.ButtonToPutaway,
             this.toolStripSeparator6,
             this.buttonPreview});
-            this.toolStripTop.Location = new System.Drawing.Point(0, 0);
+            this.toolStripTop.Location = new System.Drawing.Point(0, 50);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
             this.toolStripTop.Size = new System.Drawing.Size(2684, 38);
@@ -148,6 +151,7 @@
             this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 35);
             this.toolStripLabelSelect.Text = "查询条件：";
+            this.toolStripLabelSelect.Visible = false;
             // 
             // comboBoxSelect
             // 
@@ -155,12 +159,14 @@
             this.comboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
             this.comboBoxSelect.Name = "comboBoxSelect";
             this.comboBoxSelect.Size = new System.Drawing.Size(200, 38);
+            this.comboBoxSelect.Visible = false;
             this.comboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelect_SelectedIndexChanged_1);
             // 
             // textBoxSelect
             // 
             this.textBoxSelect.Name = "textBoxSelect";
             this.textBoxSelect.Size = new System.Drawing.Size(298, 38);
+            this.textBoxSelect.Visible = false;
             this.textBoxSelect.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSelect_KeyDown);
             // 
             // buttonSelect
@@ -170,6 +176,7 @@
             this.buttonSelect.Name = "buttonSelect";
             this.buttonSelect.Size = new System.Drawing.Size(86, 35);
             this.buttonSelect.Text = "查询";
+            this.buttonSelect.Visible = false;
             this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
             // toolStripSeparator1
@@ -177,6 +184,7 @@
             this.toolStripSeparator1.AutoSize = false;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
+            this.toolStripSeparator1.Visible = false;
             // 
             // buttonItems
             // 
@@ -352,6 +360,14 @@
             this.panel1.Size = new System.Drawing.Size(2676, 55);
             this.panel1.TabIndex = 11;
             // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(2678, 44);
+            this.panel2.TabIndex = 12;
+            // 
             // FormReceiptArrival
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -403,5 +419,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripButton buttonReceiptCancel;
+        private System.Windows.Forms.Panel panel2;
     }
 }

@@ -26,7 +26,7 @@ namespace WMS.UI.FormReceipt
         private string value;
         private Action<string, string> ToPutaway = null;
         private PagerWidget<PutawayTicketView> pagerWidget;
-
+        private SearchWidget<PutawayTicketView> searchWidget;
         public FormReceiptShelves()
         {
             InitializeComponent();
@@ -76,7 +76,9 @@ namespace WMS.UI.FormReceipt
                 this.toolStripTextBoxSelect.Text = value;
             }
             pagerWidget = new PagerWidget<PutawayTicketView>(this.reoGridControlUser, ReceiptMetaData.putawayTicketKeyName, projectID, warehouseID);
+            searchWidget = new SearchWidget<PutawayTicketView>(ReceiptMetaData.putawayTicketItemKeyName, pagerWidget);
             this.panel1.Controls.Add(pagerWidget);
+            this.panel2.Controls.Add(searchWidget);
             Search();
             pagerWidget.Show();
         }

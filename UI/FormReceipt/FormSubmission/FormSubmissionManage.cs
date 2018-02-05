@@ -24,6 +24,7 @@ namespace WMS.UI
         private string key;
         private string value;
         PagerWidget<SubmissionTicketView> pagerWidget;
+        SearchWidget<SubmissionTicketView> searchWidget;
         public FormSubmissionManage()
         {
             InitializeComponent();
@@ -65,6 +66,8 @@ namespace WMS.UI
             {
                 pagerWidget.AddCondition(key, value);
             }
+            searchWidget = new SearchWidget<SubmissionTicketView>(ReceiptMetaData.submissionTicketKeyName, pagerWidget);
+            this.panel2.Controls.Add(searchWidget);
             this.textBoxSelect.Text = value;
             this.panel1.Controls.Add(this.pagerWidget);
             pagerWidget.Show();

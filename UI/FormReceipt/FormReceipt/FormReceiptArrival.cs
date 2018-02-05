@@ -32,6 +32,7 @@ namespace WMS.UI
         private int supplierid;
         private string contractstate = "";
         PagerWidget<ReceiptTicketView> pagerWidget;
+        SearchWidget<ReceiptTicketView> searchWidget;
         private Supplier supplier;
 
         private Action<string, string> ToSubmission = null;
@@ -96,6 +97,8 @@ namespace WMS.UI
         {
             InitComponents();
             pagerWidget = new PagerWidget<ReceiptTicketView>(this.reoGridControlUser, ReceiptMetaData.receiptNameKeys, projectID, warehouseID);
+            searchWidget = new SearchWidget<ReceiptTicketView>(ReceiptMetaData.receiptNameKeys, pagerWidget);
+            this.panel2.Controls.Add(searchWidget);
             this.panel1.Controls.Add(pagerWidget);
             pagerWidget.Show();
             this.Search();
