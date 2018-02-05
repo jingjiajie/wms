@@ -141,16 +141,6 @@ namespace WMS.UI.FormReceipt.FormReceipt {
         }
         
         /// <summary>
-        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
-        /// </summary>
-        public static System.Drawing.Bitmap buttonSelect_Image {
-            get {
-                object obj = ResourceManager.GetObject("buttonSelect.Image", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   查找类似于 {X=668,Y=17} 的 System.Drawing.Point 类型的本地化资源。
         /// </summary>
         public static System.Drawing.Point statusStrip1_TrayLocation {

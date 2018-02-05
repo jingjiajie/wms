@@ -30,14 +30,9 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSubmissionManage));
             this.reoGridControl1 = new unvell.ReoGrid.ReoGridControl();
-            this.toolStripLabelSelect = new System.Windows.Forms.ToolStripLabel();
-            this.comboBoxSelect = new System.Windows.Forms.ToolStripComboBox();
-            this.textBoxSelect = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonPass = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripTop = new System.Windows.Forms.ToolStrip();
-            this.buttonSelect = new System.Windows.Forms.ToolStripButton();
             this.buttonItem = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.buttonItems = new System.Windows.Forms.ToolStripButton();
@@ -77,38 +72,6 @@
             this.reoGridControl1.TabIndex = 9;
             this.reoGridControl1.Text = "reoGridControl1";
             // 
-            // toolStripLabelSelect
-            // 
-            this.toolStripLabelSelect.BackColor = System.Drawing.SystemColors.Control;
-            this.toolStripLabelSelect.Name = "toolStripLabelSelect";
-            this.toolStripLabelSelect.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.toolStripLabelSelect.Size = new System.Drawing.Size(134, 35);
-            this.toolStripLabelSelect.Text = "查询条件：";
-            this.toolStripLabelSelect.Visible = false;
-            // 
-            // comboBoxSelect
-            // 
-            this.comboBoxSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxSelect.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
-            this.comboBoxSelect.Name = "comboBoxSelect";
-            this.comboBoxSelect.Size = new System.Drawing.Size(223, 38);
-            this.comboBoxSelect.Visible = false;
-            this.comboBoxSelect.SelectedIndexChanged += new System.EventHandler(this.comboBoxSelect_SelectedIndexChanged);
-            // 
-            // textBoxSelect
-            // 
-            this.textBoxSelect.Name = "textBoxSelect";
-            this.textBoxSelect.Size = new System.Drawing.Size(298, 38);
-            this.textBoxSelect.Visible = false;
-            this.textBoxSelect.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxSelect_KeyDown);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.AutoSize = false;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
-            this.toolStripSeparator1.Visible = false;
-            // 
             // buttonPass
             // 
             this.buttonPass.Image = ((System.Drawing.Image)(resources.GetObject("buttonPass.Image")));
@@ -133,11 +96,6 @@
             this.toolStripTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripTop.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStripTop.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabelSelect,
-            this.comboBoxSelect,
-            this.textBoxSelect,
-            this.buttonSelect,
-            this.toolStripSeparator1,
             this.buttonItem,
             this.toolStripSeparator3,
             this.buttonItems,
@@ -154,16 +112,6 @@
             this.toolStripTop.TabIndex = 8;
             this.toolStripTop.Text = "toolStrip1";
             this.toolStripTop.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripTop_ItemClicked);
-            // 
-            // buttonSelect
-            // 
-            this.buttonSelect.Image = ((System.Drawing.Image)(resources.GetObject("buttonSelect.Image")));
-            this.buttonSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buttonSelect.Name = "buttonSelect";
-            this.buttonSelect.Size = new System.Drawing.Size(86, 35);
-            this.buttonSelect.Text = "查询";
-            this.buttonSelect.Visible = false;
-            this.buttonSelect.Click += new System.EventHandler(this.buttonSelect_Click);
             // 
             // buttonItem
             // 
@@ -316,11 +264,6 @@
 
         #endregion
         private unvell.ReoGrid.ReoGridControl reoGridControl1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabelSelect;
-        private System.Windows.Forms.ToolStripComboBox comboBoxSelect;
-        private System.Windows.Forms.ToolStripTextBox textBoxSelect;
-        private System.Windows.Forms.ToolStripButton buttonSelect;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton buttonPass;
         private System.Windows.Forms.ToolStripButton buttonNoPass;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;

@@ -77,10 +77,10 @@ namespace WMS.UI
         private void InitComponents()
         {
             //初始化
-            this.comboBoxSelect.Items.Add("无");
+            //this.comboBoxSelect.Items.Add("无");
             string[] columnNames = (from kn in ReceiptMetaData.receiptNameKeys where kn.Visible == true select kn.Name).ToArray();
-            this.comboBoxSelect.Items.AddRange(columnNames);
-            this.comboBoxSelect.SelectedIndex = 0;
+            //this.comboBoxSelect.Items.AddRange(columnNames);
+            //this.comboBoxSelect.SelectedIndex = 0;
 
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
@@ -131,7 +131,7 @@ namespace WMS.UI
                     this.buttonAdd.Enabled = true;
                     this.buttonAlter.Enabled = true;
                     this.buttonDelete.Enabled = true;
-                    this.buttonSelect.Enabled = true;
+                    //this.buttonSelect.Enabled = true;
                     this.buttonItems.Enabled = true;
                 }
                 else
@@ -152,10 +152,10 @@ namespace WMS.UI
             {
                 this.pagerWidget.AddCondition("SupplierID", Convert.ToString(this.supplierid));
             }
-            if (this.comboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
-            }
+            //if (this.comboBoxSelect.SelectedIndex != 0)
+            //{
+            //    this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
+            //}
             this.pagerWidget.Search(savePage, selectID);
         }
 
@@ -250,31 +250,31 @@ namespace WMS.UI
 
         }
 
-        private void buttonSelect_Click(object sender, EventArgs e)
-        {
+        //private void buttonSelect_Click(object sender, EventArgs e)
+        //{
 
-            if (comboBoxSelect.SelectedIndex == 0)
-            {
-                Search();
-            }
-            else
-            {
-                string condition = this.comboBoxSelect.Text;
-                string key = "";
-                foreach (KeyName kn in ReceiptMetaData.receiptNameKeys)
-                {
-                    if (condition == kn.Name)
-                    {
-                        key = kn.Key;
-                        break;
-                    }
-                }
-                string value = this.textBoxSelect.Text;
-                this.pagerWidget.ClearCondition();
-                this.pagerWidget.AddCondition(key, value);
-                Search();
-            }
-        }
+        //    if (comboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        Search();
+        //    }
+        //    else
+        //    {
+        //        string condition = this.comboBoxSelect.Text;
+        //        string key = "";
+        //        foreach (KeyName kn in ReceiptMetaData.receiptNameKeys)
+        //        {
+        //            if (condition == kn.Name)
+        //            {
+        //                key = kn.Key;
+        //                break;
+        //            }
+        //        }
+        //        string value = this.textBoxSelect.Text;
+        //        this.pagerWidget.ClearCondition();
+        //        this.pagerWidget.AddCondition(key, value);
+        //        Search();
+        //    }
+        //}
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
@@ -852,33 +852,33 @@ namespace WMS.UI
             }
         }
 
-        private void comboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.comboBoxSelect.SelectedIndex == 0)
-            {
-                this.textBoxSelect.Enabled = false;
-                this.textBoxSelect.Text = "";
-            }
-            else
-            {
-                this.textBoxSelect.Enabled = true;
-                this.textBoxSelect.Text = "";
-            }
-        }
+        //private void comboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (this.comboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.textBoxSelect.Enabled = false;
+        //        this.textBoxSelect.Text = "";
+        //    }
+        //    else
+        //    {
+        //        this.textBoxSelect.Enabled = true;
+        //        this.textBoxSelect.Text = "";
+        //    }
+        //}
 
-        private void comboBoxSelect_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (this.comboBoxSelect.SelectedIndex == 0)
-            {
-                this.textBoxSelect.Text = "";
-                this.textBoxSelect.Enabled = false;
-            }
-            else
-            {
-                this.textBoxSelect.Text = "";
-                this.textBoxSelect.Enabled = true;
-            }
-        }
+        //private void comboBoxSelect_SelectedIndexChanged_1(object sender, EventArgs e)
+        //{
+        //    if (this.comboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.textBoxSelect.Text = "";
+        //        this.textBoxSelect.Enabled = false;
+        //    }
+        //    else
+        //    {
+        //        this.textBoxSelect.Text = "";
+        //        this.textBoxSelect.Enabled = true;
+        //    }
+        //}
 
         private void toolStripButton3_Click_1(object sender, EventArgs e)
         {
@@ -1296,12 +1296,12 @@ namespace WMS.UI
 
         }
 
-        private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Enter)
-            {
-                this.buttonSelect.PerformClick();
-            }
-        }
+        //private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if(e.KeyCode == Keys.Enter)
+        //    {
+        //        this.buttonSelect.PerformClick();
+        //    }
+        //}
     }
 }
