@@ -622,7 +622,8 @@ namespace WMS.UI
                 null,
                 "导入发货单条目"
                 );
-            this.standardImportForm.AddButton("置入套餐", null);
+
+            this.standardImportForm.AddButton("置入套餐", Properties.Resources.check, this.buttonAddCategoryClickedCallback);
             //搜索默认值，首先精确匹配，没有再模糊匹配
             standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultShipmentUnit FROM Supply WHERE [No] = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultShipmentUnitAmount FROM Supply WHERE [No] = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
@@ -639,6 +640,27 @@ namespace WMS.UI
             standardImportForm.AddAssociation("JobPersonName",string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
             standardImportForm.AddAssociation("ConfirmPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
             standardImportForm.Show();
+        }
+
+        private void buttonAddCategoryClickedCallback()
+        {
+            string categoryName = FormSelectCategory.SelectCategory();
+            if(categoryName == null)
+            {
+                return;
+            }
+            using (WMSEntities wmsEntities = new WMSEntities())
+            {
+                Supply[] supplies = (from s in wmsEntities.Supply
+                                     where s.ProjectID == this.projectID
+                                     && s.WarehouseID == this.warehouseID 
+                                     && s.IsHistory != 1 
+                                     && s.Category == categoryName
+                                     select s).ToArray();
+                Dictionary<string, string> keyConvert = new Dictionary<string, string>();
+                keyConvert.Add("SupplyNoOrComponentName", "No");
+                this.standardImportForm.PushData(supplies, keyConvert, true);
+            }
         }
 
         private bool importItemHandler(List<ShipmentTicketItem> results,Dictionary<string,string[]> unimportedColumns)

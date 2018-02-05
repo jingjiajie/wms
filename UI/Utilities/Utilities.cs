@@ -33,7 +33,7 @@ namespace WMS.UI
         [DllImport("user32.dll")]
         public static extern IntPtr SetActiveWindow(IntPtr hwnd);//设置活动窗体
 
-        public static object[] GetValuesByPropertieNames<T>(T obj, string[] keys)
+        public static object[] GetValuesByPropertieNames<T>(T obj, string[] keys, bool strict = true)
         {
             Type objType = typeof(T);
             object[] values = new object[keys.Length];
@@ -43,7 +43,15 @@ namespace WMS.UI
                 PropertyInfo propertyInfo = objType.GetProperty(key);
                 if (propertyInfo == null)
                 {
-                    throw new Exception("你给的类型" + objType.Name + "里没有" + key + "这个属性！检查检查你的代码吧。");
+                    if (strict)
+                    {
+                        throw new Exception("你给的类型" + objType.Name + "里没有" + key + "这个属性！检查检查你的代码吧。");
+                    }
+                    else
+                    {
+                        values[i] = null;
+                        continue;
+                    }
                 }
                 values[i] = propertyInfo.GetValue(obj, null);
             }
