@@ -94,9 +94,9 @@
             this.checkBoxLockEnglish.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.checkBoxLockEnglish.Location = new System.Drawing.Point(147, 3);
             this.checkBoxLockEnglish.Name = "checkBoxLockEnglish";
-            this.checkBoxLockEnglish.Size = new System.Drawing.Size(394, 31);
+            this.checkBoxLockEnglish.Size = new System.Drawing.Size(436, 31);
             this.checkBoxLockEnglish.TabIndex = 5;
-            this.checkBoxLockEnglish.Text = "锁定英文输入（Shift切换）";
+            this.checkBoxLockEnglish.Text = "锁定英文输入（Ctrl+Alt切换）";
             this.checkBoxLockEnglish.UseVisualStyleBackColor = false;
             this.checkBoxLockEnglish.CheckedChanged += new System.EventHandler(this.checkBoxLockEnglish_CheckedChanged);
             // 
