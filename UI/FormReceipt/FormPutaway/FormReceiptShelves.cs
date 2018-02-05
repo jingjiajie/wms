@@ -26,7 +26,7 @@ namespace WMS.UI.FormReceipt
         private string value;
         private Action<string, string> ToPutaway = null;
         private PagerWidget<PutawayTicketView> pagerWidget;
-
+        private SearchWidget<PutawayTicketView> searchWidget;
         public FormReceiptShelves()
         {
             InitializeComponent();
@@ -71,12 +71,14 @@ namespace WMS.UI.FormReceipt
             if (key != null)
             {
                 string name = (from n in ReceiptMetaData.putawayTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
-                this.toolStripComboBoxSelect.SelectedItem = name;
-                this.toolStripComboBoxSelect.SelectedIndex = this.toolStripComboBoxSelect.Items.IndexOf(name);
-                this.toolStripTextBoxSelect.Text = value;
+                //this.toolStripComboBoxSelect.SelectedItem = name;
+                //this.toolStripComboBoxSelect.SelectedIndex = this.toolStripComboBoxSelect.Items.IndexOf(name);
+                //this.toolStripTextBoxSelect.Text = value;
             }
             pagerWidget = new PagerWidget<PutawayTicketView>(this.reoGridControlUser, ReceiptMetaData.putawayTicketKeyName, projectID, warehouseID);
+            searchWidget = new SearchWidget<PutawayTicketView>(ReceiptMetaData.putawayTicketKeyName, pagerWidget);
             this.panel1.Controls.Add(pagerWidget);
+            this.panel2.Controls.Add(searchWidget);
             Search();
             pagerWidget.Show();
         }
@@ -84,20 +86,20 @@ namespace WMS.UI.FormReceipt
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
-            if (this.toolStripComboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
-            }
+            //if (this.toolStripComboBoxSelect.SelectedIndex != 0)
+            //{
+            //    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
+            //}
             this.pagerWidget.Search(savePage, selectID);
         }
 
         private void InitComponents()
         {
             //初始化
-            this.toolStripComboBoxSelect.Items.Add("无");
+            //this.toolStripComboBoxSelect.Items.Add("无");
             string[] columnNames = (from kn in ReceiptMetaData.putawayTicketKeyName where kn.Visible == true select kn.Name).ToArray();
-            this.toolStripComboBoxSelect.Items.AddRange(columnNames);
-            this.toolStripComboBoxSelect.SelectedIndex = 0;
+            //this.toolStripComboBoxSelect.Items.AddRange(columnNames);
+            //this.toolStripComboBoxSelect.SelectedIndex = 0;
 
             //初始化表格
             var worksheet = this.reoGridControlUser.Worksheets[0];
@@ -275,46 +277,46 @@ namespace WMS.UI.FormReceipt
             }    */
         }
 
-        private void toolStripButtonSelect_Click(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                Search();
-            }
-            else
-            {
-                string condition = this.toolStripComboBoxSelect.Text;
-                string key = "";
-                foreach (KeyName kn in ReceiptMetaData.putawayTicketKeyName)
-                {
-                    if (condition == kn.Name)
-                    {
-                        key = kn.Key;
-                        break;
-                    }
-                }
-                string value = this.toolStripTextBoxSelect.Text;
-                if (key != null || value != null)
-                {
-                    pagerWidget.AddCondition(key, value);
-                }
-                pagerWidget.Search();
-            }
-        }
+        //private void toolStripButtonSelect_Click(object sender, EventArgs e)
+        //{
+        //    if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        Search();
+        //    }
+        //    else
+        //    {
+        //        string condition = this.toolStripComboBoxSelect.Text;
+        //        string key = "";
+        //        foreach (KeyName kn in ReceiptMetaData.putawayTicketKeyName)
+        //        {
+        //            if (condition == kn.Name)
+        //            {
+        //                key = kn.Key;
+        //                break;
+        //            }
+        //        }
+        //        string value = this.toolStripTextBoxSelect.Text;
+        //        if (key != null || value != null)
+        //        {
+        //            pagerWidget.AddCondition(key, value);
+        //        }
+        //        pagerWidget.Search();
+        //    }
+        //}
 
-        private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                this.toolStripTextBoxSelect.Text = "";
-                this.toolStripTextBoxSelect.Enabled = false;
-            }
-            else
-            {
-                this.toolStripTextBoxSelect.Text = "";
-                this.toolStripTextBoxSelect.Enabled = true;
-            }
-        }
+        //private void toolStripComboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.toolStripTextBoxSelect.Text = "";
+        //        this.toolStripTextBoxSelect.Enabled = false;
+        //    }
+        //    else
+        //    {
+        //        this.toolStripTextBoxSelect.Text = "";
+        //        this.toolStripTextBoxSelect.Enabled = true;
+        //    }
+        //}
 
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
@@ -548,19 +550,19 @@ namespace WMS.UI.FormReceipt
 
         }
 
-        private void toolStripComboBoxSelect_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (this.toolStripComboBoxSelect.SelectedIndex == 0)
-            {
-                this.toolStripTextBoxSelect.Text = "";
-                this.toolStripTextBoxSelect.Enabled = false;
-            }
-            else
-            {
-                this.toolStripTextBoxSelect.Text = "";
-                this.toolStripTextBoxSelect.Enabled = true;
-            }
-        }
+        //private void toolStripComboBoxSelect_SelectedIndexChanged_1(object sender, EventArgs e)
+        //{
+        //    if (this.toolStripComboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.toolStripTextBoxSelect.Text = "";
+        //        this.toolStripTextBoxSelect.Enabled = false;
+        //    }
+        //    else
+        //    {
+        //        this.toolStripTextBoxSelect.Text = "";
+        //        this.toolStripTextBoxSelect.Enabled = true;
+        //    }
+        //}
 
         private void toolStripButtonDistributeCancel_Click(object sender, EventArgs e)
         {
@@ -610,12 +612,12 @@ namespace WMS.UI.FormReceipt
             formPreview.Show();
         }
 
-        private void toolStripTextBoxSelect_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                this.toolStripButtonSelect.PerformClick();
-            }
-        }
+        //private void toolStripTextBoxSelect_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Enter)
+        //    {
+        //        this.toolStripButtonSelect.PerformClick();
+        //    }
+        //}
     }
 }

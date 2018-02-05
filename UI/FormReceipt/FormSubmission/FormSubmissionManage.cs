@@ -24,6 +24,7 @@ namespace WMS.UI
         private string key;
         private string value;
         PagerWidget<SubmissionTicketView> pagerWidget;
+        SearchWidget<SubmissionTicketView> searchWidget;
         public FormSubmissionManage()
         {
             InitializeComponent();
@@ -56,8 +57,8 @@ namespace WMS.UI
             if (key != null)
             {
                 string name = (from n in ReceiptMetaData.submissionTicketKeyName where n.Key == key select n.Name).FirstOrDefault();
-                this.comboBoxSelect.SelectedItem = name;
-                this.comboBoxSelect.SelectedIndex = this.comboBoxSelect.Items.IndexOf(name);
+                //this.comboBoxSelect.SelectedItem = name;
+                //this.comboBoxSelect.SelectedIndex = this.comboBoxSelect.Items.IndexOf(name);
 
             }
             pagerWidget = new PagerWidget<SubmissionTicketView>(this.reoGridControl1, ReceiptMetaData.submissionTicketKeyName, projectID, warehouseID);
@@ -65,7 +66,9 @@ namespace WMS.UI
             {
                 pagerWidget.AddCondition(key, value);
             }
-            this.textBoxSelect.Text = value;
+            searchWidget = new SearchWidget<SubmissionTicketView>(ReceiptMetaData.submissionTicketKeyName, pagerWidget);
+            this.panel2.Controls.Add(searchWidget);
+            //this.textBoxSelect.Text = value;
             this.panel1.Controls.Add(this.pagerWidget);
             pagerWidget.Show();
             this.Search();
@@ -75,20 +78,20 @@ namespace WMS.UI
         private void Search(bool savePage = false, int selectID = -1)
         {
             this.pagerWidget.ClearCondition();
-            if (this.comboBoxSelect.SelectedIndex != 0)
-            {
-                this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
-            }
+            //if (this.comboBoxSelect.SelectedIndex != 0)
+            //{
+            //    this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
+            //}
             this.pagerWidget.Search(savePage, selectID);
         }
 
         private void InitComponents()
         {
             //初始化
-            this.comboBoxSelect.Items.Add("无");
+            //this.comboBoxSelect.Items.Add("无");
             string[] columnNames = (from kn in ReceiptMetaData.submissionTicketKeyName where kn.Visible == true select kn.Name).ToArray();
-            this.comboBoxSelect.Items.AddRange(columnNames);
-            this.comboBoxSelect.SelectedIndex = 0;
+            //this.comboBoxSelect.Items.AddRange(columnNames);
+            //this.comboBoxSelect.SelectedIndex = 0;
 
             //初始化表格
             var worksheet = this.reoGridControl1.Worksheets[0];
@@ -190,32 +193,32 @@ namespace WMS.UI
 
         }
 
-        private void buttonSelect_Click(object sender, EventArgs e)
-        {
-            if (comboBoxSelect.SelectedIndex == 0)
-            {
-                Search();
-            }
-            else
-            {
-                string condition = this.comboBoxSelect.Text;
-                string key = "";
-                foreach (KeyName kn in ReceiptMetaData.submissionTicketKeyName)
-                {
-                    if (condition == kn.Name)
-                    {
-                        key = kn.Key;
-                        break;
-                    }
-                }
-                string value = this.textBoxSelect.Text;
-                if (key != null && value != null)
-                {
-                    this.pagerWidget.AddCondition(key, value);
-                }
-                Search();
-            }
-        }
+        //private void buttonSelect_Click(object sender, EventArgs e)
+        //{
+        //    if (comboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        Search();
+        //    }
+        //    else
+        //    {
+        //        string condition = this.comboBoxSelect.Text;
+        //        string key = "";
+        //        foreach (KeyName kn in ReceiptMetaData.submissionTicketKeyName)
+        //        {
+        //            if (condition == kn.Name)
+        //            {
+        //                key = kn.Key;
+        //                break;
+        //            }
+        //        }
+        //        string value = this.textBoxSelect.Text;
+        //        if (key != null && value != null)
+        //        {
+        //            this.pagerWidget.AddCondition(key, value);
+        //        }
+        //        Search();
+        //    }
+        //}
 
         private void buttonPass_Click(object sender, EventArgs e)
         {
@@ -591,19 +594,19 @@ namespace WMS.UI
             this.Search();
         }
 
-        private void comboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.comboBoxSelect.SelectedIndex == 0)
-            {
-                this.textBoxSelect.Text = "";
-                this.textBoxSelect.Enabled = false;
-            }
-            else
-            {
-                this.textBoxSelect.Text = "";
-                this.textBoxSelect.Enabled = true;
-            }
-        }
+        //private void comboBoxSelect_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    if (this.comboBoxSelect.SelectedIndex == 0)
+        //    {
+        //        this.textBoxSelect.Text = "";
+        //        this.textBoxSelect.Enabled = false;
+        //    }
+        //    else
+        //    {
+        //        this.textBoxSelect.Text = "";
+        //        this.textBoxSelect.Enabled = true;
+        //    }
+        //}
 
         private void toolStripTop_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -740,12 +743,12 @@ namespace WMS.UI
             //this.Close();
         }
 
-        private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                this.buttonSelect.PerformClick();
-            }
-        }
+        //private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Enter)
+        //    {
+        //        this.buttonSelect.PerformClick();
+        //    }
+        //}
     }
 }
