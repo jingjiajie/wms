@@ -149,7 +149,15 @@ namespace WMS.UI
                     if (stockInfo == null) continue;
                     if(stockInfo.ReceiptTicketItemID != null)
                     {
-                        MessageBox.Show("被收货单引用的库存信息不能删除！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("被收货单引用的库存批次不能删除！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    int shipmentTicketItemCount = (from s in wmsEntities.ShipmentTicketItem
+                                                   where s.StockInfoID == stockInfo.ID
+                                                   select s).Count();
+                    if(shipmentTicketItemCount > 0)
+                    {
+                        MessageBox.Show("被发货单引用的库存批次不可以删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     wmsEntities.StockInfo.Remove(stockInfo);

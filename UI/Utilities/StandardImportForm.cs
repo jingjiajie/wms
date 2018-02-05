@@ -274,7 +274,7 @@ namespace WMS.UI
 
         private void InputTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if(e.KeyCode == Keys.ShiftKey)
+            if(e.Control && e.Alt) //Ctrl+Alt切换中英文输入
             {
                 this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
             }
@@ -520,15 +520,18 @@ namespace WMS.UI
             }
             return true;
         }
-
+        
         private void reoGridControlMain_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             if (worksheet.SelectionRange.IsSingleCell == false) return;
 
-            if (e.KeyCode == Keys.ShiftKey) //Shift Shift切换输入中英文
+            if (e.Control)
             {
-                this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
+                if (e.Alt) //Ctrl + Alt切换输入中英文
+                {
+                    this.checkBoxLockEnglish.Checked = !this.checkBoxLockEnglish.Checked;
+                }
                 return;
             }
 
