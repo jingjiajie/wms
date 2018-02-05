@@ -330,42 +330,49 @@ namespace WMS.UI
             //异步刷新默认值，防止卡顿
             new Thread(()=>
             {
-                if (globalWMSEntities.Database.Connection.State != ConnectionState.Open)
+                try
                 {
-                    globalWMSEntities.Database.Connection.Open();
-                }
-                var worksheet = this.reoGridControlMain.CurrentWorksheet;
-                //遍历行
-                foreach (int row in rows)
-                {
-                    if (IsEmptyLine(worksheet, row)) continue;
-                    //将worksheet当前行的值作为SQL参数传进去
-                    List<SqlParameter> parameters = new List<SqlParameter>();
-                    foreach (var kc in this.keyColumn)
+                    if (globalWMSEntities.Database.Connection.State == ConnectionState.Closed)
                     {
-                        parameters.Add(new SqlParameter(kc.Key, worksheet[row, kc.Value] ?? ""));
+                        globalWMSEntities.Database.Connection.Open();
                     }
-
-                    //遍历设置了默认值的列
-                    foreach (var keySQL in this.keyDefaultValueSQL)
+                    var worksheet = this.reoGridControlMain.CurrentWorksheet;
+                    //遍历行
+                    foreach (int row in rows)
                     {
-                        int col = this.keyColumn[keySQL.Key];
-                        //如果已经有字，不覆盖
-                        if (worksheet.GetCell(row, col) != null && worksheet[row, col] != null && string.IsNullOrWhiteSpace(worksheet[row, col].ToString()) == false) continue;
-                        string sql = keySQL.SQL;
-                        SqlCommand command = new SqlCommand(sql, (SqlConnection)globalWMSEntities.Database.Connection);
-                        command.Parameters.AddRange(parameters.ToArray());
-                        SqlDataReader dataReader = command.ExecuteReader();
-                        command.Parameters.Clear();
-                        if (dataReader.HasRows == false) continue;
-                        dataReader.Read();
-                        object value = dataReader.GetValue(0);
-                        if (dataReader.Read()) continue; //如果结果不唯一，则不填写默认值
-                        this.Invoke(new Action(()=>
+                        if (IsEmptyLine(worksheet, row)) continue;
+                        //将worksheet当前行的值作为SQL参数传进去
+                        List<SqlParameter> parameters = new List<SqlParameter>();
+                        foreach (var kc in this.keyColumn)
                         {
-                            worksheet[row, col] = value == null ? "" : value.ToString();
-                        }));
+                            parameters.Add(new SqlParameter(kc.Key, worksheet[row, kc.Value] ?? ""));
+                        }
+
+                        //遍历设置了默认值的列
+                        foreach (var keySQL in this.keyDefaultValueSQL)
+                        {
+                            int col = this.keyColumn[keySQL.Key];
+                            //如果已经有字，不覆盖
+                            if (worksheet.GetCell(row, col) != null && worksheet[row, col] != null && string.IsNullOrWhiteSpace(worksheet[row, col].ToString()) == false) continue;
+                            string sql = keySQL.SQL;
+                            SqlCommand command = new SqlCommand(sql, (SqlConnection)globalWMSEntities.Database.Connection);
+                            command.Parameters.AddRange(parameters.ToArray());
+                            SqlDataReader dataReader = command.ExecuteReader();
+                            command.Parameters.Clear();
+                            if (dataReader.HasRows == false) continue;
+                            dataReader.Read();
+                            object value = dataReader.GetValue(0);
+                            if (dataReader.Read()) continue; //如果结果不唯一，则不填写默认值
+                            this.Invoke(new Action(() =>
+                            {
+                                worksheet[row, col] = value == null ? "" : value.ToString();
+                            }));
+                        }
                     }
+                }
+                catch //网络连接错误，就直接返回
+                {
+                    return;
                 }
             }).Start();
         }
@@ -521,33 +528,42 @@ namespace WMS.UI
             return true;
         }
 
-        public void AddButton(string buttonText,Action callback)
+        public void AddButton(string buttonText,Image image,Action callback)
         {
-            AddButton(new string[] { buttonText }, new Action[] { callback });
+            AddButton(new string[] { buttonText }, new Image[] { image }, new Action[] { callback });
         }
 
-        public void AddButton(string[] buttonTexts,Action[] callbacks)
+        public void AddButton(string[] buttonTexts,Image[] images,Action[] callbacks)
         {
             int oriColumnCount = this.tableLayoutPanelTop.ColumnCount;
-            this.tableLayoutPanelTop.ColumnCount = oriColumnCount + buttonTexts.Length;
+            this.tableLayoutPanelTop.ColumnCount += buttonTexts.Length;
             for(int i = 0; i < buttonTexts.Length; i++)
             {
                 Button button = new Button();
                 button.Text = buttonTexts[i];
+                button.Width = button.Text.Length * 15 + 20;
+                if (images[i] != null)
+                {
+                    button.Image = images[i];
+                    button.ImageAlign = ContentAlignment.MiddleLeft;
+                    button.TextAlign = ContentAlignment.MiddleRight;
+                    button.Width += button.Image.Width;
+                }
                 button.Dock = DockStyle.Fill;
                 button.FlatStyle = FlatStyle.Flat;
                 button.FlatAppearance.BorderSize = 0;
                 button.Font = this.buttonImport.Font;
                 button.Margin = new Padding(3, 3, 3, 3);
-                button.Click += (obj, e) =>
+                if (callbacks.Length > i && callbacks[i] != null)
                 {
-                    if (callbacks.Length > i && callbacks[i] != null)
+                    Action callback = callbacks[i];
+                    button.Click += (obj, e) =>
                     {
-                        callbacks[i]();
-                    }
-                };
-                this.tableLayoutPanelTop.ColumnStyles.Insert(oriColumnCount + i, new ColumnStyle(SizeType.Absolute, button.Width));
-                this.tableLayoutPanelTop.Controls.Add(button, oriColumnCount + i, 0);
+                        callback();
+                    };
+                }
+                this.tableLayoutPanelTop.ColumnStyles.Insert(oriColumnCount + i - 1, new ColumnStyle(SizeType.Absolute, button.Width));
+                this.tableLayoutPanelTop.Controls.Add(button, oriColumnCount + i - 1, 0);
             }
         }
         
@@ -604,7 +620,7 @@ namespace WMS.UI
             }
         }
 
-        public void PushData<T>(T[] data,Dictionary<string,string> keyConvert = null)
+        public void PushData<T>(T[] data,Dictionary<string,string> keyConvert = null,bool fillDefaultValue = false)
         {
             var worksheet = this.reoGridControlMain.CurrentWorksheet;
             this.RemoveEmptyLines(worksheet);
@@ -618,7 +634,7 @@ namespace WMS.UI
             int curLine = firstEmptyLine;
             foreach (T obj in data)
             {
-                object[] columns = Utilities.GetValuesByPropertieNames(obj, (from kn in importVisibleKeyNames select keyConvert == null ? kn.Key : (keyConvert.ContainsKey(kn.Key) ? keyConvert[kn.Key] : kn.Key)).ToArray());
+                object[] columns = Utilities.GetValuesByPropertieNames(obj, (from kn in importVisibleKeyNames select keyConvert == null ? kn.Key : (keyConvert.ContainsKey(kn.Key) ? keyConvert[kn.Key] : kn.Key)).ToArray(),false);
                 for (int j = 0; j < columns.Length; j++)
                 {
                     //多选模式则空出第一列，放置选择框
@@ -642,6 +658,7 @@ namespace WMS.UI
                     }
                     worksheet[curLine, j] = text;
                 }
+                if(fillDefaultValue) this.RefreshDefaultValue(new int[] { curLine });
                 curLine++;
             }
         }
@@ -669,6 +686,12 @@ namespace WMS.UI
                 this.inputTextBox.ImeMode = ImeMode.On;
             }
         }
+
+        private void tableLayoutPanelTop_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
     }
 
     public partial class Utilities
