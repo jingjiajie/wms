@@ -289,7 +289,7 @@ namespace WMS.UI
 
             if (string.IsNullOrWhiteSpace(newJobTicket.JobTicketNo))
             {
-                DateTime createDay = new DateTime(shipmentTicket.CreateTime.Value.Year, shipmentTicket.CreateTime.Value.Month, shipmentTicket.CreateTime.Value.Day);
+                DateTime createDay = new DateTime(newJobTicket.CreateTime.Value.Year, newJobTicket.CreateTime.Value.Month, newJobTicket.CreateTime.Value.Day);
                 DateTime nextDay = createDay.AddDays(1);
                 int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from j in wmsEntities.JobTicket
                                                                       where j.CreateTime >= createDay && j.CreateTime < nextDay

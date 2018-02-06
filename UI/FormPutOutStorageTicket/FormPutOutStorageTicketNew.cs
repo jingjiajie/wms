@@ -273,7 +273,7 @@ namespace WMS.UI
             //生成出库单号
             if (string.IsNullOrWhiteSpace(newPutOutStorageTicket.No))
             {
-                DateTime createDay = new DateTime(jobTicket.CreateTime.Value.Year, jobTicket.CreateTime.Value.Month, jobTicket.CreateTime.Value.Day);
+                DateTime createDay = new DateTime(newPutOutStorageTicket.CreateTime.Value.Year, newPutOutStorageTicket.CreateTime.Value.Month, newPutOutStorageTicket.CreateTime.Value.Day);
                 DateTime nextDay = createDay.AddDays(1);
                 int maxRankOfToday = Utilities.GetMaxTicketRankOfDay((from p in wmsEntities.PutOutStorageTicket
                                                                       where p.CreateTime >= createDay && p.CreateTime < nextDay
