@@ -471,10 +471,9 @@ namespace WMS.UI.FormReceipt
                             stockInfo.ReceiptTicketNo = receiptTicket.No;
                         }
                     }
-                    new Thread(() => 
-                    {
-                        wmsEntities.SaveChanges();
-                    }).Start();
+                    
+                    wmsEntities.SaveChanges();
+                   
                     //MessageBox.Show("Successful!");
                 }
             }

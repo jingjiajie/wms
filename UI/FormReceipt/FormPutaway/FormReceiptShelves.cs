@@ -79,18 +79,22 @@ namespace WMS.UI.FormReceipt
             searchWidget = new SearchWidget<PutawayTicketView>(ReceiptMetaData.putawayTicketKeyName, pagerWidget);
             this.panel1.Controls.Add(pagerWidget);
             this.panel2.Controls.Add(searchWidget);
+            if (this.key != null && this.value != null)
+            {
+                searchWidget.SetSearchCondition(key, value);
+            }
             Search();
             pagerWidget.Show();
         }
 
         private void Search(bool savePage = false, int selectID = -1)
         {
-            this.pagerWidget.ClearCondition();
+            //this.pagerWidget.ClearCondition();
             //if (this.toolStripComboBoxSelect.SelectedIndex != 0)
             //{
             //    this.pagerWidget.AddCondition(this.toolStripComboBoxSelect.SelectedItem.ToString(), this.toolStripTextBoxSelect.Text);
             //}
-            this.pagerWidget.Search(savePage, selectID);
+            this.searchWidget.Search(savePage, selectID);
         }
 
         private void InitComponents()

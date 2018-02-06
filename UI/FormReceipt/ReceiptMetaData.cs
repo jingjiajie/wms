@@ -206,7 +206,7 @@ namespace WMS.UI.FormReceipt
             //new KeyName{Name = "分配数量", Key = "DistrabuteCount", Visible = true, Editable = true, Save = true},
             //new KeyName{Name = "上架数量", Key = "UnitCount",Visible = true, Editable = true, Save = true},
             new KeyName{Name = "计划上架数量", Key = "ScheduledMoveCount", Visible = true, Editable = false, Save = true},
-            new KeyName{Name = "实际上架数量", Key = "MoveCount", Visible = true, Editable = true, Save = true, NotNegative = true},
+            new KeyName{Name = "实际上架数量", Key = "PutawayAmount", Visible = true, Editable = true, Save = true, NotNegative = true},
             new KeyName{Name = "单位", Key = "Unit", Visible = true, Editable = false, Save = true},
             new KeyName{Name = "单位数量", Key = "UnitAmount", Visible = true, Editable = false, Save = true},
             new KeyName{Name="作业人ID", Key = "JobPersonID",Visible = false, Editable = false, Save = true},

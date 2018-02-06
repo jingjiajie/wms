@@ -62,11 +62,13 @@ namespace WMS.UI
 
             }
             pagerWidget = new PagerWidget<SubmissionTicketView>(this.reoGridControl1, ReceiptMetaData.submissionTicketKeyName, projectID, warehouseID);
-            if (key != null || value != null)
-            {
-                pagerWidget.AddCondition(key, value);
-            }
+            
             searchWidget = new SearchWidget<SubmissionTicketView>(ReceiptMetaData.submissionTicketKeyName, pagerWidget);
+            if (key != null && value != null)
+            {
+                //pagerWidget.AddCondition(key, value);
+                searchWidget.SetSearchCondition(key, value);
+            }
             this.panel2.Controls.Add(searchWidget);
             //this.textBoxSelect.Text = value;
             this.panel1.Controls.Add(this.pagerWidget);
@@ -77,12 +79,14 @@ namespace WMS.UI
 
         private void Search(bool savePage = false, int selectID = -1)
         {
-            this.pagerWidget.ClearCondition();
+            //this.pagerWidget.ClearCondition();
+            
             //if (this.comboBoxSelect.SelectedIndex != 0)
             //{
             //    this.pagerWidget.AddCondition(this.comboBoxSelect.SelectedItem.ToString(), this.textBoxSelect.Text);
             //}
-            this.pagerWidget.Search(savePage, selectID);
+            //this.pagerWidget.Search(savePage, selectID);
+            this.searchWidget.Search(savePage, selectID);
         }
 
         private void InitComponents()
