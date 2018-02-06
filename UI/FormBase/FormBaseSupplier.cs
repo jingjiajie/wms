@@ -662,6 +662,27 @@ namespace WMS.UI
                     SupplierMetaData.KeyNames, //参数1：KeyName
                     (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
                     {
+                        for (int a = 0; a < results.Count; a++)
+                        {
+
+
+                            string suppliernameimport;
+
+                            suppliernameimport = results[a].Name;
+                            //检查导入列表中是否重名
+                            for (int j = a + 1; j < results.Count; j++)
+
+                            {
+                                if (suppliernameimport == results[j].Name)
+                                {
+                                    MessageBox.Show("您输入的用户名" + suppliernameimport + "在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                    return false;
+
+                                }
+                            }
+
+                        }
                         for (int i=0;i<results.Count;i++)
                         {
                             DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
@@ -670,19 +691,19 @@ namespace WMS.UI
                             string suppliernameimport;
 
                             suppliernameimport = results[i].Name;
-                            
+
                             //检查导入列表中是否重名
-                            for (int j = i+1; j < results.Count; j++)
+                            //for (int j = i + 1; j < results.Count; j++)
 
-                            {
-                                if (suppliernameimport == results[j].Name)
-                                {
-                                    MessageBox.Show("您输入的用户名" + suppliernameimport + "在导入列表中重复","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+                            //{
+                            //    if (suppliernameimport == results[j].Name)
+                            //    {
+                            //        MessageBox.Show("您输入的用户名" + suppliernameimport + "在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                                    return false;
-                                    
-                                }
-                            }
+                            //        return false;
+
+                            //    }
+                            //}
                             if (results[i].StartingTime > results[i].EndingTime)
                             {
                                 MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同生效日期不能大于截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -807,11 +828,7 @@ namespace WMS.UI
                             results[i].CreateTime = DateTime.Now;
                             results[i].CreateUserID  = this.userid;
                             results[i].LastUpdateTime = DateTime.Now;
-                            results[i].LastUpdateUserID = this.userid;
-
-
-
-                            
+                            results[i].LastUpdateUserID = this.userid;                           
                             //历史信息设为0
                             results[i].IsHistory = 0;
                             
