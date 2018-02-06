@@ -50,5 +50,38 @@ namespace WMS.UI
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
+
+
+
+        public static Dictionary<string, string> keyConvert = new Dictionary<string, string>()
+        {
+            {"Name","Name"},
+            { "Code","Code"},
+            { "ContractNo","ContractNo"},
+            { "StartingTime","StartingTime"},
+
+            { "EndingTime","EndingTime"},
+            { "InvoiceDelayMonth","InvoiceDelayMonth"},
+            { "BalanceDelayMonth","BalanceDelayMonth"},
+            { "FullName","FullName"},
+            { "NetArea","NetArea"},
+            { "FixedStorageCost","FixedStorageCost"},
+            { "ContractStorageArea","ContractStorageArea"},
+            { "TaxpayerNumber","TaxpayerNumber"},
+            { "Address","Address"},
+
+            { "Tel","Tel"},
+            { "BankName","BankName"},
+            { "ZipCode","ZipCode"},
+            { "RecipientName","RecipientName"},
+            { "Number","Number"},
+            { "ContractState","ContractState"},
+           
+        };
+
+
+
     }
+
+
 }

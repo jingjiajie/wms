@@ -368,25 +368,264 @@ namespace WMS.UI
         private void toolStripButtonAlter_Click(object sender, EventArgs e)
         {
             var worksheet = this.reoGridControlUser.Worksheets[0];
-            try
+            if (worksheet.SelectionRange.Rows == 1)
             {
-                if (worksheet.SelectionRange.Rows != 1)
+                try
                 {
-                    throw new Exception();
+                    //if (worksheet.SelectionRange.Rows == 1)
+                    //{
+                    //    throw new Exception();
+                    //}
+                    int supplierID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                    var a1 = new FormSupplierModify(supplierID, this.contractst, this.userid);
+                    a1.SetModifyFinishedCallback((AlterID) =>
+                    {
+                        this.searchWidget.Search(false, AlterID);
+                        this.labelStatus.Text = "供应商信息";
+                    });
+                    a1.Show();
                 }
-                int supplierID  = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
-                var a1= new FormSupplierModify(supplierID, this.contractst, this.userid );
-                a1.SetModifyFinishedCallback((AlterID) =>
+                catch
                 {
-                    this.searchWidget.Search(false ,AlterID );
-                    this.labelStatus.Text = "供应商信息";
-                });
-                a1.Show();
+                    MessageBox.Show("当前选中空白条目，请重新选择要修改的条目进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
             }
-            catch
+
+
+            if (worksheet.SelectionRange.Rows != 1)
             {
-                MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                Object alterData = worksheet[worksheet.SelectionRange.Row, 0, worksheet.SelectionRange.Rows, 1];
+                var alterDatas = new SupplierView [worksheet.SelectionRange.Rows];
+                for (int i = 0; i < worksheet.SelectionRange.Rows; i++)
+                {
+                    try
+                    {
+                        int curSupplyID = int.Parse(worksheet[worksheet.SelectionRange.Row + i, 0].ToString());
+                        var curSupply = (from u in wmsEntities.SupplierView  
+                                         where
+                                         u.ID == curSupplyID
+                                         select u).FirstOrDefault();
+                        if (curSupply == null)
+                        {
+                            MessageBox.Show("供应商信息不存在，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                        alterDatas[i] = curSupply;
+                        //alterDatas[i] = worksheet[worksheet.SelectionRange.Row+i, 0,1, worksheet.SelectionRange.Cols];
+                    }
+                    catch
+                    {
+                        MessageBox.Show("当前选中空白条目，请重新选择要修改的条目进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+                int supplierID_Import = 0;
+                wmsEntities = new WMSEntities();
+                List<int> Removei = new List<int>();
+
+                //创建导入窗口
+                StandardImportForm<Supplier> formImport =
+                    new StandardImportForm<Supplier>
+                    (
+                        SupplierMetaData.KeyNames, //参数1：KeyName
+                        (results, unimportedColumns) => //参数2：导入数据二次处理回调函数
+                        {
+                            for (int a = 0; a < results.Count; a++)
+                            {
+
+
+                                string suppliernameimport;
+
+                                suppliernameimport = results[a].Name;
+                            //检查导入列表中是否重名
+                            for (int j = a + 1; j < results.Count; j++)
+
+                                {
+                                    if (suppliernameimport == results[j].Name)
+                                    {
+                                        MessageBox.Show("您输入的用户名" + suppliernameimport + "在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                        return false;
+
+                                    }
+                                }
+
+                            }
+                            for (int i = 0; i < results.Count; i++)
+                            {
+                                DialogResult MsgBoxResult = DialogResult.No;//设置对话框的返回值
+                            Supplier supplier1 = new Supplier();
+
+                                string suppliernameimport;
+
+                                suppliernameimport = results[i].Name;
+
+                            //检查导入列表中是否重名
+                            //for (int j = i + 1; j < results.Count; j++)
+
+                            //{
+                            //    if (suppliernameimport == results[j].Name)
+                            //    {
+                            //        MessageBox.Show("您输入的用户名" + suppliernameimport + "在导入列表中重复", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                            //        return false;
+
+                            //    }
+                            //}
+                            if (results[i].StartingTime > results[i].EndingTime)
+                                {
+                                    MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同生效日期不能大于截止日期", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return false;
+
+                                }
+                                string contractstate = results[i].ContractState;
+                                if (contractstate != "待审核" && contractstate != "已过审" && contractstate != "")
+                                {
+                                    MessageBox.Show("操作失败，供应商" + suppliernameimport + "的合同状态请改为待审核、已过审或空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return false;
+                                }
+                            //检查数据库中是否与非历史信息同名
+                            try
+                                {
+                                    var sameNameUsers = (from u in wmsEntities.Supplier
+                                                         where u.Name == suppliernameimport &&
+                                                         u.IsHistory == 0
+                                                         select u).FirstOrDefault();
+                                    if (sameNameUsers != null)
+                                    {
+                                        Removei.Add(i);
+                                        supplierID_Import = sameNameUsers.ID;
+                                        MsgBoxResult = MessageBox.Show("已存在同名供应商：" + suppliernameimport + "是否导入并将原信息保留为历史信息", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation,
+                                        MessageBoxDefaultButton.Button2);
+                                        if (MsgBoxResult == DialogResult.Yes)//如果对话框的返回值是YES（按"Y"按钮）且历史信息在本次修改中还没保存过
+                                    {
+                                            wmsEntities.Supplier.Add(sameNameUsers);
+                                            try
+                                            {
+                                                sameNameUsers.NewestSupplierID = supplierID_Import;
+                                                sameNameUsers.ID = -1;
+                                                sameNameUsers.IsHistory = 1;
+                                                sameNameUsers.LastUpdateUserID = this.userid;
+                                                sameNameUsers.LastUpdateTime = DateTime.Now;
+                                                wmsEntities.SaveChanges();
+                                            }
+                                            catch
+                                            {
+                                                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                                return false;
+                                            }
+                                            try
+                                            {
+                                                var supplierstorge = (from u in wmsEntities.SupplierStorageInfo
+                                                                      where u.SupplierID == supplierID_Import
+                                                                      select u).ToArray();
+
+                                                for (int a = 0; a < supplierstorge.Length; a++)
+                                                {
+                                                    supplierstorge[a].ExecuteSupplierID = supplierID_Import;
+                                                    wmsEntities.SaveChanges();
+
+                                                }
+                                            }
+                                            catch
+                                            {
+                                                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                                continue;
+                                            }
+                                        }
+
+
+                                        try
+                                        {
+
+                                            supplier1 = (from u in wmsEntities.Supplier
+                                                         where u.ID == supplierID_Import &&
+                                                         u.IsHistory == 0
+                                                         select u).FirstOrDefault();
+                                        }
+                                        catch
+                                        {
+                                            MessageBox.Show("操作失败，请检查网络连接1231132", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return false;
+                                        }
+                                        PropertyInfo[] proAs = results[i].GetType().GetProperties();
+                                        PropertyInfo[] proBs = supplier1.GetType().GetProperties();
+
+                                        for (int k = 0; k < proAs.Length; k++)
+                                        {
+                                            for (int j = 0; j < proBs.Length; j++)
+                                            {
+                                                if (proAs[k].Name == proBs[j].Name && proBs[j].Name != "ID" && proBs[j].Name != "RecipientName" && proBs[j].Name != "Supplier1" & proBs[j].Name != "Supplier2"
+                                                && proBs[j].Name != "SupplierStorageInfo" && proBs[j].Name != "SupplierStorageInfo1")
+
+                                                {
+                                                    object a = proAs[k].GetValue(results[i], null);
+                                                    proBs[j].SetValue(supplier1, a, null);
+                                                }
+                                            }
+                                        }
+                                        try
+                                        {
+                                            supplier1.IsHistory = 0;
+                                            supplier1.CreateTime = DateTime.Now;
+                                            supplier1.CreateUserID = this.userid;
+                                            supplier1.LastUpdateTime = DateTime.Now;
+                                            supplier1.LastUpdateUserID = this.userid;
+                                            wmsEntities.SaveChanges();
+                                        }
+                                        catch
+                                        {
+
+                                            MessageBox.Show("操作失败，请检查网络连接111", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            return false;
+                                        }
+
+                                    }
+
+                                }
+                                catch
+                                {
+
+                                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return false;
+                                }
+                                results[i].CreateTime = DateTime.Now;
+                                results[i].CreateUserID = this.userid;
+                                results[i].LastUpdateTime = DateTime.Now;
+                                results[i].LastUpdateUserID = this.userid;
+                            //历史信息设为0
+                            results[i].IsHistory = 0;
+
+                            }
+                            int length = Removei.ToArray().Length;
+                            for (int b = 0; b < length; b++)
+                            {
+                                results.RemoveAt(Removei.ToArray()[b] - b);
+                            }
+                            return true;
+                        },
+                        
+                        () => //参数3：导入完成回调函数                    
+                        {
+                            this.pagerWidget.Search();
+                        }
+                    );
+
+                //显示导入窗口
+                formImport.Show();
+                formImport.PushData(alterDatas, SupplierMetaData.keyConvert);
+                formImport.Text = "修改供货信息";
+
+
+                 
+
+
+
+
+
+
             }
 
         }
