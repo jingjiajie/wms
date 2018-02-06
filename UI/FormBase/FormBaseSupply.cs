@@ -578,10 +578,17 @@ namespace WMS.UI
 
                             }
                             int length = Removei.ToArray().Length;
+                        try
+                        {
                             for (int b = 0; b < length; b++)
                             {
                                 results.RemoveAt(Removei.ToArray()[b] - b);
                             }
+                        }
+                        catch
+                        {
+                            return false;
+                        }
                             return true;
 
                         },
@@ -1103,9 +1110,16 @@ namespace WMS.UI
 
                         }
                         int length = Removei.ToArray().Length;
-                        for (int b = 0; b < length; b++)
+                        try
                         {
-                            results.RemoveAt(Removei.ToArray()[b] - b);
+                            for (int b = 0; b < length; b++)
+                            {
+                                results.RemoveAt(Removei.ToArray()[b] - b);
+                            }
+                        }
+                        catch
+                        {
+                            return false;
                         }
                         return true;
 
