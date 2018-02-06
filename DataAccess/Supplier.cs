@@ -51,6 +51,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> FixedStorageCost { get; set; }
         public Nullable<decimal> ContractStorageArea { get; set; }
         public string Code { get; set; }
+        public string No { get; set; }
     
         public virtual ICollection<ReceiptTicket> ReceiptTicket { get; set; }
         public virtual ICollection<SupplierStorageInfo> SupplierStorageInfo { get; set; }

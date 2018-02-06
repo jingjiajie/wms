@@ -104,7 +104,7 @@ namespace WMS.UI
                 try
                 {
                     SqlConnection connection = (SqlConnection)globalWMSEntities.Database.Connection;
-                    if(connection.State != ConnectionState.Open)
+                    if (connection.State == ConnectionState.Closed)
                     {
                         connection.Open();
                     }

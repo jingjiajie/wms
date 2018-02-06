@@ -10,10 +10,10 @@ using WMS.DataAccess;
 
 namespace WMS.UI
 {
-    public partial class FormSelectCategory : Form
+    public partial class FormSelectPackage : Form
     {
         string selectedItem = null;
-        private FormSelectCategory()
+        private FormSelectPackage()
         {
             InitializeComponent();
         }
@@ -40,7 +40,7 @@ namespace WMS.UI
 
         public static string SelectCategory()
         {
-            FormSelectCategory form = new FormSelectCategory();
+            FormSelectPackage form = new FormSelectPackage();
             form.Search();
             form.ShowDialog();
             return form.selectedItem;

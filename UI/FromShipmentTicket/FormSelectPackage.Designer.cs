@@ -1,6 +1,6 @@
 ﻿namespace WMS.UI
 {
-    partial class FormSelectCategory
+    partial class FormSelectPackage
     {
         /// <summary>
         /// Required designer variable.

@@ -18,10 +18,12 @@ namespace WMS.UI
 {
     public partial class StandardImportForm<TargetClass> : Form where TargetClass:class,new()
     {
-        class KeySQL
+        class FieldDefaultValueSetting
         {
             public string Key = null;
             public string SQL = null;
+            public bool Force = false;
+            public bool Dynamic = false;
         }
 
         private KeyName[] importVisibleKeyNames = null;
@@ -31,7 +33,7 @@ namespace WMS.UI
         //Key和列号的对应关系
         private Dictionary<string, int> keyColumn = new Dictionary<string, int>();
         //默认值设置
-        private List<KeySQL> keyDefaultValueSQL = new List<KeySQL>();
+        private List<FieldDefaultValueSetting> keyDefaultValueSQL = new List<FieldDefaultValueSetting>();
         //联想设置 key:列号 value:sql列表（要是对于一个列有多个联想sql，就加多项）
         private Dictionary<int, List<string>> columnAssociation = new Dictionary<int, List<string>>();
 
@@ -76,6 +78,7 @@ namespace WMS.UI
             inputTextBox.Font = new Font(worksheet.EditingCell.Style.FontName, worksheet.EditingCell.Style.FontSize + 1);
             this.inputTextBox.VisibleChanged += inputTextBox_VisibleChanged;
             this.inputTextBox.PreviewKeyDown += InputTextBox_PreviewKeyDown;
+            this.inputTextBox.TextChanged += inputTextBox_TextChanged;
             this.formAssociate = new FormAssociate(inputTextBox);
             this.formAssociate.ClearAssociationSQL();
             if (this.columnAssociation.ContainsKey(worksheet.SelectionRange.Col))
@@ -87,6 +90,18 @@ namespace WMS.UI
             }
             this.formAssociate.RefreshAssociation();
             worksheet.EndEdit(new EndEditReason());
+        }
+
+        private void inputTextBox_TextChanged(object sender, EventArgs e)
+        {
+            //刷新当前行默认值，设定为Dynamic的列
+            var worksheet = this.reoGridControlMain.CurrentWorksheet;
+            this.RefreshDefaultValue(new int[] { worksheet.SelectionRange.Row }, true);
+        }
+
+        private void inputTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
 
         private void buttonImport_Click(object sender, EventArgs e)
@@ -227,7 +242,6 @@ namespace WMS.UI
         private volatile bool isWaitingShow = false;
         private void inputTextBox_VisibleChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(InputLanguage.CurrentInputLanguage.LayoutName);
             //只处理上下键选联想项的情况。此时canChangeSelectionRange=false
             if (canChangeSelectionRange == true)
             {
@@ -244,7 +258,6 @@ namespace WMS.UI
                 isWaitingShow = true;
                 while (this.reoGridControlMain.CurrentWorksheet.IsEditing) //Reogrid太tm坑了！无奈只能等着它结束编辑，再重新开启
                 {
-                    Console.WriteLine("Waiting for end edit");
                     Thread.Sleep(1);
                 }
                 //必须是当前不能移动选区并且编辑框被隐藏，才需要重新显示编辑框开始编辑
@@ -325,7 +338,7 @@ namespace WMS.UI
         }
 
         private WMSEntities globalWMSEntities = new WMSEntities();
-        private void RefreshDefaultValue(int[] rows)
+        private void RefreshDefaultValue(int[] rows,bool isDynamic=false)
         {
             //异步刷新默认值，防止卡顿
             new Thread(()=>
@@ -340,49 +353,115 @@ namespace WMS.UI
                     //遍历行
                     foreach (int row in rows)
                     {
-                        if (IsEmptyLine(worksheet, row)) continue;
+                        //非动态模式下判断是否为空行，空行不刷新默认值
+                        if (isDynamic == false && IsEmptyLine(worksheet, row)) continue;
                         //将worksheet当前行的值作为SQL参数传进去
                         List<SqlParameter> parameters = new List<SqlParameter>();
                         foreach (var kc in this.keyColumn)
                         {
-                            parameters.Add(new SqlParameter(kc.Key, worksheet[row, kc.Value] ?? ""));
+                            int column = kc.Value;
+                            //如果正在编辑，且当前列等于正在编辑的列。则内容不从表格里取，从编辑框里取
+                            if (worksheet.IsEditing && column == worksheet.EditingCell.Column)
+                            {
+                                parameters.Add(new SqlParameter(kc.Key, this.inputTextBox.Text));
+                                continue;
+                            }
+                            parameters.Add(new SqlParameter(kc.Key, worksheet[row, column] ?? ""));
                         }
+                        parameters.Add(new SqlParameter("focus",""));
 
                         //遍历设置了默认值的列
                         foreach (var keySQL in this.keyDefaultValueSQL)
                         {
                             int col = this.keyColumn[keySQL.Key];
-                            //如果已经有字，不覆盖
-                            if (worksheet.GetCell(row, col) != null && worksheet[row, col] != null && string.IsNullOrWhiteSpace(worksheet[row, col].ToString()) == false) continue;
+                            //如果字段不是强制模式，并且单元格已经有字，不覆盖
+                            if (keySQL.Force == false)
+                            {
+                                if (worksheet.GetCell(row, col) != null && worksheet[row, col] != null && string.IsNullOrWhiteSpace(worksheet[row, col].ToString()) == false) continue;
+                            }
+                            //如果当前刷新是动态模式，字段是不是动态模式，则不刷新
+                            if (isDynamic == true && keySQL.Dynamic == false)
+                            {
+                                continue;
+                            }
+                            //置入focus变量
+                            foreach(SqlParameter pram in parameters)
+                            {
+                                if(pram.ParameterName == "focus")
+                                {
+                                    string editingColumnName = (from kc in this.keyColumn where kc.Value == worksheet.SelectionRange.Col select kc.Key).Single();
+                                    pram.Value = editingColumnName;
+                                }
+                            }
+                            //开始计算默认值
                             string sql = keySQL.SQL;
-                            SqlCommand command = new SqlCommand(sql, (SqlConnection)globalWMSEntities.Database.Connection);
-                            command.Parameters.AddRange(parameters.ToArray());
-                            SqlDataReader dataReader = command.ExecuteReader();
-                            command.Parameters.Clear();
+                            SqlDataReader dataReader = null;
+                            using (SqlCommand command = new SqlCommand(sql, (SqlConnection)globalWMSEntities.Database.Connection))
+                            {
+                                command.Parameters.AddRange(parameters.ToArray());
+                                dataReader = command.ExecuteReader();
+                                command.Parameters.Clear();
+                            }
                             if (dataReader.HasRows == false) continue;
                             dataReader.Read();
                             object value = dataReader.GetValue(0);
                             if (dataReader.Read()) continue; //如果结果不唯一，则不填写默认值
+                            string valueString = null;
+                            if (value != null && value != DBNull.Value)
+                            {
+                                if (value is decimal || value is decimal?)
+                                {
+                                    valueString = Utilities.DecimalToString((decimal)value);
+                                }
+                                else
+                                {
+                                    valueString = value.ToString();
+                                }
+                                foreach (SqlParameter pram in parameters)
+                                {
+                                    if (pram.ParameterName == keySQL.Key)
+                                    {
+                                        pram.Value = valueString;
+                                    }
+                                }
+                            }
+                            else //value = null
+                            {
+                                continue;
+                            }
                             this.Invoke(new Action(() =>
                             {
-                                worksheet[row, col] = value == null ? "" : value.ToString();
+                                worksheet[row, col] = value == null ? "" : valueString;
                             }));
                         }
                     }
                 }
-                catch //网络连接错误，就直接返回
+                catch(Exception ex) //网络连接错误，就直接返回
                 {
+                    Console.WriteLine("补全默认值失败：" + ex.Message);
                     return;
                 }
             }).Start();
         }
 
-        public void AddDefaultValue(string key, string sqlValue)
+        /// <summary>
+        /// 刷新默认值的设置
+        /// </summary>
+        /// <param name="key">要刷新默认值的字段</param>
+        /// <param name="sqlValue">计算默认值的SQL，返回单个结果则刷新默认值，返回0个或多个结果，无效。</param>
+        /// <param name="force">是否强制刷新。为是的时候，格子即使有字也会被刷新</param>
+        public void AddDefaultValue(string key, string sqlValue,bool force = false,bool dynamic = false)
         {
-            this.keyDefaultValueSQL.Add(new KeySQL()
+            if(dynamic==true && force == false)
             {
-                Key=key,
-                SQL = sqlValue
+                throw new Exception("Dynamic动态刷新必须在Force强制刷新的模式下才可以进行");
+            }
+            this.keyDefaultValueSQL.Add(new FieldDefaultValueSetting()
+            {
+                Key = key,
+                SQL = sqlValue,
+                Force = force,
+                Dynamic = dynamic
             });
         }
 
@@ -605,11 +684,6 @@ namespace WMS.UI
                 worksheet[worksheet.SelectionRange.StartPos] = "";
                 worksheet.StartEdit();
             }
-        }
-
-        private void worksheet_BeforeCellKeyDown_Cancel(object sender, unvell.ReoGrid.Events.BeforeCellKeyDownEventArgs e)
-        {
-            e.IsCancelled = true;
         }
 
         private void StandardImportForm_FormClosed(object sender, FormClosedEventArgs e)

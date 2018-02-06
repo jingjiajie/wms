@@ -480,6 +480,7 @@
           <Property Name="FixedStorageCost" Type="decimal" Precision="18" Scale="3" />
           <Property Name="ContractStorageArea" Type="decimal" Precision="18" Scale="3" />
           <Property Name="Code" Type="nvarchar" MaxLength="64" />
+          <Property Name="No" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <EntityType Name="SupplierStorageInfo">
           <Key>
@@ -1418,6 +1419,7 @@
           <Property Name="CreateUserUsername" Type="nvarchar" MaxLength="64" />
           <Property Name="LastUpdateUserUsername" Type="nvarchar" MaxLength="64" />
           <Property Name="Code" Type="nvarchar" MaxLength="64" />
+          <Property Name="No" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SupplyView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2706,7 +2708,8 @@ FROM [dbo].[SupplierStorageInfoView] AS [SupplierStorageInfoView]</DefiningQuery
 [SupplierView].[ContractStorageArea] AS [ContractStorageArea], 
 [SupplierView].[CreateUserUsername] AS [CreateUserUsername], 
 [SupplierView].[LastUpdateUserUsername] AS [LastUpdateUserUsername], 
-[SupplierView].[Code] AS [Code]
+[SupplierView].[Code] AS [Code], 
+[SupplierView].[No] AS [No]
 FROM [dbo].[SupplierView] AS [SupplierView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SupplyView" EntityType="Self.SupplyView" store:Type="Views" store:Schema="dbo">
@@ -3603,6 +3606,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="FixedStorageCost" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="ContractStorageArea" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="Code" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="No" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ReceiptTicket" Relationship="WMSModel.FK_ReceiptTicket_Supplier" FromRole="Supplier" ToRole="ReceiptTicket" />
           <NavigationProperty Name="SupplierStorageInfo" Relationship="WMSModel.FK__SupplierS__Execu__30592A6F" FromRole="Supplier" ToRole="SupplierStorageInfo" />
           <NavigationProperty Name="SupplierStorageInfo1" Relationship="WMSModel.FK__SupplierS__Suppl__2D7CBDC4" FromRole="Supplier" ToRole="SupplierStorageInfo" />
@@ -4517,6 +4521,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="CreateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="LastUpdateUserUsername" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Code" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="No" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SupplyView">
           <Key>
@@ -5486,6 +5491,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="Supplier">
             <EntityTypeMapping TypeName="WMSModel.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="No" ColumnName="No" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="ContractStorageArea" ColumnName="ContractStorageArea" />
                 <ScalarProperty Name="FixedStorageCost" ColumnName="FixedStorageCost" />
@@ -6391,6 +6397,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="SupplierView">
             <EntityTypeMapping TypeName="WMSModel.SupplierView">
               <MappingFragment StoreEntitySet="SupplierView">
+                <ScalarProperty Name="No" ColumnName="No" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="LastUpdateUserUsername" ColumnName="LastUpdateUserUsername" />
                 <ScalarProperty Name="CreateUserUsername" ColumnName="CreateUserUsername" />

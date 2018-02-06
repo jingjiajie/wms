@@ -630,21 +630,25 @@ namespace WMS.UI
             standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultShipmentUnit FROM SupplyView WHERE ComponentName = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName = @SupplyNoOrComponentName AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
 
-            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID,this.warehouseID));
+            standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM Supply WHERE [No] LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("Unit", string.Format("SELECT TOP 2 DefaultShipmentUnit FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
             standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT TOP 2 DefaultShipmentUnitAmount FROM SupplyView WHERE ComponentName LIKE '%'+@SupplyNoOrComponentName+'%' AND ProjectID = {0} AND WarehouseID = {1} AND IsHistory=0;", this.projectID, this.warehouseID));
 
             standardImportForm.AddAssociation("SupplyNoOrComponentName", string.Format("SELECT No,SupplierName FROM SupplyView WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND No LIKE '%'+@value+'%'; ", this.projectID, this.warehouseID));
             standardImportForm.AddAssociation("SupplyNoOrComponentName", string.Format("SELECT DISTINCT ComponentName FROM SupplyView WHERE ProjectID={0} AND WarehouseID = {1} AND IsHistory=0 AND ComponentName LIKE '%'+@value+'%'; ", this.projectID, this.warehouseID));
-            standardImportForm.AddAssociation("JobPersonName",string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
+            standardImportForm.AddAssociation("JobPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
             standardImportForm.AddAssociation("ConfirmPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
+
+            //standardImportForm.AddDefaultValue("ShipmentAmount", "SELECT CASE WHEN @focus = 'ShipmentAmount' THEN NULL WHEN LEN(@UnitAmount)>0 AND LEN(@Unit)>0 THEN CAST(@UnitAmount AS DECIMAL(18,3))*CAST(@Unit AS DECIMAL(18,3)) ELSE NULL END", true, true);
+            //standardImportForm.AddDefaultValue("Unit", "SELECT CASE WHEN @focus = 'Unit' THEN NULL WHEN LEN(@ShipmentAmount)>0 AND LEN(@UnitAmount)>0 THEN CAST(@ShipmentAmount AS DECIMAL(18,3))/CAST(@UnitAmount AS DECIMAL(18,3)) ELSE NULL END", true, true);
+
             standardImportForm.Show();
         }
 
         private void buttonAddCategoryClickedCallback()
         {
-            string packageName = FormSelectCategory.SelectCategory();
+            string packageName = FormSelectPackage.SelectCategory();
             if(packageName == null)
             {
                 return;
