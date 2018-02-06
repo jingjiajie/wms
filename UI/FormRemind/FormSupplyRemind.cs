@@ -36,7 +36,7 @@ namespace WMS.UI
             
             //计时            
             timer.Enabled = true;
-            timer.Interval = 3000;//执行间隔时间,单位为毫秒  一千分之一
+            timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
             timer.Start();
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer1_Elapsed);
         }
