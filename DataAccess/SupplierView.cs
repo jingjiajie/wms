@@ -44,5 +44,6 @@ namespace WMS.DataAccess
         public string CreateUserUsername { get; set; }
         public string LastUpdateUserUsername { get; set; }
         public string Code { get; set; }
+        public string No { get; set; }
     }
 }
