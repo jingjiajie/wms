@@ -98,14 +98,14 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="零件名称", Key="ComponentName", Visible=true, Editable = true, Save = false, EditPlaceHolder = "点击选择零件" ,ImportVisible = false, Import = false},
             new KeyName(){Name="已分配上架数", Key = "HasPutwayAmount", Visible = true, Editable = false, Save = true,ImportVisible = false ,Import = false},
             new KeyName(){Name="状态", Key="State", Visible=true, Editable=false,Save=true, Import = false, ImportVisible =false},
-            new KeyName(){Name="收货数量", Key="ReceiviptAmount", Visible=true,Editable=false,Save=true, NotNegative = true,ImportVisible = false, Import = false},
+            //new KeyName(){Name="收货数量", Key="ReceiviptAmount", Visible=true,Editable=false,Save=true, NotNegative = true,ImportVisible = false, Import = false},
             
             //new KeyName(){Name="收货数量", Key="ReceiviptAmount",Visible=true,Editable=true,Save=true},
             //new KeyName(){Name="订单数量", Key="ExpectedUnitCount",Visible=true,Editable=true,Save=true, NotNull=true ,NotNegative = true},
             //new KeyName(){Name="实收数量", Key="RealReceiptUnitCount", Visible=true,Editable=true,Save=true,NotNegative=true,NotNull=true},
             new KeyName(){Name="订单数量", Key="ExpectedAmount", Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true, ImportVisible = true, Import = true},
-            new KeyName(){Name="实收数量", Key="RealReceiptAmount", Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true, Import = true, ImportVisible = true},
-            new KeyName(){Name="箱数", Key="RealReceiptUnitCount",Visible=true,Editable=true,Save=true,NotNegative=true, Import = true, ImportVisible = true},
+            new KeyName(){Name="实收总数", Key="RealReceiptAmount", Visible=true,Editable=true,Save=true,NotNull=true,NotNegative=true, Import = true, ImportVisible = true},
+            new KeyName(){Name="实收数量", Key="RealReceiptUnitCount",Visible=true,Editable=false,Save=true,NotNegative=true, Import = true, ImportVisible = true},
             new KeyName(){Name="单位名称", Key="Unit",Visible=true,Editable=true,Save=true, NotNull = true},
             new KeyName(){Name="单位数量", Key="UnitAmount",Visible=true,Editable=true,Save=true, NotNegative = true, NotNull = true},
 
@@ -119,7 +119,7 @@ namespace WMS.UI.FormReceipt
             //new KeyName(){Name="短缺数量", Key="ShortageAmount",Visible=true,Editable=true,Save=true, NotNegative = true},
 
             //new KeyName(){Name="拒收数量", Key="RefuseAmount", Visible=true,Editable=true,Save=true,NotNegative=true},
-            new KeyName(){Name="拒收数量", Key="RefuseUnitCount",Visible=true,Editable=true,Save=true, NotNull=true,NotNegative=true},
+            new KeyName(){Name="拒收数量", Key="RefuseAmount",Visible=true,Editable=true,Save=true, NotNull=true,NotNegative=true},
             new KeyName(){Name="拒收单位", Key="RefuseUnit",Visible=true,Editable=true,Save=true, NotNull = true},
             new KeyName(){Name="拒收单位数量", Key="RefuseUnitAmount",Visible=true, Editable=true,Save=true,NotNull=true},
             new KeyName(){Name="拒收备注", Key="RefuseComment",Visible=true,Editable=true,Save=true},
