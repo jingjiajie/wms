@@ -11,6 +11,8 @@ namespace WMS.UI
        private static KeyName[]  keyNames = {
             new KeyName(){Key="ID",Name="ID",Visible = false, Editable = false ,ImportVisible=false},
             new KeyName(){Key="Name",Name="供货商名称",Visible = true, Editable = true,NotNull =true  },
+            new KeyName(){Key="No",Name="供货商代号",Visible = true, Editable = true,NotNull =true  },
+
             new KeyName(){Key="Code",Name="企业编码",Visible = true, Editable = true  },
             new KeyName(){Key="ContractNo",Name="合同编码",Visible = true, Editable = true},
             new KeyName(){Key="StartingTime",Name="合同生效时间",Visible = true, Editable = true},
@@ -56,6 +58,7 @@ namespace WMS.UI
         public static Dictionary<string, string> keyConvert = new Dictionary<string, string>()
         {
             {"Name","Name"},
+            {"No","No"},
             { "Code","Code"},
             { "ContractNo","ContractNo"},
             { "StartingTime","StartingTime"},
