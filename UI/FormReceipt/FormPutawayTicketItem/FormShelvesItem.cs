@@ -320,6 +320,11 @@ namespace WMS.UI.FormReceipt
                     return;
                 }
                 PutawayTicketItem putawayTicketItem = (from pti in wmsEntities.PutawayTicketItem where pti.ID == putawayTicketItemID select pti).FirstOrDefault();
+                if (putawayTicketItem == null)
+                {
+                    MessageBox.Show("修改失败，该收货单可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 decimal oldPutawayAmount = 0;
                 if (putawayTicketItem.PutawayAmount == null)
                 {
@@ -351,7 +356,7 @@ namespace WMS.UI.FormReceipt
                             return;
                         }
 
-                        if (putawayTicketItem.MoveCount == null)
+                        if (putawayTicketItem.PutawayAmount == null)
                         {
                             MessageBox.Show("实际上架数量不能为空", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
