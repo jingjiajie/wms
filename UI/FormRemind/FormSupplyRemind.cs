@@ -172,21 +172,32 @@ namespace WMS.UI
                     instance.stringBuilder = new StringBuilder();
                     instance.stringBuilder.Append("刷新失败，请检查网络连接");
                     if (instance.IsDisposed) return;
-                    instance.Invoke(new Action(() =>
+                    while (true)
                     {
-                        while (true)
+                        if (instance.IsHandleCreated)
                         {
-                            if (instance.IsHandleCreated)
-                            {
-                                break;
-                            }
-                            Thread.Sleep(10);
+                            break;
                         }
-                        instance.Show();
-                        instance.textBox1.Text = "刷新失败，请检查网络连接";
-                        instance.textBox1.ForeColor = Color.Red;
-                        instance.Opacity = 100;
-                    }));
+                        Thread.Sleep(10);
+                    }
+                    if (instance.IsHandleCreated)
+                    {
+                        try
+                        {
+                            instance.Invoke(new Action(() =>
+                        {
+                            instance.Show();
+                            instance.textBox1.Text = "刷新失败，请检查网络连接";
+                            instance.textBox1.ForeColor = Color.Red;
+                            instance.Opacity = 100;
+                        }));
+                        }
+                        catch (ThreadAbortException ex)
+                        {
+
+                        }
+                    }
+                
                     if (instance.ShowCallback != null)
                     {
                         instance.ShowCallback();
@@ -206,12 +217,22 @@ namespace WMS.UI
                 {
                     if (instance.IsDisposed) return;
 
-                    instance.Invoke(new Action(() =>
+                    if (instance.IsHandleCreated)
                     {
+                        try
+                        {
+                            instance.Invoke(new Action(() =>
+                        {
 
-                        instance.Show();
-                        instance.Opacity = 100;
-                    }));
+                            instance.Show();
+                            instance.Opacity = 100;
+                        }));
+                        }
+                        catch (ThreadAbortException ex)
+                        {
+
+                        }
+                    }
 
                     if (instance.ShowCallback != null)
                     {
