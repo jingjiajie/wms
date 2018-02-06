@@ -640,8 +640,8 @@ namespace WMS.UI
             standardImportForm.AddAssociation("JobPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
             standardImportForm.AddAssociation("ConfirmPersonName", string.Format("SELECT Name FROM Person WHERE Name LIKE '%'+@value+'%'"));
 
-            standardImportForm.AddDefaultValue("ShipmentAmount", "SELECT CASE WHEN @focus = 'ShipmentAmount' THEN NULL WHEN LEN(@UnitAmount)>0 AND LEN(@Unit)>0 THEN CAST(@UnitAmount AS DECIMAL(18,3))*CAST(@Unit AS DECIMAL(18,3)) ELSE NULL END", true, true);
-            standardImportForm.AddDefaultValue("Unit", "SELECT CASE WHEN @focus = 'Unit' THEN NULL WHEN LEN(@ShipmentAmount)>0 AND LEN(@UnitAmount)>0 THEN CAST(@ShipmentAmount AS DECIMAL(18,3))/CAST(@UnitAmount AS DECIMAL(18,3)) ELSE NULL END", true, true);
+            //standardImportForm.AddDefaultValue("ShipmentAmount", "SELECT CASE WHEN @focus = 'ShipmentAmount' THEN NULL WHEN LEN(@UnitAmount)>0 AND LEN(@Unit)>0 THEN CAST(@UnitAmount AS DECIMAL(18,3))*CAST(@Unit AS DECIMAL(18,3)) ELSE NULL END", true, true);
+            //standardImportForm.AddDefaultValue("Unit", "SELECT CASE WHEN @focus = 'Unit' THEN NULL WHEN LEN(@ShipmentAmount)>0 AND LEN(@UnitAmount)>0 THEN CAST(@ShipmentAmount AS DECIMAL(18,3))/CAST(@UnitAmount AS DECIMAL(18,3)) ELSE NULL END", true, true);
 
             standardImportForm.Show();
         }
