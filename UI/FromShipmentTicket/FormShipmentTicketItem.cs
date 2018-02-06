@@ -648,7 +648,7 @@ namespace WMS.UI
 
         private void buttonAddCategoryClickedCallback()
         {
-            string packageName = FormSelectCategory.SelectCategory();
+            string packageName = FormSelectPackage.SelectCategory();
             if(packageName == null)
             {
                 return;

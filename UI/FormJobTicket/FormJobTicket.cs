@@ -274,5 +274,24 @@ namespace WMS.UI
         {
 
         }
+
+        private void buttonGeneratePutOutStorageTicket_MouseDown(object sender, MouseEventArgs e)
+        {
+            ////右键全部生成出库单
+            //if(e.Button == MouseButtons.Right)
+            //{
+            //    int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            //    if (ids.Length == 0)
+            //    {
+            //        MessageBox.Show("请选择要生成出库单的项！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //        return;
+            //    }
+            //    if (MessageBox.Show("确定为所有选中发货单满额生成出库单吗？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            //    {
+            //        return;
+            //    }
+
+            //}
+        }
     }
 }

@@ -53,11 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormJobTicket\JobTicketUtilities.cs" />
-    <Compile Include="FromShipmentTicket\FormSelectCategory.cs">
+    <Compile Include="FormStockInfo\StockInfoUtilities.cs" />
+    <Compile Include="FromShipmentTicket\FormSelectPackage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FromShipmentTicket\FormSelectCategory.Designer.cs">
-      <DependentUpon>FormSelectCategory.cs</DependentUpon>
+    <Compile Include="FromShipmentTicket\FormSelectPackage.Designer.cs">
+      <DependentUpon>FormSelectPackage.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\CommonDataStructures.cs" />
     <Compile Include="FormBase\BasePersonMetaData.cs" />
@@ -553,8 +554,8 @@
     <EmbeddedResource Include="FormBase\FormSupplierModify.resx">
       <DependentUpon>FormSupplierModify.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FromShipmentTicket\FormSelectCategory.resx">
-      <DependentUpon>FormSelectCategory.cs</DependentUpon>
+    <EmbeddedResource Include="FromShipmentTicket\FormSelectPackage.resx">
+      <DependentUpon>FormSelectPackage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Utilities\FormAssociate.resx">
       <DependentUpon>FormAssociate.cs</DependentUpon>

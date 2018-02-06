@@ -45,6 +45,8 @@
             this.buttonPreview = new System.Windows.Forms.ToolStripButton();
             this.panelPagerWidget = new System.Windows.Forms.Panel();
             this.panelSearchWidget = new System.Windows.Forms.Panel();
+            this.buttonReturnSupply = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statusStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.toolStripTop.SuspendLayout();
@@ -127,8 +129,10 @@
             this.toolStripSeparator2,
             this.buttonAlter,
             this.buttonDelete,
-            this.toolStripSeparator3,
+            this.toolStripSeparator1,
             this.buttonDeliver,
+            this.toolStripSeparator3,
+            this.buttonReturnSupply,
             this.toolStripSeparator4,
             this.buttonPreview});
             this.toolStripTop.Location = new System.Drawing.Point(0, 50);
@@ -219,6 +223,22 @@
             this.panelSearchWidget.Size = new System.Drawing.Size(1628, 50);
             this.panelSearchWidget.TabIndex = 14;
             // 
+            // buttonReturnSupply
+            // 
+            this.buttonReturnSupply.Image = global::WMS.UI.Properties.Resources.check;
+            this.buttonReturnSupply.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonReturnSupply.Name = "buttonReturnSupply";
+            this.buttonReturnSupply.Size = new System.Drawing.Size(134, 42);
+            this.buttonReturnSupply.Text = "批量退件";
+            this.buttonReturnSupply.ToolTipText = "批量退件";
+            this.buttonReturnSupply.Click += new System.EventHandler(this.buttonReturnSupply_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.AutoSize = false;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
+            // 
             // FormPutOutStorageTicket
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -260,5 +280,7 @@
         private System.Windows.Forms.ToolStripButton buttonPreview;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.Panel panelSearchWidget;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton buttonReturnSupply;
     }
 }
