@@ -85,7 +85,7 @@ namespace WMS.UI
                         standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
                     }
                     standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
-                    standardFormPreviewExcel.SetPrintScale(1.83f,worksheetName);
+                    standardFormPreviewExcel.SetPrintScale(0.82f,worksheetName);
                 }
                 standardFormPreviewExcel.Show();
                 this.Close();
@@ -164,7 +164,7 @@ namespace WMS.UI
                         standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
                     }
                     standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
-                    standardFormPreviewExcel.SetPrintScale(1.83f, worksheetName);
+                    standardFormPreviewExcel.SetPrintScale(0.82f, worksheetName);
                 }
                 standardFormPreviewExcel.Show();
                 this.Close();
@@ -206,7 +206,7 @@ namespace WMS.UI
                         standardFormPreviewExcel.AddData("ReceiptTicket", receiptTicketView, worksheetName);
                     }
                     standardFormPreviewExcel.AddData("SubmissionTicketItem", submissionTicketItemView, worksheetName);
-                    standardFormPreviewExcel.SetPrintScale(1.83f, worksheetName);
+                    standardFormPreviewExcel.SetPrintScale(0.82f, worksheetName);
                 }
                 standardFormPreviewExcel.Show();
                 this.Close();
