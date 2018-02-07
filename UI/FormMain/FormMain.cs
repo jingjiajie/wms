@@ -600,7 +600,21 @@ namespace WMS.UI
                 {
                     this.panelRight.Controls.Clear();
                     FormSubmissionManage s = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
-                   
+                    s.setActionTo(new Action<string, string>((string key1, string value1) =>
+                    {
+                        this.panelRight.Controls.Clear();
+                        FormReceiptShelves t = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID, key1, value1);
+                        t.TopLevel = false;
+                        t.Dock = System.Windows.Forms.DockStyle.Fill;
+                        t.FormBorderStyle = FormBorderStyle.None;
+                        //s.Dock = System.Windows.Forms.DockStyle.Fill;
+                        this.panelRight.Controls.Add(s);
+
+                        t.Show();
+                        SetTreeViewSelectedNodeByText("上架单管理");
+                        Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                    }));
+
                     s.TopLevel = false;
                     s.Dock = System.Windows.Forms.DockStyle.Fill;
                     this.panelRight.Controls.Clear();//清空
@@ -738,6 +752,20 @@ namespace WMS.UI
             {
                 this.panelRight.Controls.Clear();//清空
                 var formSubmissionManage = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID);//实例化子窗口
+                formSubmissionManage.setActionTo(new Action<string, string>((string key, string value) =>
+                {
+                    this.panelRight.Controls.Clear();
+                    FormReceiptShelves t = new FormReceiptShelves(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
+                    t.TopLevel = false;
+                    t.Dock = System.Windows.Forms.DockStyle.Fill;
+                    t.FormBorderStyle = FormBorderStyle.None;
+                    //s.Dock = System.Windows.Forms.DockStyle.Fill;
+                    this.panelRight.Controls.Add(formSubmissionManage);
+
+                    t.Show();
+                    SetTreeViewSelectedNodeByText("上架单管理");
+                    Utilities.SendMessage(this.panelRight.Handle, Utilities.WM_SETREDRAW, 1, 0);
+                }));
                 formSubmissionManage.TopLevel = false;
                 formSubmissionManage.Dock = DockStyle.Fill;//窗口大小
                 formSubmissionManage.FormBorderStyle = FormBorderStyle.None;//没有标题栏

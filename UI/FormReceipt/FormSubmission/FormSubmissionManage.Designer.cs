@@ -48,6 +48,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+
+            this.buttonGo = new System.Windows.Forms.ToolStripButton();
+
             this.toolStripTop.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -106,6 +109,7 @@
             this.buttonNoPass,
             this.toolStripSeparator1,
             this.toolStripButton1,
+            this.buttonGo,
             this.toolStripSeparator2,
             this.ButtonOutput});
             this.toolStripTop.Location = new System.Drawing.Point(0, 31);
@@ -178,12 +182,14 @@
             // 
             // toolStripButton1
             // 
+
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(108, 21);
             this.toolStripButton1.Text = "生成上架单";
             this.toolStripButton1.ToolTipText = "拒收";
+
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // ButtonOutput
@@ -262,6 +268,19 @@
             this.panel2.Size = new System.Drawing.Size(1283, 31);
             this.panel2.TabIndex = 12;
             // 
+
+            // buttonGo
+            // 
+            this.buttonGo.Image = global::WMS.UI.Properties.Resources._122;
+            this.buttonGo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buttonGo.Name = "buttonGo";
+            this.buttonGo.Size = new System.Drawing.Size(206, 35);
+            this.buttonGo.Text = "查看对应上架单";
+            this.buttonGo.ToolTipText = "拒收";
+            this.buttonGo.Visible = false;
+            this.buttonGo.Click += new System.EventHandler(this.buttonGo_Click);
+            // 
+
             // FormSubmissionManage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -304,5 +323,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton buttonGo;
     }
 }

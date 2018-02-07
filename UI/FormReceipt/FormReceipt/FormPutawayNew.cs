@@ -282,7 +282,13 @@ namespace WMS.UI.FormReceipt
                             MessageBox.Show("该收货单中，某收货单条目未找到，可能已被删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return null;
                         }
-                        if ((receiptTicketItem.RealReceiptAmount == null ? 0 : (decimal)receiptTicketItem.RealReceiptAmount) - submissionAmount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
+                        decimal canPutawayAmount = receiptTicketItem.RealReceiptAmount == null ? 0 : (decimal)receiptTicketItem.RealReceiptAmount;
+                        SubmissionTicketItem submissionTicketItem = receiptTicketItem.SubmissionTicketItem.FirstOrDefault();
+                        if (submissionTicketItem != null)
+                        {
+                            canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount);
+                        }
+                        if (canPutawayAmount - submissionAmount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                         {
                             SupplyView supplyView = (from sv in wmsEntities.SupplyView where sv.ID == receiptTicketItem.SupplyID select sv).FirstOrDefault();
                             MessageBox.Show("上架失败，计划上架数量过多！零件编号：" + supplyView.No + " 零件名称：" + supplyView.ComponentName, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -749,7 +755,13 @@ namespace WMS.UI.FormReceipt
                 }
 
                 results[i].State = "待上架";
-                if ((receiptTicketItem.RealReceiptAmount == null ? 0 : (decimal)receiptTicketItem.RealReceiptAmount) - results[i].ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
+                decimal canPutawayAmount = receiptTicketItem.RealReceiptAmount == null ? 0 : (decimal)receiptTicketItem.RealReceiptAmount;
+                SubmissionTicketItem submissionTicketItem = receiptTicketItem.SubmissionTicketItem.FirstOrDefault();
+                if (submissionTicketItem != null)
+                {
+                    canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount);
+                }
+                if (canPutawayAmount - results[i].ScheduledMoveCount < (receiptTicketItem.HasPutwayAmount == null ? 0 : (decimal)receiptTicketItem.HasPutwayAmount))
                 {
                     MessageBox.Show("第" + (i + 1) + "行中，计划上架数量不能多于收货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
@@ -908,7 +920,13 @@ namespace WMS.UI.FormReceipt
                     PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
 
                     putawayTicketItem.ReceiptTicketItemID = rti.ID;
-                    putawayTicketItem.ScheduledMoveCount = rti.RealReceiptAmount - (rti.HasPutwayAmount == null ? 0 : (decimal)rti.HasPutwayAmount);
+                    SubmissionTicketItem submissionTicketItem = rti.SubmissionTicketItem.FirstOrDefault();
+                    decimal canPutawayAmount = rti.RealReceiptAmount == null ? 0 : (decimal)rti.RealReceiptAmount;
+                    if (submissionTicketItem != null)
+                    {
+                        canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == 0 ? 0 : (decimal)submissionTicketItem.ReturnAmount);
+                    }
+                    putawayTicketItem.ScheduledMoveCount = canPutawayAmount - (rti.HasPutwayAmount == null ? 0 : (decimal)rti.HasPutwayAmount);
                     rti.HasPutwayAmount = rti.RealReceiptAmount;
                     putawayTicketItem.State = "待上架";
                     putawayTicketItem.UnitCount = rti.UnitCount;
