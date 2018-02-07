@@ -25,6 +25,7 @@ namespace WMS.UI
         private string value;
         PagerWidget<SubmissionTicketView> pagerWidget;
         SearchWidget<SubmissionTicketView> searchWidget;
+        Action<string, string> ToPutaway = null;
         public FormSubmissionManage()
         {
             InitializeComponent();
@@ -75,6 +76,11 @@ namespace WMS.UI
             pagerWidget.Show();
             this.Search();
             //Search(key, value);
+        }
+
+        public void setActionTo(Action<string, string> action)
+        {
+            this.ToPutaway = action;
         }
 
         private void Search(bool savePage = false, int selectID = -1)
@@ -813,6 +819,49 @@ namespace WMS.UI
                 MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        private void buttonGo_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControl1.Worksheets[0];
+            //try
+            //{
+                WMSEntities wmsEntities = new WMSEntities();
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                int receiptTicketID;
+                try
+                {
+                    receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else
+                {
+                    string key = "ReceiptTicketNo";
+                    string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
+                    string value = receiptTicket.No;
+                    ToPutaway(key, value);
+                }
+            //}
+
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            //    return;
+            //}
         }
 
         //private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
