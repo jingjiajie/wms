@@ -41,9 +41,22 @@ namespace WMS.UI.FormReceipt
         {
             InitComponents();
             InitPanel();
+            
             WMSEntities wmsEntities = new WMSEntities();
-
+            SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView where stv.ID == this.submissionTicketID select stv).FirstOrDefault();
             Search();
+
+            if (submissionTicketView != null)
+            {
+                if (submissionTicketView.ReceiptTicketHasPutawayTicket != "未生成上架单")
+                {
+                    MessageBox.Show("该送检单已生成上架单，不能修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.buttonAllPass.Enabled = false;
+                    this.buttonFinished.Enabled = false;
+                    this.buttonModify.Enabled = false;
+                }
+            }
+
         }
 
         private void InitPanel()
