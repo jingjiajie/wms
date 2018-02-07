@@ -207,6 +207,11 @@ namespace WMS.UI
         private void buttonDeliver_Click(object sender, EventArgs e)
         {
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length == 0)
+            {
+                MessageBox.Show("请选择要发运的出库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             WMSEntities wmsEntities = new WMSEntities();
 
             try
@@ -260,6 +265,11 @@ namespace WMS.UI
         private void buttonPreview_Click(object sender, EventArgs e)
         {
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            if(ids.Length == 0)
+            {
+                MessageBox.Show("请选择要打印的出库单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             FormPutOutTicketChooseExcelType form = new FormPutOutTicketChooseExcelType(ids);
             form.Show();
         }

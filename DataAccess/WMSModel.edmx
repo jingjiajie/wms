@@ -832,6 +832,8 @@
           <Property Name="PersonID" Type="int" />
           <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketReceiptDate" Type="datetime" />
+          <Property Name="InwardDeliverTicketNo" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutOutStorageTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -1363,6 +1365,7 @@
           <Property Name="PaintTime" Type="datetime" />
           <Property Name="ReceiptTicketInwardDeliverTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketInwardDeliverLineNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReceiptTicketHasPutawayTicket" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SupplierStorageInfoView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2171,7 +2174,9 @@ FROM [dbo].[PutawayTicketItemView] AS [PutawayTicketItemView]</DefiningQuery>
 [PutawayTicketView].[SupplierNumber] AS [SupplierNumber], 
 [PutawayTicketView].[PersonID] AS [PersonID], 
 [PutawayTicketView].[PersonName] AS [PersonName], 
-[PutawayTicketView].[WarehouseName] AS [WarehouseName]
+[PutawayTicketView].[WarehouseName] AS [WarehouseName], 
+[PutawayTicketView].[ReceiptTicketReceiptDate] AS [ReceiptTicketReceiptDate], 
+[PutawayTicketView].[InwardDeliverTicketNo] AS [InwardDeliverTicketNo]
 FROM [dbo].[PutawayTicketView] AS [PutawayTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutOutStorageTicketItemView" EntityType="Self.PutOutStorageTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -2659,7 +2664,8 @@ FROM [dbo].[SubmissionTicketItemView] AS [SubmissionTicketItemView]</DefiningQue
 [SubmissionTicketView].[SubmissionDate] AS [SubmissionDate], 
 [SubmissionTicketView].[PaintTime] AS [PaintTime], 
 [SubmissionTicketView].[ReceiptTicketInwardDeliverTicketNo] AS [ReceiptTicketInwardDeliverTicketNo], 
-[SubmissionTicketView].[ReceiptTicketInwardDeliverLineNo] AS [ReceiptTicketInwardDeliverLineNo]
+[SubmissionTicketView].[ReceiptTicketInwardDeliverLineNo] AS [ReceiptTicketInwardDeliverLineNo], 
+[SubmissionTicketView].[ReceiptTicketHasPutawayTicket] AS [ReceiptTicketHasPutawayTicket]
 FROM [dbo].[SubmissionTicketView] AS [SubmissionTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SupplierStorageInfoView" EntityType="Self.SupplierStorageInfoView" store:Type="Views" store:Schema="dbo">
@@ -3962,6 +3968,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="PersonID" Type="Int32" />
           <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketReceiptDate" Type="DateTime" Precision="3" />
+          <Property Name="InwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PutOutStorageTicketItemView">
           <Key>
@@ -4471,6 +4479,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="PaintTime" Type="DateTime" Precision="3" />
           <Property Name="ReceiptTicketInwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketInwardDeliverLineNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiptTicketHasPutawayTicket" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SupplierStorageInfoView">
           <Key>
@@ -5831,6 +5840,8 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="PutawayTicketView">
             <EntityTypeMapping TypeName="WMSModel.PutawayTicketView">
               <MappingFragment StoreEntitySet="PutawayTicketView">
+                <ScalarProperty Name="InwardDeliverTicketNo" ColumnName="InwardDeliverTicketNo" />
+                <ScalarProperty Name="ReceiptTicketReceiptDate" ColumnName="ReceiptTicketReceiptDate" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />
                 <ScalarProperty Name="PersonID" ColumnName="PersonID" />
@@ -6334,6 +6345,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="SubmissionTicketView">
             <EntityTypeMapping TypeName="WMSModel.SubmissionTicketView">
               <MappingFragment StoreEntitySet="SubmissionTicketView">
+                <ScalarProperty Name="ReceiptTicketHasPutawayTicket" ColumnName="ReceiptTicketHasPutawayTicket" />
                 <ScalarProperty Name="ReceiptTicketInwardDeliverLineNo" ColumnName="ReceiptTicketInwardDeliverLineNo" />
                 <ScalarProperty Name="ReceiptTicketInwardDeliverTicketNo" ColumnName="ReceiptTicketInwardDeliverTicketNo" />
                 <ScalarProperty Name="PaintTime" ColumnName="PaintTime" />

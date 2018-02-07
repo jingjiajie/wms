@@ -602,7 +602,7 @@ namespace WMS.UI.FormReceipt
                         formPreview.AddData("PutawayTicket", putawayTicketView, worksheetName);
                     }
                     formPreview.AddData("PutawayTicketItem", putawayTicketItemView, worksheetName);
-                    formPreview.SetPrintScale(0.73F, worksheetName);
+                    formPreview.SetPrintScale(1F, worksheetName);
                 }
                 catch
                 {
