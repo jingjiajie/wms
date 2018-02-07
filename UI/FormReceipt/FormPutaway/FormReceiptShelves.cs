@@ -409,7 +409,7 @@ namespace WMS.UI.FormReceipt
                     if (receiptTicketItem != null)
                     {
                         
-                        receiptTicketItem.HasPutwayAmount -= (pti.ScheduledMoveCount == null ? 0 : pti.ScheduledMoveCount) - (pti.MoveCount == null ? 0 : pti.MoveCount);
+                        receiptTicketItem.HasPutwayAmount -= (pti.ScheduledMoveCount == null ? 0 : pti.ScheduledMoveCount) - (pti.PutawayAmount == null ? 0 : pti.PutawayAmount);
                         if (receiptTicketItem.HasPutwayAmount == 0)
                         {
                             n++;

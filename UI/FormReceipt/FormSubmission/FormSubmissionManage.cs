@@ -747,6 +747,74 @@ namespace WMS.UI
             //this.Close();
         }
 
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            var worksheet = this.reoGridControl1.Worksheets[0];
+            try
+            {
+                if (worksheet.SelectionRange.Rows != 1)
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                WMSEntities wmsEntities = new WMSEntities();
+                int submissionTicketID;
+                try
+                {
+                    submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
+
+                SubmissionTicket submissionTicket = (from rt in wmsEntities.SubmissionTicket where rt.ID == submissionTicketID select rt).FirstOrDefault();
+                if (submissionTicket == null)
+                {
+                    MessageBox.Show("该收货单已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (submissionTicket.State == "待检")
+                {
+                    MessageBox.Show("该送检单状态为待检，不能生成上架单!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    return;
+                }
+                /*
+                if (receiptTicket.HasPutawayTicket == "是")
+                {
+                    MessageBox.Show("该收货单已经生成上架单，点击查看对应上架单按钮查看！");
+                    return;
+                }*/
+                if (submissionTicket.State != "合格")
+                {
+                    MessageBox.Show("该送检单状态为" + submissionTicket.State + "，不能生成上架单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("该收货单已被删除，不能上架", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                FormPutawayNew formPutawayNew = new FormPutawayNew(receiptTicket.ID, this.userID, FormMode.ADD);
+                formPutawayNew.SetCallBack(new Action(() =>
+                {
+                    this.Search();
+                }));
+
+                formPutawayNew.Show();
+               
+            }
+
+            catch (Exception)
+            {
+                MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
         //private void textBoxSelect_KeyDown(object sender, KeyEventArgs e)
         //{
         //    if (e.KeyCode == Keys.Enter)

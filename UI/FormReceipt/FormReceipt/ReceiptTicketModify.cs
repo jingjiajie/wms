@@ -213,7 +213,7 @@ namespace WMS.UI.FormReceipt
                 Supplier supplier = (from s in wmsEntities.Supplier where s.ID == ID select s).FirstOrDefault();
                 if (supplier == null)
                 {
-                    MessageBox.Show("该供应商已被删除");
+                    MessageBox.Show("该供应商已被删除", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
