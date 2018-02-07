@@ -600,6 +600,7 @@ namespace WMS.UI
                 {
                     this.panelRight.Controls.Clear();
                     FormSubmissionManage s = new FormSubmissionManage(this.project.ID, this.warehouse.ID, this.user.ID, key, value);
+                   
                     s.TopLevel = false;
                     s.Dock = System.Windows.Forms.DockStyle.Fill;
                     this.panelRight.Controls.Clear();//Çå¿Õ

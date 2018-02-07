@@ -75,7 +75,7 @@ namespace WMS.UI.FormReceipt
                 this.Controls.Find("textBoxSubmissionDate", true)[0].Text = receiptTicket.ReceiptDate.ToString();
             }
             this.Controls.Find("textBoxState", true)[0].Text = "待检";
-            
+
             this.Controls.Find("textBoxCreateTime", true)[0].Text = DateTime.Now.ToString();
             this.Controls.Find("textBoxLastUpdateTime", true)[0].Text = DateTime.Now.ToString();
         }
@@ -142,7 +142,7 @@ namespace WMS.UI.FormReceipt
             }
             else
             {
-                
+
             }
         }
 
@@ -193,7 +193,7 @@ namespace WMS.UI.FormReceipt
                     {
                         ReceiptTicketItemView curReceiptTicketItemView = receiptTicketItemViews[i];
                         object[] columns = Utilities.GetValuesByPropertieNames(curReceiptTicketItemView, (from kn in ItemKeyName select kn.Key).ToArray());
-                        
+
                         int m = 0;
                         for (int j = 0; j < worksheet.Columns - 1; j++)
                         {
@@ -279,7 +279,7 @@ namespace WMS.UI.FormReceipt
 
                     if (decimal.TryParse(strSubmissionAmount, out submissionAmount) && int.TryParse(worksheet[i, 0].ToString(), out id))
                     {
-                        
+
                         idsAndSubmissionAmount.Add(id, submissionAmount);
                     }
                     else
@@ -332,7 +332,7 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("该收货单状态为" + receiptTicket.State + "，无法送检！");
                 }
             }
-            SortedDictionary<int, decimal> idsAndSubmissionAmount = SelectReceiptTicketItem(); 
+            SortedDictionary<int, decimal> idsAndSubmissionAmount = SelectReceiptTicketItem();
             if (idsAndSubmissionAmount == null)
             {
                 return;
@@ -345,7 +345,7 @@ namespace WMS.UI.FormReceipt
                 {
                     if (receiptTicketItem.ReceiviptAmount < kv.Value)
                     {
-                        MessageBox.Show("送检数量不应大于收货数量","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("送检数量不应大于收货数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     if (kv.Value < 0)
@@ -407,79 +407,77 @@ namespace WMS.UI.FormReceipt
                     /////////////////////////////////////////////////////////////// End
                     wmsEntities.SubmissionTicket.Add(submissionTicket);
 
-                    new Thread(() =>
+
+                    try
                     {
-                        try
+                        wmsEntities.SaveChanges();
+                        //submissionTicket.No = Utilities.GenerateTicketNo()
+
+                        wmsEntities.SaveChanges();
+                        foreach (KeyValuePair<ReceiptTicketItem, decimal> vp in receiptTicketItemsAndSubmissionAmount)
                         {
-                            wmsEntities.SaveChanges();
-                            //submissionTicket.No = Utilities.GenerateTicketNo()
-
-                            wmsEntities.SaveChanges();
-                            foreach (KeyValuePair<ReceiptTicketItem, decimal> vp in receiptTicketItemsAndSubmissionAmount)
+                            SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
+                            StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == vp.Key.ID select si).FirstOrDefault();
+                            if (stockInfo == null)
                             {
-                                SubmissionTicketItem submissionTicketItem = new SubmissionTicketItem();
-                                StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == vp.Key.ID select si).FirstOrDefault();
-                                if (stockInfo == null)
-                                {
-                                    MessageBox.Show("找不到对应的库存信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                }
-                                else
-                                {
-
-                                    if (stockInfo.ReceiptAreaAmount != null)
-                                    {
-                                        submissionTicketItem.ArriveAmount = stockInfo.ReceiptAreaAmount;
-                                    }
-                                    stockInfo.SubmissionAmount = vp.Value;
-                                    stockInfo.ReceiptAreaAmount -= vp.Value;
-                                    submissionTicketItem.ArriveAmount = vp.Key.ReceiviptAmount;
-                                    submissionTicketItem.ReceiptTicketItemID = vp.Key.ID;
-                                    
-                                    submissionTicketItem.State = "待检";
-                                    vp.Key.State = "送检中";
-                                    submissionTicketItem.SubmissionAmount = vp.Value;
-                                    submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
-                                    wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
-                                   
-                                }
-                            }
-                            receiptTicket.HasSubmission = 1;
-                            receiptTicket.State = "送检中";
-                            wmsEntities.SaveChanges();
-                            /*
-                            int count = wmsEntities.Database.SqlQuery<int>(
-                                "SELECT COUNT(*) FROM ReceiptTicketItem " +
-                                "WHERE ReceiptTicketID = @receiptTicketID AND State <> '送检中'",
-                                new SqlParameter("receiptTicketID", receiptTicketID)).FirstOrDefault();
-                            if (count == 0)
-                            {
-                                wmsEntities.Database.ExecuteSqlCommand(
-                                    "UPDATE ReceiptTicket SET State='送检中' " +
-                                    "WHERE ID = @receiptTicketID",
-                                    new SqlParameter("receiptTicketID", receiptTicketID));
+                                MessageBox.Show("找不到对应的库存信息", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                             else
                             {
-                                wmsEntities.Database.ExecuteSqlCommand(
-                                    "UPDATE ReceiptTicket SET State='部分送检中' " +
-                                    "WHERE ID = @receiptTicketID",
-                                    new SqlParameter("receiptTicketID", receiptTicketID));
+
+                                if (stockInfo.ReceiptAreaAmount != null)
+                                {
+                                    submissionTicketItem.ArriveAmount = stockInfo.ReceiptAreaAmount;
+                                }
+                                stockInfo.SubmissionAmount = vp.Value;
+                                stockInfo.ReceiptAreaAmount -= vp.Value;
+                                submissionTicketItem.ArriveAmount = vp.Key.ReceiviptAmount;
+                                submissionTicketItem.ReceiptTicketItemID = vp.Key.ID;
+
+                                submissionTicketItem.State = "待检";
+                                vp.Key.State = "送检中";
+                                submissionTicketItem.SubmissionAmount = vp.Value;
+                                submissionTicketItem.SubmissionTicketID = submissionTicket.ID;
+                                wmsEntities.SubmissionTicketItem.Add(submissionTicketItem);
+
                             }
-                            */
-                            this.Invoke(new Action(() =>
-                            {
-                                this.Search();
-                                CallBack();
-                                this.Hide();
-                            }));
-                            MessageBox.Show("收货单条目送检成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        catch
+                        receiptTicket.HasSubmission = 1;
+                        receiptTicket.State = "送检中";
+                        wmsEntities.SaveChanges();
+                        /*
+                        int count = wmsEntities.Database.SqlQuery<int>(
+                            "SELECT COUNT(*) FROM ReceiptTicketItem " +
+                            "WHERE ReceiptTicketID = @receiptTicketID AND State <> '送检中'",
+                            new SqlParameter("receiptTicketID", receiptTicketID)).FirstOrDefault();
+                        if (count == 0)
                         {
-                            MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
-                            return;
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                "UPDATE ReceiptTicket SET State='送检中' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicketID));
                         }
-                    }).Start();
+                        else
+                        {
+                            wmsEntities.Database.ExecuteSqlCommand(
+                                "UPDATE ReceiptTicket SET State='部分送检中' " +
+                                "WHERE ID = @receiptTicketID",
+                                new SqlParameter("receiptTicketID", receiptTicketID));
+                        }
+                        */
+
+                        this.Search();
+                        CallBack();
+                        this.Hide();
+
+                        MessageBox.Show("收货单条目送检成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                        return;
+                    }
+
                 }
             }
             else

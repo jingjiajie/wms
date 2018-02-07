@@ -409,7 +409,6 @@ namespace WMS.UI
                             string valueString = null;
                             if (value != null && value != DBNull.Value)
                             {
-                                Console.WriteLine((from p in parameters where p.ParameterName=="focus" select p.Value).Single());
                                 if (value is decimal || value is decimal?)
                                 {
                                     valueString = Utilities.DecimalToString((decimal)value);

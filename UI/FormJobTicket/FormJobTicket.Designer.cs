@@ -186,6 +186,7 @@
             this.buttonGeneratePutOutStorageTicket.Size = new System.Drawing.Size(158, 42);
             this.buttonGeneratePutOutStorageTicket.Text = "生成出库单";
             this.buttonGeneratePutOutStorageTicket.Click += new System.EventHandler(this.buttonGeneratePutOutStorageTicket_Click);
+            this.buttonGeneratePutOutStorageTicket.MouseDown += new System.Windows.Forms.MouseEventHandler(this.buttonGeneratePutOutStorageTicket_MouseDown);
             // 
             // buttonToPutOutStorageTicket
             // 
