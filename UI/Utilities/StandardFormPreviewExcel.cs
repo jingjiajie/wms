@@ -83,6 +83,12 @@ namespace WMS.UI
                     newWorksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
                     newWorksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
                     this.reoGridControlMain.Worksheets.Add(newWorksheet);
+                    //newWorksheet.PrintSettings.PaperName = "24 x 14";
+                    //newWorksheet.PrintSettings.PaperWidth = 9.4488189f;
+                    //newWorksheet.PrintSettings.PaperWidth = 5.511811f;
+                    newWorksheet.PrintSettings.PaperName = "24 x 14";
+                    newWorksheet.PrintSettings.PaperWidth = 9.4488189f * 100;
+                    newWorksheet.PrintSettings.PaperWidth = 5.511811f * 100;
                     if (this.defaultPrintScales.ContainsKey(sheetName))
                     {
                         this.SetPrintScale(this.defaultPrintScales[sheetName], sheetName);
@@ -156,6 +162,7 @@ namespace WMS.UI
 
         private void buttonPrint_Click(object sender, EventArgs e)
         {
+            this.reoGridControlMain.CurrentWorksheet.PrintSettings.Margins = new PageMargins(0);
             PrintDocument doc = null;
             try
             {
@@ -171,11 +178,11 @@ namespace WMS.UI
             //doc.PrinterSettings.DefaultPageSettings.PaperSize = ps;
             //doc.DefaultPageSettings.PaperSize = ps;
             //doc.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
-            doc.OriginAtMargins = true;
+            //doc.OriginAtMargins = true;
 
-            PageSetupDialog pageSetupDialog = new PageSetupDialog();
-            pageSetupDialog.Document = doc;
-            pageSetupDialog.ShowDialog();
+            //PageSetupDialog pageSetupDialog = new PageSetupDialog();
+            //pageSetupDialog.Document = doc;
+            //pageSetupDialog.ShowDialog();
 
             //PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
             //printPreviewDialog.Document = doc;

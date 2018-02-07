@@ -833,6 +833,7 @@
           <Property Name="PersonName" Type="nvarchar" MaxLength="64" />
           <Property Name="WarehouseName" Type="nvarchar" MaxLength="64" />
           <Property Name="ReceiptTicketReceiptDate" Type="datetime" />
+          <Property Name="InwardDeliverTicketNo" Type="nvarchar" MaxLength="64" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.PutOutStorageTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2174,7 +2175,8 @@ FROM [dbo].[PutawayTicketItemView] AS [PutawayTicketItemView]</DefiningQuery>
 [PutawayTicketView].[PersonID] AS [PersonID], 
 [PutawayTicketView].[PersonName] AS [PersonName], 
 [PutawayTicketView].[WarehouseName] AS [WarehouseName], 
-[PutawayTicketView].[ReceiptTicketReceiptDate] AS [ReceiptTicketReceiptDate]
+[PutawayTicketView].[ReceiptTicketReceiptDate] AS [ReceiptTicketReceiptDate], 
+[PutawayTicketView].[InwardDeliverTicketNo] AS [InwardDeliverTicketNo]
 FROM [dbo].[PutawayTicketView] AS [PutawayTicketView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PutOutStorageTicketItemView" EntityType="Self.PutOutStorageTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -3802,6 +3804,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="PersonName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="WarehouseName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ReceiptTicketReceiptDate" Type="DateTime" Precision="3" />
+          <Property Name="InwardDeliverTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PutOutStorageTicketItemView">
           <Key>
@@ -4864,7 +4867,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="WMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Component" EntityType="Self.Component" />
           <EntitySet Name="JobTicket" EntityType="Self.JobTicket" />
           <EntitySet Name="JobTicketItem" EntityType="Self.JobTicketItem" />
@@ -5035,7 +5038,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="WMSModelStoreContainer" CdmEntityContainer="WMSEntities">
           <EntitySetMapping Name="Component">
             <EntityTypeMapping TypeName="WMSModel.Component">
               <MappingFragment StoreEntitySet="Component">
@@ -5874,6 +5877,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
                 <ScalarProperty Name="PersonName" ColumnName="PersonName" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="ReceiptTicketReceiptDate" ColumnName="ReceiptTicketReceiptDate" />
+                <ScalarProperty Name="InwardDeliverTicketNo" ColumnName="InwardDeliverTicketNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

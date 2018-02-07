@@ -141,6 +141,7 @@ namespace WMS.UI
                 formPreview.AddData("putOutStorageTicket", putOutStorageTicketView, worksheetName);
                 formPreview.AddData("putOutStorageTicketItems", putOutStorageTicketTiemViews,worksheetName);
                 formPreview.AddData("shipmentTicket", shipmentTicketView,worksheetName);
+                formPreview.SetPrintScale(1.2f, worksheetName);
             }
             formPreview.Show();
             this.Close();
@@ -288,6 +289,7 @@ namespace WMS.UI
                 return;
             }
             formPreview.AddData("putOutStorageTicketItems", items.ToArray());
+            formPreview.SetPrintScale(1.2f);
             formPreview.Show();
             this.Close();
         }

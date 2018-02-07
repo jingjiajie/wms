@@ -50,5 +50,6 @@ namespace WMS.DataAccess
         public string PersonName { get; set; }
         public string WarehouseName { get; set; }
         public Nullable<System.DateTime> ReceiptTicketReceiptDate { get; set; }
+        public string InwardDeliverTicketNo { get; set; }
     }
 }
