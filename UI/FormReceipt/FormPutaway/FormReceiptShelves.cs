@@ -608,7 +608,7 @@ namespace WMS.UI.FormReceipt
                         formPreview.AddData("PutawayTicket", putawayTicketView, worksheetName);
                     }
                     formPreview.AddData("PutawayTicketItem", putawayTicketItemView, worksheetName);
-                    formPreview.SetPrintScale(1F, worksheetName);
+                    formPreview.SetPrintScale(1.0F, worksheetName);
                 }
                 catch
                 {
