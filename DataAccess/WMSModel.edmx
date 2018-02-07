@@ -1258,6 +1258,7 @@
           <Property Name="ReceiptTicketNo" Type="nvarchar" MaxLength="64" />
           <Property Name="ScheduledShipmentAmount" Type="decimal" Precision="18" Scale="3" Nullable="false" />
           <Property Name="ComponentID" Type="int" />
+          <Property Name="AvailableAmount" Type="decimal" Precision="19" Scale="3" />
         </EntityType>
         <!--生成过程中发现错误:
 警告 6002: 表/视图“wms.dbo.SubmissionTicketItemView”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
@@ -2560,7 +2561,8 @@ FROM [dbo].[StockInfoCheckTicketView] AS [StockInfoCheckTicketView]</DefiningQue
 [StockInfoView].[SupplyID] AS [SupplyID], 
 [StockInfoView].[ReceiptTicketNo] AS [ReceiptTicketNo], 
 [StockInfoView].[ScheduledShipmentAmount] AS [ScheduledShipmentAmount], 
-[StockInfoView].[ComponentID] AS [ComponentID]
+[StockInfoView].[ComponentID] AS [ComponentID], 
+[StockInfoView].[AvailableAmount] AS [AvailableAmount]
 FROM [dbo].[StockInfoView] AS [StockInfoView]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="SubmissionTicketItemView" EntityType="Self.SubmissionTicketItemView" store:Type="Views" store:Schema="dbo">
@@ -4368,6 +4370,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <Property Name="ReceiptTicketNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="ScheduledShipmentAmount" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
           <Property Name="ComponentID" Type="Int32" />
+          <Property Name="AvailableAmount" Type="Decimal" Precision="19" Scale="3" />
         </EntityType>
         <EntityType Name="SubmissionTicketItemView">
           <Key>
@@ -6235,6 +6238,7 @@ FROM [dbo].[WarehouseView] AS [WarehouseView]</DefiningQuery>
           <EntitySetMapping Name="StockInfoView">
             <EntityTypeMapping TypeName="WMSModel.StockInfoView">
               <MappingFragment StoreEntitySet="StockInfoView">
+                <ScalarProperty Name="AvailableAmount" ColumnName="AvailableAmount" />
                 <ScalarProperty Name="ComponentID" ColumnName="ComponentID" />
                 <ScalarProperty Name="ScheduledShipmentAmount" ColumnName="ScheduledShipmentAmount" />
                 <ScalarProperty Name="ReceiptTicketNo" ColumnName="ReceiptTicketNo" />

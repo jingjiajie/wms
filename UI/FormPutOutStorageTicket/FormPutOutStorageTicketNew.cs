@@ -234,7 +234,7 @@ namespace WMS.UI
                 JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
                                                where j.ID == id
                                                select j).FirstOrDefault();
-                if (jobTicket == null)
+                if (jobTicketItem == null)
                 {
                     MessageBox.Show("无法找到作业单条目，请重新查询", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
