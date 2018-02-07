@@ -170,7 +170,8 @@ namespace WMS.UI
             //System.Drawing.Printing.PaperSize ps = new System.Drawing.Printing.PaperSize("Custom", (int)(9.448 * 100),(int)(5.511 * 100));
             //doc.PrinterSettings.DefaultPageSettings.PaperSize = ps;
             //doc.DefaultPageSettings.PaperSize = ps;
-            doc.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
+            //doc.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
+            doc.OriginAtMargins = true;
 
             PageSetupDialog pageSetupDialog = new PageSetupDialog();
             pageSetupDialog.Document = doc;
