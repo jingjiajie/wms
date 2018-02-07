@@ -739,6 +739,11 @@ namespace WMS.UI
             {
                 WMSEntities wmsEntities = new WMSEntities();
                 int[] ids = Utilities.GetSelectedIDs(this.reoGridControl1);
+                if (ids.Length == 0)
+                {
+                    MessageBox.Show("请选择一项预览", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 FormSubmissionChooseExcelType formSubmissionChooseExcelType = new FormSubmissionChooseExcelType(ids);
                 formSubmissionChooseExcelType.Show();
             }

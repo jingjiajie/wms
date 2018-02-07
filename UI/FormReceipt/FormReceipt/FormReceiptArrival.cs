@@ -1198,6 +1198,11 @@ namespace WMS.UI
         {
             WMSEntities wmsEntities = new WMSEntities();
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlUser);
+            if (ids.Length == 0)
+            {
+                MessageBox.Show("请选择一项预览", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("收货单预览");
 
             foreach (int id in ids)

@@ -579,7 +579,12 @@ namespace WMS.UI.FormReceipt
             StandardFormPreviewExcel formPreview = new StandardFormPreviewExcel("上架单预览");
             WMSEntities wmsEntities = new WMSEntities();
             int[] ids = Utilities.GetSelectedIDs(this.reoGridControlUser);
-            foreach(int id in ids)
+            if (ids.Length == 0)
+            {
+                MessageBox.Show("请选择一项预览", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            foreach (int id in ids)
             {
                 try
                 {
