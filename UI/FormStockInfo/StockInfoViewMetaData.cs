@@ -18,6 +18,7 @@ namespace WMS.UI
             new KeyName(){Key="ShipmentAreaAmount",Name="发货区数量"},
             new KeyName(){Key="RejectAreaAmount",Name="不良品区数量"},
             new KeyName(){Key="ScheduledShipmentAmount",Name="已分配发货数量"},
+            new KeyName(){Key="AvailableAmount",Name="可用数量",Editable=false,Save=false,ImportVisible=false,Import=false},
             new KeyName(){Key="ReceiptTicketNo",Name="收货单号",Editable=false,Save=false},
             new KeyName(){Key="InventoryDate",Name="存货日期",Editable=false,Save=false},
             new KeyName(){Key="ManufactureDate",Name="生产日期",Editable=false,Save=false},

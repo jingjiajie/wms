@@ -44,49 +44,28 @@ namespace WMS.UI
         private void FormSelectSupplier_Load(object sender, EventArgs e)
         {
             InitComponents();
+            this.toolStripComboBox1.SelectedIndex= 1;
+            //if (this.defaultSupplierID != -1)
+            //{
+            //    try
+            //    {
+            //        WMSEntities wmsEntities = new WMSEntities();
 
+            //        this.textBoxSupplierName.Text = (from s in wmsEntities.SupplierView where s.ID == defaultSupplierID select s.Name).FirstOrDefault();
+            //        this.Search(defaultSupplierID);
+            //    }
 
+            //    catch  {
+            //        MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        this.Close();
+            //        return;
+            //    }
 
-
-
-
-            if (this.defaultSupplierID != -1)
-            {
-
-
-                try
-                {
-                    WMSEntities wmsEntities = new WMSEntities();
-                    
-                    this.textBoxSupplierName.Text = (from s in wmsEntities.SupplierView where s.ID == defaultSupplierID select s.Name).FirstOrDefault();
-                    this.Search(defaultSupplierID);
-
-                }
-
-                catch  {
-                    MessageBox.Show("加载数据失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    this.Close();
-                    return;
-                }
-
-            }
-            else
-            {
-                this.Search();
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //}
+            //else
+            //{
+            //    this.Search();
+            //}
         }
 
         private void buttonSearch_Click(object sender, EventArgs e)
@@ -96,26 +75,27 @@ namespace WMS.UI
 
         private void Search(int selectID=-1)
         {
-
-
-            if (this.textBoxSupplierName.Text != "")
+            string key = this.toolStripComboBox1.Text;
+            string value = this.textBoxSupplierName.Text;
+            this.pagerWidget.ClearCondition();
+            this.pagerWidget.AddCondition("是否历史信息", "0");
+            if (key != "无")
             {
-                string value = this.textBoxSupplierName.Text;
-                this.pagerWidget.ClearCondition();
-                this.pagerWidget.AddCondition("是否历史信息", "0");
-                this.pagerWidget.AddCondition("供货商名称", value);
+                if (this.textBoxSupplierName.Text == "")
+                {
+                    MessageBox.Show("输入要查找的关键字", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                else if (this.textBoxSupplierName.Text != "")
+                {
+                    this.pagerWidget.AddCondition(key, value);
+                    this.pagerWidget.Search(false, selectID);
+                }
+            }
+            else if (key == "无")
+            {
                 this.pagerWidget.Search(false, selectID);
             }
-            else
-            {
-                //string value = this.textBoxSupplierName.Text;
-                this.pagerWidget.ClearCondition();
-                //this.pagerWidget.AddCondition("供货商名称", value);
-                
-                this.pagerWidget.AddCondition("是否历史信息", "0");
-                this.pagerWidget.Search(false, selectID);
-            }
-          
      
         }
 
@@ -174,5 +154,18 @@ namespace WMS.UI
             }
         }
 
+        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(this.toolStripComboBox1.Text =="无")
+            {
+                this.textBoxSupplierName.Text ="";
+                this.textBoxSupplierName.Enabled = false;
+            }
+            else if (this.toolStripComboBox1.Text != "无")
+            {
+                this.textBoxSupplierName.Enabled = true ;
+            }
+
+        }
     }
 }

@@ -107,7 +107,7 @@ namespace WMS.UI
                 var formStockInfoModify = new FormStockInfoModify(stockInfoID);
                 formStockInfoModify.SetModifyFinishedCallback(()=>
                 {
-                    this.pagerWidget.Search();
+                    this.searchWidget.Search(true);
                 });
                 formStockInfoModify.Show();
             }

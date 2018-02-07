@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FormJobTicket\JobTicketUtilities.cs" />
+    <Compile Include="FormPutOutStorageTicket\PutOutStorageTicketUitilities.cs" />
     <Compile Include="FormStockInfo\StockInfoUtilities.cs" />
     <Compile Include="FromShipmentTicket\FormSelectPackage.cs">
       <SubType>Form</SubType>
