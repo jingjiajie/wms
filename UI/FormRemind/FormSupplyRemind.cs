@@ -13,6 +13,7 @@ using WMS.DataAccess;
 using System.Diagnostics;
 using System.Threading;
 using System.Data.SqlClient;
+
 namespace WMS.UI
 {
     public partial class FormSupplyRemind : Form
@@ -25,6 +26,14 @@ namespace WMS.UI
         System.Timers.Timer timer = new System.Timers.Timer();
         StringBuilder stringBuilder = new StringBuilder();
         private bool CheckFinished = false;
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private extern static IntPtr SetActiveWindow(IntPtr handle);
+        private const int WM_ACTIVATE = 0x006;
+        private const int WM_ACTIVATEAPP = 0x01C;
+        private const int WM_NCACTIVATE = 0x086;
+        private const int WA_INACTIVE = 0;
+        private const int WM_MOUSEACTIVATE = 0x21;
+        private const int MA_NOACTIVATE = 3;
         public FormSupplyRemind()
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -39,6 +48,29 @@ namespace WMS.UI
             timer.Interval = 30000;//执行间隔时间,单位为毫秒  一千分之一
             timer.Start();
             timer.Elapsed += new System.Timers.ElapsedEventHandler(Timer1_Elapsed);
+        }
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_MOUSEACTIVATE)
+            {
+                m.Result = new IntPtr(MA_NOACTIVATE);
+                return;
+            }
+            else if (m.Msg == WM_NCACTIVATE)
+            {
+                if (((int)m.WParam & 0xFFFF) != WA_INACTIVE)
+                {
+                    if (m.LParam != IntPtr.Zero)
+                    {
+                        SetActiveWindow(m.LParam);
+                    }
+                    else
+                    {
+                        SetActiveWindow(IntPtr.Zero);
+                    }
+                }
+            }
+            base.WndProc(ref m);
         }
 
         private void Timer1_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -69,7 +101,6 @@ namespace WMS.UI
         }
         public static void ShowForm()
         {
-
             if (instance == null)
             {
                 instance = new FormSupplyRemind();
@@ -79,8 +110,6 @@ namespace WMS.UI
             instance.timer.Start();
             instance.Show();
             instance.Opacity = 100;
-
-
         }
         public static void RemindStockinfoClick()
         {
@@ -100,7 +129,7 @@ namespace WMS.UI
             }
             if (instance.IsDisposed) return;
             instance.Show();
-            instance.Hide();
+            //instance.Hide();
             instance.timer.Start();
             if (instance.HidedCallback != null)
             {
@@ -241,8 +270,9 @@ namespace WMS.UI
                 }
                 else
                 {
-                    instance.Hide();
                     instance.Opacity = 0;
+                    instance.Hide();
+                    
 
                     if (instance.HidedCallback != null)
                     {
@@ -296,7 +326,7 @@ namespace WMS.UI
             }
             if (instance.IsDisposed) return;
             instance.Show();
-            instance.Hide();
+            //instance.Hide();
             instance.timer.Start();          
             if (instance.HidedCallback != null)
             {
@@ -416,8 +446,9 @@ namespace WMS.UI
                 }
                 else
                 {
-                    instance.Hide();
                     instance.Opacity = 0;
+                    instance.Hide();
+                    
                     
                     if (instance.HidedCallback != null)
                     {
@@ -479,9 +510,9 @@ namespace WMS.UI
         private void FormSupplyRemind_FormClosing(object sender, FormClosingEventArgs e)
         {
             timer.Stop();
-            this.Hide();
-            e.Cancel = true;
             this.Opacity = 0;
+            this.Hide();
+            e.Cancel = true;           
             if (instance.HidedCallback != null)
             {
                 instance.HidedCallback();              
