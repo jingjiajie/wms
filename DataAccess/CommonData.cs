@@ -9,7 +9,7 @@ namespace WMS.DataAccess
 {
     public class CommonData
     {
-        public static string connectionString = GetReleaseConnectString();
+        public static string connectionString = GetDebugConnectString();
 
         private static string GetReleaseConnectString()
         {
