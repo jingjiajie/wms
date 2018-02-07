@@ -719,20 +719,18 @@ namespace WMS.UI.FormReceipt
                         {
                             putawayTicketItem.State = "部分上架";
                         }
-                        new Thread(() =>
+
+                        wmsEntities.SaveChanges();
+                        this.modifyMode(putawayTicketItem.PutawayTicketID);
+                        MessageBox.Show("上架成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        this.Search();
+                        if (CallBack != null)
                         {
-                            wmsEntities.SaveChanges();
-                            this.modifyMode(putawayTicketItem.PutawayTicketID);
-                            MessageBox.Show("上架成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            this.Invoke(new Action(() =>
-                            {
-                                this.Search();
-                                if (CallBack != null)
-                                {
-                                    CallBack();
-                                }
-                            }));
-                        }).Start();
+                            CallBack();
+                        }
+
+
                     }
                 }
             }

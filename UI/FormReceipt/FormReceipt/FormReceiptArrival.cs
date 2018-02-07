@@ -592,7 +592,12 @@ namespace WMS.UI
                 }
                 //var formReceiptTicketIems = new FormReceiptItems(FormMode.ALTER, receiptTicketID);
 
-                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).Single();
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket == null)
+                {
+                    MessageBox.Show("该收货单已被删除，请刷新后查看!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
                 if (receiptTicket.State == "拒收")
                 {
                     MessageBox.Show("该收货单已拒收，不能生成上架单!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
@@ -607,6 +612,11 @@ namespace WMS.UI
                 if (receiptTicket.State == "待收货")
                 {
                     MessageBox.Show("生成上架单前请先收货", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (receiptTicket.State == "送检中")
+                {
+                    MessageBox.Show("该收货单还在送检中，不能生成上架单。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 if (receiptTicket.ReceiptTicketItem.ToArray().Length == 0)

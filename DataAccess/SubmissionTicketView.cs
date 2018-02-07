@@ -56,5 +56,6 @@ namespace WMS.DataAccess
         public Nullable<System.DateTime> PaintTime { get; set; }
         public string ReceiptTicketInwardDeliverTicketNo { get; set; }
         public string ReceiptTicketInwardDeliverLineNo { get; set; }
+        public string ReceiptTicketHasPutawayTicket { get; set; }
     }
 }

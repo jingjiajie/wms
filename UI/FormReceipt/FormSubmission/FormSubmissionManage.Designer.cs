@@ -46,6 +46,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripTop.SuspendLayout();
             this.statusStrip2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -103,6 +105,8 @@
             this.toolStripSeparator4,
             this.buttonPass,
             this.buttonNoPass,
+            this.toolStripSeparator1,
+            this.toolStripButton1,
             this.toolStripSeparator2,
             this.ButtonOutput});
             this.toolStripTop.Location = new System.Drawing.Point(0, 50);
@@ -242,6 +246,22 @@
             this.panel2.Size = new System.Drawing.Size(1924, 50);
             this.panel2.TabIndex = 12;
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.AutoSize = false;
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(15, 28);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::WMS.UI.Properties.Resources._122;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(158, 35);
+            this.toolStripButton1.Text = "生成上架单";
+            this.toolStripButton1.ToolTipText = "拒收";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // FormSubmissionManage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -281,5 +301,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton ButtonOutput;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

@@ -50,5 +50,6 @@ namespace WMS.DataAccess
         public string ReceiptTicketNo { get; set; }
         public decimal ScheduledShipmentAmount { get; set; }
         public Nullable<int> ComponentID { get; set; }
+        public Nullable<decimal> AvailableAmount { get; set; }
     }
 }
