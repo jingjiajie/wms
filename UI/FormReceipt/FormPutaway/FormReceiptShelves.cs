@@ -408,8 +408,9 @@ namespace WMS.UI.FormReceipt
                     ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();
                     if (receiptTicketItem != null)
                     {
-                        
+
                         receiptTicketItem.HasPutwayAmount -= (pti.ScheduledMoveCount == null ? 0 : pti.ScheduledMoveCount) - (pti.PutawayAmount == null ? 0 : pti.PutawayAmount);
+                        //receiptTicketItem.HasPutwayAmount += pti.PutawayAmount;
                         if (receiptTicketItem.HasPutwayAmount == 0)
                         {
                             n++;

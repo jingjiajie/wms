@@ -927,7 +927,7 @@ namespace WMS.UI.FormReceipt
                         canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == 0 ? 0 : (decimal)submissionTicketItem.ReturnAmount);
                     }
                     putawayTicketItem.ScheduledMoveCount = canPutawayAmount - (rti.HasPutwayAmount == null ? 0 : (decimal)rti.HasPutwayAmount);
-                    rti.HasPutwayAmount = rti.RealReceiptAmount;
+                    rti.HasPutwayAmount = canPutawayAmount;
                     putawayTicketItem.State = "待上架";
                     putawayTicketItem.UnitCount = rti.UnitCount;
                     putawayTicketItem.Unit = rti.Unit;
