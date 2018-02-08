@@ -105,6 +105,7 @@
             // 
             // toolStripComboBox1
             // 
+            this.toolStripComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.toolStripComboBox1.Items.AddRange(new object[] {
             "无",
             "供货商代号",
