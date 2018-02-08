@@ -616,7 +616,27 @@ namespace WMS.UI.FormReceipt
                     return;
                 }
             }
-
+            formPreview.SetPrintedCallback(new Action(()=>
+            {
+                WMSEntities wmsEntities2 = new WMSEntities();
+                foreach(int id in ids)
+                {
+                    PutawayTicket putawayTicket = (from pt in wmsEntities2.PutawayTicket where pt.ID == id select pt).FirstOrDefault();
+                    if (putawayTicket != null)
+                    {
+                        if (putawayTicket.PrintTimes == null)
+                        {
+                            putawayTicket.PrintTimes = 0;
+                        }
+                        putawayTicket.PrintTimes++;
+                    }
+                }
+                new Thread(()=> 
+                {
+                    wmsEntities2.SaveChanges();
+                    Search();
+                }).Start();
+            }));
             
             //formPreview.AddData("SubmissionTicketItem", submissionTicketItemView);
             formPreview.Show();
