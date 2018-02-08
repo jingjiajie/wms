@@ -977,8 +977,8 @@ namespace WMS.UI
         private void buttonImport_Click(object sender, EventArgs e)
         {
             this.standardImportForm = new StandardImportForm<ReceiptTicketItem>(ReceiptMetaData.itemsKeyName, importItemHandler, importFinishedCallback, "导入收货单条目");
-            this.standardImportForm.AddDefaultValue("RealReceiptUnitCount", "SELECT CAST(@RealReceiptAmount AS DECIMAL)/CAST(@UnitAmount AS DECIMAL)");
-            this.standardImportForm.AddDefaultValue("RealReceiptAmount", "SELECT @ExpectedAmount");
+            this.standardImportForm.AddDefaultValue("RealReceiptUnitCount", "SELECT CAST(@RealReceiptAmount AS DECIMAL)/CAST(@UnitAmount AS DECIMAL)", true, true);
+            this.standardImportForm.AddDefaultValue("RealReceiptAmount", "SELECT @ExpectedAmount", true, true);
             this.standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultReceiptUnit FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1} AND isHistory = 0;", this.projectID, this.warehouseID));
             this.standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultReceiptUnitAmount FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1} AND isHistory = 0;", this.projectID, this.warehouseID));
             this.standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultReceiptUnit FROM SupplyView WHERE ComponentName = @Component AND ProjectID = {0} AND WarehouseID = {1} AND isHistory = 0;", this.projectID, this.warehouseID));

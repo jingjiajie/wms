@@ -182,6 +182,7 @@ namespace WMS.UI.FormReceipt
             //new KeyName{Name = "分配数量", Key = "DistributeAmount", Visible = true, Editable = true, Save = true},
             //new KeyName{Name = "打印次数", Key = "PrintTimes", Visible = true, Editable = false, Save = true},
             new KeyName{Name = "作业组名称", Key = "JobGroupName", Visible = true, Editable = true, Save = true},
+            new KeyName{Name = "打印次数", Key = "PrintTimes", Visible = true, Editable = false, Save = false},
             new KeyName{Name = "责任人ID", Key = "PersonID", Visible = false, Editable = false, Save = true},
             new KeyName{Name = "责任人", Key = "PersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
             new KeyName{Name = "创建用户ID", Key = "CreateUserID", Visible = false, Editable = false, Save = true},
