@@ -30,6 +30,8 @@ namespace WMS.DataAccess
         public Nullable<decimal> UnitAmount { get; set; }
         public Nullable<decimal> RefuseAmount { get; set; }
         public Nullable<decimal> Result { get; set; }
+        public string BatchNumber { get; set; }
+        public string PurchaseOrder { get; set; }
     
         public virtual ReceiptTicketItem ReceiptTicketItem { get; set; }
         public virtual SubmissionTicket SubmissionTicket { get; set; }

@@ -67,6 +67,7 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="送检单单号", Key="No",Visible=true,Editable=true, EditPlaceHolder = "自动生成"},
             new KeyName(){Name="收货单单号", Key="ReceiptTicketNo", Visible = true, Editable = false, Save = false},
             new KeyName(){Name="内向交货单号", Key="ReceiptTicketInwardDeliverTicketNo", Visible = true, Editable = false, Save = false},
+            new KeyName(){Name="SAP凭证", Key="SAPNo", Visible=true, Editable = true, Save = true},
             new KeyName(){Name="状态", Key="State",Visible=true,Editable=false},
             new KeyName(){Name="是否生成上架单", Key = "ReceiptTicketHasPutawayTicket", Visible=true,Editable=false, Save=false},
             new KeyName(){Name="有无自检报告", Key="HasSelfInspectionReport",Visible=true,Editable=false, ComboBoxItems = new ComboBoxItem[]{new ComboBoxItem("有", "有"), new ComboBoxItem("无", "无")} },
@@ -164,7 +165,10 @@ namespace WMS.UI.FormReceipt
             new KeyName(){Name="作业人", Key = "JobPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
             new KeyName(){Name="确认人ID", Key = "ConfirmPersonID",Visible = false, Editable = false, Save = true},
             new KeyName(){Name="确认人", Key = "ConfirmPersonName", Visible = true, Editable = true, Save = false, EditPlaceHolder = "点击选择人员"},
+            new KeyName(){Name="批次号", Key = "BatchNumber", Visible = true, Editable = true, Save = true},
+            new KeyName(){Name="采购订单", Key = "PurchaseOrder", Visible = true, Editable = true, Save = true},
             new KeyName(){Name="备注", Key="Comment",Visible=true,Editable=true,Save=true},
+            
             //new KeyName(){Name="库房返回", Key = "Result", Visible=true,Editable=true,Save=true}
         };
 

@@ -61,5 +61,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> Result { get; set; }
         public string ReceiptTicketItemBatchNumber { get; set; }
         public string ReceiptTicketItemPurchaseOrder { get; set; }
+        public string BatchNumber { get; set; }
+        public string PurchaseOrder { get; set; }
     }
 }

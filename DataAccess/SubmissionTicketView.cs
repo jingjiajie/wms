@@ -57,5 +57,6 @@ namespace WMS.DataAccess
         public string ReceiptTicketInwardDeliverTicketNo { get; set; }
         public string ReceiptTicketInwardDeliverLineNo { get; set; }
         public string ReceiptTicketHasPutawayTicket { get; set; }
+        public string SAPNo { get; set; }
     }
 }
