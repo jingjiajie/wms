@@ -18,7 +18,7 @@ namespace WMS.UI
     public partial class StandardFormPreviewExcel : Form
     {
         ExcelGenerator excelGenerator = new ExcelGenerator();
-        bool loadFinished = false;
+        volatile bool loadFinished = false;
 
         Dictionary<string, float> defaultPrintScales = new Dictionary<string, float>();
         Dictionary<string, Worksheet> patternTables = new Dictionary<string, Worksheet>();
@@ -27,8 +27,59 @@ namespace WMS.UI
         public StandardFormPreviewExcel(string formTitle, float printScale = 1.0F)
         {
             InitializeComponent();
+            this.comboBoxPrintSettingsRange.SelectedIndex = 0;
             this.Text = formTitle;
             this.SetPrintScale(printScale);
+        }
+
+
+        private void SetPrintScaleAll(float scale)
+        {
+            if (this.loadFinished == false)
+            {
+                throw new Exception("SetPrintScaleAll只实现了在窗口显示之后设置的功能。");
+            }
+            else
+            {
+                foreach (var worksheet in this.reoGridControlMain.Worksheets)
+                {
+                    worksheet.PrintSettings.PageScaling = scale;
+                    worksheet.AutoSplitPage();
+                }
+                this.textBoxScale.TextChanged -= this.textBoxScale_TextChanged;
+                this.textBoxScale.Text = scale.ToString();
+                this.textBoxScale.TextChanged += this.textBoxScale_TextChanged;
+            }
+        }
+
+        private void SetPaperSizeAll(string paperSizeStr)
+        {
+            if (this.loadFinished == false)
+            {
+                throw new Exception("SetPaperSizeAll只实现了在窗口显示之后设置的功能。");
+            }
+            else
+            {
+                string[] segments = paperSizeStr.Split('x');
+                if (segments.Length != 2) return;
+                if (float.TryParse(segments[0], out float paperWidth) == false)
+                {
+                    return;
+                }
+                if (float.TryParse(segments[1], out float paperHeight) == false)
+                {
+                    return;
+                }
+                foreach (var worksheet in this.reoGridControlMain.Worksheets)
+                {
+                    worksheet.PrintSettings.PaperWidth = paperWidth;
+                    worksheet.PrintSettings.PaperHeight = paperHeight;
+                    worksheet.AutoSplitPage();
+                }
+                this.textBoxPaperSize.TextChanged -= this.textBoxPaperSize_TextChanged;
+                this.textBoxPaperSize.Text = paperSizeStr.ToString();
+                this.textBoxPaperSize.TextChanged += this.textBoxPaperSize_TextChanged;
+            }
         }
 
         public void SetPrintScale(float scale, string worksheetName = "sheet1")
@@ -56,13 +107,14 @@ namespace WMS.UI
                         break;
                     }
                 }
+                this.textBoxScale.TextChanged -= this.textBoxScale_TextChanged;
                 this.textBoxScale.Text = this.reoGridControlMain.CurrentWorksheet.PrintSettings.PageScaling.ToString();
+                this.textBoxScale.TextChanged += this.textBoxScale_TextChanged;
             }
         }
 
         private void StandardFormPreviewExcel_Load(object sender, EventArgs e)
         {
-            loadFinished = true;
             try
             {
                 this.reoGridControlMain.Worksheets.Clear();
@@ -82,18 +134,30 @@ namespace WMS.UI
                     newWorksheet.Name = sheetName;
                     newWorksheet.EnableSettings(WorksheetSettings.View_ShowPageBreaks);
                     newWorksheet.SetSettings(WorksheetSettings.Behavior_AllowUserChangingPageBreaks, true);
+                    newWorksheet.PrintSettings.Margins = new PageMargins(0,0.21f,0,0); //页边距设为0，打印用
                     this.reoGridControlMain.Worksheets.Add(newWorksheet);
-                    //newWorksheet.PrintSettings.PaperName = "24 x 14";
-                    //newWorksheet.PrintSettings.PaperWidth = 9.4488189f;
-                    //newWorksheet.PrintSettings.PaperWidth = 5.511811f;
-                    newWorksheet.PrintSettings.PaperName = "24 x 14";
-                    newWorksheet.PrintSettings.PaperWidth = 9.4488189f * 100;
-                    newWorksheet.PrintSettings.PaperWidth = 5.511811f * 100;
-                    if (this.defaultPrintScales.ContainsKey(sheetName))
-                    {
-                        this.SetPrintScale(this.defaultPrintScales[sheetName], sheetName);
-                    }
                 }
+
+                loadFinished = true; //状态更新为加载完成，开始设置打印放大比例和纸张大小
+                
+                //默认打印纸尺寸
+                float paperWidth = 9.6f; 
+                float paperHeight = 5.51f;
+                string paperSizeStr = paperWidth + " x " + paperHeight;
+
+                foreach(Worksheet worksheet in this.reoGridControlMain.Worksheets)
+                {
+                    if (this.defaultPrintScales.ContainsKey(worksheet.Name))
+                    {
+                        this.SetPrintScale(this.defaultPrintScales[worksheet.Name], worksheet.Name);
+                    }
+                    worksheet.PrintSettings.PaperWidth = paperWidth;
+                    worksheet.PrintSettings.PaperHeight = paperHeight;
+                    worksheet.AutoSplitPage();
+                }
+                this.textBoxPaperSize.TextChanged -= this.textBoxPaperSize_TextChanged;
+                this.textBoxPaperSize.Text = paperSizeStr;
+                this.textBoxPaperSize.TextChanged += this.textBoxPaperSize_TextChanged;
             }
             catch (Exception ex)
             {
@@ -162,7 +226,6 @@ namespace WMS.UI
 
         private void buttonPrint_Click(object sender, EventArgs e)
         {
-            this.reoGridControlMain.CurrentWorksheet.PrintSettings.Margins = new PageMargins(0);
             PrintDocument doc = null;
             try
             {
@@ -173,16 +236,6 @@ namespace WMS.UI
                 MessageBox.Show(this, ex.Message, this.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-
-            //System.Drawing.Printing.PaperSize ps = new System.Drawing.Printing.PaperSize("Custom", (int)(9.448 * 100),(int)(5.511 * 100));
-            //doc.PrinterSettings.DefaultPageSettings.PaperSize = ps;
-            //doc.DefaultPageSettings.PaperSize = ps;
-            //doc.DefaultPageSettings.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
-            //doc.OriginAtMargins = true;
-
-            //PageSetupDialog pageSetupDialog = new PageSetupDialog();
-            //pageSetupDialog.Document = doc;
-            //pageSetupDialog.ShowDialog();
 
             //PrintPreviewDialog printPreviewDialog = new PrintPreviewDialog();
             //printPreviewDialog.Document = doc;
@@ -203,6 +256,7 @@ namespace WMS.UI
                     catch
                     {
                         if (doc != null) doc.Dispose();
+                        return;
                     }
                 }
             }
@@ -216,8 +270,12 @@ namespace WMS.UI
             {
                 return;
             }
-            this.reoGridControlMain.CurrentWorksheet.PrintSettings.PageScaling = printScale;
-            this.reoGridControlMain.CurrentWorksheet.AutoSplitPage();
+            if(comboBoxPrintSettingsRange.SelectedIndex == 1)
+            {
+                this.SetPrintScaleAll(printScale);
+                return;
+            }
+            this.SetPrintScale(printScale, this.reoGridControlMain.CurrentWorksheet.Name);
         }
 
         private void textBoxScale_KeyPress(object sender, KeyPressEventArgs e)
@@ -259,13 +317,55 @@ namespace WMS.UI
 
         private void reoGridControlMain_CurrentWorksheetChanged(object sender, EventArgs e)
         {
+            if (loadFinished == false)
+            {
+                return;
+            }
             try
             {
+                var worksheet = this.reoGridControlMain.CurrentWorksheet;
                 this.textBoxScale.Text = this.reoGridControlMain.CurrentWorksheet.PrintSettings.PageScaling.ToString();
+                this.textBoxPaperSize.Text = worksheet.PrintSettings.PaperWidth + "x" + worksheet.PrintSettings.PaperHeight;
             }
             catch
             {
                 //如果已经关闭窗口，这里会抛异常。直接返回即可
+            }
+        }
+
+        private void textBoxPaperSize_TextChanged(object sender, EventArgs e)
+        {
+            if(this.comboBoxPrintSettingsRange.SelectedIndex == 1) //如果设置全部页，调用封装好的函数
+            {
+                this.SetPaperSizeAll(this.textBoxPaperSize.Text);
+                return;
+            }
+            //否则自己处理
+            string[] segments = textBoxPaperSize.Text.Split('x');
+            if (segments.Length != 2) return;
+            if (float.TryParse(segments[0], out float paperWidth) == false)
+            {
+                return;
+            }
+            if (float.TryParse(segments[1], out float paperHeight) == false)
+            {
+                return;
+            }
+            this.reoGridControlMain.CurrentWorksheet.PrintSettings.PaperWidth = paperWidth;
+            this.reoGridControlMain.CurrentWorksheet.PrintSettings.PaperHeight = paperHeight;
+            this.reoGridControlMain.CurrentWorksheet.AutoSplitPage();
+        }
+
+        private void comboBoxPrintSettingsRange_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(comboBoxPrintSettingsRange.SelectedIndex == 1) //设置全部页
+            {
+                if (float.TryParse(this.textBoxScale.Text,out float printScale)==false)
+                {
+                    return;
+                }
+                this.SetPrintScaleAll(printScale);
+                this.SetPaperSizeAll(this.textBoxPaperSize.Text);
             }
         }
     }

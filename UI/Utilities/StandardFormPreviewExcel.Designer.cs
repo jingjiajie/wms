@@ -39,6 +39,10 @@
             this.textBoxScale = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.textBoxPaperSize = new System.Windows.Forms.ToolStripTextBox();
+            this.comboBoxPrintSettingsRange = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripTop.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -79,7 +83,11 @@
             this.toolStripSeparator2,
             this.toolStripLabel1,
             this.textBoxScale,
-            this.toolStripLabel2});
+            this.toolStripLabel2,
+            this.toolStripSeparator3,
+            this.toolStripLabel3,
+            this.textBoxPaperSize,
+            this.comboBoxPrintSettingsRange});
             this.toolStripTop.Location = new System.Drawing.Point(0, 0);
             this.toolStripTop.Name = "toolStripTop";
             this.toolStripTop.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -152,6 +160,36 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1074, 529);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(134, 27);
+            this.toolStripLabel3.Text = "纸张大小：";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
+            // 
+            // textBoxPaperSize
+            // 
+            this.textBoxPaperSize.Font = new System.Drawing.Font("微软雅黑", 10F);
+            this.textBoxPaperSize.Name = "textBoxPaperSize";
+            this.textBoxPaperSize.Size = new System.Drawing.Size(110, 30);
+            this.textBoxPaperSize.TextBoxTextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxPaperSize.TextChanged += new System.EventHandler(this.textBoxPaperSize_TextChanged);
+            // 
+            // comboBoxPrintSettingsRange
+            // 
+            this.comboBoxPrintSettingsRange.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxPrintSettingsRange.FlatStyle = System.Windows.Forms.FlatStyle.Standard;
+            this.comboBoxPrintSettingsRange.Items.AddRange(new object[] {
+            "设置本页",
+            "设置全部页"});
+            this.comboBoxPrintSettingsRange.Name = "comboBoxPrintSettingsRange";
+            this.comboBoxPrintSettingsRange.Size = new System.Drawing.Size(121, 30);
+            this.comboBoxPrintSettingsRange.SelectedIndexChanged += new System.EventHandler(this.comboBoxPrintSettingsRange_SelectedIndexChanged);
+            // 
             // StandardFormPreviewExcel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 27F);
@@ -185,5 +223,9 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripTextBox textBoxPaperSize;
+        private System.Windows.Forms.ToolStripComboBox comboBoxPrintSettingsRange;
     }
 }
