@@ -765,6 +765,19 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             PutawayTicketItem[] putawayTicketItems = putawayTicket.PutawayTicketItem.ToArray();
+            int n = 0;
+            foreach(PutawayTicketItem pti in putawayTicketItems)
+            {
+                if (pti.State == "已上架")
+                {
+                    n++;
+                }
+            }
+            if (n == putawayTicketItems.Length)
+            {
+                MessageBox.Show("该上架单已全部上架！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             foreach (PutawayTicketItem pti in putawayTicketItems)
             {
                 decimal oldPutawayAmount = (pti.PutawayAmount == null ? 0 : (decimal)pti.PutawayAmount);

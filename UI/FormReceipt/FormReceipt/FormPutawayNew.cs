@@ -21,6 +21,7 @@ namespace WMS.UI.FormReceipt
         private FormMode formMode;
         private int putawayTicketID;
         private int editableColumn = 1;
+        private decimal putawayAmountColumn = 2;
         private Action CallBack = null;
         private int countRow;
         private int userID;
@@ -86,6 +87,11 @@ namespace WMS.UI.FormReceipt
                     worksheet.ColumnHeaders[i].Text = "计划移位数量";
                     worksheet.ColumnHeaders[i].IsVisible = true;
                 }
+                else if (i == this.putawayAmountColumn)
+                {
+                    worksheet.ColumnHeaders[i].Text = "可上架数量";
+                    worksheet.ColumnHeaders[i].IsVisible = true;
+                }
                 else
                 {
                     worksheet.ColumnHeaders[i].Text = this.KeyName[n].Name;
@@ -94,7 +100,7 @@ namespace WMS.UI.FormReceipt
                 }
             }
             //worksheet.ColumnHeaders[columnNames.Length].Text = "是否送检";
-            worksheet.Columns = this.KeyName.Length + 1;
+            worksheet.Columns = this.KeyName.Length + 2;
             worksheet.CellMouseEnter += ClickOnCell;
         }
 
@@ -164,6 +170,18 @@ namespace WMS.UI.FormReceipt
                                 //worksheet[i, j]
                                 worksheet.CreateAndGetCell(i, j).Style.BackColor = Color.AliceBlue;
                                 //worksheet[i, j] = "0";
+                            }
+                            else if(j == this.putawayAmountColumn)
+                            {
+                                SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == curReceiptTicketItemView.ID select sti).FirstOrDefault();
+
+                                decimal canPutawayAmount = curReceiptTicketItemView.RealReceiptAmount == null ? 0 : (decimal)curReceiptTicketItemView.RealReceiptAmount;
+                                if (submissionTicketItem != null)
+                                {
+                                    canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == 0 ? 0 : (decimal)submissionTicketItem.ReturnAmount);
+                                }
+                                canPutawayAmount = canPutawayAmount - (curReceiptTicketItemView.HasPutwayAmount == null ? 0 : (decimal)curReceiptTicketItemView.HasPutwayAmount);
+                                worksheet[i, j] = Utilities.DecimalToString(canPutawayAmount);
                             }
                             else
                             {

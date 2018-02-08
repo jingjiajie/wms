@@ -837,27 +837,27 @@ namespace WMS.UI
                     MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                int receiptTicketID;
+                int submissionTicketID;
                 try
                 {
-                    receiptTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
+                    submissionTicketID = int.Parse(worksheet[worksheet.SelectionRange.Row, 0].ToString());
                 }
                 catch
                 {
                     MessageBox.Show("请选择一项进行修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == receiptTicketID select rt).FirstOrDefault();
-                if (receiptTicket == null)
+                SubmissionTicketView submissionTicketView = (from rt in wmsEntities.SubmissionTicketView where rt.ID == submissionTicketID select rt).FirstOrDefault();
+                if (submissionTicketView == null)
                 {
-                    MessageBox.Show("该收货单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("该送检单不存在", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else
                 {
                     string key = "ReceiptTicketNo";
                     string name = (from r in ReceiptMetaData.receiptNameKeys where r.Key == key select r.Name).FirstOrDefault();
-                    string value = receiptTicket.No;
+                    string value = submissionTicketView.ReceiptTicketNo;
                     ToPutaway(key, value);
                 }
             //}
