@@ -931,8 +931,10 @@ namespace WMS.UI.FormReceipt
                 return;
             }
             List<PutawayTicketItem> putawayTicketItemList = new List<PutawayTicketItem>();
+            int n = 0;
             foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
             {
+               
                 if (rti.HasPutwayAmount < rti.RealReceiptAmount || rti.HasPutwayAmount == null)
                 {
                     PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
@@ -945,6 +947,12 @@ namespace WMS.UI.FormReceipt
                         canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == 0 ? 0 : (decimal)submissionTicketItem.ReturnAmount);
                     }
                     putawayTicketItem.ScheduledMoveCount = canPutawayAmount - (rti.HasPutwayAmount == null ? 0 : (decimal)rti.HasPutwayAmount);
+                    if (putawayTicketItem.ScheduledMoveCount == 0)
+                    {
+                      
+                        continue;
+                    }
+                    
                     rti.HasPutwayAmount = canPutawayAmount;
                     putawayTicketItem.State = "待上架";
                     putawayTicketItem.UnitCount = rti.UnitCount;
@@ -953,6 +961,20 @@ namespace WMS.UI.FormReceipt
                     putawayTicketItemList.Add(putawayTicketItem);
                     wmsEntities.PutawayTicketItem.Add(putawayTicketItem);
                 }
+                else
+                {
+                    n++;
+                }
+            }
+            if(n == receiptTicket.ReceiptTicketItem.Count)
+            {
+                MessageBox.Show("该收货单已全部生成上架单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (n == receiptTicket.ReceiptTicketItem.Count)
+            {
+                MessageBox.Show("该收货单已全部生成上架单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
             if (putawayTicketItemList.Count != 0)
             {
