@@ -24,6 +24,9 @@ namespace WMS.UI
         Dictionary<string, Worksheet> patternTables = new Dictionary<string, Worksheet>();
         Dictionary<string, Dictionary<string, object>> data = new Dictionary<string, Dictionary<string, object>>();
 
+        private Action printedCallback = null;
+        private Action exportedExcelCallback = null;
+
         public StandardFormPreviewExcel(string formTitle, float printScale = 1.0F)
         {
             InitializeComponent();
@@ -32,6 +35,15 @@ namespace WMS.UI
             this.SetPrintScale(printScale);
         }
 
+        public void SetPrintedCallback(Action callback)
+        {
+            this.printedCallback = callback;
+        }
+
+        public void SetExportedExcelCallback(Action callback)
+        {
+            this.exportedExcelCallback = callback;
+        }
 
         private void SetPrintScaleAll(float scale)
         {
@@ -222,6 +234,7 @@ namespace WMS.UI
             }
             string filePath = dialog.FileName;
             this.reoGridControlMain.Save(filePath);
+            this.exportedExcelCallback?.Invoke();
         }
 
         private void buttonPrint_Click(object sender, EventArgs e)
@@ -252,6 +265,7 @@ namespace WMS.UI
                     try
                     {
                         doc.Print();
+                        this.printedCallback?.Invoke();
                     }
                     catch
                     {
