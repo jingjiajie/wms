@@ -25,11 +25,13 @@ namespace WMS.UI
             ,
              new KeyName(){Key="ExpectedShipmentAreaAmount",Name="账面发货区数量",Editable=false ,Save=true  },
             new KeyName(){Key="RealShipmentAreaAmount",Name="实际发货区数量",Editable=true ,Save=true }
-            ,
-            
+            ,            
             new KeyName(){Key="PersonName",Name="实际盘点人",Editable=false  ,Save=false ,EditPlaceHolder ="点击选择盘点人"  }
+            ,            
+            new KeyName(){Key="QualifiedQuantityVariance",Name="合格品差异数",Editable =false ,EditPlaceHolder ="自动计算" , Save=false    }
             ,
-
+            new KeyName(){Key="Comment",Name="备注",Editable=true,Save=true ,EditPlaceHolder ="填写备注"   }
+            ,
         };
 
         public static KeyName[] KeyNames { get => keyNames; set => keyNames = value; }
