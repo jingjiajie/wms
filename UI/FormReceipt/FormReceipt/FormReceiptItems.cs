@@ -115,7 +115,7 @@ namespace WMS.UI
             this.Controls.Find("textBoxState", true)[0].Text = receiptTicketView.State;
             if (receiptTicketView.State != "待收货")
             {
-                MessageBox.Show("该收货单状态为" + receiptTicketView.State + ",无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show("该收货单状态为" + receiptTicketView.State + ",无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
                 //this.buttonModify.Enabled = false;
@@ -123,7 +123,7 @@ namespace WMS.UI
             }
             if (receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.HasPutawayTicket == "全部生成上架单")
             {
-                MessageBox.Show("该收货单已经生成上架单，无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("该收货单已经生成上架单，无法修改收货单条目数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
                 //this.buttonModify.Enabled = false;
@@ -788,6 +788,7 @@ namespace WMS.UI
                                             {
                                                 stockInfo.OverflowAreaAmount = receiptTicketItem.RealReceiptAmount + (submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount) - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount);
                                                 //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount + submissionTicketItem.RejectAmount;
+                                                submissionTicketItem.ArriveAmount = receiptTicketItem.RealReceiptAmount;
                                             }
                                             else
                                             {
@@ -803,7 +804,17 @@ namespace WMS.UI
                                         {
                                             if (receiptTicketItem.SubmissionTicketItem.Count != 0)
                                             {
-                                                stockInfo.RejectAreaAmount = receiptTicketItem.RealReceiptAmount;
+                                                SubmissionTicketItem submissionTicketItem = receiptTicketItem.SubmissionTicketItem.FirstOrDefault();
+                                                if (submissionTicketItem != null)
+                                                {
+                                                    submissionTicketItem.ArriveAmount = receiptTicketItem.RealReceiptAmount;
+                                                    stockInfo.RejectAreaAmount = receiptTicketItem.RealReceiptAmount + submissionTicketItem.ReturnAmount - submissionTicketItem.SubmissionAmount;
+                                                    if (stockInfo.RejectAreaAmount < 0)
+                                                    {
+                                                        MessageBox.Show("收货数量不能小于送检数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                                        return;
+                                                    }
+                                                }
                                             }
                                         }
                                         else if (receiptTicketItem.State == "送检中")
