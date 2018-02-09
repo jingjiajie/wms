@@ -178,7 +178,7 @@ namespace WMS.UI.FormReceipt
                                 decimal canPutawayAmount = curReceiptTicketItemView.RealReceiptAmount == null ? 0 : (decimal)curReceiptTicketItemView.RealReceiptAmount;
                                 if (submissionTicketItem != null)
                                 {
-                                    canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == 0 ? 0 : (decimal)submissionTicketItem.ReturnAmount);
+                                    canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount);
                                 }
                                 canPutawayAmount = canPutawayAmount - (curReceiptTicketItemView.HasPutwayAmount == null ? 0 : (decimal)curReceiptTicketItemView.HasPutwayAmount);
                                 worksheet[i, j] = Utilities.DecimalToString(canPutawayAmount);
