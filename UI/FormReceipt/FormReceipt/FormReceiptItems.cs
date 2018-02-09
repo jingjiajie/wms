@@ -786,7 +786,7 @@ namespace WMS.UI
                                             SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == receiptTicketItem.ID select sti).FirstOrDefault();
                                             if (submissionTicketItem != null)
                                             {
-                                                stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount - submissionTicketItem.ReturnAmount;
+                                                stockInfo.OverflowAreaAmount = receiptTicketItem.RealReceiptAmount + (submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount) - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount);
                                                 //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount + submissionTicketItem.RejectAmount;
                                             }
                                             else
@@ -798,6 +798,13 @@ namespace WMS.UI
                                             stockInfo.SupplyID = receiptTicketItem.SupplyID;
                                             stockInfo.ManufactureDate = receiptTicketItem.ManufactureDate;
                                             stockInfo.InventoryDate = receiptTicketItem.InventoryDate;
+                                        }
+                                        else if (receiptTicketItem.State == "拒收")
+                                        {
+                                            if (receiptTicketItem.SubmissionTicketItem.Count != 0)
+                                            {
+                                                stockInfo.RejectAreaAmount = receiptTicketItem.RealReceiptAmount;
+                                            }
                                         }
                                         else if (receiptTicketItem.State == "送检中")
                                         {
