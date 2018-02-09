@@ -38,14 +38,11 @@ namespace WMS.UI
             this.stockInfoCheckID = stockInfoCheckID;
             this.projectID = projectID;
             this.warehouseID = warehouseID;
-            this.userID = userID;
-       
+            this.userID = userID;       
         }
 
         private void FormStockCheckModify_Load(object sender, EventArgs e)
-        {
-
-            
+        {            
             if (this.mode == FormMode.ALTER && this.stockInfoCheckID == -1)
             {
                 throw new Exception("未设置源库存信息");
@@ -88,25 +85,11 @@ namespace WMS.UI
             this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
             this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
             this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0].TextChanged += textBoxExcpetedOverflowAreaAmount_TextChanged;
-
             this.reoGridControlMain.Worksheets[0].SelectionRangeChanged += worksheet_SelectionRangeChanged;
             this.InitComponents();         
-            additionTextboxDiffrence();
-            this.Search();
-            
-
-
-
+            //additionTextboxDiffrence();
+            this.Search();            
         }
-
-
-
-
-
-
-
-
-
 
         private void additionTextboxDiffrence()
         {
@@ -150,8 +133,7 @@ namespace WMS.UI
             TextBox textBoxRealOverflowAreaAmount = (TextBox)this.Controls.Find("textBoxRealOverflowAreaAmount", true)[0];
             TextBox textBoxExpectedShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxExpectedShipmentAreaAmount", true)[0];
             TextBox textBoxRealShipmentAreaAmount = (TextBox)this.Controls.Find("textBoxRealShipmentAreaAmount", true)[0];
-
-            TextBox textBoxtDifference = (TextBox)this.Controls.Find("textBoxDifference", true)[0];
+            //TextBox textBoxtDifference = (TextBox)this.Controls.Find("textBoxDifference", true)[0];
             decimal result;
             if (textBoxExcpetedOverflowAreaAmount.Text != "" && textBoxRealOverflowAreaAmount.Text != "" && textBoxExpectedShipmentAreaAmount.Text !="" && textBoxRealShipmentAreaAmount.Text != "")
 
@@ -170,9 +152,7 @@ namespace WMS.UI
                 decimal  ExpectedShipmentAreaAmount = Convert.ToDecimal (textBoxExpectedShipmentAreaAmount.Text);
                 decimal  RealOverflowAreaAmount= Convert.ToDecimal (textBoxRealOverflowAreaAmount.Text);
                 decimal  RealShipmentAreaAmount = Convert.ToDecimal (textBoxRealShipmentAreaAmount.Text);
-                textBoxtDifference.Text =( -(ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount)).ToString();
-
-
+                //textBoxtDifference.Text =( -(ExcpetedOverflowAreaAmount+ ExpectedShipmentAreaAmount-RealOverflowAreaAmount- RealShipmentAreaAmount)).ToString();
             }
 
 
@@ -323,18 +303,6 @@ namespace WMS.UI
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
         private void InitComponents()
         {
             //string[] visibleColumnNames = (from kn in StockInfoCheckTicksModifyMetaDate.KeyNames
@@ -526,18 +494,7 @@ namespace WMS.UI
             });
             FormSelectSupply.ShowDialog();
 
-
-
-
-
-
         }
-
-
-
-
-
-
 
 
 
@@ -646,21 +603,10 @@ namespace WMS.UI
             }
 
             
-
-
-
-
-
-
-            StockInfoCheckTicketItem = new DataAccess.StockInfoCheckTicketItem();
+            StockInfoCheckTicketItem = new StockInfoCheckTicketItem();
             wmsEntities.StockInfoCheckTicketItem.Add(StockInfoCheckTicketItem);
-
-
             StockInfoCheckTicketItem.StockInfoCheckTicketID = this.stockInfoCheckID ;
-
-
-
-             StockInfoCheckTicketItem.SupplyID  = this.supplyID ;
+            StockInfoCheckTicketItem.SupplyID  = this.supplyID ;
             StockInfoCheckTicketItem.PersonID = this.personid;
             
 

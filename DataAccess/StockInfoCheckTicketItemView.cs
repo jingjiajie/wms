@@ -36,5 +36,7 @@ namespace WMS.DataAccess
         public string PersonName { get; set; }
         public string SupplyNo { get; set; }
         public string SupplyNumber { get; set; }
+        public string Comment { get; set; }
+        public Nullable<decimal> QualifiedQuantityVariance { get; set; }
     }
 }
