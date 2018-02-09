@@ -98,6 +98,8 @@ namespace WMS.UI.FormReceipt
                     this.tableLayoutPanelProperties.Visible = false;
                     InitPanel();
                     this.tableLayoutPanelProperties.Visible = true;
+                    TextBox textBoxPutawayAmount = (TextBox)this.Controls.Find("textBoxPutawayAmount", true)[0];
+                    textBoxPutawayAmount.TextChanged += textBoxPuawayAmount_TextChanged;
                 }));
             }).Start();
             WMSEntities wmsEntities = new WMSEntities();
@@ -107,13 +109,38 @@ namespace WMS.UI.FormReceipt
             pagerWidget.AddOrderBy("StockInfoShipmentAreaAmount / (ComponentDailyProduction * ComponentSingleCarUsageAmount)");
             pagerWidget.AddOrderBy("ReceiptTicketItemInventoryDate");
             Search();
-
             this.pagerWidget.Show();
 
             //this.RefreshTextBoxes();
         }
 
+        private void textBoxPuawayAmount_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox textBoxPutawayAmount = (TextBox)sender;
+                TextBox textBoxUnitAmount = (TextBox)this.Controls.Find("textBoxUnitAmount", true)[0];
+                TextBox textBoxPutawayUnitCount = (TextBox)this.Controls.Find("textBoxUnitCount", true)[0];
+                string strPutawayAmount = textBoxPutawayAmount.Text;
+                string strUnitAmount = textBoxUnitAmount.Text;
+                string strPutawayUnitCount = textBoxPutawayUnitCount.Text;
+                decimal putawayAmount;
+                decimal unitAmount;
+                decimal putawayUnitCount = 0;
+                if (decimal.TryParse(strPutawayAmount, out putawayAmount) == true && decimal.TryParse(strUnitAmount, out unitAmount) == true)
+                {
+                    putawayUnitCount = putawayAmount / unitAmount;
+                }
+                if (putawayUnitCount >= 0)
+                {
+                    textBoxPutawayUnitCount.Text = Utilities.DecimalToString(putawayUnitCount);
+                }
+            }
+            catch
+            {
 
+            }
+        }
 
         private void Search(bool savePage = false, int selectID = -1)
         {
@@ -783,7 +810,7 @@ namespace WMS.UI.FormReceipt
                 decimal oldPutawayAmount = (pti.PutawayAmount == null ? 0 : (decimal)pti.PutawayAmount);
                 pti.PutawayAmount = pti.ScheduledMoveCount;
                 //pti.PutawayAmount = pti.UnitAmount * pti.MoveCount;
-                pti.MoveCount = pti.PutawayAmount / pti.UnitAmount;
+                pti.UnitCount = pti.PutawayAmount / pti.UnitAmount;
                 pti.OperateTime = DateTime.Now.ToString();
                 pti.State = "已上架";
                 //ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == pti.ReceiptTicketItemID select rti).FirstOrDefault();

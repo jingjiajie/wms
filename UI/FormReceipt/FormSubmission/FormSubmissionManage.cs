@@ -787,22 +787,22 @@ namespace WMS.UI
                     MessageBox.Show("该收货单已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (submissionTicket.State == "待检")
-                {
-                    MessageBox.Show("该送检单状态为待检，不能生成上架单!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
-                    return;
-                }
+                //if (submissionTicket.State == "待检")
+                //{
+                //    MessageBox.Show("该送检单状态为待检，不能生成上架单!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                //    return;
+                //}
                 /*
                 if (receiptTicket.HasPutawayTicket == "是")
                 {
                     MessageBox.Show("该收货单已经生成上架单，点击查看对应上架单按钮查看！");
                     return;
                 }*/
-                if (submissionTicket.State != "合格")
-                {
-                    MessageBox.Show("该送检单状态为" + submissionTicket.State + "，不能生成上架单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if (submissionTicket.State != "合格")
+                //{
+                //    MessageBox.Show("该送检单状态为" + submissionTicket.State + "，不能生成上架单", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == submissionTicket.ReceiptTicketID select rt).FirstOrDefault();
                 if (receiptTicket == null)
                 {

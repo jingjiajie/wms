@@ -608,7 +608,7 @@ namespace WMS.UI
                         t.Dock = System.Windows.Forms.DockStyle.Fill;
                         t.FormBorderStyle = FormBorderStyle.None;
                         //s.Dock = System.Windows.Forms.DockStyle.Fill;
-                        this.panelRight.Controls.Add(s);
+                        this.panelRight.Controls.Add(t);
 
                         t.Show();
                         SetTreeViewSelectedNodeByText("上架单管理");
