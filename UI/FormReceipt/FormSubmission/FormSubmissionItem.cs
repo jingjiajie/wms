@@ -88,7 +88,7 @@ namespace WMS.UI.FormReceipt
             ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItemView.ReceiptTicketItemID select rti).FirstOrDefault();
             if (receiptTicketItem != null)
             {
-                if (receiptTicketItem.HasPutwayAmount != null)
+                if (receiptTicketItem.HasPutwayAmount != null && receiptTicketItem.HasPutwayAmount != 0)
                 {
                     this.buttonFinished.Enabled = false;
                     this.buttonModify.Enabled = false;
