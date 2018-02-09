@@ -786,7 +786,7 @@ namespace WMS.UI
                                             SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == receiptTicketItem.ID select sti).FirstOrDefault();
                                             if (submissionTicketItem != null)
                                             {
-                                                stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount - submissionTicketItem.ReturnAmount;
+                                                stockInfo.OverflowAreaAmount = receiptTicketItem.RealReceiptAmount + (submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount) - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount);
                                                 //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount + submissionTicketItem.RejectAmount;
                                             }
                                             else
@@ -799,12 +799,25 @@ namespace WMS.UI
                                             stockInfo.ManufactureDate = receiptTicketItem.ManufactureDate;
                                             stockInfo.InventoryDate = receiptTicketItem.InventoryDate;
                                         }
+                                        else if (receiptTicketItem.State == "拒收")
+                                        {
+                                            if (receiptTicketItem.SubmissionTicketItem.Count != 0)
+                                            {
+                                                stockInfo.RejectAreaAmount = receiptTicketItem.RealReceiptAmount;
+                                            }
+                                        }
                                         else if (receiptTicketItem.State == "送检中")
                                         {
                                             SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == receiptTicketItem.ID select sti).FirstOrDefault();
                                             if (submissionTicketItem != null)
                                             {
+                                                submissionTicketItem.ArriveAmount = receiptTicketItem.ReceiviptAmount;
                                                 stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount);
+                                                if (stockInfo.ReceiptAreaAmount < 0)
+                                                {
+                                                    MessageBox.Show("实际收货数量不能小于送检数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                                    return;
+                                                }
                                             }
                                         }
                                         else
@@ -1053,7 +1066,8 @@ namespace WMS.UI
         {
             this.standardImportForm = new StandardImportForm<ReceiptTicketItem>(ReceiptMetaData.itemsKeyName, importItemHandler, importFinishedCallback, "导入收货单条目");
             this.standardImportForm.AddDefaultValue("RealReceiptUnitCount", "SELECT CAST(@RealReceiptAmount AS DECIMAL)/CAST(@UnitAmount AS DECIMAL)", true, true);
-            this.standardImportForm.AddDefaultValue("RealReceiptAmount", "SELECT @ExpectedAmount", true, true);
+            this.standardImportForm.AddDefaultValue("RealReceiptAmount", "SELECT @ExpectedAmount WHERE @focus = 'ExpectedAmount'", true, true);
+            //this.standardImportForm.AddDefaultValue("RealReceiptAmount", "SELECT CAST(@RealReceiptUnitCount AS DECIMAL) * CAST(@UnitAmount AS DECIMAL) WHERE @focus = 'RealReceiptUnitCount'", true, true);
             this.standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultReceiptUnit FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1} AND isHistory = 0;", this.projectID, this.warehouseID));
             this.standardImportForm.AddDefaultValue("UnitAmount", string.Format("SELECT DefaultReceiptUnitAmount FROM Supply WHERE [No] = @Component AND ProjectID = {0} AND WarehouseID = {1} AND isHistory = 0;", this.projectID, this.warehouseID));
             this.standardImportForm.AddDefaultValue("Unit", string.Format("SELECT DefaultReceiptUnit FROM SupplyView WHERE ComponentName = @Component AND ProjectID = {0} AND WarehouseID = {1} AND isHistory = 0;", this.projectID, this.warehouseID));
@@ -1234,16 +1248,16 @@ namespace WMS.UI
                 results[i].ExpectedUnitCount = results[i].ExpectedAmount / results[i].UnitAmount;
                 results[i].UnitCount = results[i].RealReceiptUnitCount;
                 results[i].ReceiviptAmount = results[i].RealReceiptAmount;
-                if (results[i].RefuseAmount > results[i].ExpectedAmount)
-                {
-                    MessageBox.Show("第" + (i + 1).ToString() + "行中，拒收数量不能大于期待数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
-                if (results[i].ReceiviptAmount > results[i].ExpectedAmount)
-                {
-                    MessageBox.Show("第" + (i + 1).ToString() + "行中， 实际收货数量大于期待数量!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
+                //if (results[i].RefuseAmount > results[i].ExpectedAmount)
+                //{
+                //    MessageBox.Show("第" + (i + 1).ToString() + "行中，拒收数量不能大于期待数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return false;
+                //}
+                //if (results[i].ReceiviptAmount > results[i].ExpectedAmount)
+                //{
+                //    MessageBox.Show("第" + (i + 1).ToString() + "行中， 实际收货数量大于期待数量!", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return false;
+                //}
 
                 wmsEntities.ReceiptTicketItem.Add(results[i]);
             }
