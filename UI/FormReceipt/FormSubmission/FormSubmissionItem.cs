@@ -1235,6 +1235,7 @@ namespace WMS.UI.FormReceipt
 
                 wmsEntities.SaveChanges();
                 MessageBox.Show("送检单状态检测完毕！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (this.IsDisposed) return;
                 this.Invoke(new Action(() => 
                 {
                     this.Search();

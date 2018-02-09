@@ -28,6 +28,7 @@ namespace WMS.DataAccess
         public Nullable<decimal> RealSubmissionAmount { get; set; }
         public Nullable<int> PersonID { get; set; }
         public Nullable<int> SupplyID { get; set; }
+        public string Comment { get; set; }
     
         public virtual StockInfoCheckTicket StockInfoCheckTicket { get; set; }
         public virtual Supply Supply { get; set; }
