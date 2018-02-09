@@ -118,7 +118,7 @@ namespace WMS.UI
                 MessageBox.Show("该收货单状态为" + receiptTicketView.State + ",无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
-                this.buttonModify.Enabled = false;
+                //this.buttonModify.Enabled = false;
                 this.buttonImport.Enabled = false;
             }
             if (receiptTicketView.HasPutawayTicket == "部分生成上架单" || receiptTicketView.HasPutawayTicket == "全部生成上架单")
@@ -126,8 +126,10 @@ namespace WMS.UI
                 MessageBox.Show("该收货单已经生成上架单，无法修改收货单条目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.buttonAdd.Enabled = false;
                 this.buttonDelete.Enabled = false;
-                this.buttonModify.Enabled = false;
+                //this.buttonModify.Enabled = false;
                 this.buttonImport.Enabled = false;
+
+
             }
 
             Search();
@@ -430,6 +432,30 @@ namespace WMS.UI
                 this.buttonAdd.Text = "增加零件条目";
                 return;
             }
+            if (receiptTicketItemView.HasPutwayAmount != null && receiptTicketItemView.HasPutwayAmount != 0)
+            {
+
+                this.Controls.Find("textBoxExpectedAmount", true)[0].Enabled = false;
+                this.Controls.Find("textBoxRealReceiptAmount", true)[0].Enabled = false;
+                this.Controls.Find("textBoxRealReceiptUnitCount", true)[0].Enabled = false;
+                this.Controls.Find("textBoxUnit", true)[0].Enabled = false;
+                this.Controls.Find("textBoxUnitAmount", true)[0].Enabled = false;
+                this.Controls.Find("textBoxRefuseAmount", true)[0].Enabled = false;
+                this.Controls.Find("textBoxRefuseUnit", true)[0].Enabled = false;
+                this.Controls.Find("textBoxRefuseUnitAmount", true)[0].Enabled = false;
+
+            }
+            else
+            {
+                this.Controls.Find("textBoxExpectedAmount", true)[0].Enabled = true;
+                this.Controls.Find("textBoxRealReceiptAmount", true)[0].Enabled = true;
+                this.Controls.Find("textBoxRealReceiptUnitCount", true)[0].Enabled = true;
+                this.Controls.Find("textBoxUnit", true)[0].Enabled = true;
+                this.Controls.Find("textBoxUnitAmount", true)[0].Enabled = true;
+                this.Controls.Find("textBoxRefuseAmount", true)[0].Enabled = true;
+                this.Controls.Find("textBoxRefuseUnit", true)[0].Enabled = true;
+                this.Controls.Find("textBoxRefuseUnitAmount", true)[0].Enabled = true;
+            }
             //this.buttonAdd.Text = "复制零件条目";
             this.receiptTicketItemID = int.Parse(receiptTicketItemView.ID.ToString());
             if (receiptTicketItemView.SupplyID != null)
@@ -664,118 +690,166 @@ namespace WMS.UI
                     return;
                 }
                 //int oldRejectAreaAmount;
-                int oldReceiptAreaAmount;
-                ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).FirstOrDefault();
-                if (receiptTicketItem == null)
+                ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
+                if (receiptTicket != null)
                 {
-                    MessageBox.Show("找不到该收货单条目，可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                Supply supply = (from s in wmsEntities.Supply where s.ID == receiptTicketItem.SupplyID select s).FirstOrDefault();
-                if (supply != null)
-                {
-                    supply.ReceiveTimes--;
-                }
-                oldReceiptAreaAmount = receiptTicketItem.ReceiviptAmount == null ? 0 : (int)receiptTicketItem.ReceiviptAmount;
-                //oldRejectAreaAmount = receiptTicketItem.DisqualifiedAmount == null ? 0 : (int)receiptTicketItem.DisqualifiedAmount;
-                string errorInfo;
-                if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == false)
-                {
-                    MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                else
-                {
-
-                    if (this.ConfirmPersonIDGetter() != -1)
+                    if (receiptTicket.HasPutawayTicket == "未生成上架单")
                     {
-                        receiptTicketItem.ConfirmPersonID = this.ConfirmPersonIDGetter();
-                    }
-                    if (this.JobPersonIDGetter() != -1)
-                    {
-                        receiptTicketItem.JobPersonID = this.JobPersonIDGetter();
-                    }
-
-                    //receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitAmount * receiptTicketItem.UnitCount;
-                    new Thread(() =>
-                    {
-                        try
+                        int oldReceiptAreaAmount;
+                        ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == receiptItemID select rti).FirstOrDefault();
+                        if (receiptTicketItem == null)
                         {
-                            //receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
+                            MessageBox.Show("找不到该收货单条目，可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        Supply supply = (from s in wmsEntities.Supply where s.ID == receiptTicketItem.SupplyID select s).FirstOrDefault();
+                        if (supply != null)
+                        {
+                            supply.ReceiveTimes--;
+                        }
+                        oldReceiptAreaAmount = receiptTicketItem.ReceiviptAmount == null ? 0 : (int)receiptTicketItem.ReceiviptAmount;
+                        //oldRejectAreaAmount = receiptTicketItem.DisqualifiedAmount == null ? 0 : (int)receiptTicketItem.DisqualifiedAmount;
+                        string errorInfo;
+                        if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, ReceiptMetaData.itemsKeyName, out errorInfo) == false)
+                        {
+                            MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        else
+                        {
 
-                            receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
-                            receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
-                            //receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
-                            //receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
-                            receiptTicketItem.RefuseUnitCount = receiptTicketItem.RefuseAmount / receiptTicketItem.RefuseUnitAmount;
-                            receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
-                            //receiptTicketItem.ExpectedAmount = receiptTicketItem.ExpectedUnitCount * receiptTicketItem.UnitAmount;
-                            //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
-                            //receiptTicketItem.WrongComponentAmount = receiptTicketItem.WrongComponentUnitAmount * receiptTicketItem.WrongComponentUnitCount;
-                            //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount - receiptTicketItem.RefuseAmount;
-                            if (receiptTicketItem.ReceiviptAmount < 0)
+                            if (this.ConfirmPersonIDGetter() != -1)
                             {
+                                receiptTicketItem.ConfirmPersonID = this.ConfirmPersonIDGetter();
+                            }
+                            if (this.JobPersonIDGetter() != -1)
+                            {
+                                receiptTicketItem.JobPersonID = this.JobPersonIDGetter();
+                            }
 
-                                MessageBox.Show("实际收货数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            if (receiptTicketItem.RefuseAmount < 0)
+                            //receiptTicketItem.ReceiviptAmount = receiptTicketItem.UnitAmount * receiptTicketItem.UnitCount;
+                            new Thread(() =>
                             {
-                                MessageBox.Show("拒收数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            if (receiptTicketItem.ExpectedAmount < 0)
-                            {
-                                MessageBox.Show("订单数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return;
-                            }
-                            //receiptTicketItem.ShortageAmount = receiptTicketItem.ExpectedAmount - receiptTicketItem.RealReceiptAmount;
-                            //receiptTicketItem.UnitCount = receiptTicketItem.ReceiviptAmount / receiptTicketItem.UnitAmount;
-
-                            receiptTicketItem.SupplyID = this.componentID;
-                            supply = (from s in wmsEntities.Supply where s.ID == receiptTicketItem.SupplyID select s).FirstOrDefault();
-                            if (supply != null)
-                            {
-                                supply.ReceiveTimes++;
-                            }
-                            StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
-                            if (stockInfo == null)
-                            {
-                                //MessageBox.Show("该库存信息已被删除");
-                            }
-                            else
-                            {
-                                if (receiptTicketItem.State == "待收货" || receiptTicketItem.State == "拒收")
+                                try
                                 {
-                                    stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
-                                    //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
-                                }
-                                else if (receiptTicketItem.State == "已收货")
-                                {
-                                    SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == receiptTicketItem.ID select sti).FirstOrDefault();
-                                    if (submissionTicketItem != null)
+                                    //receiptTicketItem.RealReceiptAmount = receiptTicketItem.RealReceiptUnitCount * receiptTicketItem.UnitAmount;
+
+                                    receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
+                                    receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
+                                    //receiptTicketItem.DisqualifiedAmount = receiptTicketItem.DisqualifiedUnitAmount * receiptTicketItem.DisqualifiedUnitCount;
+                                    //receiptTicketItem.RefuseAmount = receiptTicketItem.RefuseUnitAmount * receiptTicketItem.RefuseUnitCount;
+                                    receiptTicketItem.RefuseUnitCount = receiptTicketItem.RefuseAmount / receiptTicketItem.RefuseUnitAmount;
+                                    receiptTicketItem.UnitCount = receiptTicketItem.RealReceiptUnitCount;
+                                    //receiptTicketItem.ExpectedAmount = receiptTicketItem.ExpectedUnitCount * receiptTicketItem.UnitAmount;
+                                    //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount;
+                                    //receiptTicketItem.WrongComponentAmount = receiptTicketItem.WrongComponentUnitAmount * receiptTicketItem.WrongComponentUnitCount;
+                                    //receiptTicketItem.ReceiviptAmount = receiptTicketItem.RealReceiptAmount - receiptTicketItem.RefuseAmount;
+                                    if (receiptTicketItem.ReceiviptAmount < 0)
                                     {
-                                        stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount - submissionTicketItem.ReturnAmount;
-                                        //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount + submissionTicketItem.RejectAmount;
+
+                                        MessageBox.Show("实际收货数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        return;
+                                    }
+                                    if (receiptTicketItem.RefuseAmount < 0)
+                                    {
+                                        MessageBox.Show("拒收数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        return;
+                                    }
+                                    if (receiptTicketItem.ExpectedAmount < 0)
+                                    {
+                                        MessageBox.Show("订单数量不能小于0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        return;
+                                    }
+                                    //receiptTicketItem.ShortageAmount = receiptTicketItem.ExpectedAmount - receiptTicketItem.RealReceiptAmount;
+                                    //receiptTicketItem.UnitCount = receiptTicketItem.ReceiviptAmount / receiptTicketItem.UnitAmount;
+
+                                    receiptTicketItem.SupplyID = this.componentID;
+                                    supply = (from s in wmsEntities.Supply where s.ID == receiptTicketItem.SupplyID select s).FirstOrDefault();
+                                    if (supply != null)
+                                    {
+                                        supply.ReceiveTimes++;
+                                    }
+                                    StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                                    if (stockInfo == null)
+                                    {
+                                        //MessageBox.Show("该库存信息已被删除");
                                     }
                                     else
                                     {
-                                        stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount;
-                                        // stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
+                                        if (receiptTicketItem.State == "待收货")
+                                        {
+                                            stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
+                                            //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
+                                        }
+                                        else if (receiptTicketItem.State == "已收货")
+                                        {
+                                            SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == receiptTicketItem.ID select sti).FirstOrDefault();
+                                            if (submissionTicketItem != null)
+                                            {
+                                                stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount - submissionTicketItem.ReturnAmount;
+                                                //stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount + submissionTicketItem.RejectAmount;
+                                            }
+                                            else
+                                            {
+                                                stockInfo.OverflowAreaAmount = receiptTicketItem.ReceiviptAmount;
+                                                // stockInfo.RejectAreaAmount = receiptTicketItem.DisqualifiedAmount;
+                                            }
+                                            stockInfo.ExpiryDate = receiptTicketItem.ExpiryDate;
+                                            stockInfo.SupplyID = receiptTicketItem.SupplyID;
+                                            stockInfo.ManufactureDate = receiptTicketItem.ManufactureDate;
+                                            stockInfo.InventoryDate = receiptTicketItem.InventoryDate;
+                                        }
+                                        else if (receiptTicketItem.State == "送检中")
+                                        {
+                                            SubmissionTicketItem submissionTicketItem = (from sti in wmsEntities.SubmissionTicketItem where sti.ReceiptTicketItemID == receiptTicketItem.ID select sti).FirstOrDefault();
+                                            if (submissionTicketItem != null)
+                                            {
+                                                stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            receiptTicketItem.ReceiviptAmount = oldReceiptAreaAmount;
+                                            //receiptTicketItem.DisqualifiedAmount = oldRejectAreaAmount;
+                                        }
                                     }
-                                    stockInfo.ExpiryDate = receiptTicketItem.ExpiryDate;
-                                    stockInfo.SupplyID = receiptTicketItem.SupplyID;
-                                    stockInfo.ManufactureDate = receiptTicketItem.ManufactureDate;
-                                    stockInfo.InventoryDate = receiptTicketItem.InventoryDate;
+                                    wmsEntities.SaveChanges();
+                                    MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    this.Search();
                                 }
-                                else
+                                catch
                                 {
-                                    receiptTicketItem.ReceiviptAmount = oldReceiptAreaAmount;
-                                    //receiptTicketItem.DisqualifiedAmount = oldRejectAreaAmount;
+                                    MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                                    return;
                                 }
+                            }).Start();
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            ReceiptTicketItem receiptTicketItem = (from rt in wmsEntities.ReceiptTicketItem where rt.ID == receiptItemID select rt).FirstOrDefault();
+                            if (receiptTicketItem == null)
+                            {
+                                MessageBox.Show("该收货单可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            KeyName[] keyName = (from kn in ReceiptMetaData.itemsKeyName where kn.Key != "ExpectedAmount" || kn.Key != "RealReceiptAmount" || kn.Key != "RealReceiptUnitCount" || kn.Key != "Unit" || kn.Key != "UnitAmount" || kn.Key != "RefuseAmount" || kn.Key != "RefuseUnitCount" || kn.Key != "RefuseUnitAmount" select kn).ToArray();
+                            string errorInfo;
+                            if (Utilities.CopyTextBoxTextsToProperties(this, receiptTicketItem, keyName, out errorInfo) == false)
+                            {
+                                MessageBox.Show(errorInfo, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                            receiptTicketItem.SupplyID = this.componentID;
+                            StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                            if (stockInfo != null)
+                            {
+                                stockInfo.SupplyID = this.componentID;
                             }
                             wmsEntities.SaveChanges();
-                            MessageBox.Show("修改成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             this.Search();
                         }
                         catch
@@ -783,8 +857,9 @@ namespace WMS.UI
                             MessageBox.Show("无法连接到数据库，请查看网络连接!", "警告", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                             return;
                         }
-                    }).Start();
+                    }
                 }
+
             }
             catch (Exception)
             {
@@ -1208,22 +1283,22 @@ namespace WMS.UI
             return false;
         }
 
-    private void importFinishedCallback()
-    {
+        private void importFinishedCallback()
+        {
 
 
+        }
+
+        private void reoGridControlReceiptItems_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormReceiptItems_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
     }
-
-    private void reoGridControlReceiptItems_Click_1(object sender, EventArgs e)
-    {
-
-    }
-
-    private void FormReceiptItems_FormClosing(object sender, FormClosingEventArgs e)
-    {
-
-    }
-}
     /*
                         StockInfo stockInfo = new StockInfo();
                         stockInfo.ExpiryDate = results[i].ExpiryDate;

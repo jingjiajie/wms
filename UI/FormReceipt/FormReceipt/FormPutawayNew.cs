@@ -178,7 +178,7 @@ namespace WMS.UI.FormReceipt
                                 decimal canPutawayAmount = curReceiptTicketItemView.RealReceiptAmount == null ? 0 : (decimal)curReceiptTicketItemView.RealReceiptAmount;
                                 if (submissionTicketItem != null)
                                 {
-                                    canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == 0 ? 0 : (decimal)submissionTicketItem.ReturnAmount);
+                                    canPutawayAmount = canPutawayAmount - (submissionTicketItem.SubmissionAmount == null ? 0 : (decimal)submissionTicketItem.SubmissionAmount) + (submissionTicketItem.ReturnAmount == null ? 0 : (decimal)submissionTicketItem.ReturnAmount);
                                 }
                                 canPutawayAmount = canPutawayAmount - (curReceiptTicketItemView.HasPutwayAmount == null ? 0 : (decimal)curReceiptTicketItemView.HasPutwayAmount);
                                 worksheet[i, j] = Utilities.DecimalToString(canPutawayAmount);
@@ -298,6 +298,11 @@ namespace WMS.UI.FormReceipt
                         if (receiptTicketItem == null)
                         {
                             MessageBox.Show("该收货单中，某收货单条目未找到，可能已被删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return null;
+                        }
+                        if (receiptTicketItem.State != "已收货")
+                        {
+                            MessageBox.Show("只有状态为已收货的条目才能生成上架单！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return null;
                         }
                         decimal canPutawayAmount = receiptTicketItem.RealReceiptAmount == null ? 0 : (decimal)receiptTicketItem.RealReceiptAmount;
@@ -667,6 +672,11 @@ namespace WMS.UI.FormReceipt
                     MessageBox.Show("第" + (i + 1) + "行中，无法找到该收货单条目！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
+                if (receiptTicketItem.State != "已收货")
+                {
+                    MessageBox.Show("第" + (i + 1) + "行中，收货单状态为" + receiptTicketItem.State + "，无法上架！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
                 results[i].ReceiptTicketItemID = receiptTicketItem.ID;
 
                 //ReceiptTicketItemView[] receiptTicketItemViewNo = (from sv in wmsEntities.ReceiptTicketItemView where sv.SupplyNo == supplyNoName && sv.ReceiptTicketID == this.receiptTicketID select sv).ToArray();
@@ -934,7 +944,10 @@ namespace WMS.UI.FormReceipt
             int n = 0;
             foreach (ReceiptTicketItem rti in receiptTicket.ReceiptTicketItem)
             {
-               
+                if (rti.State != "已收货")
+                {
+                    continue;
+                }
                 if (rti.HasPutwayAmount < rti.RealReceiptAmount || rti.HasPutwayAmount == null)
                 {
                     PutawayTicketItem putawayTicketItem = new PutawayTicketItem();
@@ -955,7 +968,7 @@ namespace WMS.UI.FormReceipt
                     
                     rti.HasPutwayAmount = canPutawayAmount;
                     putawayTicketItem.State = "待上架";
-                    putawayTicketItem.UnitCount = rti.UnitCount;
+                    //putawayTicketItem.UnitCount = rti.UnitCount;
                     putawayTicketItem.Unit = rti.Unit;
                     putawayTicketItem.UnitAmount = rti.UnitAmount;
                     putawayTicketItemList.Add(putawayTicketItem);

@@ -41,22 +41,7 @@ namespace WMS.UI.FormReceipt
         {
             InitComponents();
             InitPanel();
-            
-            WMSEntities wmsEntities = new WMSEntities();
-            SubmissionTicketView submissionTicketView = (from stv in wmsEntities.SubmissionTicketView where stv.ID == this.submissionTicketID select stv).FirstOrDefault();
             Search();
-
-            if (submissionTicketView != null)
-            {
-                if (submissionTicketView.ReceiptTicketHasPutawayTicket != "未生成上架单")
-                {
-                    MessageBox.Show("该送检单已生成上架单，不能修改", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    this.buttonAllPass.Enabled = false;
-                    this.buttonFinished.Enabled = false;
-                    this.buttonModify.Enabled = false;
-                }
-            }
-
         }
 
         private void InitPanel()
@@ -98,6 +83,21 @@ namespace WMS.UI.FormReceipt
             {
                 MessageBox.Show("系统错误，未找到相应送检单项目", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
+            }
+            //StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == submissionTicketItemView.ReceiptTicketItemID select si).FirstOrDefault();
+            ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == submissionTicketItemView.ReceiptTicketItemID select rti).FirstOrDefault();
+            if (receiptTicketItem != null)
+            {
+                if (receiptTicketItem.HasPutwayAmount != null)
+                {
+                    this.buttonFinished.Enabled = false;
+                    this.buttonModify.Enabled = false;
+                }
+                else
+                {
+                    this.buttonFinished.Enabled = true;
+                    this.buttonModify.Enabled = true;
+                }
             }
             this.submissionTicketID = int.Parse(submissionTicketItemView.SubmissionTicketID.ToString());
             Utilities.CopyPropertiesToTextBoxes(submissionTicketItemView, this);
@@ -948,12 +948,21 @@ namespace WMS.UI.FormReceipt
             SubmissionTicketItem[] submissionTicketItems = submissionTicket.SubmissionTicketItem.ToArray();
             foreach (SubmissionTicketItem sti in submissionTicketItems)
             {
+                if (sti.State == "合格")
+                {
+                    continue;
+                }
+               // Console.WriteLine(sti.State);
                 sti.State = "合格";
                 sti.ReturnAmount = sti.SubmissionAmount;
                 sti.RejectAmount = 0;
                 ReceiptTicketItem receiptTicketItem = (from rti in wmsEntities.ReceiptTicketItem where rti.ID == sti.ReceiptTicketItemID select rti).FirstOrDefault();
                 if (receiptTicketItem != null)
                 {
+                    if (receiptTicketItem.State == "已收货")
+                    {
+                        continue;
+                    }
                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == sti.ReceiptTicketItemID select si).FirstOrDefault();
                     if (stockInfo != null)
                     {
