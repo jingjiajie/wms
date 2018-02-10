@@ -333,7 +333,8 @@ namespace WMS.UI
                 this.componentID = id;
                 ReceiptTicket receiptTicket = (from rt in wmsEntities.ReceiptTicket where rt.ID == this.receiptTicketID select rt).FirstOrDefault();
                 WMS.DataAccess.Supply supply = (from c in wmsEntities.Supply where c.ID == id select c).FirstOrDefault();
-
+                var worksheet = this.reoGridControlReceiptItems.Worksheets[0];
+                
                 if (supply == null)
                 {
                     MessageBox.Show("没有找到该零件", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -344,29 +345,33 @@ namespace WMS.UI
                 }
                 else
                 {
-
-                    this.ClearTextBoxes();
-                    this.realReceiptAmountRefreshMark = true;
-                    this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
-                    this.Controls.Find("textBoxUnit", true)[0].Text = supply.DefaultReceiptUnit;
-                    this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.DefaultReceiptUnitAmount.ToString();
                     this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
                     this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
-
-                    //this.Controls.Find("textBoxManufactureDate", true)[0].Text = supply
-                    this.Controls.Find("textBoxInventoryDate", true)[0].Text = DateTime.Now.ToString();
-                    if (supply.ValidPeriod != null)
+                    if (receiptTicket.State == "待收货")
                     {
-                        this.Controls.Find("textBoxExpiryDate", true)[0].Text = DateTime.Now.AddDays((double)supply.ValidPeriod).ToString();
-                    }
-                    //this.Controls.Find("textBoxWrongComponentUnit", true)[0].Text = "个";
-                    //this.Controls.Find("textBoxWrongComponentUnitAmount", true)[0].Text = "1";
-                    this.Controls.Find("textBoxRefuseAmount", true)[0].Text = "0";
-                    this.Controls.Find("textBoxRefuseUnit", true)[0].Text = supply.DefaultReceiptUnit;
-                    this.Controls.Find("textBoxRefuseUnitAmount", true)[0].Text = supply.DefaultReceiptUnitAmount.ToString();
+                        this.ClearTextBoxes();
+                        this.realReceiptAmountRefreshMark = true;
+                        this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
+                        this.Controls.Find("textBoxUnit", true)[0].Text = supply.DefaultReceiptUnit;
+                        this.Controls.Find("textBoxUnitAmount", true)[0].Text = supply.DefaultReceiptUnitAmount.ToString();
+                        
 
-                    //this.Controls.Find("textBoxDisqualifiedUnit", true)[0].Text = "个";
-                    //this.Controls.Find("textBoxDisqualifiedUnitAmount", true)[0].Text = "1";
+                        //this.Controls.Find("textBoxManufactureDate", true)[0].Text = supply
+                        this.Controls.Find("textBoxInventoryDate", true)[0].Text = DateTime.Now.ToString();
+                        if (supply.ValidPeriod != null)
+                        {
+                            this.Controls.Find("textBoxExpiryDate", true)[0].Text = DateTime.Now.AddDays((double)supply.ValidPeriod).ToString();
+                        }
+                        //this.Controls.Find("textBoxWrongComponentUnit", true)[0].Text = "个";
+                        //this.Controls.Find("textBoxWrongComponentUnitAmount", true)[0].Text = "1";
+                        this.Controls.Find("textBoxRefuseAmount", true)[0].Text = "0";
+                        this.Controls.Find("textBoxRefuseUnit", true)[0].Text = supply.DefaultReceiptUnit;
+                        this.Controls.Find("textBoxRefuseUnitAmount", true)[0].Text = supply.DefaultReceiptUnitAmount.ToString();
+
+                        //this.Controls.Find("textBoxDisqualifiedUnit", true)[0].Text = "个";
+                        //this.Controls.Find("textBoxDisqualifiedUnitAmount", true)[0].Text = "1";
+                    }
+
                 }
 
             }));
