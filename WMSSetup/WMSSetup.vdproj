@@ -154,25 +154,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_52441EB7B9C3A763D0A6554750026451"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B8EDA2ADA3D06FD589FC657B811E3B2C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EEFA4BC1689A145F614F1D208B46B99A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E96A81D1C4874D85F59422350CB57038"
+        "OwnerKey" = "8:_0EAF1FE64C3623AD50ED74F8B166375E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -184,7 +166,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0EAF1FE64C3623AD50ED74F8B166375E"
+        "OwnerKey" = "8:_E96A81D1C4874D85F59422350CB57038"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EEFA4BC1689A145F614F1D208B46B99A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B8EDA2ADA3D06FD589FC657B811E3B2C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_52441EB7B9C3A763D0A6554750026451"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -289,6 +289,11 @@
             "AssemblyAsmDisplayName" = "8:EMacro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_0EAF1FE64C3623AD50ED74F8B166375E"
+                    {
+                    "Name" = "8:EMacro.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:EMacro.dll"
             "TargetName" = "8:"
@@ -375,6 +380,11 @@
             "AssemblyAsmDisplayName" = "8:EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_52441EB7B9C3A763D0A6554750026451"
+                    {
+                    "Name" = "8:EntityFramework.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:EntityFramework.dll"
             "TargetName" = "8:"
@@ -501,6 +511,11 @@
             "AssemblyAsmDisplayName" = "8:DataAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_B8EDA2ADA3D06FD589FC657B811E3B2C"
+                    {
+                    "Name" = "8:DataAccess.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:DataAccess.dll"
             "TargetName" = "8:"
@@ -567,6 +582,11 @@
             "AssemblyAsmDisplayName" = "8:unvell.ReoGrid, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_DDB8D985C5DE11048A0570B59BEBB7F7"
+                    {
+                    "Name" = "8:unvell.ReoGrid.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:unvell.ReoGrid.dll"
             "TargetName" = "8:"
@@ -613,6 +633,11 @@
             "AssemblyAsmDisplayName" = "8:Jint, Version=0.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_E96A81D1C4874D85F59422350CB57038"
+                    {
+                    "Name" = "8:Jint.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Jint.dll"
             "TargetName" = "8:"
@@ -639,6 +664,11 @@
             "AssemblyAsmDisplayName" = "8:Antlr4.Runtime.Standard, Version=4.7.0.0, Culture=neutral, PublicKeyToken=e78b2c5abd1fcb3f, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_EEFA4BC1689A145F614F1D208B46B99A"
+                    {
+                    "Name" = "8:Antlr4.Runtime.Standard.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:Antlr4.Runtime.Standard.dll"
             "TargetName" = "8:"
@@ -733,7 +763,7 @@
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.8"
+        "ProductVersion" = "8:1.1.9"
         "Manufacturer" = "8:BJUT"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -848,7 +878,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_61711852C860427FA4629FB3DFE1D02E"
             {
-            "Name" = "8:安途丰达WMS 测试版本209"
+            "Name" = "8:安途丰达WMS 测试版本210"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -862,7 +892,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_924E59AA50E44E75A33304664113F79D"
             {
-            "Name" = "8:安途丰达 WMS系统 测试版本209"
+            "Name" = "8:安途丰达 WMS系统 测试版本210"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
