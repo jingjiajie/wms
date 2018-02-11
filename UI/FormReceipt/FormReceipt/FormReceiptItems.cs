@@ -707,7 +707,17 @@ namespace WMS.UI
                         MessageBox.Show("找不到该收货单条目，可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    
                     Supply supply = (from s in wmsEntities.Supply where s.ID == receiptTicketItem.SupplyID select s).FirstOrDefault();
+                    ReceiptTicketItem receiptTicketItem1 = (from rti in wmsEntities.ReceiptTicketItem where rti.ReceiptTicketID == this.receiptTicketID && rti.SupplyID == this.componentID select rti).FirstOrDefault();
+                    if (receiptTicketItem1 != null)
+                    {
+                        if (receiptTicketItem1.ID != receiptTicketItem.ID)
+                        {
+                            MessageBox.Show("该收货单中已包含该零件，不能重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
                     if (supply != null)
                     {
                         supply.ReceiveTimes--;
