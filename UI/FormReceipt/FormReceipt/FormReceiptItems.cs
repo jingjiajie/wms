@@ -792,6 +792,7 @@ namespace WMS.UI
                                     }
                                     else
                                     {
+                                        stockInfo.SupplyID = receiptTicketItem.SupplyID;
                                         if (receiptTicketItem.State == "待收货")
                                         {
                                             stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
@@ -868,6 +869,7 @@ namespace WMS.UI
                                     }
                                     receiptTicketItem.SupplyID = this.componentID;
                                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                                    //stockInfo.SupplyID = receiptTicketItem.SupplyID;
                                     if (stockInfo != null)
                                     {
                                         stockInfo.SupplyID = this.componentID;
