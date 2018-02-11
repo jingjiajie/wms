@@ -345,11 +345,11 @@ namespace WMS.UI
                 }
                 else
                 {
-                    this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
-                    this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
+                    
                     if (receiptTicket.State == "待收货")
                     {
                         this.ClearTextBoxes();
+                       
                         this.realReceiptAmountRefreshMark = true;
                         this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
                         this.Controls.Find("textBoxUnit", true)[0].Text = supply.DefaultReceiptUnit;
@@ -371,7 +371,8 @@ namespace WMS.UI
                         //this.Controls.Find("textBoxDisqualifiedUnit", true)[0].Text = "个";
                         //this.Controls.Find("textBoxDisqualifiedUnitAmount", true)[0].Text = "1";
                     }
-
+                    this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
+                    this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
                 }
 
             }));
@@ -706,7 +707,17 @@ namespace WMS.UI
                         MessageBox.Show("找不到该收货单条目，可能已被删除，请刷新后查看！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+                    
                     Supply supply = (from s in wmsEntities.Supply where s.ID == receiptTicketItem.SupplyID select s).FirstOrDefault();
+                    ReceiptTicketItem receiptTicketItem1 = (from rti in wmsEntities.ReceiptTicketItem where rti.ReceiptTicketID == this.receiptTicketID && rti.SupplyID == this.componentID select rti).FirstOrDefault();
+                    if (receiptTicketItem1 != null)
+                    {
+                        if (receiptTicketItem1.ID != receiptTicketItem.ID)
+                        {
+                            MessageBox.Show("该收货单中已包含该零件，不能重复添加！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
                     if (supply != null)
                     {
                         supply.ReceiveTimes--;
@@ -781,6 +792,7 @@ namespace WMS.UI
                                     }
                                     else
                                     {
+                                        stockInfo.SupplyID = receiptTicketItem.SupplyID;
                                         if (receiptTicketItem.State == "待收货")
                                         {
                                             stockInfo.ReceiptAreaAmount = receiptTicketItem.ReceiviptAmount;
@@ -857,6 +869,7 @@ namespace WMS.UI
                                     }
                                     receiptTicketItem.SupplyID = this.componentID;
                                     StockInfo stockInfo = (from si in wmsEntities.StockInfo where si.ReceiptTicketItemID == receiptTicketItem.ID select si).FirstOrDefault();
+                                    //stockInfo.SupplyID = receiptTicketItem.SupplyID;
                                     if (stockInfo != null)
                                     {
                                         stockInfo.SupplyID = this.componentID;
