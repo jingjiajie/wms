@@ -345,11 +345,11 @@ namespace WMS.UI
                 }
                 else
                 {
-                    this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
-                    this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
+                    
                     if (receiptTicket.State == "待收货")
                     {
                         this.ClearTextBoxes();
+                       
                         this.realReceiptAmountRefreshMark = true;
                         this.Controls.Find("textBoxState", true)[0].Text = receiptTicket.State;
                         this.Controls.Find("textBoxUnit", true)[0].Text = supply.DefaultReceiptUnit;
@@ -371,7 +371,8 @@ namespace WMS.UI
                         //this.Controls.Find("textBoxDisqualifiedUnit", true)[0].Text = "个";
                         //this.Controls.Find("textBoxDisqualifiedUnitAmount", true)[0].Text = "1";
                     }
-
+                    this.Controls.Find("textBoxComponentName", true)[0].Text = supply.Component.Name;
+                    this.Controls.Find("textBoxSupplyNo", true)[0].Text = supply.No;
                 }
 
             }));
