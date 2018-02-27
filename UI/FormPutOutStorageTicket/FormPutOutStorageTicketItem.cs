@@ -285,7 +285,7 @@ namespace WMS.UI
                 MessageBox.Show("内部错误：读取复选框数据失败！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if(putOutStorageTicketItem.RealAmount < 0 || putOutStorageTicketItem.RealAmount > putOutStorageTicketItem.ScheduledAmount)
+            if (putOutStorageTicketItem.RealAmount < 0 || putOutStorageTicketItem.RealAmount > putOutStorageTicketItem.ScheduledAmount)
             {
                 MessageBox.Show("实际装车数量必须大于等于0并且小于计划装车数量", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -296,7 +296,7 @@ namespace WMS.UI
             decimal? deliverAmount = putOutStorageTicketItem.RealAmount * putOutStorageTicketItem.UnitAmount;
             if (returnQualityAmount + returnRejectAmount > deliverAmount)
             {
-                MessageBox.Show("正品返回数量与不良品返回数量之和不能超过实际发货数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("正品返回数量与不良品返回数量之和不能超过实际发货数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -313,8 +313,8 @@ namespace WMS.UI
                     return;
                 }
                 JobTicketItem jobTicketItem = (from j in wmsEntities.JobTicketItem
-                                                         where j.ID == putOutStorageTicketItem.JobTicketItemID
-                                                         select j).FirstOrDefault();
+                                               where j.ID == putOutStorageTicketItem.JobTicketItemID
+                                               select j).FirstOrDefault();
                 if (jobTicketItem != null)
                 {
                     //实际翻包总数量
@@ -358,24 +358,22 @@ namespace WMS.UI
                 stockInfo.ShipmentAreaAmount += deltaReturnQualityAmountNoUnit;
                 stockInfo.RejectAreaAmount += deltaReturnRejectAmountNoUnit;
             }
-            new Thread(() =>
+
+            try
             {
-                try
-                {
-                    wmsEntities.SaveChanges();
-                    this.UpdatePutOutStorageTicketStateSync();
-                }
-                catch
-                {
-                    MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                this.Invoke(new Action(() =>
-                {
-                    this.Search(putOutStorageTicketItem.ID);
-                }));
-                MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }).Start();
+                wmsEntities.SaveChanges();
+                this.UpdatePutOutStorageTicketStateSync();
+            }
+            catch
+            {
+                MessageBox.Show("修改失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            this.Invoke(new Action(() =>
+            {
+                this.Search(putOutStorageTicketItem.ID);
+            }));
+            MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         private void buttonModify_MouseEnter(object sender, EventArgs e)
@@ -399,41 +397,39 @@ namespace WMS.UI
             {
                 return;
             }
-            new Thread(new ThreadStart(() =>
-            {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
-                {
-                    PutOutStorageTicketItem[] items = (from p in wmsEntities.PutOutStorageTicketItem
-                                                     where p.PutOutStorageTicketID == this.putOutStorageTicketID
-                                                     && (p.RealAmount != p.ScheduledAmount || p.State != PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)
-                                                     select p).ToArray();
-                    for(int i = 0; i < items.Length; i++)
-                    {
-                        PutOutStorageTicketItem item = items[i];
-                        item.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED;
-                        item.LoadingTime = DateTime.Now;
-                        decimal deltaRealAmountNoUnit = (items[i].ScheduledAmount - (items[i].RealAmount ?? 0)) * (items[i].UnitAmount ?? 1) ?? 0;
-                        item.RealAmount = items[i].ScheduledAmount;
-                        StockInfo stockInfo = (from s in wmsEntities.StockInfo
-                                               where s.ID == item.StockInfoID
-                                               select s).FirstOrDefault();
-                        stockInfo.ShipmentAreaAmount -= deltaRealAmountNoUnit;
-                        stockInfo.ScheduledShipmentAmount -= deltaRealAmountNoUnit;
-                    }
 
-                    wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));
-                    wmsEntities.SaveChanges();
-                }
-                catch(Exception ex)
+            WMSEntities wmsEntities = new WMSEntities();
+            try
+            {
+                PutOutStorageTicketItem[] items = (from p in wmsEntities.PutOutStorageTicketItem
+                                                   where p.PutOutStorageTicketID == this.putOutStorageTicketID
+                                                   && (p.RealAmount != p.ScheduledAmount || p.State != PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED)
+                                                   select p).ToArray();
+                for (int i = 0; i < items.Length; i++)
                 {
-                    MessageBox.Show("操作失败，请检查网络连接\n请将下面的错误信息反馈给我们：\n"+ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    PutOutStorageTicketItem item = items[i];
+                    item.State = PutOutStorageTicketItemViewMetaData.STRING_STATE_ALL_LOADED;
+                    item.LoadingTime = DateTime.Now;
+                    decimal deltaRealAmountNoUnit = (items[i].ScheduledAmount - (items[i].RealAmount ?? 0)) * (items[i].UnitAmount ?? 1) ?? 0;
+                    item.RealAmount = items[i].ScheduledAmount;
+                    StockInfo stockInfo = (from s in wmsEntities.StockInfo
+                                           where s.ID == item.StockInfoID
+                                           select s).FirstOrDefault();
+                    stockInfo.ShipmentAreaAmount -= deltaRealAmountNoUnit;
+                    stockInfo.ScheduledShipmentAmount -= deltaRealAmountNoUnit;
                 }
-                this.putOutStorageTicketStateChangedCallback?.Invoke(this.putOutStorageTicketID);
-                this.Invoke(new Action(() => this.Search()));
-                MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
+
+                wmsEntities.Database.ExecuteSqlCommand(String.Format("UPDATE PutOutStorageTicket SET State = '{0}' WHERE ID = {1}", PutOutStorageTicketViewMetaData.STRING_STATE_ALL_LOADED, this.putOutStorageTicketID));
+                wmsEntities.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("操作失败，请检查网络连接\n请将下面的错误信息反馈给我们：\n" + ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            this.putOutStorageTicketStateChangedCallback?.Invoke(this.putOutStorageTicketID);
+            this.Invoke(new Action(() => this.Search()));
+            MessageBox.Show("操作成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)

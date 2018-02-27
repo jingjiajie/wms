@@ -388,13 +388,13 @@ namespace WMS.UI
             })).Start();
 
         }
-        
+
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             if (this.curStockInfoID == -1)
             {
-                MessageBox.Show("请选择零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("请选择零件！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             ShipmentTicketItem shipmentTicketItem = new ShipmentTicketItem();
@@ -404,52 +404,51 @@ namespace WMS.UI
             shipmentTicketItem.JobPersonID = this.curJobPersonID == -1 ? null : (int?)this.curJobPersonID;
 
 
-            if (Utilities.CopyTextBoxTextsToProperties(this,shipmentTicketItem,ShipmentTicketItemViewMetaData.KeyNames,out string errorMessage) == false)
+            if (Utilities.CopyTextBoxTextsToProperties(this, shipmentTicketItem, ShipmentTicketItemViewMetaData.KeyNames, out string errorMessage) == false)
             {
-                MessageBox.Show(errorMessage,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(errorMessage, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if(shipmentTicketItem.ShipmentAmount < shipmentTicketItem.ScheduledJobAmount)
+            if (shipmentTicketItem.ShipmentAmount < shipmentTicketItem.ScheduledJobAmount)
             {
-                MessageBox.Show("发货数量不能小于已分配翻包作业数量！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("发货数量不能小于已分配翻包作业数量！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            new Thread(new ThreadStart(()=>
+
+            WMSEntities wmsEntities = new WMSEntities();
+            try
             {
-                WMSEntities wmsEntities = new WMSEntities();
-                try
+                //不扣除库存发货区数量，但记录库存已分配发货数量
+                StockInfo stockInfo = (from s in wmsEntities.StockInfo
+                                       where s.ID == shipmentTicketItem.StockInfoID
+                                       select s).FirstOrDefault();
+                if (stockInfo == null)
                 {
-                    //不扣除库存发货区数量，但记录库存已分配发货数量
-                    StockInfo stockInfo = (from s in wmsEntities.StockInfo
-                                           where s.ID == shipmentTicketItem.StockInfoID
-                                           select s).FirstOrDefault();
-                    if (stockInfo == null)
-                    {
-                        MessageBox.Show("零件不存在，请重新选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                    decimal shipmentableAmount = (stockInfo.ShipmentAreaAmount ?? 0) - stockInfo.ScheduledShipmentAmount;
-                    shipmentableAmount = shipmentableAmount < 0 ? 0 : shipmentableAmount;
-                    if (shipmentTicketItem.ShipmentAmount*shipmentTicketItem.UnitAmount > shipmentableAmount)
-                    {
-                        MessageBox.Show("添加失败，库存可发货数量不足！可发货数：" + Utilities.DecimalToString(shipmentableAmount), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    stockInfo.ScheduledShipmentAmount += shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount ?? 0;
-                    wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
-                    wmsEntities.SaveChanges();
-                }
-                catch
-                {
-                    MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("零件不存在，请重新选择", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                this.Invoke(new Action(()=>
+                decimal shipmentableAmount = (stockInfo.ShipmentAreaAmount ?? 0) - stockInfo.ScheduledShipmentAmount;
+                shipmentableAmount = shipmentableAmount < 0 ? 0 : shipmentableAmount;
+                if (shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount > shipmentableAmount)
                 {
-                    this.Search(shipmentTicketItem.ID);
-                }));
-                MessageBox.Show("添加成功！","提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
+                    MessageBox.Show("添加失败，库存可发货数量不足！可发货数：" + Utilities.DecimalToString(shipmentableAmount), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                stockInfo.ScheduledShipmentAmount += shipmentTicketItem.ShipmentAmount * shipmentTicketItem.UnitAmount ?? 0;
+                wmsEntities.ShipmentTicketItem.Add(shipmentTicketItem);
+                wmsEntities.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("操作失败，请检查网络连接", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            this.Invoke(new Action(() =>
+            {
+                this.Search(shipmentTicketItem.ID);
+            }));
+            MessageBox.Show("添加成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void buttonAlter_Click(object sender, EventArgs e)
@@ -465,9 +464,7 @@ namespace WMS.UI
                 MessageBox.Show("请选择零件！","提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            new Thread(new ThreadStart(() =>
-            {
+            
                 WMSEntities wmsEntities = new WMSEntities();
                 int id = ids[0];
                 ShipmentTicketItem shipmentTicketItem = null;
@@ -546,7 +543,7 @@ namespace WMS.UI
                     Utilities.SelectLineByID(this.reoGridControlMain, shipmentTicketItem.ID);
                 }));
                 MessageBox.Show("修改成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            })).Start();
+         
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
