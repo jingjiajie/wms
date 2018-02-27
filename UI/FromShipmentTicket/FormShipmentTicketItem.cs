@@ -670,6 +670,7 @@ namespace WMS.UI
         private bool importItemHandler(List<ShipmentTicketItem> results,Dictionary<string,string[]> unimportedColumns)
         {
             List<ShipmentTicketItem> realImportList = new List<ShipmentTicketItem>(); //真正要导入的ShipmentTicketItem（有的一个result项可能对应多个导入项）
+            Dictionary<int, bool> dicImportedSupplyID = new Dictionary<int, bool>();
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
@@ -708,6 +709,15 @@ namespace WMS.UI
                                                 && s.ShipmentAreaAmount - s.ScheduledShipmentAmount > 0
                                           orderby s.InventoryDate ascending
                                           select s).ToArray();
+                    }
+                    if (dicImportedSupplyID.ContainsKey(stockInfoViews[0].SupplyID ?? -1))
+                    {
+                        MessageBox.Show("行"+(i+1)+"：请不要重复导入零件：" + stockInfoViews[0].SupplyNo,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    else if(stockInfoViews[0].SupplyID.HasValue)
+                    {
+                        dicImportedSupplyID.Add(stockInfoViews[0].SupplyID.Value, true);
                     }
                     int jobPersonID = -1;
                     int confirmPersonID = -1;
