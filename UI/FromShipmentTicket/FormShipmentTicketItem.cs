@@ -670,7 +670,7 @@ namespace WMS.UI
         private bool importItemHandler(List<ShipmentTicketItem> results,Dictionary<string,string[]> unimportedColumns)
         {
             List<ShipmentTicketItem> realImportList = new List<ShipmentTicketItem>(); //真正要导入的ShipmentTicketItem（有的一个result项可能对应多个导入项）
-            Dictionary<int, bool> dicImportedSupplyID = new Dictionary<int, bool>();
+            Dictionary<int, decimal> dicImportedSupplyIDAmountNoUnit = new Dictionary<int, decimal>();
             try
             {
                 WMSEntities wmsEntities = new WMSEntities();
@@ -710,15 +710,6 @@ namespace WMS.UI
                                           orderby s.InventoryDate ascending
                                           select s).ToArray();
                     }
-                    if (dicImportedSupplyID.ContainsKey(stockInfoViews[0].SupplyID ?? -1))
-                    {
-                        MessageBox.Show("行"+(i+1)+"：请不要重复导入零件：" + stockInfoViews[0].SupplyNo,"提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return false;
-                    }
-                    else if(stockInfoViews[0].SupplyID.HasValue)
-                    {
-                        dicImportedSupplyID.Add(stockInfoViews[0].SupplyID.Value, true);
-                    }
                     int jobPersonID = -1;
                     int confirmPersonID = -1;
                     //搜索作业人名
@@ -741,15 +732,19 @@ namespace WMS.UI
                         }
                         confirmPersonID = confirmPerson.ID;
                     }
-
+                    //计算总共还有多少可以发货的零件，如果不够提示库存不足
                     decimal totalShipmentableAmountNoUnit = stockInfoViews.Sum((stockInfoView) => {
                         decimal shipmentableAmountNoUnit = (stockInfoView.ShipmentAreaAmount ?? 0) - stockInfoView.ScheduledShipmentAmount;
+                        if (dicImportedSupplyIDAmountNoUnit.ContainsKey(stockInfoView.ID))
+                        {
+                            shipmentableAmountNoUnit -= dicImportedSupplyIDAmountNoUnit[stockInfoView.ID];
+                        }
                         shipmentableAmountNoUnit = shipmentableAmountNoUnit < 0 ? 0 : shipmentableAmountNoUnit;
                         return shipmentableAmountNoUnit;
                     });
                     if (totalShipmentableAmountNoUnit < results[i].ShipmentAmount * results[i].UnitAmount)
                     {
-                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足（库存可发货数：{2}）", i + 1, realName, Utilities.DecimalToString(totalShipmentableAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show(string.Format("行{0}：零件\"{1}\"库存不足，库存可发货数：{2} \n（如果之前行有重复此零件，则此数量为库存数减去之前行分配的数量）", i + 1, realName, Utilities.DecimalToString(totalShipmentableAmountNoUnit)), "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     results[i].ShipmentTicketID = this.shipmentTicketID;
@@ -761,19 +756,43 @@ namespace WMS.UI
                         ShipmentTicketItem newItem = new ShipmentTicketItem();
                         Utilities.CopyProperties(results[i], newItem);
                         newItem.StockInfoID = stockInfoViews[j].ID;
+                        //计算当前StockInfo里还有多少可以发的数量
                         decimal curShipmentableAmountNoUnit = (stockInfoViews[j].ShipmentAreaAmount ?? 0) - stockInfoViews[j].ScheduledShipmentAmount;
-                        curShipmentableAmountNoUnit = curShipmentableAmountNoUnit < 0 ? 0 : curShipmentableAmountNoUnit;
+                        if (dicImportedSupplyIDAmountNoUnit.ContainsKey(stockInfoViews[j].ID))
+                        {
+                            curShipmentableAmountNoUnit -= dicImportedSupplyIDAmountNoUnit[stockInfoViews[j].ID];
+                        }
+                        if (curShipmentableAmountNoUnit <= 0) continue; //当前如果没有可发货的数量，就跳过
                         //当前StockInfo的数量小于要发货的数量
                         if (curAmountNoUnit + curShipmentableAmountNoUnit < results[i].ShipmentAmount * results[i].UnitAmount)
                         {
                             newItem.ShipmentAmount = curShipmentableAmountNoUnit/newItem.UnitAmount;
                             realImportList.Add(newItem);
+                            //把已经发货的数量加到dicImportedSupplyIDAmountNoUnit里，在COMMIT之前，下轮循环用
+                            if (dicImportedSupplyIDAmountNoUnit.ContainsKey(newItem.StockInfoID.Value)==false)
+                            {
+                                dicImportedSupplyIDAmountNoUnit.Add(newItem.StockInfoID.Value, curShipmentableAmountNoUnit);
+                            }
+                            else
+                            {
+                                dicImportedSupplyIDAmountNoUnit[newItem.StockInfoID.Value] += curShipmentableAmountNoUnit;
+                            }
                             curAmountNoUnit += newItem.ShipmentAmount.Value * newItem.UnitAmount.Value;
                         }
                         else //当前StockInfo数量大于等于需要发货的数量
                         {
                             newItem.ShipmentAmount = (results[i].ShipmentAmount*results[i].UnitAmount - curAmountNoUnit)/results[i].UnitAmount;
                             realImportList.Add(newItem);
+                            //把已经发货的数量加到dicImportedSupplyIDAmountNoUnit里，在COMMIT之前，下轮循环用
+                            if (dicImportedSupplyIDAmountNoUnit.ContainsKey(newItem.StockInfoID.Value)==false)
+                            {
+                                dicImportedSupplyIDAmountNoUnit.Add(newItem.StockInfoID.Value, ((results[i].ShipmentAmount * results[i].UnitAmount - curAmountNoUnit)??0));
+                            }
+                            else
+                            {
+                                dicImportedSupplyIDAmountNoUnit[newItem.StockInfoID.Value] += ((results[i].ShipmentAmount * results[i].UnitAmount - curAmountNoUnit) ?? 0);
+                            }
+                            //更新curAmountNoUnit
                             curAmountNoUnit += newItem.ShipmentAmount.Value * (newItem.UnitAmount ?? 1);
                             break;
                         }
