@@ -410,10 +410,20 @@ namespace WMS.UI
             }
             try
             {
+                Dictionary<string, bool> dicImportedItems = new Dictionary<string, bool>(); //再特么加需求我特么打死你
                 WMSEntities wmsEntities = new WMSEntities();
                 JobTicketItemView[] jobTicketItemViews = (from j in wmsEntities.JobTicketItemView where j.JobTicketID == this.jobTicketID select j).ToArray();
                 for (int i = 0; i < results.Count; i++)
                 {
+                    if (dicImportedItems.ContainsKey(results[i].SupplyNoOrComponentName))
+                    {
+                        MessageBox.Show("行" + (i + 1) + "：请不要录入重复的零件\"" + results[i].SupplyNoOrComponentName + "\"", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                    else
+                    {
+                        dicImportedItems.Add(results[i].SupplyNoOrComponentName, true);
+                    }
                     string supplyNoOrComponentName = results[i].SupplyNoOrComponentName;
                     decimal scheduleAmountNoUnit = results[i].SchedulePutOutAmount * results[i].UnitAmount;
                     //封装的根据 零件名/供货代号 获取 零件/供货的函数
