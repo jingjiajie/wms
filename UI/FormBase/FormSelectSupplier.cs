@@ -134,24 +134,24 @@ namespace WMS.UI
 
         private void textBoxSupplierName_VisibleChanged(object sender, EventArgs e)
         {
-            if (this.Visible == false)
-            {
-                staticPos = this.Location;
-            }
-            else
-            {
-                if (staticPos != new Point(-1, -1))
-                {
-                    this.Location = staticPos;
-                }
-                int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
-                int id = -1;
-                if (ids.Length > 0)
-                {
-                    id = ids[0];
-                }
-                this.pagerWidget.Search(true, id);
-            }
+            //if (this.Visible == false)
+            //{
+            //    staticPos = this.Location;
+            //}
+            //else
+            //{
+            //    if (staticPos != new Point(-1, -1))
+            //    {
+            //        this.Location = staticPos;
+            //    }
+            //    int[] ids = Utilities.GetSelectedIDs(this.reoGridControlMain);
+            //    int id = -1;
+            //    if (ids.Length > 0)
+            //    {
+            //        id = ids[0];
+            //    }
+            //    this.pagerWidget.Search(true, id);
+            //}
         }
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
