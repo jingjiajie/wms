@@ -45,6 +45,8 @@ namespace WMS.UI
         {
             InitComponents();
             this.toolStripComboBox1.SelectedIndex= 1;
+            this.pagerWidget.AddCondition("是否历史信息", "0");
+            this.pagerWidget.Search();
             //if (this.defaultSupplierID != -1)
             //{
             //    try
