@@ -44,7 +44,6 @@ namespace WMS.UI
             this.authority = authority;
             this.id = supplierid;
             this.userid = userid;
-
         }
 
         private void FormBaseSupplier_Load(object sender, EventArgs e)
@@ -110,7 +109,7 @@ namespace WMS.UI
                 //string[] visibleColumnNames = (from kn in SupplierMetaData.KeyNames
                 //                               where kn.Visible == true
                 //                               select kn.Name).ToArray();
-                //初始化查询框
+                //初始化查询
                 //this.toolStripComboBoxSelect.Items.Add("无");
                 //this.toolStripComboBoxSelect.Items.AddRange(visibleColumnNames);
                 //this.toolStripComboBoxSelect.SelectedIndex = 0;
